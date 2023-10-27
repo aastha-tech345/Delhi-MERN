@@ -42,19 +42,19 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Textbausteine',
-        to: '/settings/textBlocks',
+        to: '/textBlocks',
         icon: <CIcon icon={cil3d} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'Benutzer',
-        to: '/settings/users',
+        to: '/users',
         icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'E-Mail Vorlage',
-        to: '/settings/email',
+        to: '/email',
         icon: <CIcon icon={cilEnvelopeLetter} customClassName="nav-icon" />,
       },
       {

@@ -19,7 +19,9 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
-    "test:debug": "react-scripts --inspect-brk test --runInBand"
+    "test:debug": "react-scripts --inspect-brk test --runInBand",
+    "prod": "npm run-script build && serve build",
+    "serve":"serve -s build"
   },
   "dependencies": {
     "@coreui/chartjs": "^3.1.2",
@@ -46,6 +48,7 @@
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.0",
     "redux": "4.2.1",
+    "serve": "^14.2.1",
     "simplebar-react": "^2.4.3"
   },
   "devDependencies": {
