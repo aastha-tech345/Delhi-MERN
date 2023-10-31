@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Table } from 'antd'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { MdAdd } from 'react-icons/md'
 import { DatePicker, Space } from 'antd'
+import Modal from 'react-bootstrap/Modal'
 
 const { RangePicker } = DatePicker
 const columns = [
@@ -70,6 +71,25 @@ const data = [
   },
 ]
 const Bills = () => {
+  const [show, setShow] = useState(false)
+  // eslint-disable-next-line no-undef
+  const handleClose = () => setShow(false)
+  // eslint-disable-next-line no-undef
+  const handleShow = () => setShow(true)
+  const [invoice, setInvoice] = useState()
+  const [due_date, setDueDate] = useState()
+  const [project, setProject] = useState()
+  const [tax, setTax] = useState()
+  const [second_tax, setSecondTax] = useState()
+  const [tds, setTds] = useState()
+  const [notic, setNotic] = useState()
+  const [label, setLabel] = useState()
+  const [recurring, setRecurring] = useState(false)
+
+  const saveData = () => {
+    let data = { invoice, due_date, project, tax, second_tax, tds, notic, label, recurring }
+    console.log(data)
+  }
   return (
     <div>
       <div className="row m-4 p-4  shadow">
@@ -117,9 +137,197 @@ const Bills = () => {
         <div className="col-sm-2"></div>
         <div className="col-sm-4">
           <div className="d-flex">
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
+            {/* <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
               <MdAdd /> &nbsp;Rechnung hinzufügen
-            </button>{' '}
+            </button>{' '} */}
+            <button
+              className="btn btn"
+              style={{ background: '#0b5995', color: 'white' }}
+              onClick={handleShow}
+            >
+              <MdAdd />
+              &nbsp;Rechnung hinzufügen
+              {/* Create new customer */}
+            </button>
+            <Modal show={show} onHide={handleClose} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Rechnung hinzufügen</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="row p-3">
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Datum der Rechnung
+                      {/* first name */}
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        type="date"
+                        value={invoice}
+                        onChange={(e) => {
+                          setInvoice(e.target.value)
+                        }}
+                        placeholder="jo"
+                        className="form-control"
+                        id="inputPassword"
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Fälligkeitsdatum
+                      {/* second name */}
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        name=""
+                        type="date"
+                        value={due_date}
+                        onChange={(e) => {
+                          setDueDate(e.target.value)
+                        }}
+                        className="form-control"
+                      ></input>
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Projekt
+                      {/* phone */}
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        value={project}
+                        onChange={(e) => {
+                          setProject(e.target.value)
+                        }}
+                      >
+                        <option value="">--select--</option>
+                        <option value="Projekt">Projekt</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      STEUER
+                      {/* phone */}
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        value={tax}
+                        onChange={(e) => {
+                          setTax(e.target.value)
+                        }}
+                      >
+                        <option value="">--select--</option>
+                        <option value="STEUER">STEUER</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <div className="col-sm-9">
+                      Wiederkehrende &nbsp;
+                      <input
+                        type="checkbox"
+                        name="gender"
+                        value={recurring}
+                        onChange={(e) => {
+                          setRecurring(e.target.value)
+                        }}
+                      />{' '}
+                      {/* other */}
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Zweite TAX
+                      {/* first name */}
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        value={second_tax}
+                        onChange={(e) => {
+                          setSecondTax(e.target.value)
+                        }}
+                      >
+                        <option value="">--select--</option>
+                        <option value="Zweite TAX">Zweite TAX</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      TDS
+                      {/* first name */}
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        value={tds}
+                        onChange={(e) => {
+                          setTds(e.target.value)
+                        }}
+                      >
+                        <option value="">--select--</option>
+                        <option value="TDS">TDS</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Hinweis
+                    </label>
+                    <div className="col-sm-9">
+                      <textarea
+                        className="form-control"
+                        value={notic}
+                        onChange={(e) => {
+                          setNotic(e.target.value)
+                        }}
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Priorität
+                      {/* phone */}
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={label}
+                        onChange={(e) => {
+                          setLabel(e.target.value)
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <button
+                  className="btn btn"
+                  onClick={handleClose}
+                  style={{ background: '#d04545', color: 'white' }}
+                >
+                  {' '}
+                  Abbrechen
+                </button>
+                &nbsp; &nbsp;
+                <button
+                  className="btn btn"
+                  onClick={saveData}
+                  style={{ background: '#0b5995', color: 'white' }}
+                >
+                  Aktivität hinzufügen
+                  {/* Add activity */}
+                </button>
+              </Modal.Footer>
+            </Modal>{' '}
             &nbsp;
             <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
               Excel

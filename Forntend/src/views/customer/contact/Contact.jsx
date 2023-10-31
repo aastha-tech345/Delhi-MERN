@@ -1,11 +1,23 @@
 import React, { useState } from 'react'
-import { Divider, Radio, Table } from 'antd'
+import { Divider, Table } from 'antd'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { BiFilterAlt } from 'react-icons/bi'
 import { AiOutlineMail } from 'react-icons/ai'
+import { BiErrorCircle } from 'react-icons/bi'
+
+const rowSelection = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+  },
+  getCheckboxProps: (record) => ({
+    disabled: record.name === 'Disabled User',
+    name: record.name,
+  }),
+}
+
 const columns = [
   {
     title: 'Name des Kunden',
@@ -77,21 +89,37 @@ const data = [
   },
 ]
 
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
-    name: record.name,
-  }),
-}
 const Contact = () => {
+  const [fname, setFname] = useState('')
+  const [lname, setLname] = useState('')
+  const [phone, setPhone] = useState('')
+  const [skype, setSkype] = useState('')
+  const [email, setEmail] = useState('')
+  const [gender, setGender] = useState('')
   const [show, setShow] = useState(false)
+  const [error, setError] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  const [selectionType, setSelectionType] = useState('checkbox')
+  const [selectionType] = useState('checkbox')
+
+  const saveData = () => {
+    if (
+      fname.trim().length === 0 ||
+      lname.trim().length === 0 ||
+      phone.trim().length === 0 ||
+      skype.trim().length === 0 ||
+      gender.trim().length === 0
+    ) {
+      setError(true)
+      return
+    }
+
+    let newData = { fname, lname, phone, skype, gender, email }
+    console.log(newData)
+    handleClose() // Close modal after saving data
+  }
+
   return (
     <div>
       <div className="row m-4 p-4 shadow">
@@ -139,11 +167,20 @@ const Contact = () => {
                   </label>
                   <div className="col-sm-9">
                     <input
-                      type="password"
+                      type="text"
+                      value={fname}
+                      onChange={(e) => {
+                        setFname(e.target.value)
+                      }}
                       placeholder="jo"
                       className="form-control"
                       id="inputPassword"
                     />
+                    {error && fname.trim().length === 0 && (
+                      <p style={{ color: 'red' }}>
+                        <BiErrorCircle /> required
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="mb-2 row">
@@ -153,11 +190,20 @@ const Contact = () => {
                   </label>
                   <div className="col-sm-9">
                     <input
-                      type="password"
+                      type="text"
+                      value={lname}
+                      onChange={(e) => {
+                        setLname(e.target.value)
+                      }}
                       placeholder="verma"
                       className="form-control"
                       id="inputPassword"
                     />
+                    {error && lname.trim().length === 0 && (
+                      <p style={{ color: 'red' }}>
+                        <BiErrorCircle /> required
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="mb-2 row">
@@ -168,10 +214,19 @@ const Contact = () => {
                   <div className="col-sm-9">
                     <input
                       type="number"
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value)
+                      }}
                       placeholder="91+ 8354568464"
                       className="form-control"
                       id="inputPassword"
                     />
+                    {error && phone.trim().length === 0 && (
+                      <p style={{ color: 'red' }}>
+                        <BiErrorCircle /> required
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="mb-2 row">
@@ -181,10 +236,19 @@ const Contact = () => {
                   <div className="col-sm-9">
                     <input
                       type="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value)
+                      }}
                       placeholder="jo@gmail.com"
                       className="form-control"
                       id="inputPassword"
                     />
+                    {error && email.trim().length === 0 && (
+                      <p style={{ color: 'red' }}>
+                        <BiErrorCircle /> required
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="mb-2 row">
@@ -193,23 +257,60 @@ const Contact = () => {
                   </label>
                   <div className="col-sm-9">
                     <input
-                      type="password"
+                      type="text"
+                      value={skype}
+                      onChange={(e) => {
+                        setSkype(e.target.value)
+                      }}
                       placeholder="Skype"
                       className="form-control"
                       id="inputPassword"
                     />
+                    {error && skype.trim().length === 0 && (
+                      <p style={{ color: 'red' }}>
+                        <BiErrorCircle /> Required
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="mb-2 row">
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Geschlecht
                   </label>
+                  {error && gender.trim().length === 0 && (
+                    <p style={{ color: 'red' }}>
+                      <BiErrorCircle /> required
+                    </p>
+                  )}
                   <div className="col-sm-9">
-                    <input type="radio" value="male" /> &nbsp; Männlich
-                    <input type="radio" value="female" /> &nbsp; Weiblich
-                    <input type="radio" value="other" />
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      onChange={(e) => {
+                        setGender(e.target.value)
+                      }}
+                    />{' '}
+                    &nbsp; Männlich
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      onChange={(e) => {
+                        setGender(e.target.value)
+                      }}
+                    />{' '}
+                    &nbsp; Weiblich
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="other"
+                      onChange={(e) => {
+                        setGender(e.target.value)
+                      }}
+                    />
                     &nbsp; Andere
-                    {/* outher */}
+                    {/* other */}
                   </div>
                 </div>
               </div>
@@ -226,7 +327,7 @@ const Contact = () => {
               &nbsp; &nbsp;
               <button
                 className="btn btn"
-                onClick={handleClose}
+                onClick={saveData}
                 style={{ background: '#0b5995', color: 'white' }}
               >
                 Aktivität hinzufügen
@@ -262,4 +363,5 @@ const Contact = () => {
     </div>
   )
 }
+
 export default Contact
