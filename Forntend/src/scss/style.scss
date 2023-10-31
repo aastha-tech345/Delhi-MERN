@@ -15,3 +15,9 @@ $enable-rtl: true;
 
 // If you want to add custom CSS you can put it here.
 @import "custom";
+
+// Override sidebar background color
+$sidebar-bg: "#015291";
+
+// Import CoreUI SCSS file to apply changes
+@import '~@coreui/coreui/scss/coreui';
