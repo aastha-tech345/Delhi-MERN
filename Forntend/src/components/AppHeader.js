@@ -37,19 +37,19 @@ const AppHeader = () => {
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
             <CNavLink to="/dashboard" component={NavLink}>
-              Dashboard
+              Armaturenbrett
             </CNavLink>
           </CNavItem>
           <CNavItem>
             <CNavLink to="/customer" component={NavLink}>
-              Customer
+              Kunden
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Users</CNavLink>
+            <CNavLink href="#">Benutzer</CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
+            <CNavLink href="#">Einstellungen</CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>

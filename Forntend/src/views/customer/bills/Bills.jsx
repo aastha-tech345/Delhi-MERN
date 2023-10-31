@@ -132,7 +132,7 @@ const Bills = () => {
         </div>
       </div>
       <div>
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} style={{ overflowX: 'auto' }} dataSource={data} />
       </div>
     </div>
   )

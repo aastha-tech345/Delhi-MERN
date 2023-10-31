@@ -254,6 +254,7 @@ const Contact = () => {
             type: selectionType,
             ...rowSelection,
           }}
+          style={{ overflowX: 'auto' }}
           columns={columns}
           dataSource={data}
         />

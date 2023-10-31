@@ -362,6 +362,7 @@ export default function CreateUser() {
             type: selectionType,
             ...rowSelection,
           }}
+          style={{ overflowX: 'auto' }}
           columns={columns}
           dataSource={data}
         />
