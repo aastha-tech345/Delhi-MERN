@@ -5,23 +5,19 @@ const bcrypt = require("bcryptjs");
 
 exports.register = async (req, res) => {
   try {
-    const {
-      username,
-      password,
-      email,
-      role,
-      role_id,
-    } = req.body;
+    const { username, password, email, role } = req.body;
 
     let defaultValues = {};
 
     if (role === 'employee') {
       defaultValues = {
-        role_id: null
+        role_id: null,
+        parent_id: null,
       };
     } else if (role === 'customer') {
       // Find an employee and get their _id
       const employee = await UserModel.User.findOne({ role: 'employee' });
+
       if (employee) {
         defaultValues = {
           role_id: null,
@@ -32,7 +28,7 @@ exports.register = async (req, res) => {
       }
     }
 
-    let userData = {
+    const userData = {
       username,
       password,
       email,
@@ -40,21 +36,20 @@ exports.register = async (req, res) => {
       ...defaultValues,
     };
 
-    let userInstance = new UserModel.User(userData);
-    let result = await userInstance.save();
-    result = result.toObject();
+    const userInstance = new UserModel.User(userData);
+    const result = await userInstance.save();
 
     if (result) {
-      let myToken = await userInstance.getAuthToken();
+      const myToken = await userInstance.getAuthToken();
 
       if (myToken) {
-        return res.send({
+        return res.status(201).send({
           result,
           message: "Token was generated successfully",
           token: myToken,
         });
       } else {
-        return res.send({ message: "Token was not generated" });
+        return res.status(500).send({ message: "Token was not generated" });
       }
     } else {
       return res.status(404).send({ message: "User was not found" });

@@ -9,6 +9,7 @@ exports.roleCreation = async (req, res) => {
       result
     });
   } catch (error) {
+    // Handle the error
     res.status(500).json({ error: 'An error occurred while creating the role' });
   }
-}
+};
