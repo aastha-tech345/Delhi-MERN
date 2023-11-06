@@ -112,4 +112,5 @@ exports.deleteCustomer = async (req, res) => {
     console.error('Error deleting customer:', error);
     res.status(500).send({ message: 'Internal Server Error', error });
   }
+  
 };
