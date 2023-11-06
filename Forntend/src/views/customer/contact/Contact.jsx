@@ -122,7 +122,7 @@ const Contact = () => {
 
   return (
     <div>
-      <div className="row m-4 p-4 shadow">
+      <div className="row m-4 p-4" style={{ borderRadius: '5px', border: '1px solid lightgray' }}>
         <div className="col-sm-3">
           <input
             type="search"
@@ -138,12 +138,8 @@ const Contact = () => {
             &nbsp; Filter
           </button>
         </div>
-
-        <div className="col-sm-5">
-          <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-            <AiOutlineMail />
-            &nbsp; Einladung versenden
-          </button>{' '}
+        <div className="col-sm-2"></div>
+        <div className="col-sm-3">
           &nbsp;&nbsp;
           <button
             className="btn btn"
@@ -247,28 +243,6 @@ const Contact = () => {
                     {error && email.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-2 row">
-                  <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                    Skype
-                  </label>
-                  <div className="col-sm-9">
-                    <input
-                      type="text"
-                      value={skype}
-                      onChange={(e) => {
-                        setSkype(e.target.value)
-                      }}
-                      placeholder="Skype"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-                    {error && skype.trim().length === 0 && (
-                      <p style={{ color: 'red' }}>
-                        <BiErrorCircle /> Required
                       </p>
                     )}
                   </div>

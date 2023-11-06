@@ -1,346 +1,84 @@
 import React, { useState } from 'react'
-import { Table } from 'antd'
-import Dropdown from 'react-bootstrap/Dropdown'
-import { MdAdd } from 'react-icons/md'
-import { DatePicker, Space } from 'antd'
-import Modal from 'react-bootstrap/Modal'
 
-const { RangePicker } = DatePicker
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'PROJECT',
-    dataIndex: 'project',
-    key: 'project',
-  },
-  {
-    title: 'DATUM DER RECHNUNG',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'FALLIGKEITS DATUM',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'RECHNUNG INSGESAMT',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'FALLIG',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'STATUS',
-    dataIndex: 'address',
-    key: 'address',
-  },
-]
-const data = [
-  {
-    project: 'HVD',
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    project: 'HVD',
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    project: 'HVD',
-    key: '123',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-]
 const Bills = () => {
-  const [show, setShow] = useState(false)
-  // eslint-disable-next-line no-undef
-  const handleClose = () => setShow(false)
-  // eslint-disable-next-line no-undef
-  const handleShow = () => setShow(true)
-  const [invoice, setInvoice] = useState()
-  const [due_date, setDueDate] = useState()
-  const [project, setProject] = useState()
-  const [tax, setTax] = useState()
-  const [second_tax, setSecondTax] = useState()
-  const [tds, setTds] = useState()
-  const [notic, setNotic] = useState()
-  const [label, setLabel] = useState()
-  const [recurring, setRecurring] = useState(false)
-
-  const saveData = () => {
-    let data = { invoice, due_date, project, tax, second_tax, tds, notic, label, recurring }
-    console.log(data)
-  }
   return (
     <div>
+      <h5>Rechnung</h5>
+      <hr />
       <div className="row m-4 p-4  shadow">
-        <div className="col-sm-2">
-          <input
-            type="search"
-            id="form1"
-            placeholder="Ihre Suche eingeben"
-            className="form-control"
-          />
-        </div>
-        <div className="col-sm-3">
-          <div className="d-flex">
-            <Dropdown>
-              <Dropdown.Toggle style={{ background: '#0b5995' }} id="dropdown-basic">
-                status
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">success</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">pending</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            &nbsp;
-            <Dropdown>
-              <Dropdown.Toggle style={{ background: '#0b5995' }} id="dropdown-basic">
-                type
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">success</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">pending</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            &nbsp;
-            <Space direction="vertical" size={12}>
-              <div className="d-flex mt-1">
-                <DatePicker renderExtraFooter={() => 'extra footer'} placeholder="" />
-                &nbsp;<span>-</span>&nbsp;
-                <DatePicker renderExtraFooter={() => 'extra footer'} placeholder="" />
-              </div>
-            </Space>
+        <p style={{ color: 'blue' }}>Rechnungstellung</p>
+        <div className="col-sm-6">
+          <div className="mb-6 row">
+            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              Produkt
+            </label>
+            <div className="col-sm-6 mt-2">
+              <select className="form-control">
+                <option value="">HVD-PV</option>
+                <option value="">Vortrag</option>
+                <option value="">SPV</option>
+                <option value="">OPV</option>
+              </select>
+            </div>
+          </div>
+          <div className="mb-6 row">
+            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              Zahlungsart
+            </label>
+            <div className="col-sm-6 mt-2">
+              <select className="form-control">
+                <option value="">Barzahlung</option>
+                <option value="">Rechnung</option>
+                <option value="">PayPal</option>
+                <option value="">Klarna</option>
+                <option value="">Kreditkarte (für die Zukunft)</option>
+                <option value="">Andere</option>
+              </select>
+            </div>
+          </div>
+          <div className="mb-6 row">
+            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              Rechnungsdatum
+            </label>
+            <div className="col-sm-6 mt-2">
+              <input type="date" placeholder="02/09/2004" className="form-control" />
+            </div>
+          </div>
+          <div className="mb-6 row">
+            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              MitarbeiterIn
+            </label>
+            <div className="col-sm-6 mt-2">
+              <input type="text" placeholder="MitarbeiterIn" className="form-control" />
+            </div>
           </div>
         </div>
-        <div className="col-sm-2"></div>
-        <div className="col-sm-4">
-          <div className="d-flex">
-            {/* <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              <MdAdd /> &nbsp;Rechnung hinzufügen
-            </button>{' '} */}
-            <button
-              className="btn btn"
-              style={{ background: '#0b5995', color: 'white' }}
-              onClick={handleShow}
-            >
-              <MdAdd />
-              &nbsp;Rechnung hinzufügen
-              {/* Create new customer */}
-            </button>
-            <Modal show={show} onHide={handleClose} centered>
-              <Modal.Header closeButton>
-                <Modal.Title>Rechnung hinzufügen</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <div className="row p-3">
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Datum der Rechnung
-                      {/* first name */}
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="date"
-                        value={invoice}
-                        onChange={(e) => {
-                          setInvoice(e.target.value)
-                        }}
-                        placeholder="jo"
-                        className="form-control"
-                        id="inputPassword"
-                      />
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Fälligkeitsdatum
-                      {/* second name */}
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        name=""
-                        type="date"
-                        value={due_date}
-                        onChange={(e) => {
-                          setDueDate(e.target.value)
-                        }}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Projekt
-                      {/* phone */}
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        value={project}
-                        onChange={(e) => {
-                          setProject(e.target.value)
-                        }}
-                      >
-                        <option value="">--select--</option>
-                        <option value="Projekt">Projekt</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      STEUER
-                      {/* phone */}
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        value={tax}
-                        onChange={(e) => {
-                          setTax(e.target.value)
-                        }}
-                      >
-                        <option value="">--select--</option>
-                        <option value="STEUER">STEUER</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <div className="col-sm-9">
-                      Wiederkehrende &nbsp;
-                      <input
-                        type="checkbox"
-                        name="gender"
-                        value={recurring}
-                        onChange={(e) => {
-                          setRecurring(e.target.value)
-                        }}
-                      />{' '}
-                      {/* other */}
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Zweite TAX
-                      {/* first name */}
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        value={second_tax}
-                        onChange={(e) => {
-                          setSecondTax(e.target.value)
-                        }}
-                      >
-                        <option value="">--select--</option>
-                        <option value="Zweite TAX">Zweite TAX</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      TDS
-                      {/* first name */}
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        value={tds}
-                        onChange={(e) => {
-                          setTds(e.target.value)
-                        }}
-                      >
-                        <option value="">--select--</option>
-                        <option value="TDS">TDS</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Hinweis
-                    </label>
-                    <div className="col-sm-9">
-                      <textarea
-                        className="form-control"
-                        value={notic}
-                        onChange={(e) => {
-                          setNotic(e.target.value)
-                        }}
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Priorität
-                      {/* phone */}
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={label}
-                        onChange={(e) => {
-                          setLabel(e.target.value)
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <button
-                  className="btn btn"
-                  onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
-                >
-                  {' '}
-                  Abbrechen
-                </button>
-                &nbsp; &nbsp;
-                <button
-                  className="btn btn"
-                  onClick={saveData}
-                  style={{ background: '#0b5995', color: 'white' }}
-                >
-                  Aktivität hinzufügen
-                  {/* Add activity */}
-                </button>
-              </Modal.Footer>
-            </Modal>{' '}
-            &nbsp;
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              Excel
-            </button>
-            &nbsp;
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              Drucken
-            </button>
+        <div className="col-sm-6">
+          <div className="mb-6 row">
+            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              bereits bezahlt
+            </label>
+            <div className="col-sm-6 mt-2">
+              <input type="checkbox" />
+            </div>
+          </div>
+          <div className="mb-6 row">
+            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              Rechnungsbetrag eintragen
+            </label>
+            <div className="col-sm-6 mt-2">
+              <input type="text" placeholder="MitarbeiterIn" className="form-control" />
+            </div>
+          </div>
+          <div className="mb-6 row">
+            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              Lieferdatum
+            </label>
+            <div className="col-sm-6 mt-2">
+              <input type="date" placeholder="09/09/2000" className="form-control" />
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <Table columns={columns} style={{ overflowX: 'auto' }} dataSource={data} />
       </div>
     </div>
   )

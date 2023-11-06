@@ -1,11 +1,23 @@
-import React, { useState } from 'react'
-import { Divider, Table } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Divider, Radio, Table } from 'antd'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 export default function CustomerList() {
+  const [selectionType, setSelectionType] = useState('checkbox')
+  const apiUrl = process.env.REACT_APP_API_URL
+  const [customer_record, setCustomerRecord] = useState([])
+  const [fname, setFname] = useState()
+  const [lname, setLname] = useState()
+  const [email, setEmail] = useState()
+  const [phone, setPhone] = useState()
+  const [dob, setDob] = useState()
+  const [land, setLand] = useState()
+  const [plz, setPlz] = useState()
+  const [city, setCity] = useState()
+  const [street, setStreet] = useState()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [show, setShow] = useState(false)
@@ -28,11 +40,21 @@ export default function CustomerList() {
     setIsModalVisible(false)
     setSelectedRecord(null)
   }
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      // Column configuration not to be checked
+      name: record.name,
+    }),
+  }
 
   const columns = [
     {
       title: 'NAME DES KUNDEN',
-      dataIndex: 'name',
+      dataIndex: 'fname',
       render: (text) => (
         <Link style={{ textDecoration: 'none', color: 'black' }} to={`/customerlist`}>
           {text}
@@ -41,11 +63,11 @@ export default function CustomerList() {
     },
     {
       title: 'KUNDEN-ID',
-      dataIndex: 'key',
+      dataIndex: '_id',
     },
     {
       title: 'E-MAIL',
-      dataIndex: 'address',
+      dataIndex: 'email',
     },
     {
       title: 'TELEFON',
@@ -69,40 +91,47 @@ export default function CustomerList() {
     },
   ]
 
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      phone: 354636576,
-      address: 'New York No. 1 Lake Park',
-      status: 'Active',
-      action: 'Edit',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      phone: 354636576,
-      address: 'London No. 1 Lake Park',
-      status: 'Inactive',
-      action: 'Delete',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      phone: 354636576,
-      address: 'Sydney No. 1 Lake Park',
-      status: 'Active',
-      action: 'View',
-    },
-    {
-      key: '4',
-      name: 'Roki User',
-      phone: 354636576,
-      address: 'Sydney No. 1 Lake Park',
-      status: 'Inactive',
-      action: 'Activate',
-    },
-  ]
+  const saveData = async () => {
+    let data = { fname, lname, street, city, phone, plz, email, land, dob }
+    if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
+      return
+    }
+    try {
+      let response = await fetch(`${apiUrl}/customer/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      let result = await response.json()
+      console.log(result)
+      handleClose()
+    } catch (error) {
+      console.error('Error during API call:', error)
+    }
+  }
+
+  const getDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/customer/get_record`)
+      const data = await result.json()
+      setCustomerRecord(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+
+  useEffect(() => {
+    getDetails()
+  }, [])
+
+  let data = customer_record
 
   return (
     <>
@@ -138,6 +167,10 @@ export default function CustomerList() {
                 <div className="row p-3">
                   <div className="col-sm-6">
                     <input
+                      value={fname}
+                      onChange={(e) => {
+                        setFname(e.target.value)
+                      }}
                       type="text"
                       placeholder="Vornamen"
                       className="form-control"
@@ -147,7 +180,25 @@ export default function CustomerList() {
                   <div className="col-sm-6">
                     <input
                       type="text"
+                      value={lname}
+                      onChange={(e) => {
+                        setLname(e.target.value)
+                      }}
                       placeholder="Nachname"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+                <div className="row p-3">
+                  <div className="col-sm-12">
+                    <input
+                      value={street}
+                      onChange={(e) => {
+                        setStreet(e.target.value)
+                      }}
+                      type="text"
+                      placeholder="Straβe + Hnr"
                       className="form-control"
                       id="inputPassword"
                     />
@@ -157,6 +208,10 @@ export default function CustomerList() {
                   <div className="col-sm-6">
                     <input
                       type="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value)
+                      }}
                       placeholder="E-Mail"
                       className="form-control"
                       id="inputPassword"
@@ -164,6 +219,10 @@ export default function CustomerList() {
                   </div>
                   <div className="col-sm-6">
                     <input
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value)
+                      }}
                       type="number"
                       placeholder="Telefon"
                       className="form-control"
@@ -174,6 +233,10 @@ export default function CustomerList() {
                 <div className="row p-3">
                   <div className="col-sm-6">
                     <input
+                      value={plz}
+                      onChange={(e) => {
+                        setPlz(e.target.value)
+                      }}
                       type="text"
                       placeholder="PLZ"
                       className="form-control"
@@ -182,7 +245,11 @@ export default function CustomerList() {
                   </div>
                   <div className="col-sm-6">
                     <input
-                      type="date"
+                      value={city}
+                      onChange={(e) => {
+                        setCity(e.target.value)
+                      }}
+                      type="text"
                       placeholder="Stadt"
                       className="form-control"
                       id="inputPassword"
@@ -190,10 +257,26 @@ export default function CustomerList() {
                   </div>
                 </div>
                 <div className="row p-3">
-                  <div className="col-sm-12">
+                  <div className="col-sm-6">
                     <input
+                      value={dob}
+                      onChange={(e) => {
+                        setDob(e.target.value)
+                      }}
                       type="text"
-                      placeholder="Straβe"
+                      placeholder="Geburtsdatum"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                  <div className="col-sm-6">
+                    <input
+                      value={land}
+                      onChange={(e) => {
+                        setLand(e.target.value)
+                      }}
+                      type="text"
+                      placeholder="Stadt"
                       className="form-control"
                       id="inputPassword"
                     />
@@ -204,30 +287,37 @@ export default function CustomerList() {
                 <button
                   className="btn btn"
                   onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
+                  style={{ border: '1px solid #0b5995', marginRight: '120px', color: 'black' }}
                 >
-                  Abbrechen
+                  Bearbeiten
                 </button>
                 <button
                   className="btn btn"
                   onClick={handleClose}
                   style={{ background: '#d04545', color: 'white' }}
                 >
-                  Abbrechen
+                  Stornieren
                 </button>
                 <button
                   className="btn btn"
-                  onClick={handleClose}
+                  onClick={saveData}
                   style={{ background: '#0b5995', color: 'white' }}
                 >
-                  Aktivität hinzufügen
+                  Einreichen
                 </button>
               </Modal.Footer>
             </Modal>
           </div>
         </div>
-        <Divider />
-        <Table columns={columns} dataSource={data} />
+
+        <Table
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
+          columns={columns}
+          dataSource={data}
+        />
 
         {/* Delete Modal */}
         <Modal show={isModalVisible} onHide={handleDeleteCancel} centered>

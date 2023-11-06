@@ -110,7 +110,13 @@ export default function CreateUser() {
   }, [])
   return (
     <>
-      <div className="row shadow m-4 p-4">
+      <div
+        className="row  m-4 p-4"
+        style={{
+          border: '1px solid lightgray',
+          borderRadius: '5px 5px 5px 5px ',
+        }}
+      >
         <div className="col-sm-5">
           <button
             className="btn btn"
