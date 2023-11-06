@@ -1,6 +1,13 @@
+
+
 const express = require('express');
 const router = express.Router();
-const coustomerCtrl = require('../controller/customer.controller');
+const customerController = require('../controller/customer.controller');
 
-router.post('/create_coustomer', coustomerCtrl.createCustomer);
+// Example route definition
+router.post('/create', customerController.createCustomer);
+router.get('/get_record', customerController.getCustomer);
+router.get('/get_record/:id', customerController.getCustomerData);
+router.delete('/get_record/:id', customerController.deleteCustomer);
+
 module.exports = router;

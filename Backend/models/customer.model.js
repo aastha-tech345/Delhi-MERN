@@ -4,10 +4,9 @@ const Schema = mongoose.Schema;
 const contactSchema = new Schema({
   fname: String,
   lname: String,
-  gender: String,
   email: String,
   phone: String,
-  skype: String,
+  gender:String,
   customer_id:{type:String}
 });
 
@@ -26,9 +25,9 @@ const customerSchema = new Schema({
   lname: {type:String},
   phone: {type:String},
   email: {type:String},
-  title: {type:String},
-  gender: {type:String},
-  primary_contact: {type:String},
+  plz: {type:String},
+  city: {type:String},
+  street: {type:String},
   coustomerInfo: {
     fname: {type:String},
     lname: {type:String},

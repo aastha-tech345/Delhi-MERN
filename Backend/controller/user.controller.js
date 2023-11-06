@@ -57,7 +57,7 @@ exports.register = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).send({
-      message: 'Server Error',
+      message: 'error',
     });
   }
 };
@@ -72,7 +72,7 @@ exports.register = async (req, res) => {
         return res.status(400).send({ message: "Please fill in all the details" });
       }
   
-      let user = await UserModel.User.findOne({ username });
+      let user = await UserModel.User.findOne({ username }).maxTimeMS(20000);
   
       if (user) {
         let validPassword = await bcrypt.compare(password, user.password);
