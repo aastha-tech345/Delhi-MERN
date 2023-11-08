@@ -51,12 +51,48 @@ export default function CustomerList() {
     }),
   }
 
+  // const saveData = async () => {
+  //   let data = { fname, lname, street, city, phone, plz, email, land, dob }
+  //   if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
+  //     return
+  //   }
+  //   try {
+  //     let response = await fetch(`${apiUrl}/customer/create`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
+
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`)
+  //     }
+
+  //     let result = await response.json()
+  //     console.log(result)
+  //     handleClose()
+  //   } catch (error) {
+  //     console.error('Error during API call:', error)
+  //   }
+  // }
+
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/customer/get_record`)
+  //     const data = await result.json()
+  //     setCustomerRecord(data)
+  //   } catch (error) {
+  //     console.error('Error fetching customer record:', error)
+  //   }
+  // }
+
   const columns = [
     {
       title: 'NAME DES KUNDEN',
       dataIndex: 'fname',
-      render: (text) => (
-        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/customerlist`}>
+      render: (text, record) => (
+        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/customerInfo/${record._id}`}>
           {text}
         </Link>
       ),
@@ -90,48 +126,38 @@ export default function CustomerList() {
       ),
     },
   ]
+  const data = [
+    {
+      fname: 'John Doe',
+      _id: '12345',
+      email: 'john@example.com',
+      phone: '555-1234',
+      status: 'Active',
+      // You might have more attributes depending on your use case
+    },
+    {
+      fname: 'John Doe',
+      _id: '12345',
+      email: 'john@example.com',
+      phone: '555-1234',
+      status: 'Active',
+      // You might have more attributes depending on your use case
+    },
+    {
+      fname: 'John Doe',
+      _id: '12345',
+      email: 'john@example.com',
+      phone: '555-1234',
+      status: 'Active',
+      // You might have more attributes depending on your use case
+    },
+  ]
 
-  const saveData = async () => {
-    let data = { fname, lname, street, city, phone, plz, email, land, dob }
-    if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
-      return
-    }
-    try {
-      let response = await fetch(`${apiUrl}/customer/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+  // useEffect(() => {
+  //   getDetails()
+  // }, [])
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
-
-      let result = await response.json()
-      console.log(result)
-      handleClose()
-    } catch (error) {
-      console.error('Error during API call:', error)
-    }
-  }
-
-  const getDetails = async () => {
-    try {
-      const result = await fetch(`${apiUrl}/customer/get_record`)
-      const data = await result.json()
-      setCustomerRecord(data)
-    } catch (error) {
-      console.error('Error fetching customer record:', error)
-    }
-  }
-
-  useEffect(() => {
-    getDetails()
-  }, [])
-
-  let data = customer_record
+  // let data = customer_record
 
   return (
     <>
@@ -300,7 +326,7 @@ export default function CustomerList() {
                 </button>
                 <button
                   className="btn btn"
-                  onClick={saveData}
+                  // onClick={saveData}
                   style={{ background: '#0b5995', color: 'white' }}
                 >
                   Einreichen
