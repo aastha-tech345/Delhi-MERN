@@ -17,6 +17,14 @@ const userRoute = require('./routes/user.route');
 const roleRoute = require('./routes/role.route');
 const teamRoute = require('./routes/team.route');
 const coutomerRoute = require('./routes/customer.route');
+const customerInfo = require('./routes/customerInfo.route.js')
+const contact = require('./routes/contact.route.js')
+const activity = require('./routes/activity.route.js')
+const document = require('./routes/document.route.js')
+const invoice = require('./routes/invoice.route.js')
+const print = require('./routes/printTemp.route.js')
+const spv = require('./routes/spv.route.js')
+const attorney = require('./routes/attorney.route.js')
 
 app.use(logger('dev'));
 app.use(cors());
@@ -29,6 +37,14 @@ app.use('/user', userRoute);
 app.use('/role', roleRoute);
 app.use('/team', teamRoute);
 app.use('/customer', coutomerRoute);
+app.use('/customerInfo', customerInfo);
+app.use('/contact', contact);
+app.use('/activity', activity);
+app.use('/document', document);
+app.use('/invoice', invoice);
+app.use('/print', print);
+app.use('/spv', spv);
+app.use('/attorney', attorney);
 
 let STATIC = path.resolve(__dirname, 'build');
 let INDEX = path.resolve(STATIC, 'index.html');

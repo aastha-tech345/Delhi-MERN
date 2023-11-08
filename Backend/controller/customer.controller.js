@@ -11,39 +11,17 @@ exports.createCustomer = async (req, res) => {
       plz,
       city,
       street,
-      primary_contact, // Assuming this is defined somewhere
+      primary_contact,
+      created_by,
     } = req.body;
 
-    // Find an employee to link as the parent
-    const employee = await UserModel.User.findOne({ role: "employee" });
-    if (!employee) {
+    const user = await UserModel.User.findOne({ role: "user" });
+    if (!user) {
       return res
         .status(400)
         .send({ message: "No employee found to link as parent" });
     }
 
-    // Default values for the new customer
-    const defaultValues = {
-      contacts: {
-        fname: null,
-        lname: null,
-        gender: null,
-        email: null,
-        phone: null,
-      },
-      tasks: {
-        title: null,
-        start_date: null,
-        deadline: null,
-        assigned_to: null,
-        employees: null,
-        task_status: null,
-      },
-      created_by: null,
-      parent_id: employee._id,
-    };
-
-    // Combine user data with default values
     const userData = {
       fname,
       lname,
@@ -53,7 +31,8 @@ exports.createCustomer = async (req, res) => {
       city,
       street,
       primary_contact,
-      ...defaultValues,
+      created_by,
+      parent_id: user._id,
     };
 
     // Create a new customer instance

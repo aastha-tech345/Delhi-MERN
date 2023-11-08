@@ -26,45 +26,52 @@ const Login = () => {
   const navigate = useNavigate()
   const [validated, setValidated] = useState(false)
 
-  // const login = async (event) => {
-  //   const form = event.currentTarget
-  //   if (form.checkValidity() === false) {
-  //     event.preventDefault()
-  //     event.stopPropagation()
-  //   }
+  const login = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
 
-  //   setValidated(true)
+    setValidated(true)
 
-  //   try {
-  //     if (!username || !password) {
-  //       return
-  //     }
+    try {
+      if (!username || !password) {
+        return
+      }
 
-  //     const data = { username, password }
+      const data = { username, password }
+      console.log(data)
+      const response = await fetch(`${apiUrl}/user/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-  //     const response = await fetch(`${apiUrl}/user/login`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
+      const result = await response.json()
+      console.log(result)
+      const token = result.user.tokens[0].token
+      const role = result.user.role
+      //console.log(record)
+      window.localStorage.setItem('token', token)
+      window.localStorage.setItem('role', role)
+      window.localStorage.setItem('record', result)
+      const resultString = JSON.stringify(result)
+      window.localStorage.setItem('record', resultString)
 
-  //     const result = await response.json()
-  //     console.log(result)
+      navigate('/dashboard')
+      window.location.reload()
+    } catch (error) {
+      console.error('Error:', error)
+      alert('An error occurred. Please try again later.')
+    }
+  }
 
-  //     const token = result.user.tokens[0].token
-  //     const role = result.user.role
-
-  //     window.localStorage.setItem('token', token)
-  //     window.localStorage.setItem('role', role)
-  //     navigate('/dashboard')
-  //     window.location.reload()
-  //   } catch (error) {
-  //     console.error('Error:', error)
-  //     alert('An error occurred. Please try again later.')
-  //   }
-  // }
+  const registerPage = () => {
+    navigate('/register')
+  }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -104,7 +111,7 @@ const Login = () => {
                         />
                       </Form.Group>
                     </Row>
-                    <Button>Login Here</Button>
+                    <Button onClick={login}>Login Here</Button>
                   </Form>
                 </CCardBody>
               </CCard>
@@ -116,11 +123,15 @@ const Login = () => {
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                       tempor incididunt ut labore et dolore magna aliqua.
                     </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
+                    <CButton
+                      color="primary"
+                      onClick={registerPage}
+                      className="mt-3"
+                      active
+                      tabIndex={-1}
+                    >
+                      Register Now!
+                    </CButton>
                   </div>
                 </CCardBody>
               </CCard>

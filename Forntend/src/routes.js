@@ -25,33 +25,55 @@ const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Filter = React.lazy(() => import('./views/settings/filter/Filter'))
 const Attorney = React.lazy(() => import('./views/customer/attorney/Attorney'))
 
-const auth = localStorage.getItem('token')
-let routes
+// const auth = localStorage.getItem('token')
+// let routes
 
-if (auth) {
-  routes = [
-    { path: '/', exact: true, name: 'Home' },
-    { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
-    { path: '/customer', name: 'Kunden', element: CustomerList },
-    { path: '/customerlist', name: 'Kunden-Listen ', element: Customer },
-    { path: '/customer/customer_info', name: 'KundenInfo', element: CustomerInfo },
-    { path: '/customer/contact', name: 'Kontakte', element: Contact },
-    { path: '/customer/bills', name: 'Rechnungen', element: Bills },
-    { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
-    { path: '/customer/description', name: 'Beschreibung', element: Description },
-    { path: '/customer/document', name: 'Dokumente', element: Document },
-    { path: '/customer/services', name: 'Leistungen', element: Services },
-    { path: '/users', name: 'User', element: User },
-    { path: '/roll', name: 'Roll', element: Roll },
-    { path: '/createuser', name: 'CreateUser', element: CreateUser },
-    { path: '/team', name: 'Teams', element: Teams },
-    { path: '/email', name: 'EmailTempalte', element: EmailTempalte },
-    { path: '/filter', name: 'Filter', element: Filter },
-    { path: '/print', name: 'Druckvorlage', element: PrintTemplate },
-    { path: '/attorney', name: 'Druckvorlage', element: Attorney },
-  ]
-} else {
-  routes = [{ path: '/login', element: Login }]
-}
+// if (auth) {
+//   routes = [
+//     { path: '/', exact: true, name: 'Home' },
+//     { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
+//     { path: '/customer', name: 'Kunden', element: CustomerList },
+//     { path: '/customerInfo/:id', name: 'Kunden-Listen ', element: Customer },
+//     { path: '/customer/customer_info', name: 'KundenInfo', element: CustomerInfo },
+//     { path: '/customer/contact', name: 'Kontakte', element: Contact },
+//     { path: '/customer/bills', name: 'Rechnungen', element: Bills },
+//     { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
+//     { path: '/customer/description', name: 'Beschreibung', element: Description },
+//     { path: '/customer/document', name: 'Dokumente', element: Document },
+//     { path: '/customer/services', name: 'Leistungen', element: Services },
+//     { path: '/users', name: 'User', element: User },
+//     { path: '/roll', name: 'Roll', element: Roll },
+//     { path: '/createuser', name: 'CreateUser', element: CreateUser },
+//     { path: '/team', name: 'Teams', element: Teams },
+//     { path: '/email', name: 'EmailTempalte', element: EmailTempalte },
+//     { path: '/filter', name: 'Filter', element: Filter },
+//     { path: '/print', name: 'Druckvorlage', element: PrintTemplate },
+//     { path: '/attorney', name: 'Druckvorlage', element: Attorney },
+//   ]
+// } else {
+//   routes = [{ path: '/login', element: Login }]
+// }
+
+const routes = [
+  { path: '/', exact: true, name: 'Home' },
+  { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
+  { path: '/customer', name: 'Kunden', element: CustomerList },
+  { path: '/customerInfo/:id', name: 'Kunden-Listen ', element: Customer },
+  { path: '/customer/customer_info', name: 'KundenInfo', element: CustomerInfo },
+  { path: '/customer/contact', name: 'Kontakte', element: Contact },
+  { path: '/customer/bills', name: 'Rechnungen', element: Bills },
+  { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
+  { path: '/customer/description', name: 'Beschreibung', element: Description },
+  { path: '/customer/document', name: 'Dokumente', element: Document },
+  { path: '/customer/services', name: 'Leistungen', element: Services },
+  { path: '/users', name: 'User', element: User },
+  { path: '/roll', name: 'Roll', element: Roll },
+  { path: '/createuser', name: 'CreateUser', element: CreateUser },
+  { path: '/team', name: 'Teams', element: Teams },
+  { path: '/email', name: 'EmailTempalte', element: EmailTempalte },
+  { path: '/filter', name: 'Filter', element: Filter },
+  { path: '/print', name: 'Druckvorlage', element: PrintTemplate },
+  { path: '/attorney', name: 'Druckvorlage', element: Attorney },
+]
 
 export default routes
