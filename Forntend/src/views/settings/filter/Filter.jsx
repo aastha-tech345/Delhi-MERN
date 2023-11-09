@@ -133,8 +133,7 @@ const Filter = () => {
       {/* <hr /> */}
       <div>
         <div
-          className="row serchBox"
-          style={{ border: '1px solid #ebedef', height: '55px', borderRadius: '5px 5px 5px 5px ' }}
+          className="row serchBox"          
         >
           <div className="col-sm-3">
             <input
