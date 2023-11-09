@@ -108,8 +108,8 @@ export default function CustomerList() {
     <>
       <div>
         <h5 style={{ fontWeight: 'bold' }}>Kunden-Listen</h5>
-        <div className="row m-4 p-4  shadow" style={{ background: 'white', borderRadius: '5px' }}>
-          <div className="col-sm-3">
+        <div className="row serchBox">
+          <div className="col-sm-4">
             <input
               type="search"
               id="form1"
@@ -117,12 +117,12 @@ export default function CustomerList() {
               className="form-control"
             />
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <button className="btn btn text-light" style={{ background: '#0b5995' }}>
               filter
             </button>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-4 text-right">
             <button
               className="btn btn"
               style={{ background: '#0b5995', color: 'white' }}
@@ -227,7 +227,7 @@ export default function CustomerList() {
           </div>
         </div>
         <Divider />
-        <Table columns={columns} dataSource={data} />
+        <Table className="tableBox" columns={columns} dataSource={data} />
 
         {/* Delete Modal */}
         <Modal show={isModalVisible} onHide={handleDeleteCancel} centered>
