@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { Link } from 'react-router-dom'
+import '../../scss/_custom.scss'
 
 export default function CustomerList() {
   const [selectionType, setSelectionType] = useState('checkbox')
@@ -174,7 +175,7 @@ export default function CustomerList() {
           </div>
           <div className="col-sm-4">
             <button className="btn btn text-light" style={{ background: '#0b5995' }}>
-              filter
+            <i><svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" id="filter"><g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><g stroke="#fff" stroke-width="2" transform="translate(-1614 -1629)"><g transform="translate(1615 1630)"><path d="M20 0H0l8 9.46V16l4 2V9.46z"></path></g></g></g></svg></i>  Filter
             </button>
           </div>
           <div className="col-sm-4 text-right">
@@ -346,10 +347,10 @@ export default function CustomerList() {
         />
 
         {/* Delete Modal */}
-        <Modal show={isModalVisible} onHide={handleDeleteCancel} centered>
+        <Modal show={isModalVisible} className="modal-delete" onHide={handleDeleteCancel} centered>
           <Modal.Title>
             <svg
-              style={{ marginLeft: '200px', marginTop: '50px' }}
+              style={{  marginTop: '50px' }}
               width="44"
               height="53"
               viewBox="0 0 44 53"
@@ -383,7 +384,7 @@ export default function CustomerList() {
             </svg>
             <br />
             <br />
-            <h4 style={{ marginLeft: '150px', color: 'black' }}>Sind Sie sicher?</h4>
+            <h4 className="text-center" style={{  color: 'black' }}>Sind Sie sicher?</h4>
           </Modal.Title>
           <Modal.Body>
             <p style={{ textAlign: 'center' }}>

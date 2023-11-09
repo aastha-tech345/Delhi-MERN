@@ -2,6 +2,10 @@
 .text-right {
     text-align: right;
 }
+.text-center
+{
+    text-align: center;
+}
 .serchBox {
     padding: 10px 0px;
     border: 1px solid #ccc;
@@ -84,4 +88,11 @@ li.breadcrumb-item a {
 .modal-footer {
     text-align: center;
     display: block;
+}
+.modal-delete {
+    text-align: center;
+}
+.modal-delete .modal-title {
+    text-align: center;
+    margin-top: 40px;
 }
