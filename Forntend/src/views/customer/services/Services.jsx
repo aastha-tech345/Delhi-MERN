@@ -4,205 +4,519 @@ export default function Services() {
   return (
     <>
       <div className="row card">
-        <h4 className="p-2">Leistungen</h4>
+        <h4 className="p-2">SPV</h4>
         <hr />
-        <div className="row">
-          <p style={{ color: '#0b5995' }}>Materialbestellung</p>
-          <div className="col-sm-6">
-            <input type="checkbox" /> &nbsp; &nbsp; Bestellte Anzahl SPV-Fragebögen
-          </div>
-          <div className="col-sm-6">
-            <input type="checkbox" />
-            &nbsp; &nbsp; Bestellte Anzahl OPV-Fragebögen{' '}
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <p style={{ color: '#0b5995' }}>OPV</p>
-          <div className="col-sm-6">
-            <div className="mb-5 row">
-              <label htmlFor="inputPassword" className="col-sm-5 col-form-label">
-                Rechnungsbetrag eintragen
-              </label>
-              <div className="col-sm-6">
-                <input type="password" className="form-control" id="inputPassword" />
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="mb-5 row">
-              <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                Rechnungsdatum
-              </label>
-              <div className="col-sm-6">
-                <input type="password" className="form-control" id="inputPassword" />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-3">Hinterlegung gewünschte</div>
-            <div className="col-sm-2 d-flex">
-              <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
-              <input type="checkbox" /> &nbsp; nein
-            </div>
-          </div>
-          <div className="row p-2">
-            <p style={{ color: '#0b5995' }}>Vollmachten</p>
-            <div className="col-sm-3">
-              <input type="checkbox" />
-              &nbsp; &nbsp;Gesundheitsvollmacht
-            </div>
-            <div className="col-sm-3">
-              <input type="checkbox" />
-              &nbsp; &nbsp;Vorsorgevollmacht
-            </div>
-            <div className="col-sm-3">
-              <input type="checkbox" />
-              &nbsp; &nbsp;Betreuungsverfügung
-            </div>
-            <div className="col-sm-3">
-              <input type="checkbox" />
-              &nbsp; &nbsp;Digitales
-            </div>
-          </div>
-          <br />
-          <div className="row">
-            <p style={{ color: '#0b5995' }}>SPV Erstellung</p>
-            <div className="col-sm-6 d-flex">
-              Intensivmedizin und Wiederbelebung Zustimmung &nbsp; &nbsp;&nbsp;
-              <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
-              <input type="checkbox" /> &nbsp; nein
-            </div>
-            <div className="col-sm-6 d-flex">
-              Notarzt Ablehnung &nbsp; &nbsp;&nbsp;
-              <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
-              <input type="checkbox" /> &nbsp; nein
-            </div>
+        <div className>
+          <div
+            className="col-sm-12 ps-3 pt-2"
+            style={{ border: '2px solid #ebedef', borderRadius: '5px 5px 5px 5px' }}
+          >
             <div className="row">
-              <div className="col-sm-6">
-                <br />
-                <input type="checkbox" /> &nbsp; &nbsp; Ablehnung lebensverlängernder Maßnahme
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Motivation</p>
+              <div className="col-sm-3">Vorsorge</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
               </div>
-              <br />
-              <div className="col-sm-6 d-flex">
-                Letztes Wort für Bevollmächtigte &nbsp; &nbsp;&nbsp;
+              <div className="col-sm-3">Krankheit</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Selbstbestimmung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Angehörigenentlastung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Erfahrungen</div>
+              <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
               </div>
             </div>
+            <br />
+
             <div className="row">
-              <p style={{ color: 'black' }}>Aufenthaltsort Lebensende</p>
-              <div className="col-sm-6 d-flex">
-                Selbstbestimmung &nbsp; &nbsp;&nbsp;
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>
+                Intensivmedizin und Wiederbelebung
+              </p>
+              <div className="col-sm-3">Intensivmedizin gewünsht</div>
+              <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
               </div>
-              <div className="col-sm-6 d-flex">
-                Vertraute Umgebung &nbsp; &nbsp;&nbsp;
+              <div className="col-sm-3">Keine Intensivmedizin</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Wiederbelebung gewünsht</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Keine Wiederbelebung</div>
+              <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
               </div>
             </div>
+            <br />
+
             <div className="row">
-              <div className="col-sm-6 d-flex">
-                Krankenhaus Zustimmung &nbsp; &nbsp;&nbsp;
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Situationen am Lebensende</p>
+              <div className="col-sm-3">Sterbeprozess</div>
+              <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
               </div>
-              <div className="col-sm-6 d-flex">
-                Krankenhaus keinesfalls &nbsp; &nbsp;&nbsp;
+              <div className="col-sm-3">Gehirnshädigung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Demenz</div>
+              <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
               </div>
             </div>
+            <br />
+
             <div className="row">
-              <div className="col-sm-6 d-flex">
-                Hospiz &nbsp; &nbsp;&nbsp;
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Medizinische Festlegungen</p>
+              <div className="col-sm-3">Unverzichtbare Basisversorgung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Keine Intensivmedizin</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Schwerstpflegebedurftigkeit</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Kunstliche Enahrung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Kunstliche Flussigkeitszufuhr</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Schmerz- und Beschwerdelinderung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Medikamente zur Linderung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Medikamentenverzicht</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Organspende</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Forschungszwecke</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Defibrillator</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Sterbeheife</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Suizidoption</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Verbindlichkeit</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Ermessensbereich Bevollmachtigte</div>
+              <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
               </div>
             </div>
+            <br />
+
             <div className="row">
-              <p>Beistand am Lebensende</p>
-              <div className="col-sm-4">
-                <input type="checkbox" /> &nbsp; &nbsp; Beistand Pflege-, Palliativ-,
-                ambulanter-Hospizdienst
-                <input type="text" className="form-control" placeholder="Textfelder" />
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Aufenthaltsort am Lebensende</p>
+              <div className="col-sm-3">Vertraute Umgebung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
               </div>
-              <div className="col-sm-4">
-                <input type="checkbox" /> &nbsp; &nbsp; Beistand
-                Kirche/Weltanschauungsgemeinschaft/Organisation
-                <input type="text" className="form-control" placeholder="Textfelder" />
+              <div className="col-sm-3">Hospiz</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
               </div>
-              <div className="col-sm-4">
-                <input type="checkbox" /> &nbsp; &nbsp; Beistand Ärzt*in (Behandler)
-                <br />
-                <input type="text" className="form-control" placeholder="Textfelder" />
+              <div className="col-sm-3">Ins Krankenhaus</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Kein Krankenhaus</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+            </div>
+            <br />
+            <br />
+            <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Begleitung am Lebensende</p>
+            <p style={{ color: '#0b5995' }}>Arztin</p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <hr />
+            <p style={{ color: '#0b5995' }}>Seelischer Beistand</p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <hr />
+            <p style={{ color: '#0b5995' }}>Keinesfalls</p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <hr />
+            <div className="row">
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Bestattungswunsche</p>
+              <div className="col-sm-3">Feuerbestattung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Erdbestattung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+            </div>
+            <p style={{ color: '#0b5995' }}>Bestattungsvorsorge</p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <hr />
+            <p style={{ color: '#0b5995' }}>Sonstiges</p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <hr />
+            <div className="row">
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Vollmachten</p>
+              <div className="col-sm-3">Blanko-formulare</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Betreuungsverfugung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+            </div>
+            <br />
+            <br />
+            <div className="row">
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Gebühr</p>
+              <div className="col-sm-3">Regulär</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Ermäßigt</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+            </div>
+            <br />
+            <br />
+            <div className="row">
+              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Weitere Angaben</p>
+              <div className="col-sm-3">Dringlichkeit</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Abweichende Lieferanschrift</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+            </div>
+            <br />
+            <br />
+            <div className="row mt-2">
+              <div
+                className="col-sm-5 ms-3 me-3 pt-2 "
+                style={{
+                  height: '100px',
+                  width: '580px',
+                  border: '1px solid #ebedef',
+                  borderRadius: '5px 5px 5px 5px',
+                }}
+              >
+                <p>Erstellung</p>
+                <input
+                  type="date"
+                  default
+                  style={{
+                    background: '#ebedef',
+                    paddingLeft: '10px',
+                    borderRadius: '5px 5px 5px 5px',
+                    height: '40px',
+                    width: '200px',
+                    border: 'none',
+                  }}
+                />
+              </div>
+              <div
+                className="Col-sm-7 pt-2"
+                style={{
+                  minheight: '100px',
+                  width: '580px',
+                  border: '2px solid #ebedef',
+                  borderRadius: '5px 5px 5px 5px',
+                }}
+              >
+                <p>Kontaktangaben</p>
+                <input
+                  type="date"
+                  default
+                  style={{
+                    borderRadius: '5px 5px 5px 5px',
+                    paddingLeft: '10px',
+                    height: '40px',
+                    width: '200px',
+                    border: '1px solid #ebedef',
+                  }}
+                />
+
+                <div className="row">
+                  <div className="col-sm-6 mb-3">
+                    <div className=" row mt-2">
+                      <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                        Name
+                      </label>
+                      <div className="col-sm-8">
+                        <input
+                          type="text"
+                          placeholder="Name"
+                          style={{
+                            border: '1px solid #ebedef',
+                            paddingLeft: '10px',
+                            borderRadius: '5px 5px 5px 5px',
+                            height: '40px',
+                            width: '150px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className=" row mt-2">
+                      <label htmlFor="inputtext" className="col-sm-5 col-form-label">
+                        Straße mit Hausnummer
+                      </label>
+                      <div className="col-sm-7">
+                        <input
+                          type="text"
+                          placeholder=" Straße mit Hausnummer"
+                          style={{
+                            border: '1px solid #ebedef',
+                            paddingLeft: '10px',
+                            borderRadius: '5px 5px 5px 5px',
+                            height: '40px',
+                            width: '150px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className=" row mt-2">
+                      <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                        PLZ
+                      </label>
+                      <div className="col-sm-8">
+                        <input
+                          type="text"
+                          placeholder="PLZ"
+                          style={{
+                            border: '1px solid #ebedef',
+                            paddingLeft: '10px',
+                            borderRadius: '5px 5px 5px 5px',
+                            height: '40px',
+                            width: '150px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className=" row mt-2">
+                      <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                        Telefon
+                      </label>
+                      <div className="col-sm-8">
+                        <input
+                          type="text"
+                          placeholder="Telepon"
+                          style={{
+                            border: '1px solid #ebedef',
+                            paddingLeft: '10px',
+                            borderRadius: '5px 5px 5px 5px',
+                            height: '40px',
+                            width: '150px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-sm-6 mb-3">
+                    <div className=" row mt-2">
+                      <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                        Vorname
+                      </label>
+                      <div className="col-sm-8">
+                        <input
+                          type="text"
+                          placeholder="Vorname"
+                          style={{
+                            border: '1px solid #ebedef',
+                            paddingLeft: '10px',
+                            borderRadius: '5px 5px 5px 5px',
+                            height: '40px',
+                            width: '150px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className=" row mt-2">
+                      <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                        Adresszusatz
+                      </label>
+                      <div className="col-sm-8">
+                        <input
+                          type="text"
+                          placeholder="Adresszusatz"
+                          style={{
+                            border: '1px solid #ebedef',
+                            paddingLeft: '10px',
+                            borderRadius: '5px 5px 5px 5px',
+                            height: '40px',
+                            width: '150px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className=" row mt-2">
+                      <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                        Ort
+                      </label>
+                      <div className="col-sm-8">
+                        <input
+                          type="text"
+                          placeholder=" Ort"
+                          style={{
+                            border: '1px solid #ebedef',
+                            paddingLeft: '10px',
+                            borderRadius: '5px 5px 5px 5px',
+                            height: '40px',
+                            width: '150px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className=" row mt-2">
+                      <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                        Mobil
+                      </label>
+                      <div className="col-sm-8">
+                        <input
+                          type="text"
+                          placeholder="Mobil"
+                          style={{
+                            border: '1px solid #ebedef',
+                            paddingLeft: '10px',
+                            borderRadius: '5px 5px 5px 5px',
+                            height: '40px',
+                            width: '150px',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row mt-3 mb-5 ">
+              <div className="col-sm-3">Datenschutz</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
+              </div>
+              <div className="col-sm-3">Hinterlegung</div>
+              <div className="col-sm-2 d-flex">
+                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
+                <input type="checkbox" /> &nbsp; nein
               </div>
             </div>
           </div>
         </div>
-        <br />
-        <div className="row">
-          <div className="col-sm-6 d-flex">
-            Organspende &nbsp; &nbsp;&nbsp;
-            <input type="checkbox" value="yes" /> &nbsp; ja &nbsp; &nbsp;
-            <input type="checkbox" value="no" /> &nbsp; nein
-          </div>
-          <div className="col-sm-6 d-flex">
-            Forschungszwecke &nbsp; &nbsp;&nbsp;
-            <input type="checkbox" value="yes" /> &nbsp; ja &nbsp; &nbsp;
-            <input type="checkbox" value="no" /> &nbsp; nein
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6 d-flex">
-            Herzschrittmacher &nbsp; &nbsp;&nbsp;
-            <input type="checkbox" value="yes" /> &nbsp; ja &nbsp; &nbsp;
-            <input type="checkbox" value="no" /> &nbsp; nein
-          </div>
-          <div className="col-sm-6 d-flex">
-            Defibrillator &nbsp; &nbsp;&nbsp;
-            <input type="checkbox" value="yes" /> &nbsp; ja &nbsp; &nbsp;
-            <input type="checkbox" value="no" /> &nbsp; nein
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6 d-flex">
-            Sterbehilfe ausschöpfen &nbsp; &nbsp;&nbsp;
-            <input type="checkbox" value="yes" /> &nbsp; ja &nbsp; &nbsp;
-            <input type="checkbox" value="no" /> &nbsp; nein
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-sm-3">Bemerkungen (intern)</div>
-          <div className="col-sm-9">
-            <textarea className="form-control"></textarea>
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-sm-3">Auswahl Anschreiben</div>
-          <div className="col-sm-9">
-            <select className="form-control">
-              <option value="comments">Bemerkungen (intern)</option>
-              <option value="templates">Template</option>
-              <option value="">Vorlagen</option>
-            </select>
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-sm-8"></div>
-          <div className="col-sm-4">
-            <button className="btn btn" style={{ background: '#d04545', color: 'white' }}>
-              {' '}
+        <div className="row mb-4 mt-4">
+          <div className="col-sm-9"></div>
+          <div className="col-sm-3">
+            <button
+              type="button"
+              className="btn btn"
+              style={{ background: '#d04545', color: 'white' }}
+            >
               Abbrechen
             </button>
             &nbsp; &nbsp;
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              Aktivität hinzufügen
+            <button
+              type="button"
+              style={{ background: '#0b5995', color: 'white' }}
+              className="btn btn"
+            >
+              Speichern Sie
             </button>
           </div>
         </div>

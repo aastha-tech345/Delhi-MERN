@@ -86,6 +86,11 @@
       *         type: string
       */
      router.post('/register', userCtrl.register);
+     router.post('/register/record/adduser/:id', userCtrl.addUser);
+     router.get('/register/record', userCtrl.getData);
+     router.get('/register/record/:id', userCtrl.getRegisterData);
+     router.get('/register/user/record/:id', userCtrl.getUserData);
+     // router.delete('/register/user/record/:id', userCtrl.deleteObjectById);
      
      
      module.exports = router;

@@ -21,14 +21,75 @@ import {
   cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-
+import { AiOutlineMail } from 'react-icons/ai'
+import { Avatar, Badge } from 'antd'
 import avatar8 from './../../assets/images/avatars/8.jpg'
-
+import { Button, Popover } from 'antd'
+import { Link } from 'react-router-dom'
+const content = (
+  <div style={{ width: '220px' }}>
+    <p>Benachrichtigungen</p>
+    <hr />
+    <div className="row">
+      <div className="col-sm-2">
+        <AiOutlineMail style={{ color: 'black' }} />
+      </div>
+      <div className="col-sm-10">
+        <p>
+          Lorem Ipsum ist einfach{' '}
+          <Link style={{ textDecoration: 'none', color: '#015291' }}>
+            Lorem Ipsum ist einfach ei
+          </Link>
+        </p>
+      </div>
+    </div>
+    <hr style={{ marginTop: '-10px' }} />
+    <div className="row">
+      <div className="col-sm-2">
+        <AiOutlineMail style={{ color: 'black' }} />
+      </div>
+      <div className="col-sm-10">
+        <p>
+          Lorem Ipsum ist einfach ein{' '}
+          <Link style={{ textDecoration: 'none', color: '#015291' }}>
+            Lorem Ipsum ist einfach ei
+          </Link>
+        </p>
+      </div>
+    </div>
+    <hr style={{ marginTop: '-10px' }} />
+    <div className="row">
+      <div className="col-sm-2">
+        <AiOutlineMail style={{ color: 'black' }} />
+      </div>
+      <div className="col-sm-10">
+        <p>
+          Lorem Ipsum ist einfach{' '}
+          <Link style={{ textDecoration: 'none', color: '#015291' }}>
+            Lorem Ipsum ist einfach ei
+          </Link>
+        </p>
+      </div>
+    </div>
+  </div>
+)
 const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <CAvatar src={avatar8} size="md" />
+        <div className="d-flex">
+          &nbsp;
+          <Badge count={3}>
+            <Popover content={content}>
+              <CIcon icon={cilBell} style={{ height: '25px', width: '25px', marginTop: '8px' }} />
+            </Popover>
+          </Badge>
+          &nbsp; &nbsp; &nbsp; &nbsp;
+          <div style={{ borderLeft: '0.5px solid gray', height: '40px' }}></div>
+          &nbsp; &nbsp; &nbsp; &nbsp;
+          <CAvatar src={avatar8} size="md" />
+          &nbsp;<span className="text-dark mt-2">Alexandro</span>
+        </div>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>

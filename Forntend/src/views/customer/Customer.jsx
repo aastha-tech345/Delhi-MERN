@@ -9,6 +9,7 @@ import Services from './services/Services'
 import { HiOutlineMail } from 'react-icons/hi'
 import { IoIosCall } from 'react-icons/io'
 import { ImLocation2 } from 'react-icons/im'
+import Attorney from './attorney/Attorney'
 
 function Customer() {
   const [activeTab, setActiveTab] = useState('nav-home')
@@ -95,7 +96,7 @@ function Customer() {
               onClick={() => handleTabClick('nav-aufgaben')}
               style={{ marginRight: '60px' }}
             >
-              Aufgaben
+              Aktivitat
             </button>
             <button
               className={`nav-link ${activeTab === 'nav-rechnungen' ? 'active' : ''}`}
@@ -108,7 +109,7 @@ function Customer() {
               onClick={() => handleTabClick('nav-rechnungen')}
               style={{ marginRight: '60px' }}
             >
-              Rechnungen
+              Dokumente
               {/* //bills */}
             </button>
             <button
@@ -122,7 +123,7 @@ function Customer() {
               onClick={() => handleTabClick('nav-beschreibung')}
               style={{ marginRight: '60px' }}
             >
-              Beschreibung
+              Vollmachten
               {/* //Description */}
             </button>
             <button
@@ -136,7 +137,7 @@ function Customer() {
               onClick={() => handleTabClick('nav-dokumente')}
               style={{ marginRight: '60px' }}
             >
-              Dokumente
+              SPV
               {/* //documents */}
             </button>
             <button
@@ -150,7 +151,7 @@ function Customer() {
               onClick={() => handleTabClick('nav-leistungen')}
               style={{ marginRight: '60px' }}
             >
-              Leistungen
+              Rechnung
               {/* services */}
             </button>
           </div>
@@ -178,7 +179,7 @@ function Customer() {
             role="tabpanel"
             aria-labelledby="nav-aufgaben-tab"
           >
-            <Tasks />
+            <Description />
           </div>
           <div
             className={`tab-pane fade ${activeTab === 'nav-rechnungen' ? 'show active' : ''}`}
@@ -186,7 +187,7 @@ function Customer() {
             role="tabpanel"
             aria-labelledby="nav-rechnungen-tab"
           >
-            <Bills />
+            <Document />
           </div>
           <div
             className={`tab-pane fade ${activeTab === 'nav-beschreibung' ? 'show active' : ''}`}
@@ -194,7 +195,7 @@ function Customer() {
             role="tabpanel"
             aria-labelledby="nav-beschreibung-tab"
           >
-            <Description />
+            <Attorney />
           </div>
           <div
             className={`tab-pane fade ${activeTab === 'nav-dokumente' ? 'show active' : ''}`}
@@ -202,7 +203,7 @@ function Customer() {
             role="tabpanel"
             aria-labelledby="nav-dokumente-tab"
           >
-            <Document />
+            <Services />
           </div>
           <div
             className={`tab-pane fade ${activeTab === 'nav-leistungen' ? 'show active' : ''}`}
@@ -210,7 +211,7 @@ function Customer() {
             role="tabpanel"
             aria-labelledby="nav-leistungen-tab"
           >
-            <Services />
+            <Bills />
           </div>
         </div>
         <hr />

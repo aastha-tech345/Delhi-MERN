@@ -6,84 +6,13 @@ import { MdAdd, MdDelete } from 'react-icons/md'
 import { GrEdit } from 'react-icons/gr'
 import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'NAME',
-    dataIndex: 'name',
-  },
-  {
-    title: 'E-Mail Adresse',
-    dataIndex: 'emailAddress', // Change 'email address' to 'emailAddress'
-  },
-  {
-    title: 'Super Verwalter',
-    dataIndex: 'superVerwalter', // Change 'super verwalter' to 'superVerwalter'
-  },
-  {
-    title: 'AKTION',
-    dataIndex: 'action',
-    render: () => (
-      <>
-        <GrEdit />
-        &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-        <MdDelete />
-        Löschen
-      </>
-    ),
-  },
-]
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    emailAddress: 'john@example.com', // Adjust to a valid email address
-    superVerwalter: 'Yes',
-    action: 'Edit', // Provide appropriate action value
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    emailAddress: 'jim@example.com', // Adjust to a valid email address
-    superVerwalter: 'No',
-    action: 'Delete', // Provide appropriate action value
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    emailAddress: 'joe@example.com', // Adjust to a valid email address
-    superVerwalter: 'Yes',
-    action: 'View', // Provide appropriate action value
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    emailAddress: 'disabled@example.com', // Adjust to a valid email address
-    superVerwalter: 'No',
-    action: 'Activate', // Provide appropriate action value
-  },
-]
-
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
-    name: record.name,
-  }),
-}
 
 export default function CreateUser() {
+  const [record, setRecord] = useState([])
+  const [user_email, setUserEmail] = useState()
+  const apiUrl = process.env.REACT_APP_API_URL
+  const [user_name, setUserName] = useState()
+  const [roll, setRoll] = useState()
   const [selectionType, setSelectionType] = useState('checkbox')
   const [showInviteUserModal, setShowInviteUserModal] = useState(false)
   const [show, setShow] = useState(false)
@@ -96,7 +25,7 @@ export default function CreateUser() {
   const handleShow = () => setShow(true)
 
   const onChange = (checked) => {
-    console.log(`switch to ${checked}`)
+    //console.log(`switch to ${checked}`)
   }
   const handleShowInviteUserModal = () => {
     setShowInviteUserModal(true)
@@ -105,12 +34,159 @@ export default function CreateUser() {
   const handleCloseInviteUserModal = () => {
     setShowInviteUserModal(false)
   }
-  useEffect(() => {
-    handleTabClick('nav-benutzer')
-  }, [])
+  // let value = localStorage.getItem('record')
+  // value = JSON.parse(value)
+  // let id = value.user._id
+  //console.log(id)
+
+  // const saveData = async () => {
+  //   try {
+  //     if (!user_email || !user_name || !roll) {
+  //       return
+  //     }
+
+  //     const data = {
+  //       user_email,
+  //       user_name,
+  //       roll,
+  //     }
+
+  //     const response = await fetch(`${apiUrl}/user/register/record/adduser/${id}`, {
+  //       method: 'post',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
+
+  //     const result = await response.json()
+  //     //console.log(result)
+  //     setUserEmail('')
+  //     setUserName('')
+  //     setRoll('')
+  //     handleCloseInviteUserModal()
+  //     // window.location.reload()
+  //   } catch (error) {
+  //     //console.error('Error:', error)
+  //     alert('An error occurred. Please try again later.')
+  //   }
+  // }
+
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/user/register/record/${id}`)
+  //     const data = await result.json()
+  //     setRecord(data)
+  //     getDetails()
+  //   } catch (error) {
+  //     //console.error('Error fetching customer record:', error)
+  //   }
+  // }
+
+  // let creation = record.user_creation
+  // let data
+  // if (Array.isArray(creation)) {
+  //   data = creation.map((item) => {
+  //     console.log(item.users)
+  //     return item.users
+  //   })
+
+  //   console.log(data)
+  // } else {
+  //   console.log('record.user_creation is not an array or is undefined')
+  // }
+  // console.log(data)
+
+  // useEffect(() => {
+  //   getDetails()
+  //   handleTabClick('nav-benutzer')
+  // }, [])
+
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: '_id',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'NAME',
+      dataIndex: 'user_name',
+    },
+    {
+      title: 'E-Mail Adresse',
+      dataIndex: 'user_email', // Change 'email address' to 'emailAddress'
+    },
+    {
+      title: 'Super Verwalter',
+      dataIndex: 'superVerwalter', // Change 'super verwalter' to 'superVerwalter'
+    },
+    {
+      title: 'AKTION',
+      dataIndex: 'action',
+      render: () => (
+        <>
+          <GrEdit />
+          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+          <MdDelete />
+          Löschen
+        </>
+      ),
+    },
+  ]
+
+  const data = [
+    {
+      _id: '1',
+      user_name: 'John Brown',
+      age: 32,
+      user_email: 'john@example.com', // Adjust to a valid email address
+      superVerwalter: 'Yes',
+      action: 'Edit', // Provide appropriate action value
+    },
+    {
+      _id: '2',
+      user_name: 'Jim Green',
+      age: 42,
+      user_email: 'jim@example.com', // Adjust to a valid email address
+      superVerwalter: 'No',
+      action: 'Delete', // Provide appropriate action value
+    },
+    {
+      _id: '3',
+      user_name: 'Joe Black',
+      age: 32,
+      user_email: 'joe@example.com', // Adjust to a valid email address
+      superVerwalter: 'Yes',
+      action: 'View', // Provide appropriate action value
+    },
+    {
+      _id: '4',
+      user_name: 'Disabled User',
+      age: 99,
+      user_email: 'disabled@example.com', // Adjust to a valid email address
+      superVerwalter: 'No',
+      action: 'Activate', // Provide appropriate action value
+    },
+  ]
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      name: record.name,
+    }),
+  }
   return (
     <>
-      <div className="row shadow m-4 p-4">
+      <div
+        className="row  m-4 p-4"
+        style={{
+          border: '1px solid lightgray',
+          borderRadius: '5px 5px 5px 5px ',
+        }}
+      >
         <div className="col-sm-5">
           <button
             className="btn btn"
@@ -209,14 +285,44 @@ export default function CreateUser() {
                 >
                   <div className="row">
                     <div className="col-sm-6">
-                      <input type="text" placeholder="Name" className="form-control" />
+                      <label>User Name: </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="user_name"
+                        value={user_name}
+                        onChange={(e) => {
+                          setUserName(e.target.value)
+                        }}
+                      />
+
                       <br />
-                      <select className="form-control">
-                        <option value="">Rollen</option>
+                      <br />
+                      <label>Rollen:</label>
+                      <select
+                        className="form-control"
+                        type="text"
+                        name="roll"
+                        value={roll}
+                        onChange={(e) => {
+                          setRoll(e.target.value)
+                        }}
+                      >
+                        <option value="">--select--</option>
+                        <option value="employee">ROllen</option>
                       </select>
                     </div>
                     <div className="col-sm-6">
-                      <input type="text" placeholder="E-Mail Adresse" className="form-control" />
+                      <label>User Email:</label>
+                      <input
+                        className="form-control"
+                        type="email"
+                        name="user_email"
+                        value={user_email}
+                        onChange={(e) => {
+                          setUserEmail(e.target.value)
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -247,6 +353,7 @@ export default function CreateUser() {
               </button>
               <button
                 type="button"
+                // onClick={saveData}
                 style={{ background: '#0b5995', color: 'white' }}
                 className="btn btn"
               >

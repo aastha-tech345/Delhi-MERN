@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import InputGroup from 'react-bootstrap/InputGroup'
+import Row from 'react-bootstrap/Row'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -13,21 +18,30 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
 
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const apiUrl = process.env.REACT_APP_API_URL
+  const navigate = useNavigate()
+  const [validated, setValidated] = useState(false)
 
-  const login = async () => {
+  const login = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
+    setValidated(true)
+
     try {
-      const data = { username, password }
       if (!username || !password) {
         return
       }
 
+      const data = { username, password }
+      console.log(data)
       const response = await fetch(`${apiUrl}/user/login`, {
         method: 'POST',
         headers: {
@@ -38,25 +52,25 @@ const Login = () => {
 
       const result = await response.json()
       console.log(result)
-      const token = result.student.tokens[0].token
-      const role = result.student.role
-
+      const token = result.user.tokens[0].token
+      const role = result.user.role
+      //console.log(record)
       window.localStorage.setItem('token', token)
       window.localStorage.setItem('role', role)
-      // window.localStorage.setItem('result', JSON.stringify(result))
-      // window.sessionStorage.setItem('image', image)
-      // window.localStorage.setItem('id', id)
-      // if (role === 'patient') {
-      //   navigate('/patient/dashboard')
-      //   window.location.reload()
-      // } else if (role === 'doctor') {
-      //   navigate('/doctor/dashboard')
-      //   window.location.reload()
-      // }
+      window.localStorage.setItem('record', result)
+      const resultString = JSON.stringify(result)
+      window.localStorage.setItem('record', resultString)
+
+      navigate('/dashboard')
+      window.location.reload()
     } catch (error) {
       console.error('Error:', error)
       alert('An error occurred. Please try again later.')
     }
+  }
+
+  const registerPage = () => {
+    navigate('/register')
   }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
@@ -66,49 +80,39 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => {
-                          setUsername(e.target.value)
-                        }}
-                        autoComplete="username"
-                      />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        value={password}
-                        onChange={(e) => {
-                          setPassword(e.target.value)
-                        }}
-                        placeholder="Password"
-                        autoComplete="current-password"
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" onClick={login} className="px-4">
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" onClick={login} className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
+                  <Form noValidate validated={validated}>
+                    <Row className="mb-3">
+                      <Form.Group as={Col} md="12" controlId="validationCustom01">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                          value={username}
+                          onChange={(e) => {
+                            setUsername(e.target.value)
+                          }}
+                          required
+                          type="text"
+                          placeholder="First name"
+                          defaultValue="anshika"
+                        />
+                      </Form.Group>
+                    </Row>
+                    <Row className="mb-3">
+                      <Form.Group as={Col} md="12" controlId="validationCustom01">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                          required
+                          value={password}
+                          onChange={(e) => {
+                            setPassword(e.target.value)
+                          }}
+                          type="password"
+                          placeholder="password"
+                          defaultValue="123"
+                        />
+                      </Form.Group>
+                    </Row>
+                    <Button onClick={login}>Login Here</Button>
+                  </Form>
                 </CCardBody>
               </CCard>
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
@@ -119,11 +123,15 @@ const Login = () => {
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                       tempor incididunt ut labore et dolore magna aliqua.
                     </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
+                    <CButton
+                      color="primary"
+                      onClick={registerPage}
+                      className="mt-3"
+                      active
+                      tabIndex={-1}
+                    >
+                      Register Now!
+                    </CButton>
                   </div>
                 </CCardBody>
               </CCard>

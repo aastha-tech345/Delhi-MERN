@@ -7,6 +7,7 @@ import { MdDelete, MdAdd } from 'react-icons/md'
 import { BiFilterAlt } from 'react-icons/bi'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
+import { useParams } from 'react-router-dom'
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -93,36 +94,44 @@ const Contact = () => {
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   const [phone, setPhone] = useState('')
-  const [skype, setSkype] = useState('')
   const [email, setEmail] = useState('')
   const [gender, setGender] = useState('')
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
-
+  const apiUrl = process.env.REACT_APP_API_URL
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const [selectionType] = useState('checkbox')
 
-  const saveData = () => {
-    if (
-      fname.trim().length === 0 ||
-      lname.trim().length === 0 ||
-      phone.trim().length === 0 ||
-      skype.trim().length === 0 ||
-      gender.trim().length === 0
-    ) {
-      setError(true)
+  const saveData = async () => {
+    let data = { fname, lname, phone, email, gender }
+    if (!fname || !lname || !email || !gender || !phone) {
       return
     }
+    try {
+      let response = await fetch(`${apiUrl}/contact/create_contact}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-    let newData = { fname, lname, phone, skype, gender, email }
-    console.log(newData)
-    handleClose() // Close modal after saving data
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      let result = await response.json()
+      console.log(result)
+      handleClose()
+    } catch (error) {
+      console.error('Error during API call:', error)
+    }
   }
 
   return (
     <div>
-      <div className="row m-4 p-4 shadow">
+      <div className="row m-4 p-4" style={{ borderRadius: '5px', border: '1px solid lightgray' }}>
         <div className="col-sm-3">
           <input
             type="search"
@@ -138,12 +147,8 @@ const Contact = () => {
             &nbsp; Filter
           </button>
         </div>
-
-        <div className="col-sm-5">
-          <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-            <AiOutlineMail />
-            &nbsp; Einladung versenden
-          </button>{' '}
+        <div className="col-sm-2"></div>
+        <div className="col-sm-3">
           &nbsp;&nbsp;
           <button
             className="btn btn"
@@ -247,28 +252,6 @@ const Contact = () => {
                     {error && email.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-2 row">
-                  <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                    Skype
-                  </label>
-                  <div className="col-sm-9">
-                    <input
-                      type="text"
-                      value={skype}
-                      onChange={(e) => {
-                        setSkype(e.target.value)
-                      }}
-                      placeholder="Skype"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-                    {error && skype.trim().length === 0 && (
-                      <p style={{ color: 'red' }}>
-                        <BiErrorCircle /> Required
                       </p>
                     )}
                   </div>

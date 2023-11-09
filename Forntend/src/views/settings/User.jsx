@@ -27,7 +27,7 @@ function User() {
               onClick={() => handleTabClick('nav-benutzer')}
               style={{ marginRight: '60px', marginLeft: '20px' }}
             >
-              Benutzer
+              Mitarbeiterlnnen
             </button>
             <button
               className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
@@ -40,18 +40,6 @@ function User() {
               style={{ marginRight: '60px' }}
             >
               Rollen
-            </button>
-            <button
-              className={`nav-link ${activeTab === 'nav-mannschaften' ? 'active' : ''}`}
-              id="nav-mannschaften-tab"
-              data-bs-toggle="tab"
-              role="tab"
-              aria-controls="nav-mannschaften"
-              aria-selected={activeTab === 'nav-mannschaften'}
-              onClick={() => handleTabClick('nav-mannschaften')}
-              style={{ marginRight: '60px' }}
-            >
-              Mannschaften
             </button>
           </div>
         </nav>
@@ -71,14 +59,6 @@ function User() {
             aria-labelledby="nav-rollen-tab"
           >
             <Roll />
-          </div>
-          <div
-            className={`tab-pane fade ${activeTab === 'nav-mannschaften' ? 'show active' : ''}`}
-            id="nav-mannschaften"
-            role="tabpanel"
-            aria-labelledby="nav-mannschaften-tab"
-          >
-            <Teams />
           </div>
         </div>
         <hr />
