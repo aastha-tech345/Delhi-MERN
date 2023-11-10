@@ -110,21 +110,22 @@ export default function PrintTemplate() {
         <div
           className="col-sm-12 ms-3"
           style={{
-            background: 'white',
-            Height: '640px',
-            width: '1210px',
+            // background: 'white',
+            // Height: '640px',
+            // width: '1210px',
             borderRadius: '5px 5px 5px 5px ',
           }}
         >
           <h3 className="ms-1 mt-1">Druckvorlage</h3>
-          <hr />
-          <div
-            style={{
-              border: '1px solid #ebedef',
-              height: '55px',
-              borderRadius: '5px 5px 5px 5px ',
-            }}
+          {/* <hr /> */}
+          <div className="row serchBox text-right"
+            // style={{
+            //   border: '1px solid #ebedef',
+            //   height: '55px',
+            //   borderRadius: '5px 5px 5px 5px ',
+            // }}
           >
+            <div className="col-sm-12">
             <button
               className="btn btn ms-3 mt-2"
               style={{ background: '#0b5995', color: 'white' }}
@@ -132,6 +133,7 @@ export default function PrintTemplate() {
             >
               <MdAdd /> Neue Druckvorlage anlegen
             </button>
+            </div>
             <Modal show={show} onHide={handleClose} centered>
               <Modal.Title className="mt-3 mx-4">Neue E-Mail Vorlage anlegen</Modal.Title>
               <div className="row px-4">

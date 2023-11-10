@@ -1,1 +1,98 @@
 // Here you can add other styles
+.text-right {
+    text-align: right;
+}
+.text-center
+{
+    text-align: center;
+}
+.serchBox {
+    padding: 10px 0px;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin-left: 0px!important;
+    margin-right: 0px!important;
+    border-radius: 4px;
+}
+ .ant-table {
+    background: none;
+}
+ .ant-table th {
+    background: none;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper table {
+    width: 100%;
+    text-align: start;
+    border-radius: 8px 8px 0 0;
+    border-collapse: separate;
+    border-spacing: 0px 8px;
+}
+// tr.ant-table-row.ant-table-row-level-0 {
+//     position: relative;
+// }
+// tr.ant-table-row.ant-table-row-level-0:after {
+//     position: absolute;
+//     content: "";
+//     width: 100%;
+//     border: 1px solid #c4c4c4;
+//     z-index: 1;
+//     left: 0;
+//     border-radius: 4px;
+//      background: red; 
+//     height: 100%;
+// }
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-tbody >tr >td {
+ 
+    background: #fff;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table {
+    background: none;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-container table>thead>tr:first-child >*:first-child {
+    border-start-start-radius: 0px;
+    background: none!important;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-tbody >tr >th, :where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-tbody >tr >td {
+    transition: background 0.2s,border-color 0.2s;
+    border-bottom: 1px solid #c4c4c4;
+    border-top: 1px solid #c4c4c4;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-thead >tr>th{
+    background: none;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-pagination-right {
+    justify-content: flex-start;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-tbody > tr > td:first-child {
+    border-left: 1px solid #c4c4c4;
+    border-radius: 6px 0px 0px 6px;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-tbody > tr > td:last-child {
+    border-right: 1px solid #c4c4c4;
+    border-radius: 0px 6px 6px 0px;
+}
+:where(.css-dev-only-do-not-override-2i2tap).ant-pagination .ant-pagination-disabled .ant-pagination-item-link, :where(.css-dev-only-do-not-override-2i2tap).ant-pagination .ant-pagination-disabled:hover .ant-pagination-item-link {
+    color: rgba(0, 0, 0, 0.25);
+    cursor: not-allowed;
+    background: #fff;
+}
+li.breadcrumb-item.active {
+    color: #015291;
+    text-decoration: none;
+}
+li.breadcrumb-item a {
+    color: #666;
+    text-decoration: none;
+}
+/*popup button footer */
+.modal-footer {
+    text-align: center;
+    display: block;
+}
+.modal-delete {
+    text-align: center;
+}
+.modal-delete .modal-title {
+    text-align: center;
+    margin-top: 40px;
+}

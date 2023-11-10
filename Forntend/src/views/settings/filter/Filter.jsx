@@ -122,19 +122,18 @@ const Filter = () => {
 
   return (
     <div
-      style={{
-        background: 'white',
-        height: '600px',
-        width: '1210px',
-        borderRadius: '5px 5px 5px 5px',
-      }}
+      // style={{
+      //   background: 'white',
+      //   height: '600px',
+      //   width: '1210px',
+      //   borderRadius: '5px 5px 5px 5px',
+      // }}
     >
       <h4 style={{ paddingTop: '6px', paddingLeft: '10px' }}> Filter</h4>
-      <hr />
+      {/* <hr /> */}
       <div>
         <div
-          className="row m-3 p-2"
-          style={{ border: '1px solid #ebedef', height: '55px', borderRadius: '5px 5px 5px 5px ' }}
+          className="row serchBox"          
         >
           <div className="col-sm-3">
             <input
@@ -144,14 +143,14 @@ const Filter = () => {
               className="form-control"
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-2">
             <button className="btn btn text-light" style={{ background: '#0b5995' }}>
               <BiFilterAlt />
               &nbsp; Filter
             </button>
           </div>
 
-          <div className="col-sm-5">
+          <div className="col-sm-7 text-right">
             <button
               className="btn btn"
               style={{ background: '#0b5995', color: 'white', marginLeft: '30px' }}
@@ -348,7 +347,7 @@ const Filter = () => {
           </div>
         </div>
         <div>
-          <Divider />
+          {/* <Divider /> */}
 
           <Table
             rowSelection={{
