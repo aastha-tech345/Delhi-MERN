@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { Schema, model } = require('mongoose');
+const { Schema, model } = mongoose;
+const { roles } = require("../utils/constants");
 
 const usercreationSchema = new Schema({
   user_name: { type: String },
@@ -34,7 +35,12 @@ const notificationSchema = new Schema({
 
 const userSchema = new Schema({
   username: { type: String },
-  email: { type: String },
+  email: {
+    type: String,
+    required: true,
+    lowercase: true,
+    unique: true,
+  },
   password: { type: String },
   mobile: { type: String },
   tokens: [
@@ -45,23 +51,33 @@ const userSchema = new Schema({
       },
     },
   ],
-  role: { type: String },
-  user_creation: [{
+  verifytoken: {
+    type: String,
+  },
+  role: {
+    type: String,
+  },
+  user_creation: {
     users: usercreationSchema,
     password: passwordSchema,
     localization: localizationSchema,
     notification: notificationSchema,
     advanced: advancedSchema,
-  }],
+  },
   parent_id: { type: String },
 });
 
-
 userSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 15);
+  try {
+    if (this.isNew) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(this.password, salt);
+      this.password = hashedPassword;
+    }
+    next(); // Make sure to call next() in all cases
+  } catch (error) {
+    next(error); // Pass the error to the next middleware
   }
-  next();
 });
 
 userSchema.methods.getAuthToken = async function () {
@@ -71,14 +87,12 @@ userSchema.methods.getAuthToken = async function () {
     password: this.password,
     role: this.role,
   };
-  let secretKey = "gdshskfjkdggndh";
-  var tokenValue = jwt.sign(params, secretKey);
+  let keysecret = "gdshskfjkdggndh";
+  var tokenValue = jwt.sign(params, keysecret);
   this.tokens = this.tokens.concat({ token: tokenValue });
   await this.save();
   return tokenValue;
 };
-const User = mongoose.model("user", userSchema, "user");
 
-module.exports = {
-  User,
-};
+const User = model("User", userSchema);
+module.exports = { User };

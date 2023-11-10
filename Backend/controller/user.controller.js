@@ -1,5 +1,8 @@
 const UserModel = require("../models/user.model");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+const keysecret = "asbndjhdjdkflfdghgj";
 
 exports.register = async (req, res) => {
   try {
@@ -23,7 +26,13 @@ exports.register = async (req, res) => {
           password,
           email,
           role,
-          user_creation: [],
+          user_creation: {
+            users: null,
+            password: null,
+            localization: null,
+            notification: null,
+            advanced: null,
+          },
           added_by: null,
           parent_id: admin._id,
         };
@@ -139,71 +148,6 @@ exports.addUser = async (req, res) => {
   }
 };
 
-// exports.deleteUserCreation = async (req, res) => {
-//   try {
-//     const userId = req.params.id;
-//     const userNameToDelete = req.body.user_name;
-
-//     const user = await UserModel.User.findOne({ _id: userId });
-
-//     if (!user) {
-//       return res.status(404).send({ message: "User not found" });
-//     }
-//     if (!Array.isArray(user.user_creation)) {
-//       user.user_creation = [];
-//     }
-//     const indexToDelete = user.user_creation.findIndex(
-//       (item) => item.users.user_name === userNameToDelete
-//     );
-
-//     if (indexToDelete === -1) {
-//       return res.status(404).send({ message: "User creation object not found" });
-//     }
-//     user.user_creation.splice(indexToDelete, 1);
-
-//     const record = await user.save();
-
-//     res.status(200).send(record);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send({ message: "Internal Server Error", error: error.message });
-//   }
-// };
-
-exports.getUserData = async (req, res) => {
-  try {
-    const user = await UserModel.User.findOne({ _id: req.params.id });
-
-    // Check if the user object exists
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-
-    // Extract the 'user_creation' field from the user object
-    const userCreationData = user.user_creation;
-
-    // Send the 'user_creation' field in the response
-    res.send(userCreationData);
-  } catch (error) {
-    // Handle errors appropriately
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-};
-
-// exports.deleteObjectById = (req, res) => {
-//   const objectIdToDelete = req.params.id;
-//   const indexToDelete = dataArray.findIndex(
-//     (obj) => obj.users._id === objectIdToDelete
-//   );
-//   if (indexToDelete !== -1) {
-//     const deletedObject = dataArray.splice(indexToDelete, 1);
-//     res.json({ message: "Object deleted successfully", deletedObject });
-//   } else {
-//     res.status(404).json({ message: "Object not found" });
-//   }
-// };
-
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -235,5 +179,174 @@ exports.login = async (req, res) => {
     return res.status(500).send({
       message: "An error occurred",
     });
+  }
+};
+
+// exports.forgotPassword = async (req, res) => {
+//   try {
+//     const { email } = req.body;
+//     const user = await UserModel.User.findOne({ email });
+
+//     if (!user) {
+//       return res.send({ Status: "User not existed" });
+//     }
+
+//     const transporter = nodemailer.createTransport({
+//       service: 'gmail',
+//       port: 587,
+//       secure: false,
+//       auth: {
+//         user: 'aasthamodanwal.dl@gmail.com',
+//         pass: 'lnip qeej usrx hgca',
+//       },
+//     });
+
+//     // Define email options
+//     const mailOptions = {
+//       from: 'aasthamodanwal.dl@gmail.com',
+//       to: 'aasthamodanwal5662@gmail.com',
+//       subject:"Sending Email For password Reset",
+//       html:`This Link Valid For 2 MINUTES http://localhost:4142/user/forgot-password/${userfind.id}/${setusertoken.verifytoken}`
+//     };
+
+//     // Send the email
+//     transporter.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.error('Error sending email:', error);
+//       } else {
+//         console.log('Email sent:', info.response);
+//       }
+//     });
+//     // res.send({
+//     //   token:token,
+//     //   user
+//     // })
+//   } catch (error) {
+//     console.error("Error in forgotPassword controller:", error);
+//     return res.status(500).send({ Status: "Internal Server Error" });
+//   }
+// };
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "aasthamodanwal.dl@gmail.com",
+    pass: "lnip qeej usrx hgca",
+  },
+});
+
+exports.forgotPassword = async (req, res) => {
+  console.log(req.body);
+
+  const { email } = req.body;
+
+  if (!email) {
+    return res
+      .status(400)
+      .json({ status: 400, message: "Please provide your email" });
+  }
+
+  try {
+    const userFind = await UserModel.User.findOne({ email: email });
+
+    if (!userFind) {
+      return res.status(404).json({ status: 404, message: "User not found" });
+    }
+
+    // Generate a token for password reset
+    const token = jwt.sign({ _id: userFind._id }, keysecret, {
+      expiresIn: "120s",
+    });
+
+    // Update the user document with the generated token
+    const setUserToken = await UserModel.User.findByIdAndUpdate(
+      { _id: userFind._id },
+      { verifytoken: token },
+      { new: true }
+    );
+
+    if (!setUserToken) {
+      return res
+        .status(500)
+        .json({ status: 500, message: "Failed to update user token" });
+    }
+
+    // Compose the email message
+    const mailOptions = {
+      from: "aasthamodanwal.dl@gmail.com",
+      to: email,
+      subject: "Password Reset",
+      html: `Click on the following link to reset your password: <a href="http://localhost:3000/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`,
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email", error);
+        return res.status(500).json({ status: 500, message: "Email not sent" });
+      } else {
+        console.log("Email sent successfully", info.response);
+        return res
+          .status(200)
+          .json({ status: 200, message: "Email sent successfully" });
+      }
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res
+      .status(500)
+      .json({ status: 500, message: "Internal Server Error" });
+  }
+};
+exports.forgotPasswordVerification = async (req, res) => {
+  const { id, token } = req.params;
+
+  try {
+    const validuser = await UserModel.User.findOne({
+      _id: id,
+      verifytoken: token,
+    });
+
+    const verifyToken = jwt.verify(token, keysecret);
+
+    console.log(verifyToken);
+
+    if (validuser && verifyToken._id) {
+      res.status(201).json({ status: 201, validuser });
+    } else {
+      res.status(401).json({ status: 401, message: "user not exist" });
+    }
+  } catch (error) {
+    res.status(401).json({ status: 401, error });
+  }
+};
+
+exports.changePassword = async (req, res) => {
+  const { id, token } = req.params;
+
+  const { password } = req.body;
+
+  try {
+    const validuser = await UserModel.User.findOne({ _id: id, verifytoken: token });
+
+    const verifyToken = jwt.verify(token, keysecret);
+
+    if (validuser && verifyToken._id) {
+      const newpassword = await bcrypt.hash(password, 12);
+
+      const setnewuserpass = await UserModel.User.findByIdAndUpdate(
+        { _id: id },
+        { password: newpassword }
+      );
+
+      setnewuserpass.save();
+      res.status(201).json({ status: 201, setnewuserpass });
+    } else {
+      res.status(401).json({ status: 401, message: "user not exist" });
+    }
+  } catch (error) {
+    res.status(401).json({ status: 401, error });
   }
 };

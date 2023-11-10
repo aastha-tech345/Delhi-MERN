@@ -72,6 +72,10 @@ const Login = () => {
   const registerPage = () => {
     navigate('/register')
   }
+
+  const forgetPassword = () => {
+    navigate('/password-reset')
+  }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -111,7 +115,12 @@ const Login = () => {
                         />
                       </Form.Group>
                     </Row>
-                    <Button onClick={login}>Login Here</Button>
+                    <div className="d-flex">
+                      <Button onClick={login}>Login Here</Button>&nbsp;&nbsp;&nbsp;
+                      <p color="primary" onClick={forgetPassword} className="mt-3" tabIndex={-1}>
+                        Register Now!
+                      </p>
+                    </div>
                   </Form>
                 </CCardBody>
               </CCard>

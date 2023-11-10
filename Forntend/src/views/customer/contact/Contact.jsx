@@ -7,7 +7,6 @@ import { MdDelete, MdAdd } from 'react-icons/md'
 import { BiFilterAlt } from 'react-icons/bi'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
-import { useParams } from 'react-router-dom'
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -109,7 +108,7 @@ const Contact = () => {
       return
     }
     try {
-      let response = await fetch(`${apiUrl}/contact/create_contact}`, {
+      let response = await fetch(`${apiUrl}/customer/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
