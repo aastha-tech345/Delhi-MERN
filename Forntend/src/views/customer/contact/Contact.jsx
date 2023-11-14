@@ -102,14 +102,15 @@ const Contact = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const [selectionType] = useState('checkbox')
-
+  const params = useParams()
+  console.log(params.id)
   const saveData = async () => {
     let data = { fname, lname, phone, email, gender }
     if (!fname || !lname || !email || !gender || !phone) {
       return
     }
     try {
-      let response = await fetch(`${apiUrl}/contact/create_contact}`, {
+      let response = await fetch(`${apiUrl}/contact/create_contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -145,7 +145,7 @@ export default function PrintTemplate() {
                 </div>
               </div>
               <div className="row px-4">
-                <label>Nachricht</label>
+                <label>Inhalt</label>
                 <div className="col-sm-12">
                   <JoditEditor
                     ref={editor}
@@ -166,7 +166,7 @@ export default function PrintTemplate() {
                   Abbrechen
                 </button>
                 <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-                  einreichen
+                  Speichern
                 </button>
               </Modal.Footer>
             </Modal>
