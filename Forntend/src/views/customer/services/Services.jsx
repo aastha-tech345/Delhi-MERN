@@ -492,11 +492,6 @@ export default function Services() {
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
               </div>
-              <div className="col-sm-3">Hinterlegung</div>
-              <div className="col-sm-2 d-flex">
-                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
-                <input type="checkbox" /> &nbsp; nein
-              </div>
             </div>
           </div>
         </div>

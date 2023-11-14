@@ -23,16 +23,16 @@ const billSchema = new mongoose.Schema({
 });
 
 const deliverySchema = new mongoose.Schema({
-  fname: { type: String },
-  lname: { type: String },
-  address: { type: String },
-  ort: { type: String },
-  land: { type: String },
-  plz: { type: String },
-  email: { type: String },
-  phone: { type: String },
-  mobile: { type: String },
-  alreadyPaid: { type: String },
+  delivery_fname: { type: String },
+  delivery_lname: { type: String },
+  delivery_address: { type: String },
+  delivery_ort: { type: String },
+  delivery_land: { type: String },
+  delivery_plz: { type: String },
+  delivery_email: { type: String },
+  delivery_phone: { type: String },
+  delivery_mobile: { type: String },
+  delivery_alreadyPaid: { type: String },
 });
 
 const depositSchema = new mongoose.Schema({

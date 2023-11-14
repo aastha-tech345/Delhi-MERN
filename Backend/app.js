@@ -13,10 +13,10 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-const userRoute = require('./routes/user.route');
-const roleRoute = require('./routes/role.route');
-const teamRoute = require('./routes/team.route');
-const coutomerRoute = require('./routes/customer.route');
+const userRoute = require('./routes/user.route.js');
+const roleRoute = require('./routes/role.route.js');
+const teamRoute = require('./routes/team.route.js');
+const coutomerRoute = require('./routes/customer.route.js');
 const customerInfo = require('./routes/customerInfo.route.js')
 const contact = require('./routes/contact.route.js')
 const activity = require('./routes/activity.route.js')

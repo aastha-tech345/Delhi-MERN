@@ -51,7 +51,7 @@ export default function Roll() {
               <Modal.Body>
                 <input type="text" placeholder="Name" className="form-control" />
                 <h5 className="mt-2 fw-bold">Berechtigungen</h5>
-                <h5 className="mt-3 fw-bold">Textbausteine</h5>
+                <h5 className="mt-3 fw-bold">Druckvorlage</h5>
                 <div className="row">
                   <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
                   <div className="col-sm-5"></div>

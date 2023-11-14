@@ -4,7 +4,6 @@ import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { Link } from 'react-router-dom'
-import '../../scss/_custom.scss'
 
 export default function CustomerList() {
   const [selectionType, setSelectionType] = useState('checkbox')
@@ -52,41 +51,41 @@ export default function CustomerList() {
     }),
   }
 
-  // const saveData = async () => {
-  //   let data = { fname, lname, street, city, phone, plz, email, land, dob }
-  //   if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
-  //     return
-  //   }
-  //   try {
-  //     let response = await fetch(`${apiUrl}/customer/create`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
+  const saveData = async () => {
+    let data = { fname, lname, street, city, phone, plz, email, land, dob }
+    if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
+      return
+    }
+    try {
+      let response = await fetch(`${apiUrl}/customer/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`)
-  //     }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
 
-  //     let result = await response.json()
-  //     console.log(result)
-  //     handleClose()
-  //   } catch (error) {
-  //     console.error('Error during API call:', error)
-  //   }
-  // }
+      let result = await response.json()
+      console.log(result)
+      handleClose()
+    } catch (error) {
+      console.error('Error during API call:', error)
+    }
+  }
 
-  // const getDetails = async () => {
-  //   try {
-  //     const result = await fetch(`${apiUrl}/customer/get_record`)
-  //     const data = await result.json()
-  //     setCustomerRecord(data)
-  //   } catch (error) {
-  //     console.error('Error fetching customer record:', error)
-  //   }
-  // }
+  const getDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/customer/get_record`)
+      const data = await result.json()
+      setCustomerRecord(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
 
   const columns = [
     {
@@ -127,45 +126,19 @@ export default function CustomerList() {
       ),
     },
   ]
-  const data = [
-    {
-      fname: 'John Doe',
-      _id: '12345',
-      email: 'john@example.com',
-      phone: '555-1234',
-      status: 'Active',
-      // You might have more attributes depending on your use case
-    },
-    {
-      fname: 'John Doe',
-      _id: '12345',
-      email: 'john@example.com',
-      phone: '555-1234',
-      status: 'Active',
-      // You might have more attributes depending on your use case
-    },
-    {
-      fname: 'John Doe',
-      _id: '12345',
-      email: 'john@example.com',
-      phone: '555-1234',
-      status: 'Active',
-      // You might have more attributes depending on your use case
-    },
-  ]
 
-  // useEffect(() => {
-  //   getDetails()
-  // }, [])
+  useEffect(() => {
+    getDetails()
+  }, [])
 
-  // let data = customer_record
+  let data = customer_record
 
   return (
     <>
       <div>
         <h5 style={{ fontWeight: 'bold' }}>Kunden-Listen</h5>
-        <div className="row serchBox">
-          <div className="col-sm-4">
+        <div className="row m-4 p-4  shadow" style={{ background: 'white', borderRadius: '5px' }}>
+          <div className="col-sm-3">
             <input
               type="search"
               id="form1"
@@ -173,12 +146,12 @@ export default function CustomerList() {
               className="form-control"
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-6">
             <button className="btn btn text-light" style={{ background: '#0b5995' }}>
-            <i><svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" id="filter"><g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><g stroke="#fff" stroke-width="2" transform="translate(-1614 -1629)"><g transform="translate(1615 1630)"><path d="M20 0H0l8 9.46V16l4 2V9.46z"></path></g></g></g></svg></i>  Filter
+              filter
             </button>
           </div>
-          <div className="col-sm-4 text-right">
+          <div className="col-sm-3">
             <button
               className="btn btn"
               style={{ background: '#0b5995', color: 'white' }}
@@ -327,7 +300,7 @@ export default function CustomerList() {
                 </button>
                 <button
                   className="btn btn"
-                  // onClick={saveData}
+                  onClick={saveData}
                   style={{ background: '#0b5995', color: 'white' }}
                 >
                   Einreichen
@@ -347,10 +320,10 @@ export default function CustomerList() {
         />
 
         {/* Delete Modal */}
-        <Modal show={isModalVisible} className="modal-delete" onHide={handleDeleteCancel} centered>
+        <Modal show={isModalVisible} onHide={handleDeleteCancel} centered>
           <Modal.Title>
             <svg
-              style={{  marginTop: '50px' }}
+              style={{ marginLeft: '200px', marginTop: '50px' }}
               width="44"
               height="53"
               viewBox="0 0 44 53"
@@ -384,7 +357,7 @@ export default function CustomerList() {
             </svg>
             <br />
             <br />
-            <h4 className="text-center" style={{  color: 'black' }}>Sind Sie sicher?</h4>
+            <h4 style={{ marginLeft: '150px', color: 'black' }}>Sind Sie sicher?</h4>
           </Modal.Title>
           <Modal.Body>
             <p style={{ textAlign: 'center' }}>

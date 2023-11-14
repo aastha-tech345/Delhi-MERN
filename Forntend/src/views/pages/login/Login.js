@@ -20,7 +20,7 @@ import {
 } from '@coreui/react'
 
 const Login = () => {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const apiUrl = process.env.REACT_APP_API_URL
   const navigate = useNavigate()
@@ -36,11 +36,11 @@ const Login = () => {
     setValidated(true)
 
     try {
-      if (!username || !password) {
+      if (!email || !password) {
         return
       }
 
-      const data = { username, password }
+      const data = { email, password }
       console.log(data)
       const response = await fetch(`${apiUrl}/user/login`, {
         method: 'POST',
@@ -72,6 +72,10 @@ const Login = () => {
   const registerPage = () => {
     navigate('/register')
   }
+
+  const forgetPassword = () => {
+    navigate('/password-reset')
+  }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -85,13 +89,13 @@ const Login = () => {
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
                         <Form.Label>Username</Form.Label>
                         <Form.Control
-                          value={username}
+                          value={email}
                           onChange={(e) => {
-                            setUsername(e.target.value)
+                            setEmail(e.target.value)
                           }}
                           required
-                          type="text"
-                          placeholder="First name"
+                          type="email"
+                          placeholder="Enter Your Email Id"
                           defaultValue="anshika"
                         />
                       </Form.Group>
@@ -111,7 +115,12 @@ const Login = () => {
                         />
                       </Form.Group>
                     </Row>
-                    <Button onClick={login}>Login Here</Button>
+                    <div className="d-flex">
+                      <Button onClick={login}>Login Here</Button>&nbsp;&nbsp;&nbsp;
+                      <p color="primary" onClick={forgetPassword} className="mt-3" tabIndex={-1}>
+                        Register Now!
+                      </p>
+                    </div>
                   </Form>
                 </CCardBody>
               </CCard>
