@@ -41,3 +41,32 @@ exports.createInvoice = async (req, res) => {
     res.status(500).json({ error: "An error occurred while creating invoice" });
   }
 };
+
+exports.getInvoice = async(req,res)=>{
+  const result = await InvoiceInfomation.Invoice.find()
+  res.send(result)
+}
+
+exports.getInvoiceData = async(req,res)=>{
+  const result = await InvoiceInfomation.Invoice.findOne({_id:req.params.id})
+  res.send(result)
+}
+
+exports.getInvoiceDataUpdate = async(req,res)=>{
+  const result = await InvoiceInfomation.Invoice.updateOne({_id:req.params.id},{$set:req.body})
+  res.send(result)
+}
+
+exports.getInvoiceDataDelete = async(req,res)=>{
+  const result = await InvoiceInfomation.Invoice.deleteOne({_id:req.params.id})
+  res.send(result)
+}
+
+exports.getInvoiceSearch = async(req,res)=>{
+  const result = await InvoiceInfomation.Invoice.find({
+    "$or":[
+      {fname:{$regex:req.params.key}}
+    ]
+  })
+  res.send(result)
+}

@@ -31,7 +31,31 @@ exports.createActivity = async (req, res) => {
 };
 
 
+exports.getActivity = async(req,res)=>{
+  const result = await ActivityInfomation.Activity.find()
+  res.send(result)
+}
+
 exports.getActivityData = async(req,res)=>{
   const result = await ActivityInfomation.Activity.findOne({_id:req.params.id})
+  res.send(result)
+}
+
+exports.getActivityDataUpdate = async(req,res)=>{
+  const result = await ActivityInfomation.Activity.updateOne({_id:req.params.id},{$set:req.body})
+  res.send(result)
+}
+
+exports.getActivityDataDelete = async(req,res)=>{
+  const result = await ActivityInfomation.Activity.deleteOne({_id:req.params.id})
+  res.send(result)
+}
+
+exports.getActivitySearch = async(req,res)=>{
+  const result = await ActivityInfomation.Activity.find({
+    "$or":[
+      {administration:{$regex:req.params.key}}
+    ]
+  })
   res.send(result)
 }

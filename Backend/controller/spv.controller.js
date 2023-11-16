@@ -49,3 +49,33 @@ exports.createSpv = async (req, res) => {
     res.status(500).json({ error: "An error occurred while creating spv" });
   }
 };
+
+exports.getSpv = async(req,res)=>{
+  const result = await SpvInfomation.SpvInfo.find()
+  res.send(result)
+}
+
+exports.getSpvData = async(req,res)=>{
+  const result = await SpvInfomation.SpvInfo.findOne({_id:req.params.id})
+  res.send(result)
+}
+
+exports.getSpvDataUpdate = async(req,res)=>{
+  const result = await SpvInfomation.SpvInfo.updateOne({_id:req.params.id},{$set:req.body})
+  res.send(result)
+}
+
+exports.getSpvDataDelete = async(req,res)=>{
+  const result = await SpvInfomation.SpvInfo.deleteOne({_id:req.params.id})
+  res.send(result)
+}
+
+
+exports.getSpvSearch = async(req,res)=>{
+  const result = await SpvInfomation.SpvInfo.find({
+    "$or":[
+      {fname:{$regex:req.params.key}}
+    ]
+  })
+  res.send(result)
+}

@@ -37,9 +37,37 @@ exports.createAttorney = async (req, res) => {
   }
 };
 
-exports.getActivityData = async (req, res) => {
-  const result = await ActivityInfomation.Activity.findOne({
+exports.getAttorney = async (req, res) => {
+  const result = await AttorneyInformation.Attorney.find();
+  res.send(result);
+};
+
+exports.getAttorneyData = async (req, res) => {
+  const result = await AttorneyInformation.Attorney.findOne({
     _id: req.params.id,
   });
   res.send(result);
 };
+
+exports.getAttorneyDataUpdate = async (req, res) => {
+  const result = await AttorneyInformation.Attorney.UpdateOne({
+    _id: req.params.id,
+  },{$set:req.body});
+  res.send(result);
+};
+
+exports.getAttorneyDataDelete = async (req, res) => {
+  const result = await AttorneyInformation.Attorney.deleteOne({
+    _id: req.params.id,
+  });
+  res.send(result);
+};
+
+exports.getAttorneySearch = async(req,res)=>{
+  const result = await AttorneyInformation.Attorney.find({
+    "$or":[
+      {administration:{$regex:req.params.key}}
+    ]
+  })
+  res.send(result)
+}
