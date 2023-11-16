@@ -55,3 +55,32 @@ exports.createCustomerInfo = async (req, res) => {
       .json({ error: 'An error occurred while creating customerInfo' });
   }
 };
+
+exports.getCustomerInfo = async (req, res) => {
+  const result = await CustomerModel.Customer.find();
+  res.send(result);
+};
+
+exports.getCustomerData = async (req, res) => {
+  const result = await CustomerModel.Customer.findOne({_id:req.params.body});
+  res.send(result);
+};
+
+exports.getCustomerDataUpdate = async (req, res) => {
+  const result = await CustomerModel.Customer.updateOne({_id:req.params.body},{$set:req.body});
+  res.send(result);
+};
+
+exports.getCustomerDataDelate = async (req, res) => {
+  const result = await CustomerModel.Customer.deleteOne({_id:req.params.body});
+  res.send(result);
+};
+
+exports.getCustomerInfoSearch = async(req,res)=>{
+  const result = await CustomerModel.Customer.find({
+    "$or":[
+      {fname:{$regex:req.params.key}}
+    ]
+  })
+  res.send(result)
+}

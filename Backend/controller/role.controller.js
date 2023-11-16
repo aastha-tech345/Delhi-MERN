@@ -15,3 +15,23 @@ exports.roleCreation = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while creating the role' });
   }
 };
+
+exports.getRole = async(req,res)=>{
+  const result = await roleModel.Role.find()
+  res.send(result)
+}
+
+exports.getRoleData = async(req,res)=>{
+  const result = await roleModel.Role.findOne({_id:req.params.id})
+  res.send(result)
+}
+
+exports.getRoleDataUpdate = async(req,res)=>{
+  const result = await roleModel.Role.updateOne({_id:req.params.id},{$set:req.body})
+  res.send(result)
+}
+
+exports.getRoleDataDelete = async(req,res)=>{
+  const result = await roleModel.Role.deleteOne({_id:req.params.id})
+  res.send(result)
+}
