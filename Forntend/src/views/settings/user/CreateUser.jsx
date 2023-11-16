@@ -187,7 +187,7 @@ export default function CreateUser() {
           borderRadius: '5px 5px 5px 5px ',
         }}
       >
-        <div className="col-sm-7">
+        <div className="col-sm-5">
           <button
             className="btn btn"
             onClick={handleShowInviteUserModal}
@@ -357,7 +357,7 @@ export default function CreateUser() {
                 style={{ background: '#0b5995', color: 'white' }}
                 className="btn btn"
               >
-                Einladung versenden
+                Speichern
               </button>
             </Modal.Footer>
           </Modal>
@@ -442,16 +442,16 @@ export default function CreateUser() {
             </Modal.Footer>
           </Modal>
         </div>
-        <div className="col-sm-4">
+        <div className="col-sm-3">
           <input type="search" id="form1" placeholder="Suche" className="form-control" />
         </div>
-        <div className="col-sm-1">
+        <div className="col-sm-4">
           <button type="button" className="btn btn text-light" style={{ background: '#0b5995' }}>
             <AiFillSetting />
           </button>
         </div>
       </div>
-      <div className="row ">
+      <div className="row card p-4 m-4">
         {/* <Radio.Group
           onChange={({ target: { value } }) => {
             setSelectionType(value)

@@ -56,7 +56,7 @@ const Bills = () => {
         <div className="col-sm-6">
           <div className="mb-6 row">
             <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-              bereits bezahlt
+              Bereits bezahlt
             </label>
             <div className="col-sm-6 mt-2">
               <input type="checkbox" />

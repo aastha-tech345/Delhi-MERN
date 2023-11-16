@@ -52,7 +52,10 @@ export default function Description() {
             Abbrechen
           </button>
           &nbsp; &nbsp;
-          <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
+          <button
+            className="btn btn"
+            style={{ background: '#0b5995', color: 'white', marginLeft: '100px' }}
+          >
             Aktivität hinzufügen
             {/* Add activity */}
           </button>
@@ -123,11 +126,12 @@ export default function Description() {
           <div className="col-sm-8"></div>
           <div className="col-sm-4">
             <button className="btn btn" style={{ background: '#d04545', color: 'white' }}>
-              {' '}
               Abbrechen
             </button>
-            &nbsp; &nbsp;
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
+            <button
+              className="btn btn"
+              style={{ background: '#0b5995', color: 'white', marginLeft: '100px' }}
+            >
               Aktivität hinzufügen
               {/* Add activity */}
             </button>

@@ -4,6 +4,37 @@ import React, { useState } from 'react'
 const CustomerInfo = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const [created_by, setCreatedBy] = useState()
+  const [ordered_question, setOrderQuestion] = useState()
+  const [extras, setExtras] = useState()
+  const [newsletter, setNewsletter] = useState()
+  const [newsletter_subscription, setNewsletterSubscription] = useState()
+  const [statu, setStatu] = useState()
+  const [those, setThose] = useState()
+  const [salution, setSolution] = useState()
+  const [gender, setGender] = useState()
+  const [fname, setFname] = useState()
+  const [lname, setLname] = useState()
+  const [dob, setDob] = useState()
+  const [address, setAddress] = useState()
+  const [ort, setOrt] = useState()
+  const [land, setLand] = useState()
+  const [plz, setPlz] = useState()
+  const [delivery_fname, setDeliveryFname] = useState()
+  const [delivery_lname, setDeliveryLname] = useState()
+  const [delivery_address, setDeliveryAddress] = useState()
+  const [delivery_ort, setDeliveryOrt] = useState()
+  const [delivery_land, setDeliveryLand] = useState()
+  const [delivery_plz, setDeliveryPlz] = useState()
+  const [delivery_email, setDeliveryEmail] = useState()
+  const [spv_deposit, setSpvDeposit] = useState()
+  const [opv_deposit, setOpvDeposit] = useState()
+  const [hvd_deposit, setHvdDeposit] = useState()
+  const [start_date, setStartDate] = useState()
+  const [last_stamp, setLastStamp] = useState()
+  const [return_last_stamp, setReturnStamp] = useState()
+  const [emergency_pass, setEmergencyPass] = useState()
+  const [memory, setMemory] = useState()
+
   const saveData = async () => {
     if (!created_by) {
       return
@@ -96,10 +127,10 @@ const CustomerInfo = () => {
                   <option>HVD-PV</option>
                   <option>SPV alt</option>
                   <option>OPV alt</option>
-                  <option>Dauerspender*in</option>
-                  <option>Hinterlegende*r</option>
+                  <option>Dauerspenderlnner</option>
+                  <option>Hinterlegende</option>
                   <option>Materialbestellung</option>
-                  <option>Newsletter-Abonnent*in</option>
+                  <option>Newsletter Abonnent</option>
                   <option>offen</option>
                 </select>
               </div>
@@ -114,10 +145,10 @@ const CustomerInfo = () => {
                   <option>MitarbeiterInnen</option>
                   <option>SPV alt</option>
                   <option>OPV alt</option>
-                  <option>Dauerspender*in</option>
-                  <option>Hinterlegende*r</option>
+                  <option>Dauerspenderlnner</option>
+                  <option>Hinterlegende</option>
                   <option>Materialbestellung</option>
-                  <option>Newsletter-Abonnent*in</option>
+                  <option>Newsletter Abonnent</option>
                   <option>offen</option>
                 </select>
               </div>
@@ -173,6 +204,15 @@ const CustomerInfo = () => {
             <br />
             <div className="mb-6 row">
               <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                Titel
+              </label>
+              <div className="col-sm-6">
+                <input type="text" className="form-control" placeholder="title" />
+              </div>
+            </div>
+            <br />
+            <div className="mb-6 row">
+              <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                 Anrede
               </label>
               <div className="col-sm-6">
@@ -202,23 +242,18 @@ const CustomerInfo = () => {
               </div>
             </div>
             <br />
+            <div></div>
+          </div>
+          <div className="col-sm-6">
+            <br />
             <div className="mb-6 row">
               <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                 Geburtsdatum
               </label>
               <div className="col-sm-6">
-                <select className="form-control">
-                  <option>Geburtsdatum</option>
-                  <option>Herr</option>
-                  <option>Fray</option>
-                  <option>Divers</option>
-                </select>
+                <input type="date" className="form-control" />
               </div>
             </div>
-            <br />
-            <div></div>
-          </div>
-          <div className="col-sm-6">
             <br />
             <div className="mb-6 row">
               <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
@@ -231,7 +266,7 @@ const CustomerInfo = () => {
                   <input type="radio" id="inputPassword" />
                   &nbsp;Weiblich&nbsp;
                   <input type="radio" id="inputPassword" />
-                  &nbsp;Andere
+                  &nbsp;Divers
                 </div>
               </div>
             </div>
@@ -365,15 +400,6 @@ const CustomerInfo = () => {
               </label>
               <div className="col-sm-6">
                 <input type="date" className="form-control" id="inputPassword" />
-              </div>
-            </div>
-            <div className="mb-5 row">
-              <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                Bereits bezahlt
-              </label>
-              <div className="col-sm-6">
-                <input type="checkbox" /> &nbsp;ja&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" /> &nbsp;nain&nbsp;
               </div>
             </div>
           </div>

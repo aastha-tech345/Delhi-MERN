@@ -95,11 +95,6 @@ export default function Services() {
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
               </div>
-              <div className="col-sm-3">Keine Intensivmedizin</div>
-              <div className="col-sm-2 d-flex">
-                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
-                <input type="checkbox" /> &nbsp; nein
-              </div>
               <div className="col-sm-3">Schwerstpflegebedurftigkeit</div>
               <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
@@ -321,18 +316,6 @@ export default function Services() {
                 }}
               >
                 <p>Kontaktangaben</p>
-                <input
-                  type="date"
-                  default
-                  style={{
-                    borderRadius: '5px 5px 5px 5px',
-                    paddingLeft: '10px',
-                    height: '40px',
-                    width: '200px',
-                    border: '1px solid #ebedef',
-                  }}
-                />
-
                 <div className="row">
                   <div className="col-sm-6 mb-3">
                     <div className=" row mt-2">
@@ -488,11 +471,6 @@ export default function Services() {
             </div>
             <div className="row mt-3 mb-5 ">
               <div className="col-sm-3">Datenschutz</div>
-              <div className="col-sm-2 d-flex">
-                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
-                <input type="checkbox" /> &nbsp; nein
-              </div>
-              <div className="col-sm-3">Hinterlegung</div>
               <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein

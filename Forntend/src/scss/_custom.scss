@@ -1,4 +1,6 @@
 // Here you can add other styles
+// Here you can add other styles
+// Here you can add other styles
 .text-right {
     text-align: right;
 }
@@ -6,6 +8,7 @@
 {
     text-align: center;
 }
+/**/
 .serchBox {
     padding: 10px 0px;
     border: 1px solid #ccc;
@@ -76,6 +79,9 @@
     cursor: not-allowed;
     background: #fff;
 }
+:where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-thead >tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before, :where(.css-dev-only-do-not-override-2i2tap).ant-table-wrapper .ant-table-thead >tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    width: 0px;
+}
 li.breadcrumb-item.active {
     color: #015291;
     text-decoration: none;
@@ -95,4 +101,90 @@ li.breadcrumb-item a {
 .modal-delete .modal-title {
     text-align: center;
     margin-top: 40px;
+}
+.mobalFooter.modal-footer {
+    text-align: center;
+    display: block;
+}
+.deleteIcon {
+    text-align: center;
+    margin: 30px auto 30px;
+}
+h4.h4Popup
+{
+    text-align: center;
+    margin: 20px autos;
+}
+.card  {
+    background: white;
+    border-radius: 12px;
+    padding-top: 20px;
+    border: 0;
+}
+
+/*Nav tab blue under line*/
+.tabBlueLine.nav-tabs .nav-link{
+    color: #898989;  
+}
+.tabBlueLine.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus
+
+{    
+    border: 0;
+    border-bottom: 3px solid #0b5995;
+    color:  #0b5995;
+}
+.tabBlueLine.nav-tabs .nav-link
+i.fa-solid.fa-info.fa-fw {
+    border: 1px solid #898989;
+    border-radius: 100%;
+    padding: 2px 4px;
+    color: #898989;
+    width: 20px;
+    height: 20px;
+}
+.tabBlueLine.nav-tabs .nav-link.active
+i.fa-solid.fa-info.fa-fw {
+    border: 1px solid #0b5995;
+    border-radius: 100%;
+    padding: 2px 4px;
+    color: #0b5995;
+    width: 20px;
+    height: 20px;
+}
+.tabBlueLine.nav-tabs .nav-link
+i {
+    margin-right: 6px;
+}
+
+/*new css 16-11-2023*/
+.ant-table-wrapper table.ant-table-wrapper .ant-table-tbody >tr >td:first-child {
+     border-radius: 6px 0px 0px 6px;
+     border-left: 1px solid #f0f0f0;
+}
+.ant-table-wrapper table.ant-table-wrapper .ant-table-tbody >tr >td:last-child {
+    border-radius: 0px 6px 6px 0px;
+    border-right: 1px solid #f0f0f0;
+}
+.ant-table-wrapper table.ant-table-wrapper .ant-table-tbody >tr >td {
+    transition: background 0.2s,border-color 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+    border-top: 1px solid #f0f0f0;
+}
+.ant-table-wrapper table {
+    border-collapse: separate;
+    border-spacing: 0px 8px;
+}
+
+.ant-table-wrapper table.ant-table-wrapper .ant-table-thead >tr>th, .ant-table-wrapper table.ant-table-wrapper .ant-table-thead >tr>td {
+    background: none;
+    border-bottom: 0px solid #f0f0f0;
+    transition: background 0.2s ease;
+}
+.ant-table-wrapper table.ant-table-wrapper .ant-table-pagination-right {
+    justify-content: flex-start;
+}
+.ant-table-wrapper table.ant-pagination .ant-pagination-prev, .ant-table-wrapper table.ant-pagination .ant-pagination-next {
+
+    border: 1px solid #f0f0f0;
 }

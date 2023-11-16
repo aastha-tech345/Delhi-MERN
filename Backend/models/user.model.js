@@ -94,5 +94,5 @@ userSchema.methods.getAuthToken = async function () {
   return tokenValue;
 };
 
-const User = model("User", userSchema);
+const User = model("users", userSchema);
 module.exports = { User };

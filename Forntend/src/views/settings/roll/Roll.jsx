@@ -179,7 +179,71 @@ export default function Roll() {
                     </Dropdown>
                   </div>
                 </div>
-                <h5 className="mt-3 fw-bold">Benutzer erstellen</h5>
+                <h5 className="mt-3 fw-bold">Mitarbeiterlnnen</h5>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['3'],
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space>
+                          Nur im Besitz
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['3'],
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space>
+                          Nur im Besitz
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['3'],
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space>
+                          Nur im Besitz
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['3'],
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space style={{ marginLeft: '15px' }}>
+                          Widerrufen
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                  </div>
+                </div>
+                <h5 className="mt-3 fw-bold">Klientlnnen</h5>
                 <div className="row">
                   <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
                   <div className="col-sm-5"></div>

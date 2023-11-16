@@ -7,6 +7,7 @@ import { MdDelete, MdAdd } from 'react-icons/md'
 import { BiFilterAlt } from 'react-icons/bi'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
+import { useParams } from 'react-router-dom'
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -101,14 +102,15 @@ const Contact = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const [selectionType] = useState('checkbox')
-
+  const params = useParams()
+  console.log(params.id)
   const saveData = async () => {
     let data = { fname, lname, phone, email, gender }
     if (!fname || !lname || !email || !gender || !phone) {
       return
     }
     try {
-      let response = await fetch(`${apiUrl}/customer/create`, {
+      let response = await fetch(`${apiUrl}/contact/create_contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

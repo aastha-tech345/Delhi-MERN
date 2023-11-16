@@ -27,3 +27,32 @@ exports.createDocument = async (req, res) => {
     res.status(500).json({ error: "An error occurred while creating document" });
   }
 };
+
+exports.getDocument = async(req,res)=>{
+  const result = await DocumentInfo.Document.find()
+  res.send(result)
+}
+
+exports.getDocumentData = async(req,res)=>{
+  const result = await DocumentInfo.Document.findOne({_id:req.params.id})
+  res.send(result)
+}
+
+exports.getDocumentDataUpdate = async(req,res)=>{
+  const result = await DocumentInfo.Document.updateOne({_id:req.params.id},{$set:req.body})
+  res.send(result)
+}
+
+exports.getDocumentDataDelete = async(req,res)=>{
+  const result = await DocumentInfo.Document.deleteOne({_id:req.params.id})
+  res.send(result)
+}
+
+exports.getDocumentSearch = async(req,res)=>{
+  const result = await DocumentInfo.Document.find({
+    "$or":[
+      {fname:{$regex:req.params.key}}
+    ]
+  })
+  res.send(result)
+}

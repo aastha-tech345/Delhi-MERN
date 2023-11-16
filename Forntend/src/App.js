@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
+// import './scss/_custom.scss'
 
 const loading = (
   <div className="pt-3 text-center">

@@ -150,15 +150,15 @@ exports.addUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password) {
+    if (!email || !password) {
       return res
         .status(400)
         .send({ message: "Please fill in all the details" });
     }
 
-    let user = await UserModel.User.findOne({ username }).maxTimeMS(20000);
+    let user = await UserModel.User.findOne({ email }).maxTimeMS(20000);
 
     if (user) {
       let validPassword = await bcrypt.compare(password, user.password);
@@ -342,7 +342,7 @@ exports.changePassword = async (req, res) => {
       );
 
       setnewuserpass.save();
-      res.status(201).json({ status: 201, setnewuserpass });
+      res.status(201).json({ status: 200, setnewuserpass });
     } else {
       res.status(401).json({ status: 401, message: "user not exist" });
     }
