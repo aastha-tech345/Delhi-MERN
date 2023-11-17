@@ -1,5 +1,5 @@
-import { CCol, CRow } from '@coreui/react'
 import React, { useState } from 'react'
+import Select from 'react-select'
 
 const CustomerInfo = () => {
   const apiUrl = process.env.REACT_APP_API_URL
@@ -34,6 +34,21 @@ const CustomerInfo = () => {
   const [return_last_stamp, setReturnStamp] = useState()
   const [emergency_pass, setEmergencyPass] = useState()
   const [memory, setMemory] = useState()
+
+  const options = [
+    { value: '0', label: 'HVD-PV' },
+    { value: '1', label: 'SPV alt' },
+    { value: '2', label: 'OPV alt' },
+    { value: '3', label: 'Dauerspenderlnner' },
+    {
+      label: 'Backend',
+      options: [
+        { value: '4', label: 'Materialbestellung' },
+        { value: '5', label: 'Newsletter Abonnent' },
+        { value: '6', label: 'Offen' },
+      ],
+    },
+  ]
 
   const saveData = async () => {
     if (!created_by) {
@@ -123,16 +138,7 @@ const CustomerInfo = () => {
                 Status
               </label>
               <div className="col-sm-6">
-                <select className="form-control">
-                  <option>HVD-PV</option>
-                  <option>SPV alt</option>
-                  <option>OPV alt</option>
-                  <option>Dauerspenderlnner</option>
-                  <option>Hinterlegende</option>
-                  <option>Materialbestellung</option>
-                  <option>Newsletter Abonnent</option>
-                  <option>offen</option>
-                </select>
+                <Select className="form-multi-select" id="ms1" isMulti options={options} />
               </div>
             </div>
             <br />
@@ -141,18 +147,23 @@ const CustomerInfo = () => {
                 MitarbeiterInnen
               </label>
               <div className="col-sm-6">
-                <select className="form-control">
-                  <option>MitarbeiterInnen</option>
-                  <option>SPV alt</option>
-                  <option>OPV alt</option>
-                  <option>Dauerspenderlnner</option>
-                  <option>Hinterlegende</option>
-                  <option>Materialbestellung</option>
-                  <option>Newsletter Abonnent</option>
-                  <option>offen</option>
+                <select
+                  className="form-control"
+                  name="employeeType"
+                  defaultValue="MitarbeiterInnen"
+                >
+                  <option value="MitarbeiterInnen">MitarbeiterInnen</option>
+                  <option value="SPV alt">SPV alt</option>
+                  <option value="OPV alt">OPV alt</option>
+                  <option value="Dauerspenderlnner">Dauerspenderlnner</option>
+                  <option value="Hinterlegende">Hinterlegende</option>
+                  <option value="Materialbestellung">Materialbestellung</option>
+                  <option value="Newsletter Abonnent">Newsletter Abonnent</option>
+                  <option value="offen">offen</option>
                 </select>
               </div>
             </div>
+
             <div></div>
           </div>
           <div className="col-sm-6">
@@ -408,17 +419,11 @@ const CustomerInfo = () => {
         <p style={{ color: 'blue' }}>Hinterlegung</p>
         <div className="row">
           <div className="col-sm-4">
+            Hinterlegung &nbsp;&nbsp;
             <input type="checkbox" />
-            &nbsp;&nbsp; SPV - Hinterlegung
           </div>
-          <div className="col-sm-4">
-            <input type="checkbox" />
-            &nbsp;&nbsp; OPV - Hinterlegung
-          </div>
-          <div className="col-sm-4">
-            <input type="checkbox" />
-            &nbsp;&nbsp; HVD - Hinterlegung
-          </div>
+          <div className="col-sm-4"></div>
+          <div className="col-sm-4"></div>
         </div>
         <br />
         <div className="row">
@@ -527,4 +532,4 @@ const CustomerInfo = () => {
   )
 }
 
-export default CustomerInfo
+export default React.memo(CustomerInfo)

@@ -42,7 +42,7 @@ const userSchema = new Schema({
     unique: true,
   },
   password: { type: String },
-  mobile: { type: String },
+  mobile: { type: String  },
   tokens: [
     {
       token: {

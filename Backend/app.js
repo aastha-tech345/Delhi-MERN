@@ -53,9 +53,6 @@ app.get("/*", function(req, res, next) {
   res.sendFile(INDEX);
 });
 
-app.get('/', (req, res) => {
-  res.send("dhsfdhg");
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

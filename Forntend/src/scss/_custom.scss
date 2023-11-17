@@ -1,6 +1,5 @@
 // Here you can add other styles
 // Here you can add other styles
-// Here you can add other styles
 .text-right {
     text-align: right;
 }
@@ -155,36 +154,4 @@ i.fa-solid.fa-info.fa-fw {
 .tabBlueLine.nav-tabs .nav-link
 i {
     margin-right: 6px;
-}
-
-/*new css 16-11-2023*/
-.ant-table-wrapper table.ant-table-wrapper .ant-table-tbody >tr >td:first-child {
-     border-radius: 6px 0px 0px 6px;
-     border-left: 1px solid #f0f0f0;
-}
-.ant-table-wrapper table.ant-table-wrapper .ant-table-tbody >tr >td:last-child {
-    border-radius: 0px 6px 6px 0px;
-    border-right: 1px solid #f0f0f0;
-}
-.ant-table-wrapper table.ant-table-wrapper .ant-table-tbody >tr >td {
-    transition: background 0.2s,border-color 0.2s;
-    border-bottom: 1px solid #f0f0f0;
-    border-top: 1px solid #f0f0f0;
-}
-.ant-table-wrapper table {
-    border-collapse: separate;
-    border-spacing: 0px 8px;
-}
-
-.ant-table-wrapper table.ant-table-wrapper .ant-table-thead >tr>th, .ant-table-wrapper table.ant-table-wrapper .ant-table-thead >tr>td {
-    background: none;
-    border-bottom: 0px solid #f0f0f0;
-    transition: background 0.2s ease;
-}
-.ant-table-wrapper table.ant-table-wrapper .ant-table-pagination-right {
-    justify-content: flex-start;
-}
-.ant-table-wrapper table.ant-pagination .ant-pagination-prev, .ant-table-wrapper table.ant-pagination .ant-pagination-next {
-
-    border: 1px solid #f0f0f0;
 }

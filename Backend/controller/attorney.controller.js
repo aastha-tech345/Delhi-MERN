@@ -6,10 +6,14 @@ exports.createAttorney = async (req, res) => {
     const { healthcare, power, provision, securing, added_by } = req.body;
 
     // Find the customer with the specified conditions
-    const user = await CustomerModel.Customer.findOne({ created_by: "customer" });
+    const user = await CustomerModel.Customer.findOne({
+      created_by: "customer",
+    });
 
     if (!user) {
-      return res.status(400).json({ message: "No customer found to link as parent" });
+      return res
+        .status(400)
+        .json({ message: "No customer found to link as parent" });
     }
 
     // Create a new Attorney instance
@@ -32,20 +36,33 @@ exports.createAttorney = async (req, res) => {
     });
   } catch (error) {
     console.error("Error creating attorney:", error);
-    res.status(500).json({ error: "An error occurred while creating attorney" });
+    res
+      .status(500)
+      .json({ error: "An error occurred while creating attorney" });
   }
 };
 
 exports.getAttorney = async (req, res) => {
-  const result = await AttorneyInformation.Attorney.find();
-  res.send(result);
+  try {
+    const result = await AttorneyInformation.Attorney.find();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
 };
 
 exports.getAttorneyData = async (req, res) => {
-  const result = await AttorneyInformation.Attorney.findOne({
-    _id: req.params.id,
-  });
-  res.send(result);
+  try {
+    const result = await AttorneyInformation.Attorney.findOne({
+      _id: req.params.id,
+    });
+    if (!result) {
+      return res.status(404).send({ error: "Attorney not found" });
+    }
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
 };
 
 exports.getAttorneyDataUpdate = async (req, res) => {
@@ -62,17 +79,23 @@ exports.getAttorneyDataUpdate = async (req, res) => {
 };
 
 exports.getAttorneyDataDelete = async (req, res) => {
-  const result = await AttorneyInformation.Attorney.deleteOne({
-    _id: req.params.id,
-  });
-  res.send(result);
+  try {
+    const result = await AttorneyInformation.Attorney.deleteOne({
+      _id: req.params.id,
+    });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
 };
 
-exports.getAttorneySearch = async(req,res)=>{
-  const result = await AttorneyInformation.Attorney.find({
-    "$or":[
-      {administration:{$regex:req.params.key}}
-    ]
-  })
-  res.send(result)
-}
+exports.getAttorneySearch = async (req, res) => {
+  try {
+    const result = await AttorneyInformation.Attorney.find({
+      $or: [{ administration: { $regex: req.params.key } }],
+    });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+};

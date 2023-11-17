@@ -7,7 +7,7 @@ import { GrEdit } from 'react-icons/gr'
 import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
 
-export default function CreateUser() {
+const CreateUser = () => {
   const [record, setRecord] = useState([])
   const [user_email, setUserEmail] = useState()
   const apiUrl = process.env.REACT_APP_API_URL
@@ -39,68 +39,68 @@ export default function CreateUser() {
   let id = value.user._id
   //console.log(id)
 
-  const saveData = async () => {
-    try {
-      if (!user_email || !user_name || !roll) {
-        return
-      }
+  // const saveData = async () => {
+  //   try {
+  //     if (!user_email || !user_name || !roll) {
+  //       return
+  //     }
 
-      const data = {
-        user_email,
-        user_name,
-        roll,
-      }
+  //     const data = {
+  //       user_email,
+  //       user_name,
+  //       roll,
+  //     }
 
-      const response = await fetch(`${apiUrl}/user/register/record/adduser/${id}`, {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+  //     const response = await fetch(`${apiUrl}/user/register/record/adduser/${id}`, {
+  //       method: 'post',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
 
-      const result = await response.json()
-      //console.log(result)
-      setUserEmail('')
-      setUserName('')
-      setRoll('')
-      handleCloseInviteUserModal()
-      // window.location.reload()
-    } catch (error) {
-      //console.error('Error:', error)
-      alert('An error occurred. Please try again later.')
-    }
-  }
+  //     const result = await response.json()
+  //     //console.log(result)
+  //     setUserEmail('')
+  //     setUserName('')
+  //     setRoll('')
+  //     handleCloseInviteUserModal()
+  //     // window.location.reload()
+  //   } catch (error) {
+  //     //console.error('Error:', error)
+  //     alert('An error occurred. Please try again later.')
+  //   }
+  // }
 
-  const getDetails = async () => {
-    try {
-      const result = await fetch(`${apiUrl}/user/register/record/${id}`)
-      const data = await result.json()
-      setRecord(data)
-      getDetails()
-    } catch (error) {
-      //console.error('Error fetching customer record:', error)
-    }
-  }
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/user/register/record/${id}`)
+  //     const data = await result.json()
+  //     setRecord(data)
+  //     getDetails()
+  //   } catch (error) {
+  //     //console.error('Error fetching customer record:', error)
+  //   }
+  // }
 
-  let creation = record.user_creation
-  let data
-  if (Array.isArray(creation)) {
-    data = creation.map((item) => {
-      console.log(item.users)
-      return item.users
-    })
+  // let creation = record.user_creation
+  // let data
+  // if (Array.isArray(creation)) {
+  //   data = creation.map((item) => {
+  //     console.log(item.users)
+  //     return item.users
+  //   })
 
-    console.log(data)
-  } else {
-    console.log('record.user_creation is not an array or is undefined')
-  }
-  console.log(data)
+  //   console.log(data)
+  // } else {
+  //   console.log('record.user_creation is not an array or is undefined')
+  // }
+  // console.log(data)
 
-  useEffect(() => {
-    getDetails()
-    handleTabClick('nav-benutzer')
-  }, [])
+  // useEffect(() => {
+  //   getDetails()
+  //   handleTabClick('nav-benutzer')
+  // }, [])
 
   const columns = [
     {
@@ -134,40 +134,32 @@ export default function CreateUser() {
     },
   ]
 
-  // const data = [
-  //   {
-  //     key: '1',
-  //     name: 'John Brown',
-  //     age: 32,
-  //     emailAddress: 'john@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'Yes',
-  //     action: 'Edit', // Provide appropriate action value
-  //   },
-  //   {
-  //     key: '2',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     emailAddress: 'jim@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'No',
-  //     action: 'Delete', // Provide appropriate action value
-  //   },
-  //   {
-  //     key: '3',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     emailAddress: 'joe@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'Yes',
-  //     action: 'View', // Provide appropriate action value
-  //   },
-  //   {
-  //     key: '4',
-  //     name: 'Disabled User',
-  //     age: 99,
-  //     emailAddress: 'disabled@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'No',
-  //     action: 'Activate', // Provide appropriate action value
-  //   },
-  // ]
+  const data = [
+    {
+      _id: '1',
+      user_name: 'John Brown',
+      age: 32,
+      emailAddress: 'john@example.com', // Adjust to a valid email address
+      superVerwalter: 'Yes',
+      action: 'Edit', // Provide appropriate action value
+    },
+    {
+      _id: '2',
+      user_name: 'Jim Green',
+      age: 42,
+      emailAddress: 'jim@example.com', // Adjust to a valid email address
+      superVerwalter: 'No',
+      action: 'Delete', // Provide appropriate action value
+    },
+    {
+      _id: '3',
+      user_name: 'Joe Black',
+      age: 32,
+      emailAddress: 'joe@example.com', // Adjust to a valid email address
+      superVerwalter: 'Yes',
+      action: 'View', // Provide appropriate action value
+    },
+  ]
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -353,7 +345,7 @@ export default function CreateUser() {
               </button>
               <button
                 type="button"
-                onClick={saveData}
+                // onClick={saveData}
                 style={{ background: '#0b5995', color: 'white' }}
                 className="btn btn"
               >
@@ -477,3 +469,5 @@ export default function CreateUser() {
     </>
   )
 }
+
+export default React.memo(CreateUser)

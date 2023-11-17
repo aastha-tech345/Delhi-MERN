@@ -4,8 +4,9 @@ import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
-export default function CustomerList() {
+const CustomerList = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
@@ -21,6 +22,8 @@ export default function CustomerList() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [show, setShow] = useState(false)
+
+  //console.log('aastha', phone)
   // eslint-disable-next-line no-undef
   const handleClose = () => setShow(false)
   // eslint-disable-next-line no-undef
@@ -56,20 +59,16 @@ export default function CustomerList() {
     if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
       return
     }
-    try {
-      let response = await fetch(`${apiUrl}/customer/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
 
-      if (!response.ok) {
+    try {
+      let response = await axios.post(`${apiUrl}/customer/create`, data)
+
+      if (response.status !== 200) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
 
-      let result = await response.json()
+      let result = response.data
+      getDetails()
       console.log(result)
       handleClose()
     } catch (error) {
@@ -79,8 +78,8 @@ export default function CustomerList() {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/customer/get_record`)
-      const data = await result.json()
+      const response = await axios.get(`${apiUrl}/customer/get_record`)
+      const data = response?.data
       setCustomerRecord(data)
     } catch (error) {
       console.error('Error fetching customer record:', error)
@@ -221,12 +220,16 @@ export default function CustomerList() {
                     <input
                       value={phone}
                       onChange={(e) => {
-                        setPhone(e.target.value)
+                        const inputValue = e.target.value.replace(/[^0-9]/g, '')
+                        setPhone(inputValue)
                       }}
-                      type="number"
+                      type="tel"
                       placeholder="Telefon"
                       className="form-control"
-                      id="inputPassword"
+                      id="inputTelephone"
+                      maxLength={10}
+                      minLength={3}
+                      required={true}
                     />
                   </div>
                 </div>
@@ -386,3 +389,5 @@ export default function CustomerList() {
     </>
   )
 }
+
+export default React.memo(CustomerList)

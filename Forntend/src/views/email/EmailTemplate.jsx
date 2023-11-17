@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react'
 import JoditEditor from 'jodit-react'
 
-export default function EmailTemplate() {
+const EmailTemplate = () => {
   const editor = useRef(null)
   const [content, setContent] = useState('')
   const placeholder = `Hallo {{ activity.user }}
@@ -105,3 +105,5 @@ export default function EmailTemplate() {
     </>
   )
 }
+
+export default React.memo(EmailTemplate)

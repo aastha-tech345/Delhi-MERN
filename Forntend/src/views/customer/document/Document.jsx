@@ -66,7 +66,7 @@ const rowSelection = {
   }),
 }
 
-export default function Document() {
+const Document = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
   const [show, setShow] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
@@ -179,3 +179,5 @@ export default function Document() {
     </>
   )
 }
+
+export default React.memo(Document)

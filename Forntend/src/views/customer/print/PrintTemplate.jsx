@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 
-export default function PrintTemplate() {
+const PrintTemplate = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
@@ -247,3 +247,5 @@ export default function PrintTemplate() {
     </>
   )
 }
+
+export default React.memo(PrintTemplate)

@@ -36,7 +36,7 @@ const Register = () => {
       })
       let result = await response.json()
       window.localStorage.setItem('student', JSON.stringify(result))
-      navigate('/login')
+      navigate('/')
     } catch (error) {
       console.error('Error:', error)
       alert('An error occurred. Please try again later.')
@@ -102,8 +102,9 @@ const Register = () => {
                       }}
                     >
                       <option>--select--</option>
+                      <option value="admin">Admin</option>
+                      <option value="user">User</option>
                       <option value="customer">Customer</option>
-                      <option value="empolyee">Empolyee</option>
                     </select>
                   </CInputGroup>
                   <div className="d-grid">
@@ -121,7 +122,7 @@ const Register = () => {
   )
 }
 
-export default Register
+export default React.memo(Register)
 
 // import React, { useState } from 'react'
 // import Button from 'react-bootstrap/Button'

@@ -29,7 +29,6 @@ exports.teamCreation = async (req, res) => {
       description,
       ...defaultValues,
     };
-
     const userInstance = new teamModel.Teams(userData);
     const result = await userInstance.save();
 

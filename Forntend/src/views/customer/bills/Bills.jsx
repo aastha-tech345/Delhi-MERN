@@ -56,7 +56,7 @@ const Bills = () => {
         <div className="col-sm-6">
           <div className="mb-6 row">
             <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-              Bereits bezahlt
+              bereits bezahlt
             </label>
             <div className="col-sm-6 mt-2">
               <input type="checkbox" />
@@ -83,4 +83,4 @@ const Bills = () => {
     </div>
   )
 }
-export default Bills
+export default React.memo(Bills)

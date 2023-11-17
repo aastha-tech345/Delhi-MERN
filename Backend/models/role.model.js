@@ -20,4 +20,4 @@ const Role = mongoose.model('Role', roleSchema, 'role');
 
 module.exports = {
     Role
-};
+}

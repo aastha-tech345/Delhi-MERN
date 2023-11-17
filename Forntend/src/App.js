@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
-// import './scss/_custom.scss'
+import './scss/_custom.scss'
 
 const loading = (
   <div className="pt-3 text-center">
@@ -31,7 +31,7 @@ const App = () => {
           <Route path="/404" element={<Page404 />} />
           <Route path="/500" element={<Page500 />} />
           <Route path="/password-reset" element={<ResetPassword />} />
-          <Route path="/forgotpassword/:id/:token" element={<ForgotPassword />}></Route>
+          <Route path="/forgotpassword/:id/:token" element={<ForgotPassword />} />
           {hasToken && <Route path="*" element={<DefaultLayout />} />}
         </Routes>
       </Suspense>
@@ -39,7 +39,7 @@ const App = () => {
   )
 }
 
-export default App
+export default React.memo(App)
 
 // import React, { Component, Suspense } from 'react'
 // import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'

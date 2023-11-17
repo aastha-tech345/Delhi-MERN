@@ -11,7 +11,7 @@ import { IoIosCall } from 'react-icons/io'
 import { ImLocation2 } from 'react-icons/im'
 import Attorney from './attorney/Attorney'
 
-function Customer() {
+const Customer = () => {
   const [activeTab, setActiveTab] = useState('nav-home')
 
   const handleTabClick = (tabId) => {
@@ -220,4 +220,4 @@ function Customer() {
   )
 }
 
-export default Customer
+export default React.memo(Customer)
