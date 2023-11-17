@@ -136,7 +136,7 @@ export default function PrintTemplate() {
               <Modal.Title className="mt-3 mx-4">Neue E-Mail Vorlage anlegen</Modal.Title>
               <div className="row px-4">
                 <div className="col-sm-12">
-                  <label>Thema</label>
+                  <label>Bezeichnung</label>
                   <input
                     type="text"
                     className="form-control"

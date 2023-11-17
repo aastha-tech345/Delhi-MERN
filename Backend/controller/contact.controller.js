@@ -43,31 +43,56 @@ exports.createContact = async (req, res) => {
 
 
 exports.getContact = async (req, res) => {
-  const result = await ContactInfomation.Contact.find();
-  res.send(result);
+  try {
+    const result = await ContactInfomation.Contact.find();
+    res.send(result);
+  } catch (error) {
+    console.error("Error fetching contact data:", error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 exports.getContactData = async (req, res) => {
-  const result = await ContactInfomation.Contact.findOne({_id:req.params.body});
-  res.send(result);
+  try {
+    const result = await ContactInfomation.Contact.findOne({ _id: req.params.id });
+    res.send(result);
+  } catch (error) {
+    console.error("Error fetching contact data:", error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 exports.getContactDataUpdate = async (req, res) => {
-  const result = await ContactInfomation.Contact.updateOne({_id:req.params.body},{$set:req.body});
-  res.send(result);
+  try {
+    const result = await ContactInfomation.Contact.updateOne({ _id: req.params.id }, { $set: req.body });
+    res.send(result);
+  } catch (error) {
+    console.error("Error updating contact data:", error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
-exports.getContactDataDelate = async (req, res) => {
-  const result = await ContactInfomation.Contact.deleteOne({_id:req.params.body});
-  res.send(result);
-}
+exports.getContactDataDelete = async (req, res) => {
+  try {
+    const result = await ContactInfomation.Contact.deleteOne({ _id: req.params.id });
+    res.send(result);
+  } catch (error) {
+    console.error("Error deleting contact data:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 
-exports.getContactSearch = async(req,res)=>{
-  const result = await ContactInfomation.Contact.find({
-    "$or":[
-      {fname:{$regex:req.params.key}},
-      {lname:{$regex:req.params.key}}
-    ]
-  })
-  res.send(result)
-}
+exports.getContactSearch = async (req, res) => {
+  try {
+    const result = await ContactInfomation.CustomerContact.find({
+      "$or": [
+        { fname: { $regex: req.params.key, $options: 'i' } },
+        { lname: { $regex: req.params.key, $options: 'i' } }
+      ]
+    });
+    res.send(result);
+  } catch (error) {
+    console.error("Error searching for contact info:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};

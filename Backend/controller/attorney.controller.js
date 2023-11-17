@@ -3,37 +3,36 @@ const CustomerModel = require("../models/customer.model");
 
 exports.createAttorney = async (req, res) => {
   try {
-    const { healthcare, power, provision, securing, customer_id, added_by } =
-      req.body;
+    const { healthcare, power, provision, securing, added_by } = req.body;
 
-    const user = await CustomerModel.Customer.findOne({
-      created_by: "customer",
-    });
+    // Find the customer with the specified conditions
+    const user = await CustomerModel.Customer.findOne({ created_by: "customer" });
+
     if (!user) {
-      return res
-        .status(400)
-        .send({ message: "No customer found to link as parent" });
+      return res.status(400).json({ message: "No customer found to link as parent" });
     }
+
+    // Create a new Attorney instance
     const attorney = new AttorneyInformation.Attorney({
-        healthcare,
-        power,
-        provision,
-        securing,
-        customer_id,
-        added_by,
+      healthcare,
+      power,
+      provision,
+      securing,
+      added_by,
       customer_id: user._id,
+      created_by: "customer", // Assuming you want to set created_by to "customer"
     });
 
+    // Save the attorney record to the database
     const result = await attorney.save();
+
     res.status(201).json({
-      message: "attorney was created",
+      message: "Attorney was created",
       result,
     });
   } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while creating attorney" });
+    console.error("Error creating attorney:", error);
+    res.status(500).json({ error: "An error occurred while creating attorney" });
   }
 };
 
@@ -50,10 +49,16 @@ exports.getAttorneyData = async (req, res) => {
 };
 
 exports.getAttorneyDataUpdate = async (req, res) => {
-  const result = await AttorneyInformation.Attorney.UpdateOne({
-    _id: req.params.id,
-  },{$set:req.body});
-  res.send(result);
+  try {
+    const result = await AttorneyInformation.Attorney.updateOne(
+      { _id: req.params.id },
+      { $set: req.body }
+    );
+    res.send(result);
+  } catch (error) {
+    console.error("Error updating attorney data:", error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 exports.getAttorneyDataDelete = async (req, res) => {

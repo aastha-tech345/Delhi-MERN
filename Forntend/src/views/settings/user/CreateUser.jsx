@@ -357,7 +357,7 @@ export default function CreateUser() {
                 style={{ background: '#0b5995', color: 'white' }}
                 className="btn btn"
               >
-                Einladung versenden
+                Speichern
               </button>
             </Modal.Footer>
           </Modal>

@@ -156,7 +156,7 @@ export default function Document() {
                   onClick={saveData}
                   style={{ background: '#0b5995', color: 'white' }}
                 >
-                  Aktivität hinzufügen
+                  Speichern
                 </button>
               </div>
             </Modal.Footer>

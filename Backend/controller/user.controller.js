@@ -342,7 +342,7 @@ exports.changePassword = async (req, res) => {
       );
 
       setnewuserpass.save();
-      res.status(201).json({ status: 201, setnewuserpass });
+      res.status(201).json({ status: 200, setnewuserpass });
     } else {
       res.status(401).json({ status: 401, message: "user not exist" });
     }
