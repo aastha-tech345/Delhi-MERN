@@ -34,73 +34,73 @@ export default function CreateUser() {
   const handleCloseInviteUserModal = () => {
     setShowInviteUserModal(false)
   }
-  let value = localStorage.getItem('record')
-  value = JSON.parse(value)
-  let id = value.user._id
-  //console.log(id)
+  // let value = localStorage.getItem('record')
+  // value = JSON.parse(value)
+  // let id = value.user._id
+  // //console.log(id)
 
-  const saveData = async () => {
-    try {
-      if (!user_email || !user_name || !roll) {
-        return
-      }
+  // const saveData = async () => {
+  //   try {
+  //     if (!user_email || !user_name || !roll) {
+  //       return
+  //     }
 
-      const data = {
-        user_email,
-        user_name,
-        roll,
-      }
+  //     const data = {
+  //       user_email,
+  //       user_name,
+  //       roll,
+  //     }
 
-      const response = await fetch(`${apiUrl}/user/register/record/adduser/${id}`, {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+  //     const response = await fetch(`${apiUrl}/user/register/record/adduser/${id}`, {
+  //       method: 'post',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
 
-      const result = await response.json()
-      //console.log(result)
-      setUserEmail('')
-      setUserName('')
-      setRoll('')
-      handleCloseInviteUserModal()
-      // window.location.reload()
-    } catch (error) {
-      //console.error('Error:', error)
-      alert('An error occurred. Please try again later.')
-    }
-  }
+  //     const result = await response.json()
+  //     //console.log(result)
+  //     setUserEmail('')
+  //     setUserName('')
+  //     setRoll('')
+  //     handleCloseInviteUserModal()
+  //     // window.location.reload()
+  //   } catch (error) {
+  //     //console.error('Error:', error)
+  //     alert('An error occurred. Please try again later.')
+  //   }
+  // }
 
-  const getDetails = async () => {
-    try {
-      const result = await fetch(`${apiUrl}/user/register/record/${id}`)
-      const data = await result.json()
-      setRecord(data)
-      getDetails()
-    } catch (error) {
-      //console.error('Error fetching customer record:', error)
-    }
-  }
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/user/register/record/${id}`)
+  //     const data = await result.json()
+  //     setRecord(data)
+  //     getDetails()
+  //   } catch (error) {
+  //     //console.error('Error fetching customer record:', error)
+  //   }
+  // }
 
-  let creation = record.user_creation
-  let data
-  if (Array.isArray(creation)) {
-    data = creation.map((item) => {
-      console.log(item.users)
-      return item.users
-    })
+  // let creation = record.user_creation
+  // let data
+  // if (Array.isArray(creation)) {
+  //   data = creation.map((item) => {
+  //     console.log(item.users)
+  //     return item.users
+  //   })
 
-    console.log(data)
-  } else {
-    console.log('record.user_creation is not an array or is undefined')
-  }
-  console.log(data)
+  //   console.log(data)
+  // } else {
+  //   console.log('record.user_creation is not an array or is undefined')
+  // }
+  // console.log(data)
 
-  useEffect(() => {
-    getDetails()
-    handleTabClick('nav-benutzer')
-  }, [])
+  // useEffect(() => {
+  //   getDetails()
+  //   handleTabClick('nav-benutzer')
+  // }, [])
 
   const columns = [
     {
@@ -134,40 +134,32 @@ export default function CreateUser() {
     },
   ]
 
-  // const data = [
-  //   {
-  //     key: '1',
-  //     name: 'John Brown',
-  //     age: 32,
-  //     emailAddress: 'john@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'Yes',
-  //     action: 'Edit', // Provide appropriate action value
-  //   },
-  //   {
-  //     key: '2',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     emailAddress: 'jim@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'No',
-  //     action: 'Delete', // Provide appropriate action value
-  //   },
-  //   {
-  //     key: '3',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     emailAddress: 'joe@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'Yes',
-  //     action: 'View', // Provide appropriate action value
-  //   },
-  //   {
-  //     key: '4',
-  //     name: 'Disabled User',
-  //     age: 99,
-  //     emailAddress: 'disabled@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'No',
-  //     action: 'Activate', // Provide appropriate action value
-  //   },
-  // ]
+  const data = [
+    {
+      _id: '1',
+      user_name: 'John Brown',
+      age: 32,
+      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
+      superVerwalter: 'Yes',
+      action: 'Edit', // Provide appropriate action value
+    },
+    {
+      _id: '2',
+      user_name: 'Jim Green',
+      age: 42,
+      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
+      superVerwalter: 'No',
+      action: 'Delete', // Provide appropriate action value
+    },
+    {
+      _id: '3',
+      user_name: 'Joe Black',
+      age: 32,
+      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
+      superVerwalter: 'Yes',
+      action: 'View', // Provide appropriate action value
+    },
+  ]
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -181,13 +173,10 @@ export default function CreateUser() {
   return (
     <>
       <div
-        className="row  m-4 p-4"
-        style={{
-          border: '1px solid lightgray',
-          borderRadius: '5px 5px 5px 5px ',
-        }}
+        className="  topBtnBox"
+       
       >
-        <div className="col-sm-5">
+        <div className="">
           <button
             className="btn btn"
             onClick={handleShowInviteUserModal}
@@ -200,7 +189,7 @@ export default function CreateUser() {
             <Modal.Header closeButton>
               <Modal.Title>
                 Benutzer einladen
-                <br />
+                
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -295,9 +284,22 @@ export default function CreateUser() {
                           setUserName(e.target.value)
                         }}
                       />
-
-                      <br />
-                      <br />
+                      
+                    </div>
+                    <div className="col-sm-6">
+                      <label>User Email:</label>
+                      <input
+                        className="form-control"
+                        type="email"
+                        name="user_email"
+                        value={user_email}
+                        onChange={(e) => {
+                          setUserEmail(e.target.value)
+                        }}
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                     
                       <label>Rollen:</label>
                       <select
                         className="form-control"
@@ -312,18 +314,7 @@ export default function CreateUser() {
                         <option value="employee">ROllen</option>
                       </select>
                     </div>
-                    <div className="col-sm-6">
-                      <label>User Email:</label>
-                      <input
-                        className="form-control"
-                        type="email"
-                        name="user_email"
-                        value={user_email}
-                        onChange={(e) => {
-                          setUserEmail(e.target.value)
-                        }}
-                      />
-                    </div>
+
                   </div>
                 </div>
                 <div
@@ -353,11 +344,11 @@ export default function CreateUser() {
               </button>
               <button
                 type="button"
-                onClick={saveData}
+                // onClick={saveData}
                 style={{ background: '#0b5995', color: 'white' }}
                 className="btn btn"
               >
-                Einladung versenden
+                Speichern
               </button>
             </Modal.Footer>
           </Modal>
@@ -374,16 +365,19 @@ export default function CreateUser() {
             <Modal.Header closeButton>
               <Modal.Title>
                 Benutzer einladen
-                <br />
+               
+                
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="row p-3">
+                <div className="col-sm-12">
                 <span style={{ fontSize: '13px', lineBreak: 'none' }}>
                   Eine E-Mail mit einem Einladungslink wird an den Benutzer geschickt, um ein Konto
                   zu erstellen. Der Link ist 3 Tage lang gültig und wird nach der Erstellung des
                   Kontos ungültig.
                 </span>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="row p-3">
+                </div>
                 <div className="col-sm-6">
                   <input type="email" className="form-control" placeholder="E-Mail Adresse" />
 
@@ -441,17 +435,15 @@ export default function CreateUser() {
               </button>
             </Modal.Footer>
           </Modal>
-        </div>
-        <div className="col-sm-3">
-          <input type="search" id="form1" placeholder="Suche" className="form-control" />
-        </div>
-        <div className="col-sm-4">
+          &nbsp; &nbsp;
+          <input type="search" id="form1" placeholder="Suche" className="form-control boxSearchBtn" />
+          &nbsp; &nbsp;
           <button type="button" className="btn btn text-light" style={{ background: '#0b5995' }}>
             <AiFillSetting />
           </button>
         </div>
       </div>
-      <div className="row card p-4 m-4">
+      <div className="row  ">
         {/* <Radio.Group
           onChange={({ target: { value } }) => {
             setSelectionType(value)
@@ -462,7 +454,6 @@ export default function CreateUser() {
           <Radio value="radio">radio</Radio>
         </Radio.Group> */}
 
-        {/* <Divider /> */}
 
         <Table
           rowSelection={{

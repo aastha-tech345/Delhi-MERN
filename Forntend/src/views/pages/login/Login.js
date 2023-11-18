@@ -26,48 +26,48 @@ const Login = () => {
   const navigate = useNavigate()
   const [validated, setValidated] = useState(false)
 
-  const login = async (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
+  // const login = async (event) => {
+  //   const form = event.currentTarget
+  //   if (form.checkValidity() === false) {
+  //     event.preventDefault()
+  //     event.stopPropagation()
+  //   }
 
-    setValidated(true)
+  //   setValidated(true)
 
-    try {
-      if (!email || !password) {
-        return
-      }
+  //   try {
+  //     if (!email || !password) {
+  //       return
+  //     }
 
-      const data = { email, password }
-      console.log(data)
-      const response = await fetch(`${apiUrl}/user/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+  //     const data = { email, password }
+  //     console.log(data)
+  //     const response = await fetch(`${apiUrl}/user/login`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
 
-      const result = await response.json()
-      console.log(result)
-      const token = result.user.tokens[0].token
-      const role = result.user.role
-      //console.log(record)
-      window.localStorage.setItem('token', token)
-      window.localStorage.setItem('role', role)
-      window.localStorage.setItem('record', result)
-      const resultString = JSON.stringify(result)
-      window.localStorage.setItem('record', resultString)
+  //     const result = await response.json()
+  //     console.log(result)
+  //     const token = result.user.tokens[0].token
+  //     const role = result.user.role
+  //     //console.log(record)
+  //     window.localStorage.setItem('token', token)
+  //     window.localStorage.setItem('role', role)
+  //     window.localStorage.setItem('record', result)
+  //     const resultString = JSON.stringify(result)
+  //     window.localStorage.setItem('record', resultString)
 
-      navigate('/dashboard')
-      window.location.reload()
-    } catch (error) {
-      console.error('Error:', error)
-      alert('An error occurred. Please try again later.')
-    }
-  }
+  //     navigate('/dashboard')
+  //     window.location.reload()
+  //   } catch (error) {
+  //     console.error('Error:', error)
+  //     alert('An error occurred. Please try again later.')
+  //   }
+  // }
 
   const registerPage = () => {
     navigate('/register')
@@ -116,9 +116,9 @@ const Login = () => {
                       </Form.Group>
                     </Row>
                     <div className="d-flex">
-                      <Button onClick={login}>Login Here</Button>&nbsp;&nbsp;&nbsp;
+                      <Button >Login Here</Button>&nbsp;&nbsp;&nbsp;
                       <p color="primary" onClick={forgetPassword} className="mt-3" tabIndex={-1}>
-                        Register Now!
+                        Register Now
                       </p>
                     </div>
                   </Form>

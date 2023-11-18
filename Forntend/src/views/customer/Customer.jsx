@@ -20,24 +20,25 @@ function Customer() {
 
   return (
     <>
-      <div className="row" style={{ background: 'white' }}>
+    <div className="whiteBox">
+      <div className="blueBoxTop" >
         <div
           className="row"
-          style={{
-            background: '#0b5995',
-            borderRadius: '5px 5px 0px 0px',
-            height: '100px',
-            marginLeft: '1px',
-          }}
+          // style={{
+          //   background: '#0b5995',
+          //   borderRadius: '5px 5px 0px 0px',
+          //   height: '100px',
+          //   marginLeft: '1px',
+          // }}
         >
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <p style={{ color: 'white', marginTop: '5px' }}>Firmenname: Demo Client</p>
             <ImLocation2 style={{ color: 'white' }} />
             <span style={{ color: 'white' }}>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             </span>
           </div>
-          <div className="col-sm-6 mt-4">
+          <div className="col-sm-8 mt-4 text-right">
             <button
               className="btn btn-outline-primary"
               style={{ color: 'white', border: '1px solid white', marginRight: '10px' }}
@@ -59,6 +60,11 @@ function Customer() {
             </button>
           </div>
         </div>
+        </div>
+        <div className='whiteBoxWithPdLR'>
+        <div
+          className="row">
+             <div className="col-sm-12">
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
             <button
@@ -68,8 +74,8 @@ function Customer() {
               role="tab"
               aria-selected={activeTab === 'nav-home'}
               onClick={() => handleTabClick('nav-home')}
-              style={{ marginRight: '60px', marginLeft: '20px' }}
-            >
+              style={{ marginRight: '20px', marginLeft: '20px' }}
+            ><i className="fa-solid fa-info fa-fw infoIcon"></i> 
               Kundeninfo
             </button>
             <button
@@ -80,9 +86,9 @@ function Customer() {
               aria-controls="nav-kontakte"
               aria-selected={activeTab === 'nav-kontakte'}
               onClick={() => handleTabClick('nav-kontakte')}
-              style={{ marginRight: '60px' }}
-            >
-              Kontakte
+              style={{ marginRight: '20px' }}
+            > <i class="fa-regular fa-address-book fa-fw"></i> 
+              Kontakte 
               {/* //calls */}
             </button>
             <button
@@ -94,8 +100,8 @@ function Customer() {
               aria-controls="nav-aufgaben"
               aria-selected={activeTab === 'nav-aufgaben'}
               onClick={() => handleTabClick('nav-aufgaben')}
-              style={{ marginRight: '60px' }}
-            >
+              style={{ marginRight: '20px' }}
+            ><i class="fa-solid fa-heart-pulse fa-fw"></i> 
               Aktivitat
             </button>
             <button
@@ -107,8 +113,8 @@ function Customer() {
               aria-controls="nav-rechnungen"
               aria-selected={activeTab === 'nav-rechnungen'}
               onClick={() => handleTabClick('nav-rechnungen')}
-              style={{ marginRight: '60px' }}
-            >
+              style={{ marginRight: '20px' }}
+            ><i class="fa-regular fa-file fa-fw"></i> 
               Dokumente
               {/* //bills */}
             </button>
@@ -121,8 +127,8 @@ function Customer() {
               aria-controls="nav-beschreibung"
               aria-selected={activeTab === 'nav-beschreibung'}
               onClick={() => handleTabClick('nav-beschreibung')}
-              style={{ marginRight: '60px' }}
-            >
+              style={{ marginRight: '20px' }}
+            ><i class="fa-solid fa-paint-roller fa-fw"></i> 
               Vollmachten
               {/* //Description */}
             </button>
@@ -135,8 +141,8 @@ function Customer() {
               aria-controls="nav-dokumente"
               aria-selected={activeTab === 'nav-dokumente'}
               onClick={() => handleTabClick('nav-dokumente')}
-              style={{ marginRight: '60px' }}
-            >
+              style={{ marginRight: '20px' }}
+            > <i class="fa-regular fa-lightbulb fa-fw"></i> 
               SPV
               {/* //documents */}
             </button>
@@ -149,8 +155,8 @@ function Customer() {
               aria-controls="nav-leistungen"
               aria-selected={activeTab === 'nav-leistungen'}
               onClick={() => handleTabClick('nav-leistungen')}
-              style={{ marginRight: '60px' }}
-            >
+              style={{ marginRight: '20px' }}
+            ><i class="fa-regular fa-file-lines fa-fw"></i> 
               Rechnung
               {/* services */}
             </button>
@@ -214,7 +220,10 @@ function Customer() {
             <Bills />
           </div>
         </div>
+        </div>
+        </div>        
         <hr />
+      </div>
       </div>
     </>
   )

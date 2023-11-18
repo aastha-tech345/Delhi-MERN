@@ -51,41 +51,41 @@ export default function CustomerList() {
     }),
   }
 
-  const saveData = async () => {
-    let data = { fname, lname, street, city, phone, plz, email, land, dob }
-    if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
-      return
-    }
-    try {
-      let response = await fetch(`${apiUrl}/customer/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+  // const saveData = async () => {
+  //   let data = { fname, lname, street, city, phone, plz, email, land, dob }
+  //   if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
+  //     return
+  //   }
+  //   try {
+  //     let response = await fetch(`${apiUrl}/customer/create`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`)
+  //     }
 
-      let result = await response.json()
-      console.log(result)
-      handleClose()
-    } catch (error) {
-      console.error('Error during API call:', error)
-    }
-  }
+  //     let result = await response.json()
+  //     console.log(result)
+  //     handleClose()
+  //   } catch (error) {
+  //     console.error('Error during API call:', error)
+  //   }
+  // }
 
-  const getDetails = async () => {
-    try {
-      const result = await fetch(`${apiUrl}/customer/get_record`)
-      const data = await result.json()
-      setCustomerRecord(data)
-    } catch (error) {
-      console.error('Error fetching customer record:', error)
-    }
-  }
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/customer/get_record`)
+  //     const data = await result.json()
+  //     setCustomerRecord(data)
+  //   } catch (error) {
+  //     console.error('Error fetching customer record:', error)
+  //   }
+  // }
 
   const columns = [
     {
@@ -127,11 +127,35 @@ export default function CustomerList() {
     },
   ]
 
-  useEffect(() => {
-    getDetails()
-  }, [])
+  const data = [
+    {
+      key: '1',
+      fname: 'John Brown',
+      age: 32,
+      address: 'New York No. 1 Lake Park',
+      tags: ['nice', 'developer'],
+    },
+    {
+      key: '2',
+      fname: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+      tags: ['loser'],
+    },
+    {
+      key: '3',
+      fname: 'Joe Black',
+      age: 32,
+      address: 'Sydney No. 1 Lake Park',
+      tags: ['cool', 'teacher'],
+    },
+  ]
 
-  let data = customer_record
+  // useEffect(() => {
+  //   getDetails()
+  // }, [])
+
+  // let data = customer_record
 
   return (
     <>
@@ -300,7 +324,7 @@ export default function CustomerList() {
                 </button>
                 <button
                   className="btn btn"
-                  onClick={saveData}
+                  // onClick={saveData}
                   style={{ background: '#0b5995', color: 'white' }}
                 >
                   Einreichen
@@ -319,11 +343,11 @@ export default function CustomerList() {
           dataSource={data}
         />
 
-        {/* Delete Modal */}
+        {/ Delete Modal /}
         <Modal show={isModalVisible} onHide={handleDeleteCancel} centered>
           <Modal.Title>
             <svg
-              style={{ marginLeft: '200px', marginTop: '50px' }}
+              style={{ marginLeft: '200px', marginTop: '25px' }}
               width="44"
               height="53"
               viewBox="0 0 44 53"
@@ -366,20 +390,22 @@ export default function CustomerList() {
             </p>
           </Modal.Body>
           <Modal.Footer>
+            <div className='popupfooterBtn'>
             <button
               className="btn btn w-25"
-              style={{ background: '#d04545', color: 'white' }}
+              style={{ background: '#d04545'}}
               onClick={handleDeleteCancel}
             >
               Löschen
             </button>
             <button
               className="btn btn w-25"
-              style={{ background: '#015291', color: 'white', marginRight: '20px' }}
+              style={{ background: '#015291', color: 'white' }}
               onClick={handleDeleteConfirm}
             >
               Abbrechen
             </button>
+            </div>
           </Modal.Footer>
         </Modal>
       </div>
