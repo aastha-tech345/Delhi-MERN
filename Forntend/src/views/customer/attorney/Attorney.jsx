@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Attorney() {
+const Attorney = () => {
   return (
     <>
       <h5 className="mt-2 mx-4">Vollmachten</h5>
@@ -189,3 +189,5 @@ export default function Attorney() {
     </>
   )
 }
+
+export default React.memo(Attorney)

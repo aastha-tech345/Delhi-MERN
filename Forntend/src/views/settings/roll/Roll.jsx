@@ -5,7 +5,7 @@ import { LuFilePlus } from 'react-icons/lu'
 import { IoMdAdd } from 'react-icons/io'
 import { DownOutlined } from '@ant-design/icons'
 import { Dropdown, Space, Typography } from 'antd'
-export default function Roll() {
+const Roll = () => {
   const [show, setShow] = useState(false)
   // eslint-disable-next-line no-undef
   const handleClose = () => setShow(false)
@@ -327,3 +327,5 @@ export default function Roll() {
     </div>
   )
 }
+
+export default React.memo(Roll)

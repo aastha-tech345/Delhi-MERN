@@ -16,22 +16,41 @@ exports.roleCreation = async (req, res) => {
   }
 };
 
-exports.getRole = async(req,res)=>{
-  const result = await roleModel.Role.find()
-  res.send(result)
-}
+exports.getRole = async (req, res) => {
+  try {
+    const result = await roleModel.Role.find();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
-exports.getRoleData = async(req,res)=>{
-  const result = await roleModel.Role.findOne({_id:req.params.id})
-  res.send(result)
-}
+exports.getRoleData = async (req, res) => {
+  try {
+    const result = await roleModel.Role.findOne({ _id: req.params.id });
+    if (!result) {
+      return res.status(404).send({ error: 'Role not found' });
+    }
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
-exports.getRoleDataUpdate = async(req,res)=>{
-  const result = await roleModel.Role.updateOne({_id:req.params.id},{$set:req.body})
-  res.send(result)
-}
+exports.getRoleDataUpdate = async (req, res) => {
+  try {
+    const result = await roleModel.Role.updateOne({ _id: req.params.id }, { $set: req.body });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
-exports.getRoleDataDelete = async(req,res)=>{
-  const result = await roleModel.Role.deleteOne({_id:req.params.id})
-  res.send(result)
-}
+exports.getRoleDataDelete = async (req, res) => {
+  try {
+    const result = await roleModel.Role.deleteOne({ _id: req.params.id });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};

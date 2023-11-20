@@ -57,12 +57,9 @@ const Login = () => {
       console.log(result)
       const token = result.user.tokens[0].token
       const role = result.user.role
-      //console.log(record)
       window.localStorage.setItem('token', token)
       window.localStorage.setItem('role', role)
-      window.localStorage.setItem('record', result)
-      const resultString = JSON.stringify(result)
-      window.localStorage.setItem('record', resultString)
+      window.localStorage.setItem('record', JSON.stringify(result))
 
       navigate('/dashboard')
       window.location.reload()
@@ -79,9 +76,11 @@ const Login = () => {
   const forgetPassword = () => {
     navigate('/password-reset')
   }
+
   function onChange(value) {
     console.log('Captcha value:', value)
   }
+
   return (
     <div
       className=" min-vh-100 d-flex flex-row align-items-center"
@@ -104,13 +103,10 @@ const Login = () => {
                         <Form.Label>E-Mail Adresse</Form.Label>
                         <Form.Control
                           value={email}
-                          onChange={(e) => {
-                            setEmail(e.target.value)
-                          }}
+                          onChange={(e) => setEmail(e.target.value)}
                           required
                           type="email"
                           placeholder="Enter Your Email Id"
-                          defaultValue="anshika"
                         />
                       </Form.Group>
                     </Row>
@@ -120,12 +116,9 @@ const Login = () => {
                         <Form.Control
                           required
                           value={password}
-                          onChange={(e) => {
-                            setPassword(e.target.value)
-                          }}
+                          onChange={(e) => setPassword(e.target.value)}
                           type="password"
                           placeholder="password"
-                          defaultValue="123"
                         />
                       </Form.Group>
                     </Row>
@@ -146,7 +139,7 @@ const Login = () => {
                         className="mt-1 mx-3"
                         tabIndex={-1}
                       >
-                        Passwort vergresson ?
+                        Passwort vergessen ?
                       </p>
                     </div>
                   </Form>
@@ -160,4 +153,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default React.memo(Login)

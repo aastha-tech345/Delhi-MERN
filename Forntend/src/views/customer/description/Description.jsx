@@ -10,7 +10,7 @@ import {
   LinkOutlined,
 } from '@ant-design/icons'
 
-export default function Description() {
+const Description = () => {
   return (
     <>
       <h4>Beschreibung</h4>
@@ -141,3 +141,5 @@ export default function Description() {
     </>
   )
 }
+
+export default React.memo(Description)

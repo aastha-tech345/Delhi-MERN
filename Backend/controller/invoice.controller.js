@@ -13,7 +13,9 @@ exports.createInvoice = async (req, res) => {
       colleague,
     } = req.body;
 
-    const user = await CustomerModel.Customer.findOne({ created_by: "customer" });
+    const user = await CustomerModel.Customer.findOne({
+      created_by: "customer",
+    });
     if (!user) {
       return res
         .status(400)
@@ -42,31 +44,59 @@ exports.createInvoice = async (req, res) => {
   }
 };
 
-exports.getInvoice = async(req,res)=>{
-  const result = await InvoiceInfomation.Invoice.find()
-  res.send(result)
-}
+exports.getInvoice = async (req, res) => {
+  try {
+    const result = await InvoiceInfomation.Invoice.find();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+};
 
-exports.getInvoiceData = async(req,res)=>{
-  const result = await InvoiceInfomation.Invoice.findOne({_id:req.params.id})
-  res.send(result)
-}
+exports.getInvoiceData = async (req, res) => {
+  try {
+    const result = await InvoiceInfomation.Invoice.findOne({
+      _id: req.params.id,
+    });
+    if (!result) {
+      return res.status(404).send({ error: "Invoice not found" });
+    }
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+};
 
-exports.getInvoiceDataUpdate = async(req,res)=>{
-  const result = await InvoiceInfomation.Invoice.updateOne({_id:req.params.id},{$set:req.body})
-  res.send(result)
-}
+exports.getInvoiceDataUpdate = async (req, res) => {
+  try {
+    const result = await InvoiceInfomation.Invoice.updateOne(
+      { _id: req.params.id },
+      { $set: req.body }
+    );
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+};
 
-exports.getInvoiceDataDelete = async(req,res)=>{
-  const result = await InvoiceInfomation.Invoice.deleteOne({_id:req.params.id})
-  res.send(result)
-}
+exports.getInvoiceDataDelete = async (req, res) => {
+  try {
+    const result = await InvoiceInfomation.Invoice.deleteOne({
+      _id: req.params.id,
+    });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+};
 
-exports.getInvoiceSearch = async(req,res)=>{
-  const result = await InvoiceInfomation.Invoice.find({
-    "$or":[
-      {fname:{$regex:req.params.key}}
-    ]
-  })
-  res.send(result)
-}
+exports.getInvoiceSearch = async (req, res) => {
+  try {
+    const result = await InvoiceInfomation.Invoice.find({
+      $or: [{ fname: { $regex: req.params.key } }],
+    });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+};

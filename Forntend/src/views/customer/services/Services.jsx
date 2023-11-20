@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Services() {
+const Services = () => {
   return (
     <>
       <div className="row card">
@@ -190,25 +190,13 @@ export default function Services() {
             <br />
             <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Begleitung am Lebensende</p>
             <p style={{ color: '#0b5995' }}>Arztin</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <p style={{ color: '#0b5995' }}>Seelischer Beistand</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <p style={{ color: '#0b5995' }}>Keinesfalls</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <div className="row">
               <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Bestattungswunsche</p>
@@ -224,18 +212,10 @@ export default function Services() {
               </div>
             </div>
             <p style={{ color: '#0b5995' }}>Bestattungsvorsorge</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <p style={{ color: '#0b5995' }}>Sonstiges</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <div className="row">
               <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Vollmachten</p>
@@ -502,3 +482,5 @@ export default function Services() {
     </>
   )
 }
+
+export default React.memo(Services)

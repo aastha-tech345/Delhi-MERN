@@ -91,41 +91,8 @@ const ResetPassword = () => {
           </CRow>
         </CContainer>
       </div>
-      {/* <section>
-        <div className="form_data">
-          <div className="form_heading"></div>
-
-          {message ? (
-            <p style={{ color: 'green', fontWeight: 'bold' }}>
-              pasword reset link send Succsfully in Your Email
-            </p>
-          ) : (
-            ''
-          )}
-          <form>
-            <div className="form_input">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value)
-                }}
-                name="email"
-                id="email"
-                placeholder="Enter Your Email Address"
-              />
-            </div>
-
-            <button className="btn" onClick={sendLink}>
-              Send
-            </button>
-          </form>
-          <ToastContainer />
-        </div>
-      </section> */}
     </>
   )
 }
 
-export default ResetPassword
+export default React.memo(ResetPassword)

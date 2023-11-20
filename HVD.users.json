@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "6556e7f53ae1b96eac19ef60"
+  },
+  "username": "admin",
+  "email": "admin@gmail.com",
+  "password": "$2a$10$STriN5RMpga6PxsHs/ygAeakITperLplPmBnBOGhOIpLrOwESU/Q.",
+  "role": "admin",
+  "tokens": [
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTZlN2Y1M2FlMWI5NmVhYzE5ZWY2MCIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkU1RyaU41Uk1wZ2E2UHhzSHMveWdBZWFrSVRwZXJMcGxQbUJuQk9HaE9JcExyT3dFU1UvUS4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDAxOTQyOTN9.RRIwEA5iatmJWO_u4uLWkrKuoqUVX7GPFA8xCsAXMtA",
+      "_id": {
+        "$oid": "6556e7f53ae1b96eac19ef62"
+      }
+    }
+  ],
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "6556e8233ae1b96eac19ef66"
+  },
+  "username": "aastha",
+  "email": "aasthamodanwal.dl@gmail.com",
+  "password": "$2a$12$vBJ.JNANj79EsTprUZvYkuaztWNt6QVguSOCPfTDrYYcVmD96NofG",
+  "role": "user",
+  "user_creation": {
+    "users": null,
+    "password": null,
+    "localization": null,
+    "notification": null,
+    "advanced": null
+  },
+  "parent_id": "6556e7f53ae1b96eac19ef60",
+  "tokens": [
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTZlODIzM2FlMWI5NmVhYzE5ZWY2NiIsImVtYWlsIjoiYWFzdGhhbW9kYW53YWwuZGxAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkdGI3dkJXeUZTdTJkQjN5QmNFTk1VdTllREUuRDRtZHM2WkpwaHJiV0xBSnBGOTlRL0Z1RC4iLCJyb2xlIjoidXNlciIsImlhdCI6MTcwMDE5NDMzOX0.VWG5w_ELE4z8hh8W9_9Wo6ao16vrtmsTi2gTNJi1f78",
+      "_id": {
+        "$oid": "6556e8233ae1b96eac19ef68"
+      }
+    }
+  ],
+  "__v": 1,
+  "verifytoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTU2ZTgyMzNhZTFiOTZlYWMxOWVmNjYiLCJpYXQiOjE3MDA0NTMwOTgsImV4cCI6MTcwMDQ1MzIxOH0.VTnsL_ixgylYilRAkvnGU3qKzjNtMJEm0Qw7eoHJQhA"
+}]

@@ -182,50 +182,6 @@ exports.login = async (req, res) => {
   }
 };
 
-// exports.forgotPassword = async (req, res) => {
-//   try {
-//     const { email } = req.body;
-//     const user = await UserModel.User.findOne({ email });
-
-//     if (!user) {
-//       return res.send({ Status: "User not existed" });
-//     }
-
-//     const transporter = nodemailer.createTransport({
-//       service: 'gmail',
-//       port: 587,
-//       secure: false,
-//       auth: {
-//         user: 'aasthamodanwal.dl@gmail.com',
-//         pass: 'lnip qeej usrx hgca',
-//       },
-//     });
-
-//     // Define email options
-//     const mailOptions = {
-//       from: 'aasthamodanwal.dl@gmail.com',
-//       to: 'aasthamodanwal5662@gmail.com',
-//       subject:"Sending Email For password Reset",
-//       html:`This Link Valid For 2 MINUTES http://localhost:4142/user/forgot-password/${userfind.id}/${setusertoken.verifytoken}`
-//     };
-
-//     // Send the email
-//     transporter.sendMail(mailOptions, (error, info) => {
-//       if (error) {
-//         console.error('Error sending email:', error);
-//       } else {
-//         console.log('Email sent:', info.response);
-//       }
-//     });
-//     // res.send({
-//     //   token:token,
-//     //   user
-//     // })
-//   } catch (error) {
-//     console.error("Error in forgotPassword controller:", error);
-//     return res.status(500).send({ Status: "Internal Server Error" });
-//   }
-// };
 
 const transporter = nodemailer.createTransport({
   service: "gmail",

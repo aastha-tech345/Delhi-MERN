@@ -3,7 +3,7 @@ import CreateUser from './user/CreateUser'
 import Roll from './roll/Roll'
 import Teams from './team/Teams'
 
-function User() {
+const User = () => {
   const [activeTab, setActiveTab] = useState('nav-home')
 
   const handleTabClick = (tabId) => {
@@ -67,4 +67,4 @@ function User() {
   )
 }
 
-export default User
+export default React.memo(User)
