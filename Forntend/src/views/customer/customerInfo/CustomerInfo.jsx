@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Select from 'react-select'
 
 const CustomerInfo = () => {
@@ -34,7 +35,8 @@ const CustomerInfo = () => {
   const [return_last_stamp, setReturnStamp] = useState()
   const [emergency_pass, setEmergencyPass] = useState()
   const [memory, setMemory] = useState()
-
+  const { id } = useParams()
+  console.log(id)
   const options = [
     { value: '0', label: 'HVD-PV' },
     { value: '1', label: 'SPV alt' },
@@ -49,29 +51,19 @@ const CustomerInfo = () => {
       ],
     },
   ]
-
   const saveData = async () => {
-    if (!created_by) {
+    if (!fname) {
       return
     }
-    try {
-      let response = await fetch(`${apiUrl}/role/create_role`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ created_by }),
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
-
-      let result = await response.json()
-      console.log(result)
-    } catch (error) {
-      console.error('Error during API call:', error)
-    }
+    let response = await fetch(`${apiUrl}/contact/create_contact`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ fname }),
+    })
+    let result = await response.json()
+    console.log(result)
   }
   return (
     <>
@@ -99,7 +91,15 @@ const CustomerInfo = () => {
                 Extras
               </label>
               <div className="col-sm-8">
-                <input type="text" className="form-control" placeholder="Extras" />
+                <input
+                  type="text"
+                  value={fname}
+                  onChange={(e) => {
+                    setFname(e.target.value)
+                  }}
+                  className="form-control"
+                  placeholder="Extras"
+                />
               </div>
             </div>
           </div>
@@ -243,15 +243,7 @@ const CustomerInfo = () => {
                 Vornamen
               </label>
               <div className="col-sm-6">
-                <input
-                  type="text"
-                  value={created_by}
-                  onChange={(e) => {
-                    setCreatedBy(e.target.value)
-                  }}
-                  className="form-control"
-                  id="inputPassword"
-                />
+                <input type="text" className="form-control" id="inputPassword" />
               </div>
             </div>
             <br />
