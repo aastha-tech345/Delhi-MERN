@@ -15,8 +15,9 @@ import { AiOutlineMail } from 'react-icons/ai'
 import { Avatar, Badge } from 'antd'
 import avatar8 from './../../assets/images/avatars/8.jpg'
 import { Button, Popover } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AppModal from './AppModal'
+
 const content = (
   <div style={{ width: '220px' }}>
     <p>Benachrichtigungen</p>
@@ -69,6 +70,20 @@ const AppHeaderDropdown = () => {
   // const modalOpen = () => {
   //   setOpen(true)
   // }
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    // Clear local storage
+    let a = window.localStorage.clear()
+    console.log('sdhjf', a)
+
+    // Check if local storage was successfully cleared
+    if (a === undefined) {
+      navigate('/')
+      window.location.reload()
+      // If cleared, navigate to the home page '/'
+    }
+  }
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -162,7 +177,7 @@ const AppHeaderDropdown = () => {
           </svg>
           Hilfe-Center
         </CDropdownItem>
-        <CDropdownItem href="#">
+        <CDropdownItem onClick={handleLogout}>
           <svg
             width="19"
             height="20"
