@@ -106,7 +106,7 @@ const Login = () => {
                           onChange={(e) => setEmail(e.target.value)}
                           required
                           type="email"
-                          placeholder="Enter Your Email Id"
+                          placeholder="E-Mail Adresse"
                         />
                       </Form.Group>
                     </Row>
