@@ -65,10 +65,10 @@ const content = (
   </div>
 )
 const AppHeaderDropdown = () => {
-  const [open, setOpen] = useState(false)
-  const modalOpen = () => {
-    setOpen(true)
-  }
+  // const [open, setOpen] = useState(false)
+  // const modalOpen = () => {
+  //   setOpen(true)
+  // }
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -88,7 +88,10 @@ const AppHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="#" onClick={modalOpen}>
+        <CDropdownItem
+          href="#"
+          //  onClick={modalOpen}
+        >
           <svg
             width="20"
             height="20"
@@ -111,7 +114,7 @@ const AppHeaderDropdown = () => {
           </svg>
           Profile
         </CDropdownItem>
-        {open && <AppModal />}
+        {/* {open && <AppModal />} */}
 
         <CDropdownItem href="#">
           <svg
