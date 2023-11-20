@@ -42,10 +42,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-let STATIC = path.resolve(__dirname, "build");
-let INDEX = path.resolve(STATIC, "index.html");
+// let STATIC = path.resolve(__dirname, "build");
+// let INDEX = path.resolve(STATIC, "index.html");
 
-app.use(express.static(STATIC));
+// app.use(express.static(STATIC));
 
 app.use("/user", userRoute);
 app.use("/role", roleRoute);
@@ -60,9 +60,17 @@ app.use("/print", print);
 app.use("/spv", spv);
 app.use("/attorney", attorney);
 
-app.get("/*", function (req, res, next) {
-  res.sendFile(INDEX);
-});
+app.use('/', express.static(path.join(__dirname, '/build')));
+app.get('/', function (req, res) {
+  return res.sendFile(path.join(__dirname, '/build/index.html'))
+})
+app.get('/*', function (req, res) {
+  return res.sendFile(path.join(__dirname, '/build/index.html'))
+})
+
+// app.get("/*", function (req, res, next) {
+//   res.sendFile(INDEX);
+// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
