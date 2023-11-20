@@ -57,7 +57,7 @@ exports.getContactDataUpdate = async (req, res) => {
   res.send(result);
 };
 
-exports.getContactDataDelate = async (req, res) => {
+exports.getContactDataDelete = async (req, res) => {
   const result = await ContactInfomation.Contact.deleteOne({_id:req.params.body});
   res.send(result);
 }

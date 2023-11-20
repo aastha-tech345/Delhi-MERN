@@ -9,6 +9,6 @@ router.post('/create', customerController.createCustomer);
 router.get('/get_record', customerController.getCustomer);
 router.get('/get_record/:id', customerController.getCustomerData);
 router.delete('/get_record/:id', customerController.deleteCustomer);
-router.get('/search/:key', roleCtrl.getCustomerInfoSearch);
+// router.get('/search/:key', roleCtrl.getCustomerInfoSearch);
 
 module.exports = router;

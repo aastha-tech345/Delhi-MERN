@@ -71,7 +71,7 @@ exports.getCustomerDataUpdate = async (req, res) => {
   res.send(result);
 };
 
-exports.getCustomerDataDelate = async (req, res) => {
+exports.getCustomerDataDelete = async (req, res) => {
   const result = await CustomerModel.Customer.deleteOne({_id:req.params.body});
   res.send(result);
 };

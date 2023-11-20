@@ -24,7 +24,8 @@ const document = require('./routes/document.route.js')
 const invoice = require('./routes/invoice.route.js')
 const print = require('./routes/printTemp.route.js')
 const spv = require('./routes/spv.route.js')
-const attorney = require('./routes/attorney.route.js')
+const attorney = require('./routes/attorney.route.js');
+const startDatabase = require('./config/db.js');
 
 app.use(logger('dev'));
 app.use(cors());
@@ -73,9 +74,18 @@ app.use(function(err, req, res, next) {
   // res.render('error');
 });
 
+const startServer=async()=>{
+  try {
+    await startDatabase()
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
 
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+startServer()
 module.exports = app;

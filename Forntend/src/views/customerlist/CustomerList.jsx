@@ -50,7 +50,7 @@ export default function CustomerList() {
       name: record.name,
     }),
   }
-
+  console.log("ashishh", phone)
   const saveData = async () => {
     let data = { fname, lname, street, city, phone, plz, email, land, dob }
     if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
@@ -221,12 +221,13 @@ export default function CustomerList() {
                     <input
                       value={phone}
                       onChange={(e) => {
-                        setPhone(e.target.value)
+                        const inputValue = e.target.value.replace(/[^0-9]/g, '');
+                        setPhone(inputValue)
                       }}
-                      type="number"
+                      type="tel"
                       placeholder="Telefon"
                       className="form-control"
-                      id="inputPassword"
+                      id="inputTelephone"
                     />
                   </div>
                 </div>

@@ -25,7 +25,7 @@ const App = () => {
     <BrowserRouter>
       <Suspense fallback={loading}>
         <Routes>
-          {!hasToken && <Route path="/" element={<Login />} />}
+          {!hasToken ==true && <Route path="/" element={<Login />} />}
           <Route path="/register" element={<Register />} />
           <Route path="/404" element={<Page404 />} />
           <Route path="/500" element={<Page500 />} />
