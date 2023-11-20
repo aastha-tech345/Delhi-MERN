@@ -34,10 +34,10 @@ const CreateUser = () => {
   const handleCloseInviteUserModal = () => {
     setShowInviteUserModal(false)
   }
-  let value = localStorage.getItem('record')
-  value = JSON.parse(value)
-  let id = value.user._id
-  //console.log(id)
+  // let value = localStorage.getItem('record')
+  // value = JSON.parse(value)
+  // let id = value.user._id
+  // //console.log(id)
 
   // const saveData = async () => {
   //   try {
@@ -140,6 +140,7 @@ const CreateUser = () => {
       user_name: 'John Brown',
       age: 32,
       emailAddress: 'john@example.com', // Adjust to a valid email address
+      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
       superVerwalter: 'Yes',
       action: 'Edit', // Provide appropriate action value
     },
@@ -148,6 +149,7 @@ const CreateUser = () => {
       user_name: 'Jim Green',
       age: 42,
       emailAddress: 'jim@example.com', // Adjust to a valid email address
+      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
       superVerwalter: 'No',
       action: 'Delete', // Provide appropriate action value
     },
@@ -156,6 +158,7 @@ const CreateUser = () => {
       user_name: 'Joe Black',
       age: 32,
       emailAddress: 'joe@example.com', // Adjust to a valid email address
+      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
       superVerwalter: 'Yes',
       action: 'View', // Provide appropriate action value
     },
@@ -172,14 +175,8 @@ const CreateUser = () => {
   }
   return (
     <>
-      <div
-        className="row  m-4 p-4"
-        style={{
-          border: '1px solid lightgray',
-          borderRadius: '5px 5px 5px 5px ',
-        }}
-      >
-        <div className="col-sm-5">
+      <div className="topBtnBox">
+        <div className="">
           <button
             className="btn btn"
             onClick={handleShowInviteUserModal}
@@ -190,10 +187,7 @@ const CreateUser = () => {
           </button>
           <Modal size="lg" show={showInviteUserModal} onHide={handleCloseInviteUserModal} centered>
             <Modal.Header closeButton>
-              <Modal.Title>
-                Benutzer einladen
-                <br />
-              </Modal.Title>
+              <Modal.Title> Benutzer einladen</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div className="row" style={{ background: 'white' }}>
@@ -287,9 +281,20 @@ const CreateUser = () => {
                           setUserName(e.target.value)
                         }}
                       />
-
-                      <br />
-                      <br />
+                    </div>
+                    <div className="col-sm-6">
+                      <label>User Email:</label>
+                      <input
+                        className="form-control"
+                        type="email"
+                        name="user_email"
+                        value={user_email}
+                        onChange={(e) => {
+                          setUserEmail(e.target.value)
+                        }}
+                      />
+                    </div>
+                    <div className="col-sm-6">
                       <label>Rollen:</label>
                       <select
                         className="form-control"
@@ -303,18 +308,6 @@ const CreateUser = () => {
                         <option value="">--select--</option>
                         <option value="employee">ROllen</option>
                       </select>
-                    </div>
-                    <div className="col-sm-6">
-                      <label>User Email:</label>
-                      <input
-                        className="form-control"
-                        type="email"
-                        name="user_email"
-                        value={user_email}
-                        onChange={(e) => {
-                          setUserEmail(e.target.value)
-                        }}
-                      />
                     </div>
                   </div>
                 </div>
@@ -364,18 +357,17 @@ const CreateUser = () => {
           </button>
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
-              <Modal.Title>
-                Benutzer einladen
-                <br />
-                <span style={{ fontSize: '13px', lineBreak: 'none' }}>
-                  Eine E-Mail mit einem Einladungslink wird an den Benutzer geschickt, um ein Konto
-                  zu erstellen. Der Link ist 3 Tage lang gültig und wird nach der Erstellung des
-                  Kontos ungültig.
-                </span>
-              </Modal.Title>
+              <Modal.Title>Benutzer einladen</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div className="row p-3">
+                <div className="col-sm-12">
+                  <span style={{ fontSize: '13px', lineBreak: 'none' }}>
+                    Eine E-Mail mit einem Einladungslink wird an den Benutzer geschickt, um ein
+                    Konto Konto Konto Konto Konto Konto Konto zu erstellen. Der Link ist 3 Tage lang
+                    gültig und Kontos ungültig.
+                  </span>
+                </div>
                 <div className="col-sm-6">
                   <input type="email" className="form-control" placeholder="E-Mail Adresse" />
 
@@ -433,29 +425,20 @@ const CreateUser = () => {
               </button>
             </Modal.Footer>
           </Modal>
-        </div>
-        <div className="col-sm-3">
-          <input type="search" id="form1" placeholder="Suche" className="form-control" />
-        </div>
-        <div className="col-sm-4">
+          &nbsp; &nbsp;
+          <input
+            type="search"
+            id="form1"
+            placeholder="Suche"
+            className="form-control boxSearchBtn"
+          />
+          &nbsp; &nbsp;
           <button type="button" className="btn btn text-light" style={{ background: '#0b5995' }}>
             <AiFillSetting />
           </button>
         </div>
       </div>
-      <div className="row card p-4 m-4">
-        {/* <Radio.Group
-          onChange={({ target: { value } }) => {
-            setSelectionType(value)
-          }}
-          value={selectionType}
-        >
-          <Radio value="checkbox">Checkbox</Radio>
-          <Radio value="radio">radio</Radio>
-        </Radio.Group> */}
-
-        {/* <Divider /> */}
-
+      <div className="row  ">
         <Table
           rowSelection={{
             type: selectionType,

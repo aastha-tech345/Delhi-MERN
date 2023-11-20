@@ -76,24 +76,24 @@ const CustomerInfo = () => {
   return (
     <>
       <br />
-      <p style={{ color: 'blue' }}>Kundeninfo</p>
+      <h3 className='bluetext' style={{ color: 'blue' }}>Kundeninfo</h3>
       <hr />
       <div className="row card p-2">
-        <p style={{ color: 'blue' }}>Materialbestellung</p>
+        <h3 className='bluetext'>Materialbestellung</h3>
         <div className="row">
           <div className="col-sm-3">
             <div className="row">
-              <label htmlFor="inputPassword" className="col-sm-9 col-form-label">
+              <label htmlFor="inputPassword" className="col-sm-8 col-form-label text-right">
                 Bestellte Anzahl Fragebögen
               </label>
-              <div className="col-sm-3">
+              <div className="col-sm-4">
                 <input type="number" className="form-control" />
               </div>
             </div>
           </div>
           <div className="col-sm-3">
             <div className="row">
-              <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              <label htmlFor="inputPassword" className="col-sm-4 col-form-label text-right">
                 Extras
               </label>
               <div className="col-sm-8">
@@ -103,7 +103,7 @@ const CustomerInfo = () => {
           </div>
           <div className="col-sm-3">
             <div className="row">
-              <label htmlFor="inputPassword" className="col-sm-6 col-form-label">
+              <label htmlFor="inputPassword" className="col-sm-6 col-form-label text-right">
                 Newsletter-Datum
               </label>
               <div className="col-sm-6">
@@ -113,11 +113,11 @@ const CustomerInfo = () => {
           </div>
           <div className="col-sm-3">
             <div className="row">
-              <label htmlFor="inputPassword" className="col-sm-8 col-form-label">
+              <label htmlFor="inputPassword" className="col-sm-6 col-form-label text-right">
                 Newsletter-Abonnement
               </label>
               <div className="col-sm-4">
-                <div className="d-flex mt-2">
+                <div className="d-flex mt-6">
                   <input type="checkbox" />
                   &nbsp;Aktiv
                   <input type="checkbox" />
@@ -129,7 +129,7 @@ const CustomerInfo = () => {
         </div>
         <br />
         <hr />
-        <p style={{ color: 'blue' }}>status</p>
+        <h3 className='bluetext'>status</h3>
         <div className="row">
           <div className="col-sm-6">
             <br />
@@ -194,7 +194,7 @@ const CustomerInfo = () => {
         </div>
         <hr />
         <div className="row">
-          <p>Quelle</p>
+        <h3 className='bluetext'>Quelle</h3>
           <div className="col-sm-4">
             <select className="form-control">
               <option>Formular</option>
@@ -210,7 +210,7 @@ const CustomerInfo = () => {
       <br />
       <div className="row card p-3">
         <div className="row">
-          <p style={{ color: 'blue' }}>Kontaktdaten</p>
+        <h3 className='bluetext'>Kontaktdaten</h3>
           <div className="col-sm-6">
             <br />
             <div className="mb-6 row">
@@ -292,7 +292,7 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div>
-        <p style={{ color: 'blue' }}>Rechnungsadresse</p>
+        <h3 className='bluetext'>Rechnungsadresse</h3>
         <div className="row">
           <div className="col-sm-6">
             <div className="mb-6 row">
@@ -333,7 +333,7 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div>
-        <p style={{ color: 'blue' }}>Lieferadresse c/o</p>
+        <h3 className='bluetext'>Lieferadresse c/o</h3>
         <div className="row">
           <div className="col-sm-6">
             <div className="mb-6 row">
@@ -416,7 +416,7 @@ const CustomerInfo = () => {
           </div>
         </div>
         <hr />
-        <p style={{ color: 'blue' }}>Hinterlegung</p>
+        <h3 className='bluetext'>Hinterlegung</h3>
         <div className="row">
           <div className="col-sm-4">
             Hinterlegung &nbsp;&nbsp;
@@ -486,7 +486,7 @@ const CustomerInfo = () => {
         </div>
         <br />
         <hr />
-        <p style={{ color: 'blue' }}>Beedigung</p>
+        <h3 className='bluetext'>Beedigung</h3>
         <div className="row">
           <div className="col-sm-3">
             <input type="checkbox" />
