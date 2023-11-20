@@ -225,21 +225,21 @@ const PrintTemplate = () => {
                 <p style={{ textAlign: 'center', fontSize: '18px', marginBottom: '30px' }}>
                   Dieser Vorgang kann nicht ruckgangig gemacht werden.
                 </p>
-                <div className='popupfooterBtn'>
-                <button
-                  className="btn btn"
-                  style={{ background: '#d04545', color: 'white' }}
-                  onClick={handleDeleteCancel}
-                >
-                  Löschen
-                </button>
-                <button
-                  className="btn btn"
-                  style={{ background: '#015291', color: 'white' }}
-                  onClick={handleDeleteConfirm}
-                >
-                  Abbrechen
-                </button>
+                <div className="popupfooterBtn">
+                  <button
+                    className="btn btn"
+                    style={{ background: '#d04545', color: 'white' }}
+                    onClick={handleDeleteCancel}
+                  >
+                    Löschen
+                  </button>
+                  <button
+                    className="btn btn"
+                    style={{ background: '#015291', color: 'white' }}
+                    onClick={handleDeleteConfirm}
+                  >
+                    Abbrechen
+                  </button>
                 </div>
               </Modal.Body>
             </Modal>

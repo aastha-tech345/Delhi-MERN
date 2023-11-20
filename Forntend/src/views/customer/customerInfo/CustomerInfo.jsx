@@ -76,10 +76,12 @@ const CustomerInfo = () => {
   return (
     <>
       <br />
-      <h3 className='bluetext' style={{ color: 'blue' }}>Kundeninfo</h3>
+      <h3 className="bluetext" style={{ color: 'blue' }}>
+        Kundeninfo
+      </h3>
       <hr />
       <div className="row card p-2">
-        <h3 className='bluetext'>Materialbestellung</h3>
+        <h3 className="bluetext">Materialbestellung</h3>
         <div className="row">
           <div className="col-sm-3">
             <div className="row">
@@ -129,7 +131,7 @@ const CustomerInfo = () => {
         </div>
         <br />
         <hr />
-        <h3 className='bluetext'>status</h3>
+        <h3 className="bluetext">status</h3>
         <div className="row">
           <div className="col-sm-6">
             <br />
@@ -194,7 +196,7 @@ const CustomerInfo = () => {
         </div>
         <hr />
         <div className="row">
-        <h3 className='bluetext'>Quelle</h3>
+          <h3 className="bluetext">Quelle</h3>
           <div className="col-sm-4">
             <select className="form-control">
               <option>Formular</option>
@@ -210,7 +212,7 @@ const CustomerInfo = () => {
       <br />
       <div className="row card p-3">
         <div className="row">
-        <h3 className='bluetext'>Kontaktdaten</h3>
+          <h3 className="bluetext">Kontaktdaten</h3>
           <div className="col-sm-6">
             <br />
             <div className="mb-6 row">
@@ -292,7 +294,7 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div>
-        <h3 className='bluetext'>Rechnungsadresse</h3>
+        <h3 className="bluetext">Rechnungsadresse</h3>
         <div className="row">
           <div className="col-sm-6">
             <div className="mb-6 row">
@@ -333,7 +335,7 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div>
-        <h3 className='bluetext'>Lieferadresse c/o</h3>
+        <h3 className="bluetext">Lieferadresse c/o</h3>
         <div className="row">
           <div className="col-sm-6">
             <div className="mb-6 row">
@@ -416,7 +418,7 @@ const CustomerInfo = () => {
           </div>
         </div>
         <hr />
-        <h3 className='bluetext'>Hinterlegung</h3>
+        <h3 className="bluetext">Hinterlegung</h3>
         <div className="row">
           <div className="col-sm-4">
             Hinterlegung &nbsp;&nbsp;
@@ -486,7 +488,7 @@ const CustomerInfo = () => {
         </div>
         <br />
         <hr />
-        <h3 className='bluetext'>Beedigung</h3>
+        <h3 className="bluetext">Beedigung</h3>
         <div className="row">
           <div className="col-sm-3">
             <input type="checkbox" />
