@@ -12,7 +12,7 @@ exports.createCustomer = async (req, res) => {
       city,
       street,
       primary_contact,
-      created_by="customer",
+      created_by,
     } = req.body;
 
     const user = await UserModel.User.findOne({ role: "user" });
@@ -31,8 +31,7 @@ exports.createCustomer = async (req, res) => {
       city,
       street,
       primary_contact,
-      created_by,
-      parent_id: user._id,
+      created_by: user._id,
     };
 
     // Create a new customer instance

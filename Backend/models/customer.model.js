@@ -10,9 +10,8 @@ const customerSchema = new Schema({
   plz: {type:String},
   city: {type:String},
   street: {type:String},
-  created_by: { type: String },
-  // customer_id: { type: Schema.Types.ObjectId, ref: 'Customer' },
-  parent_id: { type: Schema.Types.ObjectId, ref: 'User' },
+  created_by: { type: Schema.Types.ObjectId, ref: 'User'},
+  // parent_id: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 const Customer = mongoose.model('customer', customerSchema,'customer');

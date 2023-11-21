@@ -1,6 +1,7 @@
 const UserModel = require("../models/user.model");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
+const mailer = require('../mailer/mailer')
 const jwt = require("jsonwebtoken");
 const keysecret = "asbndjhdjdkflfdghgj";
 
@@ -183,16 +184,6 @@ exports.login = async (req, res) => {
 };
 
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  port: 587,
-  secure: false,
-  auth: {
-    user: "aasthamodanwal.dl@gmail.com",
-    pass: "lnip qeej usrx hgca",
-  },
-});
-
 exports.forgotPassword = async (req, res) => {
   console.log(req.body);
 
@@ -230,15 +221,18 @@ exports.forgotPassword = async (req, res) => {
     }
 
     // Compose the email message
-    const mailOptions = {
-      from: "aasthamodanwal.dl@gmail.com",
-      to: email,
-      subject: "Password Reset",
-      html: `Click on the following link to reset your password: <a href="http://localhost:3000/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`,
-    };
+    // const mailOptions = {
+    //   from: "patientenverfuegung@test.computerbutler.de",
+    //   to: email,
+    //   subject: "Password Reset",
+    //   html: `Click on the following link to reset your password: <a href="http://localhost:3000/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`,
+    // };
 
     // Send the email
-    transporter.sendMail(mailOptions, (error, info) => {
+
+    let mailcontent = `Click on the following link to reset your password: <a href="http://localhost:3000/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`;
+
+    mailer.mailerFromTo(email, process.env.NO_REPLY, 'Password Reset', mailcontent, '', function (error, resp) {
       if (error) {
         console.error("Error sending email", error);
         return res.status(500).json({ status: 500, message: "Email not sent" });
@@ -249,6 +243,7 @@ exports.forgotPassword = async (req, res) => {
           .json({ status: 200, message: "Email sent successfully" });
       }
     });
+  
   } catch (error) {
     console.error("Error:", error);
     return res
