@@ -1,22 +1,13 @@
 const mongoose = require("mongoose");
 
-mongoose.connection.on("open",()=>{
-    console.log("database connected")
-})
+mongoose.connect("mongodb://127.0.0.1:27017/HVD", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-mongoose.connection.on("end",()=>{
-    console.log("database not connected")
-})
+const db = mongoose.connection;
 
-const startDatabase=async()=>{
-    try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/Project",{
-            useNewUrlParser:true,
-            useUnifiedTopology:true
-        });
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-module.exports=startDatabase
+db.on("error", console.error.bind(console, "Connection error:"));
+db.once("open", () => {
+  console.log("Connected to the database!");
+});

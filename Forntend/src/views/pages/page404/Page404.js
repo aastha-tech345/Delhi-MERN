@@ -38,4 +38,4 @@ const Page404 = () => {
   )
 }
 
-export default Page404
+export default React.memo(Page404)

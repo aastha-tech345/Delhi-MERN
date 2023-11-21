@@ -42,7 +42,7 @@ const userSchema = new Schema({
     unique: true,
   },
   password: { type: String },
-  mobile: { type: String },
+  mobile: { type: String  },
   tokens: [
     {
       token: {
@@ -94,5 +94,5 @@ userSchema.methods.getAuthToken = async function () {
   return tokenValue;
 };
 
-const User = model("User", userSchema);
+const User = model("users", userSchema);
 module.exports = { User };

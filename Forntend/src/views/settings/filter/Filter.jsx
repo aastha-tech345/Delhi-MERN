@@ -125,7 +125,7 @@ const Filter = () => {
       style={{
         background: 'white',
         height: '600px',
-        width: '1210px',
+        // width: '1210px',
         borderRadius: '5px 5px 5px 5px',
       }}
     >
@@ -144,14 +144,14 @@ const Filter = () => {
               className="form-control"
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-3">
             <button className="btn btn text-light" style={{ background: '#0b5995' }}>
               <BiFilterAlt />
               &nbsp; Filter
             </button>
           </div>
 
-          <div className="col-sm-5">
+          <div className="col-sm-6 text-right">
             <button
               className="btn btn"
               style={{ background: '#0b5995', color: 'white', marginLeft: '30px' }}
@@ -347,7 +347,7 @@ const Filter = () => {
             </Modal>{' '} */}
           </div>
         </div>
-        <div>
+        <div className="m-3">
           <Divider />
 
           <Table
@@ -365,4 +365,4 @@ const Filter = () => {
   )
 }
 
-export default Filter
+export default React.memo(Filter)

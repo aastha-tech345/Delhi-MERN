@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react'
 import JoditEditor from 'jodit-react'
 
-export default function EmailTemplate() {
+const EmailTemplate = () => {
   const editor = useRef(null)
   const [content, setContent] = useState('')
   const placeholder = `Hallo {{ activity.user }}
@@ -45,7 +45,7 @@ export default function EmailTemplate() {
           className="form-control p-2"
           placeholder="Ihre {{ activity.title }} Aktivität ist fällig am {{ activity.due_date }}"
         />
-        <p>Nachricht</p>
+        <p>Inhalt</p>
         <div className="row">
           <div className="col-sm-12">
             <JoditEditor
@@ -80,7 +80,30 @@ export default function EmailTemplate() {
   {{ activity.updated_at }} - Aktualisiert am`}
           ></textarea>
         </div>
+        <br />
+        <div className="row">
+          <div className="col-sm-9"></div>
+          <div className="col-sm-3">
+            <button
+              type="button"
+              className="btn btn"
+              style={{ background: '#d04545', color: 'white' }}
+            >
+              Abbrechen
+            </button>
+            &nbsp; &nbsp;
+            <button
+              type="button"
+              style={{ background: '#0b5995', color: 'white' }}
+              className="btn btn"
+            >
+              Speichern
+            </button>
+          </div>
+        </div>
       </div>
     </>
   )
 }
+
+export default React.memo(EmailTemplate)

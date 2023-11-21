@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Services() {
+const Services = () => {
   return (
     <>
       <div className="row card">
@@ -91,11 +91,6 @@ export default function Services() {
             <div className="row">
               <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Medizinische Festlegungen</p>
               <div className="col-sm-3">Unverzichtbare Basisversorgung</div>
-              <div className="col-sm-2 d-flex">
-                <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
-                <input type="checkbox" /> &nbsp; nein
-              </div>
-              <div className="col-sm-3">Keine Intensivmedizin</div>
               <div className="col-sm-2 d-flex">
                 <input type="checkbox" /> &nbsp; ja &nbsp; &nbsp;
                 <input type="checkbox" /> &nbsp; nein
@@ -195,25 +190,13 @@ export default function Services() {
             <br />
             <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Begleitung am Lebensende</p>
             <p style={{ color: '#0b5995' }}>Arztin</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <p style={{ color: '#0b5995' }}>Seelischer Beistand</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <p style={{ color: '#0b5995' }}>Keinesfalls</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <div className="row">
               <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Bestattungswunsche</p>
@@ -229,18 +212,10 @@ export default function Services() {
               </div>
             </div>
             <p style={{ color: '#0b5995' }}>Bestattungsvorsorge</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <p style={{ color: '#0b5995' }}>Sonstiges</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            <input type="text" className="form-control" />
             <hr />
             <div className="row">
               <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Vollmachten</p>
@@ -321,18 +296,6 @@ export default function Services() {
                 }}
               >
                 <p>Kontaktangaben</p>
-                <input
-                  type="date"
-                  default
-                  style={{
-                    borderRadius: '5px 5px 5px 5px',
-                    paddingLeft: '10px',
-                    height: '40px',
-                    width: '200px',
-                    border: '1px solid #ebedef',
-                  }}
-                />
-
                 <div className="row">
                   <div className="col-sm-6 mb-3">
                     <div className=" row mt-2">
@@ -519,3 +482,5 @@ export default function Services() {
     </>
   )
 }
+
+export default React.memo(Services)

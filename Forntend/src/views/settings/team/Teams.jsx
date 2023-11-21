@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import { LuFilePlus } from 'react-icons/lu'
 import { IoMdAdd } from 'react-icons/io'
 
-export default function Teams() {
+const Teams = () => {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -76,3 +76,5 @@ export default function Teams() {
     </div>
   )
 }
+
+export default Teams

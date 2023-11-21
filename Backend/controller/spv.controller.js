@@ -50,32 +50,54 @@ exports.createSpv = async (req, res) => {
   }
 };
 
-exports.getSpv = async(req,res)=>{
-  const result = await SpvInfomation.SpvInfo.find()
-  res.send(result)
-}
+exports.getSpv = async (req, res) => {
+  try {
+    const result = await SpvInfomation.SpvInfo.find();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
-exports.getSpvData = async(req,res)=>{
-  const result = await SpvInfomation.SpvInfo.findOne({_id:req.params.id})
-  res.send(result)
-}
+exports.getSpvData = async (req, res) => {
+  try {
+    const result = await SpvInfomation.SpvInfo.findOne({ _id: req.params.id });
+    if (!result) {
+      return res.status(404).send({ error: 'SPV information not found' });
+    }
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
-exports.getSpvDataUpdate = async(req,res)=>{
-  const result = await SpvInfomation.SpvInfo.updateOne({_id:req.params.id},{$set:req.body})
-  res.send(result)
-}
+exports.getSpvDataUpdate = async (req, res) => {
+  try {
+    const result = await SpvInfomation.SpvInfo.updateOne({ _id: req.params.id }, { $set: req.body });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
-exports.getSpvDataDelete = async(req,res)=>{
-  const result = await SpvInfomation.SpvInfo.deleteOne({_id:req.params.id})
-  res.send(result)
-}
+exports.getSpvDataDelete = async (req, res) => {
+  try {
+    const result = await SpvInfomation.SpvInfo.deleteOne({ _id: req.params.id });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
-
-exports.getSpvSearch = async(req,res)=>{
-  const result = await SpvInfomation.SpvInfo.find({
-    "$or":[
-      {fname:{$regex:req.params.key}}
-    ]
-  })
-  res.send(result)
-}
+exports.getSpvSearch = async (req, res) => {
+  try {
+    const result = await SpvInfomation.SpvInfo.find({
+      "$or": [
+        { fname: { $regex: req.params.key } }
+      ]
+    });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};

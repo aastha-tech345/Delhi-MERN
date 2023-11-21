@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CAvatar,
   CBadge,
@@ -9,23 +9,14 @@ import {
   CDropdownMenu,
   CDropdownToggle,
 } from '@coreui/react'
-import {
-  cilBell,
-  cilCreditCard,
-  cilCommentSquare,
-  cilEnvelopeOpen,
-  cilFile,
-  cilLockLocked,
-  cilSettings,
-  cilTask,
-  cilUser,
-} from '@coreui/icons'
+import { cilBell } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { AiOutlineMail } from 'react-icons/ai'
 import { Avatar, Badge } from 'antd'
 import avatar8 from './../../assets/images/avatars/8.jpg'
 import { Button, Popover } from 'antd'
 import { Link } from 'react-router-dom'
+import AppModal from './AppModal'
 const content = (
   <div style={{ width: '220px' }}>
     <p>Benachrichtigungen</p>
@@ -74,6 +65,10 @@ const content = (
   </div>
 )
 const AppHeaderDropdown = () => {
+  // const [open, setOpen] = useState(false)
+  // const modalOpen = () => {
+  //   setOpen(true)
+  // }
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -93,7 +88,10 @@ const AppHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="#">
+        <CDropdownItem
+          href="#"
+          //  onClick={modalOpen}
+        >
           <svg
             width="20"
             height="20"
@@ -114,8 +112,10 @@ const AppHeaderDropdown = () => {
               </clipPath>
             </defs>
           </svg>
-          Profil
+          Profile
         </CDropdownItem>
+        {/* {open && <AppModal />} */}
+
         <CDropdownItem href="#">
           <svg
             width="19"

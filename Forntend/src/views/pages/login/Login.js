@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Row from 'react-bootstrap/Row'
 import { Link, useNavigate } from 'react-router-dom'
+import ReCAPTCHA from 'react-google-recaptcha'
+import logo from '../../../assets/images/logo-hvd-bundesverband.png'
+
 import {
   CButton,
   CCard,
@@ -54,12 +57,9 @@ const Login = () => {
       console.log(result)
       const token = result.user.tokens[0].token
       const role = result.user.role
-      //console.log(record)
       window.localStorage.setItem('token', token)
       window.localStorage.setItem('role', role)
-      window.localStorage.setItem('record', result)
-      const resultString = JSON.stringify(result)
-      window.localStorage.setItem('record', resultString)
+      window.localStorage.setItem('record', JSON.stringify(result))
 
       navigate('/dashboard')
       window.location.reload()
@@ -76,72 +76,73 @@ const Login = () => {
   const forgetPassword = () => {
     navigate('/password-reset')
   }
+
+  function onChange(value) {
+    console.log('Captcha value:', value)
+  }
+
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <div
+      className=" min-vh-100 d-flex flex-row align-items-center"
+      style={{ background: '#015291' }}
+    >
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md={8}>
+          <CCol md={4}>
+            <img src={logo} style={{ width: '400px' }} alt="..." />
+            <br />
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
                   <Form noValidate validated={validated}>
+                    <h4 style={{ color: '#015291', fontWeight: 'bold', textAlign: 'center' }}>
+                      Anmeldung
+                    </h4>
                     <Row className="mb-3">
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
-                        <Form.Label>Username</Form.Label>
+                        <Form.Label>E-Mail Adresse</Form.Label>
                         <Form.Control
                           value={email}
-                          onChange={(e) => {
-                            setEmail(e.target.value)
-                          }}
+                          onChange={(e) => setEmail(e.target.value)}
                           required
                           type="email"
                           placeholder="Enter Your Email Id"
-                          defaultValue="anshika"
                         />
                       </Form.Group>
                     </Row>
                     <Row className="mb-3">
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>Passwort</Form.Label>
                         <Form.Control
                           required
                           value={password}
-                          onChange={(e) => {
-                            setPassword(e.target.value)
-                          }}
+                          onChange={(e) => setPassword(e.target.value)}
                           type="password"
                           placeholder="password"
-                          defaultValue="123"
                         />
                       </Form.Group>
                     </Row>
-                    <div className="d-flex">
-                      <Button onClick={login}>Login Here</Button>&nbsp;&nbsp;&nbsp;
-                      <p color="primary" onClick={forgetPassword} className="mt-3" tabIndex={-1}>
-                        Register Now!
+                    <div>
+                      {/* <ReCAPTCHA sitekey="Your client site key" onChange={onChange} /> */}
+                      <br />
+                      <Button
+                        className="form-control"
+                        style={{ background: '#015291' }}
+                        onClick={login}
+                      >
+                        Senden
+                      </Button>
+                      <p
+                        style={{ textAlign: 'center', color: '#015291' }}
+                        color="primary"
+                        onClick={forgetPassword}
+                        className="mt-1 mx-3"
+                        tabIndex={-1}
+                      >
+                        Passwort vergessen ?
                       </p>
                     </div>
                   </Form>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <CButton
-                      color="primary"
-                      onClick={registerPage}
-                      className="mt-3"
-                      active
-                      tabIndex={-1}
-                    >
-                      Register Now!
-                    </CButton>
-                  </div>
                 </CCardBody>
               </CCard>
             </CCardGroup>
@@ -152,4 +153,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default React.memo(Login)

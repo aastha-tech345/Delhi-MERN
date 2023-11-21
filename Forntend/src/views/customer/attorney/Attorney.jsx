@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Attorney() {
+const Attorney = () => {
   return (
     <>
       <h5 className="mt-2 mx-4">Vollmachten</h5>
@@ -12,17 +12,68 @@ export default function Attorney() {
             <input type="checkbox" />
             <br />
             <p style={{ color: 'blue' }}>Bevollmächtigte Person(en):</p>
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th>Vorname</th>
-                  <th>Nachname</th>
-                  <th>Adresse</th>
-                  <th>Telefon</th>
-                  <th>Mobil</th>
-                </tr>
-              </thead>
-            </table>
+            <div className="row">
+              <div className="col-sm-3">
+                <div className="mb-2 row">
+                  <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                    Vorname
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      placeholder="jo"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="mb-2 row">
+                  <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                    Nachname
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      placeholder="jo"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="mb-2 row">
+                  <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                    Adresse
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      placeholder="jo"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="mb-2 row">
+                  <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                    Telefone
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      placeholder="jo"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="row p-3">
@@ -34,20 +85,71 @@ export default function Attorney() {
             <p style={{ color: 'blue' }}>Bevollmächtigte Person(en):</p>
             &nbsp;Datensatz aus Gesundheitsvollmacht übernehmen&nbsp;&nbsp;&nbsp;
             <input type="checkbox" />
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th>Vorname</th>
-                  <th>Nachname</th>
-                  <th>Adresse</th>
-                  <th>Telefon</th>
-                  <th>Mobil</th>
-                </tr>
-              </thead>
-            </table>
+            <div className="row">
+              <div className="col-sm-3">
+                <div className="mb-2 row">
+                  <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                    Vorname
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      placeholder="jo"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="mb-2 row">
+                  <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                    Nachname
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      placeholder="jo"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="mb-2 row">
+                  <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                    Adresse
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      placeholder="jo"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="mb-2 row">
+                  <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                    Telefone
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="text"
+                      placeholder="jo"
+                      className="form-control"
+                      id="inputPassword"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row p-3">
           <div className="col-sm-12">
             <p style={{ color: 'blue' }}>BETREUUNGSVER FÜGUNG</p>
             &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
@@ -55,7 +157,7 @@ export default function Attorney() {
           </div>
         </div>
         <hr />
-        <div className="row">
+        <div className="row p-3">
           <div className="col-sm-12">
             <p style={{ color: 'blue' }}>VOLLMACHT Z UR A B SICHERUNG DES DIGITALEN ER B ES</p>
             &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
@@ -87,3 +189,5 @@ export default function Attorney() {
     </>
   )
 }
+
+export default React.memo(Attorney)

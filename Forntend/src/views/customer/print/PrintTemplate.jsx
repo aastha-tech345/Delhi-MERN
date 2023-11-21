@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 
-export default function PrintTemplate() {
+const PrintTemplate = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
@@ -112,7 +112,7 @@ export default function PrintTemplate() {
           style={{
             background: 'white',
             Height: '640px',
-            width: '1210px',
+            // width: '1210px',
             borderRadius: '5px 5px 5px 5px ',
           }}
         >
@@ -136,7 +136,7 @@ export default function PrintTemplate() {
               <Modal.Title className="mt-3 mx-4">Neue E-Mail Vorlage anlegen</Modal.Title>
               <div className="row px-4">
                 <div className="col-sm-12">
-                  <label>Thema</label>
+                  <label>Bezeichnung</label>
                   <input
                     type="text"
                     className="form-control"
@@ -185,7 +185,7 @@ export default function PrintTemplate() {
             <Modal show={isModalVisible} onHide={handleDeleteCancel} centered size="sm">
               <Modal.Title>
                 <svg
-                  style={{ marginLeft: '130px', marginTop: '45px' }}
+                  style={{ marginLeft: '130px', marginTop: '25px' }}
                   width="44"
                   height="53"
                   viewBox="0 0 44 53"
@@ -225,20 +225,22 @@ export default function PrintTemplate() {
                 <p style={{ textAlign: 'center', fontSize: '18px', marginBottom: '30px' }}>
                   Dieser Vorgang kann nicht ruckgangig gemacht werden.
                 </p>
-                <button
-                  className="btn btn w-30 ms-4"
-                  style={{ background: '#d04545', color: 'white', marginRight: '18px' }}
-                  onClick={handleDeleteCancel}
-                >
-                  Löschen
-                </button>
-                <button
-                  className="btn btn w-30"
-                  style={{ background: '#015291', color: 'white', marginRight: '20px' }}
-                  onClick={handleDeleteConfirm}
-                >
-                  Abbrechen
-                </button>
+                <div className="popupfooterBtn">
+                  <button
+                    className="btn btn"
+                    style={{ background: '#d04545', color: 'white' }}
+                    onClick={handleDeleteCancel}
+                  >
+                    Löschen
+                  </button>
+                  <button
+                    className="btn btn"
+                    style={{ background: '#015291', color: 'white' }}
+                    onClick={handleDeleteConfirm}
+                  >
+                    Abbrechen
+                  </button>
+                </div>
               </Modal.Body>
             </Modal>
           </div>
@@ -247,3 +249,5 @@ export default function PrintTemplate() {
     </>
   )
 }
+
+export default React.memo(PrintTemplate)

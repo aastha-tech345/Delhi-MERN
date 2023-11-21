@@ -5,7 +5,7 @@ import { LuFilePlus } from 'react-icons/lu'
 import { IoMdAdd } from 'react-icons/io'
 import { DownOutlined } from '@ant-design/icons'
 import { Dropdown, Space, Typography } from 'antd'
-export default function Roll() {
+const Roll = () => {
   const [show, setShow] = useState(false)
   // eslint-disable-next-line no-undef
   const handleClose = () => setShow(false)
@@ -51,7 +51,7 @@ export default function Roll() {
               <Modal.Body>
                 <input type="text" placeholder="Name" className="form-control" />
                 <h5 className="mt-2 fw-bold">Berechtigungen</h5>
-                <h5 className="mt-3 fw-bold">Druckvorlage</h5>
+                <h5 className="mt-3 fw-bold">Textbausteine</h5>
                 <div className="row">
                   <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
                   <div className="col-sm-5"></div>
@@ -179,7 +179,71 @@ export default function Roll() {
                     </Dropdown>
                   </div>
                 </div>
-                <h5 className="mt-3 fw-bold">Benutzer erstellen</h5>
+                <h5 className="mt-3 fw-bold">Mitarbeiterlnnen</h5>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['3'],
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space>
+                          Nur im Besitz
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['3'],
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space>
+                          Nur im Besitz
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['3'],
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space>
+                          Nur im Besitz
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        defaultSelectedKeys: ['3'],
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space style={{ marginLeft: '15px' }}>
+                          Widerrufen
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                  </div>
+                </div>
+                <h5 className="mt-3 fw-bold">Klientlnnen</h5>
                 <div className="row">
                   <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
                   <div className="col-sm-5"></div>
@@ -263,3 +327,5 @@ export default function Roll() {
     </div>
   )
 }
+
+export default React.memo(Roll)

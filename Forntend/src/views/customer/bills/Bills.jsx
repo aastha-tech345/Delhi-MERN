@@ -83,4 +83,4 @@ const Bills = () => {
     </div>
   )
 }
-export default Bills
+export default React.memo(Bills)
