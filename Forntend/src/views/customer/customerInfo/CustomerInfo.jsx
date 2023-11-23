@@ -10,11 +10,9 @@ const CustomerInfo = () => {
     extras: '',
     newsletterSubscription: '',
   })
-  const [selectedValues, setSelectedValues] = useState([])
-
   const [customerInfoStatu, setCustomerInfoStatu] = useState({
-    clientStatus: selectedValues,
-    dataProtection: '',
+    clientStatus: [],
+    dataProtection: false,
     employee: '',
     dataCollection: '',
   })
@@ -30,10 +28,10 @@ const CustomerInfo = () => {
   })
 
   const [customerBills, setCustomerBills] = useState({
-    address: '',
-    plz: '',
-    land: '',
-    ort: '',
+    billAddress: '',
+    billPlz: '',
+    billLand: '',
+    billOrt: '',
   })
   const [customerDelivery, setCustomerDelivery] = useState({
     fname: '',
@@ -72,32 +70,15 @@ const CustomerInfo = () => {
     customerBurial: customerBurial,
   }
   //materialChange started
-  const handleCheckboxChange = (e, checkboxValue) => {
-    const { name } = e.target
-    const newValue = e.target.checked ? checkboxValue : ''
-    setOrderingMaterials({ ...orderingMaterials, [name]: newValue })
-  }
   const matarialChange = (e) => {
     const { name, value } = e.target
-
-    // If it's a checkbox, set the value based on whether it's checked or not
-    const newValue = e.target.type === 'checkbox' ? (e.target.checked ? value : '') : value
-
-    setOrderingMaterials({ ...orderingMaterials, [name]: newValue })
+    setOrderingMaterials({ ...orderingMaterials, [name]: value })
   }
-
   //materialChange end
-
-
-  const customerInfoChanges = (selectedOptions) => {
-    setSelectedValues(selectedOptions)
-    // Your additional logic goes here
-  }
 
   //customerInfoChange started
   const customerInfoChange = (e) => {
     const { name, value } = e.target
-
     setCustomerInfoStatu({ ...customerInfoStatu, [name]: value })
   }
   //customerInfoChange end
@@ -163,7 +144,7 @@ const CustomerInfo = () => {
     //   body: JSON.stringify({ fname }),
     // })
     // let result = await response.json()
-    console.log('data', customerInfoStatu)
+    console.log('data', data)
   }
   return (
     <>
@@ -234,25 +215,20 @@ const CustomerInfo = () => {
               </label>
               <div className="col-sm-4">
                 <div className="d-flex mt-6">
-                  <label>
-                    <input
-                      type="checkbox"
-                      name="newsletterSubscription"
-                      checked={orderingMaterials.newsletterSubscription === 'Aktiv'}
-                      onChange={(e) => handleCheckboxChange(e, 'Aktiv')}
-                    />
-                    &nbsp;Aktiv
-                  </label>
-
-                  <label>
-                    <input
-                      type="checkbox"
-                      name="newsletterSubscription"
-                      checked={orderingMaterials.newsletterSubscription === 'Inaktiv'}
-                      onChange={(e) => handleCheckboxChange(e, 'Inaktiv')}
-                    />
-                    &nbsp;Inaktiv
-                  </label>
+                  <input
+                    type="checkbox"
+                    name="newsletterSubscription"
+                    value={orderingMaterials.newsletterSubscription}
+                    onChange={matarialChange}
+                  />
+                  &nbsp;Aktiv
+                  <input
+                    type="checkbox"
+                    // name="newsletterSubscription"
+                    // value={orderingMaterials.newsletterSubscription}
+                    // onChange={matarialChange}
+                  />
+                  &nbsp;Inaktiv
                 </div>
               </div>
             </div>
@@ -275,8 +251,8 @@ const CustomerInfo = () => {
                 <Select
                   className="form-multi-select"
                   name="clientStatus"
-                  onChange={customerInfoChanges}
-                  value={selectedValues}
+                  onChange={customerInfoChange}
+                  value={customerInfoStatu.clientStatus}
                   id="ms1"
                   isMulti
                   options={options}
@@ -291,9 +267,9 @@ const CustomerInfo = () => {
               <div className="col-sm-6">
                 <select
                   onChange={customerInfoChange}
-                  name="employee"
                   value={customerInfoStatu.employee}
                   className="form-control"
+                  name="employee"
                   defaultValue="MitarbeiterInnen"
                 >
                   <option value="MitarbeiterInnen">MitarbeiterInnen</option>
@@ -328,15 +304,15 @@ const CustomerInfo = () => {
             </div>
             <br />
             <div className="mb-5 row">
-              <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+              <label htmlFor="inputDate" className="col-sm-4 col-form-label">
                 Datum Datenerfassung
               </label>
               <div className="col-sm-6">
                 <input
                   placeholder="02/09/2000"
-                  type="password"
+                  type="date"
                   className="form-control"
-                  id="inputPassword"
+                  id="inputDate"
                   name="dataCollection"
                   onChange={customerInfoChange}
                   value={customerInfoStatu.dataCollection}
@@ -482,7 +458,7 @@ const CustomerInfo = () => {
                   type="text"
                   onChange={BillChange}
                   name="address"
-                  value={customerBills.address}
+                  value={customerBills.billAddress}
                   className="form-control"
                   id="inputPassword"
                 />
@@ -498,7 +474,7 @@ const CustomerInfo = () => {
                   type="text"
                   onChange={BillChange}
                   name="plz"
-                  value={customerBills.plz}
+                  value={customerBills.billPlz}
                   className="form-control"
                   id="inputPassword"
                 />
@@ -515,7 +491,7 @@ const CustomerInfo = () => {
                   type="text"
                   onChange={BillChange}
                   name="ort"
-                  value={customerBills.ort}
+                  value={customerBills.billOrt}
                   className="form-control"
                   id="inputText"
                 />
@@ -531,7 +507,7 @@ const CustomerInfo = () => {
                   type="password"
                   onChange={BillChange}
                   name="land"
-                  value={customerBills.land}
+                  value={customerBills.billLand}
                   className="form-control"
                   id="inputPassword"
                 />

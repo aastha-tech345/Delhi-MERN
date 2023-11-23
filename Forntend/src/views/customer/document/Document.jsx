@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd } from 'react-icons/md'
 import { Divider, Radio, Table } from 'antd'
@@ -9,12 +9,12 @@ import { postFetchUser } from 'src/Api'
 const columns = [
   {
     title: 'Title',
-    dataIndex: 'name',
+    dataIndex: 'document_title',
     render: (text) => <a>{text}</a>,
   },
   {
     title: 'Dokumententyp',
-    dataIndex: 'age',
+    dataIndex: 'document_type',
   },
   {
     title: 'AKTION',
@@ -27,32 +27,6 @@ const columns = [
         Löschen
       </>
     ),
-  },
-]
-const dataa = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sydney No. 1 Lake Park',
   },
 ]
 
@@ -82,6 +56,7 @@ const Document = () => {
     customer_id: result._id,
   })
   const [document_upload, setDocumentUpload] = useState('')
+  const [documentRecord, setDocumentRecord] = useState([])
   const handleChange = (e) => {
     const { name, value } = e.target
     setData({ ...data, [name]: value })
@@ -97,21 +72,34 @@ const Document = () => {
       myForm.append('document_type', data.document_type)
       myForm.append('customer_id', data.customer_id)
       myForm.append('document_upload', document_upload)
-      
+
       console.log(myForm)
       const url = `${apiUrl}/document/create_document`
       console.log(url)
-      const response = await postFetchUser(url,myForm)
-      console.log('ashishh', response)
+      const response = await postFetchUser(url, myForm)
+      handleClose()
+      getDetails()
+      //console.log('ashishh', response)
     } catch (error) {
       return error
     }
   }
 
+  const getDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/document/get_document`)
+      const data = await result.json()
+      setDocumentRecord(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+  let dataa = documentRecord
+  useEffect(() => {
+    getDetails()
+  }, [])
+
   return (
-    // < className="row">
-    //
-    //   <hr />
     <>
       <div className="row">
         <h5 className="mt-3 mx-3">Dokumente</h5>
@@ -160,7 +148,7 @@ const Document = () => {
                 className="form-control"
               >
                 <option>--select--</option>
-                <option value="vorschlag">pdf</option>
+                <option value="pdf">pdf</option>
               </select>
               <label htmlFor="fileUpload">Datei-Upload</label>
               <input

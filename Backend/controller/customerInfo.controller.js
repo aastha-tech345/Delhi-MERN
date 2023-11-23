@@ -15,6 +15,14 @@ exports.createCustomerInfo = async (req, res) => {
       customer_id
     } = req.body;
 
+    // const user = await CustomerModel.Customer.findOne({
+    //   created_by: "customer",
+    // });
+    // if (!user) {
+    //   return res
+    //     .status(400)
+    //     .send({ message: "No customer found to link as parent" });
+    // }
     const customerInfo = new CustomerInfomation.CustomerInfo({
       orderingMaterials,
       customerInfoStatu,

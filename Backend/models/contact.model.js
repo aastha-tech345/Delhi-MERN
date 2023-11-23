@@ -10,6 +10,12 @@ const contactSchema = new Schema({
   gender:{type:String},
   customer_id: { type: String},
   // added_by:{type: mongoose.Schema.Types.ObjectId, }
+  status: {
+    type: String,
+    enum: ['active', 'deleted'],
+    default: 'active',
+  },
+  customer_id: { type: mongoose.Schema.Types.ObjectId }
 });
 
 const Contact = mongoose.model('contact', contactSchema,'contact');

@@ -7,7 +7,8 @@ import Row from 'react-bootstrap/Row'
 import { Link, useNavigate } from 'react-router-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
 import logo from '../../../assets/images/logo-hvd-bundesverband.png'
-
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import {
   CButton,
   CCard,
@@ -28,7 +29,7 @@ const Login = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const navigate = useNavigate()
   const [validated, setValidated] = useState(false)
-
+  const notify = (dataa) => toast(dataa)
   const login = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -65,7 +66,8 @@ const Login = () => {
       window.location.reload()
     } catch (error) {
       console.error('Error:', error)
-      alert('An error occurred. Please try again later.')
+      // alert('An error occurred. Please try again later.')
+      notify('Invalid Credentials')
     }
   }
 
@@ -149,6 +151,7 @@ const Login = () => {
           </CCol>
         </CRow>
       </CContainer>
+      <ToastContainer />
     </div>
   )
 }

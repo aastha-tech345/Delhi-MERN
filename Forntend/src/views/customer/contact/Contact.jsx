@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Divider, Table } from 'antd'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -9,6 +9,7 @@ import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
 import { useParams } from 'react-router-dom'
 import { CListGroup } from '@coreui/react'
+import axios from 'axios'
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -23,12 +24,12 @@ const rowSelection = {
 const columns = [
   {
     title: 'Name des Kunden',
-    dataIndex: 'name',
+    dataIndex: 'fname',
     render: (text) => <a>{text}</a>,
   },
   {
     title: 'Kunden-ID',
-    dataIndex: 'key',
+    dataIndex: '_id',
   },
   {
     title: 'E-Mail',
@@ -45,56 +46,22 @@ const columns = [
   {
     title: 'AKTION',
     dataIndex: 'action',
-    render: () => (
+    render: (_, record) => (
       <>
         <GrEdit />
         &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-        <MdDelete />
+        <MdDelete onClick={() => handleDelete(record._id)} />
         Löschen
       </>
     ),
   },
 ]
-
-const dataa = [
-  {
-    key: '1',
-    name: 'John Brown',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-]
-
+const handleDelete = (customerId) => {
+  console.log(`Deleting customer with ID: ${customerId}`)
+}
 const Contact = () => {
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
-console.log("ashishh",result._id)
   const [data, setData] = useState({
     fname: '',
     lname: '',
@@ -108,6 +75,9 @@ console.log("ashishh",result._id)
   const apiUrl = process.env.REACT_APP_API_URL
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  const [contactRecord, setContactRecord] = useState([])
+  const [searchKey, setSearchKey] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const [selectionType] = useState('checkbox')
   const params = useParams()
 
@@ -121,7 +91,6 @@ console.log("ashishh",result._id)
 
   const saveData = async () => {
     try {
-      console.log('ashishhhh', data)
       let response = await fetch(`${apiUrl}/contact/create_contact`, {
         method: 'POST',
         headers: {
@@ -142,11 +111,38 @@ console.log("ashishh",result._id)
     }
   }
 
+  const getDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/contact/get_contact`)
+      const data = await result.json()
+      setContactRecord(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/contact/search/${searchKey}`)
+      setSearchResults(response.data)
+    } catch (error) {
+      console.error('Error searching for contact info:', error)
+    }
+  }
+
+  //console.log(contactRecord)
+  let dataa = contactRecord
+  useEffect(() => {
+    getDetails()
+  }, [])
+
   return (
     <div>
       <div className="row m-4 p-4" style={{ borderRadius: '5px', border: '1px solid lightgray' }}>
         <div className="col-sm-3">
           <input
+            value={searchKey}
+            onChange={(e) => setSearchKey(e.target.value)}
             type="search"
             id="form1"
             placeholder="Ihre Suche eingeben"
@@ -155,7 +151,7 @@ console.log("ashishh",result._id)
         </div>
         <div className="col-sm-4">
           <button className="btn btn text-light" style={{ background: '#0b5995' }}>
-            <BiFilterAlt />
+            <BiFilterAlt onClick={handleSearch} />
             &nbsp; Filter
           </button>
         </div>
@@ -273,25 +269,25 @@ console.log("ashishh",result._id)
                     <input
                       type="radio"
                       name="gender"
-                      value="Männlich"
+                      value="male"
                       onChange={handleChange}
-                      checked={data.gender === 'Männlich'}
+                      checked={data.gender === 'male'}
                     />{' '}
                     &nbsp; Männlich
                     <input
                       type="radio"
                       name="gender"
-                      value="Weiblich"
+                      value="female"
                       onChange={handleChange}
-                      checked={data.gender === 'Weiblich'}
+                      checked={data.gender === 'female'}
                     />{' '}
                     &nbsp; Weiblich
                     <input
                       type="radio"
                       name="gender"
-                      value="Andere"
+                      value="other"
                       onChange={handleChange}
-                      checked={data.gender === 'Andere'}
+                      checked={data.gender === 'other'}
                     />
                     &nbsp; Andere
                   </div>

@@ -1,5 +1,5 @@
 const ContactInfomation = require('../models/contact.model');
-const CustomerModel = require('../models/customer.model');
+// const CustomerModel = require('../models/customer.model');
 
 exports.createContact = async (req, res) => {
   try {
@@ -54,7 +54,7 @@ exports.getContact = async (req, res) => {
 
 exports.getContactData = async (req, res) => {
   try {
-    const result = await ContactInfomation.Contact.findOne({ _id: req.params.id });
+    const result = await ContactInfomation.Contact.findOne({ _id: req.params.id, status: { $ne: "deleted" }, });
     res.send(result);
   } catch (error) {
     console.error("Error fetching contact data:", error);
@@ -74,10 +74,13 @@ exports.getContactDataUpdate = async (req, res) => {
 
 exports.getContactDataDelete = async (req, res) => {
   try {
-    const result = await ContactInfomation.Contact.deleteOne({ _id: req.params.id });
+    const result = await ContactInfomation.Contact.updateOne(
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: { status: "deleted" } }
+    );
     res.send(result);
   } catch (error) {
-    console.error("Error deleting contact data:", error);
+    console.error(error);
     res.status(500).send("Internal Server Error");
   }
 };

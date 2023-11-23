@@ -1,6 +1,5 @@
 const DocumentInfo = require("../models/document.model");
 const CustomerModel = require("../models/customer.model");
-
 exports.createDocument = async (req, res) => {
   try {
     

@@ -6,7 +6,7 @@ const customerSchema = new Schema({
   fname: {type:String},
   lname: {type:String},
   phone: {type:String},
-  email: {type:String},
+  email: {type:String,unique:true},
   plz: {type:String},
   city: {type:String},
   street: {type:String},

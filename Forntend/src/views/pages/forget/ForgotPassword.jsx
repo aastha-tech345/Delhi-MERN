@@ -3,10 +3,10 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import logo from '../../../assets/images/logo-hvd-bundesverband.png'
-
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
 import { useNavigate, useParams, NavLink } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 
@@ -21,6 +21,8 @@ const ForgotPassword = () => {
   const [validated, setValidated] = useState(false)
   const [message, setMessage] = useState('')
   const navigate = useNavigate()
+
+  const notify = (dataa) => toast(dataa)
 
   const userValid = async () => {
     const res = await fetch(`${apiUrl}/user/forgotpassword/${id}/${token}`, {
@@ -65,7 +67,8 @@ const ForgotPassword = () => {
 
       const data = await res.json()
       console.log(data)
-      if (data.status === 201) {
+      if (data.status === 200) {
+        notify('Password Resest Successfully')
         navigate('/')
         setMessage(true)
       } else {
@@ -146,6 +149,7 @@ const ForgotPassword = () => {
           <CircularProgress />
         </Box>
       )}
+      <ToastContainer />
     </>
   )
 }

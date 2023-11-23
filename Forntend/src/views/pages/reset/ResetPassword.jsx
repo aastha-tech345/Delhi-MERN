@@ -3,7 +3,8 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import logo from '../../../assets/images/logo-hvd-bundesverband.png'
-
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
 
 const ResetPassword = () => {
@@ -12,13 +13,24 @@ const ResetPassword = () => {
   const [message, setMessage] = useState('')
   const [validated, setValidated] = useState(false)
 
+  const notify = (dataa) => toast(dataa)
+
   const sendLink = async (e) => {
-    let edata = { email }
     e.preventDefault()
 
     if (email === '') {
+      // Handle case when email is empty
+      console.log('Email is required')
+      return
     } else if (!email.includes('@')) {
-    } else {
+      // Handle case when email is invalid
+      console.log('Invalid email format')
+      return
+    }
+
+    try {
+      const edata = { email }
+
       const res = await fetch(`${apiUrl}/user/forgot-password`, {
         method: 'post',
         headers: {
@@ -26,15 +38,23 @@ const ResetPassword = () => {
         },
         body: JSON.stringify(edata),
       })
-      //console.log(`yaha res aa rha hai ${res}`)
+
       const data = await res.json()
-      console.log('fghjkl', data)
+      console.log('Response:', data)
+
       if (data.status === 200) {
+        notify('Password reset link sent successfully')
         setEmail('')
-        setMessage(true)
+        setMessage('Password reset link sent successfully')
       } else if (data.status === 401) {
-        console.log('this error')
+        console.log('Unauthorized error')
+      } else if (data.status === 404) {
+        notify('Invalid Email')
+      } else {
+        console.log('Unexpected status:', data.status)
       }
+    } catch (error) {
+      console.error('Error:', error.message)
     }
   }
 
@@ -91,6 +111,7 @@ const ResetPassword = () => {
           </CRow>
         </CContainer>
       </div>
+      <ToastContainer />
     </>
   )
 }
