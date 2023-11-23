@@ -14,16 +14,9 @@ exports.createSpv = async (req, res) => {
       atorney,
       fee,
       information,
+      customer_id,
     } = req.body;
 
-    const user = await CustomerModel.Customer.findOne({
-      created_by: "customer",
-    });
-    if (!user) {
-      return res
-        .status(400)
-        .send({ message: "No customer found to link as parent" });
-    }
     const spv = new SpvInfomation.SpvInfo({
       motivation,
       resuscitation,
@@ -35,8 +28,7 @@ exports.createSpv = async (req, res) => {
       atorney,
       fee,
       information,
-      added_by: null,
-      customer_id: user._id,
+      customer_id
     });
 
     const result = await spv.save();

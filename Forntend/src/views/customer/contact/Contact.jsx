@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Divider, Table } from 'antd'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -8,6 +8,8 @@ import { BiFilterAlt } from 'react-icons/bi'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
 import { useParams } from 'react-router-dom'
+import { CListGroup } from '@coreui/react'
+import axios from 'axios'
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -22,12 +24,12 @@ const rowSelection = {
 const columns = [
   {
     title: 'Name des Kunden',
-    dataIndex: 'name',
+    dataIndex: 'fname',
     render: (text) => <a>{text}</a>,
   },
   {
     title: 'Kunden-ID',
-    dataIndex: 'key',
+    dataIndex: '_id',
   },
   {
     title: 'E-Mail',
@@ -44,71 +46,51 @@ const columns = [
   {
     title: 'AKTION',
     dataIndex: 'action',
-    render: () => (
+    render: (_, record) => (
       <>
         <GrEdit />
         &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-        <MdDelete />
+        <MdDelete onClick={() => handleDelete(record._id)} />
         Löschen
       </>
     ),
   },
 ]
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-]
-
+const handleDelete = (customerId) => {
+  console.log(`Deleting customer with ID: ${customerId}`)
+}
 const Contact = () => {
-  const [fname, setFname] = useState('')
-  const [lname, setLname] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [gender, setGender] = useState('')
+  let res = localStorage.getItem('customerDatat')
+  let result = JSON.parse(res)
+  console.log('ashishh', result._id)
+  const [data, setData] = useState({
+    fname: '',
+    lname: '',
+    phone: '',
+    email: '',
+    gender: '',
+    customer_id: result?._id,
+  })
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  const [contactRecord, setContactRecord] = useState([])
+  const [searchKey, setSearchKey] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const [selectionType] = useState('checkbox')
   const params = useParams()
-  console.log(params.id)
+
+  const handleChange = (e) => {
+    const { name, value, type } = e.target
+
+    const newValue = type === 'radio' ? e.target.value : value
+
+    setData({ ...data, [name]: newValue })
+  }
+
   const saveData = async () => {
-    let data = { fname, lname, phone, email, gender }
-    if (!fname || !lname || !email || !gender || !phone) {
-      return
-    }
     try {
       let response = await fetch(`${apiUrl}/contact/create_contact`, {
         method: 'POST',
@@ -130,11 +112,38 @@ const Contact = () => {
     }
   }
 
+  const getDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/contact/get_contact`)
+      const data = await result.json()
+      setContactRecord(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/contact/search/${searchKey}`)
+      setSearchResults(response.data)
+    } catch (error) {
+      console.error('Error searching for contact info:', error)
+    }
+  }
+
+  //console.log(contactRecord)
+  let dataa = contactRecord
+  useEffect(() => {
+    getDetails()
+  }, [])
+
   return (
     <div>
       <div className="row m-4 p-4" style={{ borderRadius: '5px', border: '1px solid lightgray' }}>
         <div className="col-sm-3">
           <input
+            value={searchKey}
+            onChange={(e) => setSearchKey(e.target.value)}
             type="search"
             id="form1"
             placeholder="Ihre Suche eingeben"
@@ -143,8 +152,7 @@ const Contact = () => {
         </div>
         <div className="col-sm-4">
           <button className="btn btn text-light" style={{ background: '#0b5995' }}>
-            {/* <i className="fas fa-search">Filter</i> */}
-            <BiFilterAlt />
+            <BiFilterAlt onClick={handleSearch} />
             &nbsp; Filter
           </button>
         </div>
@@ -158,7 +166,6 @@ const Contact = () => {
           >
             <MdAdd />
             &nbsp;Neuen Kunden anlegen
-            {/* Create new customer */}
           </button>
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
@@ -169,20 +176,18 @@ const Contact = () => {
                 <div className="mb-2 row">
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Vorname
-                    {/* first name */}
                   </label>
                   <div className="col-sm-9">
                     <input
                       type="text"
-                      value={fname}
-                      onChange={(e) => {
-                        setFname(e.target.value)
-                      }}
+                      name="fname"
+                      value={data.fname}
+                      onChange={handleChange}
                       placeholder="jo"
                       className="form-control"
                       id="inputPassword"
                     />
-                    {error && fname.trim().length === 0 && (
+                    {error && data.fname.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
                       </p>
@@ -192,20 +197,18 @@ const Contact = () => {
                 <div className="mb-2 row">
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Nachname
-                    {/* second name */}
                   </label>
                   <div className="col-sm-9">
                     <input
                       type="text"
-                      value={lname}
-                      onChange={(e) => {
-                        setLname(e.target.value)
-                      }}
+                      name="lname"
+                      value={data.lname}
+                      onChange={handleChange}
                       placeholder="verma"
                       className="form-control"
                       id="inputPassword"
                     />
-                    {error && lname.trim().length === 0 && (
+                    {error && data.lname.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
                       </p>
@@ -215,20 +218,18 @@ const Contact = () => {
                 <div className="mb-2 row">
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Telefon
-                    {/* phone */}
                   </label>
                   <div className="col-sm-9">
                     <input
-                      type="number"
-                      value={phone}
-                      onChange={(e) => {
-                        setPhone(e.target.value)
-                      }}
+                      type="tel"
+                      name="phone"
+                      value={data.phone}
+                      onChange={handleChange}
                       placeholder="91+ 8354568464"
                       className="form-control"
                       id="inputPassword"
                     />
-                    {error && phone.trim().length === 0 && (
+                    {error && data.phone.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
                       </p>
@@ -242,15 +243,14 @@ const Contact = () => {
                   <div className="col-sm-9">
                     <input
                       type="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value)
-                      }}
+                      name="email"
+                      value={data.email}
+                      onChange={handleChange}
                       placeholder="jo@gmail.com"
                       className="form-control"
                       id="inputPassword"
                     />
-                    {error && email.trim().length === 0 && (
+                    {error && data.email.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
                       </p>
@@ -261,7 +261,7 @@ const Contact = () => {
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Geschlecht
                   </label>
-                  {error && gender.trim().length === 0 && (
+                  {error && data.gender.trim().length === 0 && (
                     <p style={{ color: 'red' }}>
                       <BiErrorCircle /> required
                     </p>
@@ -271,30 +271,26 @@ const Contact = () => {
                       type="radio"
                       name="gender"
                       value="male"
-                      onChange={(e) => {
-                        setGender(e.target.value)
-                      }}
+                      onChange={handleChange}
+                      checked={data.gender === 'male'}
                     />{' '}
                     &nbsp; Männlich
                     <input
                       type="radio"
                       name="gender"
                       value="female"
-                      onChange={(e) => {
-                        setGender(e.target.value)
-                      }}
+                      onChange={handleChange}
+                      checked={data.gender === 'female'}
                     />{' '}
                     &nbsp; Weiblich
                     <input
                       type="radio"
                       name="gender"
                       value="other"
-                      onChange={(e) => {
-                        setGender(e.target.value)
-                      }}
+                      onChange={handleChange}
+                      checked={data.gender === 'other'}
                     />
                     &nbsp; Andere
-                    {/* other */}
                   </div>
                 </div>
               </div>
@@ -315,23 +311,12 @@ const Contact = () => {
                 style={{ background: '#0b5995', color: 'white' }}
               >
                 Aktivität hinzufügen
-                {/* Add activity */}
               </button>
             </Modal.Footer>
           </Modal>{' '}
         </div>
       </div>
       <div>
-        {/* <Radio.Group
-          onChange={({ target: { value } }) => {
-            setSelectionType(value)
-          }}
-          value={selectionType}
-        >
-          <Radio value="checkbox">Checkbox</Radio>
-          <Radio value="radio">radio</Radio>
-        </Radio.Group> */}
-
         <Divider />
 
         <Table
@@ -341,7 +326,7 @@ const Contact = () => {
           }}
           style={{ overflowX: 'auto' }}
           columns={columns}
-          dataSource={data}
+          dataSource={dataa}
         />
       </div>
     </div>

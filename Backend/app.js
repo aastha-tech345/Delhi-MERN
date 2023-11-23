@@ -59,6 +59,7 @@ app.use("/invoice", invoice);
 app.use("/print", print);
 app.use("/spv", spv);
 app.use("/attorney", attorney);
+app.use("/", express.static(path.join(__dirname, "./public/document")));
 
 app.use('/', express.static(path.join(__dirname, '/build')));
 app.get('/', function (req, res) {

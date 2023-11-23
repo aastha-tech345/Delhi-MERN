@@ -1,5 +1,5 @@
 const ContactInfomation = require('../models/contact.model');
-const CustomerModel = require('../models/customer.model');
+// const CustomerModel = require('../models/customer.model');
 
 exports.createContact = async (req, res) => {
   try {
@@ -10,22 +10,22 @@ exports.createContact = async (req, res) => {
       email,
       phone,
       gender,
+      customer_id
     } = req.body;
 
-    const user = await CustomerModel.Customer.findOne({ created_by: "customer" });
-    if (!user) {
-      return res
-        .status(400)
-        .send({ message: "No customer found to link as parent" });
-    }
+    // const user = await CustomerModel.Customer.findOne({ created_by: "customer" });
+    // if (!user) {
+    //   return res
+    //     .status(400)
+    //     .send({ message: "No customer found to link as parent" });
+    // }
     const contact = new ContactInfomation.Contact({
       fname,
       lname,
       email,
       phone,
       gender,
-      added_by:null,
-      customer_id: user._id,
+      customer_id,
     });
 
     const result = await contact.save();
@@ -54,7 +54,7 @@ exports.getContact = async (req, res) => {
 
 exports.getContactData = async (req, res) => {
   try {
-    const result = await ContactInfomation.Contact.findOne({ _id: req.params.id });
+    const result = await ContactInfomation.Contact.findOne({ _id: req.params.id, status: { $ne: "deleted" }, });
     res.send(result);
   } catch (error) {
     console.error("Error fetching contact data:", error);
@@ -74,10 +74,13 @@ exports.getContactDataUpdate = async (req, res) => {
 
 exports.getContactDataDelete = async (req, res) => {
   try {
-    const result = await ContactInfomation.Contact.deleteOne({ _id: req.params.id });
+    const result = await ContactInfomation.Contact.updateOne(
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: { status: "deleted" } }
+    );
     res.send(result);
   } catch (error) {
-    console.error("Error deleting contact data:", error);
+    console.error(error);
     res.status(500).send("Internal Server Error");
   }
 };
