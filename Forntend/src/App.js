@@ -23,6 +23,7 @@ const App = () => {
     <BrowserRouter>
       <Suspense fallback={loading}>
         <Routes>
+          {!hasToken == true && <Route path="/" element={<Login />} />}
           {!hasToken && <Route path="/" element={<Login />} />}
           {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/register" element={<Register />} />

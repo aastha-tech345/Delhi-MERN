@@ -17,6 +17,16 @@ exports.createCustomer = async (req, res) => {
       created_by,
     } = req.body;
 
+    const emailFind=await Customer.findOne({email})
+
+
+    if(emailFind){
+      return res.status(407).json({
+        success:false,
+        message:"Email Id Already Exists"
+      })
+    }
+
     const user = await UserModel.User.findOne({ role: "user" });
     if (!user) {
       return res
@@ -53,10 +63,32 @@ exports.createCustomer = async (req, res) => {
   }
 };
 
+exports.editCustomer=async(req,res)=>{
+  try {
+    const data=await Customer.findByIdAndUpdate(req.params.id,req.body,{
+      new:true
+    })
+
+    res.status(200).json({
+      success:true,
+      message:"Customer updated successfully",
+      data:data
+    })
+  } catch (error) {
+    console.error("Error searching data:", error.message);
+    res.status(500).json({ error: "Server Error" });
+  }
+}
+
 exports.getCustomer = async (req, res) => {
-  const result = await Customer.find();
-  res.send(result);
-};
+  try {
+    const result = (await Customer.find()).reverse();
+    return res.send(result);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: "Server Error" });
+  }
+}
 
 exports.getCustomerData = async (req, res) => {
   try {
@@ -81,6 +113,13 @@ exports.editCustomer=async(req,res)=>{
     const data=await Customer.findByIdAndUpdate(req.params.id,req.body,{
       new:true
     })
+
+   if (!data){
+      res.status(500).json({
+        success:false,
+        message:"Customer updated Unsuccessfully",
+      })
+    }
 
     res.status(200).json({
       success:true,

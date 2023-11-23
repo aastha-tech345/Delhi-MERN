@@ -6,6 +6,7 @@ exports.createDocument = async (req, res) => {
     const document = new DocumentInfo.Document({
     ...req.body,document_upload:req?.file?.filename
     });
+    console.log("ashishhh",document)
 
     const result = await document.save();
     res.status(201).json({

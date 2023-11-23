@@ -20,8 +20,8 @@ const attorneySchema = new Schema({
   power: pawerofattorneySchema,
   provision: careProvisionSchema,
   securing: securingattorneySchema,
-  customer_id: { type: mongoose.Schema.Types.ObjectId, ref: "Customer" },
-  added_by: { type: String },
+  customer_id: { type: mongoose.Schema.Types.ObjectId },
+
 });
 
 const Attorney = mongoose.model("attorney", attorneySchema, "attorney");

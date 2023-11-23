@@ -181,7 +181,7 @@ export const putFetchData = async (url, data) => {
         'Content-Type': 'application/json',
       },
       data,
-      withCredentials: true,
+      // withCredentials: true,
     })
     if (response) {
       return response

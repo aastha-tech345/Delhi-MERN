@@ -3,11 +3,23 @@ const Schema = mongoose.Schema;
 
 
 const activitySchema = new Schema({
-  title:{type:String},
-  administration:{type:String},
-  editor:{type:String},
-  customer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
-  added_by:{type:String}
+  phone:{
+    title:{type:String},
+    administration:{type:String},
+  },
+  message:{
+    title:{type:String},
+    administration:{type:String},
+  },
+  email:{
+    title:{type:String},
+    administration:{type:String},
+  },
+  print:{
+    title:{type:String},
+    administration:{type:String},
+  },
+  customer_id: { type: mongoose.Schema.Types.ObjectId},
 });
 
 const Activity = mongoose.model('activity', activitySchema,'activity');

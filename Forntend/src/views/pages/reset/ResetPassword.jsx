@@ -3,7 +3,8 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import logo from '../../../assets/images/logo-hvd-bundesverband.png'
-
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
 
 const ResetPassword = () => {
@@ -11,6 +12,8 @@ const ResetPassword = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const [message, setMessage] = useState('')
   const [validated, setValidated] = useState(false)
+
+  const notify = (dataa) => toast(dataa)
 
   const sendLink = async (e) => {
     e.preventDefault()
@@ -40,10 +43,13 @@ const ResetPassword = () => {
       console.log('Response:', data)
 
       if (data.status === 200) {
+        notify('Password reset link sent successfully')
         setEmail('')
         setMessage('Password reset link sent successfully')
       } else if (data.status === 401) {
         console.log('Unauthorized error')
+      } else if (data.status === 404) {
+        notify('Invalid Email')
       } else {
         console.log('Unexpected status:', data.status)
       }
@@ -105,6 +111,7 @@ const ResetPassword = () => {
           </CRow>
         </CContainer>
       </div>
+      <ToastContainer />
     </>
   )
 }

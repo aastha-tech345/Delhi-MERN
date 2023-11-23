@@ -347,7 +347,7 @@ const Filter = () => {
             </Modal>{' '} */}
           </div>
         </div>
-        <div className='m-3'>
+        <div className="m-3">
           <Divider />
 
           <Table

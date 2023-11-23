@@ -62,7 +62,6 @@ const handleDelete = (customerId) => {
 const Contact = () => {
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
-  console.log('ashishh', result._id)
   const [data, setData] = useState({
     fname: '',
     lname: '',

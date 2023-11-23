@@ -8,7 +8,6 @@ require("dotenv").config();
 require("./config/db.js");
 
 var app = express();
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -59,6 +58,7 @@ app.use("/invoice", invoice);
 app.use("/print", print);
 app.use("/spv", spv);
 app.use("/attorney", attorney);
+
 app.use("/", express.static(path.join(__dirname, "./public/document")));
 
 app.use('/', express.static(path.join(__dirname, '/build')));

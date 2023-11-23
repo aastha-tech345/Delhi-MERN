@@ -5,7 +5,10 @@ import { MdDelete, MdAdd } from 'react-icons/md'
 import { Table, Checkbox } from 'antd'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
+import Form from 'react-bootstrap/Form'
 
 const CustomerList = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
@@ -24,6 +27,13 @@ const CustomerList = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [show, setShow] = useState(false)
+  const [validated, setValidated] = useState(false)
+
+  const notify = (data) => toast(data)
+
+  //console.log('aastha', phone)
+  // eslint-disable-next-line no-undef
+
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const searchInputRef = useRef()
@@ -63,7 +73,7 @@ const CustomerList = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <GrEdit />
+          <GrEdit onClick={() => handleEdit(record)} />
           &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
           <MdDelete onClick={() => handleIconClick(record._id)} />
           Löschen
@@ -90,7 +100,6 @@ const CustomerList = () => {
         })
 
         if (response.ok) {
-          console.log('Record deleted successfully')
           getDetails()
         } else {
           const errorData = await response.json()
@@ -103,11 +112,18 @@ const CustomerList = () => {
     }
   }
 
-  const saveData = async () => {
+  const saveData = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
+    setValidated(true)
     let data = { fname, lname, street, city, phone, plz, email, land, dob, group }
     if (
       !fname ||
-      !lname ||
+      // !lname ||
       !street ||
       !city ||
       !phone ||
@@ -130,14 +146,18 @@ const CustomerList = () => {
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
+        // console.log("rerror found")
       }
 
       let result = await response.json()
-      console.log(result)
+      notify(result?.message)
+
       handleClose()
       getDetails()
     } catch (error) {
-      console.error('Error during API call:', error)
+      // console.error('Error during API call:', error)
+
+      notify('Email-`Id Already Exists')
     }
   }
 
@@ -155,17 +175,22 @@ const CustomerList = () => {
     }
   }
   let data = customer_record
-  console.log(data)
   const handleStore = (data, record) => {
-    console.log('data', record)
     let res = JSON.stringify(record)
     localStorage.setItem('customerDatat', res)
   }
 
+  const [hide, setHide] = useState(false)
+  // if(hide===false){
+  //   getDetails()
+  // }
+  const handleEdit = (record) => {
+    let res = JSON.stringify(record)
+    localStorage.setItem('CustomerRecord', res)
+    setHide(true)
+  }
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
+    onChange: (selectedRowKeys, selectedRows) => {},
     getCheckboxProps: (record) => ({
       disabled: record.name === 'Disabled User',
       // Column configuration not to be checked
@@ -183,7 +208,6 @@ const CustomerList = () => {
       if (activeRecords.length > 0) {
         setCustomerRecord(activeRecords)
       } else {
-        console.log('No active records found.')
         setCustomerRecord(data)
         // getDetails()
       }
@@ -199,12 +223,13 @@ const CustomerList = () => {
   return (
     <>
       <div>
+        {hide ? <EditModal setHide={setHide} getDetails={getDetails} /> : ''}
         <h5 style={{ fontWeight: 'bold' }}>Kunden-Listen</h5>
         <div className="row m-4 p-4  shadow" style={{ background: 'white', borderRadius: '5px' }}>
           <div className="col-sm-3">
             <input
               ref={searchInputRef}
-              type="search"
+              type="text"
               id="form1"
               placeholder="Ihre Suche eingeben"
               className="form-control"
@@ -231,144 +256,155 @@ const CustomerList = () => {
               <Modal.Header closeButton>
                 <Modal.Title>Neuen Kunden anlegen</Modal.Title>
               </Modal.Header>
+
               <Modal.Body>
-                <div className="row p-3">
-                  <div className="col-sm-6">
-                    <input
-                      value={fname}
-                      onChange={(e) => {
-                        setFname(e.target.value)
-                      }}
-                      type="text"
-                      placeholder="Vornamen"
-                      className="form-control"
-                      id="inputPassword"
-                    />
+                <Form noValidate validated={validated}>
+                  <div className="row p-3">
+                    <div className="col-sm-6">
+                      <input
+                        value={fname}
+                        onChange={(e) => {
+                          setFname(e.target.value)
+                        }}
+                        type="text"
+                        placeholder="Vornamen"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <input
+                        type="text"
+                        value={lname}
+                        onChange={(e) => {
+                          setLname(e.target.value)
+                        }}
+                        placeholder="Nachname"
+                        className="form-control"
+                        id="inputPassword"
+                      />
+                    </div>
                   </div>
-                  <div className="col-sm-6">
-                    <input
-                      type="text"
-                      value={lname}
-                      onChange={(e) => {
-                        setLname(e.target.value)
-                      }}
-                      placeholder="Nachname"
-                      className="form-control"
-                      id="inputPassword"
-                    />
+                  <div className="row p-3">
+                    <div className="col-sm-12">
+                      <input
+                        value={street}
+                        onChange={(e) => {
+                          setStreet(e.target.value)
+                        }}
+                        type="text"
+                        placeholder="Straβe + Hnr"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="row p-3">
-                  <div className="col-sm-12">
-                    <input
-                      value={street}
-                      onChange={(e) => {
-                        setStreet(e.target.value)
-                      }}
-                      type="text"
-                      placeholder="Straβe + Hnr"
-                      className="form-control"
-                      id="inputPassword"
-                    />
+                  <div className="row p-3">
+                    <div className="col-sm-6">
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value)
+                        }}
+                        placeholder="E-Mail"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <input
+                        value={phone}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9]/g, '')
+                          setPhone(inputValue)
+                        }}
+                        type="tel"
+                        placeholder="Telefon"
+                        className="form-control"
+                        id="inputTelephone"
+                        maxLength={10}
+                        minLength={3}
+                        required={true}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="row p-3">
-                  <div className="col-sm-6">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value)
-                      }}
-                      placeholder="E-Mail"
-                      className="form-control"
-                      id="inputPassword"
-                    />
+                  <div className="row p-3">
+                    <div className="col-sm-6">
+                      <input
+                        value={plz}
+                        onChange={(e) => {
+                          setPlz(e.target.value)
+                        }}
+                        type="text"
+                        placeholder="PLZ"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <input
+                        value={city}
+                        onChange={(e) => {
+                          setCity(e.target.value)
+                        }}
+                        type="text"
+                        placeholder="Stadt"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
                   </div>
-                  <div className="col-sm-6">
-                    <input
-                      value={phone}
-                      onChange={(e) => {
-                        const inputValue = e.target.value.replace(/[^0-9]/g, '')
-                        setPhone(inputValue)
-                      }}
-                      type="tel"
-                      placeholder="Telefon"
-                      className="form-control"
-                      id="inputTelephone"
-                      maxLength={10}
-                      minLength={3}
-                      required={true}
-                    />
+                  <div className="row p-3">
+                    <div className="col-sm-6">
+                      <input
+                        value={dob}
+                        onChange={(e) => {
+                          setDob(e.target.value)
+                        }}
+                        type="date"
+                        placeholder="Geburtsdatum"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <input
+                        value={land}
+                        onChange={(e) => {
+                          setLand(e.target.value)
+                        }}
+                        type="text"
+                        placeholder="Land"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="row p-3">
-                  <div className="col-sm-6">
-                    <input
-                      value={plz}
-                      onChange={(e) => {
-                        setPlz(e.target.value)
-                      }}
-                      type="text"
-                      placeholder="PLZ"
-                      className="form-control"
-                      id="inputPassword"
-                    />
+                  <div className="row p-3">
+                    <div className="col-sm-6">
+                      <select
+                        className="form-control"
+                        value={group}
+                        onChange={(e) => {
+                          setGroup(e.target.value)
+                        }}
+                        required={true}
+                      >
+                        <option value="">--select group--</option>
+                        <option value="HVD-PV">HVD</option>
+                        <option value="PV-ALT">ALT</option>
+                      </select>
+                    </div>
                   </div>
-                  <div className="col-sm-6">
-                    <input
-                      value={city}
-                      onChange={(e) => {
-                        setCity(e.target.value)
-                      }}
-                      type="text"
-                      placeholder="Stadt"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-                  </div>
-                </div>
-                <div className="row p-3">
-                  <div className="col-sm-6">
-                    <input
-                      value={dob}
-                      onChange={(e) => {
-                        setDob(e.target.value)
-                      }}
-                      type="date"
-                      placeholder="Geburtsdatum"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-                  </div>
-                  <div className="col-sm-6">
-                    <input
-                      value={land}
-                      onChange={(e) => {
-                        setLand(e.target.value)
-                      }}
-                      type="text"
-                      placeholder="Land"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-                  </div>
-                </div>
-                <div className="row p-3">
-                  <div className="col-sm-6">
-                    <select
-                      className="form-control"
-                      value={group}
-                      onChange={(e) => {
-                        setGroup(e.target.value)
-                      }}
-                    >
-                      <option value="">--select group--</option>
-                      <option value="HVD-PV">HVD</option>
-                      <option value="PV-ALT">ALT</option>
-                    </select>
-                  </div>
-                </div>
+                </Form>
               </Modal.Body>
               <Modal.Footer>
                 <button
@@ -396,7 +432,6 @@ const CustomerList = () => {
             </Modal>
           </div>
         </div>
-        <EditModal />
         <Table rowKey="_id" rowSelection={rowSelection} columns={columns} dataSource={data} />
         <Modal show={isModalVisible} onHide={handleModalClose} centered>
           <Modal.Title>
@@ -455,7 +490,7 @@ const CustomerList = () => {
               &nbsp;&nbsp;
               <button
                 className="btn btn w-25"
-                style={{ background: '#d04545' }}
+                style={{ background: '#d04545', color: 'white' }}
                 onClick={handleDeleteConfirm}
               >
                 Löschen
@@ -464,6 +499,7 @@ const CustomerList = () => {
           </Modal.Footer>
         </Modal>
       </div>
+      <ToastContainer />
     </>
   )
 }
