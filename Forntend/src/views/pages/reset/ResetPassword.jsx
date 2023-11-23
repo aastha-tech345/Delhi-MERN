@@ -13,12 +13,21 @@ const ResetPassword = () => {
   const [validated, setValidated] = useState(false)
 
   const sendLink = async (e) => {
-    let edata = { email }
     e.preventDefault()
 
     if (email === '') {
+      // Handle case when email is empty
+      console.log('Email is required')
+      return
     } else if (!email.includes('@')) {
-    } else {
+      // Handle case when email is invalid
+      console.log('Invalid email format')
+      return
+    }
+
+    try {
+      const edata = { email }
+
       const res = await fetch(`${apiUrl}/user/forgot-password`, {
         method: 'post',
         headers: {
@@ -26,15 +35,20 @@ const ResetPassword = () => {
         },
         body: JSON.stringify(edata),
       })
-      //console.log(`yaha res aa rha hai ${res}`)
+
       const data = await res.json()
-      console.log('fghjkl', data)
+      console.log('Response:', data)
+
       if (data.status === 200) {
         setEmail('')
-        setMessage(true)
+        setMessage('Password reset link sent successfully')
       } else if (data.status === 401) {
-        console.log('this error')
+        console.log('Unauthorized error')
+      } else {
+        console.log('Unexpected status:', data.status)
       }
+    } catch (error) {
+      console.error('Error:', error.message)
     }
   }
 

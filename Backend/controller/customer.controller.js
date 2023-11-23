@@ -11,7 +11,9 @@ exports.createCustomer = async (req, res) => {
       plz,
       city,
       street,
-      primary_contact,
+      dob,
+      land,
+      group,
       created_by,
     } = req.body;
 
@@ -30,7 +32,9 @@ exports.createCustomer = async (req, res) => {
       plz,
       city,
       street,
-      primary_contact,
+      dob,
+      land,
+      group,
       created_by: user._id,
     };
 
@@ -56,41 +60,66 @@ exports.getCustomer = async (req, res) => {
 
 exports.getCustomerData = async (req, res) => {
   try {
-    const result = await Customer.findOne({ _id: req.params.id, status: { $ne: 'deleted' } });
+    const result = await Customer.findOne({
+      _id: req.params.id,
+      status: { $ne: "deleted" },
+    });
 
     if (result) {
       res.send(result);
     } else {
-      res.status(404).send({ message: 'Customer not found' });
+      res.status(404).send({ message: "Customer not found" });
     }
   } catch (error) {
-    console.error('Error fetching customer data:', error);
-    res.status(500).send({ message: 'Internal Server Error' });
+    console.error("Error fetching customer data:", error);
+    res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
+exports.editCustomer=async(req,res)=>{
+  try {
+    const data=await Customer.findByIdAndUpdate(req.params.id,req.body,{
+      new:true
+    })
+
+    res.status(200).json({
+      success:true,
+      message:"Customer updated successfully",
+      data:data
+    })
+  } catch (error) {
+    console.error("Error searching data:", error.message);
+    res.status(500).json({ error: "Server Error" });
+  }
+}
 
 exports.deleteCustomer = async (req, res) => {
   try {
     const result = await Customer.updateOne(
-      { _id: req.params.id, status: { $ne: 'deleted' } },
-      { $set: { status: 'deleted' } }
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: { status: "deleted" } }
     );
-
-    if (result.nModified === 1) {
-      res.send({ message: 'Customer soft deleted successfully', result });
-    } else if (result.n === 0) {
-      // Customer not found or already soft-deleted
-      res.status(404).send({ message: 'Customer not found or already soft-deleted', result });
-    } else {
-      // Other unexpected scenarios
-      res.status(500).send({ message: 'Unexpected error occurred during soft delete', result });
-    }
+    res.send(result);
   } catch (error) {
-    console.error('Error deleting customer:', error);
-    res.status(500).send({ message: 'Internal Server Error', error });
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
-  
 };
 
-
+exports.searchCustomer = async (req, res) => {
+  try {
+    const searchKey = req.params.searchKey;
+    const result = await Customer.find({
+      $or: [
+        { fname: { $regex: searchKey, $options: "i" } },
+        { group: { $regex: searchKey, $options: "i" } },
+        { email: { $regex: searchKey, $options: "i" } },
+        { phone: { $regex: searchKey, $options: "i" } }
+      ],
+    });
+    res.send(result);
+  } catch (error) {
+    console.error("Error searching data:", error.message);
+    res.status(500).send({ error: "Server Error" });
+  }
+};

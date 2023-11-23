@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { Divider, Radio, Table } from 'antd'
+import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
+import { Table, Checkbox } from 'antd'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import EditModal from './EditModal'
 
 const CustomerList = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
@@ -19,43 +20,103 @@ const CustomerList = () => {
   const [plz, setPlz] = useState()
   const [city, setCity] = useState()
   const [street, setStreet] = useState()
+  const [group, setGroup] = useState()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [show, setShow] = useState(false)
-
-  //console.log('aastha', phone)
-  // eslint-disable-next-line no-undef
   const handleClose = () => setShow(false)
-  // eslint-disable-next-line no-undef
   const handleShow = () => setShow(true)
-
-  // Move the function definition above its usage
-  const handleDelete = (record) => {
-    setIsModalVisible(true)
-    setSelectedRecord(record)
-  }
-
-  const handleDeleteConfirm = () => {
-    setIsModalVisible(false)
-  }
-
-  const handleDeleteCancel = () => {
-    setIsModalVisible(false)
-    setSelectedRecord(null)
-  }
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+  const searchInputRef = useRef()
+  const [selectedRecordId, setSelectedRecordId] = useState(null)
+  const columns = [
+    {
+      title: 'NAME DES KUNDEN',
+      dataIndex: 'fname',
+      render: (text, record) => (
+        <Link
+          style={{ textDecoration: 'none', color: 'black' }}
+          to={`/${record._id}`}
+          onClick={() => handleStore(text, record)}
+        >
+          {text}
+        </Link>
+      ),
     },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      // Column configuration not to be checked
-      name: record.name,
-    }),
+    {
+      title: 'KUNDEN-ID',
+      dataIndex: '_id',
+    },
+    {
+      title: 'E-MAIL',
+      dataIndex: 'email',
+    },
+    {
+      title: 'TELEFON',
+      dataIndex: 'phone',
+    },
+    {
+      title: 'GRUPPE',
+      dataIndex: 'group',
+    },
+    {
+      title: 'AKTION',
+      dataIndex: 'action',
+      render: (_, record) => (
+        <>
+          <GrEdit />
+          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+          <MdDelete onClick={() => handleIconClick(record._id)} />
+          Löschen
+        </>
+      ),
+    },
+  ]
+  const handleIconClick = (recordId) => {
+    setSelectedRecordId(recordId)
+    setIsModalVisible(true)
   }
+
+  const handleModalClose = () => {
+    setIsModalVisible(false)
+  }
+  const handleDeleteConfirm = async () => {
+    if (selectedRecordId) {
+      try {
+        const response = await fetch(`${apiUrl}/customer/get_record/${selectedRecordId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (response.ok) {
+          console.log('Record deleted successfully')
+          getDetails()
+        } else {
+          const errorData = await response.json()
+          console.error('Failed to delete record:', response.status, response.statusText, errorData)
+        }
+      } catch (error) {
+        console.error('An error occurred while deleting the record:', error)
+      }
+      setIsModalVisible(false)
+    }
+  }
+
   const saveData = async () => {
-    let data = { fname, lname, street, city, phone, plz, email, land, dob }
-    if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
+    let data = { fname, lname, street, city, phone, plz, email, land, dob, group }
+    if (
+      !fname ||
+      !lname ||
+      !street ||
+      !city ||
+      !phone ||
+      !plz ||
+      !email ||
+      !land ||
+      !dob ||
+      !group
+    ) {
       return
     }
     try {
@@ -74,6 +135,7 @@ const CustomerList = () => {
       let result = await response.json()
       console.log(result)
       handleClose()
+      getDetails()
     } catch (error) {
       console.error('Error during API call:', error)
     }
@@ -83,57 +145,56 @@ const CustomerList = () => {
     try {
       const result = await fetch(`${apiUrl}/customer/get_record`)
       const data = await result.json()
-      setCustomerRecord(data)
+
+      // Filter records with status 'active'
+      const activeRecords = data.filter((record) => record.status === 'active')
+
+      setCustomerRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
   }
+  let data = customer_record
+  console.log(data)
+  const handleStore = (data, record) => {
+    console.log('data', record)
+    let res = JSON.stringify(record)
+    localStorage.setItem('customerDatat', res)
+  }
 
-  const columns = [
-    {
-      title: 'NAME DES KUNDEN',
-      dataIndex: 'fname',
-      render: (text, record) => (
-        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/${record._id}`}>
-          {text}
-        </Link>
-      ),
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
     },
-    {
-      title: 'KUNDEN-ID',
-      dataIndex: '_id',
-    },
-    {
-      title: 'E-MAIL',
-      dataIndex: 'email',
-    },
-    {
-      title: 'TELEFON',
-      dataIndex: 'phone',
-    },
-    {
-      title: 'STATUS',
-      dataIndex: 'status',
-    },
-    {
-      title: 'AKTION',
-      dataIndex: 'action',
-      render: (_, record) => (
-        <>
-          <GrEdit />
-          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-          <MdDelete onClick={() => handleDelete(record)} />
-          Löschen
-        </>
-      ),
-    },
-  ]
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      // Column configuration not to be checked
+      name: record.name,
+    }),
+  }
+
+  const searchHandle = async () => {
+    try {
+      let key = searchInputRef.current.value
+      const response = await fetch(`${apiUrl}/customer/search/${key}`)
+      const data = await response.json()
+      const activeRecords = data.filter((record) => record.status === 'active')
+
+      if (activeRecords.length > 0) {
+        setCustomerRecord(activeRecords)
+      } else {
+        console.log('No active records found.')
+        setCustomerRecord(data)
+        // getDetails()
+      }
+    } catch (error) {
+      console.error('Error searching data:', error.message)
+    }
+  }
 
   useEffect(() => {
     getDetails()
   }, [])
-
-  let data = customer_record
 
   return (
     <>
@@ -142,6 +203,7 @@ const CustomerList = () => {
         <div className="row m-4 p-4  shadow" style={{ background: 'white', borderRadius: '5px' }}>
           <div className="col-sm-3">
             <input
+              ref={searchInputRef}
               type="search"
               id="form1"
               placeholder="Ihre Suche eingeben"
@@ -149,7 +211,11 @@ const CustomerList = () => {
             />
           </div>
           <div className="col-sm-6">
-            <button className="btn btn text-light" style={{ background: '#0b5995' }}>
+            <button
+              onClick={searchHandle}
+              className="btn btn text-light"
+              style={{ background: '#0b5995' }}
+            >
               filter
             </button>
           </div>
@@ -269,7 +335,7 @@ const CustomerList = () => {
                       onChange={(e) => {
                         setDob(e.target.value)
                       }}
-                      type="text"
+                      type="date"
                       placeholder="Geburtsdatum"
                       className="form-control"
                       id="inputPassword"
@@ -282,10 +348,25 @@ const CustomerList = () => {
                         setLand(e.target.value)
                       }}
                       type="text"
-                      placeholder="Stadt"
+                      placeholder="Land"
                       className="form-control"
                       id="inputPassword"
                     />
+                  </div>
+                </div>
+                <div className="row p-3">
+                  <div className="col-sm-6">
+                    <select
+                      className="form-control"
+                      value={group}
+                      onChange={(e) => {
+                        setGroup(e.target.value)
+                      }}
+                    >
+                      <option value="">--select group--</option>
+                      <option value="HVD-PV">HVD</option>
+                      <option value="PV-ALT">ALT</option>
+                    </select>
                   </div>
                 </div>
               </Modal.Body>
@@ -315,16 +396,9 @@ const CustomerList = () => {
             </Modal>
           </div>
         </div>
-
-        <Table
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-          }}
-          columns={columns}
-          dataSource={data}
-        />
-        <Modal show={isModalVisible} onHide={handleDeleteCancel} centered>
+        <EditModal />
+        <Table rowKey="_id" rowSelection={rowSelection} columns={columns} dataSource={data} />
+        <Modal show={isModalVisible} onHide={handleModalClose} centered>
           <Modal.Title>
             <svg
               style={{ marginLeft: '200px', marginTop: '25px' }}
@@ -373,17 +447,18 @@ const CustomerList = () => {
             <div>
               <button
                 className="btn btn w-25"
-                style={{ background: '#d04545' }}
-                onClick={handleDeleteCancel}
-              >
-                Löschen
-              </button>
-              <button
-                className="btn btn w-25"
                 style={{ background: '#015291', color: 'white' }}
-                onClick={handleDeleteConfirm}
+                onClick={handleModalClose}
               >
                 Abbrechen
+              </button>
+              &nbsp;&nbsp;
+              <button
+                className="btn btn w-25"
+                style={{ background: '#d04545' }}
+                onClick={handleDeleteConfirm}
+              >
+                Löschen
               </button>
             </div>
           </Modal.Footer>

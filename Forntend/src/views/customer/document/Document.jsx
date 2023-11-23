@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd } from 'react-icons/md'
 import { Divider, Radio, Table } from 'antd'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete } from 'react-icons/md'
+import axios from 'axios'
+import { postFetchUser } from 'src/Api'
 const columns = [
   {
     title: 'Title',
-    dataIndex: 'name',
+    dataIndex: 'document_title',
     render: (text) => <a>{text}</a>,
   },
   {
     title: 'Dokumententyp',
-    dataIndex: 'age',
+    dataIndex: 'document_type',
   },
   {
     title: 'AKTION',
@@ -25,32 +27,6 @@ const columns = [
         Löschen
       </>
     ),
-  },
-]
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sydney No. 1 Lake Park',
   },
 ]
 
@@ -70,21 +46,60 @@ const Document = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
   const [show, setShow] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
-  const [document_type, setDocumentType] = useState()
-  const [document_upload, setDocumentUpload] = useState()
-  const [document_title, setDocumentTitle] = useState()
+  // const [document_type, setDocumentType] = useState()
+  // const [document_title, setDocumentTitle] = useState()
+  let res = localStorage.getItem('customerDatat')
+  let result = JSON.parse(res)
+  const [data, setData] = useState({
+    document_title: '',
+    document_type: '',
+    customer_id: result._id,
+  })
+  const [document_upload, setDocumentUpload] = useState('')
+  const [documentRecord, setDocumentRecord] = useState([])
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setData({ ...data, [name]: value })
+  }
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  const saveData = () => {
-    let data = { document_title, document_type }
-    console.log(data)
-    fetch(`${apiUrl}`)
+
+  const saveData = async (e) => {
+    try {
+      e.preventDefault()
+      const myForm = new FormData()
+      myForm.append('document_title', data.document_title)
+      myForm.append('document_type', data.document_type)
+      myForm.append('customer_id', data.customer_id)
+      myForm.append('document_upload', document_upload)
+
+      console.log(myForm)
+      const url = `${apiUrl}/document/create_document`
+      console.log(url)
+      const response = await postFetchUser(url, myForm)
+      handleClose()
+      getDetails()
+      //console.log('ashishh', response)
+    } catch (error) {
+      return error
+    }
   }
 
+  const getDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/document/get_document`)
+      const data = await result.json()
+      setDocumentRecord(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+  let dataa = documentRecord
+  useEffect(() => {
+    getDetails()
+  }, [])
+
   return (
-    // < className="row">
-    //
-    //   <hr />
     <>
       <div className="row">
         <h5 className="mt-3 mx-3">Dokumente</h5>
@@ -118,27 +133,31 @@ const Document = () => {
               <input
                 id="title"
                 required
-                value={document_title}
-                onChange={(e) => {
-                  setDocumentTitle(e.target.value)
-                }}
+                name="document_title"
+                value={data.document_title}
+                onChange={handleChange}
                 type="text"
                 className="form-control"
               />
-              <label htmlFor="documentType">Dokumenttyp</label>
+              <label htmlFor="documentType">Documenttype</label>
               <select
-                id="documentType"
-                value={document_type}
-                onChange={(e) => {
-                  setDocumentType(e.target.value)
-                }}
+                id="document_type"
+                name="document_type"
+                value={data.document_type}
+                onChange={handleChange}
                 className="form-control"
               >
                 <option>--select--</option>
-                <option value="vorschlag">Vorschlag</option>
+                <option value="pdf">pdf</option>
               </select>
               <label htmlFor="fileUpload">Datei-Upload</label>
-              <input id="fileUpload" type="file" className="form-control" />
+              <input
+                id="fileUpload"
+                type="file"
+                className="form-control"
+                name="document_upload"
+                onChange={(e) => setDocumentUpload(e.target.files[0])}
+              />
             </Modal.Body>
             <Modal.Footer>
               <div className="modal-footer">
@@ -172,7 +191,7 @@ const Document = () => {
               ...rowSelection,
             }}
             columns={columns}
-            dataSource={data}
+            dataSource={dataa}
           />
         </div>
       </div>

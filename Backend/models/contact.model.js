@@ -8,8 +8,12 @@ const contactSchema = new Schema({
   phone: {type:String},
   email: {type:String},
   gender:{type:String},
-  customer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
-  added_by:{type:String}
+  status: {
+    type: String,
+    enum: ['active', 'deleted'],
+    default: 'active',
+  },
+  customer_id: { type: mongoose.Schema.Types.ObjectId }
 });
 
 const Contact = mongoose.model('contact', contactSchema,'contact');

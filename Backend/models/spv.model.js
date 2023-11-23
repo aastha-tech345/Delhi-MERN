@@ -3,52 +3,52 @@ const mongoose = require('mongoose');
 const motivationSchema = new mongoose.Schema({
   prevention: { type: String },
   illness: { type: String },
-  self_determination: { type: String },
+  selfDetermination: { type: String },
   relatives: { type: String },
   lessons: { type: String },
 });
 
 const resuscitationSchema = new mongoose.Schema({
-  medicine_desired: { type: String },
-  no_intensive: { type: String },
+  medicineDesired: { type: String },
+  noIntensive: { type: String },
   revival: { type: String },
-  no_revival: { type: String },
+  noRevival: { type: String },
 });
 
 const situationSchema = new mongoose.Schema({
   dyingProcess: { type: String },
-  brain_injury: { type: String },
+  brainInjury: { type: String },
   dementia: { type: String },
 });
 
 const determinationSchema = new mongoose.Schema({
   essential: { type: String },
-  no_intensive: { type: String },
+  noIntensive: { type: String },
   servere: { type: String },
-  artificial_hydration: { type: String },
+  artificialHydration: { type: String },
   discomfort: { type: String },
   medication: { type: String },
   medicines: { type: String },
-  organ_donation: { type: String },
-  research_purpose: { type: String },
+  organDonation: { type: String },
+  researchPurpose: { type: String },
   defibrillator: { type: String },
-  dying_yeast: { type: String },
-  suicide_option: { type: String },
+  dyingYeast: { type: String },
+  suicideOption: { type: String },
   commitment: { type: String },
-  discretionary_area: { type: String },
+  discretionaryArea: { type: String },
 });
 
 
 const whereaboutSchema = new mongoose.Schema({
-  familiar_environment: { type: String },
+  familiarEnvironment: { type: String },
   hospice: { type: String },
-  to_hospital: { type: String },
-  not_hospital: { type: String },
+  toHospital: { type: String },
+  notHospital: { type: String },
 });
 const supportSchema = new mongoose.Schema({
     doctor: { type: String },
-    mental_support: { type: String },
-    absolutely_not: { type: String },
+    mentalSupport: { type: String },
+    absolutelyNot: { type: String },
   });
   const funeralwishesSchema = new mongoose.Schema({
     cremation: { type: String },
@@ -58,7 +58,7 @@ const supportSchema = new mongoose.Schema({
   });
   const atorneySchema = new mongoose.Schema({
     forms: { type: String },
-    care_order: { type: String },
+    careOrder: { type: String },
   });
 
   const feeSchema = new mongoose.Schema({
@@ -68,7 +68,7 @@ const supportSchema = new mongoose.Schema({
 
   const informationSchema = new mongoose.Schema({
     urgency: { type: String },
-    alternate_address: { type: String },
+    alternateAddress: { type: String },
     creation: { type: String },
     cntactdetails: { type: String },
     fname: { type: String },
@@ -79,7 +79,7 @@ const supportSchema = new mongoose.Schema({
     ort: { type: String },
     phone: { type: String },
     mobile: { type: String },
-    data_protection: { type: String },
+    dataProtection: { type: String },
     deposit: { type: String },
   });
 
@@ -94,7 +94,7 @@ const spvInfoSchema = new mongoose.Schema({
     atorney:atorneySchema,
     fee:feeSchema,
     information:informationSchema,
-  customer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
+  customer_id: { type: mongoose.Schema.Types.ObjectId},
 });
 
 const SpvInfo = mongoose.model(
