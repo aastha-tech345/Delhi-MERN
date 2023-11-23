@@ -8,7 +8,6 @@ require("dotenv").config();
 require("./config/db.js");
 
 var app = express();
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -26,16 +25,26 @@ const spv = require("./routes/spv.route.js");
 const attorney = require("./routes/attorney.route.js");
 var createError = require("http-errors");
 app.use(logger("dev"));
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-let STATIC = path.resolve(__dirname, "build");
-let INDEX = path.resolve(STATIC, "index.html");
+// let STATIC = path.resolve(__dirname, "build");
+// let INDEX = path.resolve(STATIC, "index.html");
 
-app.use(express.static(STATIC));
+// app.use(express.static(STATIC));
 
 app.use("/user", userRoute);
 app.use("/role", roleRoute);
@@ -49,10 +58,18 @@ app.use("/invoice", invoice);
 app.use("/print", print);
 app.use("/spv", spv);
 app.use("/attorney", attorney);
+app.use("/", express.static(path.join(__dirname, "./public/document")));
+app.use('/', express.static(path.join(__dirname, '/build')));
+app.get('/', function (req, res) {
+  return res.sendFile(path.join(__dirname, '/build/index.html'))
+})
+app.get('/*', function (req, res) {
+  return res.sendFile(path.join(__dirname, '/build/index.html'))
+})
 
-app.get("/*", function (req, res, next) {
-  res.sendFile(INDEX);
-});
+// app.get("/*", function (req, res, next) {
+//   res.sendFile(INDEX);
+// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

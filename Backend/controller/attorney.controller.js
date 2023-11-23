@@ -3,18 +3,7 @@ const CustomerModel = require("../models/customer.model");
 
 exports.createAttorney = async (req, res) => {
   try {
-    const { healthcare, power, provision, securing, added_by } = req.body;
-
-    // Find the customer with the specified conditions
-    const user = await CustomerModel.Customer.findOne({
-      created_by: "customer",
-    });
-
-    if (!user) {
-      return res
-        .status(400)
-        .json({ message: "No customer found to link as parent" });
-    }
+    const { healthcare, power, provision, securing ,customer_id} = req.body;
 
     // Create a new Attorney instance
     const attorney = new AttorneyInformation.Attorney({
@@ -23,8 +12,8 @@ exports.createAttorney = async (req, res) => {
       provision,
       securing,
       added_by,
-      customer_id: user._id,
-      created_by: "customer", // Assuming you want to set created_by to "customer"
+      customer_id,
+    
     });
 
     // Save the attorney record to the database

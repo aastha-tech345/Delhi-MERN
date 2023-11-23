@@ -8,6 +8,7 @@ import { BiFilterAlt } from 'react-icons/bi'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
 import { useParams } from 'react-router-dom'
+import { CListGroup } from '@coreui/react'
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -55,7 +56,7 @@ const columns = [
   },
 ]
 
-const data = [
+const dataa = [
   {
     key: '1',
     name: 'John Brown',
@@ -91,11 +92,17 @@ const data = [
 ]
 
 const Contact = () => {
-  const [fname, setFname] = useState('')
-  const [lname, setLname] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [gender, setGender] = useState('')
+  let res = localStorage.getItem('customerDatat')
+  let result = JSON.parse(res)
+console.log("ashishh",result._id)
+  const [data, setData] = useState({
+    fname: '',
+    lname: '',
+    phone: '',
+    email: '',
+    gender: '',
+    customer_id: result?._id,
+  })
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
@@ -103,13 +110,18 @@ const Contact = () => {
   const handleShow = () => setShow(true)
   const [selectionType] = useState('checkbox')
   const params = useParams()
-  console.log(params.id)
+
+  const handleChange = (e) => {
+    const { name, value, type } = e.target
+
+    const newValue = type === 'radio' ? e.target.value : value
+
+    setData({ ...data, [name]: newValue })
+  }
+
   const saveData = async () => {
-    let data = { fname, lname, phone, email, gender }
-    if (!fname || !lname || !email || !gender || !phone) {
-      return
-    }
     try {
+      console.log('ashishhhh', data)
       let response = await fetch(`${apiUrl}/contact/create_contact`, {
         method: 'POST',
         headers: {
@@ -143,7 +155,6 @@ const Contact = () => {
         </div>
         <div className="col-sm-4">
           <button className="btn btn text-light" style={{ background: '#0b5995' }}>
-            {/* <i className="fas fa-search">Filter</i> */}
             <BiFilterAlt />
             &nbsp; Filter
           </button>
@@ -158,7 +169,6 @@ const Contact = () => {
           >
             <MdAdd />
             &nbsp;Neuen Kunden anlegen
-            {/* Create new customer */}
           </button>
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
@@ -169,20 +179,18 @@ const Contact = () => {
                 <div className="mb-2 row">
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Vorname
-                    {/* first name */}
                   </label>
                   <div className="col-sm-9">
                     <input
                       type="text"
-                      value={fname}
-                      onChange={(e) => {
-                        setFname(e.target.value)
-                      }}
+                      name="fname"
+                      value={data.fname}
+                      onChange={handleChange}
                       placeholder="jo"
                       className="form-control"
                       id="inputPassword"
                     />
-                    {error && fname.trim().length === 0 && (
+                    {error && data.fname.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
                       </p>
@@ -192,20 +200,18 @@ const Contact = () => {
                 <div className="mb-2 row">
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Nachname
-                    {/* second name */}
                   </label>
                   <div className="col-sm-9">
                     <input
                       type="text"
-                      value={lname}
-                      onChange={(e) => {
-                        setLname(e.target.value)
-                      }}
+                      name="lname"
+                      value={data.lname}
+                      onChange={handleChange}
                       placeholder="verma"
                       className="form-control"
                       id="inputPassword"
                     />
-                    {error && lname.trim().length === 0 && (
+                    {error && data.lname.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
                       </p>
@@ -215,20 +221,18 @@ const Contact = () => {
                 <div className="mb-2 row">
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Telefon
-                    {/* phone */}
                   </label>
                   <div className="col-sm-9">
                     <input
-                      type="number"
-                      value={phone}
-                      onChange={(e) => {
-                        setPhone(e.target.value)
-                      }}
+                      type="tel"
+                      name="phone"
+                      value={data.phone}
+                      onChange={handleChange}
                       placeholder="91+ 8354568464"
                       className="form-control"
                       id="inputPassword"
                     />
-                    {error && phone.trim().length === 0 && (
+                    {error && data.phone.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
                       </p>
@@ -242,15 +246,14 @@ const Contact = () => {
                   <div className="col-sm-9">
                     <input
                       type="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value)
-                      }}
+                      name="email"
+                      value={data.email}
+                      onChange={handleChange}
                       placeholder="jo@gmail.com"
                       className="form-control"
                       id="inputPassword"
                     />
-                    {error && email.trim().length === 0 && (
+                    {error && data.email.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
                       </p>
@@ -261,7 +264,7 @@ const Contact = () => {
                   <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                     Geschlecht
                   </label>
-                  {error && gender.trim().length === 0 && (
+                  {error && data.gender.trim().length === 0 && (
                     <p style={{ color: 'red' }}>
                       <BiErrorCircle /> required
                     </p>
@@ -270,31 +273,27 @@ const Contact = () => {
                     <input
                       type="radio"
                       name="gender"
-                      value="male"
-                      onChange={(e) => {
-                        setGender(e.target.value)
-                      }}
+                      value="Männlich"
+                      onChange={handleChange}
+                      checked={data.gender === 'Männlich'}
                     />{' '}
                     &nbsp; Männlich
                     <input
                       type="radio"
                       name="gender"
-                      value="female"
-                      onChange={(e) => {
-                        setGender(e.target.value)
-                      }}
+                      value="Weiblich"
+                      onChange={handleChange}
+                      checked={data.gender === 'Weiblich'}
                     />{' '}
                     &nbsp; Weiblich
                     <input
                       type="radio"
                       name="gender"
-                      value="other"
-                      onChange={(e) => {
-                        setGender(e.target.value)
-                      }}
+                      value="Andere"
+                      onChange={handleChange}
+                      checked={data.gender === 'Andere'}
                     />
                     &nbsp; Andere
-                    {/* other */}
                   </div>
                 </div>
               </div>
@@ -315,23 +314,12 @@ const Contact = () => {
                 style={{ background: '#0b5995', color: 'white' }}
               >
                 Aktivität hinzufügen
-                {/* Add activity */}
               </button>
             </Modal.Footer>
           </Modal>{' '}
         </div>
       </div>
       <div>
-        {/* <Radio.Group
-          onChange={({ target: { value } }) => {
-            setSelectionType(value)
-          }}
-          value={selectionType}
-        >
-          <Radio value="checkbox">Checkbox</Radio>
-          <Radio value="radio">radio</Radio>
-        </Radio.Group> */}
-
         <Divider />
 
         <Table
@@ -341,7 +329,7 @@ const Contact = () => {
           }}
           style={{ overflowX: 'auto' }}
           columns={columns}
-          dataSource={data}
+          dataSource={dataa}
         />
       </div>
     </div>

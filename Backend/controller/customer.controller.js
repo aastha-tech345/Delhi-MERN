@@ -11,7 +11,9 @@ exports.createCustomer = async (req, res) => {
       plz,
       city,
       street,
-      primary_contact,
+      dob,
+      land,
+      group,
       created_by,
     } = req.body;
 
@@ -30,9 +32,10 @@ exports.createCustomer = async (req, res) => {
       plz,
       city,
       street,
-      primary_contact,
-      created_by,
-      parent_id: user._id,
+      dob,
+      land,
+      group,
+      created_by: user._id,
     };
 
     // Create a new customer instance
@@ -49,6 +52,23 @@ exports.createCustomer = async (req, res) => {
     return res.status(500).send({ message: "Server Error" });
   }
 };
+
+exports.editCustomer=async(req,res)=>{
+  try {
+    const data=await Customer.findByIdAndUpdate(req.params.id,req.body,{
+      new:true
+    })
+
+    res.status(200).json({
+      success:true,
+      message:"Customer updated successfully",
+      data:data
+    })
+  } catch (error) {
+    console.error("Error searching data:", error.message);
+    res.status(500).json({ error: "Server Error" });
+  }
+}
 
 exports.getCustomer = async (req, res) => {
   const result = await Customer.find();

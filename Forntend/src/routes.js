@@ -33,7 +33,7 @@ if (auth) {
     { path: '/', exact: true, name: 'Home' },
     { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
     { path: '/customer', name: 'Kunden', element: CustomerList },
-    { path: '/customerInfo/:id', name: 'Kunden-Listen', element: Customer },
+    { path: '/:id', name: 'Kunden-Listen', element: Customer },
     { path: '/customer/customer_info', name: 'KundenInfo', element: CustomerInfo },
     { path: '/customer/contact', name: 'Kontakte', element: Contact },
     { path: '/customer/bills', name: 'Rechnungen', element: Bills },

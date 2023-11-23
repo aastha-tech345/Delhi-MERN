@@ -10,9 +10,16 @@ const customerSchema = new Schema({
   plz: {type:String},
   city: {type:String},
   street: {type:String},
-  created_by: { type: String },
-  // customer_id: { type: Schema.Types.ObjectId, ref: 'Customer' },
-  parent_id: { type: Schema.Types.ObjectId, ref: 'User' },
+  created_by: { type: Schema.Types.Mixed, ref: 'User'},
+  status: {
+    type: String,
+    enum: ['active', 'deleted'],
+    default: 'active',
+  },
+  land:{type:String},
+  group:{type:String},
+  dob:{type:String}
+  // parent_id: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 const Customer = mongoose.model('customer', customerSchema,'customer');

@@ -5,7 +5,9 @@ import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import EditModal from './EditModal'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const CustomerList = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
   const apiUrl = process.env.REACT_APP_API_URL
@@ -22,6 +24,8 @@ const CustomerList = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [show, setShow] = useState(false)
+
+  const notify = (data) => toast(data);
 
   //console.log('aastha', phone)
   // eslint-disable-next-line no-undef
@@ -59,17 +63,23 @@ const CustomerList = () => {
     if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
       return
     }
-
     try {
-      let response = await axios.post(`${apiUrl}/customer/create`, data)
+      let response = await fetch(`${apiUrl}/customer/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-      if (response.status !== 200) {
+      if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
 
-      let result = response.data
-      getDetails()
-      console.log(result)
+      let result = await response.json()
+      notify(result?.message)
+      console.log("hdgagvSJ",result?.message)
+
       handleClose()
     } catch (error) {
       console.error('Error during API call:', error)
@@ -78,55 +88,30 @@ const CustomerList = () => {
 
   const getDetails = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/customer/get_record`)
-      const data = response?.data
+      const result = await fetch(`${apiUrl}/customer/get_record`)
+      const data = await result.json()
       setCustomerRecord(data)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
   }
-  // const saveData = async () => {
-  //   let data = { fname, lname, street, city, phone, plz, email, land, dob }
-  //   if (!fname || !lname || !street || !city || !phone || !plz || !email || !land || !dob) {
-  //     return
-  //   }
-  //   try {
-  //     let response = await fetch(`${apiUrl}/customer/create`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
 
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`)
-  //     }
-
-  //     let result = await response.json()
-  //     console.log(result)
-  //     handleClose()
-  //   } catch (error) {
-  //     console.error('Error during API call:', error)
-  //   }
-  // }
-
-  // const getDetails = async () => {
-  //   try {
-  //     const result = await fetch(`${apiUrl}/customer/get_record`)
-  //     const data = await result.json()
-  //     setCustomerRecord(data)
-  //   } catch (error) {
-  //     console.error('Error fetching customer record:', error)
-  //   }
-  // }
+  const handleStore = (data, record) => {
+    console.log('ashishihhverma', record)
+    let res = JSON.stringify(record)
+    localStorage.setItem('customerDatat', res)
+  }
 
   const columns = [
     {
       title: 'NAME DES KUNDEN',
       dataIndex: 'fname',
       render: (text, record) => (
-        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/customerInfo/${record._id}`}>
+        <Link
+          style={{ textDecoration: 'none', color: 'black' }}
+          to={`/${record._id}`}
+          onClick={() => handleStore(text, record)}
+        >
           {text}
         </Link>
       ),
@@ -152,7 +137,7 @@ const CustomerList = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <GrEdit />
+          <GrEdit onClick={() => handleEdit(record)}/>
           &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
           <MdDelete onClick={() => handleDelete(record)} />
           Löschen
@@ -160,40 +145,23 @@ const CustomerList = () => {
       ),
     },
   ]
+  const [value,setValue]=useState(false)
+const handleEdit=(record)=>{
+  console.log("ashishh",record)
+  let res=JSON.stringify(record)
+  localStorage.setItem("CustomerRecord",res)
+  setValue(true)
+}
+  useEffect(() => {
+    getDetails()
+  }, [])
 
-  const data = [
-    {
-      key: '1',
-      fname: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      fname: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      fname: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ]
-
-  // useEffect(() => {
-  //   getDetails()
-  // }, [])
-
-  // let data = customer_record
+  let data = customer_record
 
   return (
     <>
       <div>
+        {value?<EditModal hide={()=>setValue(false)}/>:""}
         <h5 style={{ fontWeight: 'bold' }}>Kunden-Listen</h5>
         <div className="row m-4 p-4  shadow" style={{ background: 'white', borderRadius: '5px' }}>
           <div className="col-sm-3">
@@ -362,7 +330,7 @@ const CustomerList = () => {
                 </button>
                 <button
                   className="btn btn"
-                  // onClick={saveData}
+                  onClick={saveData}
                   style={{ background: '#0b5995', color: 'white' }}
                 >
                   Einreichen
@@ -445,6 +413,7 @@ const CustomerList = () => {
           </Modal.Footer>
         </Modal>
       </div>
+      <ToastContainer />
     </>
   )
 }

@@ -1,68 +1,76 @@
 const mongoose = require('mongoose');
 
-const statusSchema = new mongoose.Schema({
-  client_status: { type: String },
-  data_protection: { type: String },
-  employee: { type: String },
-  data_collection: { type: String },
+const orderingMaterialsSchema = new mongoose.Schema({
+  orderNumber: { type: String },
+  newsletterDate: { type: String },
+  extras: { type: String },
+  newsletterSubscription: { type: String },
 });
 
-const contactSchema = new mongoose.Schema({
-  salutation: { type: String },
+const customerInfoStatuSchema = new mongoose.Schema({
+  clientStatus: { type: String },
+  dataProtection: { type: String },
+  employee: { type: String },
+  lname: { type: String },
+  dataCollection: { type: String },
+});
+
+const customerContactSchema = new mongoose.Schema({
+  title: { type: String },
+  salution: { type: String },
   gender: { type: String },
   fname: { type: String },
   lname: { type: String },
   dob: { type: String },
+  name: { type: String },
 });
 
-const billSchema = new mongoose.Schema({
-  address: { type: String },
-  ort: { type: String },
-  land: { type: String },
+const customerBillSchema = new mongoose.Schema({
+  billAddress: { type: String },
+  billPlz: { type: String },
+  billLand: { type: String },
+  billOrt: { type: String },
+});
+
+const customerDeliverySchema = new mongoose.Schema({
+  fname: { type: String },
+  lname: { type: String },
   plz: { type: String },
+  address: { type: String },
+  land: { type: String },
+  email: { type: String },
+  ort: { type: String },
+  phone: { type: String },
+  mobile: { type: String },
+  alreadyPaid: { type: String },
 });
 
-const deliverySchema = new mongoose.Schema({
-  delivery_fname: { type: String },
-  delivery_lname: { type: String },
-  delivery_address: { type: String },
-  delivery_ort: { type: String },
-  delivery_land: { type: String },
-  delivery_plz: { type: String },
-  delivery_email: { type: String },
-  delivery_phone: { type: String },
-  delivery_mobile: { type: String },
-  delivery_alreadyPaid: { type: String },
+const customerDepositSchema = new mongoose.Schema({
+  deposit:{type:String},
+  emergencyPass: { type: String },
+  reminderBrand: { type: String },
+  updateStamp: { type: String },
+  nextBrand: { type: String },
 });
 
-const depositSchema = new mongoose.Schema({
-  spv_deposit: { type: String },
-  opv_deposit: { type: String },
-  hvd_deposit: { type: String },
-  start_date: { type: String },
-  last_stamp: { type: String },
-  next_brand: { type: String },
-  return_last_stamp: { type: String },
-  emergency_pass: { type: String },
-  memory: { type: String },
+const customerBurialSchema = new mongoose.Schema({
+  termination:{type:String},
+  terminationDeath: { type: String },
+  notTermination: { type: String },
+  financialReasons: { type: String },
 });
-
 const customerInfoSchema = new mongoose.Schema({
-  customer_id:{type:String},
-  added_by: { type: String },
-  ordered_question: { type: String },
-  extras: { type: String },
-  newsletter: { type: String },
-  newsletter_subscription: { type: String },
-  statu: statusSchema,
-  those: { type: String },
-  contact: contactSchema,
-  bill: billSchema,
-  delivery: deliverySchema,
-  deposit: depositSchema,
-  completion: { type: String },
-  customer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
+  orderingMaterials:orderingMaterialsSchema,
+  customerInfoStatu:customerInfoStatuSchema,
+  those:{type:String},
+  customerContact:customerContactSchema,
+  customerBills:customerBillSchema,
+  customerDelivery:customerDeliverySchema,
+  customerDeposit:customerDepositSchema,
+  customerBurial:customerBurialSchema,
+  customer_id:{ type: mongoose.Schema.Types.ObjectId }
 });
+
 
 const CustomerInfo = mongoose.model(
   'customerInfo',
