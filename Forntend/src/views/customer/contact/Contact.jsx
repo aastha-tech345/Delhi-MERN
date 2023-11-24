@@ -10,56 +10,58 @@ import { BiErrorCircle } from 'react-icons/bi'
 import { useParams } from 'react-router-dom'
 import { CListGroup } from '@coreui/react'
 import axios from 'axios'
+import DeleteModal from './DeleteModal'
+import { postFetchData } from 'src/Api'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
-    name: record.name,
-  }),
-}
-
-const columns = [
-  {
-    title: 'Name des Kunden',
-    dataIndex: 'fname',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Kunden-ID',
-    dataIndex: '_id',
-  },
-  {
-    title: 'E-Mail',
-    dataIndex: 'email',
-  },
-  {
-    title: 'Telefon',
-    dataIndex: 'phone',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-  },
-  {
-    title: 'AKTION',
-    dataIndex: 'action',
-    render: (_, record) => (
-      <>
-        <GrEdit />
-        &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-        <MdDelete onClick={() => handleDelete(record._id)} />
-        Löschen
-      </>
-    ),
-  },
-]
-const handleDelete = (customerId) => {
-  console.log(`Deleting customer with ID: ${customerId}`)
-}
 const Contact = () => {
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      name: record.name,
+    }),
+  }
+
+  const columns = [
+    {
+      title: 'Name des Kunden',
+      dataIndex: 'fname',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Kunden-ID',
+      dataIndex: '_id',
+    },
+    {
+      title: 'E-Mail',
+      dataIndex: 'email',
+    },
+    {
+      title: 'Telefon',
+      dataIndex: 'phone',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+    },
+    {
+      title: 'AKTION',
+      dataIndex: 'action',
+      render: (_, record) => (
+        <>
+          <GrEdit />
+          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+          <MdDelete onClick={() => handleDelete(record._id)} />
+          Löschen
+        </>
+      ),
+    },
+  ]
+
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
   const [data, setData] = useState({
@@ -79,6 +81,8 @@ const Contact = () => {
   const [searchKey, setSearchKey] = useState('')
   const [searchResults, setSearchResults] = useState([])
   const [selectionType] = useState('checkbox')
+  const [hide, setHide] = useState(false)
+  const [contactId, setContactId] = useState('')
   const params = useParams()
 
   const handleChange = (e) => {
@@ -89,23 +93,41 @@ const Contact = () => {
     setData({ ...data, [name]: newValue })
   }
 
+  const handleDelete = (customerId) => {
+    console.log(`Deleting customer with ID: ${customerId}`)
+    setContactId(customerId)
+    setHide(true)
+  }
+  const notify = (dataa) => toast(dataa)
+
   const saveData = async () => {
     try {
-      let response = await fetch(`${apiUrl}/contact/create_contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+      // let response = await fetch(`${apiUrl}/contact/create_contact`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(data),
+      // })
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! Status: ${response.status}`)
+      // }
+
+      if (!data?.email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
+        notify('Please Fill All Details')
       }
 
-      let result = await response.json()
-      console.log(result)
+      console.log('ashshihh', data.email)
+
+      const response = await postFetchData(`${apiUrl}/contact/create_contact`, data)
+      // let result = await response.json()
+      console.log(response)
+      getDetails()
       handleClose()
+      if (response.response.data.status == 400) {
+        notify('Email Already Exists')
+      }
     } catch (error) {
       console.error('Error during API call:', error)
     }
@@ -115,7 +137,9 @@ const Contact = () => {
     try {
       const result = await fetch(`${apiUrl}/contact/get_contact`)
       const data = await result.json()
-      setContactRecord(data)
+      const activeRecords = data.filter((record) => record.status === 'active')
+
+      setContactRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
@@ -138,6 +162,7 @@ const Contact = () => {
 
   return (
     <div>
+      {hide ? <DeleteModal setHide={setHide} contactId={contactId} getDetails={getDetails} /> : ''}
       <div className="row m-4 p-4" style={{ borderRadius: '5px', border: '1px solid lightgray' }}>
         <div className="col-sm-3">
           <input
@@ -328,6 +353,7 @@ const Contact = () => {
           dataSource={dataa}
         />
       </div>
+      <ToastContainer />
     </div>
   )
 }

@@ -14,7 +14,8 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useNavigate } from 'react-router-dom'
-
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 const Register = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -22,10 +23,11 @@ const Register = () => {
   const [role, setRole] = useState('')
   const apiUrl = process.env.REACT_APP_API_URL
   const navigate = useNavigate()
+  const notify = (dataa) => toast(dataa)
 
   const addUser = async () => {
     if (!username || !password || !email || !role) {
-      return
+      return notify('Please Fill All Details')
     }
 
     try {
@@ -118,6 +120,7 @@ const Register = () => {
           </CCol>
         </CRow>
       </CContainer>
+      <ToastContainer />
     </div>
   )
 }

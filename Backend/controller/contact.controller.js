@@ -13,12 +13,13 @@ exports.createContact = async (req, res) => {
       customer_id
     } = req.body;
 
-    // const user = await CustomerModel.Customer.findOne({ created_by: "customer" });
-    // if (!user) {
-    //   return res
-    //     .status(400)
-    //     .send({ message: "No customer found to link as parent" });
-    // }
+  const emailFind=await ContactInfomation.Contact.findOne({email})
+  if(emailFind){
+   return res.status(400).json({
+      message: 'Email Already Exists',
+      success:false
+    });
+  }
     const contact = new ContactInfomation.Contact({
       fname,
       lname,
@@ -78,7 +79,10 @@ exports.getContactDataDelete = async (req, res) => {
       { _id: req.params.id, status: { $ne: "deleted" } },
       { $set: { status: "deleted" } }
     );
-    res.send(result);
+    res.status(200).json({
+      success:true,
+      message:"Contact Deleted Successfully"
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

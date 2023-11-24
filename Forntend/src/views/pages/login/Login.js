@@ -55,13 +55,16 @@ const Login = () => {
       })
 
       const result = await response.json()
-      console.log(result)
+      if (result.message === 'Login was successful') {
+        notify('User Login Successfully')
+      }
+      console.log('ashish', result)
+
       const token = result.user.tokens[0].token
-      const role = result.user.role
+      const role = result.user.roles
       window.localStorage.setItem('token', token)
       window.localStorage.setItem('role', role)
       window.localStorage.setItem('record', JSON.stringify(result))
-
       navigate('/dashboard')
       window.location.reload()
     } catch (error) {
