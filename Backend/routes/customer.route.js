@@ -13,5 +13,6 @@ router.put("/get_record/edit/:id",customerController.editCustomer)
 
 
 router.get('/search/:searchKey', customerController.searchCustomer);
+// router.get('/search', customerController.searchCustomer);
 router.put("/get_record/edit/:id",customerController.editCustomer)
 module.exports = router;

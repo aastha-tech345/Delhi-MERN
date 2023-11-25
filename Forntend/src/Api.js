@@ -196,14 +196,15 @@ export const putFetchData = async (url, data) => {
 }
 export const deleteFetch = async (url, id) => {
   try {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const response = await axios({
       method: 'delete',
       url: `${url}/${id}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
-      withCredentials: true,
+      // withCredentials: true,
     })
     if (response.status === 200) {
       return response
@@ -217,16 +218,16 @@ export const deleteFetch = async (url, id) => {
 
 export const postFetchData = async (url, data) => {
   try {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const response = await axios({
       method: 'post',
       url: `${url}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       data,
-      withCredentials: true,
+      // withCredentials: true,
     })
     if (response) {
       return response?.data

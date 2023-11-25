@@ -21,7 +21,7 @@ const ResetPassword = () => {
     if (email === '') {
       // Handle case when email is empty
       console.log('Email is required')
-      return
+      return notify('Email Field Required')
     } else if (!email.includes('@')) {
       // Handle case when email is invalid
       console.log('Invalid email format')

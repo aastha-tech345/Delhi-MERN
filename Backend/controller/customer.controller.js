@@ -153,10 +153,12 @@ exports.searchCustomer = async (req, res) => {
         { fname: { $regex: searchKey, $options: "i" } },
         { group: { $regex: searchKey, $options: "i" } },
         { email: { $regex: searchKey, $options: "i" } },
-        { phone: { $regex: searchKey, $options: "i" } }
+        { phone: { $regex: searchKey, $options: "i" } },
+       
       ],
     });
     res.send(result);
+  
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).send({ error: "Server Error" });

@@ -55,6 +55,7 @@ const CustomerList = () => {
     {
       title: 'KUNDEN-ID',
       dataIndex: '_id',
+      render: () => <p>{Math.floor(10000 + Math.random() * 9000)}</p>,
     },
     {
       title: 'E-MAIL',
@@ -81,6 +82,7 @@ const CustomerList = () => {
       ),
     },
   ]
+
   const handleIconClick = (recordId) => {
     setSelectedRecordId(recordId)
     setIsModalVisible(true)
@@ -189,27 +191,35 @@ const CustomerList = () => {
     localStorage.setItem('CustomerRecord', res)
     setHide(true)
   }
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {},
+    // onChange: (selectedRowKeys, selectedRows) => {},
+    onChange: (selectedKeys) => {
+      setSelectedRowKeys(selectedKeys)
+    },
     getCheckboxProps: (record) => ({
       disabled: record.name === 'Disabled User',
       // Column configuration not to be checked
       name: record.name,
     }),
   }
-
+  const [search, setSearch] = useState('')
   const searchHandle = async () => {
     try {
-      let key = searchInputRef.current.value
-      const response = await fetch(`${apiUrl}/customer/search/${key}`)
+      // let key = searchInputRef.current.value
+      console.log('ashish', search)
+      if (search == '') {
+        return getDetails()
+      }
+      const response = await fetch(`${apiUrl}/customer/search/${search}`)
       const data = await response.json()
       const activeRecords = data.filter((record) => record.status === 'active')
 
       if (activeRecords.length > 0) {
         setCustomerRecord(activeRecords)
       } else {
+        getDetails()
         setCustomerRecord(data)
-        // getDetails()
       }
     } catch (error) {
       console.error('Error searching data:', error.message)
@@ -229,7 +239,10 @@ const CustomerList = () => {
           <div className="col-sm-3">
             <input
               ref={searchInputRef}
-              type="text"
+              name="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="search"
               id="form1"
               placeholder="Ihre Suche eingeben"
               className="form-control"
@@ -244,6 +257,13 @@ const CustomerList = () => {
               filter
             </button>
           </div>
+
+          {/* Number of row selection completed */}
+          {/* <div className="col-sm-6">
+            <p>Number of rows selected: {selectedRowKeys.length}</p>
+          </div> */}
+          {/* Number of row selection completed */}
+
           <div className="col-sm-3">
             <button
               className="btn btn"
