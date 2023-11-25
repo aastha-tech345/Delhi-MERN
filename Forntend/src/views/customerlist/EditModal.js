@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 const EditModal = ({ setHide, getDetails }) => {
   let modalStyle = {
     display: 'block',
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: 'rgba(0,0,0,0.7)',
     maxHeight: '100%',
     color: 'black',
   }
@@ -99,7 +99,7 @@ const EditModal = ({ setHide, getDetails }) => {
   }, 5000)
   return (
     <div className="modal" tabIndex={-1} style={modalStyle}>
-      <div className="modal-dialog">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Kunden Aktualisieren</h5>

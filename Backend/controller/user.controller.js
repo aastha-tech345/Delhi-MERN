@@ -229,7 +229,7 @@ exports.forgotPassword = async (req, res) => {
 
     // Send the email
 
-    let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`;
+    let mailcontent = `Click on the following link to reset your password: <a href="${process.env.dEVELOPMENT_RESET_URL}/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`;
 
     mailer.mailerFromTo(
       email,
@@ -238,14 +238,14 @@ exports.forgotPassword = async (req, res) => {
       mailcontent,
       "",
       function (error, resp) {
-        // if (error) {
-        //   console.error("Error sending email", error);
-        //   return res
-        //     .status(500)
-        //     .json({ status: 500, message: "Email not sent" });
-        // } else {
-        //   console.log("Email sent successfully", info.response);
-        // }
+        if (error) {
+          console.error("Error sending email", error);
+          return res
+            .status(500)
+            .json({ status: 500, message: "Email not sent" });
+        } else {
+          console.log("Email sent successfully", info.response);
+        }
         return res
           .status(200)
           .json({ status: 200, message: "Email sent successfully" });
