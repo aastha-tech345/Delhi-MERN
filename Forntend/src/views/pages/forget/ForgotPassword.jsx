@@ -11,9 +11,12 @@ import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 
 const ForgotPassword = () => {
-  const { id, token } = useParams()
+  let data = localStorage.getItem('email')
+  let res = JSON.parse(data)
+  let email = res?.email
+  // const { id, token } = useParams()
   const apiUrl = process.env.REACT_APP_API_URL
-  const history = useNavigate()
+  // const history = useNavigate()
 
   const [data2, setData] = useState(false)
 
@@ -23,23 +26,24 @@ const ForgotPassword = () => {
   const navigate = useNavigate()
 
   const notify = (dataa) => toast(dataa)
+  let total = { password, email }
+  console.log('ashishh', total)
+  // const userValid = async () => {
+  //   const res = await fetch(`${apiUrl}/user/forgotpassword`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
 
-  const userValid = async () => {
-    const res = await fetch(`${apiUrl}/user/forgotpassword/${id}/${token}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+  //   const data = await res.json()
 
-    const data = await res.json()
-
-    if (data.status === 201) {
-      console.log('user valid')
-    } else {
-      history('*')
-    }
-  }
+  //   if (data.status === 201) {
+  //     console.log('user valid')
+  //   } else {
+  //     history('*')
+  //   }
+  // }
 
   const setval = (e) => {
     setPassword(e.target.value)
@@ -57,30 +61,31 @@ const ForgotPassword = () => {
         position: 'top-center',
       })
     } else {
-      const res = await fetch(`${apiUrl}/user/${id}/${token}`, {
+      const res = await fetch(`${apiUrl}/user/changePassword`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify(total),
       })
 
       const data = await res.json()
       console.log(data)
-      if (data.status === 200) {
+      if (data.message === 'password changed successfully') {
         notify('Password Resest Successfully')
         navigate('/')
         setMessage(true)
-      } else {
-        toast.error('! Token Expired generate new LInk', {
-          position: 'top-center',
-        })
       }
+      // else {
+      //   toast.error('! Token Expired generate new LInk', {
+      //     position: 'top-center',
+      //   })
+      // }
     }
   }
 
   useEffect(() => {
-    userValid()
+    // userValid()
     setTimeout(() => {
       setData(true)
     }, 3000)
@@ -155,3 +160,14 @@ const ForgotPassword = () => {
 }
 
 export default React.memo(ForgotPassword)
+
+// import React from 'react'
+
+// const ForgotPassword = () => {
+//   let data = localStorage.getItem('email')
+//   let res = JSON.parse(data)
+//   console.log(res)
+//   return <div>ForgotPassword</div>
+// }
+
+// export default ForgotPassword

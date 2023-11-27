@@ -93,7 +93,7 @@
      // router.delete('/register/user/record/:id', userCtrl.deleteObjectById);
      
      router.post('/forgot-password', userCtrl.forgotPassword);
-     router.get('/forgotpassword/:id/:token', userCtrl.forgotPasswordVerification);
-     router.post('/:id/:token', userCtrl.changePassword);
+     router.get('/forgotpassword', userCtrl.forgotPasswordVerification);
+     router.post('/changePassword', userCtrl.changePassword);
 
      module.exports = router;

@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 router.post('/create_document',upload.single("document_upload") ,roleCtrl.createDocument);
 router.get('/get_document', roleCtrl.getDocument);
 router.get('/get_document/:id', roleCtrl.getDocumentData);
-router.put('/get_document/:id', roleCtrl.getDocumentDataUpdate);
+router.put('/get_document/:id', upload.single("document_upload") ,roleCtrl.getDocumentDataUpdate);
 router.delete('/get_document/:id', roleCtrl.getDocumentDataDelete);
 router.get('/search/:key', roleCtrl.getDocumentSearch);
 module.exports = router;

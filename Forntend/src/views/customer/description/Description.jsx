@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   PhoneOutlined,
   CheckCircleOutlined,
@@ -9,8 +9,72 @@ import {
   BellOutlined,
   LinkOutlined,
 } from '@ant-design/icons'
+import { postFetchData } from 'src/Api'
 
 const Description = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
+  const [color, setColor] = useState('white')
+  const [color1, setColor1] = useState('white')
+  const [color2, setColor2] = useState('white')
+  const [color3, setColor3] = useState('white')
+
+  const [icon, setIcon] = useState('')
+  const [data, setData] = useState({
+    message: '',
+  })
+
+  // const selectIcon = (elem, colour) => {
+  //   setIcon(elem)
+  //   setColor(colour)
+  // }
+
+  const selectIcon = (iconName, selectedColor) => {
+    setIcon(iconName)
+    switch (iconName) {
+      case 'PhoneOutlined':
+        setColor(selectedColor)
+        setColor1('white')
+        setColor2('white')
+        setColor3('white')
+        break
+      case 'CheckCircleOutlined':
+        setColor1(selectedColor)
+        setColor('white')
+        setColor2('white')
+        setColor3('white')
+        break
+      case 'RedEnvelopeOutlined':
+        setColor2(selectedColor)
+        setColor1('white')
+        setColor('white')
+        setColor3('white')
+        break
+      case 'PrinterOutlined':
+        setColor3(selectedColor)
+        setColor1('white')
+        setColor2('white')
+        setColor('white')
+        break
+      default:
+        break
+    }
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setData({ ...data, [name]: value })
+  }
+  let total = { ...data, icon }
+  const handleSumit = async () => {
+    console.log('ashish', total)
+    try {
+      const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
       <h4>Beschreibung</h4>
@@ -18,30 +82,60 @@ const Description = () => {
       <hr />
       <div className="row p-3">
         <div className="col-sm-4">
-          <input type="text" className="form-control" />
+          <input type="search" className="form-control" placeholder="Search" />
         </div>
         <div className="col-sm-8">
           <PhoneOutlined
             className="p-2"
-            style={{ border: '1px solid black', borderRadius: '5px', marginRight: '10px' }}
+            style={{
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color,
+            }}
+            onClick={() => selectIcon('PhoneOutlined', 'red')}
           />
           <CheckCircleOutlined
             className="p-2"
-            style={{ border: '1px solid black', borderRadius: '5px', marginRight: '10px' }}
+            style={{
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color1,
+            }}
+            onClick={() => selectIcon('CheckCircleOutlined', 'red')}
           />
           <RedEnvelopeOutlined
             className="p-2"
-            style={{ border: '1px solid black', borderRadius: '5px', marginRight: '10px' }}
+            style={{
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color2,
+            }}
+            onClick={() => selectIcon('RedEnvelopeOutlined', 'red')}
           />
           <PrinterOutlined
             className="p-2"
-            style={{ border: '1px solid black', borderRadius: '5px', marginRight: '10px' }}
+            style={{
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color3,
+            }}
+            onClick={() => selectIcon('PrinterOutlined', 'red')}
           />
         </div>
       </div>
       <div className="row p-3">
         <br />
-        <textarea className="form-control" rows={6}></textarea>
+        <textarea
+          className="form-control"
+          rows={6}
+          name="message"
+          value={data?.message}
+          onChange={handleChange}
+        ></textarea>
       </div>
       <hr />
       <div className="row">
@@ -55,6 +149,7 @@ const Description = () => {
           <button
             className="btn btn"
             style={{ background: '#0b5995', color: 'white', marginLeft: '100px' }}
+            onClick={handleSumit}
           >
             Aktivität hinzufügen
             {/* Add activity */}
@@ -62,12 +157,10 @@ const Description = () => {
         </div>
       </div>
       <br />
-      <div className="row card m-2 p-1">
+      {/* <div className="row card m-2 p-1">
         <div className="col-sm-3">
           <input type="checkbox" /> Qui enim odit est aliquam.
-          {/* For he who hates is some */}
           <p style={{ fontSize: '14px' }}>Assoziiert mit 1 Datensätzen</p>
-          {/* Associated with 1 records */}
         </div>
         <table className="table table-hover">
           <thead>
@@ -87,12 +180,10 @@ const Description = () => {
         </table>
         <BarChartOutlined />
         <span>Beschreibung</span>
-        {/* Description */}
         <p>
           Accusamus provident beatae aut fugit reprehenderit quo. Sunt quis culpa ipsa ut debitis.
           Ea veritatis ratione quisquam officia.
-          {/* The accusers provide for the blessed or flees to criticize where. There are some who are to blame.
-          On the basis of that truth, no one responsibilities. */}
+
         </p>
         <div className="row">
           <div className="col-sm-2">
@@ -133,11 +224,10 @@ const Description = () => {
               style={{ background: '#0b5995', color: 'white', marginLeft: '100px' }}
             >
               Aktivität hinzufügen
-              {/* Add activity */}
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

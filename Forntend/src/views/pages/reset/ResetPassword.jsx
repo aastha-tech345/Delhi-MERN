@@ -30,7 +30,7 @@ const ResetPassword = () => {
 
     try {
       const edata = { email }
-
+      localStorage.setItem('email', JSON.stringify(edata))
       const res = await fetch(`${apiUrl}/user/forgot-password`, {
         method: 'post',
         headers: {

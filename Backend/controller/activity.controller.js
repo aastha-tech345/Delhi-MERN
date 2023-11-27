@@ -3,7 +3,7 @@ const CustomerModel = require("../models/customer.model");
 
 exports.createActivity = async (req, res) => {
   try {
-    const { title, adinistration, editor } = req.body;
+    const { icon, message } = req.body;
 
     const user = await CustomerModel.Customer.findOne({
       created_by: "customer",
@@ -14,15 +14,13 @@ exports.createActivity = async (req, res) => {
         .send({ message: "No customer found to link as parent" });
     }
     const activity = new ActivityInfomation.Activity({
-      title,
-      adinistration,
-      editor,
-      added_by: null,
+      icon,
+      message,
       customer_id: user._id,
     });
-                          
+
     const result = await activity.save();
-    res.status(201).json({
+    return res.status(201).json({
       message: "activity was created",
       result,
     });
@@ -81,7 +79,7 @@ exports.getActivityDataDelete = async (req, res) => {
   } catch (error) {
     console.error("Error deleting activity data:", error);
     res.status(500).send({
-      message:"Internal Server Error"
+      message: "Internal Server Error",
     });
   }
 };
@@ -95,7 +93,7 @@ exports.getActivitySearch = async (req, res) => {
   } catch (error) {
     console.error("Error searching for activity info:", error);
     res.status(500).send({
-      message:"Internal Server Error"
+      message: "Internal Server Error",
     });
   }
 };

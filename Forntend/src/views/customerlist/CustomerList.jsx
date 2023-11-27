@@ -74,10 +74,17 @@ const CustomerList = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <GrEdit onClick={() => handleEdit(record)} />
-          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-          <MdDelete onClick={() => handleIconClick(record._id)} />
-          Löschen
+          <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
+            <GrEdit />
+            &nbsp;&nbsp;Bearbeiten
+          </button>
+          &nbsp;&nbsp;
+          <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => handleIconClick(record._id)}
+          >
+            <MdDelete /> Löschen
+          </button>
         </>
       ),
     },
@@ -103,6 +110,7 @@ const CustomerList = () => {
 
         if (response.ok) {
           getDetails()
+          notify('Record was deleted successfully')
         } else {
           const errorData = await response.json()
           console.error('Failed to delete record:', response.status, response.statusText, errorData)
@@ -153,7 +161,16 @@ const CustomerList = () => {
 
       let result = await response.json()
       notify(result?.message)
-
+      setFname('')
+      setLand('')
+      setLname('')
+      setEmail('')
+      setPlz('')
+      setStreet('')
+      setGroup('')
+      setPhone('')
+      setCity('')
+      setDob('')
       handleClose()
       getDetails()
     } catch (error) {
@@ -207,7 +224,7 @@ const CustomerList = () => {
   const searchHandle = async () => {
     try {
       // let key = searchInputRef.current.value
-      console.log('ashish', search)
+      //console.log('ashish', search)
       if (search == '') {
         return getDetails()
       }
