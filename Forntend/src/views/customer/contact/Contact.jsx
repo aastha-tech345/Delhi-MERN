@@ -14,6 +14,8 @@ import DeleteModal from './DeleteModal'
 import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { TRUE } from 'sass'
+import EditModal from './EditModal'
 
 const Contact = () => {
   const rowSelection = {
@@ -53,7 +55,7 @@ const Contact = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <GrEdit />
+          <GrEdit onClick={() => handleEdit(record)} />
           &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
           <MdDelete onClick={() => handleDelete(record._id)} />
           Löschen
@@ -82,6 +84,7 @@ const Contact = () => {
   const [searchResults, setSearchResults] = useState([])
   const [selectionType] = useState('checkbox')
   const [hide, setHide] = useState(false)
+  const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
   const params = useParams()
 
@@ -98,24 +101,18 @@ const Contact = () => {
     setContactId(customerId)
     setHide(true)
   }
+
+  const handleEdit = (record) => {
+    let data = JSON.stringify(record)
+    localStorage.setItem('ContactEditDetails', data)
+    setEdit(true)
+  }
   const notify = (dataa) => toast(dataa)
 
   const saveData = async () => {
     try {
-      // let response = await fetch(`${apiUrl}/contact/create_contact`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(data),
-      // })
-
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! Status: ${response.status}`)
-      // }
-
       if (!data?.email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
-        notify('Please Fill All Details')
+        return notify('Please Fill All Details')
       }
 
       console.log('ashshihh', data.email)
@@ -125,7 +122,7 @@ const Contact = () => {
       console.log(response)
       getDetails()
       handleClose()
-      if (response.response.data.status == 400) {
+      if (response.response.status == 406) {
         notify('Email Already Exists')
       }
     } catch (error) {
@@ -163,6 +160,7 @@ const Contact = () => {
   return (
     <div>
       {hide ? <DeleteModal setHide={setHide} contactId={contactId} getDetails={getDetails} /> : ''}
+      {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
       <div className="row m-4 p-4" style={{ borderRadius: '5px', border: '1px solid lightgray' }}>
         <div className="col-sm-3">
           <input

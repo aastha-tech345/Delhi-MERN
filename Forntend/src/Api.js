@@ -172,12 +172,12 @@ export const putFetchById = async (url) => {
 }
 export const putFetchData = async (url, data) => {
   try {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const response = await axios({
       method: 'put',
       url: `${url}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       data,
