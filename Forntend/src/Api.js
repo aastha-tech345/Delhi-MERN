@@ -1,19 +1,19 @@
 import axios from 'axios'
 export const getFetch = async (url) => {
   try {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const response = await axios({
       method: 'get',
       url: `${url}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      withCredentials: true,
+      // withCredentials: true,
     })
-    if (response.status === 200) {
-      return await response?.data
-    }
+    // if (response.status === 200) {
+    return response
+    // }
   } catch (error) {
     console.log(error)
     return error

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   PhoneOutlined,
   CheckCircleOutlined,
@@ -9,7 +9,9 @@ import {
   BellOutlined,
   LinkOutlined,
 } from '@ant-design/icons'
-import { postFetchData } from 'src/Api'
+import { getFetch, postFetchData } from 'src/Api'
+import GetDescriptionData from './GetDescriptionData'
+// import axios from 'axios'
 
 const Description = () => {
   const apiUrl = process.env.REACT_APP_API_URL
@@ -18,17 +20,27 @@ const Description = () => {
   const [color1, setColor1] = useState('white')
   const [color2, setColor2] = useState('white')
   const [color3, setColor3] = useState('white')
-
+  const [updateData, setUpdateData] = useState(false)
   const [icon, setIcon] = useState('')
+  const [search, setSearch] = useState('')
   const [data, setData] = useState({
     message: '',
   })
 
-  // const selectIcon = (elem, colour) => {
-  //   setIcon(elem)
-  //   setColor(colour)
-  // }
+  // const [activityData, setActivityData] = useState([])
 
+  // const getData = async () => {
+  //   try {
+  //     const res = await axios.get(`${apiUrl}/activity/get_activity`)
+  //     // console.log(res?.data?.data)
+  //     setActivityData(res?.data?.data)
+  //     // setGetActivity(res.data.data)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+  console.log(search)
+  // let countData = activityData?.length / 10
   const selectIcon = (iconName, selectedColor) => {
     setIcon(iconName)
     switch (iconName) {
@@ -67,14 +79,28 @@ const Description = () => {
   }
   let total = { ...data, icon }
   const handleSumit = async () => {
-    console.log('ashish', total)
     try {
       const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
       console.log(res)
+      if (res?.message === 'activity was created') {
+        setData({
+          message: '',
+        })
+        setColor3('white')
+        setColor1('white')
+        setColor2('white')
+        setColor('white')
+      }
+      setUpdateData(!updateData)
     } catch (error) {
       console.log(error)
     }
   }
+
+  // useEffect(() => {
+  //   getData()
+  // }, [updateData])
+
   return (
     <>
       <h4>Beschreibung</h4>
@@ -82,7 +108,13 @@ const Description = () => {
       <hr />
       <div className="row p-3">
         <div className="col-sm-4">
-          <input type="search" className="form-control" placeholder="Search" />
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
         <div className="col-sm-8">
           <PhoneOutlined
@@ -157,6 +189,9 @@ const Description = () => {
         </div>
       </div>
       <br />
+
+      <GetDescriptionData updateData={updateData} search={search} />
+
       {/* <div className="row card m-2 p-1">
         <div className="col-sm-3">
           <input type="checkbox" /> Qui enim odit est aliquam.

@@ -184,7 +184,7 @@ exports.login = async (req, res) => {
 };
 
 exports.forgotPassword = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const { email } = req.body;
 
@@ -287,11 +287,19 @@ exports.changePassword = async (req, res) => {
 
   try {
     let user = await UserModel.User.findOne({ email }).select("+password");
-    if (!password) {
-      return res.status(406).json({
-        message: "password changed successfully",
+
+      if (!user) {
+      return res.status(500).json({
+        message: "Somethig Went Wrong Please Try Again",
       });
     }
+
+    if (!password) {
+      return res.status(406).json({
+        message: "Please Enter a Password",
+      });
+    }
+
     const newpassword = await bcrypt.hash(password, 12);
     user.password = newpassword;
 

@@ -1,5 +1,6 @@
 const ActivityInfomation = require("../models/activity.model");
 const CustomerModel = require("../models/customer.model");
+const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createActivity = async (req, res) => {
   try {
@@ -34,10 +35,24 @@ exports.createActivity = async (req, res) => {
 
 exports.getActivity = async (req, res) => {
   try {
-    const result = await ActivityInfomation.Activity.find();
-    res.send(result);
+    const resultPerPage = 3;
+
+    const apiFeatures = new ApiFeatures(
+      ActivityInfomation.Activity.find(),
+      req.query
+    ).search().pagination(resultPerPage);
+
+    // const products = await productDatabase.find()
+    const result = await apiFeatures.query;
+
+    // const result = await ActivityInfomation.Activity.find();
+    return res.status(200).json({
+      success: true,
+      message: "Activity Data",
+      data: result,
+    });
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error" });
+    return res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
