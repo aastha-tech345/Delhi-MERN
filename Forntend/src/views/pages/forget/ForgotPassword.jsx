@@ -76,6 +76,7 @@ const ForgotPassword = () => {
         navigate('/')
         setMessage(true)
       }
+      notify('Please Verify Your Email First')
       // else {
       //   toast.error('! Token Expired generate new LInk', {
       //     position: 'top-center',
