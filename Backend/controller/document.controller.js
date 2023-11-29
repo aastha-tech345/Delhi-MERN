@@ -2,11 +2,11 @@ const DocumentInfo = require("../models/document.model");
 const CustomerModel = require("../models/customer.model");
 exports.createDocument = async (req, res) => {
   try {
-    
     const document = new DocumentInfo.Document({
-    ...req.body,document_upload:req?.file?.filename
+      ...req.body,
+      document_upload: req?.file?.filename,
     });
-    console.log("ashishhh",document)
+    console.log("ashishhh", document);
 
     const result = await document.save();
     res.status(201).json({
@@ -43,9 +43,17 @@ exports.getDocumentData = async (req, res) => {
 
 exports.getDocumentDataUpdate = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.updateOne(
-      { _id: req.params.id },
-      { $set: req.body }
+    // const result = await DocumentInfo.Document.updateOne(
+    //   { _id: req.params.id },
+    //   { $set: req.body }
+    // );
+
+    const result = await DocumentInfo.Document.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, document_upload: req?.file?.filename },
+      {
+        new: true,
+      }
     );
     res.send(result);
   } catch (error) {

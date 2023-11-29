@@ -184,7 +184,7 @@ exports.login = async (req, res) => {
 };
 
 exports.forgotPassword = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   const { email } = req.body;
 
@@ -195,29 +195,29 @@ exports.forgotPassword = async (req, res) => {
   }
 
   try {
-    const userFind = await UserModel.User.findOne({ email: email });
+    const userFind = await UserModel.User.findOne({ email });
 
     if (!userFind) {
       return res.status(404).json({ status: 404, message: "User not found" });
     }
 
     // Generate a token for password reset
-    const token = jwt.sign({ _id: userFind._id }, keysecret, {
-      expiresIn: "120s",
-    });
+    // const token = jwt.sign({ _id: userFind._id }, keysecret, {
+    //   expiresIn: "120s",
+    // });
 
-    // Update the user document with the generated token
-    const setUserToken = await UserModel.User.findByIdAndUpdate(
-      { _id: userFind._id },
-      { verifytoken: token },
-      { new: true }
-    );
+    // // Update the user document with the generated token
+    // const setUserToken = await UserModel.User.findByIdAndUpdate(
+    //   { _id: userFind._id },
+    //   { verifytoken: token },
+    //   { new: true }
+    // );
 
-    if (!setUserToken) {
-      return res
-        .status(500)
-        .json({ status: 500, message: "Failed to update user token" });
-    }
+    // if (!setUserToken) {
+    //   return res
+    //     .status(500)
+    //     .json({ status: 500, message: "Failed to update user token" });
+    // }
 
     // Compose the email message
     // const mailOptions = {
@@ -229,7 +229,7 @@ exports.forgotPassword = async (req, res) => {
 
     // Send the email
 
-    let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`;
+    let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
 
     mailer.mailerFromTo(
       email,
@@ -246,11 +246,11 @@ exports.forgotPassword = async (req, res) => {
         } else {
           console.log("Email sent successfully", info.response);
         }
-        return res
-          .status(200)
-          .json({ status: 200, message: "Email sent successfully" });
       }
       );
+      return res
+        .status(200)
+        .json({ status: 200, message: "Email sent successfully" });
   } catch (error) {
     console.error("Error:", error);
     return res
@@ -282,32 +282,32 @@ exports.forgotPasswordVerification = async (req, res) => {
 };
 
 exports.changePassword = async (req, res) => {
-  const { id, token } = req.params;
 
-  const { password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const validuser = await UserModel.User.findOne({
-      _id: id,
-      verifytoken: token,
-    });
+    let user = await UserModel.User.findOne({ email }).select("+password");
 
-    const verifyToken = jwt.verify(token, keysecret);
-
-    if (validuser && verifyToken._id) {
-      const newpassword = await bcrypt.hash(password, 12);
-
-      const setnewuserpass = await UserModel.User.findByIdAndUpdate(
-        { _id: id },
-        { password: newpassword }
-      );
-
-      setnewuserpass.save();
-      res.status(201).json({ status: 200, setnewuserpass });
-    } else {
-      res.status(401).json({ status: 401, message: "user not exist" });
+      if (!user) {
+      return res.status(500).json({
+        message: "Somethig Went Wrong Please Try Again",
+      });
     }
+
+    if (!password) {
+      return res.status(406).json({
+        message: "Please Enter a Password",
+      });
+    }
+
+    const newpassword = await bcrypt.hash(password, 12);
+    user.password = newpassword;
+
+    await user.save();
+    return res.status(200).json({
+      message: "password changed successfully",
+    });
   } catch (error) {
-    res.status(401).json({ status: 401, error });
+    res.status(500).json({ status: 500, error });
   }
 };

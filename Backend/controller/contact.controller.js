@@ -15,7 +15,7 @@ exports.createContact = async (req, res) => {
 
   const emailFind=await ContactInfomation.Contact.findOne({email})
   if(emailFind){
-   return res.status(400).json({
+   return res.status(406).json({
       message: 'Email Already Exists',
       success:false
     });
@@ -30,7 +30,7 @@ exports.createContact = async (req, res) => {
     });
 
     const result = await contact.save();
-    res.status(201).json({
+  return  res.status(201).json({
       message: 'contact was created',
       result,
     });

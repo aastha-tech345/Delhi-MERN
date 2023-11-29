@@ -1,9 +1,10 @@
 const ActivityInfomation = require("../models/activity.model");
 const CustomerModel = require("../models/customer.model");
+const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createActivity = async (req, res) => {
   try {
-    const { title, adinistration, editor } = req.body;
+    const { icon, message } = req.body;
 
     const user = await CustomerModel.Customer.findOne({
       created_by: "customer",
@@ -14,15 +15,13 @@ exports.createActivity = async (req, res) => {
         .send({ message: "No customer found to link as parent" });
     }
     const activity = new ActivityInfomation.Activity({
-      title,
-      adinistration,
-      editor,
-      added_by: null,
+      icon,
+      message,
       customer_id: user._id,
     });
-                          
+
     const result = await activity.save();
-    res.status(201).json({
+    return res.status(201).json({
       message: "activity was created",
       result,
     });
@@ -36,10 +35,24 @@ exports.createActivity = async (req, res) => {
 
 exports.getActivity = async (req, res) => {
   try {
-    const result = await ActivityInfomation.Activity.find();
-    res.send(result);
+    const resultPerPage = 3;
+
+    const apiFeatures = new ApiFeatures(
+      ActivityInfomation.Activity.find(),
+      req.query
+    ).search().pagination(resultPerPage);
+
+    // const products = await productDatabase.find()
+    const result = await apiFeatures.query;
+
+    // const result = await ActivityInfomation.Activity.find();
+    return res.status(200).json({
+      success: true,
+      message: "Activity Data",
+      data: result,
+    });
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error" });
+    return res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
@@ -81,7 +94,7 @@ exports.getActivityDataDelete = async (req, res) => {
   } catch (error) {
     console.error("Error deleting activity data:", error);
     res.status(500).send({
-      message:"Internal Server Error"
+      message: "Internal Server Error",
     });
   }
 };
@@ -95,7 +108,7 @@ exports.getActivitySearch = async (req, res) => {
   } catch (error) {
     console.error("Error searching for activity info:", error);
     res.status(500).send({
-      message:"Internal Server Error"
+      message: "Internal Server Error",
     });
   }
 };
