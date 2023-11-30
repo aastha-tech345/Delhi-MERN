@@ -1,5 +1,6 @@
 const { Customer } = require("../models/customer.model");
 const UserModel = require("../models/user.model");
+const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createCustomer = async (req, res) => {
   try {
@@ -17,14 +18,13 @@ exports.createCustomer = async (req, res) => {
       created_by,
     } = req.body;
 
-    const emailFind=await Customer.findOne({email})
+    const emailFind = await Customer.findOne({ email });
 
-
-    if(emailFind){
+    if (emailFind) {
       return res.status(407).json({
-        success:false,
-        message:"Email Id Already Exists"
-      })
+        success: false,
+        message: "Email Id Already Exists",
+      });
     }
 
     const user = await UserModel.User.findOne({ role: "user" });
@@ -63,32 +63,46 @@ exports.createCustomer = async (req, res) => {
   }
 };
 
-exports.editCustomer=async(req,res)=>{
+exports.editCustomer = async (req, res) => {
   try {
-    const data=await Customer.findByIdAndUpdate(req.params.id,req.body,{
-      new:true
-    })
+    const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
-    res.status(200).json({
-      success:true,
-      message:"Customer updated successfully",
-      data:data
-    })
+   return res.status(200).json({
+      success: true,
+      message: "Customer updated successfully",
+      data: data,
+    });
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).json({ error: "Server Error" });
   }
-}
+};
 
 exports.getCustomer = async (req, res) => {
   try {
-    const result = (await Customer.find()).reverse();
-    return res.send(result);
+    const resultPerPage = 10;
+    const countPage = await Customer.countDocuments({
+      status: "active",
+    });
+    let pageCount = Math.ceil(Number(countPage) / 10);
+    const apiFeatures = new ApiFeatures(Customer.find(), req.query)
+      .reverse()
+      .pagination(resultPerPage);
+
+    const result = await apiFeatures.query;
+
+    return res.status(200).json({
+      success: true,
+      result: result,
+      pageCount: pageCount,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Server Error" });
   }
-}
+};
 
 exports.getCustomerData = async (req, res) => {
   try {
@@ -108,29 +122,29 @@ exports.getCustomerData = async (req, res) => {
   }
 };
 
-exports.editCustomer=async(req,res)=>{
+exports.editCustomer = async (req, res) => {
   try {
-    const data=await Customer.findByIdAndUpdate(req.params.id,req.body,{
-      new:true
-    })
+    const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
-   if (!data){
+    if (!data) {
       res.status(500).json({
-        success:false,
-        message:"Customer updated Unsuccessfully",
-      })
+        success: false,
+        message: "Customer updated Unsuccessfully",
+      });
     }
 
     res.status(200).json({
-      success:true,
-      message:"Customer updated successfully",
-      data:data
-    })
+      success: true,
+      message: "Customer updated successfully",
+      data: data,
+    });
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).json({ error: "Server Error" });
   }
-}
+};
 
 exports.deleteCustomer = async (req, res) => {
   try {
@@ -154,11 +168,9 @@ exports.searchCustomer = async (req, res) => {
         { group: { $regex: searchKey, $options: "i" } },
         { email: { $regex: searchKey, $options: "i" } },
         { phone: { $regex: searchKey, $options: "i" } },
-       
       ],
     });
     res.send(result);
-  
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).send({ error: "Server Error" });

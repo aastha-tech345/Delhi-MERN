@@ -1,12 +1,13 @@
 const DocumentInfo = require("../models/document.model");
 const CustomerModel = require("../models/customer.model");
+const ApiFeatures = require("../utils/apiFeatures");
 exports.createDocument = async (req, res) => {
   try {
     const document = new DocumentInfo.Document({
       ...req.body,
       document_upload: req?.file?.filename,
     });
-    console.log("ashishhh", document);
+    // console.log("ashishhh", document);
 
     const result = await document.save();
     res.status(201).json({
@@ -22,8 +23,25 @@ exports.createDocument = async (req, res) => {
 };
 exports.getDocument = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.find();
-    res.send(result);
+    const resultPerPage = 10;
+    const countPage = await DocumentInfo.Document.countDocuments({
+      status: "active",
+    });
+    // console.log("ashish", countPage);
+    let pageCount = Math.ceil(Number(countPage) / 10);
+    const apiFeatures = new ApiFeatures(DocumentInfo.Document.find(), req.query)
+      .reverse()
+      .pagination(resultPerPage);
+
+    const result = await apiFeatures.query;
+
+    // const result = await DocumentInfo.Document.find();
+    // res.send(result);
+    return res.status(200).json({
+      success: true,
+      result: result,
+      pageCount: pageCount,
+    });
   } catch (error) {
     res.status(500).send({ error: "Internal Server Error" });
   }
@@ -63,10 +81,24 @@ exports.getDocumentDataUpdate = async (req, res) => {
 
 exports.getDocumentDataDelete = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.deleteOne({
-      _id: req.params.id,
+    const result = await DocumentInfo.Document.findByIdAndUpdate(
+      req.params.id,
+      { status: "deleted" },
+      {
+        new: true,
+      }
+    );
+    if (!result) {
+      return res.status(500).json({
+        success: false,
+        message: "Document Not Deleted",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Document Deleted Succesfully",
     });
-    res.send(result);
   } catch (error) {
     res.status(500).send({ error: "Internal Server Error" });
   }

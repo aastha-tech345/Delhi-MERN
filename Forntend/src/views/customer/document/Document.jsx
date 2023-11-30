@@ -6,6 +6,9 @@ import { GrEdit } from 'react-icons/gr'
 import { MdDelete } from 'react-icons/md'
 import axios from 'axios'
 import { postFetchUser } from 'src/Api'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
+
 const columns = [
   {
     title: 'Title',
@@ -57,6 +60,13 @@ const Document = () => {
   })
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
+
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setData({ ...data, [name]: value })
@@ -74,7 +84,7 @@ const Document = () => {
       myForm.append('document_upload', document_upload)
 
       console.log(myForm)
-      const url = `${apiUrl}/document/create_document`
+      const url = `${apiUrl}/document/create_document?page=${page}`
       console.log(url)
       const response = await postFetchUser(url, myForm)
       handleClose()
@@ -89,7 +99,9 @@ const Document = () => {
     try {
       const result = await fetch(`${apiUrl}/document/get_document`)
       const data = await result.json()
-      setDocumentRecord(data)
+      // console.log('documentPage', data?.pageCount)
+      setDocumentRecord(data?.result)
+      setCountPage(data?.pageCount)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
@@ -192,8 +204,18 @@ const Document = () => {
             }}
             columns={columns}
             dataSource={dataa}
+            pagination={false}
           />
         </div>
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
     </>
   )

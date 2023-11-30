@@ -35,12 +35,17 @@ exports.createActivity = async (req, res) => {
 
 exports.getActivity = async (req, res) => {
   try {
-    const resultPerPage = 3;
+    const resultPerPage = 10;
+    const countPage = await ActivityInfomation.Activity.countDocuments();
+    let pageCount = Math.ceil(Number(countPage) / 10);
 
     const apiFeatures = new ApiFeatures(
       ActivityInfomation.Activity.find(),
       req.query
-    ).search().pagination(resultPerPage);
+    )
+      .reverse()
+      .search()
+      .pagination(resultPerPage);
 
     // const products = await productDatabase.find()
     const result = await apiFeatures.query;
@@ -50,6 +55,7 @@ exports.getActivity = async (req, res) => {
       success: true,
       message: "Activity Data",
       data: result,
+      pageCount: pageCount,
     });
   } catch (error) {
     return res.status(500).send({ error: "Internal Server Error" });

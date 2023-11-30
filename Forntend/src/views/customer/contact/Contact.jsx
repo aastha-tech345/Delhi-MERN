@@ -16,6 +16,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { TRUE } from 'sass'
 import EditModal from './EditModal'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 const Contact = () => {
   const rowSelection = {
@@ -86,7 +88,13 @@ const Contact = () => {
   const [hide, setHide] = useState(false)
   const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
   const params = useParams()
+
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
 
   const handleChange = (e) => {
     const { name, value, type } = e.target
@@ -132,9 +140,10 @@ const Contact = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/contact/get_contact`)
+      const result = await fetch(`${apiUrl}/contact/get_contact?page=${page}`)
       const data = await result.json()
-      const activeRecords = data.filter((record) => record.status === 'active')
+      setCountPage(data?.pageCount)
+      const activeRecords = data?.result?.filter((record) => record.status === 'active')
 
       setContactRecord(activeRecords)
     } catch (error) {
@@ -155,7 +164,7 @@ const Contact = () => {
   let dataa = contactRecord
   useEffect(() => {
     getDetails()
-  }, [])
+  }, [page])
 
   return (
     <div>
@@ -349,7 +358,17 @@ const Contact = () => {
           style={{ overflowX: 'auto' }}
           columns={columns}
           dataSource={dataa}
+          pagination={false}
         />
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
       <ToastContainer />
     </div>

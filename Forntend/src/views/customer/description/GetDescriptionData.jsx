@@ -6,15 +6,18 @@ import {
   PrinterOutlined,
   RedEnvelopeOutlined,
 } from '@ant-design/icons'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import axios from 'axios'
 
 const GetDescriptionData = ({ updateData, search }) => {
+  const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const [page, setPage] = useState(1)
   const [activityData, setActivityData] = useState([])
-
+  const [coountPage, setCountPage] = useState(0)
   const handleChange = (event, value) => {
     setPage(value)
   }
@@ -41,6 +44,13 @@ const GetDescriptionData = ({ updateData, search }) => {
       const res = await axios.get(`${apiUrl}/activity/get_activity?keyword=${search}&page=${page}`)
 
       setActivityData(res?.data?.data)
+      console.log('ashish', res?.data?.pageCount)
+      setCountPage(res?.data?.pageCount)
+      // if (res?.data?.data?.length === 0) {
+      //   console.log('ashihsh')
+      //   notify(`Page ${page} There is no Data Left`)
+      //   setPage(page - 1)
+      // }
 
       // setGetActivity(res.data.data)
     } catch (error) {
@@ -72,13 +82,13 @@ const GetDescriptionData = ({ updateData, search }) => {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="shadow p-3 mb-5 bg-body rounded m-3">
           {activityData?.map((elem) => {
             const { createdAt, icon, message, _id } = elem
             const inputDate = new Date(createdAt)
-            const day = inputDate.getUTCDate()
-            const month = inputDate.getUTCMonth() + 1
-            const year = inputDate.getUTCFullYear() % 100
+            const day = inputDate?.getUTCDate()
+            const month = inputDate?.getUTCMonth() + 1
+            const year = inputDate?.getUTCFullYear() % 100
 
             const outputDateString = `${day}-${month < 10 ? '0' : ''}${month}-${
               year < 10 ? '0' : ''
@@ -106,9 +116,19 @@ const GetDescriptionData = ({ updateData, search }) => {
           })}
         </tbody>
       </table>
+      {/* <Stack spacing={2}>
+        <Pagination count={coountPage} color="secondary" page={page} onChange={handleChange} />
+      </Stack> */}
       <Stack spacing={2}>
-        <Pagination count={10} color="secondary" page={page} onChange={handleChange} />
+        <Pagination
+          count={coountPage}
+          variant="outlined"
+          shape="rounded"
+          page={page}
+          onChange={handleChange}
+        />
       </Stack>
+      <ToastContainer />
     </>
   )
 }

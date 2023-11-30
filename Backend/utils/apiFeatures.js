@@ -28,6 +28,11 @@ class ApiFeatures {
 
         return this
     }
+
+    reverse() {
+        this.query = this.query.sort({ _id: -1 }); // Assuming _id is an ObjectId
+        return this;
+      }
 }
 
 module.exports = ApiFeatures

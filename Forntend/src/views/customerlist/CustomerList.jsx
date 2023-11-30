@@ -9,6 +9,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
 import Form from 'react-bootstrap/Form'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 const CustomerList = () => {
   const [selectionType, setSelectionType] = useState('checkbox')
@@ -28,6 +30,8 @@ const CustomerList = () => {
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
 
   const notify = (data) => toast(data)
 
@@ -180,13 +184,17 @@ const CustomerList = () => {
     }
   }
 
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
+
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/customer/get_record`)
+      const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
       const data = await result.json()
-
+      setCountPage(data?.pageCount)
       // Filter records with status 'active'
-      const activeRecords = data.filter((record) => record.status === 'active')
+      const activeRecords = data?.result?.filter((record) => record.status === 'active')
 
       setCustomerRecord(activeRecords)
     } catch (error) {
@@ -245,7 +253,7 @@ const CustomerList = () => {
 
   useEffect(() => {
     getDetails()
-  }, [])
+  }, [page])
 
   return (
     <>
@@ -469,7 +477,22 @@ const CustomerList = () => {
             </Modal>
           </div>
         </div>
-        <Table rowKey="_id" rowSelection={rowSelection} columns={columns} dataSource={data} />
+        <Table
+          rowKey="_id"
+          rowSelection={rowSelection}
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+        />
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
         <Modal show={isModalVisible} onHide={handleModalClose} centered>
           <Modal.Title>
             <svg

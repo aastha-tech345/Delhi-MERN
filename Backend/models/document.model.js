@@ -1,17 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const documentSchema = new Schema({
-  document_title:{type:String},
-  document_type:{type:String},
-  document_upload:{type:String},
-  customer_id: { type: String},
+  document_title: { type: String },
+  document_type: { type: String },
+  document_upload: { type: String },
+  // customer_id: { type: String},
   customer_id: { type: mongoose.Schema.Types.ObjectId },
-  added_by:{type:String}
+  // added_by:{type:String}
+  status: { type: String, default: "active" },
 });
 
-const Document = mongoose.model('document', documentSchema,'document');
+const Document = mongoose.model("document", documentSchema, "document");
 
 module.exports = { Document };
-
