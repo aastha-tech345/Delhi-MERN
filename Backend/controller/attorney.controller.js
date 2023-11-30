@@ -1,19 +1,22 @@
-const AttorneyInformation = require("../models/attorney.model");
-const CustomerModel = require("../models/customer.model");
+const { Attorney } = require("../models/attorney.model");
 
 exports.createAttorney = async (req, res) => {
   try {
-    const { healthcare, power, provision, securing ,customer_id} = req.body;
+    const {
+      healthCare,
+      powerOfAttorney,
+      careProvision,
+      securingattorney,
+      customer_id,
+    } = req.body;
 
     // Create a new Attorney instance
-    const attorney = new AttorneyInformation.Attorney({
-      healthcare,
-      power,
-      provision,
-      securing,
-      added_by,
+    const attorney = new Attorney({
+      healthCare,
+      powerOfAttorney,
+      careProvision,
+      securingattorney,
       customer_id,
-    
     });
 
     // Save the attorney record to the database
@@ -42,7 +45,7 @@ exports.getAttorney = async (req, res) => {
 
 exports.getAttorneyData = async (req, res) => {
   try {
-    const result = await AttorneyInformation.Attorney.findOne({
+    const result = await Attorney.findOne({
       _id: req.params.id,
     });
     if (!result) {
@@ -56,7 +59,7 @@ exports.getAttorneyData = async (req, res) => {
 
 exports.getAttorneyDataUpdate = async (req, res) => {
   try {
-    const result = await AttorneyInformation.Attorney.updateOne(
+    const result = await Attorney.updateOne(
       { _id: req.params.id },
       { $set: req.body }
     );
@@ -69,7 +72,7 @@ exports.getAttorneyDataUpdate = async (req, res) => {
 
 exports.getAttorneyDataDelete = async (req, res) => {
   try {
-    const result = await AttorneyInformation.Attorney.deleteOne({
+    const result = await Attorney.deleteOne({
       _id: req.params.id,
     });
     res.send(result);
@@ -80,7 +83,7 @@ exports.getAttorneyDataDelete = async (req, res) => {
 
 exports.getAttorneySearch = async (req, res) => {
   try {
-    const result = await AttorneyInformation.Attorney.find({
+    const result = await Attorney.find({
       $or: [{ administration: { $regex: req.params.key } }],
     });
     res.send(result);

@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Services = () => {
+  const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const [motivation, setMotivation] = useState({
     prevention: '',
@@ -79,7 +82,6 @@ const Services = () => {
     phone: '',
     mobile: '',
     dataProtection: '',
-    deposit: '',
   })
   //materialChange started
 
@@ -187,6 +189,42 @@ const Services = () => {
     customer_id: result._id,
   }
 
+  const style = `
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .radio-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  input[type="radio"]:checked {
+    background-color: #333;
+  }
+
+  label {
+    cursor: pointer;
+  }
+`
   const saveData = async () => {
     try {
       let response = await fetch(`${apiUrl}/spv/create_spv`, {
@@ -203,16 +241,80 @@ const Services = () => {
 
       let result = await response.json()
       console.log(result)
-      // setMotivation('')
-      // setResuscitation('')
-      // setSituation('')
-      // setDetermination('')
-      // setWhereabout('')
-      // setSupport('')
-      // setFuneralwishes('')
-      // setAtorney('')
-      // setFee('')
-      // setInformation('')
+      notify('Data Saved Successfully')
+      setMotivation({
+        prevention: '',
+        illness: '',
+        selfDetermination: '',
+        relatives: '',
+        lessons: '',
+      })
+      setResuscitation({
+        medicineDesired: '',
+        noIntensive: '',
+        revival: '',
+        noRevival: '',
+      })
+      setSituation({
+        dyingProcess: '',
+        brainInjury: '',
+        dementia: '',
+      })
+      setDetermination({
+        essential: '',
+        noIntensive: '',
+        servere: '',
+        artificialHydration: '',
+        discomfort: '',
+        medication: '',
+        medicines: '',
+        organDonation: '',
+        researchPurpose: '',
+        defibrillator: '',
+        dyingYeast: '',
+        suicideOption: '',
+        commitment: '',
+        discretionaryArea: '',
+      })
+      setWhereabout({
+        familiarEnvironment: '',
+        hospice: '',
+        toHospital: '',
+        notHospital: '',
+      })
+      setSupport({
+        doctor: '',
+        mentalSupport: '',
+        absolutelyNot: '',
+      })
+      setFuneralwishes({
+        cremation: '',
+        burial: '',
+        arrangement: '',
+        miscellaneous: '',
+      })
+      setAtorney({
+        forms: '',
+        careOrder: '',
+      })
+      setFee({
+        regular: '',
+        reduced: '',
+      })
+      setInformation({
+        urgency: '',
+        alternateAddress: '',
+        creation: '',
+        fname: '',
+        lname: '',
+        address: '',
+        street: '',
+        plz: '',
+        ort: '',
+        phone: '',
+        mobile: '',
+        dataProtection: '',
+      })
     } catch (error) {
       console.error('Error during API call:', error)
     }
@@ -825,32 +927,50 @@ const Services = () => {
             <br />
             <br />
             <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Begleitung am Lebensende</p>
-
-            <p style={{ color: '#0b5995' }}>Arztin</p>
-            <input
-              type="text"
-              className="form-control"
-              value={support.doctor}
-              onChange={(e) => onChange('doctor', e.target.value)}
-            />
+            <div className=" row mt-2">
+              <label htmlFor="inputtext" className="col-sm-2 col-form-label">
+                Arztin
+              </label>
+              <div className="col-sm-10">
+                <input
+                  value={support.doctor}
+                  onChange={(e) => onChange('doctor', e.target.value)}
+                  name="lname"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+            </div>
             <hr />
-
-            <p style={{ color: '#0b5995' }}>Seelischer Beistand</p>
-            <input
-              type="text"
-              className="form-control"
-              value={support.mentalSupport}
-              onChange={(e) => onChange('mentalSupport', e.target.value)}
-            />
+            <div className=" row mt-2">
+              <label htmlFor="inputtext" className="col-sm-2 col-form-label">
+                Seelischer Beistand
+              </label>
+              <div className="col-sm-10">
+                <input
+                  value={support.mentalSupport}
+                  onChange={(e) => onChange('mentalSupport', e.target.value)}
+                  name="lname"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+            </div>
             <hr />
-
-            <p style={{ color: '#0b5995' }}>Keinesfalls</p>
-            <input
-              type="text"
-              className="form-control"
-              value={support.absolutelyNot}
-              onChange={(e) => onChange('absolutelyNot', e.target.value)}
-            />
+            <div className=" row mt-2">
+              <label htmlFor="inputtext" className="col-sm-2 col-form-label">
+                Keinesfalls
+              </label>
+              <div className="col-sm-10">
+                <input
+                  value={support.absolutelyNot}
+                  onChange={(e) => onChange('absolutelyNot', e.target.value)}
+                  name="lname"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+            </div>
             <hr />
             <div className="row">
               <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Bestattungswunsche</p>
@@ -893,23 +1013,35 @@ const Services = () => {
                 &nbsp; nein
               </div>
             </div>
-            <p style={{ color: '#0b5995' }}>Bestattungsvorsorge</p>
-            <input
-              type="text"
-              value={funeralwishes.arrangement}
-              onChange={(e) => funeralwishesChange(e)}
-              name="arrangement"
-              className="form-control"
-            />
+            <div className=" row mt-2">
+              <label htmlFor="inputtext" className="col-sm-2 col-form-label">
+                Bestattungsvorsorge
+              </label>
+              <div className="col-sm-10">
+                <input
+                  value={funeralwishes.arrangement}
+                  onChange={(e) => funeralwishesChange(e)}
+                  name="arrangement"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+            </div>
             <hr />
-            <p style={{ color: '#0b5995' }}>Sonstiges</p>
-            <input
-              type="text"
-              value={funeralwishes.miscellaneous}
-              onChange={(e) => funeralwishesChange(e)}
-              name="miscellaneous"
-              className="form-control"
-            />
+            <div className=" row mt-2">
+              <label htmlFor="inputtext" className="col-sm-2 col-form-label">
+                Sonstiges
+              </label>
+              <div className="col-sm-10">
+                <input
+                  value={funeralwishes.miscellaneous}
+                  onChange={(e) => funeralwishesChange(e)}
+                  name="miscellaneous"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+            </div>
             <hr />
             <div className="row">
               <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Vollmachten</p>
@@ -1076,7 +1208,6 @@ const Services = () => {
                   borderRadius: '5px 5px 5px 5px',
                 }}
               >
-                <p>Kontaktangaben</p>
                 <div className="row">
                   <div className="col-sm-6 mb-3">
                     <div className=" row mt-2">

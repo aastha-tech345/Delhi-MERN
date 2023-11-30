@@ -63,9 +63,13 @@ exports.getDocumentDataUpdate = async (req, res) => {
 
 exports.getDocumentDataDelete = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.deleteOne({
-      _id: req.params.id,
-    });
+    const result = await DocumentInfo.Document.findByIdAndUpdate(
+      req.params.id,
+      { status: "deleted" },
+      {
+        new: true,
+      }
+    );
     res.send(result);
   } catch (error) {
     res.status(500).send({ error: "Internal Server Error" });

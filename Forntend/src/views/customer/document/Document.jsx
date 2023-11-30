@@ -5,30 +5,8 @@ import { Divider, Radio, Table } from 'antd'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete } from 'react-icons/md'
 import axios from 'axios'
-import { postFetchUser } from 'src/Api'
-const columns = [
-  {
-    title: 'Title',
-    dataIndex: 'document_title',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Dokumententyp',
-    dataIndex: 'document_type',
-  },
-  {
-    title: 'AKTION',
-    dataIndex: 'action',
-    render: (_, record) => (
-      <>
-        <GrEdit />
-        &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-        <MdDelete />
-        Löschen
-      </>
-    ),
-  },
-]
+import { postFetchUser, getFetch } from 'src/Api'
+import DeleteModal from './DeleteModal'
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -43,6 +21,41 @@ const rowSelection = {
 }
 
 const Document = () => {
+  const columns = [
+    {
+      title: 'Title',
+      dataIndex: 'document_title',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Dokumententyp',
+      dataIndex: 'document_type',
+    },
+    {
+      title: 'AKTION',
+      dataIndex: 'action',
+      render: (_, record) => (
+        <>
+          <button
+            style={{ background: 'none', border: 'none' }}
+            //  onClick={() => handleEdit(record)}
+          >
+            <GrEdit />
+            &nbsp;&nbsp;Bearbeiten
+          </button>
+          &nbsp;&nbsp;
+          <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => handleDelete(record._id)}
+          >
+            <MdDelete /> Löschen
+          </button>
+        </>
+      ),
+    },
+  ]
+  const [hide, setHide] = useState(false)
+  const [documentId, setDocumentId] = useState('')
   const [selectionType, setSelectionType] = useState('checkbox')
   const [show, setShow] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
@@ -64,6 +77,12 @@ const Document = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  const handleDelete = (documentId) => {
+    console.log(`Deleting customer with ID: ${documentId}`)
+    setDocumentId(documentId)
+    setHide(true)
+  }
+
   const saveData = async (e) => {
     try {
       e.preventDefault()
@@ -79,7 +98,6 @@ const Document = () => {
       const response = await postFetchUser(url, myForm)
       handleClose()
       getDetails()
-      //console.log('ashishh', response)
     } catch (error) {
       return error
     }
@@ -87,20 +105,31 @@ const Document = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/document/get_document`)
-      const data = await result.json()
-      setDocumentRecord(data)
+      const url = `${apiUrl}/document/get_document`
+      const result = await getFetch(url)
+      console.log('document page', result)
+      if (result?.status === 200) {
+        const activeRecords = result.data.filter((record) => record.status === 'active')
+        // console.log('dp1', activeRecords)
+        setDocumentRecord(activeRecords)
+      }
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
   }
-  let dataa = documentRecord
+
+  // console.log('document page', documentRecord)
   useEffect(() => {
     getDetails()
   }, [])
 
   return (
     <>
+      {hide ? (
+        <DeleteModal setHide={setHide} documentId={documentId} getDetails={getDetails} />
+      ) : (
+        ''
+      )}
       <div className="row">
         <h5 className="mt-3 mx-3">Dokumente</h5>
         <hr />
@@ -148,7 +177,15 @@ const Document = () => {
                 className="form-control"
               >
                 <option>--select--</option>
-                <option value="pdf">pdf</option>
+                <option value="Living will">Patientenverfügung</option>
+                <option value="Health care power of attorney">Gesundheitsvollmacht</option>
+                <option value="Power of attorney">Vorsorgevollmacht</option>
+                <option value="care order">Betreuungsverfügung</option>
+                <option value="Feces pass">Kotfallpass</option>
+                <option value="Power of attorney digital test">Vollmacht digitales Prbe</option>
+                <option value="Write to">Anschreiben</option>
+                <option value="Personal document">Persönliches Dokument</option>
+                <option value="Other">Anderes</option>
               </select>
               <label htmlFor="fileUpload">Datei-Upload</label>
               <input
@@ -191,7 +228,7 @@ const Document = () => {
               ...rowSelection,
             }}
             columns={columns}
-            dataSource={dataa}
+            dataSource={documentRecord}
           />
         </div>
       </div>

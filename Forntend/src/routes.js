@@ -32,8 +32,8 @@ if (auth) {
   routes = [
     { path: '/', exact: true, name: 'Home' },
     { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
-    { path: '/customer', name: 'Kunden', element: CustomerList },
-    { path: '/:id', name: 'Kunden-Listen', element: Customer },
+    { path: '/customerlist', name: 'KlientInnen', element: CustomerList },
+    { path: '/:id', name: 'KlientInnen-Listen', element: Customer },
     { path: '/customer/customer_info', name: 'KundenInfo', element: CustomerInfo },
     { path: '/customer/contact', name: 'Kontakte', element: Contact },
     { path: '/customer/bills', name: 'Rechnungen', element: Bills },
