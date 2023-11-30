@@ -1,22 +1,32 @@
 import React, { useState } from 'react'
-import CustomerInfo from './customerInfo/CustomerInfo'
-import Contact from './contact/Contact'
-import Tasks from './task/Tasks'
-import Bills from './bills/Bills'
-import Description from './description/Description'
-import Document from './document/Document'
-import Services from './services/Services'
 import { HiOutlineMail } from 'react-icons/hi'
 import { IoIosCall } from 'react-icons/io'
 import { ImLocation2 } from 'react-icons/im'
-import Attorney from './attorney/Attorney'
+import { useNavigate } from 'react-router-dom'
 
 const Customer = () => {
-  const [activeTab, setActiveTab] = useState('nav-home')
+  const [activeTab, setActiveTab] = useState('')
+  const navigate = useNavigate()
 
-  const handleTabClick = (tabId) => {
+  const handleTabClick = (tabId, name) => {
     setActiveTab(tabId)
+    if (name === 'KlientInnen') {
+      return navigate('/customer/customer_info')
+    } else if (name === 'Kontakte') {
+      return navigate('/customer/contact')
+    } else if (name === 'Aktivitat') {
+      return navigate('/customer/description')
+    } else if (name === 'Dokumente') {
+      return navigate('/customer/document')
+    } else if (name === 'Vollmachten') {
+      return navigate('/customer/attorney')
+    } else if (name === 'SPV') {
+      return navigate('/customer/services')
+    } else if (name === 'Rechnung') {
+      return navigate('/customer/bills')
+    }
   }
+
   let data = localStorage.getItem('customerDatat')
   let res = JSON.parse(data)
 
@@ -57,11 +67,11 @@ const Customer = () => {
                     data-bs-toggle="tab"
                     role="tab"
                     aria-selected={activeTab === 'nav-home'}
-                    onClick={() => handleTabClick('nav-home')}
+                    onClick={() => handleTabClick('nav-home', 'KlientInnen')}
                     style={{ marginRight: '20px', marginLeft: '20px' }}
                   >
                     <i className="fa-solid fa-info fa-fw infoIcon"></i>
-                    Kundeninfo
+                    KlientInnen
                   </button>
                   <button
                     className={`nav-link ${activeTab === 'nav-kontakte' ? 'active' : ''}`}
@@ -70,13 +80,12 @@ const Customer = () => {
                     role="tab"
                     aria-controls="nav-kontakte"
                     aria-selected={activeTab === 'nav-kontakte'}
-                    onClick={() => handleTabClick('nav-kontakte')}
+                    onClick={() => handleTabClick('nav-kontakte', 'Kontakte')}
                     style={{ marginRight: '20px' }}
                   >
                     {' '}
                     <i className="fa-regular fa-address-book fa-fw"></i>
                     Kontakte
-                    {/* //calls */}
                   </button>
                   <button
                     className={`nav-link ${activeTab === 'nav-aufgaben' ? 'active' : ''}`}
@@ -86,7 +95,7 @@ const Customer = () => {
                     role="tab"
                     aria-controls="nav-aufgaben"
                     aria-selected={activeTab === 'nav-aufgaben'}
-                    onClick={() => handleTabClick('nav-aufgaben')}
+                    onClick={() => handleTabClick('nav-aufgaben', 'Aktivitat')}
                     style={{ marginRight: '20px' }}
                   >
                     <i className="fa-solid fa-heart-pulse fa-fw"></i>
@@ -100,12 +109,11 @@ const Customer = () => {
                     role="tab"
                     aria-controls="nav-rechnungen"
                     aria-selected={activeTab === 'nav-rechnungen'}
-                    onClick={() => handleTabClick('nav-rechnungen')}
+                    onClick={() => handleTabClick('nav-rechnungen', 'Dokumente')}
                     style={{ marginRight: '20px' }}
                   >
                     <i className="fa-regular fa-file fa-fw"></i>
                     Dokumente
-                    {/* //bills */}
                   </button>
                   <button
                     className={`nav-link ${activeTab === 'nav-beschreibung' ? 'active' : ''}`}
@@ -115,12 +123,11 @@ const Customer = () => {
                     role="tab"
                     aria-controls="nav-beschreibung"
                     aria-selected={activeTab === 'nav-beschreibung'}
-                    onClick={() => handleTabClick('nav-beschreibung')}
+                    onClick={() => handleTabClick('nav-beschreibung', 'Vollmachten')}
                     style={{ marginRight: '20px' }}
                   >
                     <i className="fa-solid fa-paint-roller fa-fw"></i>
                     Vollmachten
-                    {/* //Description */}
                   </button>
                   <button
                     className={`nav-link ${activeTab === 'nav-dokumente' ? 'active' : ''}`}
@@ -130,13 +137,12 @@ const Customer = () => {
                     role="tab"
                     aria-controls="nav-dokumente"
                     aria-selected={activeTab === 'nav-dokumente'}
-                    onClick={() => handleTabClick('nav-dokumente')}
+                    onClick={() => handleTabClick('nav-dokumente', 'SPV')}
                     style={{ marginRight: '20px' }}
                   >
                     {' '}
                     <i className="fa-regular fa-lightbulb fa-fw"></i>
                     SPV
-                    {/* //documents */}
                   </button>
                   <button
                     className={`nav-link ${activeTab === 'nav-leistungen' ? 'active' : ''}`}
@@ -146,75 +152,14 @@ const Customer = () => {
                     role="tab"
                     aria-controls="nav-leistungen"
                     aria-selected={activeTab === 'nav-leistungen'}
-                    onClick={() => handleTabClick('nav-leistungen')}
+                    onClick={() => handleTabClick('nav-leistungen', 'Rechnung')}
                     style={{ marginRight: '20px' }}
                   >
                     <i className="fa-regular fa-file-lines fa-fw"></i>
                     Rechnung
-                    {/* services */}
                   </button>
                 </div>
               </nav>
-              <div className="tab-content" id="nav-tabContent">
-                <div
-                  className={`tab-pane fade ${activeTab === 'nav-home' ? 'show active' : ''}`}
-                  id="nav-home"
-                  role="tabpanel"
-                  aria-labelledby="nav-home-tab"
-                >
-                  <CustomerInfo />
-                </div>
-                <div
-                  className={`tab-pane fade ${activeTab === 'nav-kontakte' ? 'show active' : ''}`}
-                  id="nav-kontakte"
-                  role="tabpanel"
-                  aria-labelledby="nav-kontakte-tab"
-                >
-                  <Contact />
-                </div>
-                <div
-                  className={`tab-pane fade ${activeTab === 'nav-aufgaben' ? 'show active' : ''}`}
-                  id="nav-aufgaben"
-                  role="tabpanel"
-                  aria-labelledby="nav-aufgaben-tab"
-                >
-                  <Description />
-                </div>
-                <div
-                  className={`tab-pane fade ${activeTab === 'nav-rechnungen' ? 'show active' : ''}`}
-                  id="nav-rechnungen"
-                  role="tabpanel"
-                  aria-labelledby="nav-rechnungen-tab"
-                >
-                  <Document />
-                </div>
-                <div
-                  className={`tab-pane fade ${
-                    activeTab === 'nav-beschreibung' ? 'show active' : ''
-                  }`}
-                  id="nav-beschreibung"
-                  role="tabpanel"
-                  aria-labelledby="nav-beschreibung-tab"
-                >
-                  <Attorney />
-                </div>
-                <div
-                  className={`tab-pane fade ${activeTab === 'nav-dokumente' ? 'show active' : ''}`}
-                  id="nav-dokumente"
-                  role="tabpanel"
-                  aria-labelledby="nav-dokumente-tab"
-                >
-                  <Services />
-                </div>
-                <div
-                  className={`tab-pane fade ${activeTab === 'nav-leistungen' ? 'show active' : ''}`}
-                  id="nav-leistungen"
-                  role="tabpanel"
-                  aria-labelledby="nav-leistungen-tab"
-                >
-                  <Bills />
-                </div>
-              </div>
             </div>
           </div>
           <hr />

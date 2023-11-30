@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Divider, Table } from 'antd'
-import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { BiFilterAlt } from 'react-icons/bi'
-import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
-import { useParams } from 'react-router-dom'
-import { CListGroup } from '@coreui/react'
 import axios from 'axios'
 import DeleteModal from './DeleteModal'
 import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { TRUE } from 'sass'
 import EditModal from './EditModal'
+import Customer from '../Customer'
 
 const Contact = () => {
+  const searchInputRef = useRef()
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
@@ -89,13 +86,12 @@ const Contact = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const [contactRecord, setContactRecord] = useState([])
-  const [searchKey, setSearchKey] = useState('')
-  const [searchResults, setSearchResults] = useState([])
+  const [search, setSearch] = useState('')
+  // const [customer_record, setCustomerRecord] = useState([])
   const [selectionType] = useState('checkbox')
   const [hide, setHide] = useState(false)
   const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
-  const params = useParams()
 
   const handleChange = (e) => {
     const { name, value, type } = e.target
@@ -124,14 +120,14 @@ const Contact = () => {
         return notify('Please Fill All Details')
       }
 
-      console.log('ashshihh', data.email)
+      // console.log('ashshihh', data.email)
 
       const response = await postFetchData(`${apiUrl}/contact/create_contact`, data)
       // let result = await response.json()
       console.log(response)
       getDetails()
       handleClose()
-      if (response.response.status == 406) {
+      if (response.response.status === 406) {
         notify('Email Already Exists')
       }
     } catch (error) {
@@ -151,43 +147,72 @@ const Contact = () => {
     }
   }
 
-  const handleSearch = async () => {
+  const searchHandle = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/contact/search/${searchKey}`)
-      setSearchResults(response.data)
+      // let key = searchInputRef.current.value
+      //console.log('ashish', search)
+      if (search === '') {
+        return getDetails()
+      }
+      const response = await fetch(`${apiUrl}/contact/search/${search}`)
+      const data = await response.json()
+      console.log('astha', data)
+      const activeRecords = data.filter((record) => record.status === 'active')
+
+      if (activeRecords.length > 0) {
+        setContactRecord(activeRecords)
+      } else {
+        getDetails()
+        setContactRecord(data)
+      }
     } catch (error) {
-      console.error('Error searching for contact info:', error)
+      console.error('Error searching data:', error.message)
     }
   }
 
   //console.log(contactRecord)
   let dataa = contactRecord
+  console.log(dataa)
   useEffect(() => {
     getDetails()
   }, [])
 
   return (
-    <div>
+    <div style={{ background: '#fff' }}>
       {hide ? <DeleteModal setHide={setHide} contactId={contactId} getDetails={getDetails} /> : ''}
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
-      <div className="row m-4 p-4" style={{ borderRadius: '5px', border: '1px solid lightgray' }}>
+      <Customer />
+      <h5 className="mx-4">Kontakte</h5>
+      <div
+        className="row p-3 mx-4"
+        style={{
+          borderRadius: '5px',
+          margin: '0px',
+          border: '1px solid lightgray',
+          background: '#fff',
+        }}
+      >
         <div className="col-sm-3">
           <input
-            value={searchKey}
-            onChange={(e) => setSearchKey(e.target.value)}
+            ref={searchInputRef}
+            name="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             type="search"
             id="form1"
             placeholder="Ihre Suche eingeben"
             className="form-control"
           />
         </div>
-        <div className="col-sm-4">
-          <button className="btn btn text-light" style={{ background: '#0b5995' }}>
-            <BiFilterAlt onClick={handleSearch} />
-            &nbsp; Filter
+        <div className="col-sm-6">
+          <button
+            onClick={searchHandle}
+            className="btn btn text-light"
+            style={{ background: '#0b5995' }}
+          >
+            filter
           </button>
         </div>
-        <div className="col-sm-2"></div>
         <div className="col-sm-3">
           &nbsp;&nbsp;
           <button
@@ -347,7 +372,7 @@ const Contact = () => {
           </Modal>{' '}
         </div>
       </div>
-      <div>
+      <div style={{ background: '#fff' }} className="mx-3">
         <Divider />
 
         <Table
@@ -360,6 +385,7 @@ const Contact = () => {
           dataSource={dataa}
         />
       </div>
+
       <ToastContainer />
     </div>
   )

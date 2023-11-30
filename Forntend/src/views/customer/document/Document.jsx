@@ -7,6 +7,7 @@ import { MdDelete } from 'react-icons/md'
 import axios from 'axios'
 import { postFetchUser, getFetch } from 'src/Api'
 import DeleteModal from './DeleteModal'
+import Customer from '../Customer'
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -124,17 +125,16 @@ const Document = () => {
   }, [])
 
   return (
-    <>
+    <div style={{ background: '#fff' }}>
       {hide ? (
         <DeleteModal setHide={setHide} documentId={documentId} getDetails={getDetails} />
       ) : (
         ''
       )}
-      <div className="row">
-        <h5 className="mt-3 mx-3">Dokumente</h5>
-        <hr />
-      </div>
-      <div className="row" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
+      <Customer />
+      <h5 className="mt-3 mx-3">Dokumente</h5>
+      <hr />
+      <div className="row p-1 m-1" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
         <div className="col-sm-7">
           <h5>Dokumente verwalten</h5>
           <p>
@@ -232,7 +232,7 @@ const Document = () => {
           />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
