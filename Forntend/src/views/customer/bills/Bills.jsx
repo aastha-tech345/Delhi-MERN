@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Customer from '../Customer'
 
 const Bills = () => {
   const notify = (dataa) => toast(dataa)
@@ -59,8 +60,10 @@ const Bills = () => {
   }
 
   return (
-    <div>
-      <h5>Rechnung</h5>
+    <div style={{ background: '#fff' }}>
+      <Customer />
+      <br />
+      <h5 className="mx-4">Rechnung</h5>
       <hr />
       <div className="row m-4 p-4  shadow">
         <p style={{ color: 'blue' }}>Rechnungstellung</p>

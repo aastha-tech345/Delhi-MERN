@@ -1,17 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
-import { Table, Checkbox } from 'antd'
+import { Table } from 'antd'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
 import Form from 'react-bootstrap/Form'
 
 const CustomerList = () => {
-  const [selectionType, setSelectionType] = useState('checkbox')
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
   const [fname, setFname] = useState()
@@ -25,7 +23,6 @@ const CustomerList = () => {
   const [street, setStreet] = useState()
   const [group, setGroup] = useState()
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [selectedRecord, setSelectedRecord] = useState(null)
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
 
@@ -45,7 +42,7 @@ const CustomerList = () => {
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
-          to={`/${record._id}`}
+          to={`/customer/customer_info`}
           onClick={() => handleStore(text, record)}
         >
           {text}
@@ -180,7 +177,8 @@ const CustomerList = () => {
     }
   }
 
-  const getDetails = async () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getDetails = useCallback(async () => {
     try {
       const result = await fetch(`${apiUrl}/customer/get_record`)
       const data = await result.json()
@@ -192,7 +190,7 @@ const CustomerList = () => {
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
-  }
+  })
   let data = customer_record
   const handleStore = (data, record) => {
     let res = JSON.stringify(record)
@@ -208,7 +206,7 @@ const CustomerList = () => {
     localStorage.setItem('CustomerRecord', res)
     setHide(true)
   }
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [, setSelectedRowKeys] = useState([])
   const rowSelection = {
     // onChange: (selectedRowKeys, selectedRows) => {},
     onChange: (selectedKeys) => {
@@ -225,7 +223,7 @@ const CustomerList = () => {
     try {
       // let key = searchInputRef.current.value
       //console.log('ashish', search)
-      if (search == '') {
+      if (search === '') {
         return getDetails()
       }
       const response = await fetch(`${apiUrl}/customer/search/${search}`)

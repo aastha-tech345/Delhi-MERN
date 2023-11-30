@@ -17,14 +17,13 @@ exports.createCustomer = async (req, res) => {
       created_by,
     } = req.body;
 
-    const emailFind=await Customer.findOne({email})
+    const emailFind = await Customer.findOne({ email });
 
-
-    if(emailFind){
+    if (emailFind) {
       return res.status(407).json({
-        success:false,
-        message:"Email Id Already Exists"
-      })
+        success: false,
+        message: "Email Id Already Exists",
+      });
     }
 
     const user = await UserModel.User.findOne({ role: "user" });
@@ -56,29 +55,29 @@ exports.createCustomer = async (req, res) => {
 
     return res
       .status(200)
-      .send({ message: "Customer created successfully", data: result });
+      .json({ message: "Customer created successfully", data: result });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({ message: "Server Error" });
+    return res.status(500).json({ message: "Server Error" });
   }
 };
 
-exports.editCustomer=async(req,res)=>{
+exports.editCustomer = async (req, res) => {
   try {
-    const data=await Customer.findByIdAndUpdate(req.params.id,req.body,{
-      new:true
-    })
+    const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
     res.status(200).json({
-      success:true,
-      message:"Customer updated successfully",
-      data:data
-    })
+      success: true,
+      message: "Customer updated successfully",
+      data: data,
+    });
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).json({ error: "Server Error" });
   }
-}
+};
 
 exports.getCustomer = async (req, res) => {
   try {
@@ -88,7 +87,7 @@ exports.getCustomer = async (req, res) => {
     console.error(error);
     return res.status(500).send({ message: "Server Error" });
   }
-}
+};
 
 exports.getCustomerData = async (req, res) => {
   try {
@@ -108,29 +107,29 @@ exports.getCustomerData = async (req, res) => {
   }
 };
 
-exports.editCustomer=async(req,res)=>{
+exports.editCustomer = async (req, res) => {
   try {
-    const data=await Customer.findByIdAndUpdate(req.params.id,req.body,{
-      new:true
-    })
+    const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
-   if (!data){
+    if (!data) {
       res.status(500).json({
-        success:false,
-        message:"Customer updated Unsuccessfully",
-      })
+        success: false,
+        message: "Customer updated Unsuccessfully",
+      });
     }
 
     res.status(200).json({
-      success:true,
-      message:"Customer updated successfully",
-      data:data
-    })
+      success: true,
+      message: "Customer updated successfully",
+      data: data,
+    });
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).json({ error: "Server Error" });
   }
-}
+};
 
 exports.deleteCustomer = async (req, res) => {
   try {
@@ -154,11 +153,9 @@ exports.searchCustomer = async (req, res) => {
         { group: { $regex: searchKey, $options: "i" } },
         { email: { $regex: searchKey, $options: "i" } },
         { phone: { $regex: searchKey, $options: "i" } },
-       
       ],
     });
-    res.send(result);
-  
+    return res.send(result);
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).send({ error: "Server Error" });
