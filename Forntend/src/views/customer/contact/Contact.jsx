@@ -55,10 +55,19 @@ const Contact = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <GrEdit onClick={() => handleEdit(record)} />
-          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-          <MdDelete onClick={() => handleDelete(record._id)} />
-          Löschen
+          <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
+            <GrEdit />
+            &nbsp; Bearbeiten
+          </button>
+          &nbsp;
+          {/* <MdDelete onClick={() => handleDelete(record._id)} /> */}
+          <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => handleDelete(record._id)}
+          >
+            <MdDelete />
+            &nbsp; Löschen
+          </button>
         </>
       ),
     },

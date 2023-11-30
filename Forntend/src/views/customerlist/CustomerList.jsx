@@ -251,8 +251,8 @@ const CustomerList = () => {
     <>
       <div>
         {hide ? <EditModal setHide={setHide} getDetails={getDetails} /> : ''}
-        <h5 style={{ fontWeight: 'bold' }}>Kunden-Listen</h5>
-        <div className="row m-4 p-4  shadow" style={{ background: 'white', borderRadius: '5px' }}>
+        <h5 style={{ fontWeight: 'bold' }}>KlientInnen-Listen</h5>
+        <div className="row m-1 p-4 " style={{ background: 'white', borderRadius: '5px' }}>
           <div className="col-sm-3">
             <input
               ref={searchInputRef}

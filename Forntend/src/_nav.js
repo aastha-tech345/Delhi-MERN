@@ -19,7 +19,7 @@ import { CNavGroup, CNavItem } from '@coreui/react'
 const _nav = [
   {
     component: CNavItem,
-    name: 'Armaturenbrett',
+    name: 'Dashboard',
     to: '/dashboard',
     icon: (
       <svg
@@ -50,8 +50,8 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Kunden',
-    to: '/customer',
+    name: 'KlientInnen',
+    to: '/customerlist',
     icon: (
       <svg
         width="24"

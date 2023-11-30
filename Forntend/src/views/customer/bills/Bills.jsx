@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Bills = () => {
+  const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
@@ -40,7 +43,17 @@ const Bills = () => {
 
       let result = await response.json()
       console.log(result)
+      notify('Data Saved Successfully')
+      setProductData({
+        product: '',
+        paymentMethod: '',
+        invoiceDate: '',
+        colleague: '',
+        invoiceAmount: '',
+        deliveryDate: '',
+      })
     } catch (error) {
+      notify.error('Please Fill ful details')
       console.error('Error during API call:', error)
     }
   }
@@ -81,11 +94,11 @@ const Bills = () => {
                 value={productData.paymentMethod}
                 onChange={handleInputChange}
               >
-                <option value="paypal">Barzahlung</option>
-                <option value="paypal">Rechnung</option>
+                <option value="cash payment">Barzahlung</option>
+                <option value="the invoice">Rechnung</option>
                 <option value="paypal">PayPal</option>
-                <option value="paypal">Klarna</option>
-                <option value="paypal">Kreditkarte (für die Zukunft)</option>
+                <option value="klarna">Klarna</option>
+                <option value="credit card">Kreditkarte (für die Zukunft)</option>
                 <option value="other">Andere</option>
               </select>
             </div>
@@ -168,6 +181,7 @@ const Bills = () => {
         </div>
       </div>
       <button onClick={saveData}>Save</button>
+      <ToastContainer />
     </div>
   )
 }
