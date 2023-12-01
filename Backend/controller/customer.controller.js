@@ -14,7 +14,8 @@ exports.createCustomer = async (req, res) => {
       dob,
       land,
       group,
-      created_by,
+      id,
+      created_by
     } = req.body;
 
     const emailFind = await Customer.findOne({ email });
@@ -44,6 +45,7 @@ exports.createCustomer = async (req, res) => {
       dob,
       land,
       group,
+      id,
       created_by: user._id,
     };
 

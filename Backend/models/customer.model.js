@@ -18,7 +18,8 @@ const customerSchema = new Schema({
   },
   land:{type:String},
   group:{type:String},
-  dob:{type:String}
+  dob:{type:String},
+  id:{type:String},
   // parent_id: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 

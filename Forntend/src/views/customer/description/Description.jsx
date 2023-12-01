@@ -105,7 +105,7 @@ const Description = () => {
   return (
     <div style={{ background: '#fff' }}>
       <Customer />
-      <h4 className="mx-3">Beschreibung</h4>
+      <h4>Beschreibung</h4>
       <hr />
       <div className="row p-3">
         <div className="col-sm-4">
