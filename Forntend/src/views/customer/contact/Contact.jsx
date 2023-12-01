@@ -21,7 +21,7 @@ const Contact = () => {
   const searchInputRef = useRef()
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === 'Disabled User',
@@ -120,7 +120,7 @@ const Contact = () => {
   }
 
   const handleDelete = (customerId) => {
-    console.log(`Deleting customer with ID: ${customerId}`)
+    // console.log(`Deleting customer with ID: ${customerId}`)
     setContactId(customerId)
     setHide(true)
   }
@@ -152,7 +152,7 @@ const Contact = () => {
 
       const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
       // let result = await response.json()
-      console.log(response)
+      // console.log(response)
       getDetails()
       handleClose()
       if (response.response.status === 406) {
@@ -185,7 +185,7 @@ const Contact = () => {
       }
       const response = await fetch(`${apiUrl}/contact/search/${search}`)
       const data = await response.json()
-      console.log('astha', data)
+      // console.log('astha', data)
       const activeRecords = data.filter((record) => record.status === 'active')
 
       if (activeRecords.length > 0) {
@@ -201,7 +201,7 @@ const Contact = () => {
 
   //console.log(contactRecord)
   let dataa = contactRecord
-  console.log(dataa)
+  // console.log(dataa)
   useEffect(() => {
     getDetails()
   }, [page])
