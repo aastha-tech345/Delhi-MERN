@@ -21,6 +21,9 @@ const Description = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const notify = (dataa) => toast(dataa)
 
+  let res = localStorage.getItem('customerDatat')
+  let result = JSON.parse(res)
+
   const [color, setColor] = useState('white')
   const [color1, setColor1] = useState('white')
   const [color2, setColor2] = useState('white')
@@ -31,6 +34,7 @@ const Description = () => {
   const [openMessage, setOpenMessage] = useState(false)
   const [data, setData] = useState({
     message: '',
+    customer_id: result?._id,
   })
 
   // const [activityData, setActivityData] = useState([])
@@ -45,7 +49,6 @@ const Description = () => {
   //     console.log(error)
   //   }
   // }
-  console.log('iconName', icon)
   // let countData = activityData?.length / 10
   const selectIcon = (iconName, selectedColor) => {
     setIcon(iconName)
@@ -87,7 +90,6 @@ const Description = () => {
   const handleSumit = async () => {
     try {
       const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
-      console.log(res)
       if (res?.message === 'activity was created') {
         notify('activity was created')
         setOpenMessage(false)

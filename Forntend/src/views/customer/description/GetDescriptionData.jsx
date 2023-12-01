@@ -45,7 +45,7 @@ const GetDescriptionData = ({ updateData, search }) => {
       const res = await axios.get(`${apiUrl}/activity/get_activity?keyword=${search}&page=${page}`)
 
       setActivityData(res?.data?.data)
-      console.log('ashish', res?.data?.pageCount)
+      // console.log('ashish', res?.data?.pageCount)
       setCountPage(res?.data?.pageCount)
       // if (res?.data?.data?.length === 0) {
       //   console.log('ashihsh')

@@ -183,7 +183,7 @@ const CustomerList = () => {
     try {
       const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
       const data = await result.json()
-      console.log(data)
+      // console.log(data)
       // Filter records with status 'active'
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')

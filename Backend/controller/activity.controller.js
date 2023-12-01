@@ -4,20 +4,20 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createActivity = async (req, res) => {
   try {
-    const { icon, message } = req.body;
+    const { icon, message, customer_id} = req.body;
 
-    const user = await CustomerModel.Customer.findOne({
-      created_by: "customer",
-    });
-    if (!user) {
-      return res
-        .status(400)
-        .send({ message: "No customer found to link as parent" });
-    }
+    // const user = await CustomerModel.Customer.findOne({
+    //   created_by: "customer",
+    // });
+    // if (!user) {
+    //   return res
+    //     .status(400)
+    //     .send({ message: "No customer found to link as parent" });
+    // }
     const activity = new ActivityInfomation.Activity({
       icon,
       message,
-      customer_id: user._id,
+      customer_id,
     });
 
     const result = await activity.save();
