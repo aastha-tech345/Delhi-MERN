@@ -11,6 +11,8 @@ import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 import Customer from '../Customer'
 import Form from 'react-bootstrap/Form'
 
@@ -31,11 +33,11 @@ const Contact = () => {
     {
       title: 'Name des Kunden',
       dataIndex: 'fname',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}</a>,
     },
     {
       title: 'Kunden-ID',
-      dataIndex: '_id',
+      dataIndex: 'id',
     },
     {
       title: 'E-Mail',
@@ -78,10 +80,11 @@ const Contact = () => {
     fname: '',
     lname: '',
     phone: '',
-    email: '',
+    // email: '',
     gender: '',
     customer_id: result?._id,
   })
+  const [email, setEmail] = useState('')
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
@@ -94,6 +97,19 @@ const Contact = () => {
   const [hide, setHide] = useState(false)
   const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
+  // const params = useParams()
+
+  const generateRandomId = () => {
+    return 'HVD' + Math.floor(1000 + Math.random() * 9000)
+  }
+
+  const [id] = useState(generateRandomId())
+
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
 
   const handleChange = (e) => {
     const { name, value, type } = e.target
@@ -115,6 +131,7 @@ const Contact = () => {
     setEdit(true)
   }
   const notify = (dataa) => toast(dataa)
+  const TotalData = { ...data, email, id }
 
   const saveData = async (event) => {
     const form = event.currentTarget
@@ -124,13 +141,16 @@ const Contact = () => {
     }
     setValidated(true)
     try {
-      if (!data?.email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
+      if (!email) {
+        return notify('Invalid Email')
+      }
+      if (!email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
         return notify('Please Fill All Details')
       }
 
       // console.log('ashshihh', data.email)
 
-      const response = await postFetchData(`${apiUrl}/contact/create_contact`, data)
+      const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
       // let result = await response.json()
       console.log(response)
       getDetails()
@@ -145,9 +165,10 @@ const Contact = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/contact/get_contact`)
+      const result = await fetch(`${apiUrl}/contact/get_contact?page=${page}`)
       const data = await result.json()
-      const activeRecords = data.filter((record) => record.status === 'active')
+      setCountPage(data?.pageCount)
+      const activeRecords = data?.result?.filter((record) => record.status === 'active')
 
       setContactRecord(activeRecords)
     } catch (error) {
@@ -183,7 +204,7 @@ const Contact = () => {
   console.log(dataa)
   useEffect(() => {
     getDetails()
-  }, [])
+  }, [page])
 
   return (
     <div style={{ background: '#fff' }}>
@@ -303,12 +324,24 @@ const Contact = () => {
                       <input
                         type="email"
                         name="email"
-                        value={data.email}
-                        onChange={handleChange}
+                        // value={email}
+                        onChange={(e) => {
+                          const inputValue = e.target.value
+                          if (inputValue.toLowerCase().includes('@gmail.com')) {
+                            setEmail(inputValue)
+                          } else {
+                            setEmail('')
+                          }
+                        }}
                         placeholder="jo@gmail.com"
                         className="form-control"
                         id="inputPassword"
                       />
+                      {error && email.trim().length === 0 && (
+                        <p style={{ color: 'red' }}>
+                          <BiErrorCircle /> required
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="mb-2 row">
@@ -377,7 +410,17 @@ const Contact = () => {
           style={{ overflowX: 'auto' }}
           columns={columns}
           dataSource={dataa}
+          pagination={false}
         />
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
 
       <ToastContainer />

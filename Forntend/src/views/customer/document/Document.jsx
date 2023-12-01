@@ -5,9 +5,37 @@ import { Divider, Radio, Table } from 'antd'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete } from 'react-icons/md'
 import axios from 'axios'
+// import { postFetchUser } from 'src/Api'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
+
 import { postFetchUser, getFetch } from 'src/Api'
 import DeleteModal from './DeleteModal'
 import Customer from '../Customer'
+
+const columns = [
+  {
+    title: 'Title',
+    dataIndex: 'document_title',
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: 'Dokumententyp',
+    dataIndex: 'document_type',
+  },
+  {
+    title: 'AKTION',
+    dataIndex: 'action',
+    render: (_, record) => (
+      <>
+        <GrEdit />
+        &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+        <MdDelete />
+        Löschen
+      </>
+    ),
+  },
+]
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -71,6 +99,13 @@ const Document = () => {
   })
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
+
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setData({ ...data, [name]: value })
@@ -94,7 +129,7 @@ const Document = () => {
       myForm.append('document_upload', document_upload)
 
       console.log(myForm)
-      const url = `${apiUrl}/document/create_document`
+      const url = `${apiUrl}/document/create_document?page=${page}`
       console.log(url)
       const response = await postFetchUser(url, myForm)
       handleClose()
@@ -106,8 +141,13 @@ const Document = () => {
 
   const getDetails = async () => {
     try {
-      const url = `${apiUrl}/document/get_document`
-      const result = await getFetch(url)
+      const result = await fetch(`${apiUrl}/document/get_document`)
+      const data = await result.json()
+      // console.log('documentPage', data?.pageCount)
+      setDocumentRecord(data?.result)
+      setCountPage(data?.pageCount)
+      // const url = `${apiUrl}/document/get_document`
+      // const result = await getFetch(url)
       console.log('document page', result)
       if (result?.status === 200) {
         const activeRecords = result.data.filter((record) => record.status === 'active')
@@ -228,9 +268,20 @@ const Document = () => {
               ...rowSelection,
             }}
             columns={columns}
+            // dataSource={dataa}
+            pagination={false}
             dataSource={documentRecord}
           />
         </div>
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
     </div>
   )

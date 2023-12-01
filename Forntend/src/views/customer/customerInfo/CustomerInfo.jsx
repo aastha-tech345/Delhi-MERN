@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
-import { toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
 
@@ -177,53 +177,56 @@ const CustomerInfo = () => {
 
       let result = await response.json()
       console.log(result)
-      notify('Data saved successfully!')
-      setOrderingMaterials({
-        orderNumber: '',
-        newsletterDate: '',
-        extras: '',
-      })
-      setCustomerInfoStatu({
-        clientStatus: '',
-        employee: '',
-        dataCollection: '',
-      })
-      setThose('')
-      setCustomerContact({
-        title: '',
-        salution: '',
-        gender: '',
-        fname: '',
-        dob: '',
-        name: '',
-      })
-      setCustomerBills({
-        billAddress: '',
-        billPlz: '',
-        billLand: '',
-        billOrt: '',
-      })
-      setCustomerDelivery({
-        fname: '',
-        lname: '',
-        address: '',
-        plz: '',
-        land: '',
-        ort: '',
-        email: '',
-        phone: '',
-        mobile: '',
-      })
-      setCustomerDeposit({
-        deposit: '',
-        startDeposit: '',
-        nextBrand: '',
-        updateStamp: '',
-        lastStamp: '',
-        emergencyPass: '',
-        reminderStamp: '',
-      })
-      setCustomerBurial('')
+
+      if (result?.message === 'CustomerInfo was created') {
+        notify('Data saved successfully!')
+        setOrderingMaterials({
+          orderNumber: '',
+          newsletterDate: '',
+          extras: '',
+        })
+        setCustomerInfoStatu({
+          clientStatus: '',
+          employee: '',
+          dataCollection: '',
+        })
+        setThose('')
+        setCustomerContact({
+          title: '',
+          salution: '',
+          gender: '',
+          fname: '',
+          dob: '',
+          name: '',
+        })
+        setCustomerBills({
+          billAddress: '',
+          billPlz: '',
+          billLand: '',
+          billOrt: '',
+        })
+        setCustomerDelivery({
+          fname: '',
+          lname: '',
+          address: '',
+          plz: '',
+          land: '',
+          ort: '',
+          email: '',
+          phone: '',
+          mobile: '',
+        })
+        setCustomerDeposit({
+          deposit: '',
+          startDeposit: '',
+          nextBrand: '',
+          updateStamp: '',
+          lastStamp: '',
+          emergencyPass: '',
+          reminderStamp: '',
+        })
+        setCustomerBurial('')
+      }
 
       // Show success toast
     } catch (error) {
@@ -988,6 +991,7 @@ const CustomerInfo = () => {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

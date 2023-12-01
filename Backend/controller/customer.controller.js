@@ -1,5 +1,6 @@
 const { Customer } = require("../models/customer.model");
 const UserModel = require("../models/user.model");
+const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createCustomer = async (req, res) => {
   try {
@@ -15,7 +16,7 @@ exports.createCustomer = async (req, res) => {
       land,
       group,
       id,
-      created_by
+      created_by,
     } = req.body;
 
     const emailFind = await Customer.findOne({ email });
@@ -70,7 +71,7 @@ exports.editCustomer = async (req, res) => {
       new: true,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Customer updated successfully",
       data: data,
@@ -83,8 +84,38 @@ exports.editCustomer = async (req, res) => {
 
 exports.getCustomer = async (req, res) => {
   try {
-    const result = (await Customer.find()).reverse();
-    return res.send(result);
+    const resultPerPage = 10;
+
+    const countPage = await Customer.countDocuments({
+      status: "active",
+    });
+
+    let pageCount = Math.ceil(countPage / resultPerPage);
+
+    const apiFeatures = new ApiFeatures(
+      Customer.find({ status: "active" }),
+      req.query
+    )
+      .reverse()
+      .pagination(resultPerPage);
+
+    const result = await apiFeatures.query;
+
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        result: updatedResult,
+        pageCount: pageCount,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      result: result,
+      pageCount: pageCount,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Server Error" });
@@ -157,6 +188,7 @@ exports.searchCustomer = async (req, res) => {
         { phone: { $regex: searchKey, $options: "i" } },
       ],
     });
+    res.send(result);
     return res.send(result);
   } catch (error) {
     console.error("Error searching data:", error.message);
