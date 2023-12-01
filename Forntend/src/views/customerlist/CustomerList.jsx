@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
-import { Table, Checkbox } from 'antd'
+import { Table } from 'antd'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
@@ -13,7 +12,6 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 
 const CustomerList = () => {
-  const [selectionType, setSelectionType] = useState('checkbox')
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
   const [fname, setFname] = useState()
@@ -27,16 +25,18 @@ const CustomerList = () => {
   const [street, setStreet] = useState()
   const [group, setGroup] = useState()
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [selectedRecord, setSelectedRecord] = useState(null)
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
-
   const notify = (data) => toast(data)
 
   //console.log('aastha', phone)
   // eslint-disable-next-line no-undef
+
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -49,10 +49,10 @@ const CustomerList = () => {
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
-          to={`/${record._id}`}
+          to={`/customer/customer_info`}
           onClick={() => handleStore(text, record)}
         >
-          {text}
+          {text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}
         </Link>
       ),
     },
@@ -184,23 +184,20 @@ const CustomerList = () => {
     }
   }
 
-  const handlePageChange = (event, value) => {
-    setPage(value)
-  }
-
-  const getDetails = async () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getDetails = useCallback(async () => {
     try {
       const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
       const data = await result.json()
-      setCountPage(data?.pageCount)
+      console.log(data)
       // Filter records with status 'active'
+      setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
-
       setCustomerRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
-  }
+  })
   let data = customer_record
   const handleStore = (data, record) => {
     let res = JSON.stringify(record)
@@ -216,7 +213,7 @@ const CustomerList = () => {
     localStorage.setItem('CustomerRecord', res)
     setHide(true)
   }
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [, setSelectedRowKeys] = useState([])
   const rowSelection = {
     // onChange: (selectedRowKeys, selectedRows) => {},
     onChange: (selectedKeys) => {
@@ -233,7 +230,7 @@ const CustomerList = () => {
     try {
       // let key = searchInputRef.current.value
       //console.log('ashish', search)
-      if (search == '') {
+      if (search === '') {
         return getDetails()
       }
       const response = await fetch(`${apiUrl}/customer/search/${search}`)
@@ -259,8 +256,8 @@ const CustomerList = () => {
     <>
       <div>
         {hide ? <EditModal setHide={setHide} getDetails={getDetails} /> : ''}
-        <h5 style={{ fontWeight: 'bold' }}>Kunden-Listen</h5>
-        <div className="row m-4 p-4  shadow" style={{ background: 'white', borderRadius: '5px' }}>
+        <h5 style={{ fontWeight: 'bold' }}>KlientInnen-Listen</h5>
+        <div className="row m-1 p-4 " style={{ background: 'white', borderRadius: '5px' }}>
           <div className="col-sm-3">
             <input
               ref={searchInputRef}
@@ -356,7 +353,7 @@ const CustomerList = () => {
                         }}
                         placeholder="E-Mail"
                         className="form-control"
-                        id="inputPassword"
+                        id="email"
                         required={true}
                       />
                     </div>

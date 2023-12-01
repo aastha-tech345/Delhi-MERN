@@ -41,7 +41,7 @@ const DeleteModal = ({ setHide, contactId, getDetails }) => {
   return (
     <>
       <div className="modal" tabIndex={-1} style={modalStyle}>
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             {/* <div className="modal-header">
               <h5 className="modal-title" style={{ textAlign: 'center' }}>

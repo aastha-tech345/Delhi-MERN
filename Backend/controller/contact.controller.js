@@ -43,7 +43,9 @@ exports.getContact = async (req, res) => {
     const apiFeatures = new ApiFeatures(
       ContactInfomation.Contact.find(),
       req.query
-    ).reverse().pagination(resultPerPage);
+    )
+      .reverse()
+      .pagination(resultPerPage);
 
     const result = await apiFeatures.query;
 
@@ -100,17 +102,38 @@ exports.getContactDataDelete = async (req, res) => {
   }
 };
 
+// exports.getContactSearch = async (req, res) => {
+//   try {
+//     const result = await ContactInfomation.CustomerContact.find({
+//       "$or": [
+//         { fname: { $regex: req.params.key, $options: 'i' } },
+//         { lname: { $regex: req.params.key, $options: 'i' } }
+//       ]
+//     });
+//     res.send(result);
+//   } catch (error) {
+//     console.error("Error searching for contact info:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// };
 exports.getContactSearch = async (req, res) => {
   try {
-    const result = await ContactInfomation.CustomerContact.find({
+    // const result = await ContactInfomation.CustomerContact.find({
+    // $or: [
+    // { fname: { $regex: req.params.key, $options: "i" } },
+    // { lname: { $regex: req.params.key, $options: "i" } },
+    const searchKey = req.params.searchKey;
+    const result = await ContactInfomation.Contact.find({
       $or: [
-        { fname: { $regex: req.params.key, $options: "i" } },
-        { lname: { $regex: req.params.key, $options: "i" } },
+        { fname: { $regex: searchKey, $options: "i" } },
+        { lname: { $regex: searchKey, $options: "i" } },
+        { email: { $regex: searchKey, $options: "i" } },
+        { phone: { $regex: searchKey, $options: "i" } },
       ],
     });
-    res.send(result);
+    return res.send(result);
   } catch (error) {
-    console.error("Error searching for contact info:", error);
-    res.status(500).send("Internal Server Error");
+    console.error("Error searching data:", error.message);
+    res.status(500).send({ error: "Server Error" });
   }
 };

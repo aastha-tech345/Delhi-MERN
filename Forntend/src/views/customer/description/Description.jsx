@@ -11,10 +11,15 @@ import {
 } from '@ant-design/icons'
 import { getFetch, postFetchData } from 'src/Api'
 import GetDescriptionData from './GetDescriptionData'
+import Customer from '../Customer'
+import { MdAdd } from 'react-icons/md'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 // import axios from 'axios'
 
 const Description = () => {
   const apiUrl = process.env.REACT_APP_API_URL
+  const notify = (dataa) => toast(dataa)
 
   const [color, setColor] = useState('white')
   const [color1, setColor1] = useState('white')
@@ -23,6 +28,7 @@ const Description = () => {
   const [updateData, setUpdateData] = useState(false)
   const [icon, setIcon] = useState('')
   const [search, setSearch] = useState('')
+  const [openMessage, setOpenMessage] = useState(false)
   const [data, setData] = useState({
     message: '',
   })
@@ -39,7 +45,7 @@ const Description = () => {
   //     console.log(error)
   //   }
   // }
-  console.log(search)
+  console.log('iconName', icon)
   // let countData = activityData?.length / 10
   const selectIcon = (iconName, selectedColor) => {
     setIcon(iconName)
@@ -83,6 +89,8 @@ const Description = () => {
       const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
       console.log(res)
       if (res?.message === 'activity was created') {
+        notify('activity was created')
+        setOpenMessage(false)
         setData({
           message: '',
         })
@@ -90,8 +98,11 @@ const Description = () => {
         setColor1('white')
         setColor2('white')
         setColor('white')
+      } else {
+        notify('Something Went Wrong')
       }
       setUpdateData(!updateData)
+      setOpenMessage(false)
     } catch (error) {
       console.log(error)
     }
@@ -101,21 +112,17 @@ const Description = () => {
   //   getData()
   // }, [updateData])
 
+  const openText = () => {
+    setOpenMessage(true)
+  }
+
   return (
-    <>
-      <h4>Beschreibung</h4>
-      {/* Description */}
-      <hr />
-      <div className="row p-3">
-        <div className="col-sm-4">
-          <input
-            type="search"
-            className="form-control"
-            placeholder="Search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+    <div style={{ background: '#fff' }}>
+      <Customer />
+      {/* <h4 className="mx-3">Beschreibung</h4>
+      <hr /> */}
+      {/* <div className="row p-3">
+       
         <div className="col-sm-8">
           <PhoneOutlined
             className="p-2"
@@ -158,8 +165,8 @@ const Description = () => {
             onClick={() => selectIcon('PrinterOutlined', 'red')}
           />
         </div>
-      </div>
-      <div className="row p-3">
+      </div> */}
+      {/* <div className="row p-3">
         <br />
         <textarea
           className="form-control"
@@ -168,9 +175,9 @@ const Description = () => {
           value={data?.message}
           onChange={handleChange}
         ></textarea>
-      </div>
+      </div> */}
       <hr />
-      <div className="row">
+      {/* <div className="row">
         <div className="col-sm-8"></div>
         <div className="col-sm-4">
           <button className="btn btn" style={{ background: '#d04545', color: 'white' }}>
@@ -184,86 +191,140 @@ const Description = () => {
             onClick={handleSumit}
           >
             Aktivität hinzufügen
-            {/* Add activity */}
+            
           </button>
         </div>
+      </div> */}
+
+      <div className="row p-3">
+        <div className="col-sm-2">
+          <h4 className="mx-3">Beschreibung</h4>
+        </div>
+        <div className="col-sm-10">
+          <PhoneOutlined
+            className="p-2"
+            style={{
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color,
+            }}
+            onClick={() => selectIcon('PhoneOutlined', 'red')}
+          />
+          <CheckCircleOutlined
+            className="p-2"
+            style={{
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color1,
+            }}
+            onClick={() => selectIcon('CheckCircleOutlined', 'red')}
+          />
+          <RedEnvelopeOutlined
+            className="p-2"
+            style={{
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color2,
+            }}
+            onClick={() => selectIcon('RedEnvelopeOutlined', 'red')}
+          />
+          <PrinterOutlined
+            className="p-2"
+            style={{
+              border: '1px solid black',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color3,
+            }}
+            onClick={() => selectIcon('PrinterOutlined', 'red')}
+          />
+        </div>
       </div>
+
       <br />
 
-      <GetDescriptionData updateData={updateData} search={search} />
+      {/* button with search */}
+      {openMessage ? (
+        // <div className="row p-3 m-3">
+        //   <br />
+        //   <textarea
+        //     className="form-control mx-2"
+        //     rows={6}
+        //     name="message"
+        //     value={data?.message}
+        //     onChange={handleChange}
+        //   ></textarea>
+        // </div>
 
-      {/* <div className="row card m-2 p-1">
-        <div className="col-sm-3">
-          <input type="checkbox" /> Qui enim odit est aliquam.
-          <p style={{ fontSize: '14px' }}>Assoziiert mit 1 Datensätzen</p>
-        </div>
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th>SL. NEIN</th>
-              <th>TITLE</th>
-              <th>VERWAL TUNG</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>01</td>
-              <td>Lorem Ipsum is simply dummy text </td>
-              <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-            </tr>
-          </tbody>
-        </table>
-        <BarChartOutlined />
-        <span>Beschreibung</span>
-        <p>
-          Accusamus provident beatae aut fugit reprehenderit quo. Sunt quis culpa ipsa ut debitis.
-          Ea veritatis ratione quisquam officia.
-
-        </p>
-        <div className="row">
-          <div className="col-sm-2">
-            <select className="form-control" style={{ width: '160px' }}>
-              <option>Eigentümer</option>
-              <option>Eigentümer</option>
-              <option>Eigentümer</option>
-            </select>
-          </div>
-          <div className="col-sm-4">
-            <CalendarOutlined />
-            <span> &nbsp; &nbsp;August 26, 2023 23:30 - August 27, 2023 00:00</span>
-          </div>
-          <div className="col-sm-4">
-            <BellOutlined />
-            <span>&nbsp; &nbsp; Reminder set for 30 minutes before</span>
-          </div>
-        </div>
-        <br />
-        <hr />
-        <div className="row">
-          <div className="col-sm-12">
-            <LinkOutlined />
-            <span>Anhänge (0)</span>
+        <div style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
+          <div className="row px-4 pt-2">
             <br />
-            <textarea className="form-control" rows={4}></textarea>
+            <textarea
+              className="form-control"
+              rows={6}
+              name="message"
+              placeholder="Notiz"
+              value={data?.message}
+              onChange={handleChange}
+            ></textarea>
+          </div>
+          <hr />
+          <div className="row mb-2">
+            <div className="col-sm-12">
+              <div style={{ float: 'right' }}>
+                <button
+                  className="btn"
+                  style={{ background: '#d04545', color: 'white' }}
+                  onClick={() => setOpenMessage(false)}
+                >
+                  Abbrechen
+                </button>
+                &nbsp;&nbsp;
+                <button
+                  className="btn mx-2"
+                  style={{ background: '#0b5995', color: 'white' }}
+                  onClick={handleSumit}
+                >
+                  Aktivität hinzufügen
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <br />
-        <div className="row">
-          <div className="col-sm-8"></div>
+      ) : (
+        <div className="row p-3 m-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
           <div className="col-sm-4">
-            <button className="btn btn" style={{ background: '#d04545', color: 'white' }}>
-              Abbrechen
-            </button>
+            <p>Planen und verwalten Sie Aktivitäten mit KlientInnen.</p>
+            <input
+              type="search"
+              className="form-control"
+              placeholder="Ihre Suche eingeben"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <div className="col-sm-6"></div>
+          <div className="col-sm-2">
             <button
               className="btn btn"
-              style={{ background: '#0b5995', color: 'white', marginLeft: '100px' }}
+              style={{ background: '#015291', color: 'white' }}
+              onClick={openText}
             >
+              <MdAdd />
               Aktivität hinzufügen
             </button>
           </div>
         </div>
-      </div> */}
-    </>
+      )}
+
+      {/* button with search end */}
+
+      <GetDescriptionData updateData={updateData} search={search} />
+      <ToastContainer />
+    </div>
   )
 }
 

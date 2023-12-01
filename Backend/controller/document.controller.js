@@ -99,6 +99,7 @@ exports.getDocumentDataDelete = async (req, res) => {
       success: true,
       message: "Document Deleted Succesfully",
     });
+  
   } catch (error) {
     res.status(500).send({ error: "Internal Server Error" });
   }

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const orderingMaterialsSchema = new mongoose.Schema({
   orderNumber: { type: String },
@@ -8,7 +8,7 @@ const orderingMaterialsSchema = new mongoose.Schema({
 });
 
 const customerInfoStatuSchema = new mongoose.Schema({
-  clientStatus: { type: String },
+  clientStatus: [],
   dataProtection: { type: String },
   employee: { type: String },
   lname: { type: String },
@@ -46,7 +46,7 @@ const customerDeliverySchema = new mongoose.Schema({
 });
 
 const customerDepositSchema = new mongoose.Schema({
-  deposit:{type:String},
+  deposit: { type: String },
   emergencyPass: { type: String },
   reminderBrand: { type: String },
   updateStamp: { type: String },
@@ -54,28 +54,27 @@ const customerDepositSchema = new mongoose.Schema({
 });
 
 const customerBurialSchema = new mongoose.Schema({
-  termination:{type:String},
+  termination: { type: String },
   terminationDeath: { type: String },
   notTermination: { type: String },
   financialReasons: { type: String },
 });
 const customerInfoSchema = new mongoose.Schema({
-  orderingMaterials:orderingMaterialsSchema,
-  customerInfoStatu:customerInfoStatuSchema,
-  those:{type:String},
-  customerContact:customerContactSchema,
-  customerBills:customerBillSchema,
-  customerDelivery:customerDeliverySchema,
-  customerDeposit:customerDepositSchema,
-  customerBurial:customerBurialSchema,
-  customer_id:{ type: mongoose.Schema.Types.ObjectId }
+  orderingMaterials: orderingMaterialsSchema,
+  customerInfoStatu: customerInfoStatuSchema,
+  those: { type: String },
+  customerContact: customerContactSchema,
+  customerBills: customerBillSchema,
+  customerDelivery: customerDeliverySchema,
+  customerDeposit: customerDepositSchema,
+  customerBurial: customerBurialSchema,
+  customer_id: { type: mongoose.Schema.Types.ObjectId },
 });
 
-
 const CustomerInfo = mongoose.model(
-  'customerInfo',
+  "customerInfo",
   customerInfoSchema,
-  'customerInfo'
+  "customerInfo"
 );
 
 module.exports = {

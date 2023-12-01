@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import axios from 'axios'
+import { MdAdd } from 'react-icons/md'
 
 const GetDescriptionData = ({ updateData, search }) => {
   const notify = (dataa) => toast(dataa)
@@ -64,7 +65,7 @@ const GetDescriptionData = ({ updateData, search }) => {
 
   return (
     <>
-      <table className="table">
+      {/* <table className="table">
         <thead>
           <tr>
             <th scope="col"></th>
@@ -115,10 +116,77 @@ const GetDescriptionData = ({ updateData, search }) => {
             )
           })}
         </tbody>
-      </table>
-      {/* <Stack spacing={2}>
-        <Pagination count={coountPage} color="secondary" page={page} onChange={handleChange} />
-      </Stack> */}
+      </table> */}
+
+      <div className="row m-3">
+        <div style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
+          <table className="table table">
+            <thead>
+              <tr>
+                <th>
+                  <div className="row">
+                    <div className="col-1"></div>
+                    <div className="col-1">DATUM</div>
+                    <div className="col-3 text-center">TITEL</div>
+                    <div className="col-4 text-center">VERWALTUNG</div>
+                    <div className="col-3 text-center">BEARBEITER</div>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {activityData?.map((elem) => {
+                const { createdAt, icon, message, _id } = elem
+                const inputDate = new Date(createdAt)
+                const day = inputDate?.getUTCDate()
+                const month = inputDate?.getUTCMonth() + 1
+                const year = inputDate?.getUTCFullYear() % 100
+
+                const outputDateString = `${day}-${month < 10 ? '0' : ''}${month}-${
+                  year < 10 ? '0' : ''
+                }${year}`
+                return (
+                  <tr key={_id}>
+                    <td>
+                      <div className="row">
+                        <div className="col-sm-1 m-auto">
+                          <div
+                            style={{
+                              border: '1px solid #015291',
+                              borderRadius: '5px',
+                              width: '30px',
+                              height: '30px',
+                              textAlign: 'center',
+                            }}
+                          >
+                            {getIconData(icon)}
+                          </div>
+                        </div>
+                        <div className="col-sm-1 m-auto">{outputDateString} </div>
+                        <div className="col-sm-3 text-center m-auto">
+                          Lorem Ipsum is simply dummy text{' '}
+                        </div>
+                        <div className="col-sm-4 m-auto">
+                          <p>{message}</p>
+                        </div>
+                        <div className="col-sm-3 m-auto">
+                          <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting
+                            industry. Lorem Ipsum has been the industry standard dummy text ever
+                            since the 1500s, when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book.{' '}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <Stack spacing={2}>
         <Pagination
           count={coountPage}

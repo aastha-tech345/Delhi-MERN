@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Divider, Table } from 'antd'
-import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { BiFilterAlt } from 'react-icons/bi'
-import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
-import { useParams } from 'react-router-dom'
-import { CListGroup } from '@coreui/react'
 import axios from 'axios'
 import DeleteModal from './DeleteModal'
 import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { TRUE } from 'sass'
 import EditModal from './EditModal'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import Customer from '../Customer'
 
 const Contact = () => {
+  const searchInputRef = useRef()
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
@@ -34,7 +31,7 @@ const Contact = () => {
     {
       title: 'Name des Kunden',
       dataIndex: 'fname',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}</a>,
     },
     {
       title: 'Kunden-ID',
@@ -57,10 +54,19 @@ const Contact = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <GrEdit onClick={() => handleEdit(record)} />
-          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-          <MdDelete onClick={() => handleDelete(record._id)} />
-          Löschen
+          <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
+            <GrEdit />
+            &nbsp; Bearbeiten
+          </button>
+          &nbsp;
+          {/* <MdDelete onClick={() => handleDelete(record._id)} /> */}
+          <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => handleDelete(record._id)}
+          >
+            <MdDelete />
+            &nbsp; Löschen
+          </button>
         </>
       ),
     },
@@ -72,25 +78,26 @@ const Contact = () => {
     fname: '',
     lname: '',
     phone: '',
-    email: '',
+    // email: '',
     gender: '',
     customer_id: result?._id,
   })
+  const [email, setEmail] = useState('')
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const [contactRecord, setContactRecord] = useState([])
-  const [searchKey, setSearchKey] = useState('')
-  const [searchResults, setSearchResults] = useState([])
+  const [search, setSearch] = useState('')
+  // const [customer_record, setCustomerRecord] = useState([])
   const [selectionType] = useState('checkbox')
   const [hide, setHide] = useState(false)
   const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
-  const params = useParams()
+  // const params = useParams()
 
   const handlePageChange = (event, value) => {
     setPage(value)
@@ -116,21 +123,24 @@ const Contact = () => {
     setEdit(true)
   }
   const notify = (dataa) => toast(dataa)
-
+  const TotalData = { ...data, email }
   const saveData = async () => {
     try {
-      if (!data?.email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
+      if (!email) {
+        return notify('Invalid Email')
+      }
+      if (!email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
         return notify('Please Fill All Details')
       }
 
-      console.log('ashshihh', data.email)
+      // console.log('ashshihh', data.email)
 
-      const response = await postFetchData(`${apiUrl}/contact/create_contact`, data)
+      const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
       // let result = await response.json()
       console.log(response)
       getDetails()
       handleClose()
-      if (response.response.status == 406) {
+      if (response.response.status === 406) {
         notify('Email Already Exists')
       }
     } catch (error) {
@@ -151,43 +161,72 @@ const Contact = () => {
     }
   }
 
-  const handleSearch = async () => {
+  const searchHandle = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/contact/search/${searchKey}`)
-      setSearchResults(response.data)
+      // let key = searchInputRef.current.value
+      //console.log('ashish', search)
+      if (search === '') {
+        return getDetails()
+      }
+      const response = await fetch(`${apiUrl}/contact/search/${search}`)
+      const data = await response.json()
+      console.log('astha', data)
+      const activeRecords = data.filter((record) => record.status === 'active')
+
+      if (activeRecords.length > 0) {
+        setContactRecord(activeRecords)
+      } else {
+        getDetails()
+        setContactRecord(data)
+      }
     } catch (error) {
-      console.error('Error searching for contact info:', error)
+      console.error('Error searching data:', error.message)
     }
   }
 
   //console.log(contactRecord)
   let dataa = contactRecord
+  console.log(dataa)
   useEffect(() => {
     getDetails()
   }, [page])
 
   return (
-    <div>
+    <div style={{ background: '#fff' }}>
       {hide ? <DeleteModal setHide={setHide} contactId={contactId} getDetails={getDetails} /> : ''}
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
-      <div className="row m-4 p-4" style={{ borderRadius: '5px', border: '1px solid lightgray' }}>
+      <Customer />
+      <h5 className="mx-4">Kontakte</h5>
+      <div
+        className="row p-3 mx-4"
+        style={{
+          borderRadius: '5px',
+          margin: '0px',
+          border: '1px solid lightgray',
+          background: '#fff',
+        }}
+      >
         <div className="col-sm-3">
           <input
-            value={searchKey}
-            onChange={(e) => setSearchKey(e.target.value)}
+            ref={searchInputRef}
+            name="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             type="search"
             id="form1"
             placeholder="Ihre Suche eingeben"
             className="form-control"
           />
         </div>
-        <div className="col-sm-4">
-          <button className="btn btn text-light" style={{ background: '#0b5995' }}>
-            <BiFilterAlt onClick={handleSearch} />
-            &nbsp; Filter
+        <div className="col-sm-6">
+          <button
+            onClick={searchHandle}
+            className="btn btn text-light"
+            style={{ background: '#0b5995' }}
+          >
+            filter
           </button>
         </div>
-        <div className="col-sm-2"></div>
         <div className="col-sm-3">
           &nbsp;&nbsp;
           <button
@@ -275,12 +314,20 @@ const Contact = () => {
                     <input
                       type="email"
                       name="email"
-                      value={data.email}
-                      onChange={handleChange}
+                      // value={email}
+                      onChange={(e) => {
+                        const inputValue = e.target.value
+                        if (inputValue.toLowerCase().includes('@gmail.com')) {
+                          setEmail(inputValue)
+                        } else {
+                          setEmail('')
+                        }
+                      }}
                       placeholder="jo@gmail.com"
                       className="form-control"
                       id="inputPassword"
                     />
+
                     {error && data.email.trim().length === 0 && (
                       <p style={{ color: 'red' }}>
                         <BiErrorCircle /> required
@@ -347,7 +394,7 @@ const Contact = () => {
           </Modal>{' '}
         </div>
       </div>
-      <div>
+      <div style={{ background: '#fff' }} className="mx-3">
         <Divider />
 
         <Table
@@ -370,6 +417,7 @@ const Contact = () => {
           />
         </Stack>
       </div>
+
       <ToastContainer />
     </div>
   )

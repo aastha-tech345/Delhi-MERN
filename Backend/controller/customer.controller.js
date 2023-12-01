@@ -56,10 +56,10 @@ exports.createCustomer = async (req, res) => {
 
     return res
       .status(200)
-      .send({ message: "Customer created successfully", data: result });
+      .json({ message: "Customer created successfully", data: result });
   } catch (error) {
     console.error(error);
-    return res.status(500).send({ message: "Server Error" });
+    return res.status(500).json({ message: "Server Error" });
   }
 };
 
@@ -69,7 +69,7 @@ exports.editCustomer = async (req, res) => {
       new: true,
     });
 
-   return res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Customer updated successfully",
       data: data,
@@ -171,6 +171,7 @@ exports.searchCustomer = async (req, res) => {
       ],
     });
     res.send(result);
+    return res.send(result);
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).send({ error: "Server Error" });

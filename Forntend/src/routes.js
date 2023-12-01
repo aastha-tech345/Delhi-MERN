@@ -32,15 +32,15 @@ if (auth) {
   routes = [
     { path: '/', exact: true, name: 'Home' },
     { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
-    { path: '/customer', name: 'Kunden', element: CustomerList },
-    { path: '/:id', name: 'Kunden-Listen', element: Customer },
+    { path: '/customerlist', name: 'KlientInnen', element: CustomerList },
+    { path: '/customer', name: 'Kunden', element: Customer },
     { path: '/customer/customer_info', name: 'KundenInfo', element: CustomerInfo },
     { path: '/customer/contact', name: 'Kontakte', element: Contact },
     { path: '/customer/bills', name: 'Rechnungen', element: Bills },
     { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
-    { path: '/customer/description', name: 'Beschreibung', element: Description },
+    { path: '/customer/description', name: 'Vollmachten', element: Description },
     { path: '/customer/document', name: 'Dokumente', element: Document },
-    { path: '/customer/services', name: 'Leistungen', element: Services },
+    { path: '/customer/services', name: 'SPV', element: Services },
     { path: '/users', name: 'User', element: User },
     { path: '/roll', name: 'Roll', element: Roll },
     { path: '/createuser', name: 'CreateUser', element: CreateUser },
@@ -48,7 +48,7 @@ if (auth) {
     { path: '/email', name: 'EmailTemplate', element: EmailTemplate },
     { path: '/filter', name: 'Filter', element: Filter },
     { path: '/print', name: 'DruckvorlagePrint', element: PrintTemplate }, // Updated name
-    { path: '/attorney', name: 'DruckvorlageAttorney', element: Attorney }, // Updated name
+    { path: '/customer/attorney', name: 'DruckvorlageAttorney', element: Attorney }, // Updated name
   ]
 } else {
   routes = [{ path: '/login', element: Login }]
