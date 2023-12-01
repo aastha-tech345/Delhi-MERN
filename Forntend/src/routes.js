@@ -24,6 +24,7 @@ const EmailTemplate = React.lazy(() => import('./views/email/EmailTemplate'))
 const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Filter = React.lazy(() => import('./views/settings/filter/Filter'))
 const Attorney = React.lazy(() => import('./views/customer/attorney/Attorney'))
+// const DescriptionList = React.lazy(() => import('./views/customer/description/DescriptionList'))
 
 const auth = localStorage.getItem('token')
 let routes
@@ -31,6 +32,7 @@ let routes
 if (auth) {
   routes = [
     { path: '/', exact: true, name: 'Home' },
+    // { path: '/descriptionlist', name: 'DescriptionList', element: DescriptionList },
     { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
     { path: '/customerlist', name: 'KlientInnen', element: CustomerList },
     { path: '/customer', name: 'Kunden', element: Customer },

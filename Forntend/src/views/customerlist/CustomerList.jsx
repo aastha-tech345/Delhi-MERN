@@ -16,7 +16,6 @@ const CustomerList = () => {
   const [customer_record, setCustomerRecord] = useState([])
   const [fname, setFname] = useState()
   const [lname, setLname] = useState()
-  const [email, setEmail] = useState()
   const [phone, setPhone] = useState()
   const [dob, setDob] = useState()
   const [land, setLand] = useState()
@@ -29,10 +28,15 @@ const CustomerList = () => {
   const [validated, setValidated] = useState(false)
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
+  const generateRandomId = () => {
+    return 'HVD' + Math.floor(1000 + Math.random() * 9000)
+  }
+
+  const [id] = useState(generateRandomId())
+
   const notify = (data) => toast(data)
 
-  //console.log('aastha', phone)
-  // eslint-disable-next-line no-undef
+  const [email, setEmail] = useState('')
 
   const handlePageChange = (event, value) => {
     setPage(value)
@@ -58,8 +62,7 @@ const CustomerList = () => {
     },
     {
       title: 'KUNDEN-ID',
-      dataIndex: '_id',
-      render: () => <p>{Math.floor(10000 + Math.random() * 9000)}</p>,
+      dataIndex: 'id',
     },
     {
       title: 'E-MAIL',
@@ -125,7 +128,6 @@ const CustomerList = () => {
       setIsModalVisible(false)
     }
   }
-
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -134,19 +136,11 @@ const CustomerList = () => {
     }
 
     setValidated(true)
-    let data = { fname, lname, street, city, phone, plz, email, land, dob, group }
-    if (
-      !fname ||
-      // !lname ||
-      !street ||
-      !city ||
-      !phone ||
-      !plz ||
-      !email ||
-      !land ||
-      !dob ||
-      !group
-    ) {
+    let data = { fname, lname, street, city, phone, plz, email, land, dob, group, id }
+    if (!email) {
+      return notify('Invalid Email')
+    }
+    if (!fname || !lname || !email) {
       return
     }
     try {
@@ -292,11 +286,12 @@ const CustomerList = () => {
               style={{ background: '#0b5995', color: 'white' }}
               onClick={handleShow}
             >
-              <MdAdd /> Neuen Kunden anlegen
+              <MdAdd />
+              Neue KlientInnen anlegen
             </button>
             <Modal show={show} onHide={handleClose} centered>
               <Modal.Header closeButton>
-                <Modal.Title>Neuen Kunden anlegen</Modal.Title>
+                <Modal.Title>Neue KlientInnen anlegen</Modal.Title>
               </Modal.Header>
 
               <Modal.Body>
@@ -325,6 +320,7 @@ const CustomerList = () => {
                         placeholder="Nachname"
                         className="form-control"
                         id="inputPassword"
+                        required={true}
                       />
                     </div>
                   </div>
@@ -339,7 +335,7 @@ const CustomerList = () => {
                         placeholder="Straβe + Hnr"
                         className="form-control"
                         id="inputPassword"
-                        required={true}
+                        // required={true}
                       />
                     </div>
                   </div>
@@ -347,14 +343,20 @@ const CustomerList = () => {
                     <div className="col-sm-6">
                       <input
                         type="email"
-                        value={email}
+                        // value={email}
                         onChange={(e) => {
-                          setEmail(e.target.value)
+                          const inputValue = e.target.value
+                          if (inputValue.toLowerCase().includes('@gmail.com')) {
+                            setEmail(inputValue)
+                          } else {
+                            setEmail('')
+                          }
                         }}
                         placeholder="E-Mail"
                         className="form-control"
-                        id="email"
+                        // id="email"
                         required={true}
+                        id="inputEmail"
                       />
                     </div>
                     <div className="col-sm-6">
@@ -370,35 +372,35 @@ const CustomerList = () => {
                         id="inputTelephone"
                         maxLength={10}
                         minLength={3}
-                        required={true}
+                        // required={true}
                       />
                     </div>
                   </div>
                   <div className="row p-3">
                     <div className="col-sm-6">
                       <input
+                        type="text"
                         value={plz}
                         onChange={(e) => {
-                          setPlz(e.target.value)
+                          const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                          setPlz(inputValue)
                         }}
-                        type="text"
                         placeholder="PLZ"
                         className="form-control"
                         id="inputPassword"
-                        required={true}
                       />
                     </div>
                     <div className="col-sm-6">
                       <input
+                        type="text"
                         value={city}
                         onChange={(e) => {
-                          setCity(e.target.value)
+                          const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                          setCity(inputValue)
                         }}
-                        type="text"
                         placeholder="Stadt"
                         className="form-control"
                         id="inputPassword"
-                        required={true}
                       />
                     </div>
                   </div>
@@ -413,7 +415,7 @@ const CustomerList = () => {
                         placeholder="Geburtsdatum"
                         className="form-control"
                         id="inputPassword"
-                        required={true}
+                        // required={true}
                       />
                     </div>
                     <div className="col-sm-6">
@@ -426,7 +428,7 @@ const CustomerList = () => {
                         placeholder="Land"
                         className="form-control"
                         id="inputPassword"
-                        required={true}
+                        // required={true}
                       />
                     </div>
                   </div>
@@ -438,7 +440,7 @@ const CustomerList = () => {
                         onChange={(e) => {
                           setGroup(e.target.value)
                         }}
-                        required={true}
+                        // required={true}
                       >
                         <option value="">--select group--</option>
                         <option value="HVD-PV">HVD</option>

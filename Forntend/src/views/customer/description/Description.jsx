@@ -123,6 +123,19 @@ const Description = () => {
       <hr /> */}
       {/* <div className="row p-3">
        
+      <h4>Beschreibung</h4>
+      <hr />
+      <div className="row p-3">
+        <div className="col-sm-4">
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+>>>>>>> 2972b39290c010dbdb3bf46d837c7fbab5b146ff
         <div className="col-sm-8">
           <PhoneOutlined
             className="p-2"

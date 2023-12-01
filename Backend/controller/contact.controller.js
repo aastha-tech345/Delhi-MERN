@@ -4,7 +4,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createContact = async (req, res) => {
   try {
-    const { fname, lname, email, phone, gender, customer_id } = req.body;
+    const { fname, lname, email, phone, gender, customer_id,id } = req.body;
 
     const emailFind = await ContactInfomation.Contact.findOne({ email });
     if (emailFind) {
@@ -20,6 +20,7 @@ exports.createContact = async (req, res) => {
       phone,
       gender,
       customer_id,
+      id
     });
 
     const result = await contact.save();
@@ -36,12 +37,15 @@ exports.createContact = async (req, res) => {
 exports.getContact = async (req, res) => {
   try {
     const resultPerPage = 10;
+
     const countPage = await ContactInfomation.Contact.countDocuments({
       status: "active",
     });
-    let pageCount = Math.ceil(Number(countPage) / 10);
+
+    let pageCount = Math.ceil(countPage / resultPerPage);
+
     const apiFeatures = new ApiFeatures(
-      ContactInfomation.Contact.find(),
+      ContactInfomation.Contact.find({ status: "active" }),
       req.query
     )
       .reverse()
@@ -49,14 +53,24 @@ exports.getContact = async (req, res) => {
 
     const result = await apiFeatures.query;
 
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        result: updatedResult,
+        pageCount: pageCount,
+      });
+    }
+
     return res.status(200).json({
       success: true,
       result: result,
       pageCount: pageCount,
     });
   } catch (error) {
-    console.error("Error fetching contact data:", error);
-    res.status(500).send("Internal Server Error");
+    console.error(error);
+    return res.status(500).send({ message: "Server Error" });
   }
 };
 

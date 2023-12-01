@@ -15,6 +15,7 @@ exports.createCustomer = async (req, res) => {
       dob,
       land,
       group,
+      id,
       created_by,
     } = req.body;
 
@@ -45,6 +46,7 @@ exports.createCustomer = async (req, res) => {
       dob,
       land,
       group,
+      id,
       created_by: user._id,
     };
 
@@ -83,15 +85,31 @@ exports.editCustomer = async (req, res) => {
 exports.getCustomer = async (req, res) => {
   try {
     const resultPerPage = 10;
+
     const countPage = await Customer.countDocuments({
       status: "active",
     });
-    let pageCount = Math.ceil(Number(countPage) / 10);
-    const apiFeatures = new ApiFeatures(Customer.find(), req.query)
+
+    let pageCount = Math.ceil(countPage / resultPerPage);
+
+    const apiFeatures = new ApiFeatures(
+      Customer.find({ status: "active" }),
+      req.query
+    )
       .reverse()
       .pagination(resultPerPage);
 
     const result = await apiFeatures.query;
+
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        result: updatedResult,
+        pageCount: pageCount,
+      });
+    }
 
     return res.status(200).json({
       success: true,

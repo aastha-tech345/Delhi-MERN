@@ -29,9 +29,10 @@ const Customer = () => {
 
   let data = localStorage.getItem('customerDatat')
   let res = JSON.parse(data)
+
   const firstName = res?.fname.slice(0, 1).toUpperCase() + res?.fname.slice(1).toLowerCase()
   const lastName = res?.lname.slice(0, 1).toUpperCase() + res?.lname.slice(1).toLowerCase()
-  let city = res?.city.slice(0, 1).toUpperCase() + res?.city.slice(1).toLowerCase()
+  let street = res?.street.slice(0, 1).toUpperCase() + res?.street.slice(1).toLowerCase()
   // console.log('customerPage', res)
   return (
     <>
@@ -40,20 +41,21 @@ const Customer = () => {
           <div className="row">
             <div className="col-sm-4">
               <p style={{ color: 'white', marginTop: '5px' }}>
-                Firmenname: {`${firstName} ${lastName}`}
+                KlientInnen: {`${firstName} ${lastName}`}
               </p>
               <ImLocation2 style={{ color: 'white' }} />
-              <span style={{ color: 'white' }}>{city}</span>
+              &nbsp;
+              <span style={{ color: 'white' }}>{street}</span>
             </div>
             <div className="col-sm-8 mt-4 text-right">
               <button
-                className="btn btn-outline-primary"
+                className="btn btn-outline"
                 style={{ color: 'white', border: '1px solid white', marginRight: '10px' }}
               >
                 <HiOutlineMail className="f-2" /> {res?.email}
               </button>
               <button
-                className="btn btn-outline-primary"
+                className="btn btn-outline"
                 style={{ color: 'white', border: '1px solid white', marginRight: '10px' }}
               >
                 <IoIosCall className="f-2" /> {res?.phone}

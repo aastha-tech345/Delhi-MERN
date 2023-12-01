@@ -14,8 +14,10 @@ import EditModal from './EditModal'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import Customer from '../Customer'
+import Form from 'react-bootstrap/Form'
 
 const Contact = () => {
+  const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -35,7 +37,7 @@ const Contact = () => {
     },
     {
       title: 'Kunden-ID',
-      dataIndex: '_id',
+      dataIndex: 'id',
     },
     {
       title: 'E-Mail',
@@ -99,6 +101,12 @@ const Contact = () => {
   const [countPage, setCountPage] = useState(0)
   // const params = useParams()
 
+  const generateRandomId = () => {
+    return 'HVD' + Math.floor(1000 + Math.random() * 9000)
+  }
+
+  const [id] = useState(generateRandomId())
+
   const handlePageChange = (event, value) => {
     setPage(value)
   }
@@ -123,8 +131,15 @@ const Contact = () => {
     setEdit(true)
   }
   const notify = (dataa) => toast(dataa)
-  const TotalData = { ...data, email }
-  const saveData = async () => {
+  const TotalData = { ...data, email, id }
+
+  const saveData = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    setValidated(true)
     try {
       if (!email) {
         return notify('Invalid Email')
@@ -242,136 +257,126 @@ const Contact = () => {
               <Modal.Title>Kontakt hinzufügen</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="row p-3">
-                <div className="mb-2 row">
-                  <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                    Vorname
-                  </label>
-                  <div className="col-sm-9">
-                    <input
-                      type="text"
-                      name="fname"
-                      value={data.fname}
-                      onChange={handleChange}
-                      placeholder="jo"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-                    {error && data.fname.trim().length === 0 && (
-                      <p style={{ color: 'red' }}>
-                        <BiErrorCircle /> required
-                      </p>
-                    )}
+              <Form noValidate validated={validated}>
+                <div className="row p-3">
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Vorname
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        type="text"
+                        name="fname"
+                        value={data.fname}
+                        onChange={handleChange}
+                        placeholder="jo"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Nachname
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        type="text"
+                        name="lname"
+                        value={data.lname}
+                        onChange={handleChange}
+                        placeholder="verma"
+                        className="form-control"
+                        id="inputPassword"
+                        required={true}
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Telefon
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={data.phone}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                            handleChange({ target: { name: 'phone', value: inputValue } })
+                          }
+                        }}
+                        placeholder="e.g., 91+ 8354568464"
+                        className="form-control"
+                        id="inputPhone"
+                        maxLength={10}
+                        minLength={3}
+                      />
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Mail
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        type="email"
+                        name="email"
+                        // value={email}
+                        onChange={(e) => {
+                          const inputValue = e.target.value
+                          if (inputValue.toLowerCase().includes('@gmail.com')) {
+                            setEmail(inputValue)
+                          } else {
+                            setEmail('')
+                          }
+                        }}
+                        placeholder="jo@gmail.com"
+                        className="form-control"
+                        id="inputPassword"
+                      />
+                      {error && email.trim().length === 0 && (
+                        <p style={{ color: 'red' }}>
+                          <BiErrorCircle /> required
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Geschlecht
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="male"
+                        onChange={handleChange}
+                        checked={data.gender === 'male'}
+                      />{' '}
+                      &nbsp; Männlich
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="female"
+                        onChange={handleChange}
+                        checked={data.gender === 'female'}
+                      />{' '}
+                      &nbsp; Weiblich
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="other"
+                        onChange={handleChange}
+                        checked={data.gender === 'other'}
+                      />
+                      &nbsp; Andere
+                    </div>
                   </div>
                 </div>
-                <div className="mb-2 row">
-                  <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                    Nachname
-                  </label>
-                  <div className="col-sm-9">
-                    <input
-                      type="text"
-                      name="lname"
-                      value={data.lname}
-                      onChange={handleChange}
-                      placeholder="verma"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-                    {error && data.lname.trim().length === 0 && (
-                      <p style={{ color: 'red' }}>
-                        <BiErrorCircle /> required
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-2 row">
-                  <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                    Telefon
-                  </label>
-                  <div className="col-sm-9">
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={data.phone}
-                      onChange={handleChange}
-                      placeholder="91+ 8354568464"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-                    {error && data.phone.trim().length === 0 && (
-                      <p style={{ color: 'red' }}>
-                        <BiErrorCircle /> required
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-2 row">
-                  <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                    Mail
-                  </label>
-                  <div className="col-sm-9">
-                    <input
-                      type="email"
-                      name="email"
-                      // value={email}
-                      onChange={(e) => {
-                        const inputValue = e.target.value
-                        if (inputValue.toLowerCase().includes('@gmail.com')) {
-                          setEmail(inputValue)
-                        } else {
-                          setEmail('')
-                        }
-                      }}
-                      placeholder="jo@gmail.com"
-                      className="form-control"
-                      id="inputPassword"
-                    />
-
-                    {error && data.email.trim().length === 0 && (
-                      <p style={{ color: 'red' }}>
-                        <BiErrorCircle /> required
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="mb-2 row">
-                  <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                    Geschlecht
-                  </label>
-                  {error && data.gender.trim().length === 0 && (
-                    <p style={{ color: 'red' }}>
-                      <BiErrorCircle /> required
-                    </p>
-                  )}
-                  <div className="col-sm-9">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="male"
-                      onChange={handleChange}
-                      checked={data.gender === 'male'}
-                    />{' '}
-                    &nbsp; Männlich
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="female"
-                      onChange={handleChange}
-                      checked={data.gender === 'female'}
-                    />{' '}
-                    &nbsp; Weiblich
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="other"
-                      onChange={handleChange}
-                      checked={data.gender === 'other'}
-                    />
-                    &nbsp; Andere
-                  </div>
-                </div>
-              </div>
+              </Form>
             </Modal.Body>
             <Modal.Footer>
               <button

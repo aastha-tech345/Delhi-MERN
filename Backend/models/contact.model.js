@@ -14,6 +14,7 @@ const contactSchema = new Schema({
     enum: ["active", "deleted"],
     default: "active",
   },
+  id: { type: String },
   customer_id: { type: mongoose.Schema.Types.ObjectId },
 });
 
