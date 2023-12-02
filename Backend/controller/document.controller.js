@@ -31,7 +31,10 @@ exports.getDocument = async (req, res) => {
 
 exports.getDocumentData = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.findOne({ _id: req.params.id });
+    const result = await DocumentInfo.Document.findOne({
+      _id: req.params.id,
+      status: { $ne: "deleted" },
+    });
     if (!result) {
       return res.status(404).send({ error: "Document not found" });
     }
@@ -43,11 +46,6 @@ exports.getDocumentData = async (req, res) => {
 
 exports.getDocumentDataUpdate = async (req, res) => {
   try {
-    // const result = await DocumentInfo.Document.updateOne(
-    //   { _id: req.params.id },
-    //   { $set: req.body }
-    // );
-
     const result = await DocumentInfo.Document.findByIdAndUpdate(
       req.params.id,
       { ...req.body, document_upload: req?.file?.filename },
@@ -60,19 +58,19 @@ exports.getDocumentDataUpdate = async (req, res) => {
     res.status(500).send({ error: "Internal Server Error" });
   }
 };
-
 exports.getDocumentDataDelete = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.findByIdAndUpdate(
-      req.params.id,
-      { status: "deleted" },
-      {
-        new: true,
-      }
+    const result = await DocumentInfo.Document.updateOne(
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: { status: "deleted" } }
     );
-    res.send(result);
+    res.status(200).json({
+      success: true,
+      message: "Contact Deleted Successfully",
+    });
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error" });
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };
 

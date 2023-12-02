@@ -65,7 +65,7 @@ const Bills = () => {
       <br />
       <h5 className="mx-4">Rechnung</h5>
       <hr />
-      <div className="row m-4 p-4  shadow">
+      <div className="row m-4 p-4 " style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
         <p style={{ color: 'blue' }}>Rechnungstellung</p>
         <div className="col-sm-6">
           <div className="mb-6 row">

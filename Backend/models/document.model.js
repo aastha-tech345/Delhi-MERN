@@ -6,7 +6,11 @@ const documentSchema = new Schema({
   document_type: { type: String },
   document_upload: { type: String },
   customer_id: { type: mongoose.Schema.Types.ObjectId },
-  status: { type: String, default: "active" },
+  status: {
+    type: String,
+    enum: ["active", "deleted"],
+    default: "active",
+  },
 });
 
 const Document = mongoose.model("document", documentSchema, "document");

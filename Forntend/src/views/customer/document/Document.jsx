@@ -4,10 +4,13 @@ import { MdAdd } from 'react-icons/md'
 import { Divider, Radio, Table } from 'antd'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete } from 'react-icons/md'
-import axios from 'axios'
 import { postFetchUser, getFetch } from 'src/Api'
 import DeleteModal from './DeleteModal'
 import Customer from '../Customer'
+import EditModal from './EditModal'
+import { Pagination } from 'antd'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -22,6 +25,8 @@ const rowSelection = {
 }
 
 const Document = () => {
+  const notify = (dataa) => toast(dataa)
+  const [edit, setEdit] = useState(false)
   const columns = [
     {
       title: 'Title',
@@ -37,10 +42,7 @@ const Document = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <button
-            style={{ background: 'none', border: 'none' }}
-            //  onClick={() => handleEdit(record)}
-          >
+          <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
             <GrEdit />
             &nbsp;&nbsp;Bearbeiten
           </button>
@@ -71,6 +73,9 @@ const Document = () => {
   })
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
+  const handleEdit = () => {
+    setEdit(true)
+  }
   const handleChange = (e) => {
     const { name, value } = e.target
     setData({ ...data, [name]: value })
@@ -93,10 +98,10 @@ const Document = () => {
       myForm.append('customer_id', data.customer_id)
       myForm.append('document_upload', document_upload)
 
-      console.log(myForm)
       const url = `${apiUrl}/document/create_document`
-      console.log(url)
       const response = await postFetchUser(url, myForm)
+      notify('Data Saved Successfully')
+      setData('')
       handleClose()
       getDetails()
     } catch (error) {
@@ -131,10 +136,11 @@ const Document = () => {
       ) : (
         ''
       )}
+      {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
       <Customer />
       <h5 className="mt-3 mx-3">Dokumente</h5>
-      <hr />
-      <div className="row p-1 m-1" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
+      <hr className="mx-3" />
+      <div className="row p-3 mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
         <div className="col-sm-7">
           <h5>Dokumente verwalten</h5>
           <p>
@@ -220,7 +226,7 @@ const Document = () => {
         </div>
       </div>
       <br />
-      <div className="row">
+      <div className="row mx-2">
         <div className="col-sm-12">
           <Table
             rowSelection={{
@@ -229,7 +235,9 @@ const Document = () => {
             }}
             columns={columns}
             dataSource={documentRecord}
+            pagination={false}
           />
+          <Pagination defaultCurrent={2} total={50} />
         </div>
       </div>
     </div>

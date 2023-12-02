@@ -17,9 +17,10 @@ import Form from 'react-bootstrap/Form'
 const Contact = () => {
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
+  const [, setSelectedRowKeys] = useState([])
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    onChange: (selectedKeys) => {
+      setSelectedRowKeys(selectedKeys)
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === 'Disabled User',

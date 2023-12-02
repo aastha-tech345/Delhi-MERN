@@ -12,14 +12,19 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
     if (documentId) {
       try {
         const response = await deleteFetch(`${apiUrl}/document/get_document`, documentId)
+
         console.log(response)
-        getDetails()
 
         if (response?.status === 200) {
           notify(response?.data?.message)
+          getDetails()
+        } else {
+          console.error('Failed to delete the document. Server response:', response)
+          notify('Failed to delete the document. Please try again.')
         }
       } catch (error) {
         console.error('An error occurred while deleting the record:', error)
+        notify('An error occurred while deleting the document. Please try again.')
       } finally {
         setHide(false)
       }
