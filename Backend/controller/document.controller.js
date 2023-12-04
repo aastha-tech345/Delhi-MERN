@@ -24,32 +24,49 @@ exports.createDocument = async (req, res) => {
 exports.getDocument = async (req, res) => {
   try {
     const resultPerPage = 10;
+
     const countPage = await DocumentInfo.Document.countDocuments({
       status: "active",
     });
-    // console.log("ashish", countPage);
-    let pageCount = Math.ceil(Number(countPage) / 10);
-    const apiFeatures = new ApiFeatures(DocumentInfo.Document.find(), req.query)
+
+    let pageCount = Math.ceil(countPage / resultPerPage);
+
+    const apiFeatures = new ApiFeatures(
+      DocumentInfo.Document.find({ status: "active" }),
+      req.query
+    )
       .reverse()
       .pagination(resultPerPage);
 
     const result = await apiFeatures.query;
 
-    // const result = await DocumentInfo.Document.find();
-    // res.send(result);
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        result: updatedResult,
+        pageCount: pageCount,
+      });
+    }
+
     return res.status(200).json({
       success: true,
       result: result,
       pageCount: pageCount,
     });
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error" });
+    console.error(error);
+    return res.status(500).send({ message: "Server Error" });
   }
 };
 
 exports.getDocumentData = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.findOne({ _id: req.params.id });
+    const result = await DocumentInfo.Document.findOne({
+      _id: req.params.id,
+      status: { $ne: "deleted" },
+    });
     if (!result) {
       return res.status(404).send({ error: "Document not found" });
     }
@@ -61,11 +78,6 @@ exports.getDocumentData = async (req, res) => {
 
 exports.getDocumentDataUpdate = async (req, res) => {
   try {
-    // const result = await DocumentInfo.Document.updateOne(
-    //   { _id: req.params.id },
-    //   { $set: req.body }
-    // );
-
     const result = await DocumentInfo.Document.findByIdAndUpdate(
       req.params.id,
       { ...req.body, document_upload: req?.file?.filename },
@@ -81,27 +93,25 @@ exports.getDocumentDataUpdate = async (req, res) => {
 
 exports.getDocumentDataDelete = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.findByIdAndUpdate(
-      req.params.id,
-      { status: "deleted" },
-      {
-        new: true,
-      }
+    const result = await DocumentInfo.Document.updateOne(
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: { status: "deleted" } }
     );
-    if (!result) {
-      return res.status(500).json({
+
+    if (result.nModified === 0) {
+      return res.status(404).json({
         success: false,
-        message: "Document Not Deleted",
+        message: "Document Not Found or Already Deleted",
       });
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
-      message: "Document Deleted Succesfully",
+      message: "Document Deleted Successfully",
     });
-  
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error" });
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };
 

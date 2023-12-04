@@ -29,10 +29,11 @@ const Customer = () => {
 
   let data = localStorage.getItem('customerDatat')
   let res = JSON.parse(data)
+  // console.log(res)
 
-  const firstName = res?.fname.slice(0, 1).toUpperCase() + res?.fname.slice(1).toLowerCase()
-  const lastName = res?.lname.slice(0, 1).toUpperCase() + res?.lname.slice(1).toLowerCase()
-  let street = res?.street.slice(0, 1).toUpperCase() + res?.street.slice(1).toLowerCase()
+  const firstName = res?.fname?.slice(0, 1).toUpperCase() + res?.fname?.slice(1).toLowerCase()
+  const lastName = res?.lname?.slice(0, 1).toUpperCase() + res?.lname?.slice(1).toLowerCase()
+  let street = res?.street?.slice(0, 1).toUpperCase() + res?.street?.slice(1).toLowerCase()
   // console.log('customerPage', res)
   return (
     <>
@@ -40,6 +41,9 @@ const Customer = () => {
         <div className="blueBoxTop">
           <div className="row">
             <div className="col-sm-4">
+              <p style={{ color: 'white', marginTop: '5px' }}>KlientInnen: {res.fname}</p>
+              <ImLocation2 style={{ color: 'white' }} />
+              <span style={{ color: 'white' }}>{res.street}</span>
               <p style={{ color: 'white', marginTop: '5px' }}>
                 KlientInnen: {`${firstName} ${lastName}`}
               </p>
