@@ -1,12 +1,13 @@
 const DocumentInfo = require("../models/document.model");
 const CustomerModel = require("../models/customer.model");
+const ApiFeatures = require("../utils/apiFeatures");
 exports.createDocument = async (req, res) => {
   try {
     const document = new DocumentInfo.Document({
       ...req.body,
       document_upload: req?.file?.filename,
     });
-    console.log("ashishhh", document);
+    // console.log("ashishhh", document);
 
     const result = await document.save();
     res.status(201).json({
@@ -22,10 +23,41 @@ exports.createDocument = async (req, res) => {
 };
 exports.getDocument = async (req, res) => {
   try {
-    const result = await DocumentInfo.Document.find();
-    res.send(result);
+    const resultPerPage = 10;
+
+    const countPage = await DocumentInfo.Document.countDocuments({
+      status: "active",
+    });
+
+    let pageCount = Math.ceil(countPage / resultPerPage);
+
+    const apiFeatures = new ApiFeatures(
+      DocumentInfo.Document.find({ status: "active" }),
+      req.query
+    )
+      .reverse()
+      .pagination(resultPerPage);
+
+    const result = await apiFeatures.query;
+
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        result: updatedResult,
+        pageCount: pageCount,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      result: result,
+      pageCount: pageCount,
+    });
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error" });
+    console.error(error);
+    return res.status(500).send({ message: "Server Error" });
   }
 };
 
@@ -58,15 +90,24 @@ exports.getDocumentDataUpdate = async (req, res) => {
     res.status(500).send({ error: "Internal Server Error" });
   }
 };
+
 exports.getDocumentDataDelete = async (req, res) => {
   try {
     const result = await DocumentInfo.Document.updateOne(
       { _id: req.params.id, status: { $ne: "deleted" } },
       { $set: { status: "deleted" } }
     );
+
+    if (result.nModified === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Document Not Found or Already Deleted",
+      });
+    }
+
     res.status(200).json({
       success: true,
-      message: "Contact Deleted Successfully",
+      message: "Document Deleted Successfully",
     });
   } catch (error) {
     console.error(error);

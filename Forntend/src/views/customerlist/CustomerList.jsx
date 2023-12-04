@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
 import Form from 'react-bootstrap/Form'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 const CustomerList = () => {
   const apiUrl = process.env.REACT_APP_API_URL
@@ -24,6 +26,8 @@ const CustomerList = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
   }
@@ -33,6 +37,10 @@ const CustomerList = () => {
   const notify = (data) => toast(data)
 
   const [email, setEmail] = useState('')
+
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -48,7 +56,7 @@ const CustomerList = () => {
           to={`/customer/customer_info`}
           onClick={() => handleStore(text, record)}
         >
-          {text}
+          {text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}
         </Link>
       ),
     },
@@ -129,18 +137,10 @@ const CustomerList = () => {
 
     setValidated(true)
     let data = { fname, lname, street, city, phone, plz, email, land, dob, group, id }
-    if (
-      !fname ||
-      // !lname ||
-      !street ||
-      !city ||
-      !phone ||
-      !plz ||
-      !email ||
-      !land ||
-      !dob ||
-      !group
-    ) {
+    if (!email) {
+      return notify('Invalid Email')
+    }
+    if (!fname || !lname || !email) {
       return
     }
     try {
@@ -181,12 +181,12 @@ const CustomerList = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getDetails = useCallback(async () => {
     try {
-      const result = await fetch(`${apiUrl}/customer/get_record`)
+      const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
       const data = await result.json()
-
+      // console.log(data)
       // Filter records with status 'active'
-      const activeRecords = data.filter((record) => record.status === 'active')
-
+      setCountPage(data?.pageCount)
+      const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setCustomerRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
@@ -244,7 +244,7 @@ const CustomerList = () => {
 
   useEffect(() => {
     getDetails()
-  }, [])
+  }, [page])
 
   return (
     <>
@@ -343,16 +343,19 @@ const CustomerList = () => {
                     <div className="col-sm-6">
                       <input
                         type="email"
-                        value={email}
+                        // value={email}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(
-                            /^[a-zA-Z0-9]+@[a-z]+\.[a-z]?$/.com,
-                            '',
-                          )
-                          setEmail(inputValue)
+                          const inputValue = e.target.value
+                          if (inputValue.toLowerCase().includes('@gmail.com')) {
+                            setEmail(inputValue)
+                          } else {
+                            setEmail('')
+                          }
                         }}
                         placeholder="E-Mail"
                         className="form-control"
+                        // id="email"
+                        required={true}
                         id="inputEmail"
                       />
                     </div>
@@ -473,7 +476,22 @@ const CustomerList = () => {
             </Modal>
           </div>
         </div>
-        <Table rowKey="_id" rowSelection={rowSelection} columns={columns} dataSource={data} />
+        <Table
+          rowKey="_id"
+          rowSelection={rowSelection}
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+        />
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
         <Modal show={isModalVisible} onHide={handleModalClose} centered>
           <Modal.Title>
             <svg

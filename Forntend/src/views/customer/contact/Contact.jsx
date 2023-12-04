@@ -11,6 +11,8 @@ import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 import Customer from '../Customer'
 import Form from 'react-bootstrap/Form'
 
@@ -18,6 +20,10 @@ const Contact = () => {
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
   const [, setSelectedRowKeys] = useState([])
+  const apiUrl = process.env.REACT_APP_API_URL
+
+  // ... (Your existing functions and states)
+
   const rowSelection = {
     onChange: (selectedKeys) => {
       setSelectedRowKeys(selectedKeys)
@@ -32,11 +38,11 @@ const Contact = () => {
     {
       title: 'Name des Kunden',
       dataIndex: 'fname',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}</a>,
     },
     {
       title: 'Kunden-ID',
-      dataIndex: '_id',
+      dataIndex: 'id',
     },
     {
       title: 'E-Mail',
@@ -60,7 +66,6 @@ const Contact = () => {
             &nbsp; Bearbeiten
           </button>
           &nbsp;
-          {/* <MdDelete onClick={() => handleDelete(record._id)} /> */}
           <button
             style={{ background: 'none', border: 'none' }}
             onClick={() => handleDelete(record._id)}
@@ -73,72 +78,79 @@ const Contact = () => {
     },
   ]
 
-  let res = localStorage.getItem('customerDatat')
-  let result = JSON.parse(res)
   const [data, setData] = useState({
     fname: '',
     lname: '',
     phone: '',
-    email: '',
     gender: '',
-    customer_id: result?._id,
+    customer_id: localStorage.getItem('customerDatat')?._id,
   })
+
+  const [email, setEmail] = useState('')
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
-  const apiUrl = process.env.REACT_APP_API_URL
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
   const [contactRecord, setContactRecord] = useState([])
   const [search, setSearch] = useState('')
-  // const [customer_record, setCustomerRecord] = useState([])
   const [selectionType] = useState('checkbox')
   const [hide, setHide] = useState(false)
   const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
+  const [id, setId] = useState('')
+
+  const generateRandomId = () => {
+    return 'HVD' + Math.floor(1000 + Math.random() * 9000)
+  }
+
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
 
   const handleChange = (e) => {
     const { name, value, type } = e.target
-
     const newValue = type === 'radio' ? e.target.value : value
-
     setData({ ...data, [name]: newValue })
   }
 
   const handleDelete = (customerId) => {
-    console.log(`Deleting customer with ID: ${customerId}`)
     setContactId(customerId)
     setHide(true)
   }
 
   const handleEdit = (record) => {
-    let data = JSON.stringify(record)
-    localStorage.setItem('ContactEditDetails', data)
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('ContactEditDetails', recordData)
     setEdit(true)
   }
-  const notify = (dataa) => toast(dataa)
+
+  const notify = (dataa) => {
+    // Implement your toast function here
+    console.log(dataa)
+  }
+
+  const TotalData = { ...data, email, id }
 
   const saveData = async (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
+    try {
       event.preventDefault()
       event.stopPropagation()
-    }
-    setValidated(true)
-    try {
-      if (!data?.email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
+
+      if (!email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
         return notify('Please Fill All Details')
       }
 
-      // console.log('ashshihh', data.email)
+      const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
 
-      const response = await postFetchData(`${apiUrl}/contact/create_contact`, data)
-      // let result = await response.json()
-      console.log(response)
-      getDetails()
-      handleClose()
       if (response.response.status === 406) {
         notify('Email Already Exists')
       }
+
+      getDetails()
+      handleClose()
     } catch (error) {
       console.error('Error during API call:', error)
     }
@@ -146,26 +158,26 @@ const Contact = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/contact/get_contact`)
+      const result = await fetch(`${apiUrl}/contact/get_contact?page=${page}`)
       const data = await result.json()
-      const activeRecords = data.filter((record) => record.status === 'active')
-
+      setCountPage(data?.pageCount)
+      const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setContactRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
   }
+  console.log('astha', contactRecord)
 
   const searchHandle = async () => {
     try {
-      // let key = searchInputRef.current.value
-      //console.log('ashish', search)
       if (search === '') {
         return getDetails()
       }
+
       const response = await fetch(`${apiUrl}/contact/search/${search}`)
       const data = await response.json()
-      console.log('astha', data)
+
       const activeRecords = data.filter((record) => record.status === 'active')
 
       if (activeRecords.length > 0) {
@@ -178,13 +190,13 @@ const Contact = () => {
       console.error('Error searching data:', error.message)
     }
   }
-
-  //console.log(contactRecord)
+  console.log(contactRecord)
   let dataa = contactRecord
-  console.log(dataa)
+
   useEffect(() => {
+    setId(generateRandomId())
     getDetails()
-  }, [])
+  }, [page])
 
   return (
     <div style={{ background: '#fff' }}>
@@ -304,12 +316,24 @@ const Contact = () => {
                       <input
                         type="email"
                         name="email"
-                        value={data.email}
-                        onChange={handleChange}
+                        // value={email}
+                        onChange={(e) => {
+                          const inputValue = e.target.value
+                          if (inputValue.toLowerCase().includes('@gmail.com')) {
+                            setEmail(inputValue)
+                          } else {
+                            setEmail('')
+                          }
+                        }}
                         placeholder="jo@gmail.com"
                         className="form-control"
                         id="inputPassword"
                       />
+                      {error && email.trim().length === 0 && (
+                        <p style={{ color: 'red' }}>
+                          <BiErrorCircle /> required
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="mb-2 row">
@@ -378,7 +402,17 @@ const Contact = () => {
           style={{ overflowX: 'auto' }}
           columns={columns}
           dataSource={dataa}
+          pagination={false}
         />
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
 
       <ToastContainer />

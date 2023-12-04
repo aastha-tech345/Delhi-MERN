@@ -4,13 +4,41 @@ import { MdAdd } from 'react-icons/md'
 import { Divider, Radio, Table } from 'antd'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete } from 'react-icons/md'
+import axios from 'axios'
+// import { postFetchUser } from 'src/Api'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
+
 import { postFetchUser, getFetch } from 'src/Api'
 import DeleteModal from './DeleteModal'
 import Customer from '../Customer'
 import EditModal from './EditModal'
-import { Pagination } from 'antd'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+
+const columns = [
+  {
+    title: 'Title',
+    dataIndex: 'document_title',
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: 'Dokumententyp',
+    dataIndex: 'document_type',
+  },
+  {
+    title: 'AKTION',
+    dataIndex: 'action',
+    render: (_, record) => (
+      <>
+        <GrEdit />
+        &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+        <MdDelete />
+        Löschen
+      </>
+    ),
+  },
+]
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
@@ -73,9 +101,18 @@ const Document = () => {
   })
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
-  const handleEdit = () => {
+  const handleEdit = (record) => {
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('DocumentEditDetails', recordData)
     setEdit(true)
   }
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
+
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setData({ ...data, [name]: value })
@@ -99,6 +136,9 @@ const Document = () => {
       myForm.append('document_upload', document_upload)
 
       const url = `${apiUrl}/document/create_document`
+      console.log(myForm)
+      // const url = `${apiUrl}/document/create_document?page=${page}`
+      // console.log(url)
       const response = await postFetchUser(url, myForm)
       notify('Data Saved Successfully')
       setData('')
@@ -111,23 +151,21 @@ const Document = () => {
 
   const getDetails = async () => {
     try {
-      const url = `${apiUrl}/document/get_document`
-      const result = await getFetch(url)
-      console.log('document page', result)
-      if (result?.status === 200) {
-        const activeRecords = result.data.filter((record) => record.status === 'active')
-        // console.log('dp1', activeRecords)
-        setDocumentRecord(activeRecords)
-      }
+      const result = await fetch(`${apiUrl}/document/get_document?page=${page}`)
+      const data = await result.json()
+      setCountPage(data?.pageCount)
+      const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      setDocumentRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
   }
 
-  // console.log('document page', documentRecord)
+  console.log('document page', documentRecord)
   useEffect(() => {
+    // setId(generateRandomId())
     getDetails()
-  }, [])
+  }, [page])
 
   return (
     <div style={{ background: '#fff' }}>
@@ -234,11 +272,21 @@ const Document = () => {
               ...rowSelection,
             }}
             columns={columns}
-            dataSource={documentRecord}
+            // dataSource={dataa}
             pagination={false}
+            dataSource={documentRecord}
           />
-          <Pagination defaultCurrent={2} total={50} />
+          {/* <Pagination defaultCurrent={2} total={50} /> */}
         </div>
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
     </div>
   )
