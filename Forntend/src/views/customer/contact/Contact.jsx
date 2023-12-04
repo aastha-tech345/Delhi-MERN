@@ -127,9 +127,17 @@ const Contact = () => {
     setEdit(true)
   }
 
-  const notify = (dataa) => {
-    // Implement your toast function here
-    console.log(dataa)
+  const notify = (dataa) => toast(dataa)
+
+  const handleEmailChange = (e) => {
+    const inputValue = e.target.value
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+    if (emailRegex.test(inputValue.toLowerCase())) {
+      setEmail(inputValue)
+    } else {
+      setEmail('')
+    }
   }
 
   const TotalData = { ...data, email, id }
@@ -167,7 +175,7 @@ const Contact = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  console.log('astha', contactRecord)
+  // console.log('astha', contactRecord)
 
   const searchHandle = async () => {
     try {
@@ -190,7 +198,7 @@ const Contact = () => {
       console.error('Error searching data:', error.message)
     }
   }
-  console.log(contactRecord)
+  // console.log(contactRecord)
   let dataa = contactRecord
 
   useEffect(() => {
@@ -313,7 +321,7 @@ const Contact = () => {
                       Mail
                     </label>
                     <div className="col-sm-9">
-                      <input
+                      {/* <input
                         type="email"
                         name="email"
                         // value={email}
@@ -328,7 +336,18 @@ const Contact = () => {
                         placeholder="jo@gmail.com"
                         className="form-control"
                         id="inputPassword"
+                      /> */}
+
+                      <input
+                        type="email"
+                        name="email"
+                        // value={email}
+                        onChange={handleEmailChange}
+                        placeholder="jo@gmail.com"
+                        className="form-control"
+                        id="inputPassword"
                       />
+
                       {error && email.trim().length === 0 && (
                         <p style={{ color: 'red' }}>
                           <BiErrorCircle /> required

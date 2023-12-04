@@ -29,11 +29,11 @@ const Customer = () => {
 
   let data = localStorage.getItem('customerDatat')
   let res = JSON.parse(data)
-  console.log(res)
+  // console.log(res)
 
-  const firstName = res?.fname.slice(0, 1).toUpperCase() + res?.fname.slice(1).toLowerCase()
-  const lastName = res?.lname.slice(0, 1).toUpperCase() + res?.lname.slice(1).toLowerCase()
-  let street = res?.street.slice(0, 1).toUpperCase() + res?.street.slice(1).toLowerCase()
+  const firstName = res?.fname?.slice(0, 1).toUpperCase() + res?.fname?.slice(1).toLowerCase()
+  const lastName = res?.lname?.slice(0, 1).toUpperCase() + res?.lname?.slice(1).toLowerCase()
+  let street = res?.street?.slice(0, 1).toUpperCase() + res?.street?.slice(1).toLowerCase()
   // console.log('customerPage', res)
   return (
     <>
