@@ -24,7 +24,7 @@ const EditModal = ({ setHide, getDetails }) => {
     fname: response?.fname,
     lname: response?.lname,
     street: response?.street,
-    email: response?.email,
+    // email: response?.email,
     phone: response?.phone,
     plz: response?.plz,
     city: response?.city,
@@ -32,6 +32,7 @@ const EditModal = ({ setHide, getDetails }) => {
     land: response?.land,
     group: response.group,
   })
+  const [email, setEmail] = useState(response?.email)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadVale] = useState(false)
   const handleChange = (e) => {
@@ -42,6 +43,20 @@ const EditModal = ({ setHide, getDetails }) => {
   const close = () => {
     setHide(false)
   }
+
+  const handleEmailChange = (e) => {
+    const inputValue = e.target.value
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+    if (emailRegex.test(inputValue.toLowerCase())) {
+      setEmail(inputValue)
+    } else {
+      setEmail('')
+    }
+  }
+
+  const dataa = { ...data, email }
+
   const handleSubmit = async (e) => {
     const form = e.currentTarget
     if (form.checkValidity() === false) {
@@ -50,7 +65,7 @@ const EditModal = ({ setHide, getDetails }) => {
     }
 
     setValidated(true)
-    const { fname, lname, street, city, phone, plz, email, land, dob, group } = data
+    const { fname, lname, street, city, phone, plz, land, dob, group } = data
     if (
       !fname ||
       // !lname ||
@@ -58,24 +73,25 @@ const EditModal = ({ setHide, getDetails }) => {
       !city ||
       !phone ||
       !plz ||
-      !email ||
       !land ||
       !dob ||
       !group
     ) {
       return
     }
+    if (!email) {
+      return notify('Invalid Email')
+    }
     e.preventDefault()
     try {
       setLoadVale(true)
-      const res = await putFetchData(`${apiUrl}/customer/get_record/edit/${response?._id}`, data)
+      const res = await putFetchData(`${apiUrl}/customer/get_record/edit/${response?._id}`, dataa)
       if (res.data.success == true) {
         setLoadVale(false)
         setData({
           fname: '',
           lname: '',
           street: '',
-          email: '',
           phone: '',
           plz: '',
           city: '',
@@ -83,6 +99,7 @@ const EditModal = ({ setHide, getDetails }) => {
           land: '',
           group: '',
         })
+        setEmail('')
         notify(res?.data?.message)
         close()
         getDetails()
@@ -156,7 +173,7 @@ const EditModal = ({ setHide, getDetails }) => {
             </div>
             <div className="row p-3">
               <div className="col-sm-6">
-                <input
+                {/* <input
                   type="email"
                   placeholder="E-Mail"
                   className="form-control"
@@ -165,6 +182,15 @@ const EditModal = ({ setHide, getDetails }) => {
                   value={data.email}
                   onChange={handleChange}
                   required={true}
+                /> */}
+                <input
+                  type="email"
+                  name="email"
+                  // value={email}
+                  onChange={handleEmailChange}
+                  placeholder="jo@gmail.com"
+                  className="form-control"
+                  id="inputPassword"
                 />
               </div>
               <div className="col-sm-6">

@@ -128,6 +128,18 @@ const CustomerList = () => {
       setIsModalVisible(false)
     }
   }
+
+  const handleEmailChange = (e) => {
+    const inputValue = e.target.value
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+    if (emailRegex.test(inputValue.toLowerCase())) {
+      setEmail(inputValue)
+    } else {
+      setEmail('')
+    }
+  }
+
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -341,7 +353,7 @@ const CustomerList = () => {
                   </div>
                   <div className="row p-3">
                     <div className="col-sm-6">
-                      <input
+                      {/* <input
                         type="email"
                         // value={email}
                         onChange={(e) => {
@@ -357,6 +369,15 @@ const CustomerList = () => {
                         // id="email"
                         required={true}
                         id="inputEmail"
+                      /> */}
+                      <input
+                        type="email"
+                        name="email"
+                        // value={email}
+                        onChange={handleEmailChange}
+                        placeholder="jo@gmail.com"
+                        className="form-control"
+                        id="inputPassword"
                       />
                     </div>
                     <div className="col-sm-6">

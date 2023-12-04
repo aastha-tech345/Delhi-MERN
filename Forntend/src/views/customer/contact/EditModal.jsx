@@ -26,13 +26,25 @@ const EditModal = ({ setEdit, getDetails }) => {
     fname: response?.fname,
     lname: response?.lname,
     phone: response?.phone,
-    email: response?.email,
+    // email: response?.email,
     gender: response?.gender,
     // customer_id: result?._id,
   })
-
+  const [email, setEmail] = useState(response?.email)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadVale] = useState(false)
+
+  const handleEmailChange = (e) => {
+    const inputValue = e.target.value
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+    if (emailRegex.test(inputValue.toLowerCase())) {
+      setEmail(inputValue)
+    } else {
+      setEmail('')
+    }
+  }
+
   const handleChange = (e) => {
     const { name, value, type } = e.target
 
@@ -44,6 +56,9 @@ const EditModal = ({ setEdit, getDetails }) => {
   const close = () => {
     setEdit(false)
   }
+
+  const dataa = { ...data, email }
+
   const handleSubmit = async (e) => {
     const form = e.currentTarget
     if (form.checkValidity() === false) {
@@ -52,25 +67,27 @@ const EditModal = ({ setEdit, getDetails }) => {
     }
 
     setValidated(true)
-    const { fname, lname, gender, phone, email } = data
-    if (!fname || !lname || !phone || !email || !gender) {
-      return
-    }
-    console.log('ashish', data)
     e.preventDefault()
     try {
       setLoadVale(true)
-      const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, data)
+      const { fname, lname, gender, phone } = data
+      if (!fname || !lname || !phone || !gender) {
+        return
+      }
+      if (!email) {
+        return notify('Invalid Email')
+      }
+      const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, dataa)
       console.log('ashish', res)
       if (res.status == 200) {
         setLoadVale(false)
         setData({
           fname: '',
           lname: '',
-          email: '',
           phone: '',
           gender: '',
         })
+        setEmail('')
         notify('Contact Updated Successfully')
         close()
         getDetails()
@@ -172,11 +189,21 @@ const EditModal = ({ setEdit, getDetails }) => {
                   Mail
                 </label>
                 <div className="col-sm-9">
-                  <input
+                  {/* <input
                     type="email"
                     name="email"
                     value={data.email}
                     onChange={handleChange}
+                    placeholder="jo@gmail.com"
+                    className="form-control"
+                    id="inputPassword"
+                  /> */}
+
+                  <input
+                    type="email"
+                    name="email"
+                    // value={email}
+                    onChange={handleEmailChange}
                     placeholder="jo@gmail.com"
                     className="form-control"
                     id="inputPassword"
