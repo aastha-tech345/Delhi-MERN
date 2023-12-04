@@ -130,6 +130,18 @@ const Contact = () => {
     localStorage.setItem('ContactEditDetails', data)
     setEdit(true)
   }
+
+  const handleEmailChange = (e) => {
+    const inputValue = e.target.value
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+    if (emailRegex.test(inputValue.toLowerCase())) {
+      setEmail(inputValue)
+    } else {
+      setEmail('')
+    }
+  }
+
   const notify = (dataa) => toast(dataa)
   const TotalData = { ...data, email, id }
 
@@ -321,7 +333,7 @@ const Contact = () => {
                       Mail
                     </label>
                     <div className="col-sm-9">
-                      <input
+                      {/* <input
                         type="email"
                         name="email"
                         // value={email}
@@ -336,7 +348,18 @@ const Contact = () => {
                         placeholder="jo@gmail.com"
                         className="form-control"
                         id="inputPassword"
+                      /> */}
+
+                      <input
+                        type="email"
+                        name="email"
+                        // value={email}
+                        onChange={handleEmailChange}
+                        placeholder="jo@gmail.com"
+                        className="form-control"
+                        id="inputPassword"
                       />
+
                       {error && email.trim().length === 0 && (
                         <p style={{ color: 'red' }}>
                           <BiErrorCircle /> required
