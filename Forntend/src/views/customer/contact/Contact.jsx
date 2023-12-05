@@ -19,9 +19,14 @@ import Form from 'react-bootstrap/Form'
 const Contact = () => {
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
+  const [, setSelectedRowKeys] = useState([])
+  const apiUrl = process.env.REACT_APP_API_URL
+
+  // ... (Your existing functions and states)
+
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    onChange: (selectedKeys) => {
+      setSelectedRowKeys(selectedKeys)
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === 'Disabled User',
@@ -61,7 +66,6 @@ const Contact = () => {
             &nbsp; Bearbeiten
           </button>
           &nbsp;
-          {/* <MdDelete onClick={() => handleDelete(record._id)} /> */}
           <button
             style={{ background: 'none', border: 'none' }}
             onClick={() => handleDelete(record._id)}
@@ -74,38 +78,33 @@ const Contact = () => {
     },
   ]
 
-  let res = localStorage.getItem('customerDatat')
-  let result = JSON.parse(res)
   const [data, setData] = useState({
     fname: '',
     lname: '',
     phone: '',
-    // email: '',
     gender: '',
-    customer_id: result?._id,
+    customer_id: localStorage.getItem('customerDatat')?._id,
   })
+
   const [email, setEmail] = useState('')
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
-  const apiUrl = process.env.REACT_APP_API_URL
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
   const [contactRecord, setContactRecord] = useState([])
   const [search, setSearch] = useState('')
-  // const [customer_record, setCustomerRecord] = useState([])
   const [selectionType] = useState('checkbox')
   const [hide, setHide] = useState(false)
   const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
-  // const params = useParams()
+  const [id, setId] = useState('')
 
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
   }
 
-  const [id] = useState(generateRandomId())
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
   const handlePageChange = (event, value) => {
     setPage(value)
@@ -113,23 +112,22 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target
-
     const newValue = type === 'radio' ? e.target.value : value
-
     setData({ ...data, [name]: newValue })
   }
 
   const handleDelete = (customerId) => {
-    // console.log(`Deleting customer with ID: ${customerId}`)
     setContactId(customerId)
     setHide(true)
   }
 
   const handleEdit = (record) => {
-    let data = JSON.stringify(record)
-    localStorage.setItem('ContactEditDetails', data)
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('ContactEditDetails', recordData)
     setEdit(true)
   }
+
+  const notify = (dataa) => toast(dataa)
 
   const handleEmailChange = (e) => {
     const inputValue = e.target.value
@@ -142,34 +140,25 @@ const Contact = () => {
     }
   }
 
-  const notify = (dataa) => toast(dataa)
   const TotalData = { ...data, email, id }
 
   const saveData = async (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
+    try {
       event.preventDefault()
       event.stopPropagation()
-    }
-    setValidated(true)
-    try {
-      if (!email) {
-        return notify('Invalid Email')
-      }
+
       if (!email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
         return notify('Please Fill All Details')
       }
 
-      // console.log('ashshihh', data.email)
-
       const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
-      // let result = await response.json()
-      // console.log(response)
-      getDetails()
-      handleClose()
+
       if (response.response.status === 406) {
         notify('Email Already Exists')
       }
+
+      getDetails()
+      handleClose()
     } catch (error) {
       console.error('Error during API call:', error)
     }
@@ -181,23 +170,22 @@ const Contact = () => {
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
-
       setContactRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
   }
+  // console.log('astha', contactRecord)
 
   const searchHandle = async () => {
     try {
-      // let key = searchInputRef.current.value
-      //console.log('ashish', search)
       if (search === '') {
         return getDetails()
       }
+
       const response = await fetch(`${apiUrl}/contact/search/${search}`)
       const data = await response.json()
-      // console.log('astha', data)
+
       const activeRecords = data.filter((record) => record.status === 'active')
 
       if (activeRecords.length > 0) {
@@ -210,11 +198,11 @@ const Contact = () => {
       console.error('Error searching data:', error.message)
     }
   }
-
-  //console.log(contactRecord)
+  // console.log(contactRecord)
   let dataa = contactRecord
-  // console.log(dataa)
+
   useEffect(() => {
+    setId(generateRandomId())
     getDetails()
   }, [page])
 

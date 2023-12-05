@@ -12,6 +12,9 @@ import Stack from '@mui/material/Stack'
 import { postFetchUser, getFetch } from 'src/Api'
 import DeleteModal from './DeleteModal'
 import Customer from '../Customer'
+import EditModal from './EditModal'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const columns = [
   {
@@ -50,6 +53,8 @@ const rowSelection = {
 }
 
 const Document = () => {
+  const notify = (dataa) => toast(dataa)
+  const [edit, setEdit] = useState(false)
   const columns = [
     {
       title: 'Title',
@@ -65,10 +70,7 @@ const Document = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <button
-            style={{ background: 'none', border: 'none' }}
-            //  onClick={() => handleEdit(record)}
-          >
+          <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
             <GrEdit />
             &nbsp;&nbsp;Bearbeiten
           </button>
@@ -92,13 +94,19 @@ const Document = () => {
   // const [document_title, setDocumentTitle] = useState()
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
+
   const [data, setData] = useState({
     document_title: '',
     document_type: '',
-    customer_id: result._id,
+    customer_id: result?._id,
   })
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
+  const handleEdit = (record) => {
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('DocumentEditDetails', recordData)
+    setEdit(true)
+  }
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
 
@@ -121,17 +129,24 @@ const Document = () => {
 
   const saveData = async (e) => {
     try {
+      if (!data.document_title || !data.document_type) {
+        return notify('Please fill all details')
+      }
+
       e.preventDefault()
       const myForm = new FormData()
-      myForm.append('document_title', data.document_title)
-      myForm.append('document_type', data.document_type)
-      myForm.append('customer_id', data.customer_id)
+      myForm.append('document_title', data?.document_title)
+      myForm.append('document_type', data?.document_type)
+      myForm.append('customer_id', result?._id)
       myForm.append('document_upload', document_upload)
 
+      const url = `${apiUrl}/document/create_document`
       console.log(myForm)
-      const url = `${apiUrl}/document/create_document?page=${page}`
-      console.log(url)
+      // const url = `${apiUrl}/document/create_document?page=${page}`
+      // console.log(url)
       const response = await postFetchUser(url, myForm)
+      notify('Data Saved Successfully')
+      setData('')
       handleClose()
       getDetails()
     } catch (error) {
@@ -141,28 +156,21 @@ const Document = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/document/get_document`)
+      const result = await fetch(`${apiUrl}/document/get_document?page=${page}`)
       const data = await result.json()
-      // console.log('documentPage', data?.pageCount)
-      setDocumentRecord(data?.result)
       setCountPage(data?.pageCount)
-      // const url = `${apiUrl}/document/get_document`
-      // const result = await getFetch(url)
-      console.log('document page', result)
-      if (result?.status === 200) {
-        const activeRecords = result.data.filter((record) => record.status === 'active')
-        // console.log('dp1', activeRecords)
-        setDocumentRecord(activeRecords)
-      }
+      const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      setDocumentRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
   }
 
-  // console.log('document page', documentRecord)
+  console.log('document page', documentRecord)
   useEffect(() => {
+    // setId(generateRandomId())
     getDetails()
-  }, [])
+  }, [page])
 
   return (
     <div style={{ background: '#fff' }}>
@@ -171,10 +179,11 @@ const Document = () => {
       ) : (
         ''
       )}
+      {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
       <Customer />
       <h5 className="mt-3 mx-3">Dokumente</h5>
-      <hr />
-      <div className="row p-1 m-1" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
+      <hr className="mx-3" />
+      <div className="row p-3 mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
         <div className="col-sm-7">
           <h5>Dokumente verwalten</h5>
           <p>
@@ -260,7 +269,7 @@ const Document = () => {
         </div>
       </div>
       <br />
-      <div className="row">
+      <div className="row mx-2">
         <div className="col-sm-12">
           <Table
             rowSelection={{
@@ -272,6 +281,7 @@ const Document = () => {
             pagination={false}
             dataSource={documentRecord}
           />
+          {/* <Pagination defaultCurrent={2} total={50} /> */}
         </div>
         <Stack spacing={2}>
           <Pagination
@@ -283,6 +293,7 @@ const Document = () => {
           />
         </Stack>
       </div>
+      <ToastContainer />
     </div>
   )
 }

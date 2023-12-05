@@ -125,16 +125,16 @@ export const patchFetch = async (url, id, data) => {
 }
 export const putFetch = async (url, data) => {
   try {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const response = await axios({
       method: 'put',
       url: `${url}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
       },
       data,
-      withCredentials: true,
+      // withCredentials: true,
     })
     if (response.status === 200) {
       return response

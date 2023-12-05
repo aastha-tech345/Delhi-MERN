@@ -46,19 +46,22 @@ const Attorney = () => {
       healthCareData: updatedHealthCareData,
     }))
   }
-
+  const maxFields = 4
   const addHealthCareField = () => {
-    const updatedHealthCareData = [...healthCare.healthCareData]
-    updatedHealthCareData.push({
-      healthCare_fname: '',
-      healthCare_lname: '',
-      healthCare_address: '',
-      healthCare_phone: '',
-    })
-    setHealthCare((prevHealthCare) => ({
-      ...prevHealthCare,
-      healthCareData: updatedHealthCareData,
-    }))
+    if (healthCare.healthCareData.length < maxFields) {
+      setHealthCare((prev) => ({
+        ...prev,
+        healthCareData: [
+          ...prev.healthCareData,
+          {
+            healthCare_fname: '',
+            healthCare_lname: '',
+            healthCare_address: '',
+            healthCare_phone: '',
+          },
+        ],
+      }))
+    }
   }
   const powerOfAttorneyChange = (e, index) => {
     const { name, value, type, checked } = e.target
@@ -108,38 +111,6 @@ const Attorney = () => {
     securingattorney,
     customer_id: result?._id,
   }
-
-  // const saveData = async (e) => {
-  //   e.preventDefault()
-
-  //   // Check if all required data is available before making the request
-  //   // Add your validation logic here
-
-  //   try {
-  //     let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
-
-  //     let result = await response.json()
-  //     console.log(result)
-  //     healthCare('')
-  //     powerOfAttorney('')
-  //     careProvision('')
-  //     securingattorney('')
-
-  //     // Show success toast
-  //     notify('Data saved successfully!')
-  //   } catch (error) {
-  //     console.log('Error saving data:', error)
-
-  //     // Show error toast
-  //     notify('Error saving data. Please try again.')
-  //   }
-  // }
   const saveData = async (e) => {
     e.preventDefault()
     try {

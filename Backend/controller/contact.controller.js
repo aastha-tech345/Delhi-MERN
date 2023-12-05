@@ -72,7 +72,7 @@ exports.getContact = async (req, res) => {
     console.error(error);
     return res.status(500).send({ message: "Server Error" });
   }
-};
+}
 
 exports.getContactData = async (req, res) => {
   try {

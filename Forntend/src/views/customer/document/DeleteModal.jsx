@@ -8,19 +8,18 @@ import PropTypes from 'prop-types'
 const DeleteModal = ({ setHide, documentId, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   const notify = (dataa) => toast(dataa)
-  const handleDeleteDone = async () => {
+  const handleDeleteConfirm = async () => {
     if (documentId) {
       try {
         const response = await deleteFetch(`${apiUrl}/document/get_document`, documentId)
-        console.log(response)
+        if (response.status === 200) {
+          notify('Data Deleted Successfully')
+        }
         getDetails()
 
-        if (response?.status === 200) {
-          notify(response?.data?.message)
-        }
+        setHide(false)
       } catch (error) {
         console.error('An error occurred while deleting the record:', error)
-      } finally {
         setHide(false)
       }
     }
@@ -86,7 +85,7 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
             <button
               className="btn btn w-25"
               style={{ background: '#d04545', color: 'white' }}
-              onClick={handleDeleteDone}
+              onClick={handleDeleteConfirm}
             >
               Löschen
             </button>

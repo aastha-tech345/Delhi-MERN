@@ -146,8 +146,11 @@ const Description = () => {
               borderRadius: '5px',
               marginRight: '10px',
               background: color,
+              color: 'white',
+              // eslint-disable-next-line no-dupe-keys
+              border: '1px solid #0b5995',
             }}
-            onClick={() => selectIcon('PhoneOutlined', 'red')}
+            onClick={() => selectIcon('PhoneOutlined', '#0b5995')}
           />
           <CheckCircleOutlined
             className="p-2"
