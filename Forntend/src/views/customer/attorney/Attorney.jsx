@@ -1,30 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { MdAdd } from 'react-icons/md'
 import Customer from '../Customer'
+import Form from 'react-bootstrap/Form'
 const Attorney = () => {
+  const maxFields = 10
+  const initialFields = 3
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
-
-  const [healthCare, setHealthCare] = useState({
-    healthCareMasterData: false,
-    healthCareData: [
-      { healthCare_fname: '', healthCare_lname: '', healthCare_address: '', healthCare_phone: '' },
-    ],
-  })
 
   const [powerOfAttorney, setPowerOfAttorney] = useState({
     AttorneyMasterData: false,
     adoptDataFromHealthcare: false,
-    powerOfAttorneys: [
-      {
-        powerOfAttorney_fname: '',
-        powerOfAttorney_lname: '',
-        powerOfAttorney_address: '',
-        powerOfAttorney_phone: '',
-      },
-    ],
+    powerOfAttorneyData: Array.from({ length: initialFields }, () => ({
+      powerOfAttorney_fname: '',
+      powerOfAttorney_lname: '',
+      powerOfAttorney_address: '',
+      powerOfAttorney_phone: [],
+    })),
   })
 
   const [careProvision, setCareProvision] = useState({
@@ -36,17 +29,43 @@ const Attorney = () => {
   })
   const healthCareChange = (e, index) => {
     const { name, value } = e.target
-    const updatedHealthCareData = [...healthCare.healthCareData]
-    updatedHealthCareData[index] = {
-      ...updatedHealthCareData[index],
-      [name]: value,
-    }
-    setHealthCare((prevHealthCare) => ({
-      ...prevHealthCare,
-      healthCareData: updatedHealthCareData,
-    }))
+
+    setHealthCare((prevHealthCare) => {
+      const updatedHealthCareData = [...prevHealthCare.healthCareData]
+      const newValue = name === 'healthCare_phone' ? formatPhoneNumber(value) : value
+
+      updatedHealthCareData[index] = {
+        ...updatedHealthCareData[index],
+        [name]: newValue,
+      }
+
+      return { ...prevHealthCare, healthCareData: updatedHealthCareData }
+    })
   }
-  const maxFields = 4
+
+  const formatPhoneNumber = (value) => {
+    const numericValue = value.replace(/\D/g, '')
+    let formattedNumber = ''
+
+    for (let i = 0; i < numericValue.length; i++) {
+      if (i > 0 && i % 10 === 0) {
+        formattedNumber += ' / '
+      }
+      formattedNumber += numericValue[i]
+    }
+
+    return formattedNumber
+  }
+
+  const [healthCare, setHealthCare] = useState({
+    healthCareMasterData: false,
+    healthCareData: Array.from({ length: initialFields }, () => ({
+      healthCare_fname: '',
+      healthCare_lname: '',
+      healthCare_address: '',
+      healthCare_phone: [],
+    })),
+  })
   const addHealthCareField = () => {
     if (healthCare.healthCareData.length < maxFields) {
       setHealthCare((prev) => ({
@@ -57,43 +76,59 @@ const Attorney = () => {
             healthCare_fname: '',
             healthCare_lname: '',
             healthCare_address: '',
-            healthCare_phone: '',
+            healthCare_phone: [],
           },
         ],
       }))
     }
   }
+
   const powerOfAttorneyChange = (e, index) => {
     const { name, value, type, checked } = e.target
-    const updatedPowerOfAttorneys = [...powerOfAttorney.powerOfAttorneys]
-    updatedPowerOfAttorneys[index] = {
-      ...updatedPowerOfAttorneys[index],
-      [name]: type === 'checkbox' ? checked : value,
-    }
-    setPowerOfAttorney((prevPowerOfAttorney) => ({
-      ...prevPowerOfAttorney,
-      powerOfAttorneys: updatedPowerOfAttorneys,
-    }))
+    setPowerOfAttorney((prevPowerOfAttorney) => {
+      const updatedPowerOfAttorneyData = [...prevPowerOfAttorney.powerOfAttorneyData]
+      updatedPowerOfAttorneyData[index] = {
+        ...updatedPowerOfAttorneyData[index],
+        [name]: type === 'checkbox' ? checked : value,
+      }
+      if (name === 'powerOfAttorney_phone') {
+        const numericValue = value.replace(/\D/g, '')
+        let formattedNumber = ''
+
+        for (let i = 0; i < numericValue.length; i++) {
+          if (i > 0 && i % 10 === 0) {
+            formattedNumber += ' / '
+          }
+          formattedNumber += numericValue[i]
+        }
+
+        updatedPowerOfAttorneyData[index][name] = formattedNumber
+      }
+      return { ...prevPowerOfAttorney, powerOfAttorneyData: updatedPowerOfAttorneyData }
+    })
   }
 
   const addPowerOfAttorneyField = () => {
-    const updatedPowerOfAttorneys = [...powerOfAttorney.powerOfAttorneys]
-    updatedPowerOfAttorneys.push({
-      powerOfAttorney_fname: '',
-      powerOfAttorney_lname: '',
-      powerOfAttorney_address: '',
-      powerOfAttorney_phone: '',
-    })
-    setPowerOfAttorney((prevPowerOfAttorney) => ({
-      ...prevPowerOfAttorney,
-      powerOfAttorneys: updatedPowerOfAttorneys,
-    }))
+    if (powerOfAttorney.powerOfAttorneyData.length < maxFields) {
+      setPowerOfAttorney((prev) => ({
+        ...prev,
+        powerOfAttorneyData: [
+          ...prev.powerOfAttorneyData,
+          {
+            powerOfAttorney_fname: '',
+            powerOfAttorney_lname: '',
+            powerOfAttorney_address: '',
+            powerOfAttorney_phone: [],
+          },
+        ],
+      }))
+    }
   }
-  const careProvisionChange = (e) => {
-    const { name, value, type, checked } = e.target
-    const inputValue = type === 'checkbox' ? checked : value
 
-    setCareProvision({ ...careProvision, [name]: inputValue })
+  const careProvisionChange = (e) => {
+    const { name, checked } = e.target
+
+    setCareProvision({ ...careProvision, [name]: checked })
   }
   const securingattorneyChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -104,6 +139,10 @@ const Attorney = () => {
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
 
+  // const formattedPhoneNumbers = healthCare.healthCareData.map((entry) =>
+  //   entry.healthCare_phone.join(', '),
+  // )
+  // console.log(formattedPhoneNumbers)
   const data = {
     healthCare,
     powerOfAttorney,
@@ -111,8 +150,17 @@ const Attorney = () => {
     securingattorney,
     customer_id: result?._id,
   }
-  const saveData = async (e) => {
-    e.preventDefault()
+  const [validated, setValidated] = useState(false)
+  const saveData = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
+    setValidated(true)
+    // e.preventDefault()
+
     try {
       let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
         method: 'POST',
@@ -123,26 +171,39 @@ const Attorney = () => {
       })
 
       let result = await response.json()
-      console.log(result)
-      // window.location.reload()
-      setHealthCare({
-        healthCare_fname: '',
-        healthCare_lname: '',
-        healthCare_address: '',
-        healthCare_phone: '',
-      })
-
-      setPowerOfAttorney({
-        powerOfAttorney_fname: '',
-        powerOfAttorney_lname: '',
-        powerOfAttorney_address: '',
-        powerOfAttorney_phone: '',
-      })
-
-      setCareProvision('')
-
-      setSecuringattorney('')
+      // console.log(result)
       notify('Data saved successfully!')
+      setHealthCare((prevHealthCare) => ({
+        ...prevHealthCare,
+        healthCareData: Array.from({ length: initialFields + 1 }, () => ({
+          healthCare_fname: '',
+          healthCare_lname: '',
+          healthCare_address: '',
+          healthCare_phone: [],
+        })),
+        healthCareMasterData: '',
+      }))
+
+      setPowerOfAttorney((prevPowerOfAttorney) => ({
+        ...prevPowerOfAttorney,
+        AttorneyMasterData: '',
+        adoptDataFromHealthcare: '',
+        powerOfAttorneyData: Array.from({ length: initialFields + 1 }, () => ({
+          powerOfAttorney_fname: '',
+          powerOfAttorney_lname: '',
+          powerOfAttorney_address: '',
+          powerOfAttorney_phone: [],
+        })),
+      }))
+
+      setCareProvision((prevCareProvision) => ({
+        ...prevCareProvision,
+        CareProvisionMasterData: '',
+      }))
+      setSecuringattorney((prevSecuringMasterData) => ({
+        ...prevSecuringMasterData,
+        prevSecuringMasterData: '',
+      }))
     } catch (error) {
       console.log('Error saving data:', error)
 
@@ -152,6 +213,11 @@ const Attorney = () => {
     console.log(data)
   }
 
+  useEffect(() => {
+    // Add fields on component mount
+    addHealthCareField()
+    addPowerOfAttorneyField()
+  }, [])
   return (
     <>
       <div style={{ background: '#fff' }}>
@@ -177,81 +243,77 @@ const Attorney = () => {
                   <div className="col-sm-3">Adresse</div>
                   <div className="col-sm-3">Telefone</div>
                 </div>
-                {healthCare.healthCareData &&
-                  healthCare.healthCareData.map((field, index) => (
-                    <div className="row" key={index}>
-                      <div className="col-sm-3">
-                        <div className="mb-2 row">
-                          <div className="col-sm-12">
-                            <input
-                              onChange={(e) => healthCareChange(e, index)}
-                              value={field.healthCare_fname}
-                              name="healthCare_fname"
-                              type="text"
-                              placeholder="jo"
-                              className="form-control"
-                              id={`fname_${index}`}
-                            />
+                <Form noValidate validated={validated}>
+                  {healthCare.healthCareData &&
+                    healthCare.healthCareData.map((field, index) => (
+                      <div className="row" key={index}>
+                        <div className="col-sm-3">
+                          <div className="mb-2 row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => healthCareChange(e, index)}
+                                value={field.healthCare_fname}
+                                name="healthCare_fname"
+                                type="text"
+                                placeholder="John"
+                                className="form-control"
+                                id={`fname_${index}`}
+                                required={true}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-3">
+                          <div className="mb-2 row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => healthCareChange(e, index)}
+                                value={field.healthCare_lname}
+                                type="text"
+                                name="healthCare_lname"
+                                placeholder="Doe"
+                                className="form-control"
+                                id={`lname_${index}`}
+                                required={true}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-3">
+                          <div className="mb-2 row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => healthCareChange(e, index)}
+                                value={field.healthCare_address}
+                                type="text"
+                                name="healthCare_address"
+                                placeholder="Lorem Ipsum"
+                                className="form-control"
+                                id={`address_${index}`}
+                                required={true}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-3">
+                          <div className="mb-2 row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => healthCareChange(e, index)}
+                                value={field.healthCare_phone}
+                                type="text"
+                                name="healthCare_phone"
+                                placeholder="0121456789 / 0123456789"
+                                className="form-control"
+                                id={`phone_${index}`}
+                                required={true}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div className="col-sm-3">
-                        <div className="mb-2 row">
-                          <div className="col-sm-12">
-                            <input
-                              onChange={(e) => healthCareChange(e, index)}
-                              value={field.healthCare_lname}
-                              type="text"
-                              name="healthCare_lname"
-                              placeholder="jo"
-                              className="form-control"
-                              id={`lname_${index}`}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-sm-3">
-                        <div className="mb-2 row">
-                          <div className="col-sm-12">
-                            <input
-                              onChange={(e) => healthCareChange(e, index)}
-                              value={field.healthCare_address}
-                              type="text"
-                              name="healthCare_address"
-                              placeholder="jo"
-                              className="form-control"
-                              id={`address_${index}`}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-sm-2">
-                        <div className="mb-2 row">
-                          <div className="col-sm-12">
-                            <input
-                              onChange={(e) => healthCareChange(e, index)}
-                              value={field.healthCare_phone}
-                              type="text"
-                              name="healthCare_phone"
-                              placeholder="jo"
-                              className="form-control"
-                              id={`phone_${index}`}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-sm-1">
-                        {index === healthCare.healthCareData.length - 1 && (
-                          <button
-                            style={{ background: 'none', border: '1px solid pink' }}
-                            onClick={addHealthCareField}
-                          >
-                            <MdAdd />
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                </Form>
               </div>
             </div>
           </div>
@@ -274,25 +336,25 @@ const Attorney = () => {
                 value={powerOfAttorney.adoptDataFromHealthcare}
                 name="adoptDataFromHealthcare"
               />
-              <div>
-                <div className="row">
-                  <div className="col-sm-3">Vorname</div>
-                  <div className="col-sm-3">Nachname</div>
-                  <div className="col-sm-3">Adresse</div>
-                  <div className="col-sm-3">Telefone</div>
-                </div>
-                {powerOfAttorney.powerOfAttorneys &&
-                  powerOfAttorney.powerOfAttorneys.map((field, index) => (
+              <div className="row">
+                <div className="col-sm-3">Vorname</div>
+                <div className="col-sm-3">Nachname</div>
+                <div className="col-sm-3">Adresse</div>
+                <div className="col-sm-3">Telefone</div>
+              </div>
+              <Form noValidate validated={validated}>
+                {powerOfAttorney.powerOfAttorneyData &&
+                  powerOfAttorney.powerOfAttorneyData.map((field, index) => (
                     <div className="row" key={index}>
                       <div className="col-sm-3">
                         <div className="row">
                           <div className="col-sm-12">
                             <input
-                              onChange={powerOfAttorneyChange}
-                              value={powerOfAttorney.powerOfAttorney_fname}
+                              onChange={(e) => powerOfAttorneyChange(e, index)}
+                              value={field.powerOfAttorney_fname}
                               name="powerOfAttorney_fname"
                               type="text"
-                              placeholder="jo"
+                              placeholder="John"
                               className="form-control"
                               id="inputPassword"
                             />
@@ -303,11 +365,11 @@ const Attorney = () => {
                         <div className="mb-2 row">
                           <div className="col-sm-12">
                             <input
-                              onChange={powerOfAttorneyChange}
-                              value={powerOfAttorney.powerOfAttorney_lname}
+                              onChange={(e) => powerOfAttorneyChange(e, index)}
+                              value={field.powerOfAttorney_lname}
                               name="powerOfAttorney_lname"
                               type="text"
-                              placeholder="jo"
+                              placeholder="Doe"
                               className="form-control"
                               id="inputPassword"
                             />
@@ -318,33 +380,33 @@ const Attorney = () => {
                         <div className="mb-2 row">
                           <div className="col-sm-12">
                             <input
-                              onChange={powerOfAttorneyChange}
-                              value={powerOfAttorney.powerOfAttorney_address}
+                              onChange={(e) => powerOfAttorneyChange(e, index)}
+                              value={field.powerOfAttorney_address}
                               name="powerOfAttorney_address"
                               type="text"
-                              placeholder="jo"
+                              placeholder="Lorem Ipsum"
                               className="form-control"
                               id="inputPassword"
                             />
                           </div>
                         </div>
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-sm-3">
                         <div className="mb-2 row">
                           <div className="col-sm-12">
                             <input
-                              onChange={powerOfAttorneyChange}
-                              value={powerOfAttorney.powerOfAttorney_phone}
+                              onChange={(e) => powerOfAttorneyChange(e, index)}
+                              value={field.powerOfAttorney_phone}
                               name="powerOfAttorney_phone"
                               type="text"
-                              placeholder="jo"
+                              placeholder="0121456789 / 0123456789"
                               className="form-control"
                               id="inputPassword"
                             />
                           </div>
                         </div>
                       </div>
-                      <div className="col-sm-1">
+                      {/* <div className="col-sm-1">
                         {index === powerOfAttorney.powerOfAttorneys.length - 1 && (
                           <button
                             style={{ background: 'none', border: '1px solid pink' }}
@@ -353,60 +415,61 @@ const Attorney = () => {
                             <MdAdd />
                           </button>
                         )}
-                      </div>
+                      </div> */}
                     </div>
                   ))}
-              </div>
-            </div>
-          </div>
-          <div className="row p-3">
-            <div className="col-sm-12">
-              <p style={{ color: 'blue' }}>BETREUUNGSVER FÜGUNG</p>
-              &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
-              <input
-                type="checkbox"
-                onChange={careProvisionChange}
-                value={careProvision.CareProvisionMasterData}
-                name="CareProvisionMasterData"
-              />
-            </div>
-          </div>
-          <hr />
-          <div className="row p-3">
-            <div className="col-sm-12">
-              <p style={{ color: 'blue' }}>VOLLMACHT Z UR A B SICHERUNG DES DIGITALEN ER B ES</p>
-              &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
-              <input
-                type="checkbox"
-                onChange={securingattorneyChange}
-                value={securingattorney.SecuringMasterData}
-                name="SecuringMasterData"
-              />
-            </div>
-          </div>
-          <hr />
-          <div className="row">
-            <div className="col-sm-9"></div>
-            <div className="col-sm-3">
-              <button
-                type="button"
-                className="btn btn"
-                style={{ background: '#d04545', color: 'white' }}
-              >
-                Abbrechen
-              </button>
-              &nbsp; &nbsp;
-              <button
-                onClick={saveData}
-                type="button"
-                style={{ background: '#0b5995', color: 'white' }}
-                className="btn btn"
-              >
-                Speichern Sie
-              </button>
+              </Form>
             </div>
           </div>
         </div>
+        <div className="row p-3">
+          <div className="col-sm-12">
+            <p style={{ color: 'blue' }}>BETREUUNGSVER FÜGUNG</p>
+            &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
+            <input
+              type="checkbox"
+              onChange={careProvisionChange}
+              value={careProvision.CareProvisionMasterData}
+              name="CareProvisionMasterData"
+            />
+          </div>
+        </div>
+        <hr />
+        <div className="row p-3">
+          <div className="col-sm-12">
+            <p style={{ color: 'blue' }}>VOLLMACHT Z UR A B SICHERUNG DES DIGITALEN ER B ES</p>
+            &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
+            <input
+              type="checkbox"
+              onChange={securingattorneyChange}
+              value={securingattorney.SecuringMasterData}
+              name="SecuringMasterData"
+            />
+          </div>
+        </div>
+        <hr />
+        <div className="row">
+          <div className="col-sm-9"></div>
+          <div className="col-sm-3">
+            <button
+              type="button"
+              className="btn btn"
+              style={{ background: '#d04545', color: 'white' }}
+            >
+              Abbrechen
+            </button>
+            &nbsp; &nbsp;
+            <button
+              onClick={saveData}
+              type="button"
+              style={{ background: '#0b5995', color: 'white' }}
+              className="btn btn"
+            >
+              Speichern Sie
+            </button>
+          </div>
+        </div>
+        <ToastContainer />
       </div>
     </>
   )
