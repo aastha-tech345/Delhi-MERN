@@ -16,7 +16,7 @@ const roleSchema = new mongoose.Schema({
     added_by: { type: String },
 });
 
-const Role = mongoose.model('Role', roleSchema, 'role');
+const Role = mongoose.model('Role', roleSchema);
 
 module.exports = {
     Role

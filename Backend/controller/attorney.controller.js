@@ -4,7 +4,7 @@ exports.createAttorney = async (req, res) => {
   try {
     const {
       healthCare,
-      powerOfAttorney,
+      powerOfAttorneyData,
       careProvision,
       securingattorney,
       customer_id,
@@ -13,7 +13,7 @@ exports.createAttorney = async (req, res) => {
     // Create a new Attorney instance
     const attorney = new Attorney({
       healthCare,
-      powerOfAttorney,
+      powerOfAttorneyData,
       careProvision,
       securingattorney,
       customer_id,

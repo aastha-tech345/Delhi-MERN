@@ -1,44 +1,43 @@
 const mongoose = require("mongoose");
 
-const authPersonSchema = new mongoose.Schema({
+const authPersonSchema = {
   healthCare_fname: { type: String },
   healthCare_lname: { type: String },
   healthCare_address: { type: String },
-  healthCare_phone: { type: String },
-});
+  healthCare_phone: [],
+};
 
-const authPowerPersonSchema = new mongoose.Schema({
+const authPowerPersonSchema = {
   powerOfAttorney_fname: { type: String },
   powerOfAttorney_lname: { type: String },
   powerOfAttorney_address: { type: String },
-  powerOfAttorney_phone: { type: String },
-});
+  powerOfAttorney_phone: [],
+};
 
-const healthCareSchema = new mongoose.Schema({
+const healthCareSchema = {
   healthCareMasterData: { type: String },
-  healthCareData:[authPersonSchema]
-});
+  healthCareData: [authPersonSchema],
+};
 
-const powerofattorneySchema = new mongoose.Schema({
+const powerofattorneySchema = {
   AttorneyMasterData: { type: String },
   adoptDataFromHealthcare: { type: String },
-  powerOfAttorneys:[authPowerPersonSchema]
-});
-
-const careProvisionSchema = new mongoose.Schema({
+  powerOfAttorneys: [authPowerPersonSchema],
+};
+const careProvisionSchema = {
   CareProvisionMasterData: { type: String },
-});
+};
 
-const securingattorneySchema = new mongoose.Schema({
+const securingattorneySchema = {
   SecuringMasterData: { type: String },
-});
+};
 
 const attorneySchema = new mongoose.Schema({
   healthCare: healthCareSchema,
-  powerOfAttorney: powerofattorneySchema,
+  powerOfAttorneyData: powerofattorneySchema,
   careProvision: careProvisionSchema,
   securingattorney: securingattorneySchema,
-  customer_id: { type: mongoose.Schema.Types.ObjectId }
+  customer_id: { type: mongoose.Schema.Types.ObjectId },
 });
 
 const Attorney = mongoose.model("attorney", attorneySchema, "attorney");

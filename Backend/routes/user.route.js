@@ -86,6 +86,8 @@
       *         type: string
       */
      router.post('/register', userCtrl.register);
+     router.get('/all', userCtrl.getData);
+
      router.post('/register/record/adduser/:id', userCtrl.addUser);
      // router.get('/register/record', userCtrl.getData);
      // router.get('/register/record/:id', userCtrl.getRegisterData);
