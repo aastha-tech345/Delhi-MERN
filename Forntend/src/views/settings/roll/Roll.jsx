@@ -1,30 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { MdDelete, MdAdd } from 'react-icons/md'
+import { MdAdd } from 'react-icons/md'
 import { LuFilePlus } from 'react-icons/lu'
-import { IoMdAdd } from 'react-icons/io'
-import { DownOutlined } from '@ant-design/icons'
-import { Dropdown, Space, Typography } from 'antd'
 const Roll = () => {
   const [show, setShow] = useState(false)
   // eslint-disable-next-line no-undef
   const handleClose = () => setShow(false)
   // eslint-disable-next-line no-undef
   const handleShow = () => setShow(true)
-  const items = [
-    {
-      key: '1',
-      label: 'Item 1',
-    },
-    {
-      key: '2',
-      label: 'Item 2',
-    },
-    {
-      key: '3',
-      label: 'Item 3',
-    },
-  ]
   return (
     <div>
       <div className="row ">
