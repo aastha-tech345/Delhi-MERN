@@ -4,14 +4,14 @@ const authPersonSchema = {
   healthCare_fname: { type: String },
   healthCare_lname: { type: String },
   healthCare_address: { type: String },
-  healthCare_phone: [],
+  healthCare_phone: { type: String },
 };
 
 const authPowerPersonSchema = {
   powerOfAttorney_fname: { type: String },
   powerOfAttorney_lname: { type: String },
   powerOfAttorney_address: { type: String },
-  powerOfAttorney_phone: [],
+  powerOfAttorney_phone: { type: String },
 };
 
 const healthCareSchema = {
@@ -22,7 +22,7 @@ const healthCareSchema = {
 const powerofattorneySchema = {
   AttorneyMasterData: { type: String },
   adoptDataFromHealthcare: { type: String },
-  powerOfAttorneys: [authPowerPersonSchema],
+  powerOfAttorneyData: [authPowerPersonSchema],
 };
 const careProvisionSchema = {
   CareProvisionMasterData: { type: String },
@@ -34,7 +34,7 @@ const securingattorneySchema = {
 
 const attorneySchema = new mongoose.Schema({
   healthCare: healthCareSchema,
-  powerOfAttorneyData: powerofattorneySchema,
+  powerOfAttorney: powerofattorneySchema,
   careProvision: careProvisionSchema,
   securingattorney: securingattorneySchema,
   customer_id: { type: mongoose.Schema.Types.ObjectId },

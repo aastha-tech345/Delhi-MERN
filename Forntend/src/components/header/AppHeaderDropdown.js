@@ -66,22 +66,17 @@ const content = (
   </div>
 )
 const AppHeaderDropdown = () => {
-  // const [open, setOpen] = useState(false)
-  // const modalOpen = () => {
-  //   setOpen(true)
-  // }
+  const [open, setOpen] = useState(false)
+  const modalOpen = () => {
+    setOpen(true)
+  }
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    // Clear local storage
     let a = window.localStorage.clear()
-    console.log('sdhjf', a)
-
-    // Check if local storage was successfully cleared
     if (a === undefined) {
       navigate('/')
       window.location.reload()
-      // If cleared, navigate to the home page '/'
     }
   }
   return (
@@ -103,10 +98,8 @@ const AppHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem
-          href="#"
-          //  onClick={modalOpen}
-        >
+        {open ? <AppModal setOpen={setOpen} /> : ''}
+        <CDropdownItem onClick={modalOpen}>
           <svg
             width="20"
             height="20"

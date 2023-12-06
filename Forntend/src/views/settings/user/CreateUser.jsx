@@ -270,10 +270,10 @@ const CreateUser = () => {
                   aria-labelledby="nav-benutzer-tab"
                 >
                   <div className="row">
-                    <div className="col-sm-6">
-                      <label>User Name: </label>
+                    {/* <div className="col-sm-6">
                       <input
                         className="form-control"
+                        placeholder="Name"
                         type="text"
                         name="user_name"
                         value={user_name}
@@ -281,21 +281,30 @@ const CreateUser = () => {
                           setUserName(e.target.value)
                         }}
                       />
-                    </div>
+                    </div> */}
                     <div className="col-sm-6">
-                      <label>User Email:</label>
                       <input
                         className="form-control"
-                        type="email"
-                        name="user_email"
-                        value={user_email}
+                        placeholder="Name"
+                        type="text"
+                        name="user_name"
+                        value={user_name}
                         onChange={(e) => {
-                          setUserEmail(e.target.value)
+                          setUserName(e.target.value)
                         }}
                       />
-                    </div>
-                    <div className="col-sm-6">
-                      <label>Rollen:</label>
+                      <br />
+                      <input
+                        className="form-control"
+                        placeholder="Straße mit Hausnummer"
+                        type="text"
+                      />
+                      <br />
+                      <input className="form-control" placeholder="Stadt" type="text" />
+
+                      <br />
+                      <input className="form-control" placeholder="Standort" type="text" />
+                      <br />
                       <select
                         className="form-control"
                         type="text"
@@ -305,9 +314,50 @@ const CreateUser = () => {
                           setRoll(e.target.value)
                         }}
                       >
-                        <option value="">--select--</option>
-                        <option value="employee">ROllen</option>
+                        <option value="employee">Rolle</option>
                       </select>
+                    </div>
+                    <div className="col-sm-6">
+                      <input
+                        className="form-control"
+                        placeholder="Vorname"
+                        type="email"
+                        name="user_email"
+                        value={user_email}
+                        onChange={(e) => {
+                          setUserEmail(e.target.value)
+                        }}
+                      />
+                      <br />
+                      <input className="form-control" type="text" placeholder="PLZ" />
+                      <br />
+                      <input
+                        className="form-control"
+                        placeholder="E-Mail Adresse"
+                        type="email"
+                        name="user_email"
+                        value={user_email}
+                        onChange={(e) => {
+                          setUserEmail(e.target.value)
+                        }}
+                      />
+                      <br />
+
+                      <input
+                        className="form-control"
+                        placeholder="Telefon"
+                        maxLength={10}
+                        minLength={2}
+                        type="text"
+                      />
+                      <br />
+                      <input
+                        className="form-control"
+                        placeholder="Mobil"
+                        maxLength={10}
+                        minLength={2}
+                        type="text"
+                      />
                     </div>
                   </div>
                 </div>
@@ -328,101 +378,27 @@ const CreateUser = () => {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <button
-                type="button"
-                className="btn btn"
-                style={{ background: '#d04545', color: 'white' }}
-                onClick={handleClose}
-              >
-                Abbrechen
-              </button>
-              <button
-                type="button"
-                // onClick={saveData}
-                style={{ background: '#0b5995', color: 'white' }}
-                className="btn btn"
-              >
-                Speichern
-              </button>
-            </Modal.Footer>
-          </Modal>
-          &nbsp; &nbsp;
-          <button
-            className="btn btn"
-            style={{ background: '#0b5995', color: 'white' }}
-            onClick={handleShow}
-          >
-            <AiOutlineMail />
-            &nbsp; Benutzer einladen
-          </button>
-          <Modal show={show} onHide={handleClose} centered>
-            <Modal.Header closeButton>
-              <Modal.Title>Benutzer einladen</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="row p-3">
+              <div className="row mb-2">
                 <div className="col-sm-12">
-                  <span style={{ fontSize: '13px', lineBreak: 'none' }}>
-                    Eine E-Mail mit einem Einladungslink wird an den Benutzer geschickt, um ein
-                    Konto Konto Konto Konto Konto Konto Konto zu erstellen. Der Link ist 3 Tage lang
-                    gültig und Kontos ungültig.
-                  </span>
-                </div>
-                <div className="col-sm-6">
-                  <input type="email" className="form-control" placeholder="E-Mail Adresse" />
-
-                  <br />
-                  <select className="form-control">
-                    <option value="">Mannschaften</option>
-                  </select>
-                </div>
-                <div className="col-sm-6">
-                  <select className="form-control">
-                    <option value="">Mannschaften</option>
-                  </select>
-                </div>
-              </div>
-              <div className="row m-2">
-                <p>Super Verwalter</p>
-                <div className="col-sm-10">
-                  <p>
-                    Wenn Sie den Super-Admin-Zugang für den Benutzer aktivieren, erhalten Sie vollen
-                    Zugriff auf alle Funktionen ohne jegliche Einschränkungen.
-                  </p>
-                </div>
-                <div className="col-sm-2">
-                  <Switch defaultChecked onChange={onChange} />
+                  <div style={{ float: 'right' }}>
+                    <button
+                      className="btn"
+                      onClick={handleClose}
+                      style={{ background: '#d04545', color: 'white' }}
+                    >
+                      Abbrechen
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      className="btn mx-2"
+                      onClick={handleClose}
+                      style={{ background: '#0b5995', color: 'white' }}
+                    >
+                      Speichern
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="row m-2">
-                <p>Super Verwalter</p>
-                <div className="col-sm-10">
-                  <p>
-                    Wenn Sie den Super-Admin-Zugang für den Benutzer aktivieren, erhalten Sie vollen
-                    Zugriff auf alle Funktionen ohne jegliche Einschränkungen.
-                  </p>
-                </div>
-                <div className="col-sm-2">
-                  <Switch defaultChecked onChange={onChange} />
-                </div>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <button
-                type="button"
-                className="btn btn"
-                style={{ background: '#d04545', color: 'white' }}
-                onClick={handleClose}
-              >
-                Abbrechen
-              </button>
-              <button
-                type="button"
-                style={{ background: '#0b5995', color: 'white' }}
-                className="btn btn"
-              >
-                Einladung versenden
-              </button>
             </Modal.Footer>
           </Modal>
           &nbsp; &nbsp;
@@ -438,7 +414,7 @@ const CreateUser = () => {
           </button>
         </div>
       </div>
-      <div className="row  ">
+      <div className="row">
         <Table
           rowSelection={{
             type: selectionType,

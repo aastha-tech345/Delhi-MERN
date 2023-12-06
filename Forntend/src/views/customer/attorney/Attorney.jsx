@@ -151,12 +151,12 @@ const Attorney = () => {
     customer_id: result?._id,
   }
   const [validated, setValidated] = useState(false)
-  const saveData = async (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
+  const saveData = async () => {
+    // const form = event.currentTarget
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault()
+    //   event.stopPropagation()
+    // }
 
     setValidated(true)
     // e.preventDefault()
@@ -171,7 +171,7 @@ const Attorney = () => {
       })
 
       let result = await response.json()
-      // console.log(result)
+      console.log(result)
       notify('Data saved successfully!')
       setHealthCare((prevHealthCare) => ({
         ...prevHealthCare,
@@ -179,20 +179,17 @@ const Attorney = () => {
           healthCare_fname: '',
           healthCare_lname: '',
           healthCare_address: '',
-          healthCare_phone: [],
+          healthCare_phone: '',
         })),
-        healthCareMasterData: '',
       }))
 
       setPowerOfAttorney((prevPowerOfAttorney) => ({
         ...prevPowerOfAttorney,
-        AttorneyMasterData: '',
-        adoptDataFromHealthcare: '',
         powerOfAttorneyData: Array.from({ length: initialFields + 1 }, () => ({
           powerOfAttorney_fname: '',
           powerOfAttorney_lname: '',
           powerOfAttorney_address: '',
-          powerOfAttorney_phone: [],
+          powerOfAttorney_phone: '',
         })),
       }))
 
@@ -246,7 +243,7 @@ const Attorney = () => {
                 <Form noValidate validated={validated}>
                   {healthCare.healthCareData &&
                     healthCare.healthCareData.map((field, index) => (
-                      <div className="row" key={index}>
+                      <div className="row mb-2" key={index}>
                         <div className="col-sm-3">
                           <div className="mb-2 row">
                             <div className="col-sm-12">
@@ -258,7 +255,6 @@ const Attorney = () => {
                                 placeholder="John"
                                 className="form-control"
                                 id={`fname_${index}`}
-                                required={true}
                               />
                             </div>
                           </div>
@@ -274,7 +270,7 @@ const Attorney = () => {
                                 placeholder="Doe"
                                 className="form-control"
                                 id={`lname_${index}`}
-                                required={true}
+                                //required={true}
                               />
                             </div>
                           </div>
@@ -290,7 +286,7 @@ const Attorney = () => {
                                 placeholder="Lorem Ipsum"
                                 className="form-control"
                                 id={`address_${index}`}
-                                required={true}
+                                //required={true}
                               />
                             </div>
                           </div>
@@ -308,6 +304,7 @@ const Attorney = () => {
                                 id={`phone_${index}`}
                                 maxLength={23}
                                 required={true}
+                                minLength={10}
                               />
                             </div>
                           </div>
@@ -346,7 +343,7 @@ const Attorney = () => {
               <Form noValidate validated={validated}>
                 {powerOfAttorney.powerOfAttorneyData &&
                   powerOfAttorney.powerOfAttorneyData.map((field, index) => (
-                    <div className="row" key={index}>
+                    <div className="row mb-2" key={index}>
                       <div className="col-sm-3">
                         <div className="row">
                           <div className="col-sm-12">
@@ -403,6 +400,8 @@ const Attorney = () => {
                               placeholder="0121456789 / 0123456789"
                               className="form-control"
                               id="inputPassword"
+                              maxLength={23}
+                              minLength={10}
                             />
                           </div>
                         </div>

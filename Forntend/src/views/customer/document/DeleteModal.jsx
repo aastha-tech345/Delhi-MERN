@@ -15,6 +15,8 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
         if (response.status === 200) {
           notify('Data Deleted Successfully')
         }
+        // console.log(response)
+        notify('Data Deleted Successfully')
         getDetails()
 
         setHide(false)

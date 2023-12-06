@@ -190,44 +190,42 @@ const Services = () => {
     customer_id: result._id,
   }
 
-  const style = `
-  body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-  }
-
-  .radio-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  input[type="radio"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #333;
-    border-radius: 50%;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-
-  input[type="radio"]:checked {
-    background-color: #333;
-  }
-
-  label {
-    cursor: pointer;
-  }
-`
   const saveData = async () => {
     try {
+      // Check if at least one field is filled
+      const sections = [
+        motivation,
+        resuscitation,
+        situation,
+        determination,
+        whereabout,
+        support,
+        funeralwishes,
+        atorney,
+        fee,
+        information,
+      ]
+
+      let isAnyFieldFilled = false
+
+      for (const section of sections) {
+        for (const key in section) {
+          if (section[key] !== '') {
+            isAnyFieldFilled = true
+            break
+          }
+        }
+        if (isAnyFieldFilled) {
+          break
+        }
+      }
+
+      if (!isAnyFieldFilled) {
+        notify('Please fill in at least one field')
+        return
+      }
+
+      // Continue with the API call if at least one field is filled
       let response = await fetch(`${apiUrl}/spv/create_spv`, {
         method: 'POST',
         headers: {
@@ -241,85 +239,101 @@ const Services = () => {
       }
 
       let result = await response.json()
-      console.log(result)
       notify('Data Saved Successfully')
-      setMotivation({
-        prevention: '',
-        illness: '',
-        selfDetermination: '',
-        relatives: '',
-        lessons: '',
-      })
-      setResuscitation({
-        medicineDesired: '',
-        noIntensive: '',
-        revival: '',
-        noRevival: '',
-      })
-      setSituation({
-        dyingProcess: '',
-        brainInjury: '',
-        dementia: '',
-      })
-      setDetermination({
-        essential: '',
-        noIntensive: '',
-        servere: '',
-        artificialHydration: '',
-        discomfort: '',
-        medication: '',
-        medicines: '',
-        organDonation: '',
-        researchPurpose: '',
-        defibrillator: '',
-        dyingYeast: '',
-        suicideOption: '',
-        commitment: '',
-        discretionaryArea: '',
-      })
-      setWhereabout({
-        familiarEnvironment: '',
-        hospice: '',
-        toHospital: '',
-        notHospital: '',
-      })
-      setSupport({
-        doctor: '',
-        mentalSupport: '',
-        absolutelyNot: '',
-      })
-      setFuneralwishes({
-        cremation: '',
-        burial: '',
-        arrangement: '',
-        miscellaneous: '',
-      })
-      setAtorney({
-        forms: '',
-        careOrder: '',
-      })
-      setFee({
-        regular: '',
-        reduced: '',
-      })
-      setInformation({
-        urgency: '',
-        alternateAddress: '',
-        creation: '',
-        fname: '',
-        lname: '',
-        address: '',
-        street: '',
-        plz: '',
-        ort: '',
-        phone: '',
-        mobile: '',
-        dataProtection: '',
-      })
+
+      // Reset all state variables to initial values
+      resetStateVariables()
     } catch (error) {
+      notify('Please Fill in all details')
       console.error('Error during API call:', error)
     }
   }
+
+  const resetStateVariables = () => {
+    setMotivation({
+      prevention: '',
+      illness: '',
+      selfDetermination: '',
+      relatives: '',
+      lessons: '',
+    })
+
+    setResuscitation({
+      medicineDesired: '',
+      noIntensive: '',
+      revival: '',
+      noRevival: '',
+    })
+
+    setSituation({
+      dyingProcess: '',
+      brainInjury: '',
+      dementia: '',
+    })
+
+    setDetermination({
+      essential: '',
+      noIntensive: '',
+      servere: '',
+      artificialHydration: '',
+      discomfort: '',
+      medication: '',
+      medicines: '',
+      organDonation: '',
+      researchPurpose: '',
+      defibrillator: '',
+      dyingYeast: '',
+      suicideOption: '',
+      commitment: '',
+      discretionaryArea: '',
+    })
+
+    setWhereabout({
+      familiarEnvironment: '',
+      hospice: '',
+      toHospital: '',
+      notHospital: '',
+    })
+
+    setSupport({
+      doctor: '',
+      mentalSupport: '',
+      absolutelyNot: '',
+    })
+
+    setFuneralwishes({
+      cremation: '',
+      burial: '',
+      arrangement: '',
+      miscellaneous: '',
+    })
+
+    setAtorney({
+      forms: '',
+      careOrder: '',
+    })
+
+    setFee({
+      regular: '',
+      reduced: '',
+    })
+
+    setInformation({
+      urgency: '',
+      alternateAddress: '',
+      creation: '',
+      fname: '',
+      lname: '',
+      address: '',
+      street: '',
+      plz: '',
+      ort: '',
+      phone: '',
+      mobile: '',
+      dataProtection: '',
+    })
+  }
+
   return (
     <>
       <div style={{ background: '#fff' }}>
@@ -1431,6 +1445,7 @@ const Services = () => {
             </button>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   )
