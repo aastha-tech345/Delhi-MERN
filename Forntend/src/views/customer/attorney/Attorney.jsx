@@ -151,12 +151,12 @@ const Attorney = () => {
     customer_id: result?._id,
   }
   const [validated, setValidated] = useState(false)
-  const saveData = async (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
+  const saveData = async () => {
+    // const form = event.currentTarget
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault()
+    //   event.stopPropagation()
+    // }
 
     setValidated(true)
     // e.preventDefault()
@@ -179,20 +179,17 @@ const Attorney = () => {
           healthCare_fname: '',
           healthCare_lname: '',
           healthCare_address: '',
-          healthCare_phone: [],
+          healthCare_phone: '',
         })),
-        healthCareMasterData: '',
       }))
 
       setPowerOfAttorney((prevPowerOfAttorney) => ({
         ...prevPowerOfAttorney,
-        AttorneyMasterData: '',
-        adoptDataFromHealthcare: '',
         powerOfAttorneyData: Array.from({ length: initialFields + 1 }, () => ({
           powerOfAttorney_fname: '',
           powerOfAttorney_lname: '',
           powerOfAttorney_address: '',
-          powerOfAttorney_phone: [],
+          powerOfAttorney_phone: '',
         })),
       }))
 
@@ -258,7 +255,6 @@ const Attorney = () => {
                                 placeholder="John"
                                 className="form-control"
                                 id={`fname_${index}`}
-                                required={true}
                               />
                             </div>
                           </div>
@@ -274,7 +270,7 @@ const Attorney = () => {
                                 placeholder="Doe"
                                 className="form-control"
                                 id={`lname_${index}`}
-                                required={true}
+                                //required={true}
                               />
                             </div>
                           </div>
@@ -290,7 +286,7 @@ const Attorney = () => {
                                 placeholder="Lorem Ipsum"
                                 className="form-control"
                                 id={`address_${index}`}
-                                required={true}
+                                //required={true}
                               />
                             </div>
                           </div>
@@ -306,7 +302,7 @@ const Attorney = () => {
                                 placeholder="0121456789 / 0123456789"
                                 className="form-control"
                                 id={`phone_${index}`}
-                                required={true}
+                                //required={true}
                                 maxLength={23}
                                 minLength={10}
                               />

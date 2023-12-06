@@ -53,63 +53,128 @@ const Roll = () => {
                 <input type="text" placeholder="Name" className="form-control" />
                 <h5 className="mt-2 fw-bold">Berechtigungen</h5>
                 <h5 className="mt-3 fw-bold">Klientlnnen</h5>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Anzeigen</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select style={{ border: 'none', background: 'none' }}>
-                        <option value="only owned">Nur im Besitz</option>
-                        <option value="Withdraw">Widerrufen</option>
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
+                <div>
+                  <div className="row">
+                    <div className="col-sm-3 mt-2">Anzeigen</div>
+                    <div className="col-sm-5"></div>
+                    {/*dropdown*/}
+                    <div className="col-sm-4 mt-2">
+                      <div className="input-group">
+                        <select style={{ border: 'none', background: 'none' }}>
+                          <option value="only owned">Nur im Besitz</option>
+                          <option value="Withdraw">Widerrufen</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-3 mt-2">Bearbeiten</div>
+                    <div className="col-sm-5"></div>
+                    {/*dropdown*/}
+                    <div className="col-sm-4 mt-2">
+                      <div className="input-group">
+                        <select style={{ border: 'none', background: 'none' }}>
+                          <option value="only owned">Nur im Besitz</option>
+                          <option value="Withdraw">Widerrufen</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-3 mt-2">Löschen</div>
+                    <div className="col-sm-5"></div>
+                    {/*dropdown*/}
+                    <div className="col-sm-4 mt-2">
+                      <div className="input-group">
+                        <select style={{ border: 'none', background: 'none' }}>
+                          <option value="only owned">Nur im Besitz</option>
+                          <option value="Withdraw">Widerrufen</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-3 mt-2">Exportieren</div>
+                    <div className="col-sm-5"></div>
+                    {/*dropdown*/}
+                    <div className="col-sm-4 mt-2">
+                      <div className="input-group">
+                        <select style={{ border: 'none', background: 'none' }}>
+                          <option value="only owned">Nur im Besitz</option>
+                          <option value="Withdraw">Widerrufen</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Bearbeiten</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select style={{ border: 'none', background: 'none' }}>
-                        <option value="only owned">Nur im Besitz</option>
-                        <option value="Withdraw">Widerrufen</option>
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
+                <h5 className="mt-3 fw-bold">Dashboard</h5>
+                <div>
+                  <div className="row">
+                    <div className="col-sm-3 mt-2">Anzeigen</div>
+                    <div className="col-sm-5"></div>
+                    {/*dropdown*/}
+                    <div className="col-sm-4 mt-2">
+                      <div className="input-group">
+                        <select style={{ border: 'none', background: 'none' }}>
+                          <option value="only owned">Nur im Besitz</option>
+                          <option value="Withdraw">Widerrufen</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Löschen</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select style={{ border: 'none', background: 'none' }}>
-                        <option value="only owned">Nur im Besitz</option>
-                        <option value="Withdraw">Widerrufen</option>
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
+                  <div className="row">
+                    <div className="col-sm-3 mt-2">Bearbeiten</div>
+                    <div className="col-sm-5"></div>
+                    {/*dropdown*/}
+                    <div className="col-sm-4 mt-2">
+                      <div className="input-group">
+                        <select style={{ border: 'none', background: 'none' }}>
+                          <option value="only owned">Nur im Besitz</option>
+                          <option value="Withdraw">Widerrufen</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Exportieren</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select style={{ border: 'none', background: 'none' }}>
-                        <option value="only owned">Nur im Besitz</option>
-                        <option value="Withdraw">Widerrufen</option>
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
+                  <div className="row">
+                    <div className="col-sm-3 mt-2">Löschen</div>
+                    <div className="col-sm-5"></div>
+                    {/*dropdown*/}
+                    <div className="col-sm-4 mt-2">
+                      <div className="input-group">
+                        <select style={{ border: 'none', background: 'none' }}>
+                          <option value="only owned">Nur im Besitz</option>
+                          <option value="Withdraw">Widerrufen</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-3 mt-2">Exportieren</div>
+                    <div className="col-sm-5"></div>
+                    {/*dropdown*/}
+                    <div className="col-sm-4 mt-2">
+                      <div className="input-group">
+                        <select style={{ border: 'none', background: 'none' }}>
+                          <option value="only owned">Nur im Besitz</option>
+                          <option value="Withdraw">Widerrufen</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
