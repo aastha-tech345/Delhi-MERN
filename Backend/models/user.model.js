@@ -2,12 +2,11 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Schema, model } = mongoose;
-const { roles } = require("../utils/constants");
 
 const usercreationSchema = new Schema({
   user_name: { type: String },
   user_email: { type: String },
-  roll: { type: String },
+  role: { type:mongoose.Schema.Types.ObjectId,ref:"Role"},
 });
 
 const passwordSchema = new Schema({
@@ -57,7 +56,7 @@ const userSchema = new Schema({
   role: {
     type: String,
   },
-  user_creation: {
+  employee_creation: {
     users: usercreationSchema,
     password: passwordSchema,
     localization: localizationSchema,

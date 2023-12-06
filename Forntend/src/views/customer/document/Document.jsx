@@ -94,10 +94,11 @@ const Document = () => {
   // const [document_title, setDocumentTitle] = useState()
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
+
   const [data, setData] = useState({
     document_title: '',
     document_type: '',
-    customer_id: result._id,
+    customer_id: result?._id,
   })
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
@@ -128,11 +129,15 @@ const Document = () => {
 
   const saveData = async (e) => {
     try {
+      if (!data.document_title || !data.document_type) {
+        return notify('Please fill all details')
+      }
+
       e.preventDefault()
       const myForm = new FormData()
-      myForm.append('document_title', data.document_title)
-      myForm.append('document_type', data.document_type)
-      myForm.append('customer_id', data.customer_id)
+      myForm.append('document_title', data?.document_title)
+      myForm.append('document_type', data?.document_type)
+      myForm.append('customer_id', result?._id)
       myForm.append('document_upload', document_upload)
 
       const url = `${apiUrl}/document/create_document`
@@ -288,6 +293,7 @@ const Document = () => {
           />
         </Stack>
       </div>
+      <ToastContainer />
     </div>
   )
 }

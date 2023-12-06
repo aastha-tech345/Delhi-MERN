@@ -190,6 +190,14 @@ const Bills = () => {
           </div>
         </div>
       </div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '10px',
+        }}
+      ></div>
       <div className="row mb-4 mt-4">
         <div className="col-sm-9"></div>
         <div className="col-sm-3">

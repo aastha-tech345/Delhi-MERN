@@ -302,8 +302,8 @@ const Attorney = () => {
                                 placeholder="0121456789 / 0123456789"
                                 className="form-control"
                                 id={`phone_${index}`}
-                                //required={true}
                                 maxLength={23}
+                                required={true}
                                 minLength={10}
                               />
                             </div>
