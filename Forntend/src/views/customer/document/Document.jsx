@@ -121,7 +121,7 @@ const Document = () => {
   const handleShow = () => setShow(true)
 
   const handleDelete = (documentId) => {
-    console.log(`Deleting customer with ID: ${documentId}`)
+    // console.log(`Deleting customer with ID: ${documentId}`)
     setDocumentId(documentId)
     setHide(true)
   }
@@ -136,7 +136,7 @@ const Document = () => {
       myForm.append('document_upload', document_upload)
 
       const url = `${apiUrl}/document/create_document`
-      console.log(myForm)
+      // console.log(myForm)
       // const url = `${apiUrl}/document/create_document?page=${page}`
       // console.log(url)
       const response = await postFetchUser(url, myForm)
@@ -161,7 +161,7 @@ const Document = () => {
     }
   }
 
-  console.log('document page', documentRecord)
+  // console.log('document page', documentRecord)
   useEffect(() => {
     // setId(generateRandomId())
     getDetails()

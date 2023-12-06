@@ -42,7 +42,8 @@ const Roll = () => {
               style={{ background: '#0b5995', color: 'white' }}
               onClick={handleShow}
             >
-              <MdAdd /> Neuen Kunden anlegen
+              <MdAdd />
+              &nbsp; Rolle erstellen
             </button>
             <Modal show={show} onHide={handleClose} centered size="large">
               <Modal.Header closeButton>
@@ -51,260 +52,65 @@ const Roll = () => {
               <Modal.Body>
                 <input type="text" placeholder="Name" className="form-control" />
                 <h5 className="mt-2 fw-bold">Berechtigungen</h5>
-                <h5 className="mt-3 fw-bold">Textbausteine</h5>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space style={{ marginLeft: '15px' }}>
-                          Widerrufen
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                  </div>
-                </div>
-                <h5 className="mt-3 fw-bold">E-mail Vorlage</h5>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space style={{ marginLeft: '15px' }}>
-                          Widerrufen
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                  </div>
-                </div>
-                <h5 className="mt-3 fw-bold">Mitarbeiterlnnen</h5>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space style={{ marginLeft: '15px' }}>
-                          Widerrufen
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                  </div>
-                </div>
                 <h5 className="mt-3 fw-bold">Klientlnnen</h5>
                 <div className="row">
-                  <div className="col-sm-3 mt-2">Anzeigen Bearbeiten Löschen Exportieren</div>
+                  <div className="col-sm-3 mt-2">Anzeigen</div>
                   <div className="col-sm-5"></div>
                   {/*dropdown*/}
                   <div className="col-sm-4 mt-2">
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          Nur im Besitz
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        defaultSelectedKeys: ['3'],
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space style={{ marginLeft: '15px' }}>
-                          Widerrufen
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
+                    <div className="input-group">
+                      <select style={{ border: 'none', background: 'none' }}>
+                        <option value="only owned">Nur im Besitz</option>
+                        <option value="Withdraw">Widerrufen</option>
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Bearbeiten</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <div className="input-group">
+                      <select style={{ border: 'none', background: 'none' }}>
+                        <option value="only owned">Nur im Besitz</option>
+                        <option value="Withdraw">Widerrufen</option>
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Löschen</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <div className="input-group">
+                      <select style={{ border: 'none', background: 'none' }}>
+                        <option value="only owned">Nur im Besitz</option>
+                        <option value="Withdraw">Widerrufen</option>
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Exportieren</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <div className="input-group">
+                      <select style={{ border: 'none', background: 'none' }}>
+                        <option value="only owned">Nur im Besitz</option>
+                        <option value="Withdraw">Widerrufen</option>
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </Modal.Body>

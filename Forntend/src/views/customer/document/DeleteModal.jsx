@@ -12,7 +12,7 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
     if (documentId) {
       try {
         const response = await deleteFetch(`${apiUrl}/document/get_document`, documentId)
-        console.log(response)
+        // console.log(response)
         notify('Data Deleted Successfully')
         getDetails()
         // if (response?.status === 200) {

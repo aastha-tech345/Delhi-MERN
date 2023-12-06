@@ -177,15 +177,15 @@ const CreateUser = () => {
     <>
       <div className="topBtnBox">
         <div className="">
-          <button
+          {/* <button
             className="btn btn"
             onClick={handleShowInviteUserModal}
             style={{ background: '#0b5995', color: 'white' }}
           >
             <MdAdd />
             &nbsp; Benutzer erstellen
-          </button>
-          <Modal size="lg" show={showInviteUserModal} onHide={handleCloseInviteUserModal} centered>
+          </button> */}
+          {/* <Modal size="lg" show={showInviteUserModal} onHide={handleCloseInviteUserModal} centered>
             <Modal.Header closeButton>
               <Modal.Title> Benutzer einladen</Modal.Title>
             </Modal.Header>
@@ -346,14 +346,14 @@ const CreateUser = () => {
               </button>
             </Modal.Footer>
           </Modal>
-          &nbsp; &nbsp;
+          &nbsp; &nbsp; */}
           <button
             className="btn btn"
             style={{ background: '#0b5995', color: 'white' }}
             onClick={handleShow}
           >
-            <AiOutlineMail />
-            &nbsp; Benutzer einladen
+            <MdAdd />
+            &nbsp; MitarbeiterInnen erstellen
           </button>
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>

@@ -20,24 +20,44 @@ const rowSelection = {
 
 const columns = [
   {
-    title: 'Name des Kunden',
+    title: 'NACHNAME',
     dataIndex: 'name',
     render: (text) => <a>{text}</a>,
   },
   {
-    title: 'Kunden-ID',
+    title: 'VORNAMEN',
     dataIndex: 'key',
   },
   {
-    title: 'E-Mail',
+    title: 'GEBURTSDATUM',
     dataIndex: 'email',
   },
   {
-    title: 'Telefon',
+    title: 'PLZ',
     dataIndex: 'phone',
   },
   {
-    title: 'Status',
+    title: 'TELEFON',
+    dataIndex: 'status',
+  },
+  {
+    title: 'MOBIL',
+    dataIndex: 'status',
+  },
+  {
+    title: 'STATUS',
+    dataIndex: 'status',
+  },
+  {
+    title: 'ID KLIENTINNEN',
+    dataIndex: 'status',
+  },
+  {
+    title: 'VERSAND NACHSTE MARKE',
+    dataIndex: 'status',
+  },
+  {
+    title: 'DAUERSPENDERINNEN',
     dataIndex: 'status',
   },
   {
@@ -58,7 +78,7 @@ const data = [
   {
     key: '1',
     name: 'Russell Crowe',
-    email: 'mailto:russellcrowe@left4code.com',
+    email: 'russellcrowe@left4code.com',
     status: 'done',
     phone: '+3 809 291 4525',
     action: 'active',
@@ -66,7 +86,7 @@ const data = [
   {
     key: '2',
     name: 'Jim Green',
-    email: 'mailto:user@gmail.com',
+    email: 'user@gmail.com',
     status: 'done',
     phone: '2934289354',
     action: 'active',
@@ -74,7 +94,7 @@ const data = [
   {
     key: '3',
     name: 'Joe Black',
-    email: 'mailto:user@gmail.com',
+    email: 'user@gmail.com',
     status: 'done',
     phone: '2934289354',
     action: 'active',
@@ -82,7 +102,7 @@ const data = [
   {
     key: '4',
     name: 'Disabled User',
-    email: 'mailto:user@gmail.com',
+    email: 'user@gmail.com',
     status: 'done',
     phone: '2934289354',
     action: 'active',
@@ -121,14 +141,7 @@ const Filter = () => {
   }
 
   return (
-    <div
-      style={{
-        background: 'white',
-        height: '600px',
-        // width: '1210px',
-        borderRadius: '5px 5px 5px 5px',
-      }}
-    >
+    <div style={{ background: 'white' }}>
       <h4 style={{ paddingTop: '6px', paddingLeft: '10px' }}> Filter</h4>
       <hr />
       <div>
@@ -152,7 +165,7 @@ const Filter = () => {
           </div>
 
           <div className="col-sm-6 text-right">
-            <button
+            {/* <button
               className="btn btn"
               style={{ background: '#0b5995', color: 'white', marginLeft: '30px' }}
             >
@@ -168,7 +181,7 @@ const Filter = () => {
               <MdAdd />
               &nbsp;Neuen Kunden anlegen
             </button>
-            {/* <Modal show={show} onHide={handleClose} centered>
+            <Modal show={show} onHide={handleClose} centered>
               <Modal.Header closeButton>
                 <Modal.Title>Kontakt hinzufügen</Modal.Title>
               </Modal.Header>
@@ -221,7 +234,6 @@ const Filter = () => {
                   <div className="mb-2 row">
                     <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                       Telefon
-                      {/ phone /}
                     </label>
                     <div className="col-sm-9">
                       <input
@@ -252,7 +264,7 @@ const Filter = () => {
                         onChange={(e) => {
                           setEmail(e.target.value)
                         }}
-                        mailto:placeholder="jo@gmail.com"
+                        placeholder="jo@gmail.com"
                         className="form-control"
                         id="inputPassword"
                       />

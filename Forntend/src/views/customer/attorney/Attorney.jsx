@@ -171,7 +171,7 @@ const Attorney = () => {
       })
 
       let result = await response.json()
-      // console.log(result)
+      console.log(result)
       notify('Data saved successfully!')
       setHealthCare((prevHealthCare) => ({
         ...prevHealthCare,
@@ -246,7 +246,7 @@ const Attorney = () => {
                 <Form noValidate validated={validated}>
                   {healthCare.healthCareData &&
                     healthCare.healthCareData.map((field, index) => (
-                      <div className="row" key={index}>
+                      <div className="row mb-2" key={index}>
                         <div className="col-sm-3">
                           <div className="mb-2 row">
                             <div className="col-sm-12">
@@ -307,6 +307,8 @@ const Attorney = () => {
                                 className="form-control"
                                 id={`phone_${index}`}
                                 required={true}
+                                maxLength={23}
+                                minLength={10}
                               />
                             </div>
                           </div>
@@ -345,7 +347,7 @@ const Attorney = () => {
               <Form noValidate validated={validated}>
                 {powerOfAttorney.powerOfAttorneyData &&
                   powerOfAttorney.powerOfAttorneyData.map((field, index) => (
-                    <div className="row" key={index}>
+                    <div className="row mb-2" key={index}>
                       <div className="col-sm-3">
                         <div className="row">
                           <div className="col-sm-12">
@@ -402,6 +404,8 @@ const Attorney = () => {
                               placeholder="0121456789 / 0123456789"
                               className="form-control"
                               id="inputPassword"
+                              maxLength={23}
+                              minLength={10}
                             />
                           </div>
                         </div>
