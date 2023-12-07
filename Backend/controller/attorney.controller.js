@@ -23,6 +23,7 @@ exports.createAttorney = async (req, res) => {
     const result = await attorney.save();
 
     res.status(201).json({
+      status: 201,
       message: "Attorney was created",
       result,
     });
