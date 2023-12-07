@@ -11,7 +11,7 @@ const Tasks = React.lazy(() => import('./views/customer/task/Tasks'))
 const Document = React.lazy(() => import('./views/customer/document/Document'))
 const Services = React.lazy(() => import('./views/customer/services/Services'))
 const Description = React.lazy(() => import('./views/customer/description/Description'))
-const PrintTemplate = React.lazy(() => import('./views/customer/print/PrintTemplate'))
+const PrintTemplate = React.lazy(() => import('./views/settings/print/PrintTemplate'))
 
 //settings
 const User = React.lazy(() => import('./views/settings/User'))
@@ -20,7 +20,7 @@ const CreateUser = React.lazy(() => import('./views/settings/user/CreateUser'))
 const Teams = React.lazy(() => import('./views/settings/team/Teams'))
 
 //email-template
-const EmailTemplate = React.lazy(() => import('./views/email/EmailTemplate'))
+const EmailTemplate = React.lazy(() => import('./views/settings/email/EmailTemplate'))
 const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Filter = React.lazy(() => import('./views/settings/filter/Filter'))
 const Attorney = React.lazy(() => import('./views/customer/attorney/Attorney'))

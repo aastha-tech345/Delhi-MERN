@@ -29,7 +29,14 @@ const Bills = () => {
   }
   const saveData = async () => {
     try {
-      console.log('ashishhhh', productData)
+      for (const key in productData) {
+        if (!productData[key]) {
+          notify(`Please fill in the ${key} field`)
+          return
+        }
+      }
+
+      // console.log('ashishhhh', productData)
       let response = await fetch(`${apiUrl}/invoice/create_invoice`, {
         method: 'POST',
         headers: {
@@ -54,7 +61,7 @@ const Bills = () => {
         deliveryDate: '',
       })
     } catch (error) {
-      notify.error('Please Fill ful details')
+      notify('Please Fill in all details')
       console.error('Error during API call:', error)
     }
   }
@@ -183,7 +190,36 @@ const Bills = () => {
           </div>
         </div>
       </div>
-      <button onClick={saveData}>Save</button>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '10px',
+        }}
+      ></div>
+      <div className="row mb-4 mt-4">
+        <div className="col-sm-9"></div>
+        <div className="col-sm-3">
+          <button
+            type="button"
+            className="btn btn"
+            style={{ background: '#d04545', color: 'white' }}
+          >
+            Abbrechen
+          </button>
+          &nbsp; &nbsp;
+          <button
+            onClick={saveData}
+            type="button"
+            style={{ background: '#0b5995', color: 'white' }}
+            className="btn btn"
+          >
+            Speichern Sie
+          </button>
+        </div>
+      </div>
+      <hr />
       <ToastContainer />
     </div>
   )

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { putFetchData } from 'src/Api'
+import { putFetch } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Loader from 'src/components/loader/Loader'
@@ -21,9 +21,9 @@ const EditModal = ({ setEdit, getDetails }) => {
   const [loadValue, setLoadValue] = useState(false)
 
   const handleChange = (e) => {
-    const { name, value, type } = e.target
-    const newValue = type === 'radio' ? e.target.value : value
-    setData({ ...data, [name]: newValue })
+    const { name, value } = e.target
+    // const newValue = type === 'radio' ? e.target.value : value
+    setData({ ...data, [name]: value })
   }
 
   const notify = (dataa) => toast(dataa)
@@ -58,17 +58,13 @@ const EditModal = ({ setEdit, getDetails }) => {
       formData.append('document_type', document_type)
       formData.append('document_upload', document_upload)
 
-      const res = await putFetchData(
+      const res = await putFetch(
         `${apiUrl}/document/get_document/update/${response?._id}`,
         formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
       )
+      console.log('document page', res)
 
-      if (res.status === 200) {
+      if (res?.status === 200) {
         setLoadValue(false)
         setData({
           document_title: '',
@@ -76,11 +72,11 @@ const EditModal = ({ setEdit, getDetails }) => {
           document_upload: null,
         })
         notify('Document Updated Successfully')
-        close()
         getDetails()
       } else {
         notify('Something Went Wrong')
       }
+      close()
     } catch (error) {
       console.error(error)
     }

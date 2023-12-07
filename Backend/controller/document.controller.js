@@ -3,14 +3,15 @@ const CustomerModel = require("../models/customer.model");
 const ApiFeatures = require("../utils/apiFeatures");
 exports.createDocument = async (req, res) => {
   try {
-    const document = new DocumentInfo.Document({
+    const result = await DocumentInfo.Document.create({
       ...req.body,
       document_upload: req?.file?.filename,
     });
+
     // console.log("ashishhh", document);
 
-    const result = await document.save();
-    res.status(201).json({
+    // const result = await document.save();
+   return res.status(201).json({
       message: "document was created",
       result,
     });
@@ -28,7 +29,6 @@ exports.getDocument = async (req, res) => {
     const countPage = await DocumentInfo.Document.countDocuments({
       status: "active",
     });
-
     let pageCount = Math.ceil(countPage / resultPerPage);
 
     const apiFeatures = new ApiFeatures(

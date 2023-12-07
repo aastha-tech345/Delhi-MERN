@@ -7,7 +7,7 @@ const keysecret = "asbndjhdjdkflfdghgj";
 
 exports.register = async (req, res) => {
   try {
-    const { username, password, email, role } = req.body;
+    const { username, password, email, role,employee_creation} = req.body;
 
     let userData;
 
@@ -27,13 +27,7 @@ exports.register = async (req, res) => {
           password,
           email,
           role,
-          user_creation: {
-            users: null,
-            password: null,
-            localization: null,
-            notification: null,
-            advanced: null,
-          },
+          employee_creation,
           added_by: null,
           parent_id: admin._id,
         };
@@ -90,9 +84,16 @@ exports.register = async (req, res) => {
 };
 
 exports.getData = async (req, res) => {
-  const user = await UserModel.User.find();
-  res.send(user);
+  try {
+    const users = await UserModel.User.find().populate("employee_creation.users.role");
+
+    res.send(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
+
 exports.getRegisterData = async (req, res) => {
   const user = await UserModel.User.findOne({ _id: req.params.id });
   res.send(user);

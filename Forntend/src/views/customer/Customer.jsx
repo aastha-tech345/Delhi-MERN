@@ -41,9 +41,9 @@ const Customer = () => {
         <div className="blueBoxTop">
           <div className="row">
             <div className="col-sm-4">
-              <p style={{ color: 'white', marginTop: '5px' }}>KlientInnen: {res.fname}</p>
+              {/* <p style={{ color: 'white', marginTop: '5px' }}>KlientInnen: {res.fname}</p>
               <ImLocation2 style={{ color: 'white' }} />
-              <span style={{ color: 'white' }}>{res.street}</span>
+              <span style={{ color: 'white' }}>{res.street}</span> */}
               <p style={{ color: 'white', marginTop: '5px' }}>
                 KlientInnen: {`${firstName} ${lastName}`}
               </p>
