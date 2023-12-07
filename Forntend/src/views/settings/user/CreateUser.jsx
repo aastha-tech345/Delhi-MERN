@@ -346,17 +346,17 @@ const CreateUser = () => {
                       <input
                         className="form-control"
                         placeholder="Telefon"
-                        maxLength={10}
-                        minLength={2}
-                        type="text"
+                        // maxLength={10}
+                        // minLength={2}
+                        type="tel"
                       />
                       <br />
                       <input
                         className="form-control"
                         placeholder="Mobil"
-                        maxLength={10}
-                        minLength={2}
-                        type="text"
+                        // maxLength={10}
+                        // minLength={2}
+                        type="tel"
                       />
                     </div>
                   </div>

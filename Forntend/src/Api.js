@@ -100,6 +100,25 @@ export const postFetchUser = async (url, data) => {
     return error
   }
 }
+
+export const postFetchContent = async (url, data) => {
+  try {
+    const response = await axios.post(url, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    // if (response.status >= 200 && response.status < 300) {
+    return response.data
+    // } else {
+    //   throw new Error(`Request failed with status ${response.status}`)
+    // }
+  } catch (error) {
+    console.error('Error in postFetchContent:', error)
+    throw error
+  }
+}
+
 export const patchFetch = async (url, id, data) => {
   try {
     const token = localStorage.getItem('token')
