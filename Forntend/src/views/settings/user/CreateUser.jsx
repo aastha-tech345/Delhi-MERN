@@ -6,6 +6,7 @@ import { MdAdd, MdDelete } from 'react-icons/md'
 import { GrEdit } from 'react-icons/gr'
 import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
+import User from '../User'
 
 const CreateUser = () => {
   const [record, setRecord] = useState([])
@@ -174,8 +175,9 @@ const CreateUser = () => {
     }),
   }
   return (
-    <>
+    <div style={{ background: 'white' }}>
       <div className="topBtnBox">
+        <User />
         <div className="">
           <button
             className="btn btn"
@@ -425,7 +427,7 @@ const CreateUser = () => {
           dataSource={data}
         />
       </div>
-    </>
+    </div>
   )
 }
 

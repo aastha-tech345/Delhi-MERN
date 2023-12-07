@@ -24,6 +24,7 @@ const EmailTemplate = React.lazy(() => import('./views/settings/email/EmailTempl
 const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Filter = React.lazy(() => import('./views/settings/filter/Filter'))
 const Attorney = React.lazy(() => import('./views/customer/attorney/Attorney'))
+const Setting = React.lazy(() => import('./views/settings/User'))
 // const DescriptionList = React.lazy(() => import('./views/customer/description/DescriptionList'))
 
 const auth = localStorage.getItem('token')
@@ -43,13 +44,14 @@ if (auth) {
     { path: '/customer/description', name: 'Vollmachten', element: Description },
     { path: '/customer/document', name: 'Dokumente', element: Document },
     { path: '/customer/services', name: 'SPV', element: Services },
-    { path: '/users', name: 'User', element: User },
-    { path: '/roll', name: 'Roll', element: Roll },
-    { path: '/createuser', name: 'CreateUser', element: CreateUser },
+    { path: '/settings', name: 'Einstellungen', element: Setting },
+    { path: '/settings/users', name: 'MitarbeiterInnen', element: User },
+    { path: '/settings/role', name: 'Rollen', element: Roll },
+    { path: '/settings/createuser', name: 'MitarbeiterInnen', element: CreateUser },
     { path: '/team', name: 'Teams', element: Teams },
-    { path: '/email', name: 'EmailTemplate', element: EmailTemplate },
-    { path: '/filter', name: 'Filter', element: Filter },
-    { path: '/print', name: 'DruckvorlagePrint', element: PrintTemplate }, // Updated name
+    { path: '/settings/email', name: 'EmailTemplate', element: EmailTemplate },
+    { path: '/settings/filter', name: 'Filter', element: Filter },
+    { path: '/settings/print', name: 'DruckvorlagePrint', element: PrintTemplate }, // Updated name
     { path: '/customer/attorney', name: 'DruckvorlageAttorney', element: Attorney }, // Updated name
   ]
 } else {

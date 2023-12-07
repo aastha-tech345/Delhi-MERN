@@ -6,7 +6,7 @@ const { Schema, model } = mongoose;
 const usercreationSchema = new Schema({
   user_name: { type: String },
   user_email: { type: String },
-  role: { type:mongoose.Schema.Types.ObjectId,ref:"Role"},
+  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
 });
 
 const passwordSchema = new Schema({
@@ -41,7 +41,10 @@ const userSchema = new Schema({
     unique: true,
   },
   password: { type: String },
-  mobile: { type: String  },
+  gender: { type: String },
+  lname: { type: String },
+  mobile: { type: String },
+  profileImage: { type: String },
   tokens: [
     {
       token: {

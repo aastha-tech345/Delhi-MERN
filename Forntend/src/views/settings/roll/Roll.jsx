@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { LuFilePlus } from 'react-icons/lu'
+import User from '../User'
 // import { IoMdAdd } from 'react-icons/io'
 // import { DownOutlined } from '@ant-design/icons'
 // import { Dropdown, Space, Typography } from 'antd'
@@ -71,8 +72,9 @@ const Roll = () => {
   const handleShow = () => setShow(true)
 
   return (
-    <div>
-      <div className="row ">
+    <div style={{ background: 'white' }}>
+      <User />
+      <div className="row">
         <center className="mx-auto">
           <LuFilePlus style={{ fontSize: '50px', marginTop: '100px' }} />
           <p>Keine Rollen</p>
