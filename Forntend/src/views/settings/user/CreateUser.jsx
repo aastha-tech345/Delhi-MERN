@@ -6,6 +6,7 @@ import { MdAdd, MdDelete } from 'react-icons/md'
 import { GrEdit } from 'react-icons/gr'
 import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
+import { getFetch } from 'src/Api'
 
 const CreateUser = () => {
   const [record, setRecord] = useState([])
@@ -17,7 +18,7 @@ const CreateUser = () => {
   const [showInviteUserModal, setShowInviteUserModal] = useState(false)
   const [show, setShow] = useState(false)
   const [activeTab, setActiveTab] = useState('nav-home')
-
+  const [roleList, setRoleList] = useState([])
   const handleTabClick = (tabId) => {
     setActiveTab(tabId)
   }
@@ -173,6 +174,20 @@ const CreateUser = () => {
       name: record.name,
     }),
   }
+
+  const getRole = async () => {
+    try {
+      const res = await getFetch(`${apiUrl}/role/get_role`)
+      setRoleList(res?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  let localData = localStorage.getItem('updateFunc')
+  useEffect(() => {
+    getRole()
+  }, [localData])
+
   return (
     <>
       <div className="topBtnBox">
@@ -314,7 +329,15 @@ const CreateUser = () => {
                           setRoll(e.target.value)
                         }}
                       >
-                        <option value="employee">Rolle</option>
+                        <option value="">Select Role</option>
+                        {roleList?.map((value) => {
+                          const { role_name, _id } = value
+                          return (
+                            <option key={_id} value={role_name}>
+                              {role_name}
+                            </option>
+                          )
+                        })}
                       </select>
                     </div>
                     <div className="col-sm-6">
@@ -348,7 +371,7 @@ const CreateUser = () => {
                         placeholder="Telefon"
                         maxLength={10}
                         minLength={2}
-                        type="text"
+                        type="phone"
                       />
                       <br />
                       <input
@@ -356,7 +379,7 @@ const CreateUser = () => {
                         placeholder="Mobil"
                         maxLength={10}
                         minLength={2}
-                        type="text"
+                        type="phone"
                       />
                     </div>
                   </div>
