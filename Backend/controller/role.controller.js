@@ -46,13 +46,26 @@ exports.getRoleData = async (req, res) => {
 
 exports.getRoleDataUpdate = async (req, res) => {
   try {
-    const result = await roleModel.Role.updateOne(
-      { _id: req.params.id },
-      { $set: req.body }
+    // const result = await roleModel.Role.updateOne(
+    //   { _id: req.params.id },
+    //   { $set: req.body }
+    // );
+    // res.send(result);
+
+    const result = await roleModel.Role.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
     );
-    res.send(result);
+
+    return res.status(200).json({
+      success:true,
+      message:"Role Updated Successfully"
+    })
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error" });
+   return res.status(500).send({ error: "Internal Server Error" });
   }
 };
 

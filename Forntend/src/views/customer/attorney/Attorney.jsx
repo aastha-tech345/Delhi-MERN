@@ -150,18 +150,30 @@ const Attorney = () => {
     securingattorney,
     customer_id: result?._id,
   }
-  const [validated, setValidated] = useState(false)
   const saveData = async () => {
-    // const form = event.currentTarget
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault()
-    //   event.stopPropagation()
-    // }
-
-    setValidated(true)
-    // e.preventDefault()
-
     try {
+      const sections = [healthCare, powerOfAttorney, careProvision, securingattorney]
+
+      let isAnyFieldFilled = false
+
+      for (const section of sections) {
+        for (const key in section) {
+          if (section[key] !== '') {
+            isAnyFieldFilled = true
+            break
+          }
+        }
+        if (isAnyFieldFilled) {
+          break
+        }
+      }
+
+      if (!isAnyFieldFilled) {
+        notify('Please fill in at least one field')
+        return
+      }
+
+      // Assuming `data` is defined somewhere in your code
       let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
         method: 'POST',
         headers: {
@@ -171,8 +183,13 @@ const Attorney = () => {
       })
 
       let result = await response.json()
-      console.log(result)
-      notify('Data saved successfully!')
+      console.log(result.status)
+      if (result.status === 201) {
+        notify('Data saved successfully!')
+      } else {
+        notify('Please fill in at least one field!')
+      }
+      // notify('Data saved successfully!')
       setHealthCare((prevHealthCare) => ({
         ...prevHealthCare,
         healthCareData: Array.from({ length: initialFields + 1 }, () => ({
@@ -197,6 +214,7 @@ const Attorney = () => {
         ...prevCareProvision,
         CareProvisionMasterData: '',
       }))
+
       setSecuringattorney((prevSecuringMasterData) => ({
         ...prevSecuringMasterData,
         prevSecuringMasterData: '',
@@ -240,78 +258,75 @@ const Attorney = () => {
                   <div className="col-sm-3">Adresse</div>
                   <div className="col-sm-3">Telefone</div>
                 </div>
-                <Form noValidate validated={validated}>
-                  {healthCare.healthCareData &&
-                    healthCare.healthCareData.map((field, index) => (
-                      <div className="row mb-2" key={index}>
-                        <div className="col-sm-3">
-                          <div className="mb-2 row">
-                            <div className="col-sm-12">
-                              <input
-                                onChange={(e) => healthCareChange(e, index)}
-                                value={field.healthCare_fname}
-                                name="healthCare_fname"
-                                type="text"
-                                placeholder="John"
-                                className="form-control"
-                                id={`fname_${index}`}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-3">
-                          <div className="mb-2 row">
-                            <div className="col-sm-12">
-                              <input
-                                onChange={(e) => healthCareChange(e, index)}
-                                value={field.healthCare_lname}
-                                type="text"
-                                name="healthCare_lname"
-                                placeholder="Doe"
-                                className="form-control"
-                                id={`lname_${index}`}
-                                //required={true}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-3">
-                          <div className="mb-2 row">
-                            <div className="col-sm-12">
-                              <input
-                                onChange={(e) => healthCareChange(e, index)}
-                                value={field.healthCare_address}
-                                type="text"
-                                name="healthCare_address"
-                                placeholder="Lorem Ipsum"
-                                className="form-control"
-                                id={`address_${index}`}
-                                //required={true}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-3">
-                          <div className="mb-2 row">
-                            <div className="col-sm-12">
-                              <input
-                                onChange={(e) => healthCareChange(e, index)}
-                                value={field.healthCare_phone}
-                                type="text"
-                                name="healthCare_phone"
-                                placeholder="0121456789 / 0123456789"
-                                className="form-control"
-                                id={`phone_${index}`}
-                                maxLength={23}
-                                required={true}
-                                minLength={10}
-                              />
-                            </div>
+                {healthCare.healthCareData &&
+                  healthCare.healthCareData.map((field, index) => (
+                    <div className="row mb-2" key={index}>
+                      <div className="col-sm-3">
+                        <div className="mb-2 row">
+                          <div className="col-sm-12">
+                            <input
+                              onChange={(e) => healthCareChange(e, index)}
+                              value={field.healthCare_fname}
+                              name="healthCare_fname"
+                              type="text"
+                              placeholder="John"
+                              className="form-control"
+                              id={`fname_${index}`}
+                            />
                           </div>
                         </div>
                       </div>
-                    ))}
-                </Form>
+                      <div className="col-sm-3">
+                        <div className="mb-2 row">
+                          <div className="col-sm-12">
+                            <input
+                              onChange={(e) => healthCareChange(e, index)}
+                              value={field.healthCare_lname}
+                              type="text"
+                              name="healthCare_lname"
+                              placeholder="Doe"
+                              className="form-control"
+                              id={`lname_${index}`}
+                              //required={true}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-3">
+                        <div className="mb-2 row">
+                          <div className="col-sm-12">
+                            <input
+                              onChange={(e) => healthCareChange(e, index)}
+                              value={field.healthCare_address}
+                              type="text"
+                              name="healthCare_address"
+                              placeholder="Lorem Ipsum"
+                              className="form-control"
+                              id={`address_${index}`}
+                              //required={true}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-3">
+                        <div className="mb-2 row">
+                          <div className="col-sm-12">
+                            <input
+                              onChange={(e) => healthCareChange(e, index)}
+                              value={field.healthCare_phone}
+                              type="text"
+                              name="healthCare_phone"
+                              placeholder="0121456789 / 0123456789"
+                              className="form-control"
+                              id={`phone_${index}`}
+                              maxLength={23}
+                              minLength={10}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -340,73 +355,72 @@ const Attorney = () => {
                 <div className="col-sm-3">Adresse</div>
                 <div className="col-sm-3">Telefone</div>
               </div>
-              <Form noValidate validated={validated}>
-                {powerOfAttorney.powerOfAttorneyData &&
-                  powerOfAttorney.powerOfAttorneyData.map((field, index) => (
-                    <div className="row mb-2" key={index}>
-                      <div className="col-sm-3">
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <input
-                              onChange={(e) => powerOfAttorneyChange(e, index)}
-                              value={field.powerOfAttorney_fname}
-                              name="powerOfAttorney_fname"
-                              type="text"
-                              placeholder="John"
-                              className="form-control"
-                              id="inputPassword"
-                            />
-                          </div>
+              {powerOfAttorney.powerOfAttorneyData &&
+                powerOfAttorney.powerOfAttorneyData.map((field, index) => (
+                  <div className="row mb-2" key={index}>
+                    <div className="col-sm-3">
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <input
+                            onChange={(e) => powerOfAttorneyChange(e, index)}
+                            value={field.powerOfAttorney_fname}
+                            name="powerOfAttorney_fname"
+                            type="text"
+                            placeholder="John"
+                            className="form-control"
+                            id="inputPassword"
+                          />
                         </div>
                       </div>
-                      <div className="col-sm-3">
-                        <div className="mb-2 row">
-                          <div className="col-sm-12">
-                            <input
-                              onChange={(e) => powerOfAttorneyChange(e, index)}
-                              value={field.powerOfAttorney_lname}
-                              name="powerOfAttorney_lname"
-                              type="text"
-                              placeholder="Doe"
-                              className="form-control"
-                              id="inputPassword"
-                            />
-                          </div>
+                    </div>
+                    <div className="col-sm-3">
+                      <div className="mb-2 row">
+                        <div className="col-sm-12">
+                          <input
+                            onChange={(e) => powerOfAttorneyChange(e, index)}
+                            value={field.powerOfAttorney_lname}
+                            name="powerOfAttorney_lname"
+                            type="text"
+                            placeholder="Doe"
+                            className="form-control"
+                            id="inputPassword"
+                          />
                         </div>
                       </div>
-                      <div className="col-sm-3">
-                        <div className="mb-2 row">
-                          <div className="col-sm-12">
-                            <input
-                              onChange={(e) => powerOfAttorneyChange(e, index)}
-                              value={field.powerOfAttorney_address}
-                              name="powerOfAttorney_address"
-                              type="text"
-                              placeholder="Lorem Ipsum"
-                              className="form-control"
-                              id="inputPassword"
-                            />
-                          </div>
+                    </div>
+                    <div className="col-sm-3">
+                      <div className="mb-2 row">
+                        <div className="col-sm-12">
+                          <input
+                            onChange={(e) => powerOfAttorneyChange(e, index)}
+                            value={field.powerOfAttorney_address}
+                            name="powerOfAttorney_address"
+                            type="text"
+                            placeholder="Lorem Ipsum"
+                            className="form-control"
+                            id="inputPassword"
+                          />
                         </div>
                       </div>
-                      <div className="col-sm-3">
-                        <div className="mb-2 row">
-                          <div className="col-sm-12">
-                            <input
-                              onChange={(e) => powerOfAttorneyChange(e, index)}
-                              value={field.powerOfAttorney_phone}
-                              name="powerOfAttorney_phone"
-                              type="text"
-                              placeholder="0121456789 / 0123456789"
-                              className="form-control"
-                              id="inputPassword"
-                              maxLength={23}
-                              minLength={10}
-                            />
-                          </div>
+                    </div>
+                    <div className="col-sm-3">
+                      <div className="mb-2 row">
+                        <div className="col-sm-12">
+                          <input
+                            onChange={(e) => powerOfAttorneyChange(e, index)}
+                            value={field.powerOfAttorney_phone}
+                            name="powerOfAttorney_phone"
+                            type="text"
+                            placeholder="0121456789 / 0123456789"
+                            className="form-control"
+                            id="inputPassword"
+                            maxLength={23}
+                            minLength={10}
+                          />
                         </div>
                       </div>
-                      {/* <div className="col-sm-1">
+                    </div>
+                    {/* <div className="col-sm-1">
                         {index === powerOfAttorney.powerOfAttorneys.length - 1 && (
                           <button
                             style={{ background: 'none', border: '1px solid pink' }}
@@ -416,9 +430,8 @@ const Attorney = () => {
                           </button>
                         )}
                       </div> */}
-                    </div>
-                  ))}
-              </Form>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -448,9 +461,9 @@ const Attorney = () => {
           </div>
         </div>
         <hr />
-        <div className="row">
+        <div className="row ">
           <div className="col-sm-9"></div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 mb-3">
             <button
               type="button"
               className="btn btn"

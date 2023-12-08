@@ -239,6 +239,7 @@ const Services = () => {
       }
 
       let result = await response.json()
+      console.log('aastha', result)
       notify('Data Saved Successfully')
 
       // Reset all state variables to initial values
@@ -1294,7 +1295,7 @@ const Services = () => {
                         Telefon
                       </label>
                       <div className="col-sm-8">
-                        <input
+                        {/* <input
                           value={information.phone}
                           onChange={(e) => informationChange(e)}
                           name="phone"
@@ -1307,6 +1308,22 @@ const Services = () => {
                             height: '40px',
                             width: '150px',
                           }}
+                        /> */}
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={information.phone}
+                          onChange={(e) => {
+                            const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                            if (/^\+?[0-9]*$/.test(inputValue)) {
+                              informationChange({ target: { name: 'phone', value: inputValue } })
+                            }
+                          }}
+                          placeholder="e.g., 91+ 8354568464"
+                          className="form-control"
+                          id="inputPhone"
+                          maxLength={10}
+                          minLength={3}
                         />
                       </div>
                     </div>
@@ -1382,18 +1399,20 @@ const Services = () => {
                       </label>
                       <div className="col-sm-8">
                         <input
-                          value={information.mobile}
-                          onChange={(e) => informationChange(e)}
+                          type="tel"
                           name="mobile"
-                          type="text"
-                          placeholder="Mobil"
-                          style={{
-                            border: '1px solid #ebedef',
-                            paddingLeft: '10px',
-                            borderRadius: '5px 5px 5px 5px',
-                            height: '40px',
-                            width: '150px',
+                          value={information.mobile}
+                          onChange={(e) => {
+                            const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                            if (/^\+?[0-9]*$/.test(inputValue)) {
+                              informationChange({ target: { name: 'mobile', value: inputValue } })
+                            }
                           }}
+                          placeholder="e.g., 91+ 8354568464"
+                          className="form-control"
+                          id="inputPhone"
+                          maxLength={10}
+                          minLength={3}
                         />
                       </div>
                     </div>

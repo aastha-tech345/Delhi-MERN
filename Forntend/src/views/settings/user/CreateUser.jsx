@@ -6,7 +6,7 @@ import { MdAdd, MdDelete } from 'react-icons/md'
 import { GrEdit } from 'react-icons/gr'
 import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
-import { getFetch } from 'src/Api'
+import { getFetch, postFetchData } from 'src/Api'
 
 const CreateUser = () => {
   const [record, setRecord] = useState([])
@@ -19,6 +19,36 @@ const CreateUser = () => {
   const [show, setShow] = useState(false)
   const [activeTab, setActiveTab] = useState('nav-home')
   const [roleList, setRoleList] = useState([])
+  const [roleId, setRoleId] = useState('')
+  const [employee, setEmployee] = useState({
+    f_name: '',
+    l_name: '',
+    street: '',
+    plz: '',
+    city: '',
+    email: '',
+    location: '',
+    tel: '',
+    mob: '',
+    // select_role: '',
+    role: '',
+  })
+  const [employeData, setEmployeData] = useState({
+    users: {},
+    password: {
+      password: 'null',
+    },
+    localization: {
+      location: 'null',
+    },
+    advanced: {
+      advanced: 'null',
+    },
+    notification: {
+      notification: 'null',
+    },
+  })
+
   const handleTabClick = (tabId) => {
     setActiveTab(tabId)
   }
@@ -35,6 +65,36 @@ const CreateUser = () => {
   const handleCloseInviteUserModal = () => {
     setShowInviteUserModal(false)
   }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+
+    setEmployee({ ...employee, [name]: value })
+  }
+
+  let localUserData = localStorage.getItem('record')
+  let mainRes = JSON.parse(localUserData)
+  let userId = mainRes?.user?._id
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault()
+      const res = await postFetchData(
+        `${apiUrl}/user/register/record/adduser/${userId}`,
+        employeData,
+      )
+      console.log('response', res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    setEmployeData((prevRole) => ({
+      ...prevRole,
+      users: employee,
+    }))
+  }, [employee])
   // let value = localStorage.getItem('record')
   // value = JSON.parse(value)
   // let id = value.user._id
@@ -302,38 +362,52 @@ const CreateUser = () => {
                         className="form-control"
                         placeholder="Name"
                         type="text"
-                        name="user_name"
-                        value={user_name}
-                        onChange={(e) => {
-                          setUserName(e.target.value)
-                        }}
+                        name="f_name"
+                        value={employee.f_name}
+                        onChange={handleChange}
                       />
                       <br />
                       <input
                         className="form-control"
                         placeholder="Straße mit Hausnummer"
                         type="text"
+                        name="street"
+                        value={employee.street}
+                        onChange={handleChange}
                       />
                       <br />
-                      <input className="form-control" placeholder="Stadt" type="text" />
+                      <input
+                        className="form-control"
+                        placeholder="Stadt"
+                        type="text"
+                        name="city"
+                        value={employee.city}
+                        onChange={handleChange}
+                      />
 
                       <br />
-                      <input className="form-control" placeholder="Standort" type="text" />
+                      <input
+                        className="form-control"
+                        placeholder="Standort"
+                        type="text"
+                        name="location"
+                        value={employee.location}
+                        onChange={handleChange}
+                      />
                       <br />
                       <select
                         className="form-control"
-                        type="text"
-                        name="roll"
-                        value={roll}
-                        onChange={(e) => {
-                          setRoll(e.target.value)
-                        }}
+                        // type="text"
+                        name="role"
+                        value={employee.role}
+                        onChange={handleChange}
                       >
                         <option value="">Select Role</option>
                         {roleList?.map((value) => {
                           const { role_name, _id } = value
+
                           return (
-                            <option key={_id} value={role_name}>
+                            <option key={_id} value={_id}>
                               {role_name}
                             </option>
                           )
@@ -344,25 +418,28 @@ const CreateUser = () => {
                       <input
                         className="form-control"
                         placeholder="Vorname"
-                        type="email"
-                        name="user_email"
-                        value={user_email}
-                        onChange={(e) => {
-                          setUserEmail(e.target.value)
-                        }}
+                        type="text"
+                        name="l_name"
+                        value={employee.l_name}
+                        onChange={handleChange}
                       />
                       <br />
-                      <input className="form-control" type="text" placeholder="PLZ" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder="PLZ"
+                        name="plz"
+                        value={employee.plz}
+                        onChange={handleChange}
+                      />
                       <br />
                       <input
                         className="form-control"
                         placeholder="E-Mail Adresse"
                         type="email"
-                        name="user_email"
-                        value={user_email}
-                        onChange={(e) => {
-                          setUserEmail(e.target.value)
-                        }}
+                        name="email"
+                        value={employee.email}
+                        onChange={handleChange}
                       />
                       <br />
 
@@ -372,6 +449,9 @@ const CreateUser = () => {
                         maxLength={10}
                         minLength={2}
                         type="phone"
+                        name="tel"
+                        value={employee.tel}
+                        onChange={handleChange}
                       />
                       <br />
                       <input
@@ -380,6 +460,9 @@ const CreateUser = () => {
                         maxLength={10}
                         minLength={2}
                         type="phone"
+                        name="mob"
+                        value={employee.mob}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -414,7 +497,7 @@ const CreateUser = () => {
                     &nbsp;&nbsp;
                     <button
                       className="btn mx-2"
-                      onClick={handleClose}
+                      onClick={handleSubmit}
                       style={{ background: '#0b5995', color: 'white' }}
                     >
                       Speichern
