@@ -69,7 +69,6 @@ const Bills = () => {
   return (
     <div style={{ background: '#fff' }}>
       <Customer />
-      <br />
       <h5 className="mx-4">Rechnung</h5>
       <hr />
       <div className="row m-4 p-4 " style={{ border: '1px solid lightgray', borderRadius: '5px' }}>

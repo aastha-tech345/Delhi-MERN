@@ -122,6 +122,17 @@ const CreateUser = () => {
     // handleTabClick('nav-benutzer')
   }, [])
 
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      // Column configuration not to be checked
+      name: record.name,
+    }),
+  }
+
   const columns = [
     {
       title: 'ID',
@@ -153,15 +164,7 @@ const CreateUser = () => {
       ),
     },
   ]
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
-  }
+
   return (
     <div style={{ background: 'white' }}>
       <div className="topBtnBox">
@@ -417,15 +420,22 @@ const CreateUser = () => {
           </button>
         </div>
       </div>
-      <div className="row">
+      <div className="row p-3">
         <Table
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-          }}
-          style={{ overflowX: 'auto' }}
-          columns={columns}
           dataSource={employeeData}
+          columns={columns}
+          pagination={false}
+          rowKey={(record) => record._id}
+          rowSelection={{
+            type: 'checkbox',
+            onChange: (selectedRowKeys, selectedRows) => {
+              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+            },
+            getCheckboxProps: (record) => ({
+              disabled: record.name === 'Disabled User',
+              name: record.name,
+            }),
+          }}
         />
       </div>
     </div>

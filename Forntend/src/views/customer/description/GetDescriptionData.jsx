@@ -187,15 +187,19 @@ const GetDescriptionData = ({ updateData, search }) => {
         </div>
       </div>
 
-      <Stack spacing={2}>
-        <Pagination
-          count={coountPage}
-          variant="outlined"
-          shape="rounded"
-          page={page}
-          onChange={handleChange}
-        />
-      </Stack>
+      {/* <div className="mx-3">
+        <Stack spacing={2}>
+          <Pagination
+            count={coountPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handleChange}
+          />
+        </Stack>
+        <br />
+      </div> */}
+
       <ToastContainer />
     </>
   )

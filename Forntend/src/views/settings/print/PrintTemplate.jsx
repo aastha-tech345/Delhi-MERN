@@ -111,17 +111,6 @@ const PrintTemplate = () => {
     }),
     [placeholder],
   )
-  // rowSelection object indicates the need for row selection
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      // Column configuration not to be checked
-      name: record.name,
-    }),
-  }
 
   const saveData = async () => {
     try {
@@ -133,7 +122,7 @@ const PrintTemplate = () => {
       const url = `${apiUrl}/print/create_print`
       const response = await postFetchContent(url, data)
 
-      console.log(response.status)
+      // console.log(response.status)
       if (response.status === 201) {
         notify('Data Saved Successfully')
       }
@@ -148,7 +137,7 @@ const PrintTemplate = () => {
       console.error(error)
       notify('Error saving data')
     }
-    console.log(data)
+    // console.log(data)
   }
 
   const getDetails = async () => {
@@ -252,7 +241,7 @@ const PrintTemplate = () => {
           <div>
             <Divider />
 
-            <Table
+            {/* <Table
               rowSelection={{
                 type: selectionType,
                 ...rowSelection,
@@ -260,6 +249,22 @@ const PrintTemplate = () => {
               columns={columns}
               dataSource={printRecord}
               pagination={false}
+            /> */}
+            <Table
+              dataSource={printRecord}
+              columns={columns}
+              pagination={false}
+              rowKey={(record) => record._id}
+              rowSelection={{
+                type: 'checkbox',
+                onChange: (selectedRowKeys, selectedRows) => {
+                  // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+                },
+                getCheckboxProps: (record) => ({
+                  disabled: record.name === 'Disabled User',
+                  name: record.name,
+                }),
+              }}
             />
             <Stack spacing={2}>
               <Pagination

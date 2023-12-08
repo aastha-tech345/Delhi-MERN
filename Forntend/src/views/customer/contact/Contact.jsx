@@ -412,17 +412,23 @@ const Contact = () => {
       </div>
       <div style={{ background: '#fff' }} className="mx-3">
         <Divider />
-
         <Table
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-          }}
-          style={{ overflowX: 'auto' }}
-          columns={columns}
           dataSource={dataa}
+          columns={columns}
           pagination={false}
+          rowKey={(record) => record._id}
+          rowSelection={{
+            type: 'checkbox',
+            onChange: (selectedRowKeys, selectedRows) => {
+              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+            },
+            getCheckboxProps: (record) => ({
+              disabled: record.name === 'Disabled User',
+              name: record.name,
+            }),
+          }}
         />
+
         <Stack spacing={2}>
           <Pagination
             count={countPage}
@@ -432,6 +438,7 @@ const Contact = () => {
             onChange={handlePageChange}
           />
         </Stack>
+        <br />
       </div>
 
       <ToastContainer />
