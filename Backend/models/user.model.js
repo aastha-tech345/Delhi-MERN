@@ -4,32 +4,34 @@ const bcrypt = require("bcryptjs");
 const { Schema, model } = mongoose;
 
 const usercreationSchema = new Schema({
-  user_name: { type: String },
-  user_email: { type: String },
-  role: { type:mongoose.Schema.Types.ObjectId,ref:"Role"},
+  // user_name: { type: String },
+  f_name: { type: String },
+  l_name: { type: String },
+  street: { type: String },
+  plz: { type: String },
+  city: { type: String },
+  email: { type: String },
+  location: { type: String },
+  tel: { type: String },
+  mob: { type: String },
+  // select_role:{type:String},
+  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
 });
 
 const passwordSchema = new Schema({
-  user_name: { type: String },
-  user_email: { type: String },
   password: { type: String },
 });
 
 const localizationSchema = new Schema({
-  user_name: { type: String },
-  user_address: { type: String },
+  location: { type: String },
 });
 
 const advancedSchema = new Schema({
-  user_name: { type: String },
-  user_email: { type: String },
-  password: { type: String },
+  advanced: { type: String },
 });
 
 const notificationSchema = new Schema({
-  user_name: { type: String },
-  user_email: { type: String },
-  password: { type: String },
+  notification: { type: String },
 });
 
 const userSchema = new Schema({
@@ -41,7 +43,7 @@ const userSchema = new Schema({
     unique: true,
   },
   password: { type: String },
-  mobile: { type: String  },
+  mobile: { type: String },
   tokens: [
     {
       token: {
@@ -56,13 +58,15 @@ const userSchema = new Schema({
   role: {
     type: String,
   },
-  employee_creation: {
-    users: usercreationSchema,
-    password: passwordSchema,
-    localization: localizationSchema,
-    notification: notificationSchema,
-    advanced: advancedSchema,
-  },
+  employee_creation: [
+    {
+      users: usercreationSchema,
+      password: passwordSchema,
+      localization: localizationSchema,
+      notification: notificationSchema,
+      advanced: advancedSchema,
+    },
+  ],
   parent_id: { type: String },
 });
 

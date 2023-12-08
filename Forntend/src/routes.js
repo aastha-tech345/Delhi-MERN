@@ -1,4 +1,6 @@
 import React from 'react'
+// import CustomerInfo from './views/customer/customerInfo/CustomerInfo'
+// import Contact from './views/customer/contact/Contact'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 //customerInfo
