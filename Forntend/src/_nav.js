@@ -132,7 +132,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Mitarbeiterlnnen',
-        to: '/settings/users',
+        to: '/settings/createuser',
         icon: (
           <svg
             width="24"

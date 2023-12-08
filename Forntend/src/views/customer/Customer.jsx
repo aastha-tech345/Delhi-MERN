@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HiOutlineMail } from 'react-icons/hi'
 import { IoIosCall } from 'react-icons/io'
 import { ImLocation2 } from 'react-icons/im'
@@ -26,7 +26,9 @@ const Customer = () => {
       return navigate('/customer/bills')
     }
   }
-
+  useEffect(() => {
+    handleTabClick('nav-home')
+  }, [])
   let data = localStorage.getItem('customerDatat')
   let res = JSON.parse(data)
   // console.log(res)

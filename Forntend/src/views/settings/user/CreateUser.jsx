@@ -1,33 +1,52 @@
 import React, { useEffect, useState } from 'react'
-import { Divider, Radio, Table } from 'antd'
-import { GrFormAdd, GrAdd } from 'react-icons/gr'
+import { Table } from 'antd'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd, MdDelete } from 'react-icons/md'
 import { GrEdit } from 'react-icons/gr'
-import { Switch } from 'antd'
-import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
+import { AiFillSetting } from 'react-icons/ai'
 import User from '../User'
+import { postFetchData } from 'src/Api'
 
 const CreateUser = () => {
   const [record, setRecord] = useState([])
-  const [user_email, setUserEmail] = useState()
   const apiUrl = process.env.REACT_APP_API_URL
-  const [user_name, setUserName] = useState()
-  const [roll, setRoll] = useState()
   const [selectionType, setSelectionType] = useState('checkbox')
   const [showInviteUserModal, setShowInviteUserModal] = useState(false)
   const [show, setShow] = useState(false)
   const [activeTab, setActiveTab] = useState('nav-home')
 
+  const [data, setData] = useState({
+    employee_fname: '',
+    employee_lname: '',
+    employee_password: '',
+    employee_email: '',
+    employee_location: '',
+    employee_mobile: '',
+    employee_tel: '',
+    employee_timeZone: '',
+    employee_street: '',
+    employee_plz: '',
+    employee_city: '',
+  })
+  const [employee_id, setEmployeeId] = useState('')
+
+  const generateRandomId = () => {
+    return 'HVD' + Math.floor(1000 + Math.random() * 9000)
+  }
+  let employee_timeZone = 'timeZOne'
+  let employee_password = 'EMP876'
+
+  const handleChange = (e) => {
+    const { name, value, type } = e.target
+    const newValue = type === 'radio' ? e.target.value : value
+    setData({ ...data, [name]: newValue })
+  }
   const handleTabClick = (tabId) => {
     setActiveTab(tabId)
   }
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const onChange = (checked) => {
-    //console.log(`switch to ${checked}`)
-  }
   const handleShowInviteUserModal = () => {
     setShowInviteUserModal(true)
   }
@@ -35,91 +54,91 @@ const CreateUser = () => {
   const handleCloseInviteUserModal = () => {
     setShowInviteUserModal(false)
   }
-  // let value = localStorage.getItem('record')
-  // value = JSON.parse(value)
-  // let id = value.user._id
-  // //console.log(id)
 
-  // const saveData = async () => {
-  //   try {
-  //     if (!user_email || !user_name || !roll) {
-  //       return
-  //     }
+  let value = localStorage.getItem('record')
+  value = JSON.parse(value)
+  let user_id = value.user._id
+  // console.log('id', user_id)
+  let rolename = value.user.role
+  // console.log(rolename)
+  let role = 'employee'
 
-  //     const data = {
-  //       user_email,
-  //       user_name,
-  //       roll,
-  //     }
+  let records = { ...data, employee_timeZone, employee_password, role, user_id, employee_id }
 
-  //     const response = await fetch(`${apiUrl}/user/register/record/adduser/${id}`, {
-  //       method: 'post',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
+  const saveData = async () => {
+    console.log(records)
+    try {
+      if (
+        !employee_timeZone ||
+        !data?.employee_city ||
+        !data?.employee_email ||
+        !data?.employee_lname ||
+        !data?.employee_location ||
+        !data?.employee_fname ||
+        !data?.employee_plz ||
+        !data?.employee_street ||
+        !data?.employee_tel ||
+        !data?.employee_mobile ||
+        !employee_timeZone ||
+        !role
+      ) {
+      } else {
+        if (rolename === 'user') {
+          const response = await postFetchData(`${apiUrl}/user/register`, records)
+          // console.log(response)
+          if (response.response.status === 406) {
+          }
+        }
+        setData('')
+        getDetails()
+      }
+    } catch (error) {
+      console.error('Error during API call:', error)
+    }
+  }
 
-  //     const result = await response.json()
-  //     //console.log(result)
-  //     setUserEmail('')
-  //     setUserName('')
-  //     setRoll('')
-  //     handleCloseInviteUserModal()
-  //     // window.location.reload()
-  //   } catch (error) {
-  //     //console.error('Error:', error)
-  //     alert('An error occurred. Please try again later.')
-  //   }
-  // }
+  const getDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/user/all`)
+      const data = await result.json()
+      setRecord(data)
+    } catch (error) {
+      console.error('Error fetching employee records:', error)
+    }
+  }
+  let creation = record.data
+  let employeeData
 
-  // const getDetails = async () => {
-  //   try {
-  //     const result = await fetch(`${apiUrl}/user/register/record/${id}`)
-  //     const data = await result.json()
-  //     setRecord(data)
-  //     getDetails()
-  //   } catch (error) {
-  //     //console.error('Error fetching customer record:', error)
-  //   }
-  // }
+  if (Array.isArray(creation)) {
+    employeeData = creation.filter((item) => item.role === 'employee')
+    console.log(employeeData)
+  } else {
+    console.error('record.data is not an array or is undefined.')
+  }
 
-  // let creation = record.user_creation
-  // let data
-  // if (Array.isArray(creation)) {
-  //   data = creation.map((item) => {
-  //     console.log(item.users)
-  //     return item.users
-  //   })
-
-  //   console.log(data)
-  // } else {
-  //   console.log('record.user_creation is not an array or is undefined')
-  // }
-  // console.log(data)
-
-  // useEffect(() => {
-  //   getDetails()
-  //   handleTabClick('nav-benutzer')
-  // }, [])
+  useEffect(() => {
+    getDetails()
+    setEmployeeId(generateRandomId())
+    // handleTabClick('nav-benutzer')
+  }, [])
 
   const columns = [
     {
       title: 'ID',
-      dataIndex: '_id',
+      dataIndex: 'employee_id',
       render: (text) => <a>{text}</a>,
     },
     {
       title: 'NAME',
-      dataIndex: 'user_name',
+      dataIndex: 'username',
     },
     {
       title: 'E-Mail Adresse',
-      dataIndex: 'user_email', // Change 'email address' to 'emailAddress'
+      dataIndex: 'email',
     },
     {
       title: 'Super Verwalter',
-      dataIndex: 'superVerwalter', // Change 'super verwalter' to 'superVerwalter'
+      dataIndex: 'superVerwalter',
     },
     {
       title: 'AKTION',
@@ -134,37 +153,6 @@ const CreateUser = () => {
       ),
     },
   ]
-
-  const data = [
-    {
-      _id: '1',
-      user_name: 'John Brown',
-      age: 32,
-      emailAddress: 'john@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
-      superVerwalter: 'Yes',
-      action: 'Edit', // Provide appropriate action value
-    },
-    {
-      _id: '2',
-      user_name: 'Jim Green',
-      age: 42,
-      emailAddress: 'jim@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
-      superVerwalter: 'No',
-      action: 'Delete', // Provide appropriate action value
-    },
-    {
-      _id: '3',
-      user_name: 'Joe Black',
-      age: 32,
-      emailAddress: 'joe@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
-      superVerwalter: 'Yes',
-      action: 'View', // Provide appropriate action value
-    },
-  ]
-
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
@@ -272,50 +260,45 @@ const CreateUser = () => {
                   aria-labelledby="nav-benutzer-tab"
                 >
                   <div className="row">
-                    {/* <div className="col-sm-6">
-                      <input
-                        className="form-control"
-                        placeholder="Name"
-                        type="text"
-                        name="user_name"
-                        value={user_name}
-                        onChange={(e) => {
-                          setUserName(e.target.value)
-                        }}
-                      />
-                    </div> */}
                     <div className="col-sm-6">
                       <input
                         className="form-control"
                         placeholder="Name"
                         type="text"
-                        name="user_name"
-                        value={user_name}
-                        onChange={(e) => {
-                          setUserName(e.target.value)
-                        }}
+                        name="employee_fname"
+                        value={data.employee_fname}
+                        onChange={handleChange}
                       />
                       <br />
                       <input
                         className="form-control"
                         placeholder="Straße mit Hausnummer"
                         type="text"
+                        name="employee_street"
+                        value={data.employee_street}
+                        onChange={handleChange}
                       />
                       <br />
-                      <input className="form-control" placeholder="Stadt" type="text" />
+                      <input
+                        className="form-control"
+                        name="employee_city"
+                        value={data.employee_city}
+                        onChange={handleChange}
+                        placeholder="Stadt"
+                        type="text"
+                      />
 
                       <br />
-                      <input className="form-control" placeholder="Standort" type="text" />
-                      <br />
-                      <select
+                      <input
                         className="form-control"
+                        name="employee_location"
+                        value={data.employee_location}
+                        onChange={handleChange}
+                        placeholder="Standort"
                         type="text"
-                        name="roll"
-                        value={roll}
-                        onChange={(e) => {
-                          setRoll(e.target.value)
-                        }}
-                      >
+                      />
+                      <br />
+                      <select className="form-control" type="text" name="roll">
                         <option value="employee">Rolle</option>
                       </select>
                     </div>
@@ -324,42 +307,82 @@ const CreateUser = () => {
                         className="form-control"
                         placeholder="Vorname"
                         type="email"
-                        name="user_email"
-                        value={user_email}
-                        onChange={(e) => {
-                          setUserEmail(e.target.value)
-                        }}
+                        name="employee_lname"
+                        value={data.employee_lname}
+                        onChange={handleChange}
                       />
                       <br />
-                      <input className="form-control" type="text" placeholder="PLZ" />
+                      <input
+                        className="form-control"
+                        name="employee_plz"
+                        value={data.employee_plz}
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="PLZ"
+                      />
                       <br />
                       <input
                         className="form-control"
                         placeholder="E-Mail Adresse"
                         type="email"
-                        name="user_email"
-                        value={user_email}
-                        onChange={(e) => {
-                          setUserEmail(e.target.value)
-                        }}
+                        name="employee_email"
+                        value={data.employee_email}
+                        onChange={handleChange}
                       />
                       <br />
 
                       <input
                         className="form-control"
                         placeholder="Telefon"
-                        // maxLength={10}
-                        // minLength={2}
+                        maxLength={10}
+                        minLength={2}
+                        name="employee_tel"
+                        value={data.employee_tel}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                            handleChange({ target: { name: 'employee_tel', value: inputValue } })
+                          }
+                        }}
                         type="tel"
                       />
                       <br />
                       <input
                         className="form-control"
                         placeholder="Mobil"
-                        // maxLength={10}
-                        // minLength={2}
+                        maxLength={10}
+                        minLength={2}
+                        name="employee_mobile"
+                        value={data.employee_mobile}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                            handleChange({ target: { name: 'employee_mobile', value: inputValue } })
+                          }
+                        }}
                         type="tel"
                       />
+                    </div>
+                    <div className="row mb-2">
+                      <div className="col-sm-12">
+                        <div style={{ float: 'right' }}>
+                          <button
+                            className="btn"
+                            onClick={handleClose}
+                            style={{ background: '#d04545', color: 'white' }}
+                          >
+                            Abbrechen
+                          </button>
+                          &nbsp;&nbsp;
+                          <button
+                            className="btn mx-2"
+                            onClick={saveData}
+                            style={{ background: '#0b5995', color: 'white' }}
+                          >
+                            Speichern
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -379,29 +402,7 @@ const CreateUser = () => {
                 ></div>
               </div>
             </Modal.Body>
-            <Modal.Footer>
-              <div className="row mb-2">
-                <div className="col-sm-12">
-                  <div style={{ float: 'right' }}>
-                    <button
-                      className="btn"
-                      onClick={handleClose}
-                      style={{ background: '#d04545', color: 'white' }}
-                    >
-                      Abbrechen
-                    </button>
-                    &nbsp;&nbsp;
-                    <button
-                      className="btn mx-2"
-                      onClick={handleClose}
-                      style={{ background: '#0b5995', color: 'white' }}
-                    >
-                      Speichern
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </Modal.Footer>
+            <Modal.Footer></Modal.Footer>
           </Modal>
           &nbsp; &nbsp;
           <input
@@ -424,7 +425,7 @@ const CreateUser = () => {
           }}
           style={{ overflowX: 'auto' }}
           columns={columns}
-          dataSource={data}
+          dataSource={employeeData}
         />
       </div>
     </div>

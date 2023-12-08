@@ -12,11 +12,22 @@ exports.register = async (req, res) => {
       password,
       email,
       role,
-      employee_creation,
       lname,
       mobile,
       gender,
-      profileImage,
+      employee_password,
+      employee_id,
+      employee_email,
+      employee_location,
+      employee_mobile,
+      employee_tel,
+      employee_timeZone,
+      employee_street,
+      employee_plz,
+      employee_city,
+      employee_fname,
+      employee_lname,
+      user_id,
     } = req.body;
 
     let userData;
@@ -26,7 +37,7 @@ exports.register = async (req, res) => {
         username,
         password,
         email,
-        role: role || "admin",
+        role: "admin",
       };
     } else if (role === "user") {
       const admin = await UserModel.User.findOne({ role: "admin" });
@@ -36,12 +47,10 @@ exports.register = async (req, res) => {
           username,
           password,
           email,
-          gender: "",
-          lname: "",
-          profileImage,
+          gender,
+          lname,
           role,
-          mobile: "",
-          employee_creation,
+          mobile,
           added_by: null,
           parent_id: admin._id,
         };
@@ -50,17 +59,26 @@ exports.register = async (req, res) => {
           .status(400)
           .send({ message: "No admin found to link as parent" });
       }
-    } else if (role === "customer") {
+    } else if (role === "employee") {
       const user = await UserModel.User.findOne({ role: "user" });
 
       if (user) {
         userData = {
-          username,
-          password,
-          email,
+          employee_id,
+          username: employee_fname,
+          password: employee_password,
+          email: employee_email,
+          employee_lname,
+          employee_location,
+          employee_mobile,
+          employee_tel,
+          employee_timeZone,
+          employee_street,
+          employee_plz,
+          employee_city,
           role,
-          role_id: null,
-          parent_id: user._id,
+          added_by: null,
+          user_id,
         };
       } else {
         return res
@@ -79,7 +97,8 @@ exports.register = async (req, res) => {
 
       if (myToken) {
         return res.status(201).send({
-          result,
+          status: 201,
+          data: result,
           message: "Token was generated successfully",
           token: myToken,
         });
@@ -92,18 +111,30 @@ exports.register = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).send({
-      message: "error",
+      message: "Internal Server Error",
     });
   }
 };
 
 exports.getData = async (req, res) => {
   try {
-    const users = await UserModel.User.find().populate(
-      "employee_creation.users.role"
-    );
+    // const role = req.body.role;
+    // let query = {};
+    // if (role === "user") {
+    //   query = { role: "user" };
+    // } else if (role === "employee") {
+    //   query = { role: "employee" };
+    // } else if (role === "admin") {
+    //   query = { role: "admin" };
+    // }
 
-    res.send(users);
+    // const users = await UserModel.User.find(query);
+    const users = await UserModel.User.find();
+    res.status(200).json({
+      status: 200,
+      data: users,
+      message: "Data Find Successfully",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
