@@ -181,7 +181,7 @@ const Document = () => {
       )}
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
       <Customer />
-      <h5 className="mt-3 mx-3">Dokumente</h5>
+      <h5 className="mx-3">Dokumente</h5>
       <hr className="mx-3" />
       <div className="row p-3 mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
         <div className="col-sm-7">
@@ -272,26 +272,35 @@ const Document = () => {
       <div className="row mx-2">
         <div className="col-sm-12">
           <Table
-            rowSelection={{
-              type: selectionType,
-              ...rowSelection,
-            }}
-            columns={columns}
-            // dataSource={dataa}
-            pagination={false}
             dataSource={documentRecord}
+            columns={columns}
+            pagination={false}
+            rowKey={(record) => record._id}
+            rowSelection={{
+              type: 'checkbox',
+              onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+              },
+              getCheckboxProps: (record) => ({
+                disabled: record.name === 'Disabled User',
+                name: record.name,
+              }),
+            }}
           />
           {/* <Pagination defaultCurrent={2} total={50} /> */}
         </div>
-        <Stack spacing={2}>
-          <Pagination
-            count={countPage}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        <div className="">
+          <Stack spacing={2}>
+            <Pagination
+              count={countPage}
+              variant="outlined"
+              shape="rounded"
+              page={page}
+              onChange={handlePageChange}
+            />
+          </Stack>
+          <br />
+        </div>
       </div>
       <ToastContainer />
     </div>

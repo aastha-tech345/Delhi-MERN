@@ -341,7 +341,7 @@ const Services = () => {
         <Customer />
         <h5 className="p-2 mx-3">SPV</h5>
         <hr />
-        <div className>
+        <div className="px-3">
           <div
             className="col-sm-12 ps-3 pt-2"
             style={{ border: '2px solid #ebedef', borderRadius: '5px 5px 5px 5px' }}

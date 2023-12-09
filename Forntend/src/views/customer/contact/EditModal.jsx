@@ -21,7 +21,6 @@ const EditModal = ({ setEdit, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('ContactEditDetails')
   let response = JSON.parse(res)
-  console.log('ashishhh', response)
   const [data, setData] = useState({
     fname: response?.fname,
     lname: response?.lname,
@@ -78,7 +77,6 @@ const EditModal = ({ setEdit, getDetails }) => {
         return notify('Invalid Email')
       }
       const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, dataa)
-      console.log('ashish', res)
       if (res.status == 200) {
         setLoadVale(false)
         setData({

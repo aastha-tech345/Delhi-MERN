@@ -218,6 +218,7 @@ const Description = () => {
         <div className="col-sm-2">
           <h4 className="mx-3">Beschreibung</h4>
         </div>
+
         <div className="col-sm-10">
           <PhoneOutlined
             className="p-2"
@@ -262,7 +263,7 @@ const Description = () => {
         </div>
       </div>
 
-      <br />
+      <hr />
 
       {/* button with search */}
       {openMessage ? (

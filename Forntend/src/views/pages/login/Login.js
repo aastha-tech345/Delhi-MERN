@@ -9,19 +9,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import logo from '../../../assets/images/hvd-logo.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
+import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -58,7 +46,7 @@ const Login = () => {
       if (result.message === 'Login was successful') {
         notify('User Login Successfully')
       }
-      console.log('ashish', result)
+      console.log('aastha', result)
 
       const token = result.user.tokens[0].token
       const role = result.user.roles

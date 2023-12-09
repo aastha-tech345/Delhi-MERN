@@ -105,7 +105,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Druckvorlage',
-        to: '/print',
+        to: '/settings/print',
         icon: (
           <svg
             width="24"
@@ -132,7 +132,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Mitarbeiterlnnen',
-        to: '/users',
+        to: '/settings/createuser',
         icon: (
           <svg
             width="24"
@@ -159,7 +159,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'E-Mail Vorlage',
-        to: '/email',
+        to: '/settings/email',
         icon: (
           <svg
             width="20"
@@ -186,7 +186,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Filter',
-        to: '/filter', // Fixed path
+        to: '/settings/filter', // Fixed path
         icon: (
           <svg
             width="18"

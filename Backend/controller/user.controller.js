@@ -7,7 +7,32 @@ const keysecret = "asbndjhdjdkflfdghgj";
 
 exports.register = async (req, res) => {
   try {
+<<<<<<< HEAD
+    const {
+      username,
+      password,
+      email,
+      role,
+      lname,
+      mobile,
+      gender,
+      employee_password,
+      employee_id,
+      employee_email,
+      employee_location,
+      employee_mobile,
+      employee_tel,
+      employee_timeZone,
+      employee_street,
+      employee_plz,
+      employee_city,
+      employee_fname,
+      employee_lname,
+      user_id,
+    } = req.body;
+=======
     const { username, password, email, role, employee_creation } = req.body;
+>>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
 
     let userData;
 
@@ -16,7 +41,7 @@ exports.register = async (req, res) => {
         username,
         password,
         email,
-        role: role || "admin",
+        role: "admin",
       };
     } else if (role === "user") {
       const admin = await UserModel.User.findOne({ role: "admin" });
@@ -26,8 +51,10 @@ exports.register = async (req, res) => {
           username,
           password,
           email,
+          gender,
+          lname,
           role,
-          employee_creation,
+          mobile,
           added_by: null,
           parent_id: admin._id,
         };
@@ -36,17 +63,26 @@ exports.register = async (req, res) => {
           .status(400)
           .send({ message: "No admin found to link as parent" });
       }
-    } else if (role === "customer") {
+    } else if (role === "employee") {
       const user = await UserModel.User.findOne({ role: "user" });
 
       if (user) {
         userData = {
-          username,
-          password,
-          email,
+          employee_id,
+          username: employee_fname,
+          password: employee_password,
+          email: employee_email,
+          employee_lname,
+          employee_location,
+          employee_mobile,
+          employee_tel,
+          employee_timeZone,
+          employee_street,
+          employee_plz,
+          employee_city,
           role,
-          role_id: null,
-          parent_id: user._id,
+          added_by: null,
+          user_id,
         };
       } else {
         return res
@@ -65,7 +101,8 @@ exports.register = async (req, res) => {
 
       if (myToken) {
         return res.status(201).send({
-          result,
+          status: 201,
+          data: result,
           message: "Token was generated successfully",
           token: myToken,
         });
@@ -78,18 +115,36 @@ exports.register = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).send({
-      message: "error",
+      message: "Internal Server Error",
     });
   }
 };
 
 exports.getData = async (req, res) => {
   try {
+<<<<<<< HEAD
+    // const role = req.body.role;
+    // let query = {};
+    // if (role === "user") {
+    //   query = { role: "user" };
+    // } else if (role === "employee") {
+    //   query = { role: "employee" };
+    // } else if (role === "admin") {
+    //   query = { role: "admin" };
+    // }
+=======
     const users = await UserModel.User.find().populate(
       "employee_creation.users.role"
     );
+>>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
 
-    res.send(users);
+    // const users = await UserModel.User.find(query);
+    const users = await UserModel.User.find();
+    res.status(200).json({
+      status: 200,
+      data: users,
+      message: "Data Find Successfully",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -99,6 +154,25 @@ exports.getData = async (req, res) => {
 exports.getRegisterData = async (req, res) => {
   const user = await UserModel.User.findOne({ _id: req.params.id });
   res.send(user);
+};
+
+exports.getRegisterUpdate = async (req, res) => {
+  const { password, ...otherFields } = req.body;
+  if (password) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    otherFields.password = hashedPassword;
+  }
+
+  try {
+    const user = await UserModel.User.updateOne(
+      { _id: req.params.id },
+      { $set: otherFields }
+    );
+    res.send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 exports.addUser = async (req, res) => {

@@ -2,12 +2,19 @@ import React, { useEffect, useState } from 'react'
 import CreateUser from './user/CreateUser'
 import Roll from './roll/Roll'
 import Teams from './team/Teams'
+import { useNavigate } from 'react-router-dom'
 
 const User = () => {
-  const [activeTab, setActiveTab] = useState('nav-home')
+  const [activeTab, setActiveTab] = useState('')
+  const navigate = useNavigate()
 
-  const handleTabClick = (tabId) => {
+  const handleTabClick = (tabId, name) => {
     setActiveTab(tabId)
+    if (name === 'user') {
+      return navigate('/settings/createuser')
+    } else if (name === 'role') {
+      return navigate('/settings/role')
+    }
   }
   useEffect(() => {
     handleTabClick('nav-benutzer')
@@ -24,7 +31,7 @@ const User = () => {
               data-bs-toggle="tab"
               role="tab"
               aria-selected={activeTab === 'nav-benutzer'}
-              onClick={() => handleTabClick('nav-benutzer')}
+              onClick={() => handleTabClick('nav-benutzer', 'user')}
               style={{ marginRight: '60px', marginLeft: '20px' }}
             >
               Mitarbeiterlnnen
@@ -36,14 +43,14 @@ const User = () => {
               role="tab"
               aria-controls="nav-rollen"
               aria-selected={activeTab === 'nav-rollen'}
-              onClick={() => handleTabClick('nav-rollen')}
+              onClick={() => handleTabClick('nav-rollen', 'role')}
               style={{ marginRight: '60px' }}
             >
               Rollen
             </button>
           </div>
         </nav>
-        <div className="tab-content" id="nav-tabContent">
+        {/* <div className="tab-content" id="nav-tabContent">
           <div
             className={`tab-pane fade ${activeTab === 'nav-benutzer' ? 'show active' : ''}`}
             id="nav-benutzer"
@@ -60,7 +67,7 @@ const User = () => {
           >
             <Roll />
           </div>
-        </div>
+        </div> */}
         <hr />
       </div>
     </>

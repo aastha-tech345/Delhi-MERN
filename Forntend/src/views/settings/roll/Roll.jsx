@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { LuFilePlus } from 'react-icons/lu'
+import User from '../User'
 import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import AllRoles from './AllRoles'
 // import { IoMdAdd } from 'react-icons/io'
 // import { DownOutlined } from '@ant-design/icons'
 // import { Dropdown, Space, Typography } from 'antd'
@@ -102,9 +102,9 @@ const Roll = () => {
   const handleShow = () => setShow(true)
 
   return (
-    <div>
-      {/* <AllRoles /> */}
-      <div className="row ">
+    <div style={{ background: 'white' }}>
+      <User />
+      <div className="row">
         <center className="mx-auto">
           <LuFilePlus style={{ fontSize: '50px', marginTop: '100px' }} />
           <p>Keine Rollen</p>
