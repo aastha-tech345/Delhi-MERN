@@ -3,40 +3,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Schema, model } = mongoose;
 
-<<<<<<< HEAD
-=======
-const usercreationSchema = new Schema({
-  // user_name: { type: String },
-  f_name: { type: String },
-  l_name: { type: String },
-  street: { type: String },
-  plz: { type: String },
-  city: { type: String },
-  email: { type: String },
-  location: { type: String },
-  tel: { type: String },
-  mob: { type: String },
-  // select_role:{type:String},
-  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
-});
-
-const passwordSchema = new Schema({
-  password: { type: String },
-});
-
-const localizationSchema = new Schema({
-  location: { type: String },
-});
-
-const advancedSchema = new Schema({
-  advanced: { type: String },
-});
-
-const notificationSchema = new Schema({
-  notification: { type: String },
-});
-
->>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
 const userSchema = new Schema({
   username: { type: String },
   email: {
@@ -45,14 +11,10 @@ const userSchema = new Schema({
     unique: true,
   },
   password: { type: String },
-<<<<<<< HEAD
   gender: { type: String },
   lname: { type: String },
   mobile: { type: String },
   profileImage: { type: String },
-=======
-  mobile: { type: String },
->>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
   tokens: [
     {
       token: {
@@ -66,7 +28,6 @@ const userSchema = new Schema({
   role: {
     type: String,
   },
-<<<<<<< HEAD
   street: { type: String },
   plz: { type: String },
   city: { type: String },
@@ -84,18 +45,6 @@ const userSchema = new Schema({
   employee_timeZone: { type: String },
   user_id: { type: mongoose.Schema.Types.ObjectId },
   parent_id: { type: mongoose.Schema.Types.ObjectId },
-=======
-  employee_creation: [
-    {
-      users: usercreationSchema,
-      password: passwordSchema,
-      localization: localizationSchema,
-      notification: notificationSchema,
-      advanced: advancedSchema,
-    },
-  ],
-  parent_id: { type: String },
->>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
 });
 
 userSchema.pre("save", async function (next) {
