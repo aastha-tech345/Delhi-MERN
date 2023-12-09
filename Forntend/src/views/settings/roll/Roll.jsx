@@ -6,9 +6,6 @@ import User from '../User'
 import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-// import { IoMdAdd } from 'react-icons/io'
-// import { DownOutlined } from '@ant-design/icons'
-// import { Dropdown, Space, Typography } from 'antd'
 
 const Roll = () => {
   const notify = (dataa) => toast(dataa)
