@@ -7,7 +7,6 @@ const keysecret = "asbndjhdjdkflfdghgj";
 
 exports.register = async (req, res) => {
   try {
-<<<<<<< HEAD
     const {
       username,
       password,
@@ -30,9 +29,6 @@ exports.register = async (req, res) => {
       employee_lname,
       user_id,
     } = req.body;
-=======
-    const { username, password, email, role, employee_creation } = req.body;
->>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
 
     let userData;
 
@@ -122,7 +118,6 @@ exports.register = async (req, res) => {
 
 exports.getData = async (req, res) => {
   try {
-<<<<<<< HEAD
     // const role = req.body.role;
     // let query = {};
     // if (role === "user") {
@@ -132,11 +127,9 @@ exports.getData = async (req, res) => {
     // } else if (role === "admin") {
     //   query = { role: "admin" };
     // }
-=======
-    const users = await UserModel.User.find().populate(
-      "employee_creation.users.role"
-    );
->>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
+    // const users = await UserModel.User.find().populate(
+    //   "employee_creation.users.role"
+    // );
 
     // const users = await UserModel.User.find(query);
     const users = await UserModel.User.find();
