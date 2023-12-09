@@ -237,41 +237,139 @@ const Attorney = () => {
     <>
       <div style={{ background: '#fff' }}>
         <Customer />
-        <h5 className="mt-2 mx-4">Vollmachten</h5>
-        <div className="card m-2">
-          <div className="row p-3">
-            <div className="col-sm-12">
-              <p style={{ color: 'blue' }}>GESUNDHEITSVOLLMACHT</p>
-              &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
-              <input
-                type="checkbox"
-                onChange={healthCareChange}
-                value={healthCare.healthCareMasterData}
-                name="healthCareMasterData"
-              />
-              <br />
-              <p style={{ color: 'blue' }}>Bevollmächtigte Person(en):</p>
-              <div>
+        <h5 className="mx-4">Vollmachten</h5>
+        <div className="mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
+          <div className="card">
+            <div className="row p-3">
+              <div className="col-sm-12">
+                <p style={{ color: 'blue' }}>GESUNDHEITSVOLLMACHT</p>
+                &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
+                <input
+                  type="checkbox"
+                  onChange={healthCareChange}
+                  value={healthCare.healthCareMasterData}
+                  name="healthCareMasterData"
+                />
+                <br />
+                <p style={{ color: 'blue' }}>Bevollmächtigte Person(en):</p>
+                <div>
+                  <div className="row">
+                    <div className="col-sm-3">Vorname</div>
+                    <div className="col-sm-3">Nachname</div>
+                    <div className="col-sm-3">Adresse</div>
+                    <div className="col-sm-3">Telefone</div>
+                  </div>
+                  {healthCare.healthCareData &&
+                    healthCare.healthCareData.map((field, index) => (
+                      <div className="row mb-2" key={index}>
+                        <div className="col-sm-3">
+                          <div className="mb-2 row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => healthCareChange(e, index)}
+                                value={field.healthCare_fname}
+                                name="healthCare_fname"
+                                type="text"
+                                placeholder="John"
+                                className="form-control"
+                                id={`fname_${index}`}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-3">
+                          <div className="mb-2 row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => healthCareChange(e, index)}
+                                value={field.healthCare_lname}
+                                type="text"
+                                name="healthCare_lname"
+                                placeholder="Doe"
+                                className="form-control"
+                                id={`lname_${index}`}
+                                //required={true}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-3">
+                          <div className="mb-2 row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => healthCareChange(e, index)}
+                                value={field.healthCare_address}
+                                type="text"
+                                name="healthCare_address"
+                                placeholder="Lorem Ipsum"
+                                className="form-control"
+                                id={`address_${index}`}
+                                //required={true}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-3">
+                          <div className="mb-2 row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => healthCareChange(e, index)}
+                                value={field.healthCare_phone}
+                                type="text"
+                                name="healthCare_phone"
+                                placeholder="0121456789 / 0123456789"
+                                className="form-control"
+                                id={`phone_${index}`}
+                                maxLength={23}
+                                minLength={10}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+            <div className="row p-3">
+              <div className="col-sm-12">
+                <p style={{ color: 'blue' }}>VORSORGEVOLLMACHT</p>
+                &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
+                <input
+                  type="checkbox"
+                  onChange={powerOfAttorneyChange}
+                  value={powerOfAttorney.AttorneyMasterData}
+                  name="AttorneyMasterData"
+                />
+                <br />
+                <p style={{ color: 'blue' }}>Bevollmächtigte Person(en):</p>
+                &nbsp;Datensatz aus Gesundheitsvollmacht übernehmen&nbsp;&nbsp;&nbsp;
+                <input
+                  type="checkbox"
+                  onChange={powerOfAttorneyChange}
+                  value={powerOfAttorney.adoptDataFromHealthcare}
+                  name="adoptDataFromHealthcare"
+                />
                 <div className="row">
                   <div className="col-sm-3">Vorname</div>
                   <div className="col-sm-3">Nachname</div>
                   <div className="col-sm-3">Adresse</div>
                   <div className="col-sm-3">Telefone</div>
                 </div>
-                {healthCare.healthCareData &&
-                  healthCare.healthCareData.map((field, index) => (
+                {powerOfAttorney.powerOfAttorneyData &&
+                  powerOfAttorney.powerOfAttorneyData.map((field, index) => (
                     <div className="row mb-2" key={index}>
                       <div className="col-sm-3">
-                        <div className="mb-2 row">
+                        <div className="row">
                           <div className="col-sm-12">
                             <input
-                              onChange={(e) => healthCareChange(e, index)}
-                              value={field.healthCare_fname}
-                              name="healthCare_fname"
+                              onChange={(e) => powerOfAttorneyChange(e, index)}
+                              value={field.powerOfAttorney_fname}
+                              name="powerOfAttorney_fname"
                               type="text"
                               placeholder="John"
                               className="form-control"
-                              id={`fname_${index}`}
+                              id="inputPassword"
                             />
                           </div>
                         </div>
@@ -280,14 +378,13 @@ const Attorney = () => {
                         <div className="mb-2 row">
                           <div className="col-sm-12">
                             <input
-                              onChange={(e) => healthCareChange(e, index)}
-                              value={field.healthCare_lname}
+                              onChange={(e) => powerOfAttorneyChange(e, index)}
+                              value={field.powerOfAttorney_lname}
+                              name="powerOfAttorney_lname"
                               type="text"
-                              name="healthCare_lname"
                               placeholder="Doe"
                               className="form-control"
-                              id={`lname_${index}`}
-                              //required={true}
+                              id="inputPassword"
                             />
                           </div>
                         </div>
@@ -296,14 +393,13 @@ const Attorney = () => {
                         <div className="mb-2 row">
                           <div className="col-sm-12">
                             <input
-                              onChange={(e) => healthCareChange(e, index)}
-                              value={field.healthCare_address}
+                              onChange={(e) => powerOfAttorneyChange(e, index)}
+                              value={field.powerOfAttorney_address}
+                              name="powerOfAttorney_address"
                               type="text"
-                              name="healthCare_address"
                               placeholder="Lorem Ipsum"
                               className="form-control"
-                              id={`address_${index}`}
-                              //required={true}
+                              id="inputPassword"
                             />
                           </div>
                         </div>
@@ -312,115 +408,20 @@ const Attorney = () => {
                         <div className="mb-2 row">
                           <div className="col-sm-12">
                             <input
-                              onChange={(e) => healthCareChange(e, index)}
-                              value={field.healthCare_phone}
+                              onChange={(e) => powerOfAttorneyChange(e, index)}
+                              value={field.powerOfAttorney_phone}
+                              name="powerOfAttorney_phone"
                               type="text"
-                              name="healthCare_phone"
                               placeholder="0121456789 / 0123456789"
                               className="form-control"
-                              id={`phone_${index}`}
+                              id="inputPassword"
                               maxLength={23}
                               minLength={10}
                             />
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </div>
-          <div className="row p-3">
-            <div className="col-sm-12">
-              <p style={{ color: 'blue' }}>VORSORGEVOLLMACHT</p>
-              &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
-              <input
-                type="checkbox"
-                onChange={powerOfAttorneyChange}
-                value={powerOfAttorney.AttorneyMasterData}
-                name="AttorneyMasterData"
-              />
-              <br />
-              <p style={{ color: 'blue' }}>Bevollmächtigte Person(en):</p>
-              &nbsp;Datensatz aus Gesundheitsvollmacht übernehmen&nbsp;&nbsp;&nbsp;
-              <input
-                type="checkbox"
-                onChange={powerOfAttorneyChange}
-                value={powerOfAttorney.adoptDataFromHealthcare}
-                name="adoptDataFromHealthcare"
-              />
-              <div className="row">
-                <div className="col-sm-3">Vorname</div>
-                <div className="col-sm-3">Nachname</div>
-                <div className="col-sm-3">Adresse</div>
-                <div className="col-sm-3">Telefone</div>
-              </div>
-              {powerOfAttorney.powerOfAttorneyData &&
-                powerOfAttorney.powerOfAttorneyData.map((field, index) => (
-                  <div className="row mb-2" key={index}>
-                    <div className="col-sm-3">
-                      <div className="row">
-                        <div className="col-sm-12">
-                          <input
-                            onChange={(e) => powerOfAttorneyChange(e, index)}
-                            value={field.powerOfAttorney_fname}
-                            name="powerOfAttorney_fname"
-                            type="text"
-                            placeholder="John"
-                            className="form-control"
-                            id="inputPassword"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-sm-3">
-                      <div className="mb-2 row">
-                        <div className="col-sm-12">
-                          <input
-                            onChange={(e) => powerOfAttorneyChange(e, index)}
-                            value={field.powerOfAttorney_lname}
-                            name="powerOfAttorney_lname"
-                            type="text"
-                            placeholder="Doe"
-                            className="form-control"
-                            id="inputPassword"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-sm-3">
-                      <div className="mb-2 row">
-                        <div className="col-sm-12">
-                          <input
-                            onChange={(e) => powerOfAttorneyChange(e, index)}
-                            value={field.powerOfAttorney_address}
-                            name="powerOfAttorney_address"
-                            type="text"
-                            placeholder="Lorem Ipsum"
-                            className="form-control"
-                            id="inputPassword"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-sm-3">
-                      <div className="mb-2 row">
-                        <div className="col-sm-12">
-                          <input
-                            onChange={(e) => powerOfAttorneyChange(e, index)}
-                            value={field.powerOfAttorney_phone}
-                            name="powerOfAttorney_phone"
-                            type="text"
-                            placeholder="0121456789 / 0123456789"
-                            className="form-control"
-                            id="inputPassword"
-                            maxLength={23}
-                            minLength={10}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    {/* <div className="col-sm-1">
+                      {/* <div className="col-sm-1">
                         {index === powerOfAttorney.powerOfAttorneys.length - 1 && (
                           <button
                             style={{ background: 'none', border: '1px solid pink' }}
@@ -430,56 +431,57 @@ const Attorney = () => {
                           </button>
                         )}
                       </div> */}
-                  </div>
-                ))}
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row p-3">
-          <div className="col-sm-12">
-            <p style={{ color: 'blue' }}>BETREUUNGSVER FÜGUNG</p>
-            &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
-            <input
-              type="checkbox"
-              onChange={careProvisionChange}
-              value={careProvision.CareProvisionMasterData}
-              name="CareProvisionMasterData"
-            />
+          <div className="row p-3">
+            <div className="col-sm-12">
+              <p style={{ color: 'blue' }}>BETREUUNGSVER FÜGUNG</p>
+              &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
+              <input
+                type="checkbox"
+                onChange={careProvisionChange}
+                value={careProvision.CareProvisionMasterData}
+                name="CareProvisionMasterData"
+              />
+            </div>
           </div>
-        </div>
-        <hr />
-        <div className="row p-3">
-          <div className="col-sm-12">
-            <p style={{ color: 'blue' }}>VOLLMACHT Z UR A B SICHERUNG DES DIGITALEN ER B ES</p>
-            &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
-            <input
-              type="checkbox"
-              onChange={securingattorneyChange}
-              value={securingattorney.SecuringMasterData}
-              name="SecuringMasterData"
-            />
+          <hr className="mx-3" />
+          <div className="row p-3">
+            <div className="col-sm-12">
+              <p style={{ color: 'blue' }}>VOLLMACHT Z UR A B SICHERUNG DES DIGITALEN ER B ES</p>
+              &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
+              <input
+                type="checkbox"
+                onChange={securingattorneyChange}
+                value={securingattorney.SecuringMasterData}
+                name="SecuringMasterData"
+              />
+            </div>
           </div>
-        </div>
-        <hr />
-        <div className="row ">
-          <div className="col-sm-9"></div>
-          <div className="col-sm-3 mb-3">
-            <button
-              type="button"
-              className="btn btn"
-              style={{ background: '#d04545', color: 'white' }}
-            >
-              Abbrechen
-            </button>
-            &nbsp; &nbsp;
-            <button
-              onClick={saveData}
-              type="button"
-              style={{ background: '#0b5995', color: 'white' }}
-              className="btn btn"
-            >
-              Speichern Sie
-            </button>
+          <hr className="mx-3" />
+          <div className="row ">
+            <div className="col-sm-9"></div>
+            <div className="col-sm-3 mb-3">
+              <button
+                type="button"
+                className="btn btn"
+                style={{ background: '#d04545', color: 'white' }}
+              >
+                Abbrechen
+              </button>
+              &nbsp; &nbsp;
+              <button
+                onClick={saveData}
+                type="button"
+                style={{ background: '#0b5995', color: 'white' }}
+                className="btn btn"
+              >
+                Speichern Sie
+              </button>
+            </div>
           </div>
         </div>
         <ToastContainer />

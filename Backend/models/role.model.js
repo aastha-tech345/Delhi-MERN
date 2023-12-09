@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const rolePermissionSchema = new mongoose.Schema({
-    p_add: { type: String },
+    p_show: { type: String },
     p_edit: { type: String },
-    p_view: { type: String },
+    p_export: { type: String },
     p_delete: { type: String },
     ownership_check: { type: String },
     section_name: { type: String },

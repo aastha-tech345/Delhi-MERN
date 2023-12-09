@@ -7,6 +7,7 @@ const keysecret = "asbndjhdjdkflfdghgj";
 
 exports.register = async (req, res) => {
   try {
+<<<<<<< HEAD
     const {
       username,
       password,
@@ -29,6 +30,9 @@ exports.register = async (req, res) => {
       employee_lname,
       user_id,
     } = req.body;
+=======
+    const { username, password, email, role, employee_creation } = req.body;
+>>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
 
     let userData;
 
@@ -118,6 +122,7 @@ exports.register = async (req, res) => {
 
 exports.getData = async (req, res) => {
   try {
+<<<<<<< HEAD
     // const role = req.body.role;
     // let query = {};
     // if (role === "user") {
@@ -127,6 +132,11 @@ exports.getData = async (req, res) => {
     // } else if (role === "admin") {
     //   query = { role: "admin" };
     // }
+=======
+    const users = await UserModel.User.find().populate(
+      "employee_creation.users.role"
+    );
+>>>>>>> 8e56815e20b1887101f44c5659e633f2f93feea2
 
     // const users = await UserModel.User.find(query);
     const users = await UserModel.User.find();
@@ -167,54 +177,26 @@ exports.getRegisterUpdate = async (req, res) => {
 
 exports.addUser = async (req, res) => {
   try {
-    const user = await UserModel.User.findOne({ _id: req.params.id });
+    const existingUser = await UserModel.User.findById(req.params.id);
 
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
-    }
+    existingUser.employee_creation = [
+      ...existingUser.employee_creation,
+      req.body,
+    ];
 
-    const { user_name, user_email, roll } = req.body;
+    const updatedUser = await existingUser.save();
 
-    if (!user_name || !user_email || !roll) {
-      return res
-        .status(400)
-        .send({ message: "user_name, user_email, and roll are required" });
-    }
-
-    // Check if user_creation is an array, if not, initialize it as an empty array
-    if (!Array.isArray(user.user_creation)) {
-      user.user_creation = [];
-    }
-
-    // Push a new object into the user_creation array
-    user.user_creation.push({
-      users: {
-        user_name,
-        user_email,
-        roll,
-      },
-      password: {
-        user_name,
-        user_email,
-        roll,
-      },
-      localization: null,
-      notification: null,
-      advanced: null,
+    return res.status(200).json({
+      success: true,
+      data: updatedUser,
     });
-
-    const record = await user.save();
-
-    res.status(201).send(record);
   } catch (error) {
-    console.error(error); // Log the error to the console
-
-    // Provide a more detailed error message in the response
     res
       .status(500)
       .send({ message: "Internal Server Error", error: error.message });
   }
 };
+
 
 exports.login = async (req, res) => {
   try {

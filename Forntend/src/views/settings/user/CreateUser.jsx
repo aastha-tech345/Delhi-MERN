@@ -14,6 +14,36 @@ const CreateUser = () => {
   const [showInviteUserModal, setShowInviteUserModal] = useState(false)
   const [show, setShow] = useState(false)
   const [activeTab, setActiveTab] = useState('nav-home')
+  const [roleList, setRoleList] = useState([])
+  const [roleId, setRoleId] = useState('')
+  const [employee, setEmployee] = useState({
+    f_name: '',
+    l_name: '',
+    street: '',
+    plz: '',
+    city: '',
+    email: '',
+    location: '',
+    tel: '',
+    mob: '',
+    // select_role: '',
+    role: '',
+  })
+  const [employeData, setEmployeData] = useState({
+    users: {},
+    password: {
+      password: 'null',
+    },
+    localization: {
+      location: 'null',
+    },
+    advanced: {
+      advanced: 'null',
+    },
+    notification: {
+      notification: 'null',
+    },
+  })
 
   const [data, setData] = useState({
     employee_fname: '',

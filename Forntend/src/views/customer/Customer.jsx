@@ -5,11 +5,17 @@ import { ImLocation2 } from 'react-icons/im'
 import { useNavigate } from 'react-router-dom'
 
 const Customer = () => {
-  const [activeTab, setActiveTab] = useState('')
+  // const [activeTab, setActiveTab] = useState('')
   const navigate = useNavigate()
+  let activeTab = localStorage.getItem('tabId')
 
-  const handleTabClick = (tabId, name) => {
-    setActiveTab(tabId)
+  const handleTabClick = (tabId, name, e) => {
+    if (e && e.target.tagName.toLowerCase() === 'a') {
+      e.preventDefault()
+    }
+    localStorage.setItem('tabId', tabId)
+    // setActiveTab(id)
+    // setActiveTab(tabId)
     if (name === 'KlientInnen') {
       return navigate('/customer/customer_info')
     } else if (name === 'Kontakte') {
