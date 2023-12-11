@@ -11,10 +11,24 @@ const userSchema = new Schema({
     unique: true,
   },
   password: { type: String },
+  mobile: { type: String },
   gender: { type: String },
   lname: { type: String },
-  mobile: { type: String },
   profileImage: { type: String },
+  street: { type: String },
+  plz: { type: String },
+  city: { type: String },
+  fname: { type: String },
+  // lname: { type: String },
+  location: { type: String },
+  tel: { type: String },
+  // plz: { type: String },
+  // city: { type: String },
+  timeZone: { type: String },
+  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" }, // manager hr type roles
+  user_role: { type: String }, // admin user employee
+  parent_id: { type: mongoose.Schema.Types.ObjectId },
+  added_by: { type: String },
   tokens: [
     {
       token: {
@@ -25,26 +39,7 @@ const userSchema = new Schema({
   verifytoken: {
     type: String,
   },
-  role: {
-    type: String,
-  },
-  street: { type: String },
-  plz: { type: String },
-  city: { type: String },
-  employee_id: { type: String },
-  employee_fname: { type: String },
-  employee_lname: { type: String },
-  employee_location: { type: String },
-  employee_password: { type: String },
-  employee_email: { type: String },
-  employee_mobile: { type: String },
-  employee_tel: { type: String },
-  employee_street: { type: String },
-  employee_plz: { type: String },
-  employee_city: { type: String },
-  employee_timeZone: { type: String },
-  user_id: { type: mongoose.Schema.Types.ObjectId },
-  parent_id: { type: mongoose.Schema.Types.ObjectId },
+  // user_id: { type: mongoose.Schema.Types.ObjectId },
 });
 
 userSchema.pre("save", async function (next) {

@@ -4,6 +4,20 @@ const router = express.Router();
 const userCtrl = require("../controller/user.controller");
 // const forgotPasswordCtrl = require('../controller/forgotPassword.controller');
 const auth = require("../auth/auth");
+const multer = require("multer");
+const path=require("path")
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, path.resolve(__dirname, "../public/user")); // Set your desired destination folder
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+      cb(null, file.fieldname + "-" + uniqueSuffix + ".pdf");
+    },
+  });
+  
+  const upload = multer({ storage: storage });
 
 /**
  * @swagger
@@ -91,11 +105,11 @@ router.post("/register/record/adduser/:id", userCtrl.addUser);
 // router.get('/register/record/:id', userCtrl.getRegisterData);
 // router.get('/register/user/record/:id', userCtrl.getUserData);
 // router.delete('/register/user/record/:id', userCtrl.deleteObjectById);
-
+router.get("/get/employeeData/:id",userCtrl.getEmployeeData)
 router.post("/forgot-password", userCtrl.forgotPassword);
 router.get("/forgotpassword", userCtrl.forgotPasswordVerification);
 router.post("/changePassword", userCtrl.changePassword);
 router.get("/register/:id", userCtrl.getRegisterData);
-router.put("/register/:id", userCtrl.getRegisterUpdate);
-
+// router.put("/register/:id", userCtrl.getRegisterUpdate);
+router.put("/update/:id",upload.single("profileImage") ,userCtrl.updateUser);
 module.exports = router;
