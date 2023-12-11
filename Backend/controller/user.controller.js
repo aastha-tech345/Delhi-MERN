@@ -11,36 +11,32 @@ exports.register = async (req, res) => {
       username,
       password,
       email,
-      role,
-      lname,
+      user_role,
       mobile,
       gender,
-      employee_password,
-      employee_id,
-      employee_email,
-      employee_location,
-      employee_mobile,
-      employee_tel,
-      employee_timeZone,
-      employee_street,
-      employee_plz,
-      employee_city,
-      employee_fname,
-      employee_lname,
-      user_id,
+      location,
+      tel,
+      timeZone,
+      street,
+      plz,
+      city,
+      fname,
+      lname,
+      parent_id,
+      role,
     } = req.body;
 
     let userData;
 
-    if (role === "admin") {
+    if (user_role === "admin") {
       userData = {
         username,
         password,
         email,
-        role: "admin",
+        user_role: "admin",
       };
-    } else if (role === "user") {
-      const admin = await UserModel.User.findOne({ role: "admin" });
+    } else if (user_role === "user") {
+      const admin = await UserModel.User.findOne({ user_role: "admin" });
 
       if (admin) {
         userData = {
@@ -49,9 +45,8 @@ exports.register = async (req, res) => {
           email,
           gender,
           lname,
-          role,
+          user_role,
           mobile,
-          added_by: null,
           parent_id: admin._id,
         };
       } else {
@@ -59,32 +54,31 @@ exports.register = async (req, res) => {
           .status(400)
           .send({ message: "No admin found to link as parent" });
       }
-    } else if (role === "employee") {
-      const user = await UserModel.User.findOne({ role: "user" });
+    } else if (user_role === "employee") {
+      // const user = await UserModel.User.findOne({ user_role: "user" });
 
-      if (user) {
-        userData = {
-          employee_id,
-          username: employee_fname,
-          password: employee_password,
-          email: employee_email,
-          employee_lname,
-          employee_location,
-          employee_mobile,
-          employee_tel,
-          employee_timeZone,
-          employee_street,
-          employee_plz,
-          employee_city,
-          role,
-          added_by: null,
-          user_id,
-        };
-      } else {
-        return res
-          .status(400)
-          .send({ message: "No user found to link as parent" });
-      }
+      // if (user) {
+      userData = {
+        fname,
+        lname,
+        password,
+        mobile,
+        email,
+        location,
+        tel,
+        timeZone,
+        street,
+        plz,
+        city,
+        user_role, //admin employee user
+        role, //Manager HR
+        parent_id,
+      };
+      // } else {
+      //   return res
+      //     .status(400)
+      //     .send({ message: "No user found to link as parent" });
+      // }
     } else {
       return res.status(400).send({ message: "Invalid role value" });
     }
@@ -116,7 +110,8 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.getData = async (req, res) => {
+// update Login User
+exports.updateUser = async (req, res) => {
   try {
     // const role = req.body.role;
     // let query = {};
@@ -130,10 +125,69 @@ exports.getData = async (req, res) => {
     // const users = await UserModel.User.find().populate(
     //   "employee_creation.users.role"
     // );
+    const user = await UserModel.User.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...req.body,
+        profileImage: req?.file?.filename,
+      },
+      {
+        new: true,
+      }
+    );
 
-    // const users = await UserModel.User.find(query);
-    const users = await UserModel.User.find();
-    res.status(200).json({
+    return res.status(200).json({
+      success: true,
+      message: "User Updatd Successfully",
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// update Employee Details
+exports.updateEmployeeDetails = async () => {
+  try {
+    const employee = await UserModel.User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Employee Updated Successfully",
+      data: employee,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// get Employee under the user
+exports.getEmployeeData = async (req, res) => {
+  try {
+    const usermployees = await UserModel.User.find({
+      parent_id: req.params.id,
+    }).populate("role");
+
+    return res.status(200).json({
+      success: true,
+      message: "User Employees Data Found",
+      data: usermployees,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getData = async (req, res) => {
+  try {
+    const users = await UserModel.User.find().populate("role");
+
+    return res.status(200).json({
       status: 200,
       data: users,
       message: "Data Find Successfully",
@@ -190,7 +244,6 @@ exports.addUser = async (req, res) => {
   }
 };
 
-
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -201,7 +254,9 @@ exports.login = async (req, res) => {
         .send({ message: "Please fill in all the details" });
     }
 
-    let user = await UserModel.User.findOne({ email }).maxTimeMS(20000);
+    let user = await UserModel.User.findOne({ email })
+      .maxTimeMS(20000)
+      .populate("role");
 
     if (user) {
       let validPassword = await bcrypt.compare(password, user.password);

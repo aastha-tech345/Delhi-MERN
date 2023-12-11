@@ -18,7 +18,7 @@ const Roll = () => {
     p_show: 'no',
     p_delete: 'no',
     p_export: 'no',
-    section_name: 'client',
+    section_name: 'Klientlnnen',
     ownership_check: 'false',
   })
   const [permissionDashboard, setPermissionDashboard] = useState({
@@ -26,7 +26,15 @@ const Roll = () => {
     p_show: 'no',
     p_delete: 'no',
     p_export: 'no',
-    section_name: 'dashboard',
+    section_name: 'Dashboard',
+    ownership_check: 'false',
+  })
+  const [permissionSetting, setPermissionSetting] = useState({
+    p_edit: 'no',
+    p_show: 'no',
+    p_delete: 'no',
+    p_export: 'no',
+    section_name: 'Einstellungen',
     ownership_check: 'false',
   })
   const [role, setRole] = useState({
@@ -49,6 +57,13 @@ const Roll = () => {
     }))
   }
 
+  const handleSetSettingName = (name) => {
+    setPermissionSetting((prevData) => ({
+      ...prevData,
+      section_name: name,
+    }))
+  }
+
   const handlePermissionDataChange = (e) => {
     const { name, value } = e.target
     setPermissionData({ ...permissionData, [name]: value })
@@ -59,23 +74,23 @@ const Roll = () => {
     setPermissionDashboard({ ...permissionDashboard, [name]: value })
   }
 
+  const handlePermissionSettingChange = (e) => {
+    const { name, value } = e.target
+    setPermissionSetting({ ...permissionSetting, [name]: value })
+  }
+
   useEffect(() => {
     setRole((prevRole) => ({
       ...prevRole,
       role_name: rolePermission,
-      permission: [permissionData, permissionDashboard],
+      permission: [permissionData, permissionDashboard, permissionSetting],
     }))
-  }, [rolePermission, permissionData, permissionDashboard])
+  }, [rolePermission, permissionData, permissionDashboard, permissionSetting])
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault()
       const res = await postFetchData(`${apiUrl}/role/create_role`, role)
-      // console.log('rolePermission', rolePermission)
-      // console.log('permissionData', permissionData)
-      // console.log('role', role)
-      // console.log('role', res)
-
       if (res?.status === 201) {
         setUpdate(!update)
         notify('Role Created Successfully')
@@ -91,9 +106,9 @@ const Roll = () => {
     setRole((prevRole) => ({
       ...prevRole,
       role_name: rolePermission,
-      permission: [permissionData, permissionDashboard],
+      permission: [permissionData, permissionDashboard, permissionSetting],
     }))
-  }, [rolePermission, permissionData, permissionDashboard])
+  }, [rolePermission, permissionData, permissionDashboard, permissionSetting])
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -221,7 +236,7 @@ const Roll = () => {
                 <h5 className="mt-3 fw-bold">Dashboard</h5>
                 <div>
                   <div className="row" onClick={() => handleSetDashboardName('Dashboard')}>
-                    <div className="row" onClick={() => handleSetName('Dashboard')}>
+                    <div className="row">
                       <div className="col-sm-3 mt-2">Anzeigen</div>
                       <div className="col-sm-5"></div>
                       {/*dropdown*/}
@@ -292,6 +307,92 @@ const Roll = () => {
                             value={permissionDashboard.p_export}
                             style={{ border: 'none', background: 'none' }}
                             onChange={handlePermissionDashboardChange}
+                          >
+                            <option value="only owned">Nur im Besitz</option>
+                            <option value="Withdraw">Widerrufen</option>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <h5 className="mt-3 fw-bold">Setting</h5>
+                <div>
+                  <div className="row" onClick={() => handleSetSettingName('Einstellungen')}>
+                    <div className="row">
+                      <div className="col-sm-3 mt-2">Anzeigen</div>
+                      <div className="col-sm-5"></div>
+                      {/*dropdown*/}
+                      <div className="col-sm-4 mt-2">
+                        <div className="input-group">
+                          <select
+                            style={{ border: 'none', background: 'none' }}
+                            name="p_show"
+                            value={permissionSetting.p_show}
+                            onChange={handlePermissionSettingChange}
+                          >
+                            <option value="only owned">Nur im Besitz</option>
+                            <option value="Withdraw">Widerrufen</option>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-3 mt-2">Bearbeiten</div>
+                      <div className="col-sm-5"></div>
+                      {/*dropdown*/}
+                      <div className="col-sm-4 mt-2">
+                        <div className="input-group">
+                          <select
+                            name="p_edit"
+                            value={permissionSetting.p_edit}
+                            style={{ border: 'none', background: 'none' }}
+                            onChange={handlePermissionSettingChange}
+                          >
+                            <option value="only owned">Nur im Besitz</option>
+                            <option value="Withdraw">Widerrufen</option>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-3 mt-2">Löschen</div>
+                      <div className="col-sm-5"></div>
+                      {/*dropdown*/}
+                      <div className="col-sm-4 mt-2">
+                        <div className="input-group">
+                          <select
+                            style={{ border: 'none', background: 'none' }}
+                            name="p_delete"
+                            value={permissionSetting.p_delete}
+                            onChange={handlePermissionSettingChange}
+                          >
+                            <option value="only owned">Nur im Besitz</option>
+                            <option value="Withdraw">Widerrufen</option>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-3 mt-2">Exportieren</div>
+                      <div className="col-sm-5"></div>
+                      {/*dropdown*/}
+                      <div className="col-sm-4 mt-2">
+                        <div className="input-group">
+                          <select
+                            name="p_export"
+                            value={permissionSetting.p_export}
+                            style={{ border: 'none', background: 'none' }}
+                            onChange={handlePermissionSettingChange}
                           >
                             <option value="only owned">Nur im Besitz</option>
                             <option value="Withdraw">Widerrufen</option>

@@ -23,6 +23,7 @@ const Teams = React.lazy(() => import('./views/settings/team/Teams'))
 
 //email-template
 const EmailTemplate = React.lazy(() => import('./views/settings/email/EmailTemplate'))
+const EmailList = React.lazy(() => import('./views/settings/email/EmailList'))
 const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Filter = React.lazy(() => import('./views/settings/filter/Filter'))
 const Attorney = React.lazy(() => import('./views/customer/attorney/Attorney'))
@@ -43,7 +44,7 @@ if (auth) {
     { path: '/customer/contact', name: 'Kontakte', element: Contact },
     { path: '/customer/bills', name: 'Rechnungen', element: Bills },
     { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
-    { path: '/customer/description', name: 'Vollmachten', element: Description },
+    { path: '/customer/description', name: 'Aktivitat', element: Description },
     { path: '/customer/document', name: 'Dokumente', element: Document },
     { path: '/customer/services', name: 'SPV', element: Services },
     { path: '/settings', name: 'Einstellungen', element: Setting },
@@ -51,10 +52,11 @@ if (auth) {
     { path: '/settings/role', name: 'Rollen', element: Roll },
     { path: '/settings/createuser', name: 'MitarbeiterInnen', element: CreateUser },
     { path: '/team', name: 'Teams', element: Teams },
-    { path: '/settings/email', name: 'EmailTemplate', element: EmailTemplate },
+    { path: '/settings/email_info', name: 'E-Mail Vorlage', element: EmailTemplate },
+    { path: '/settings/email', name: 'E-Mail Vorlage', element: EmailList },
     { path: '/settings/filter', name: 'Filter', element: Filter },
-    { path: '/settings/print', name: 'DruckvorlagePrint', element: PrintTemplate }, // Updated name
-    { path: '/customer/attorney', name: 'DruckvorlageAttorney', element: Attorney }, // Updated name
+    { path: '/settings/print', name: 'Druckvorlage', element: PrintTemplate }, // Updated name
+    { path: '/customer/attorney', name: 'Vollmachten', element: Attorney }, // Updated name
   ]
 } else {
   routes = [{ path: '/login', element: Login }]

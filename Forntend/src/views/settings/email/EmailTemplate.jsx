@@ -1,9 +1,16 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import JoditEditor from 'jodit-react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { putFetchData } from 'src/Api'
 
 const EmailTemplate = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
   const editor = useRef(null)
   const [content, setContent] = useState('')
+  const notify = (dataa) => toast(dataa)
+  const navigate = useNavigate()
   const placeholder = `Hallo {{ activity.user }}
 
   Ihre {{ activity.title }} Aktivität ist fällig am {{ activity.due_date }}
@@ -13,94 +20,136 @@ const EmailTemplate = () => {
   const config = useMemo(
     () => ({
       readonly: false,
+      removeButtons: ['about'], // Use removeButtons instead of removeAbout
       placeholder: placeholder,
     }),
     [placeholder],
   )
+  let res = localStorage.getItem('EmailEditDetails')
+  let response = JSON.parse(res)
+  const [data, setData] = useState({
+    content: response?.content,
+    designation: response?.designation,
+  })
+
+  const handleChange = (value, name) => {
+    if (name) {
+      setData({ ...data, [name]: value })
+    } else {
+      setContent(value)
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    const form = e.currentTarget
+    if (form.checkValidity() === false) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    e.preventDefault()
+    try {
+      const { content, designation } = data
+      if (!content || !designation) {
+        return
+      }
+      const res = await putFetchData(`${apiUrl}/email/get_email/${response?._id}`, data)
+      if (res.status == 200) {
+        setData({
+          content: '',
+          designation: '',
+        })
+        notify('EmailTemplate Updated Successfully')
+        setTimeout(() => {
+          navigate('/settings/email')
+        }, 3000)
+      } else {
+        notify('Something Went Wrong')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
-      <div className="row card p-4">
-        <h5>E-Mail Vorlage</h5>
-        {/* Email template */}
+      <div className="card">
+        <h5 className="mx-3">E-Mail Vorlage Anmeldung</h5>
         <hr />
-        <div className="row card p-2">
-          <div className="col-sm-7">
-            <span>Template</span>&nbsp;&nbsp;
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              Aktivitätserinnerung
-              {/* Activity reminder */}
-            </button>
-            &nbsp;&nbsp;
-            <span>Schauplatz</span>&nbsp;&nbsp;
-            {/* Scene */}
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              en
-            </button>
-          </div>
+        <span className="mx-3 mb-1">Inhalt</span>
+        <div className="mx-3">
+          <JoditEditor
+            ref={editor}
+            value={data.content}
+            onChange={(value) => handleChange(value, 'content')}
+            config={config}
+            tabIndex={1}
+            onBlur={(newContent) => setContent(newContent)}
+          />
         </div>
-        <p>Thema</p>
-        <input
-          type="text"
-          className="form-control p-2"
-          placeholder="Ihre {{ activity.title }} Aktivität ist fällig am {{ activity.due_date }}"
-        />
-        <p>Inhalt</p>
-        <div className="row">
-          <div className="col-sm-12">
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={config}
-              tabIndex={1}
-              onBlur={(newContent) => setContent(newContent)}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <span>Platzhalter</span>
+        <br />
+
+        <span className=" mx-3 mb-2">Platzhalter</span>
+        <div className="mx-3">
           <textarea
+            value={data.designation}
+            onChange={(e) => handleChange(e.target.value, 'designation')}
             name=""
-            rows={15}
+            rows={25}
+            cols={10}
             id=""
             className="form-control"
-            placeholder={`{{ Aktivität.Titel }} - Titel
+            placeholder={`
+  {{ Aktivität.Titel }} - Titel
+
   {{ activity.type }} - Typ der Aktivität
+  
   {{ activity.due_date }} - Fälligkeitsdatum
+
   {{ activity.end_date }} - Enddatum
+  
   {{ activity.reminder_minutes_before }} - Erinnerung
+
   {{ activity.user }} - Besitzer
+
   {{ activity.guests }} - Gäste
+  
   {{ activity.description }} - Beschreibung
+
   {{ activity.owner_assigned_date }} - Zugewiesenes Datum des Eigentümers
+
   {{{ activity.note }}} - Notiz
+
   {{ activity.creator }} - Erstellt von
+
   {{ activity.reminded_at }} - Datum der gesendeten Erinnerung
+
   {{ activity.completed_at }} - Erledigt am
-  {{ activity.updated_at }} - Aktualisiert am`}
+
+  {{ activity.updated_at }} - Aktualisiert am
+  `}
           ></textarea>
         </div>
         <br />
-        <div className="row">
-          <div className="col-sm-9"></div>
-          <div className="col-sm-3">
-            <button
-              type="button"
-              className="btn btn"
-              style={{ background: '#d04545', color: 'white' }}
-            >
-              Abbrechen
-            </button>
-            &nbsp; &nbsp;
-            <button
-              type="button"
-              style={{ background: '#0b5995', color: 'white' }}
-              className="btn btn"
-            >
-              Speichern
-            </button>
-          </div>
+        <div className="text-right">
+          <button
+            type="button"
+            className="btn btn"
+            style={{ background: '#d04545', color: 'white' }}
+          >
+            Abbrechen
+          </button>
+          &nbsp; &nbsp;
+          <button
+            type="button"
+            onClick={handleSubmit}
+            style={{ background: '#0b5995', color: 'white', marginRight: '15px' }}
+            className="btn btn"
+          >
+            Speichern
+          </button>
         </div>
+        <br />
+        <ToastContainer autoClose={2000} />
       </div>
     </>
   )

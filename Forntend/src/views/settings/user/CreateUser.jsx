@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { Table } from 'antd'
+import { Divider, Radio, Table } from 'antd'
+import { GrFormAdd, GrAdd } from 'react-icons/gr'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd, MdDelete } from 'react-icons/md'
 import { GrEdit } from 'react-icons/gr'
-import { AiFillSetting } from 'react-icons/ai'
+import { Switch } from 'antd'
+import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
+import { getFetch, postFetchData } from 'src/Api'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import User from '../User'
-import { postFetchData } from 'src/Api'
 
 const CreateUser = () => {
+  const loginUser = localStorage.getItem('record')
+  let dataa = JSON.parse(loginUser)
+  const notify = (dataa) => toast(dataa)
+
   const [record, setRecord] = useState([])
+  const [user_email, setUserEmail] = useState()
   const apiUrl = process.env.REACT_APP_API_URL
+  const [user_name, setUserName] = useState()
+  const [roll, setRoll] = useState()
   const [selectionType, setSelectionType] = useState('checkbox')
   const [showInviteUserModal, setShowInviteUserModal] = useState(false)
   const [show, setShow] = useState(false)
@@ -17,66 +28,47 @@ const CreateUser = () => {
   const [roleList, setRoleList] = useState([])
   const [roleId, setRoleId] = useState('')
   const [employee, setEmployee] = useState({
-    f_name: '',
-    l_name: '',
+    fname: '',
+    lname: '',
     street: '',
     plz: '',
     city: '',
     email: '',
     location: '',
     tel: '',
-    mob: '',
-    // select_role: '',
+    mobile: '',
     role: '',
+    password: '123456',
+    user_role: 'employee',
+    timezone: '5:30',
+    parent_id: dataa?.user?._id,
+    added_by: dataa?.user?.username,
   })
-  const [employeData, setEmployeData] = useState({
-    users: {},
-    password: {
-      password: 'null',
-    },
-    localization: {
-      location: 'null',
-    },
-    advanced: {
-      advanced: 'null',
-    },
-    notification: {
-      notification: 'null',
-    },
-  })
+  // const [employeData, setEmployeData] = useState({
+  //   users: {},
+  //   password: {
+  //     password: 'null',
+  //   },
+  //   localization: {
+  //     location: 'null',
+  //   },
+  //   advanced: {
+  //     advanced: 'null',
+  //   },
+  //   notification: {
+  //     notification: 'null',
+  //   },
+  // })
 
-  const [data, setData] = useState({
-    employee_fname: '',
-    employee_lname: '',
-    employee_password: '',
-    employee_email: '',
-    employee_location: '',
-    employee_mobile: '',
-    employee_tel: '',
-    employee_timeZone: '',
-    employee_street: '',
-    employee_plz: '',
-    employee_city: '',
-  })
-  const [employee_id, setEmployeeId] = useState('')
-
-  const generateRandomId = () => {
-    return 'HVD' + Math.floor(1000 + Math.random() * 9000)
-  }
-  let employee_timeZone = 'timeZOne'
-  let employee_password = 'EMP876'
-
-  const handleChange = (e) => {
-    const { name, value, type } = e.target
-    const newValue = type === 'radio' ? e.target.value : value
-    setData({ ...data, [name]: newValue })
-  }
   const handleTabClick = (tabId) => {
     setActiveTab(tabId)
   }
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  const onChange = (checked) => {
+    //console.log(`switch to ${checked}`)
+  }
   const handleShowInviteUserModal = () => {
     setShowInviteUserModal(true)
   }
@@ -85,101 +77,54 @@ const CreateUser = () => {
     setShowInviteUserModal(false)
   }
 
-  let value = localStorage.getItem('record')
-  value = JSON.parse(value)
-  let user_id = value.user._id
-  // console.log('id', user_id)
-  let rolename = value.user.role
-  // console.log(rolename)
-  let role = 'employee'
+  const handleChange = (e) => {
+    const { name, value } = e.target
 
-  let records = { ...data, employee_timeZone, employee_password, role, user_id, employee_id }
+    setEmployee({ ...employee, [name]: value })
+  }
 
-  const saveData = async () => {
-    console.log(records)
+  let localUserData = localStorage.getItem('record')
+  let mainRes = JSON.parse(localUserData)
+  let userId = mainRes?.user?._id
+
+  const handleSubmit = async (e) => {
     try {
-      if (
-        !employee_timeZone ||
-        !data?.employee_city ||
-        !data?.employee_email ||
-        !data?.employee_lname ||
-        !data?.employee_location ||
-        !data?.employee_fname ||
-        !data?.employee_plz ||
-        !data?.employee_street ||
-        !data?.employee_tel ||
-        !data?.employee_mobile ||
-        !employee_timeZone ||
-        !role
-      ) {
-      } else {
-        if (rolename === 'user') {
-          const response = await postFetchData(`${apiUrl}/user/register`, records)
-          // console.log(response)
-          if (response.response.status === 406) {
-          }
-        }
-        setData('')
-        getDetails()
+      e.preventDefault()
+      const res = await postFetchData(`${apiUrl}/user/register`, employee)
+      console.log('response', res)
+      if (res.status === 201) {
+        notify('Employe Created Successfully')
+        return setShow(false)
       }
     } catch (error) {
-      console.error('Error during API call:', error)
+      console.log(error)
     }
   }
 
-  const getDetails = async () => {
-    try {
-      const result = await fetch(`${apiUrl}/user/all`)
-      const data = await result.json()
-      setRecord(data)
-    } catch (error) {
-      console.error('Error fetching employee records:', error)
-    }
-  }
-  let creation = record.data
-  let employeeData
-
-  if (Array.isArray(creation)) {
-    employeeData = creation.filter((item) => item.role === 'employee')
-    console.log(employeeData)
-  } else {
-    console.error('record.data is not an array or is undefined.')
-  }
-
-  useEffect(() => {
-    getDetails()
-    setEmployeeId(generateRandomId())
-    // handleTabClick('nav-benutzer')
-  }, [])
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      // Column configuration not to be checked
-      name: record.name,
-    }),
-  }
+  // useEffect(() => {
+  //   setEmployeData((prevRole) => ({
+  //     ...prevRole,
+  //     users: employee,
+  //   }))
+  // }, [employee])
 
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'employee_id',
+      dataIndex: '_id',
       render: (text) => <a>{text}</a>,
     },
     {
       title: 'NAME',
-      dataIndex: 'username',
+      dataIndex: 'user_name',
     },
     {
       title: 'E-Mail Adresse',
-      dataIndex: 'email',
+      dataIndex: 'user_email', // Change 'email address' to 'emailAddress'
     },
     {
       title: 'Super Verwalter',
-      dataIndex: 'superVerwalter',
+      dataIndex: 'superVerwalter', // Change 'super verwalter' to 'superVerwalter'
     },
     {
       title: 'AKTION',
@@ -195,10 +140,64 @@ const CreateUser = () => {
     },
   ]
 
+  const data = [
+    {
+      _id: '1',
+      user_name: 'John Brown',
+      age: 32,
+      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
+      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
+      superVerwalter: 'Yes',
+      action: 'Edit', // Provide appropriate action value
+    },
+    {
+      _id: '2',
+      user_name: 'Jim Green',
+      age: 42,
+      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
+      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
+      superVerwalter: 'No',
+      action: 'Delete', // Provide appropriate action value
+    },
+    {
+      _id: '3',
+      user_name: 'Joe Black',
+      age: 32,
+      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
+      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
+      superVerwalter: 'Yes',
+      action: 'View', // Provide appropriate action value
+    },
+  ]
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      name: record.name,
+    }),
+  }
+
+  const getRole = async () => {
+    try {
+      const res = await getFetch(`${apiUrl}/role/get_role`)
+      setRoleList(res?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  let localData = localStorage.getItem('updateFunc')
+  useEffect(() => {
+    getRole()
+  }, [localData])
+
   return (
     <div style={{ background: 'white' }}>
-      <div className="topBtnBox">
-        <User />
+      <User />
+      <br />
+      <div className="topBtnBox mx-3">
         <div className="">
           <button
             className="btn btn"
@@ -293,13 +292,25 @@ const CreateUser = () => {
                   aria-labelledby="nav-benutzer-tab"
                 >
                   <div className="row">
+                    {/* <div className="col-sm-6">
+                      <input
+                        className="form-control"
+                        placeholder="Name"
+                        type="text"
+                        name="user_name"
+                        value={user_name}
+                        onChange={(e) => {
+                          setUserName(e.target.value)
+                        }}
+                      />
+                    </div> */}
                     <div className="col-sm-6">
                       <input
                         className="form-control"
                         placeholder="Name"
                         type="text"
-                        name="employee_fname"
-                        value={data.employee_fname}
+                        name="fname"
+                        value={employee.fname}
                         onChange={handleChange}
                       />
                       <br />
@@ -307,59 +318,74 @@ const CreateUser = () => {
                         className="form-control"
                         placeholder="Straße mit Hausnummer"
                         type="text"
-                        name="employee_street"
-                        value={data.employee_street}
+                        name="street"
+                        value={employee.street}
                         onChange={handleChange}
                       />
                       <br />
                       <input
                         className="form-control"
-                        name="employee_city"
-                        value={data.employee_city}
-                        onChange={handleChange}
                         placeholder="Stadt"
                         type="text"
+                        name="city"
+                        value={employee.city}
+                        onChange={handleChange}
                       />
 
                       <br />
                       <input
                         className="form-control"
-                        name="employee_location"
-                        value={data.employee_location}
-                        onChange={handleChange}
                         placeholder="Standort"
                         type="text"
+                        name="location"
+                        value={employee.location}
+                        onChange={handleChange}
                       />
                       <br />
-                      <select className="form-control" type="text" name="roll">
-                        <option value="employee">Rolle</option>
+                      <select
+                        className="form-control"
+                        // type="text"
+                        name="role"
+                        value={employee.role}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Role</option>
+                        {roleList?.map((value) => {
+                          const { role_name, _id } = value
+
+                          return (
+                            <option key={_id} value={_id}>
+                              {role_name}
+                            </option>
+                          )
+                        })}
                       </select>
                     </div>
                     <div className="col-sm-6">
                       <input
                         className="form-control"
                         placeholder="Vorname"
-                        type="email"
-                        name="employee_lname"
-                        value={data.employee_lname}
+                        type="text"
+                        name="lname"
+                        value={employee.lname}
                         onChange={handleChange}
                       />
                       <br />
                       <input
                         className="form-control"
-                        name="employee_plz"
-                        value={data.employee_plz}
-                        onChange={handleChange}
                         type="text"
                         placeholder="PLZ"
+                        name="plz"
+                        value={employee.plz}
+                        onChange={handleChange}
                       />
                       <br />
                       <input
                         className="form-control"
                         placeholder="E-Mail Adresse"
                         type="email"
-                        name="employee_email"
-                        value={data.employee_email}
+                        name="email"
+                        value={employee.email}
                         onChange={handleChange}
                       />
                       <br />
@@ -369,15 +395,10 @@ const CreateUser = () => {
                         placeholder="Telefon"
                         maxLength={10}
                         minLength={2}
-                        name="employee_tel"
-                        value={data.employee_tel}
-                        onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                          if (/^\+?[0-9]*$/.test(inputValue)) {
-                            handleChange({ target: { name: 'employee_tel', value: inputValue } })
-                          }
-                        }}
-                        type="tel"
+                        type="phone"
+                        name="tel"
+                        value={employee.tel}
+                        onChange={handleChange}
                       />
                       <br />
                       <input
@@ -385,37 +406,11 @@ const CreateUser = () => {
                         placeholder="Mobil"
                         maxLength={10}
                         minLength={2}
-                        name="employee_mobile"
-                        value={data.employee_mobile}
-                        onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                          if (/^\+?[0-9]*$/.test(inputValue)) {
-                            handleChange({ target: { name: 'employee_mobile', value: inputValue } })
-                          }
-                        }}
-                        type="tel"
+                        type="phone"
+                        name="mobile"
+                        value={employee.mobile}
+                        onChange={handleChange}
                       />
-                    </div>
-                    <div className="row mb-2">
-                      <div className="col-sm-12">
-                        <div style={{ float: 'right' }}>
-                          <button
-                            className="btn"
-                            onClick={handleClose}
-                            style={{ background: '#d04545', color: 'white' }}
-                          >
-                            Abbrechen
-                          </button>
-                          &nbsp;&nbsp;
-                          <button
-                            className="btn mx-2"
-                            onClick={saveData}
-                            style={{ background: '#0b5995', color: 'white' }}
-                          >
-                            Speichern
-                          </button>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -435,7 +430,29 @@ const CreateUser = () => {
                 ></div>
               </div>
             </Modal.Body>
-            <Modal.Footer></Modal.Footer>
+            <Modal.Footer>
+              <div className="row mb-2">
+                <div className="col-sm-12">
+                  <div style={{ float: 'right' }}>
+                    <button
+                      className="btn"
+                      onClick={handleClose}
+                      style={{ background: '#d04545', color: 'white' }}
+                    >
+                      Abbrechen
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      className="btn mx-2"
+                      onClick={handleSubmit}
+                      style={{ background: '#0b5995', color: 'white' }}
+                    >
+                      Speichern
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Modal.Footer>
           </Modal>
           &nbsp; &nbsp;
           <input
@@ -450,24 +467,18 @@ const CreateUser = () => {
           </button>
         </div>
       </div>
-      <div className="row p-3">
+      <div className="row mx-2">
         <Table
-          dataSource={employeeData}
-          columns={columns}
-          pagination={false}
-          rowKey={(record) => record._id}
           rowSelection={{
-            type: 'checkbox',
-            onChange: (selectedRowKeys, selectedRows) => {
-              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-            },
-            getCheckboxProps: (record) => ({
-              disabled: record.name === 'Disabled User',
-              name: record.name,
-            }),
+            type: selectionType,
+            ...rowSelection,
           }}
+          style={{ overflowX: 'auto' }}
+          columns={columns}
+          dataSource={data}
         />
       </div>
+      <ToastContainer />
     </div>
   )
 }
