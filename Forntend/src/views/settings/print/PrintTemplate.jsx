@@ -168,28 +168,29 @@ const PrintTemplate = () => {
           style={{
             background: 'white',
             Height: '640px',
-            // width: '1210px',
             borderRadius: '5px 5px 5px 5px ',
           }}
         >
-          <h3 className="ms-1 mt-1">Druckvorlage</h3>
-          <hr />
-          <div
-            style={{
-              border: '1px solid #ebedef',
-              height: '55px',
-              borderRadius: '5px 5px 5px 5px ',
-            }}
-          >
-            <button
-              className="btn btn ms-3 mt-2"
-              style={{ background: '#0b5995', color: 'white' }}
-              onClick={handleShow}
+          <h4 className="ms-1 mt-3">Druckvorlage</h4>
+          <hr className="mx-2" />
+          <div>
+            <div
+              className="p-2 mx-2"
+              style={{ border: '1px solid lightgray', borderRadius: '5px' }}
             >
-              <MdAdd /> Neue Druckvorlage anlegen
-            </button>
-            <Modal show={show} onHide={handleClose} centered>
-              <Modal.Title className="mt-3 mx-4">Neue E-Mail Vorlage anlegen</Modal.Title>
+              <button
+                className="btn btn m-2"
+                style={{ background: '#0b5995', color: 'white' }}
+                onClick={handleShow}
+              >
+                <MdAdd /> Neue Druckvorlage anlegen
+              </button>
+            </div>
+
+            <Modal size="lg" show={show} onHide={handleClose} centered>
+              <Modal.Header closeButton style={{ borderBottom: 'none' }}>
+                <Modal.Title>Neue E-Mail Vorlage anlegen</Modal.Title>
+              </Modal.Header>
               <div>
                 <div className="row px-4">
                   <div className="col-sm-12">
@@ -221,25 +222,28 @@ const PrintTemplate = () => {
               </div>
               <Modal.Body></Modal.Body>
               <Modal.Footer>
-                <button
-                  className="btn btn"
-                  onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
-                >
-                  Abbrechen
-                </button>
-                <button
-                  className="btn btn"
-                  onClick={saveData}
-                  style={{ background: '#0b5995', color: 'white' }}
-                >
-                  Speichern
-                </button>
+                <div className="text-right">
+                  <button
+                    className="btn btn"
+                    onClick={handleClose}
+                    style={{ background: '#d04545', color: 'white' }}
+                  >
+                    Abbrechen
+                  </button>
+                  &nbsp;&nbsp;&nbsp;
+                  <button
+                    className="btn btn"
+                    onClick={saveData}
+                    style={{ background: '#0b5995', color: 'white', marginRight: '8px' }}
+                  >
+                    Speichern
+                  </button>
+                </div>
               </Modal.Footer>
             </Modal>
           </div>
-          <div>
-            <Divider />
+          <div className="mx-2">
+            {/* <Divider /> */}
 
             {/* <Table
               rowSelection={{
@@ -274,6 +278,7 @@ const PrintTemplate = () => {
                 page={page}
                 onChange={handlePageChange}
               />
+              <br />
             </Stack>
             <Modal show={isModalVisible} onHide={handleDeleteCancel} centered size="sm">
               <Modal.Title>

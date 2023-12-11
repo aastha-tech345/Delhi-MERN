@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import CreateUser from './user/CreateUser'
-import Roll from './roll/Roll'
-import Teams from './team/Teams'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { CiUser } from 'react-icons/ci'
+import { ImInfo } from 'react-icons/im'
 
 const User = () => {
-  const [activeTab, setActiveTab] = useState('')
   const navigate = useNavigate()
-
-  const handleTabClick = (tabId, name) => {
-    setActiveTab(tabId)
+  let activeTab = localStorage.getItem('tabId')
+  const handleTabClick = (tabId, name, e) => {
+    if (e && e.target.tagName.toLowerCase() === 'a') {
+      e.preventDefault()
+    }
+    localStorage.setItem('tabId', tabId)
     if (name === 'user') {
       return navigate('/settings/createuser')
     } else if (name === 'role') {
@@ -22,7 +23,7 @@ const User = () => {
 
   return (
     <>
-      <div className="row" style={{ background: 'white' }}>
+      <div className="row mx-1" style={{ background: 'white' }}>
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
             <button
@@ -31,10 +32,11 @@ const User = () => {
               data-bs-toggle="tab"
               role="tab"
               aria-selected={activeTab === 'nav-benutzer'}
-              onClick={() => handleTabClick('nav-benutzer', 'user')}
+              onClick={(e) => handleTabClick('nav-benutzer', 'user', e)}
               style={{ marginRight: '60px', marginLeft: '20px' }}
             >
-              Mitarbeiterlnnen
+              <CiUser />
+              &nbsp; Mitarbeiterlnnen
             </button>
             <button
               className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
@@ -43,32 +45,15 @@ const User = () => {
               role="tab"
               aria-controls="nav-rollen"
               aria-selected={activeTab === 'nav-rollen'}
-              onClick={() => handleTabClick('nav-rollen', 'role')}
+              onClick={(e) => handleTabClick('nav-rollen', 'role', e)}
               style={{ marginRight: '60px' }}
             >
-              Rollen
+              <ImInfo />
+              &nbsp; Rollen
             </button>
           </div>
         </nav>
-        {/* <div className="tab-content" id="nav-tabContent">
-          <div
-            className={`tab-pane fade ${activeTab === 'nav-benutzer' ? 'show active' : ''}`}
-            id="nav-benutzer"
-            role="tabpanel"
-            aria-labelledby="nav-benutzer-tab"
-          >
-            <CreateUser />
-          </div>
-          <div
-            className={`tab-pane fade ${activeTab === 'nav-rollen' ? 'show active' : ''}`}
-            id="nav-rollen"
-            role="tabpanel"
-            aria-labelledby="nav-rollen-tab"
-          >
-            <Roll />
-          </div>
-        </div> */}
-        <hr />
+        <br />
       </div>
     </>
   )

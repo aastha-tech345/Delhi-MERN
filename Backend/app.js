@@ -23,6 +23,7 @@ const invoice = require("./routes/invoice.route.js");
 const print = require("./routes/print.route.js");
 const spv = require("./routes/spv.route.js");
 const attorney = require("./routes/attorney.route.js");
+const emailRoute = require("./routes/email.route.js");
 var createError = require("http-errors");
 app.use(logger("dev"));
 app.use(function (req, res, next) {
@@ -58,6 +59,7 @@ app.use("/invoice", invoice);
 app.use("/print", print);
 app.use("/spv", spv);
 app.use("/attorney", attorney);
+app.use("/email", emailRoute);
 
 app.use("/", express.static(path.join(__dirname, "./public/document")));
 
