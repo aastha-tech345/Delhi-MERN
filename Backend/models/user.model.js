@@ -3,76 +3,48 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Schema, model } = mongoose;
 
-const usercreationSchema = new Schema({
-  // user_name: { type: String },
-  f_name: { type: String },
-  l_name: { type: String },
-  street: { type: String },
-  plz: { type: String },
-  city: { type: String },
-  email: { type: String },
-  location: { type: String },
-  tel: { type: String },
-  mob: { type: String },
-  // select_role:{type:String},
-  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
-});
-
-const passwordSchema = new Schema({
-  password: { type: String },
-});
-
-const localizationSchema = new Schema({
-  location: { type: String },
-});
-
-const advancedSchema = new Schema({
-  advanced: { type: String },
-});
-
-const notificationSchema = new Schema({
-  notification: { type: String },
-});
-
 const userSchema = new Schema({
   username: { type: String },
   email: {
     type: String,
-    required: true,
     lowercase: true,
     unique: true,
   },
   password: { type: String },
   mobile: { type: String },
+  gender: { type: String },
+  lname: { type: String },
+  profileImage: { type: String },
+  street: { type: String },
+  plz: { type: String },
+  city: { type: String },
+  fname: { type: String },
+  // lname: { type: String },
+  location: { type: String },
+  tel: { type: String },
+  // plz: { type: String },
+  // city: { type: String },
+  timeZone: { type: String },
+  role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" }, // manager hr type roles
+  user_role: { type: String }, // admin user employee
+  parent_id: { type: mongoose.Schema.Types.ObjectId },
+  added_by: { type: String },
   tokens: [
     {
       token: {
         type: String,
-        required: true,
       },
     },
   ],
   verifytoken: {
     type: String,
   },
-  role: {
-    type: String,
-  },
-  employee_creation: [
-    {
-      users: usercreationSchema,
-      password: passwordSchema,
-      localization: localizationSchema,
-      notification: notificationSchema,
-      advanced: advancedSchema,
-    },
-  ],
-  parent_id: { type: String },
+  // user_id: { type: mongoose.Schema.Types.ObjectId },
 });
 
 userSchema.pre("save", async function (next) {
   try {
-    if (this.isNew) {
+    if (this.isNew || this.isModified("password")) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(this.password, salt);
       this.password = hashedPassword;

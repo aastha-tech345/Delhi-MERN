@@ -7,8 +7,15 @@ import { GrEdit } from 'react-icons/gr'
 import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
 import { getFetch, postFetchData } from 'src/Api'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import User from '../User'
 
 const CreateUser = () => {
+  const loginUser = localStorage.getItem('record')
+  let dataa = JSON.parse(loginUser)
+  const notify = (dataa) => toast(dataa)
+
   const [record, setRecord] = useState([])
   const [user_email, setUserEmail] = useState()
   const apiUrl = process.env.REACT_APP_API_URL
@@ -21,33 +28,37 @@ const CreateUser = () => {
   const [roleList, setRoleList] = useState([])
   const [roleId, setRoleId] = useState('')
   const [employee, setEmployee] = useState({
-    f_name: '',
-    l_name: '',
+    fname: '',
+    lname: '',
     street: '',
     plz: '',
     city: '',
     email: '',
     location: '',
     tel: '',
-    mob: '',
-    // select_role: '',
+    mobile: '',
     role: '',
+    password: '123456',
+    user_role: 'employee',
+    timezone: '5:30',
+    parent_id: dataa?.user?._id,
+    added_by: dataa?.user?.username,
   })
-  const [employeData, setEmployeData] = useState({
-    users: {},
-    password: {
-      password: 'null',
-    },
-    localization: {
-      location: 'null',
-    },
-    advanced: {
-      advanced: 'null',
-    },
-    notification: {
-      notification: 'null',
-    },
-  })
+  // const [employeData, setEmployeData] = useState({
+  //   users: {},
+  //   password: {
+  //     password: 'null',
+  //   },
+  //   localization: {
+  //     location: 'null',
+  //   },
+  //   advanced: {
+  //     advanced: 'null',
+  //   },
+  //   notification: {
+  //     notification: 'null',
+  //   },
+  // })
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId)
@@ -79,89 +90,23 @@ const CreateUser = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault()
-      const res = await postFetchData(
-        `${apiUrl}/user/register/record/adduser/${userId}`,
-        employeData,
-      )
+      const res = await postFetchData(`${apiUrl}/user/register`, employee)
       console.log('response', res)
+      if (res.status === 201) {
+        notify('Employe Created Successfully')
+        return setShow(false)
+      }
     } catch (error) {
       console.log(error)
     }
   }
 
-  useEffect(() => {
-    setEmployeData((prevRole) => ({
-      ...prevRole,
-      users: employee,
-    }))
-  }, [employee])
-  // let value = localStorage.getItem('record')
-  // value = JSON.parse(value)
-  // let id = value.user._id
-  // //console.log(id)
-
-  // const saveData = async () => {
-  //   try {
-  //     if (!user_email || !user_name || !roll) {
-  //       return
-  //     }
-
-  //     const data = {
-  //       user_email,
-  //       user_name,
-  //       roll,
-  //     }
-
-  //     const response = await fetch(`${apiUrl}/user/register/record/adduser/${id}`, {
-  //       method: 'post',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
-
-  //     const result = await response.json()
-  //     //console.log(result)
-  //     setUserEmail('')
-  //     setUserName('')
-  //     setRoll('')
-  //     handleCloseInviteUserModal()
-  //     // window.location.reload()
-  //   } catch (error) {
-  //     //console.error('Error:', error)
-  //     alert('An error occurred. Please try again later.')
-  //   }
-  // }
-
-  // const getDetails = async () => {
-  //   try {
-  //     const result = await fetch(`${apiUrl}/user/register/record/${id}`)
-  //     const data = await result.json()
-  //     setRecord(data)
-  //     getDetails()
-  //   } catch (error) {
-  //     //console.error('Error fetching customer record:', error)
-  //   }
-  // }
-
-  // let creation = record.user_creation
-  // let data
-  // if (Array.isArray(creation)) {
-  //   data = creation.map((item) => {
-  //     console.log(item.users)
-  //     return item.users
-  //   })
-
-  //   console.log(data)
-  // } else {
-  //   console.log('record.user_creation is not an array or is undefined')
-  // }
-  // console.log(data)
-
   // useEffect(() => {
-  //   getDetails()
-  //   handleTabClick('nav-benutzer')
-  // }, [])
+  //   setEmployeData((prevRole) => ({
+  //     ...prevRole,
+  //     users: employee,
+  //   }))
+  // }, [employee])
 
   const columns = [
     {
@@ -250,6 +195,7 @@ const CreateUser = () => {
 
   return (
     <>
+      <User />
       <div className="topBtnBox">
         <div className="">
           <button
@@ -362,8 +308,8 @@ const CreateUser = () => {
                         className="form-control"
                         placeholder="Name"
                         type="text"
-                        name="f_name"
-                        value={employee.f_name}
+                        name="fname"
+                        value={employee.fname}
                         onChange={handleChange}
                       />
                       <br />
@@ -419,8 +365,8 @@ const CreateUser = () => {
                         className="form-control"
                         placeholder="Vorname"
                         type="text"
-                        name="l_name"
-                        value={employee.l_name}
+                        name="lname"
+                        value={employee.lname}
                         onChange={handleChange}
                       />
                       <br />
@@ -460,8 +406,8 @@ const CreateUser = () => {
                         maxLength={10}
                         minLength={2}
                         type="phone"
-                        name="mob"
-                        value={employee.mob}
+                        name="mobile"
+                        value={employee.mobile}
                         onChange={handleChange}
                       />
                     </div>
@@ -531,6 +477,7 @@ const CreateUser = () => {
           dataSource={data}
         />
       </div>
+      <ToastContainer />
     </>
   )
 }

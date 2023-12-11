@@ -31,7 +31,9 @@ const Customer = () => {
       return navigate('/customer/bills')
     }
   }
-
+  useEffect(() => {
+    handleTabClick('nav-home')
+  }, [])
   let data = localStorage.getItem('customerDatat')
   let res = JSON.parse(data)
   // console.log(res)
