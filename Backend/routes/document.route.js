@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
   const upload = multer({ storage: storage });
 
 router.post('/create_document',upload.single("document_upload") ,roleCtrl.createDocument);
-router.get('/get_document', roleCtrl.getDocument);
+router.get('/get_document/:id', roleCtrl.getDocument);
 router.get('/get_document/:id', roleCtrl.getDocumentData);
 router.put('/get_document/update/:id', upload.single("document_upload") ,roleCtrl.getDocumentDataUpdate);
 router.put('/get_document/delete/:id', roleCtrl.getDocumentDataDelete);

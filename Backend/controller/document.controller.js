@@ -11,7 +11,7 @@ exports.createDocument = async (req, res) => {
     // console.log("ashishhh", document);
 
     // const result = await document.save();
-   return res.status(201).json({
+    return res.status(201).json({
       message: "document was created",
       result,
     });
@@ -32,7 +32,10 @@ exports.getDocument = async (req, res) => {
     let pageCount = Math.ceil(countPage / resultPerPage);
 
     const apiFeatures = new ApiFeatures(
-      DocumentInfo.Document.find({ status: "active" }),
+      DocumentInfo.Document.find({
+        customer_id: req.params.id,
+        status: "active",
+      }),
       req.query
     )
       .reverse()

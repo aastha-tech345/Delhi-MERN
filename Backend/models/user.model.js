@@ -43,17 +43,15 @@ const userSchema = new Schema({
 });
 
 userSchema.pre("save", async function (next) {
-  try {
-    if (this.isNew || this.isModified("password")) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(this.password, salt);
-      this.password = hashedPassword;
-    }
-    next(); // Make sure to call next() in all cases
-  } catch (error) {
-    next(error); // Pass the error to the next middleware
+  if (!this.isModified("password")) {
+    next();
   }
+  this.password = await bcrypt.hash(this.password, 10);
 });
+
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 userSchema.methods.getAuthToken = async function () {
   let params = {

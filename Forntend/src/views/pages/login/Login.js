@@ -43,18 +43,19 @@ const Login = () => {
       })
 
       const result = await response.json()
-      if (result.message === 'Login was successful') {
-        notify('User Login Successfully')
-      }
       console.log('aastha', result)
 
-      const token = result.user.tokens[0].token
-      const role = result.user.roles
-      window.localStorage.setItem('token', token)
-      window.localStorage.setItem('role', role)
-      window.localStorage.setItem('record', JSON.stringify(result))
-      navigate('/dashboard')
-      window.location.reload()
+      if (result.success === true) {
+        notify('User Login Successfully')
+        const token = result?.user?.tokens[0]?.token
+        // const role = result?.user?.roles
+        window.localStorage.setItem('token', token)
+        // window.localStorage.setItem('role', role)
+        window.localStorage.setItem('record', JSON.stringify(result))
+        navigate('/dashboard')
+        window.location.reload()
+      }
+      notify('Invalid Credentials')
     } catch (error) {
       console.error('Error:', error)
       // alert('An error occurred. Please try again later.')

@@ -37,15 +37,10 @@ const AllRoles = () => {
           <table className="table table">
             <thead>
               <tr>
-                <th>
-                  <div className="row">
-                    {/* <div className="col-1"></div> */}
-                    <div className="col-1">id</div>
-                    <div className="col-5 text-center">Role</div>
-                    <div className="col-3 text-center">Edit</div>
-                    <div className="col-3 text-center">Delete</div>
-                  </div>
-                </th>
+                <th>ID</th>
+                <th>Role</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -54,15 +49,24 @@ const AllRoles = () => {
                 return (
                   <>
                     <tr>
+                      <td>323</td>
+                      <td>{role_name}</td>
                       <td>
-                        <div className="row">
-                          <div className="col-sm-1 m-auto">{_id}</div>
+                        <button
+                          className="btn"
+                          style={{ background: 'none', border: 'none' }}
+                          onClick={() => handleOpen(_id)}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                      <td>
+                        {/* <div className="col-sm-1 m-auto">{_id}</div>
                           <div className="col-sm-5 text-center m-auto">{role_name}</div>
                           <div className="col-sm-3 m-auto" onClick={() => handleOpen(_id)}>
                             Edit
-                          </div>
-                          <div className="col-sm-3 m-auto">Delete</div>
-                        </div>
+                          </div> */}
+                        Delete
                       </td>
                     </tr>
                   </>

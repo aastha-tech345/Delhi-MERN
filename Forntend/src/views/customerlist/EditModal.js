@@ -20,6 +20,7 @@ const EditModal = ({ setHide, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('CustomerRecord')
   let response = JSON.parse(res)
+
   const [data, setData] = useState({
     fname: response?.fname,
     lname: response?.lname,
