@@ -11,7 +11,7 @@ router.get('/get_record/:id', customerController.getCustomerData);
 router.delete('/get_record/:id', customerController.deleteCustomer);
 router.put("/get_record/edit/:id",customerController.editCustomer)
 
-
+router.get('/user/customer/:id', customerController.getUserCustomer);
 router.get('/search/:searchKey', customerController.searchCustomer);
 // router.get('/search', customerController.searchCustomer);
 module.exports = router;

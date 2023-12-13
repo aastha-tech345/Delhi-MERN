@@ -100,7 +100,8 @@ const AppHeaderDropdown = () => {
             <div style={{ borderLeft: '0.5px solid gray', height: '40px' }}></div>
             &nbsp; &nbsp; &nbsp; &nbsp;
             <CAvatar src={avatar8} size="md" />
-            &nbsp;<span className="text-dark mt-2">{result?.user?.username}</span>
+            &nbsp;
+            <span className="text-dark mt-2">{result?.user?.username}</span>
           </div>
         </CDropdownToggle>
         <CDropdownMenu className="pt-0" placement="bottom-end">

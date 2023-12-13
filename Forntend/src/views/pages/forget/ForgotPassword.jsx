@@ -14,6 +14,7 @@ const ForgotPassword = () => {
   let data = localStorage.getItem('email')
   let res = JSON.parse(data)
   let email = res?.email
+
   // const { id, token } = useParams()
   const apiUrl = process.env.REACT_APP_API_URL
   // const history = useNavigate()
@@ -27,7 +28,6 @@ const ForgotPassword = () => {
 
   const notify = (dataa) => toast(dataa)
   let total = { password, email }
-  console.log('ashishh', total)
   // const userValid = async () => {
   //   const res = await fetch(`${apiUrl}/user/forgotpassword`, {
   //     method: 'GET',
@@ -50,17 +50,20 @@ const ForgotPassword = () => {
   }
 
   const sendpassword = async (e) => {
-    e.preventDefault()
+    try {
+      e.preventDefault()
 
-    if (password === '') {
-      toast.error('password is required!', {
-        position: 'top-center',
-      })
-    } else if (password.length < 6) {
-      toast.error('password must be 6 char!', {
-        position: 'top-center',
-      })
-    } else {
+      if (password === '') {
+        return toast.error('password is required!', {
+          position: 'top-center',
+        })
+      }
+      if (password.length < 6) {
+        return toast.error('password must be 6 char!', {
+          position: 'top-center',
+        })
+      }
+
       const res = await fetch(`${apiUrl}/user/changePassword`, {
         method: 'POST',
         headers: {
@@ -70,18 +73,16 @@ const ForgotPassword = () => {
       })
 
       const data = await res.json()
-      console.log(data)
-      if (data.message === 'password changed successfully') {
+      console.log('dataa', data)
+      if (data?.message === 'Password changed successfully.') {
         notify('Password Resest Successfully')
-        navigate('/')
-        setMessage(true)
+        localStorage.removeItem('email')
+        return navigate('/')
       }
+
       notify('Please Verify Your Email First')
-      // else {
-      //   toast.error('! Token Expired generate new LInk', {
-      //     position: 'top-center',
-      //   })
-      // }
+    } catch (error) {
+      console.log(error)
     }
   }
 

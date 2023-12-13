@@ -4,7 +4,8 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createContact = async (req, res) => {
   try {
-    const { fname, lname, email, phone, gender, customer_id,id } = req.body;
+    const { fname, lname, email, phone, gender, customer_id, added_by, id } =
+      req.body;
 
     const emailFind = await ContactInfomation.Contact.findOne({ email });
     if (emailFind) {
@@ -20,7 +21,8 @@ exports.createContact = async (req, res) => {
       phone,
       gender,
       customer_id,
-      id
+      added_by,
+      id,
     });
 
     const result = await contact.save();
@@ -45,7 +47,11 @@ exports.getContact = async (req, res) => {
     let pageCount = Math.ceil(countPage / resultPerPage);
 
     const apiFeatures = new ApiFeatures(
-      ContactInfomation.Contact.find({ status: "active" }),
+      ContactInfomation.Contact.find({
+        customer_id: req.params.first,
+        // added_by: req.params.second,
+        status: "active",
+      }),
       req.query
     )
       .reverse()
@@ -72,7 +78,7 @@ exports.getContact = async (req, res) => {
     console.error(error);
     return res.status(500).send({ message: "Server Error" });
   }
-}
+};
 
 exports.getContactData = async (req, res) => {
   try {

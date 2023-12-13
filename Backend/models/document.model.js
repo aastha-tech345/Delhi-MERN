@@ -6,7 +6,7 @@ const documentSchema = new Schema({
   document_type: { type: String },
   document_upload: { type: String },
   // customer_id: { type: String},
-  // added_by:{type:String}
+  added_by:{type:mongoose.Schema.Types.ObjectId},
   customer_id: { type: mongoose.Schema.Types.ObjectId },
   status: {
     type: String,

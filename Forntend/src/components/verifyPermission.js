@@ -1,19 +1,12 @@
 const data = localStorage.getItem('record')
 const loginUser = JSON.parse(data)
-console.log(loginUser)
 const userPermission = loginUser?.user?.role?.permission || []
-
 const isAdmin = loginUser?.user?.user_role === 'admin'
 
 export const verifyPer = () => {
   if (isAdmin) {
     return ['Klientlnnen', 'Dashboard', 'Einstellungen']
   }
-
-  //   return userPermission.filter((elem) =>
-  //     ['Dashboard', 'Klientlnnen', 'Einstellungen'].includes(elem.section_name),
-  //   )
-  //   .map((elem) => elem.section_name)
 
   return userPermission?.map((elem) => {
     const { section_name, p_show } = elem
@@ -27,6 +20,38 @@ export const verifyPer = () => {
       return 'Einstellungen'
     } else {
       return null
+    }
+  })
+}
+
+export const verifyEditPer = () => {
+  if (isAdmin) {
+    return ['yes']
+  }
+
+  return userPermission?.map((elem) => {
+    const { section_name, p_edit } = elem
+    if (section_name === 'Klientlnnen' && p_edit === 'owned') {
+      return 'owned'
+    }
+    if (section_name === 'Klientlnnen' && p_edit === 'yes') {
+      return 'yes'
+    }
+  })
+}
+
+export const verifyDelPer = () => {
+  if (isAdmin) {
+    return ['yes']
+  }
+
+  return userPermission?.map((elem) => {
+    const { section_name, p_delete } = elem
+    if (section_name === 'Klientlnnen' && p_delete === 'owned') {
+      return 'owned'
+    }
+    if (section_name === 'Klientlnnen' && p_delete === 'yes') {
+      return 'yes'
     }
   })
 }

@@ -15,6 +15,7 @@ import Customer from '../Customer'
 import EditModal from './EditModal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 
 const columns = [
   {
@@ -53,6 +54,12 @@ const rowSelection = {
 }
 
 const Document = () => {
+  let lgCust = localStorage.getItem('customerDatat')
+  let custData = JSON.parse(lgCust)
+
+  let lgUser = localStorage.getItem('record')
+  let loginData = JSON.parse(lgUser)
+
   const notify = (dataa) => toast(dataa)
   const [edit, setEdit] = useState(false)
   const columns = [
@@ -70,17 +77,38 @@ const Document = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
-            <GrEdit />
-            &nbsp;&nbsp;Bearbeiten
-          </button>
-          &nbsp;&nbsp;
-          <button
-            style={{ background: 'none', border: 'none' }}
-            onClick={() => handleDelete(record._id)}
-          >
-            <MdDelete /> Löschen
-          </button>
+          {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
+          verifyEditPer().includes('yes') ||
+          loginData?.user?.user_role === 'admin' ? (
+            <>
+              <button
+                style={{ background: 'none', border: 'none' }}
+                onClick={() => handleEdit(record)}
+              >
+                <GrEdit />
+                &nbsp;&nbsp;Bearbeiten
+              </button>
+            </>
+          ) : (
+            ''
+          )}
+
+          {/* &nbsp;&nbsp; */}
+
+          {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
+          verifyDelPer().includes('yes') ||
+          loginData?.user?.user_role === 'admin' ? (
+            <>
+              <button
+                style={{ background: 'none', border: 'none' }}
+                onClick={() => handleDelete(record._id)}
+              >
+                <MdDelete /> Löschen
+              </button>
+            </>
+          ) : (
+            ''
+          )}
         </>
       ),
     },
@@ -99,6 +127,7 @@ const Document = () => {
     document_title: '',
     document_type: '',
     customer_id: result?._id,
+    added_by: loginData?.user?._id,
   })
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
@@ -138,6 +167,7 @@ const Document = () => {
       myForm.append('document_title', data?.document_title)
       myForm.append('document_type', data?.document_type)
       myForm.append('customer_id', result?._id)
+      myForm.append('added_by', loginData?.user?._id)
       myForm.append('document_upload', document_upload)
 
       const url = `${apiUrl}/document/create_document`
@@ -156,7 +186,7 @@ const Document = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/document/get_document?page=${page}`)
+      const result = await fetch(`${apiUrl}/document/get_document/${custData?._id}?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
