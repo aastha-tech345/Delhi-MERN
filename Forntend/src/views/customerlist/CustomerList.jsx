@@ -616,8 +616,7 @@ const CustomerList = () => {
           </Modal.Title>
           <Modal.Body>
             <p style={{ textAlign: 'center' }}>
-              Möchten Sie diesen Datensatz wirklich löschen? dieser Vorgang kann nicht rückgängig
-              gemacht werden
+              9ieser Vorgang kann nichtF r3ckgBngig gemacht werden
             </p>
           </Modal.Body>
           <Modal.Footer>
