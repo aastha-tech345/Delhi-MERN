@@ -22,6 +22,7 @@ exports.register = async (req, res) => {
       city,
       fname,
       lname,
+      profileImage,
       parent_id,
       role,
     } = req.body;
@@ -33,6 +34,7 @@ exports.register = async (req, res) => {
         username,
         password,
         email,
+        profileImage,
         user_role: "admin",
       };
     } else if (user_role === "user") {
@@ -45,6 +47,7 @@ exports.register = async (req, res) => {
           email,
           gender,
           lname,
+          profileImage,
           user_role,
           mobile,
           parent_id: admin._id,
@@ -70,6 +73,7 @@ exports.register = async (req, res) => {
         street,
         plz,
         city,
+        profileImage: null,
         user_role, //admin employee user
         role, //Manager HR
         parent_id,
@@ -113,7 +117,6 @@ exports.register = async (req, res) => {
 // update Login User
 exports.updateUser = async (req, res) => {
   try {
-  
     const user = await UserModel.User.findByIdAndUpdate(
       req.params.id,
       {
@@ -192,24 +195,24 @@ exports.getRegisterData = async (req, res) => {
   res.send(user);
 };
 
-exports.getRegisterUpdate = async (req, res) => {
-  const { password, ...otherFields } = req.body;
-  if (password) {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    otherFields.password = hashedPassword;
-  }
+// exports.getRegisterUpdate = async (req, res) => {
+//   const { password, ...otherFields } = req.body;
+//   if (password) {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     otherFields.password = hashedPassword;
+//   }
 
-  try {
-    const user = await UserModel.User.updateOne(
-      { _id: req.params.id },
-      { $set: otherFields }
-    );
-    res.send(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-};
+//   try {
+//     const user = await UserModel.User.updateOne(
+//       { _id: req.params.id },
+//       { $set: otherFields }
+//     );
+//     res.send(user);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// };
 
 exports.addUser = async (req, res) => {
   try {
@@ -236,10 +239,8 @@ exports.addUser = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await UserModel.User.findOne({ email })
-      .select("+password")
-      .populate("role");
 
+    let user = await UserModel.User.findOne({ email }).select("+password");
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -248,7 +249,6 @@ exports.login = async (req, res) => {
     }
 
     const isPasswordMatched = await user.comparePassword(password);
-
     if (!isPasswordMatched) {
       return res.status(404).json({
         success: false,
@@ -386,7 +386,6 @@ exports.changePassword = async (req, res) => {
     }
 
     user.password = password;
-    // user.password = newpassword;
 
     await user.save();
     return res.status(200).json({

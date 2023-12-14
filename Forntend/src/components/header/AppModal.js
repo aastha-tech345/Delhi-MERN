@@ -26,50 +26,6 @@ const AppModal = ({ setOpen }) => {
     setData({ ...data, [name]: newValue })
   }
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault()
-  //   try {
-  //     setLoadVale(true)
-  //     const { username, email, password, lname, mobile, gender } = data
-
-  //     if (!email) {
-  //       return notify('Invalid Email')
-  //     }
-
-  //     const apiUrl = process.env.REACT_APP_API_URL
-
-  //     const res = await fetch(`${apiUrl}/user/register/${response.user?._id}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         username,
-  //         email,
-  //         password,
-  //         lname,
-  //         mobile,
-  //         gender,
-  //       }),
-  //     })
-
-  //     if (res.status === 200) {
-  //       setLoadVale(false)
-  //       setData({
-  //         username: '',
-  //         lname: '',
-  //         mobile: '',
-  //         password: '',
-  //         gender: '',
-  //       })
-  //       notify('Profile Updated Successfully')
-  //     } else {
-  //       notify('Something Went Wrong')
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -85,6 +41,7 @@ const AppModal = ({ setOpen }) => {
       if (selectedFile) {
         formData.append('profileImage', selectedFile)
       }
+
       // const res = await fetch(`${apiUrl}/user//update/${response.user?._id}`, {
       //   method: 'PUT',
       //   body: formData,
@@ -260,7 +217,7 @@ const AppModal = ({ setOpen }) => {
                   onChange={handleChange}
                   checked={data.gender === 'male'}
                 />{' '}
-                &nbsp; Männlich
+                &nbsp; Männlich &nbsp;
                 <input
                   type="radio"
                   name="gender"
@@ -268,7 +225,7 @@ const AppModal = ({ setOpen }) => {
                   onChange={handleChange}
                   checked={data.gender === 'female'}
                 />{' '}
-                &nbsp; Weiblich
+                &nbsp; Weiblich &nbsp;
                 <input
                   type="radio"
                   name="gender"
