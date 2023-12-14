@@ -4,10 +4,13 @@ console.log(loginUser)
 const userPermission = loginUser?.user?.role?.permission || []
 
 const isAdmin = loginUser?.user?.user_role === 'admin'
+const isUser = loginUser?.user?.user_role === 'user'
 
 export const verifyPer = () => {
   if (isAdmin) {
     return ['Klientlnnen', 'Dashboard', 'Einstellungen']
+  } else if (isUser) {
+    return ['Klientlnnen', 'Einstellungen']
   }
 
   //   return userPermission.filter((elem) =>

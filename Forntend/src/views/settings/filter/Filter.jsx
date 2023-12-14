@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Divider, Table } from 'antd'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -7,42 +7,34 @@ import { MdDelete, MdAdd } from 'react-icons/md'
 import { BiFilterAlt } from 'react-icons/bi'
 import { AiOutlineMail } from 'react-icons/ai'
 import { BiErrorCircle } from 'react-icons/bi'
-
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
-    name: record.name,
-  }),
-}
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 const columns = [
   {
     title: 'NACHNAME',
-    dataIndex: 'name',
+    dataIndex: 'fname',
     render: (text) => <a>{text}</a>,
   },
   {
     title: 'VORNAMEN',
-    dataIndex: 'key',
+    dataIndex: 'lname',
   },
   {
     title: 'GEBURTSDATUM',
-    dataIndex: 'email',
+    dataIndex: 'dob',
   },
   {
     title: 'PLZ',
-    dataIndex: 'phone',
+    dataIndex: 'plz',
   },
   {
     title: 'TELEFON',
-    dataIndex: 'status',
+    dataIndex: 'telephone',
   },
   {
     title: 'MOBIL',
-    dataIndex: 'status',
+    dataIndex: 'mobil',
   },
   {
     title: 'STATUS',
@@ -50,27 +42,15 @@ const columns = [
   },
   {
     title: 'ID KLIENTINNEN',
-    dataIndex: 'status',
+    dataIndex: 'client_id',
   },
   {
     title: 'VERSAND NACHSTE MARKE',
-    dataIndex: 'status',
+    dataIndex: 'next_shipping',
   },
   {
     title: 'DAUERSPENDERINNEN',
-    dataIndex: 'status',
-  },
-  {
-    title: 'AKTION',
-    dataIndex: 'action',
-    render: () => (
-      <>
-        <GrEdit />
-        &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-        <MdDelete />
-        Löschen
-      </>
-    ),
+    dataIndex: 'permanent_donors',
   },
 ]
 
@@ -110,47 +90,74 @@ const data = [
 ]
 
 const Filter = () => {
-  const [fname, setFname] = useState('')
-  const [lname, setLname] = useState('')
-  const [phone, setPhone] = useState('')
-  const [skype, setSkype] = useState('')
-  const [email, setEmail] = useState('')
-  const [gender, setGender] = useState('')
+  const [search, setSearch] = useState('')
   const [show, setShow] = useState(false)
   const [error, setError] = useState(false)
-
+  const [filterRecord, setFilterRecord] = useState([])
+  const apiUrl = process.env.REACT_APP_API_URL
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
+  const searchInputRef = useRef()
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const [selectionType] = useState('checkbox')
 
-  const saveData = () => {
-    if (
-      fname.trim().length === 0 ||
-      lname.trim().length === 0 ||
-      phone.trim().length === 0 ||
-      skype.trim().length === 0 ||
-      gender.trim().length === 0
-    ) {
-      setError(true)
-      return
+  const getDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/filter/get_filter?page=${page}`)
+      const data = await result.json()
+      setCountPage(data?.pageCount)
+      const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      setFilterRecord(activeRecords)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
     }
+  }
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
+  // console.log('aastha', filterRecord)
+  useEffect(() => {
+    getDetails()
+  }, [page])
 
-    let newData = { fname, lname, phone, skype, gender, email }
-    console.log(newData)
-    handleClose() // Close modal after saving data
+  const searchHandle = async () => {
+    try {
+      if (search === '') {
+        return getDetails()
+      }
+
+      const response = await fetch(`${apiUrl}/filter/search/${search}`)
+      const data = await response.json()
+
+      const activeRecords = data.filter((record) => record.status === 'active')
+
+      if (activeRecords.length > 0) {
+        setFilterRecord(activeRecords)
+      } else {
+        getDetails()
+        setFilterRecord(data)
+      }
+    } catch (error) {
+      console.error('Error searching data:', error.message)
+    }
   }
 
   return (
-    <div style={{ background: 'white' }}>
-      <h4 style={{ paddingTop: '6px', paddingLeft: '10px' }}> Filter</h4>
+    <div style={{ background: 'white', borderRadius: '5px' }}>
+      <h4 className="px-3 pt-3">Filter</h4>
       <hr />
-      <div>
+      <div className="m-2">
         <div
-          className="row m-3 p-2"
-          style={{ border: '1px solid #ebedef', height: '55px', borderRadius: '5px 5px 5px 5px ' }}
+          className="row m-3 p-3"
+          style={{ border: '1px solid lightgray', borderRadius: '5px ' }}
         >
           <div className="col-sm-3">
             <input
+              ref={searchInputRef}
+              name="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               type="search"
               id="form1"
               placeholder="Ihre Suche eingeben"
@@ -158,7 +165,11 @@ const Filter = () => {
             />
           </div>
           <div className="col-sm-3">
-            <button className="btn btn text-light" style={{ background: '#0b5995' }}>
+            <button
+              className="btn btn text-light"
+              onClick={searchHandle}
+              style={{ background: '#0b5995' }}
+            >
               <BiFilterAlt />
               &nbsp; Filter
             </button>
@@ -360,17 +371,33 @@ const Filter = () => {
           </div>
         </div>
         <div className="m-3">
-          <Divider />
-
           <Table
+            rowKey={(record) => record._id}
             rowSelection={{
-              type: selectionType,
-              ...rowSelection,
+              type: 'checkbox',
+              onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+              },
+              getCheckboxProps: (record) => ({
+                disabled: record.name === 'Disabled User',
+                name: record.name,
+              }),
             }}
             style={{ overflowX: 'auto' }}
             columns={columns}
-            dataSource={data}
+            dataSource={filterRecord}
+            pagination={false}
           />
+          <Stack spacing={2}>
+            <Pagination
+              count={countPage}
+              variant="outlined"
+              shape="rounded"
+              page={page}
+              onChange={handlePageChange}
+            />
+          </Stack>
+          <br />
         </div>
       </div>
     </div>

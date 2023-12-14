@@ -22,6 +22,7 @@ exports.register = async (req, res) => {
       city,
       fname,
       lname,
+      profileImage,
       parent_id,
       role,
     } = req.body;
@@ -33,6 +34,7 @@ exports.register = async (req, res) => {
         username,
         password,
         email,
+        profileImage,
         user_role: "admin",
       };
     } else if (user_role === "user") {
@@ -45,6 +47,7 @@ exports.register = async (req, res) => {
           email,
           gender,
           lname,
+          profileImage,
           user_role,
           mobile,
           parent_id: admin._id,
@@ -70,6 +73,7 @@ exports.register = async (req, res) => {
         street,
         plz,
         city,
+        profileImage: null,
         user_role, //admin employee user
         role, //Manager HR
         parent_id,
@@ -254,9 +258,7 @@ exports.login = async (req, res) => {
         .send({ message: "Please fill in all the details" });
     }
 
-    let user = await UserModel.User.findOne({ email })
-      .maxTimeMS(20000)
-      .populate("role");
+    let user = await UserModel.User.findOne({ email }).select("+password");
 
     if (user) {
       let validPassword = await bcrypt.compare(password, user.password);
@@ -396,9 +398,9 @@ exports.changePassword = async (req, res) => {
       });
     }
 
-    const newpassword = await bcrypt.hash(password, 12);
-    user.password = newpassword;
-
+    // const newpassword = await bcrypt.hash(password, 12);
+    user.password = password;
+    console.log("password", password);
     await user.save();
     return res.status(200).json({
       message: "password changed successfully",

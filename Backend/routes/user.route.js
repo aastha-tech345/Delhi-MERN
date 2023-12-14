@@ -111,5 +111,5 @@ router.get("/forgotpassword", userCtrl.forgotPasswordVerification);
 router.post("/changePassword", userCtrl.changePassword);
 router.get("/register/:id", userCtrl.getRegisterData);
 // router.put("/register/:id", userCtrl.getRegisterUpdate);
-router.put("/update/:id",upload.single("profileImage") ,userCtrl.updateUser);
+router.put("/update/:id",upload.single("profileImage") ,userCtrl.getRegisterUpdate);
 module.exports = router;
