@@ -834,13 +834,13 @@ const CustomerInfo = () => {
         <h3 className="bluetext mx-3">Hinterlegung</h3>
         <div className="row p-3">
           <div className="col-sm-4">
-            Hinterlegung &nbsp;&nbsp;
             <input
               type="checkbox"
               onChange={DepositChange}
               checked={customerDeposit.deposit}
               name="deposit"
             />
+            &nbsp;&nbsp;Hinterlegung&nbsp;[ja]
           </div>
           <div className="col-sm-4"></div>
           <div className="col-sm-4"></div>
