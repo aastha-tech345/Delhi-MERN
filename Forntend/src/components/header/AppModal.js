@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { putFetchData } from 'src/Api'
+import { putFetch, putFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const AppModal = ({ setOpen }) => {
   const notify = (dataa) => toast(dataa)
-  const [loadValue, setLoadVale] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('record')
   let response = JSON.parse(res)
-  console.log('id', response.user._id)
+
+  const [loadValue, setLoadVale] = useState(false)
   const [data, setData] = useState({
     username: response.user?.username,
     email: response.user?.email,
@@ -41,10 +41,15 @@ const AppModal = ({ setOpen }) => {
       if (selectedFile) {
         formData.append('profileImage', selectedFile)
       }
-      const res = await fetch(`${apiUrl}/user/update/${response.user?._id}`, {
-        method: 'PUT',
-        body: formData,
-      })
+
+      // const res = await fetch(`${apiUrl}/user//update/${response.user?._id}`, {
+      //   method: 'PUT',
+      //   body: formData,
+      // })
+
+      const res = await putFetch(`${apiUrl}/user//update/${response.user?._id}`, formData)
+
+      console.log('updatedProfile', res)
 
       if (res.status === 200) {
         setLoadVale(false)

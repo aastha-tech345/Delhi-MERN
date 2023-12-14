@@ -10,8 +10,13 @@ import EditModal from './EditModal'
 import Form from 'react-bootstrap/Form'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 
 const CustomerList = () => {
+  console.log('verifyEditPer', verifyEditPer())
+  let lgUser = localStorage.getItem('record')
+  let loginData = JSON.parse(lgUser)
+
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
   const [fname, setFname] = useState()
@@ -23,6 +28,7 @@ const CustomerList = () => {
   const [city, setCity] = useState()
   const [street, setStreet] = useState()
   const [group, setGroup] = useState()
+  const [created_by, setCreated_by] = useState(loginData?.user?._id)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
@@ -79,21 +85,44 @@ const CustomerList = () => {
     {
       title: 'AKTION',
       dataIndex: 'action',
+      hidden: true,
       render: (_, record) => (
         <>
-          <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
+          {(loginData?.user?._id === record.created_by && verifyEditPer().includes('owned')) ||
+          verifyEditPer().includes('yes') ||
+          loginData?.user?.user_role === 'admin' ? (
+            <>
+              <button
+                style={{ background: 'none', border: 'none' }}
+                onClick={() => handleEdit(record)}
+              >
+                <GrEdit />
+                &nbsp;&nbsp;Bearbeiten
+              </button>
+
+              {/* <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
             <GrEdit />
             &nbsp;&nbsp;Bearbeiten
-          </button>
-          &nbsp;&nbsp;
-          <button
-            style={{ background: 'none', border: 'none' }}
-            onClick={() => handleIconClick(record._id)}
-          >
-            <MdDelete /> Löschen
-          </button>
+          </button> */}
+            </>
+          ) : (
+            ''
+          )}
+          {(loginData?.user?._id === record.created_by && verifyDelPer().includes('owned')) ||
+          verifyDelPer().includes('yes') ||
+          loginData?.user?.user_role === 'admin' ? (
+            <button
+              style={{ background: 'none', border: 'none' }}
+              onClick={() => handleIconClick(record._id)}
+            >
+              <MdDelete /> Löschen
+            </button>
+          ) : (
+            ''
+          )}
         </>
       ),
+      // hidden: 'true',
     },
   ]
 
@@ -148,7 +177,7 @@ const CustomerList = () => {
     }
 
     setValidated(true)
-    let data = { fname, lname, street, city, phone, plz, email, land, dob, group, id }
+    let data = { fname, lname, street, city, phone, plz, email, land, dob, group, id, created_by }
     if (!email) {
       return notify('Invalid Email')
     }
@@ -193,17 +222,50 @@ const CustomerList = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getDetails = useCallback(async () => {
     try {
+      // if (loginData?.user?.user_role === 'admin') {
       const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
       const data = await result.json()
-      // console.log(data)
-      // Filter records with status 'active'
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setCustomerRecord(activeRecords)
+      // }
+
+      // if (loginData?.user?.user_role === 'employee') {
+      //   const result = await fetch(
+      //     `${apiUrl}/customer/user/customer/${loginData?.user?._id}?page=${page}`,
+      //   )
+      //   const data = await result.json()
+      //   setCountPage(data?.pageCount)
+      //   const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      //   setCustomerRecord(activeRecords)
+      // }
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
   })
+  // useEffect(() => {
+  //   getDetails()
+  // }, [page])
+
+  // if (loginData?.user?.user_role === 'employee') {
+  //   const getDetails = useCallback(async () => {
+  //     try {
+  //       const result = await fetch(
+  //         `${apiUrl}/customer/user/customer/${loginData?.user?._id}?page=${page}`,
+  //       )
+  //       const data = await result.json()
+  //       setCountPage(data?.pageCount)
+  //       const activeRecords = data?.result?.filter((record) => record.status === 'active')
+  //       setCustomerRecord(activeRecords)
+  //     } catch (error) {
+  //       console.error('Error fetching customer record:', error)
+  //     }
+  //   })
+  //   useEffect(() => {
+  //     getDetails()
+  //   }, [page])
+  // }
+
   let data = customer_record
   const handleStore = (data, record) => {
     let res = JSON.stringify(record)

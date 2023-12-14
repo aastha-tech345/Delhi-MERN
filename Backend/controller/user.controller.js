@@ -117,18 +117,6 @@ exports.register = async (req, res) => {
 // update Login User
 exports.updateUser = async (req, res) => {
   try {
-    // const role = req.body.role;
-    // let query = {};
-    // if (role === "user") {
-    //   query = { role: "user" };
-    // } else if (role === "employee") {
-    //   query = { role: "employee" };
-    // } else if (role === "admin") {
-    //   query = { role: "admin" };
-    // }
-    // const users = await UserModel.User.find().populate(
-    //   "employee_creation.users.role"
-    // );
     const user = await UserModel.User.findByIdAndUpdate(
       req.params.id,
       {
@@ -207,24 +195,24 @@ exports.getRegisterData = async (req, res) => {
   res.send(user);
 };
 
-exports.getRegisterUpdate = async (req, res) => {
-  const { password, ...otherFields } = req.body;
-  if (password) {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    otherFields.password = hashedPassword;
-  }
+// exports.getRegisterUpdate = async (req, res) => {
+//   const { password, ...otherFields } = req.body;
+//   if (password) {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     otherFields.password = hashedPassword;
+//   }
 
-  try {
-    const user = await UserModel.User.updateOne(
-      { _id: req.params.id },
-      { $set: otherFields }
-    );
-    res.send(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-};
+//   try {
+//     const user = await UserModel.User.updateOne(
+//       { _id: req.params.id },
+//       { $set: otherFields }
+//     );
+//     res.send(user);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// };
 
 exports.addUser = async (req, res) => {
   try {
@@ -252,32 +240,31 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res
-        .status(400)
-        .send({ message: "Please fill in all the details" });
-    }
-
     let user = await UserModel.User.findOne({ email }).select("+password");
-
-    if (user) {
-      let validPassword = await bcrypt.compare(password, user.password);
-
-      if (validPassword) {
-        return res.status(200).send({
-          user,
-          message: "Login was successful",
-        });
-      } else {
-        return res.status(401).send({ message: "Invalid password" });
-      }
-    } else {
-      return res.status(404).send({ message: "user not found" });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Invalid Credentials",
+      });
     }
+
+    const isPasswordMatched = await user.comparePassword(password);
+    if (!isPasswordMatched) {
+      return res.status(404).json({
+        success: false,
+        message: "Invalid Credentials",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "User Login Successfully",
+      user,
+    });
   } catch (error) {
-    console.error(error);
-    return res.status(500).send({
-      message: "An error occurred",
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
     });
   }
 };
@@ -387,25 +374,28 @@ exports.changePassword = async (req, res) => {
     let user = await UserModel.User.findOne({ email }).select("+password");
 
     if (!user) {
-      return res.status(500).json({
-        message: "Somethig Went Wrong Please Try Again",
+      return res.status(404).json({
+        message: "User not found. Please check the email address.",
       });
     }
 
     if (!password) {
-      return res.status(406).json({
-        message: "Please Enter a Password",
+      return res.status(400).json({
+        message: "Please enter a password.",
       });
     }
 
-    // const newpassword = await bcrypt.hash(password, 12);
     user.password = password;
-    console.log("password", password);
+
     await user.save();
     return res.status(200).json({
-      message: "password changed successfully",
+      message: "Password changed successfully.",
+      user,
     });
   } catch (error) {
-    res.status(500).json({ status: 500, error });
+    console.error(error);
+    res.status(500).json({
+      message: "An error occurred while changing the password.",
+    });
   }
 };

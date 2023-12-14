@@ -20,13 +20,13 @@ const Register = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState('')
+  const [user_role, setUser_Role] = useState('')
   const apiUrl = process.env.REACT_APP_API_URL
   const navigate = useNavigate()
   const notify = (dataa) => toast(dataa)
 
   const addUser = async () => {
-    if (!username || !password || !email || !role) {
+    if (!username || !password || !email || !user_role) {
       return notify('Please Fill All Details')
     }
 
@@ -34,7 +34,7 @@ const Register = () => {
       let response = await fetch(`${apiUrl}/user/register`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password, email, role }),
+        body: JSON.stringify({ username, password, email, user_role }),
       })
       let result = await response.json()
       window.localStorage.setItem('student', JSON.stringify(result))
@@ -98,9 +98,9 @@ const Register = () => {
                     </CInputGroupText>
                     <select
                       className="form-control"
-                      value={role}
+                      value={user_role}
                       onChange={(e) => {
-                        setRole(e.target.value)
+                        setUser_Role(e.target.value)
                       }}
                     >
                       <option>--select--</option>

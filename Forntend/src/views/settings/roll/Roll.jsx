@@ -6,6 +6,7 @@ import User from '../User'
 import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import AllRoles from './AllRoles'
 
 const Roll = () => {
   const notify = (dataa) => toast(dataa)
@@ -115,6 +116,7 @@ const Roll = () => {
 
   return (
     <div style={{ background: 'white' }}>
+      {/* <AllRoles /> */}
       <User />
       <div className="row">
         <center className="mx-auto">
@@ -164,8 +166,8 @@ const Roll = () => {
                           value={permissionData.p_show}
                           onChange={handlePermissionDataChange}
                         >
-                          <option value="only owned">Nur im Besitz</option>
-                          <option value="Withdraw">Widerrufen</option>
+                          {/* <option value="owned">Nur im Besitz</option> */}
+                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -184,8 +186,8 @@ const Roll = () => {
                           value={permissionData.p_edit}
                           onChange={handlePermissionDataChange}
                         >
-                          <option value="only owned">Nur im Besitz</option>
-                          <option value="Withdraw">Widerrufen</option>
+                          <option value="owned">Nur im Besitz</option>
+                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -204,8 +206,8 @@ const Roll = () => {
                           value={permissionData.p_delete}
                           onChange={handlePermissionDataChange}
                         >
-                          <option value="only owned">Nur im Besitz</option>
-                          <option value="Withdraw">Widerrufen</option>
+                          <option value="owned">Nur im Besitz</option>
+                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -224,8 +226,8 @@ const Roll = () => {
                           value={permissionData.p_export}
                           onChange={handlePermissionDataChange}
                         >
-                          <option value="only owned">Nur im Besitz</option>
-                          <option value="Withdraw">Widerrufen</option>
+                          <option value="owned">Nur im Besitz</option>
+                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -248,8 +250,8 @@ const Roll = () => {
                             value={permissionDashboard.p_show}
                             onChange={handlePermissionDashboardChange}
                           >
-                            <option value="only owned">Nur im Besitz</option>
-                            <option value="Withdraw">Widerrufen</option>
+                            {/* <option value="owned">Nur im Besitz</option> */}
+                            {/* <option value="Withdraw">Widerrufen</option> */}
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -268,8 +270,8 @@ const Roll = () => {
                             style={{ border: 'none', background: 'none' }}
                             onChange={handlePermissionDashboardChange}
                           >
-                            <option value="only owned">Nur im Besitz</option>
-                            <option value="Withdraw">Widerrufen</option>
+                            <option value="owned">Nur im Besitz</option>
+                            {/* <option value="Withdraw">Widerrufen</option> */}
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -288,8 +290,8 @@ const Roll = () => {
                             value={permissionDashboard.p_delete}
                             onChange={handlePermissionDashboardChange}
                           >
-                            <option value="only owned">Nur im Besitz</option>
-                            <option value="Withdraw">Widerrufen</option>
+                            <option value="owned">Nur im Besitz</option>
+                            {/* <option value="Withdraw">Widerrufen</option> */}
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -308,8 +310,8 @@ const Roll = () => {
                             style={{ border: 'none', background: 'none' }}
                             onChange={handlePermissionDashboardChange}
                           >
-                            <option value="only owned">Nur im Besitz</option>
-                            <option value="Withdraw">Widerrufen</option>
+                            <option value="owned">Nur im Besitz</option>
+                            {/* <option value="Withdraw">Widerrufen</option> */}
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -334,8 +336,8 @@ const Roll = () => {
                             value={permissionSetting.p_show}
                             onChange={handlePermissionSettingChange}
                           >
-                            <option value="only owned">Nur im Besitz</option>
-                            <option value="Withdraw">Widerrufen</option>
+                            {/* <option value="owned">Nur im Besitz</option> */}
+                            {/* <option value="Withdraw">Widerrufen</option> */}
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -354,8 +356,8 @@ const Roll = () => {
                             style={{ border: 'none', background: 'none' }}
                             onChange={handlePermissionSettingChange}
                           >
-                            <option value="only owned">Nur im Besitz</option>
-                            <option value="Withdraw">Widerrufen</option>
+                            <option value="owned">Nur im Besitz</option>s
+                            {/* <option value="Withdraw">Widerrufen</option> */}
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -374,8 +376,8 @@ const Roll = () => {
                             value={permissionSetting.p_delete}
                             onChange={handlePermissionSettingChange}
                           >
-                            <option value="only owned">Nur im Besitz</option>
-                            <option value="Withdraw">Widerrufen</option>
+                            <option value="owned">Nur im Besitz</option>
+                            {/* <option value="Withdraw">Widerrufen</option> */}
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>
@@ -394,8 +396,8 @@ const Roll = () => {
                             style={{ border: 'none', background: 'none' }}
                             onChange={handlePermissionSettingChange}
                           >
-                            <option value="only owned">Nur im Besitz</option>
-                            <option value="Withdraw">Widerrufen</option>
+                            <option value="owned">Nur im Besitz</option>
+                            {/* <option value="Withdraw">Widerrufen</option> */}
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
                           </select>

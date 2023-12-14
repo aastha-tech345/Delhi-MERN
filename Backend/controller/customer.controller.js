@@ -28,12 +28,12 @@ exports.createCustomer = async (req, res) => {
       });
     }
 
-    const user = await UserModel.User.findOne({ role: "user" });
-    if (!user) {
-      return res
-        .status(400)
-        .send({ message: "No employee found to link as parent" });
-    }
+    // const user = await UserModel.User.findOne({ user_role: "user" });
+    // if (!user) {
+    //   return res
+    //     .status(400)
+    //     .send({ message: "No employee found to link as parent" });
+    // }
 
     const userData = {
       fname,
@@ -47,7 +47,7 @@ exports.createCustomer = async (req, res) => {
       land,
       group,
       id,
-      created_by: user._id,
+      created_by,
     };
 
     // Create a new customer instance
@@ -140,29 +140,29 @@ exports.getCustomerData = async (req, res) => {
   }
 };
 
-exports.editCustomer = async (req, res) => {
-  try {
-    const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+// exports.editCustomer = async (req, res) => {
+//   try {
+//     const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+//       new: true,
+//     });
 
-    if (!data) {
-      res.status(500).json({
-        success: false,
-        message: "Customer updated Unsuccessfully",
-      });
-    }
+//     if (!data) {
+//       res.status(500).json({
+//         success: false,
+//         message: "Customer updated Unsuccessfully",
+//       });
+//     }
 
-    res.status(200).json({
-      success: true,
-      message: "Customer updated successfully",
-      data: data,
-    });
-  } catch (error) {
-    console.error("Error searching data:", error.message);
-    res.status(500).json({ error: "Server Error" });
-  }
-};
+//     res.status(200).json({
+//       success: true,
+//       message: "Customer updated successfully",
+//       data: data,
+//     });
+//   } catch (error) {
+//     console.error("Error searching data:", error.message);
+//     res.status(500).json({ error: "Server Error" });
+//   }
+// };
 
 exports.deleteCustomer = async (req, res) => {
   try {
@@ -193,5 +193,52 @@ exports.searchCustomer = async (req, res) => {
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).send({ error: "Server Error" });
+  }
+};
+
+exports.getUserCustomer = async (req, res) => {
+  try {
+    let resultPerPage = 10;
+    const baseQuery = Customer.find({
+      created_by: req.params.id,
+      status: "active",
+    });
+    const apiFeatures = new ApiFeatures(baseQuery, req.query)
+      .reverse()
+      .pagination(resultPerPage);
+
+    const result = await apiFeatures.query;
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "No Data Found",
+      });
+    }
+
+    let pageCount = Math.ceil(result?.length / resultPerPage);
+
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        result: updatedResult,
+        pageCount: pageCount,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Customer under user",
+      result: result,
+      pageCount: pageCount,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };

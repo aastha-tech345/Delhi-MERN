@@ -15,8 +15,15 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import Customer from '../Customer'
 import Form from 'react-bootstrap/Form'
+import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 
 const Contact = () => {
+  let lgUser = localStorage.getItem('record')
+  let loginData = JSON.parse(lgUser)
+
+  let lgCust = localStorage.getItem('customerDatat')
+  let custData = JSON.parse(lgCust)
+
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
   const [, setSelectedRowKeys] = useState([])
@@ -61,29 +68,55 @@ const Contact = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
-            <GrEdit />
-            &nbsp; Bearbeiten
-          </button>
-          &nbsp;
-          <button
-            style={{ background: 'none', border: 'none' }}
-            onClick={() => handleDelete(record._id)}
-          >
-            <MdDelete />
-            &nbsp; Löschen
-          </button>
+          {/* {console.log('contactRecord', record?.added_by)} */}
+          {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
+          verifyEditPer().includes('yes') ||
+          loginData?.user?.user_role === 'admin' ? (
+            <>
+              <button
+                style={{ background: 'none', border: 'none' }}
+                onClick={() => handleEdit(record)}
+              >
+                <GrEdit />
+                &nbsp;&nbsp;Bearbeiten
+              </button>
+            </>
+          ) : (
+            ''
+          )}
+          {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
+          verifyDelPer().includes('yes') ||
+          loginData?.user?.user_role === 'admin' ? (
+            <>
+              <button
+                style={{ background: 'none', border: 'none' }}
+                onClick={() => handleDelete(record._id)}
+              >
+                <MdDelete />
+                &nbsp; Löschen
+              </button>
+            </>
+          ) : (
+            ''
+          )}
+          {/* &nbsp; */}
         </>
       ),
     },
   ]
+  let loginCust = localStorage.getItem('customerDatat')
+  let loginCustData = JSON.parse(loginCust)
+
+  const loginUser = localStorage.getItem('record')
+  const loginUserData = JSON.parse(loginUser)
 
   const [data, setData] = useState({
     fname: '',
     lname: '',
     phone: '',
     gender: '',
-    customer_id: localStorage.getItem('customerDatat')?._id,
+    customer_id: loginCustData?._id,
+    added_by: loginUserData?.user?._id,
   })
 
   const [email, setEmail] = useState('')
@@ -166,7 +199,10 @@ const Contact = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/contact/get_contact?page=${page}`)
+      // const result = await fetch(
+      //   `${apiUrl}/contact/get_contact/${custData?._id}/${loginUserData?.user?._id}?page=${page}`,
+      // )
+      const result = await fetch(`${apiUrl}/contact/get_contact/${custData?._id}?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
