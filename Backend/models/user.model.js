@@ -25,8 +25,9 @@ const userSchema = new Schema({
   // plz: { type: String },
   // city: { type: String },
   timeZone: { type: String },
+  isAdminFullRights: { type: String, default: "false" },
   role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" }, // manager hr type roles
-  user_role: { type: String }, // admin user employee
+  user_type: { type: String }, // admin user employee
   parent_id: { type: mongoose.Schema.Types.ObjectId },
   added_by: { type: String },
   tokens: [

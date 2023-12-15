@@ -25,7 +25,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     fname: response?.fname,
     lname: response?.lname,
     phone: response?.phone,
-    // email: response?.email,
+    statu: response?.statu,
     gender: response?.gender,
     // customer_id: result?._id,
   })
@@ -247,6 +247,22 @@ const EditModal = ({ setEdit, getDetails }) => {
                     checked={data.gender === 'other'}
                   />
                   &nbsp; Andere
+                </div>
+              </div>
+              <div className="mb-2 row">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Status
+                </label>
+                <div className="col-sm-9">
+                  <select
+                    className="form-control"
+                    name="statu"
+                    onChange={handleChange}
+                    value={data.statu}
+                  >
+                    <option value="HVD-PV">HVD-PV</option>
+                    <option value="PV-ALT">PV-ALT</option>
+                  </select>
                 </div>
               </div>
             </div>

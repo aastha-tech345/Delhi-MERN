@@ -26,6 +26,14 @@ const AppModal = ({ setOpen }) => {
     setData({ ...data, [name]: newValue })
   }
 
+  const [selectedFile, setSelectedFile] = useState(null)
+  const fileInputRef = useRef(null)
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]
+    setSelectedFile(file)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -47,7 +55,7 @@ const AppModal = ({ setOpen }) => {
       //   body: formData,
       // })
 
-      const res = await putFetch(`${apiUrl}/user//update/${response.user?._id}`, formData)
+      const res = await putFetch(`${apiUrl}/user/update/${response.user?._id}`, formData)
 
       console.log('updatedProfile', res)
 
@@ -60,9 +68,12 @@ const AppModal = ({ setOpen }) => {
           password: '',
           gender: '',
         })
-        console.log('profile update', data)
+        localStorage.setItem('record', JSON.stringify(res?.data))
+        // console.log('profile update', res?.data)
         setSelectedFile(null)
         notify('Profile Updated Successfully')
+        setOpen(false)
+        // window.location.reload()
       } else {
         notify('Something Went Wrong')
       }
@@ -71,13 +82,6 @@ const AppModal = ({ setOpen }) => {
     }
   }
 
-  const [selectedFile, setSelectedFile] = useState(null)
-  const fileInputRef = useRef(null)
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0]
-    setSelectedFile(file)
-  }
   return (
     <div
       className="modal"
@@ -112,7 +116,7 @@ const AppModal = ({ setOpen }) => {
               <img
                 className="mb-3"
                 src={selectedFile ? URL.createObjectURL(selectedFile) : ''}
-                alt="Preview"
+                alt=""
                 style={{ height: '70px', width: '70px', borderRadius: '50%', marginLeft: '45%' }}
                 onClick={() => fileInputRef.current.click()}
               />

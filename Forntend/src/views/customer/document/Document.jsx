@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { MdAdd } from 'react-icons/md'
+import { MdAdd, MdOutlineEdit } from 'react-icons/md'
 import { Divider, Radio, Table } from 'antd'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete } from 'react-icons/md'
@@ -16,6 +16,7 @@ import EditModal from './EditModal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
+import { RiDeleteBinLine } from 'react-icons/ri'
 
 const columns = [
   {
@@ -79,13 +80,13 @@ const Document = () => {
         <>
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleEdit(record)}
               >
-                <GrEdit />
+                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
                 &nbsp;&nbsp;Bearbeiten
               </button>
             </>
@@ -97,13 +98,13 @@ const Document = () => {
 
           {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleDelete(record._id)}
               >
-                <MdDelete /> Löschen
+                <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
               </button>
             </>
           ) : (

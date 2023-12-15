@@ -33,7 +33,6 @@ const Login = () => {
       }
 
       const data = { email, password }
-      console.log(data)
       const response = await fetch(`${apiUrl}/user/login`, {
         method: 'POST',
         headers: {

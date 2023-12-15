@@ -28,7 +28,7 @@ exports.createCustomer = async (req, res) => {
       });
     }
 
-    // const user = await UserModel.User.findOne({ user_role: "user" });
+    // const user = await UserModel.User.findOne({ user_type: "user" });
     // if (!user) {
     //   return res
     //     .status(400)

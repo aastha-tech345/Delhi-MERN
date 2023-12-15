@@ -28,21 +28,7 @@ const Contact = () => {
 
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
-  const [, setSelectedRowKeys] = useState([])
   const apiUrl = process.env.REACT_APP_API_URL
-
-  // ... (Your existing functions and states)
-
-  const rowSelection = {
-    onChange: (selectedKeys) => {
-      setSelectedRowKeys(selectedKeys)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
-  }
-
   const columns = [
     {
       title: 'NAME DES KUNDEN',
@@ -72,10 +58,11 @@ const Contact = () => {
               text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
             borderRadius: '20px',
             padding: '3px',
+            width: '70px',
             textAlign: 'center',
           }}
         >
-          <b>{text}</b>
+          <b style={{ fontSize: '12px' }}>{text}</b>
         </div>
       ),
     },
@@ -87,7 +74,7 @@ const Contact = () => {
           {/* {console.log('contactRecord', record?.added_by)} */}
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
@@ -102,7 +89,7 @@ const Contact = () => {
           )}
           {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
@@ -224,7 +211,7 @@ const Contact = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  // console.log('astha', contactRecord)
+  console.log('astha', contactRecord)
 
   const searchHandle = async () => {
     try {

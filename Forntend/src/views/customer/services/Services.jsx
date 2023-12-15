@@ -355,7 +355,7 @@ const Services = () => {
               <div className="col-sm-3">Vorsorge</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.prevention === 'yes'}
                   onChange={matarialChange}
                   name="prevention"
@@ -363,7 +363,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.prevention === 'no'}
                   onChange={matarialChange}
                   name="prevention"
@@ -374,7 +374,7 @@ const Services = () => {
               <div className="col-sm-3">Krankheit</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.illness === 'yes'}
                   onChange={matarialChange}
                   name="illness"
@@ -382,7 +382,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.illness === 'no'}
                   onChange={matarialChange}
                   name="illness"
@@ -393,7 +393,7 @@ const Services = () => {
               <div className="col-sm-3">Selbstbestimmung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.selfDetermination === 'yes'}
                   onChange={matarialChange}
                   name="selfDetermination"
@@ -401,7 +401,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.selfDetermination === 'no'}
                   onChange={matarialChange}
                   name="selfDetermination"
@@ -412,7 +412,7 @@ const Services = () => {
               <div className="col-sm-3">Angehörigenentlastung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.relatives === 'yes'}
                   onChange={matarialChange}
                   name="relatives"
@@ -420,7 +420,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.relatives === 'no'}
                   onChange={matarialChange}
                   name="relatives"
@@ -431,7 +431,7 @@ const Services = () => {
               <div className="col-sm-3">Erfahrungen</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.lessons === 'yes'}
                   onChange={matarialChange}
                   name="lessons"
@@ -439,7 +439,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={motivation.lessons === 'no'}
                   onChange={matarialChange}
                   name="lessons"
@@ -457,7 +457,7 @@ const Services = () => {
               <div className="col-sm-3">Intensivmedizin gewünscht</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="medicineDesired"
                   value="yes"
                   checked={resuscitation.medicineDesired === 'yes'}
@@ -465,7 +465,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="medicineDesired"
                   value="no"
                   checked={resuscitation.medicineDesired === 'no'}
@@ -476,7 +476,7 @@ const Services = () => {
               <div className="col-sm-3">Keine Intensivmedizin</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="noIntensive"
                   value="yes"
                   checked={resuscitation.noIntensive === 'yes'}
@@ -484,7 +484,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="noIntensive"
                   value="no"
                   checked={resuscitation.noIntensive === 'no'}
@@ -495,7 +495,7 @@ const Services = () => {
               <div className="col-sm-3">Wiederbelebung gewünscht</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="revival"
                   value="yes"
                   checked={resuscitation.revival === 'yes'}
@@ -503,7 +503,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="revival"
                   value="no"
                   checked={resuscitation.revival === 'no'}
@@ -514,7 +514,7 @@ const Services = () => {
               <div className="col-sm-3">Keine Wiederbelebung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="noRevival"
                   value="yes"
                   checked={resuscitation.noRevival === 'yes'}
@@ -522,7 +522,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="noRevival"
                   value="no"
                   checked={resuscitation.noRevival === 'no'}
@@ -538,7 +538,7 @@ const Services = () => {
               <div className="col-sm-3">Sterbeprozess</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="dyingProcess"
                   value="yes"
                   checked={situation.dyingProcess === 'yes'}
@@ -546,7 +546,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="dyingProcess"
                   value="no"
                   checked={situation.dyingProcess === 'no'}
@@ -557,7 +557,7 @@ const Services = () => {
               <div className="col-sm-3">Gehirnshädigung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="brainInjury"
                   value="yes"
                   checked={situation.brainInjury === 'yes'}
@@ -565,7 +565,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="brainInjury"
                   value="no"
                   checked={situation.brainInjury === 'no'}
@@ -576,7 +576,7 @@ const Services = () => {
               <div className="col-sm-3">Demenz</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="dementia"
                   value="yes"
                   checked={situation.dementia === 'yes'}
@@ -584,7 +584,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="dementia"
                   value="no"
                   checked={situation.dementia === 'no'}
@@ -600,7 +600,7 @@ const Services = () => {
               <div className="col-sm-3">Unverzichtbare Basisversorgung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.essential === 'yes'}
                   onChange={determinationChange}
                   name="essential"
@@ -608,7 +608,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.essential === 'no'}
                   onChange={determinationChange}
                   name="essential"
@@ -619,7 +619,7 @@ const Services = () => {
               <div className="col-sm-3">Schwerstpflegebedurftigkeit</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.servere === 'yes'}
                   onChange={determinationChange}
                   name="servere"
@@ -627,7 +627,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.servere === 'no'}
                   onChange={determinationChange}
                   name="servere"
@@ -638,7 +638,7 @@ const Services = () => {
               <div className="col-sm-3">Kunstliche Enahrung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.noIntensive === 'yes'}
                   onChange={determinationChange}
                   name="noIntensive"
@@ -646,7 +646,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.noIntensive === 'no'}
                   onChange={determinationChange}
                   name="noIntensive"
@@ -657,7 +657,7 @@ const Services = () => {
               <div className="col-sm-3">Kunstliche Flussigkeitszufuhr</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.artificialHydration === 'yes'}
                   onChange={determinationChange}
                   name="artificialHydration"
@@ -665,7 +665,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.artificialHydration === 'no'}
                   onChange={determinationChange}
                   name="artificialHydration"
@@ -676,7 +676,7 @@ const Services = () => {
               <div className="col-sm-3">Schmerz- und Beschwerdelinderung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.discomfort === 'yes'}
                   onChange={determinationChange}
                   name="discomfort"
@@ -684,7 +684,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.discomfort === 'no'}
                   onChange={determinationChange}
                   name="discomfort"
@@ -695,7 +695,7 @@ const Services = () => {
               <div className="col-sm-3">Medikamente zur Linderung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.medication === 'yes'}
                   onChange={determinationChange}
                   name="medication"
@@ -703,7 +703,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.medication === 'no'}
                   onChange={determinationChange}
                   name="medication"
@@ -714,7 +714,7 @@ const Services = () => {
               <div className="col-sm-3">Medikamentenverzicht</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.medicines === 'yes'}
                   onChange={determinationChange}
                   name="medicines"
@@ -722,7 +722,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.medicines === 'no'}
                   onChange={determinationChange}
                   name="medicines"
@@ -733,7 +733,7 @@ const Services = () => {
               <div className="col-sm-3">Organspende</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.organDonation === 'yes'}
                   onChange={determinationChange}
                   name="organDonation"
@@ -741,7 +741,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.organDonation === 'no'}
                   onChange={determinationChange}
                   name="organDonation"
@@ -752,7 +752,7 @@ const Services = () => {
               <div className="col-sm-3">Forschungszwecke</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.researchPurpose === 'yes'}
                   onChange={determinationChange}
                   name="researchPurpose"
@@ -760,7 +760,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.researchPurpose === 'no'}
                   onChange={determinationChange}
                   name="researchPurpose"
@@ -771,7 +771,7 @@ const Services = () => {
               <div className="col-sm-3">Defibrillator</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.defibrillator === 'yes'}
                   onChange={determinationChange}
                   name="defibrillator"
@@ -779,7 +779,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.defibrillator === 'no'}
                   onChange={determinationChange}
                   name="defibrillator"
@@ -790,7 +790,7 @@ const Services = () => {
               <div className="col-sm-3">Sterbeheife</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.dyingYeast === 'yes'}
                   onChange={determinationChange}
                   name="dyingYeast"
@@ -798,7 +798,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.dyingYeast === 'no'}
                   onChange={determinationChange}
                   name="dyingYeast"
@@ -809,7 +809,7 @@ const Services = () => {
               <div className="col-sm-3">Suizidoption</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.suicideOption === 'yes'}
                   onChange={determinationChange}
                   name="suicideOption"
@@ -817,7 +817,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.suicideOption === 'no'}
                   onChange={determinationChange}
                   name="suicideOption"
@@ -828,7 +828,7 @@ const Services = () => {
               <div className="col-sm-3">Verbindlichkeit</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.commitment === 'yes'}
                   onChange={determinationChange}
                   name="commitment"
@@ -836,7 +836,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.commitment === 'no'}
                   onChange={determinationChange}
                   name="commitment"
@@ -847,7 +847,7 @@ const Services = () => {
               <div className="col-sm-3">Ermessensbereich Bevollmachtigte</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.discretionaryArea === 'yes'}
                   onChange={determinationChange}
                   name="discretionaryArea"
@@ -855,7 +855,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={determination.discretionaryArea === 'no'}
                   onChange={determinationChange}
                   name="discretionaryArea"
@@ -871,7 +871,7 @@ const Services = () => {
               <div className="col-sm-3">Vertraute Umgebung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={whereabout.familiarEnvironment === 'yes'}
                   onChange={whereaboutChange}
                   name="familiarEnvironment"
@@ -879,7 +879,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={whereabout.familiarEnvironment === 'no'}
                   onChange={whereaboutChange}
                   name="familiarEnvironment"
@@ -890,7 +890,7 @@ const Services = () => {
               <div className="col-sm-3">Hospiz</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={whereabout.hospice === 'yes'}
                   onChange={whereaboutChange}
                   name="hospice"
@@ -898,7 +898,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={whereabout.hospice === 'no'}
                   onChange={whereaboutChange}
                   name="hospice"
@@ -909,7 +909,7 @@ const Services = () => {
               <div className="col-sm-3">Ins Krankenhaus</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={whereabout.toHospital === 'yes'}
                   onChange={whereaboutChange}
                   name="toHospital"
@@ -917,7 +917,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={whereabout.toHospital === 'no'}
                   onChange={whereaboutChange}
                   name="toHospital"
@@ -928,7 +928,7 @@ const Services = () => {
               <div className="col-sm-3">Kein Krankenhaus</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={whereabout.notHospital === 'yes'}
                   onChange={whereaboutChange}
                   name="notHospital"
@@ -936,7 +936,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={whereabout.notHospital === 'no'}
                   onChange={whereaboutChange}
                   name="notHospital"
@@ -998,7 +998,7 @@ const Services = () => {
               <div className="col-sm-3">Feuerbestattung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={funeralwishes.cremation === 'yes'}
                   onChange={funeralwishesChange}
                   name="cremation"
@@ -1006,7 +1006,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={funeralwishes.cremation === 'no'}
                   onChange={funeralwishesChange}
                   name="cremation"
@@ -1017,7 +1017,7 @@ const Services = () => {
               <div className="col-sm-3">Erdbestattung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={funeralwishes.burial === 'yes'}
                   onChange={funeralwishesChange}
                   name="burial"
@@ -1025,7 +1025,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={funeralwishes.burial === 'no'}
                   onChange={funeralwishesChange}
                   name="burial"
@@ -1069,7 +1069,7 @@ const Services = () => {
               <div className="col-sm-3">Blanko-formulare</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={atorney.forms === 'yes'}
                   onChange={atorneyChange}
                   name="forms"
@@ -1077,7 +1077,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={atorney.forms === 'no'}
                   onChange={atorneyChange}
                   name="forms"
@@ -1088,7 +1088,7 @@ const Services = () => {
               <div className="col-sm-3">Betreuungsverfugung</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={atorney.careOrder === 'yes'}
                   onChange={atorneyChange}
                   name="careOrder"
@@ -1096,7 +1096,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={atorney.careOrder === 'no'}
                   onChange={atorneyChange}
                   name="careOrder"
@@ -1112,7 +1112,7 @@ const Services = () => {
               <div className="col-sm-3">Regulär</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={fee.regular === 'yes'}
                   onChange={feeChange}
                   name="regular"
@@ -1120,7 +1120,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={fee.regular === 'no'}
                   onChange={feeChange}
                   name="regular"
@@ -1131,7 +1131,7 @@ const Services = () => {
               <div className="col-sm-3">Ermäßigt</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={fee.reduced === 'yes'}
                   onChange={feeChange}
                   name="reduced"
@@ -1139,7 +1139,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={fee.reduced === 'no'}
                   onChange={feeChange}
                   name="reduced"
@@ -1155,7 +1155,7 @@ const Services = () => {
               <div className="col-sm-3">Dringlichkeit</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={information.urgency === 'yes'}
                   onChange={informationChange}
                   name="urgency"
@@ -1163,7 +1163,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={information.urgency === 'no'}
                   onChange={informationChange}
                   name="urgency"
@@ -1174,7 +1174,7 @@ const Services = () => {
               <div className="col-sm-3">Abweichende Lieferanschrift</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={information.alternateAddress === 'yes'}
                   onChange={informationChange}
                   name="alternateAddress"
@@ -1182,7 +1182,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={information.alternateAddress === 'no'}
                   onChange={informationChange}
                   name="alternateAddress"
@@ -1428,7 +1428,7 @@ const Services = () => {
               <div className="col-sm-3">Datenschutz</div>
               <div className="col-sm-2 d-flex">
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={information.dataProtection === 'yes'}
                   onChange={informationChange}
                   name="dataProtection"
@@ -1436,7 +1436,7 @@ const Services = () => {
                 />{' '}
                 &nbsp; ja &nbsp; &nbsp;
                 <input
-                  type="radio"
+                  type="checkbox"
                   checked={information.dataProtection === 'no'}
                   onChange={informationChange}
                   name="dataProtection"

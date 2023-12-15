@@ -27,8 +27,12 @@ const CreateUser = () => {
   const [activeTab, setActiveTab] = useState('nav-home')
   const [roleList, setRoleList] = useState([])
   const [roleId, setRoleId] = useState('')
+  const [refresh, setRefresh] = useState(false)
+  const [getEmployee, setGetEmployee] = useState([])
+  const [isAdminFullRights, setIsAdminFullRights] = useState('false')
+
   const [employee, setEmployee] = useState({
-    fname: '',
+    username: '',
     lname: '',
     street: '',
     plz: '',
@@ -39,11 +43,12 @@ const CreateUser = () => {
     mobile: '',
     role: '',
     password: '123456',
-    user_role: 'employee',
+    user_type: 'employee',
     timezone: '5:30',
     parent_id: dataa?.user?._id,
     added_by: dataa?.user?.username,
   })
+  const employeData = { ...employee, isAdminFullRights }
   // const [employeData, setEmployeData] = useState({
   //   users: {},
   //   password: {
@@ -66,9 +71,6 @@ const CreateUser = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const onChange = (checked) => {
-    //console.log(`switch to ${checked}`)
-  }
   const handleShowInviteUserModal = () => {
     setShowInviteUserModal(true)
   }
@@ -90,12 +92,14 @@ const CreateUser = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault()
-      const res = await postFetchData(`${apiUrl}/user/register`, employee)
+      const res = await postFetchData(`${apiUrl}/user/register`, employeData)
       console.log('response', res)
       if (res.status === 201) {
         notify('Employe Created Successfully')
-        return setShow(false)
+        setRefresh(!refresh)
+        return setShowInviteUserModal(false)
       }
+      // console.log('employeData', employeData)
     } catch (error) {
       console.log(error)
     }
@@ -112,19 +116,19 @@ const CreateUser = () => {
     {
       title: 'ID',
       dataIndex: '_id',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{text?.slice(-6)}</a>,
     },
     {
       title: 'NAME',
-      dataIndex: 'user_name',
+      dataIndex: 'username',
     },
     {
       title: 'E-Mail Adresse',
-      dataIndex: 'user_email', // Change 'email address' to 'emailAddress'
+      dataIndex: 'email', // Change 'email address' to 'emailAddress'
     },
     {
       title: 'Super Verwalter',
-      dataIndex: 'superVerwalter', // Change 'super verwalter' to 'superVerwalter'
+      dataIndex: 'isAdminFullRights', // Change 'super verwalter' to 'superVerwalter'
     },
     {
       title: 'AKTION',
@@ -140,46 +144,35 @@ const CreateUser = () => {
     },
   ]
 
-  const data = [
-    {
-      _id: '1',
-      user_name: 'John Brown',
-      age: 32,
-      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
-      superVerwalter: 'Yes',
-      action: 'Edit', // Provide appropriate action value
-    },
-    {
-      _id: '2',
-      user_name: 'Jim Green',
-      age: 42,
-      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
-      superVerwalter: 'No',
-      action: 'Delete', // Provide appropriate action value
-    },
-    {
-      _id: '3',
-      user_name: 'Joe Black',
-      age: 32,
-      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
-      superVerwalter: 'Yes',
-      action: 'View', // Provide appropriate action value
-    },
-  ]
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
-  }
-
+  // const data = [
+  //   {
+  //     _id: '1',
+  //     user_name: 'John Brown',
+  //     age: 32,
+  //     emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
+  //     emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
+  //     superVerwalter: 'Yes',
+  //     action: 'Edit', // Provide appropriate action value
+  //   },
+  //   {
+  //     _id: '2',
+  //     user_name: 'Jim Green',
+  //     age: 42,
+  //     emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
+  //     emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
+  //     superVerwalter: 'No',
+  //     action: 'Delete', // Provide appropriate action value
+  //   },
+  //   {
+  //     _id: '3',
+  //     user_name: 'Joe Black',
+  //     age: 32,
+  //     emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
+  //     emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
+  //     superVerwalter: 'Yes',
+  //     action: 'View', // Provide appropriate action value
+  //   },
+  // ]
   const getRole = async () => {
     try {
       const res = await getFetch(`${apiUrl}/role/get_role`)
@@ -188,10 +181,22 @@ const CreateUser = () => {
       console.log(error)
     }
   }
+
+  const getEmployeeData = async () => {
+    try {
+      const res = await getFetch(`${apiUrl}/user/get/employeeData/${dataa?.user?._id}`)
+      // console.log('getEmployeeData', res?.data?.data)
+      setGetEmployee(res?.data?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   let localData = localStorage.getItem('updateFunc')
   useEffect(() => {
     getRole()
-  }, [localData])
+    getEmployeeData()
+  }, [localData, refresh])
 
   return (
     <div style={{ background: 'white' }}>
@@ -208,21 +213,42 @@ const CreateUser = () => {
             &nbsp; Benutzer erstellen
           </button>
           <Modal size="lg" show={showInviteUserModal} onHide={handleCloseInviteUserModal} centered>
-            <Modal.Header closeButton>
-              <Modal.Title> Benutzer einladen</Modal.Title>
-            </Modal.Header>
+            <div className=" row pt-5 px-5">
+              <p className="fs-5">
+                <b>Super Verwalter</b>
+              </p>
+              <div className="col-sm-9">
+                <p>
+                  Wenn Sie den Super-Admin-Zugang für den Benutzer aktivieren, erhalten Sie vollen
+                  Zugriff auf alle Funktionen ohne jegliche Einschränkungen.
+                </p>
+              </div>
+              <div className="col-sm-3">
+                <div className="form-check mx-5 form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckChecked"
+                    name="isAdminFullRights"
+                    onChange={(e) => setIsAdminFullRights(e.target.checked.toString())}
+                  />
+                </div>
+              </div>
+            </div>
+
             <Modal.Body>
               <div className="row" style={{ background: 'white' }}>
                 <div className="col-sm-12">
                   <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
                       <button
-                        className={`nav-link ${activeTab === 'nav-benutzer' ? 'active' : ''}`}
-                        id="nav-benutzer-tab"
+                        className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
+                        id="nav-home-tab"
                         data-bs-toggle="tab"
                         role="tab"
-                        aria-selected={activeTab === 'nav-benutzer'}
-                        onClick={() => handleTabClick('nav-benutzer')}
+                        aria-selected={activeTab === 'nav-home'}
+                        onClick={() => handleTabClick('nav-home')}
                         style={{ marginRight: '10px', marginLeft: '20px' }}
                       >
                         Benutzer
@@ -286,12 +312,12 @@ const CreateUser = () => {
               <br />
               <div className="tab-content" id="nav-tabContent">
                 <div
-                  className={`tab-pane fade ${activeTab === 'nav-benutzer' ? 'show active' : ''}`}
-                  id="nav-benutzer"
+                  className={`tab-pane fade ${activeTab === 'nav-home' ? 'show active' : ''}`}
+                  id="nav-home"
                   role="tabpanel"
-                  aria-labelledby="nav-benutzer-tab"
+                  aria-labelledby="nav-home-tab"
                 >
-                  <div className="row">
+                  <div className="row mx-3">
                     {/* <div className="col-sm-6">
                       <input
                         className="form-control"
@@ -309,8 +335,8 @@ const CreateUser = () => {
                         className="form-control"
                         placeholder="Name"
                         type="text"
-                        name="fname"
-                        value={employee.fname}
+                        name="username"
+                        value={employee.username}
                         onChange={handleChange}
                       />
                       <br />
@@ -469,13 +495,20 @@ const CreateUser = () => {
       </div>
       <div className="row mx-2">
         <Table
+          rowKey={(record) => record._id}
           rowSelection={{
-            type: selectionType,
-            ...rowSelection,
+            type: 'checkbox',
+            onChange: (selectedRowKeys, selectedRows) => {
+              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+            },
+            getCheckboxProps: (record) => ({
+              disabled: record.name === 'Disabled User',
+              name: record.name,
+            }),
           }}
           style={{ overflowX: 'auto' }}
           columns={columns}
-          dataSource={data}
+          dataSource={getEmployee}
         />
       </div>
       <ToastContainer />
