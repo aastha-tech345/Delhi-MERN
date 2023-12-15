@@ -90,7 +90,7 @@ const CustomerList = () => {
         <>
           {(loginData?.user?._id === record.created_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
@@ -110,7 +110,7 @@ const CustomerList = () => {
           )}
           {(loginData?.user?._id === record.created_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <button
               style={{ background: 'none', border: 'none' }}
               onClick={() => handleIconClick(record._id)}
@@ -222,7 +222,7 @@ const CustomerList = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getDetails = useCallback(async () => {
     try {
-      // if (loginData?.user?.user_role === 'admin') {
+      // if (loginData?.user?.user_type === 'admin') {
       const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
@@ -230,7 +230,7 @@ const CustomerList = () => {
       setCustomerRecord(activeRecords)
       // }
 
-      // if (loginData?.user?.user_role === 'employee') {
+      // if (loginData?.user?.user_type === 'employee') {
       //   const result = await fetch(
       //     `${apiUrl}/customer/user/customer/${loginData?.user?._id}?page=${page}`,
       //   )
@@ -247,7 +247,7 @@ const CustomerList = () => {
   //   getDetails()
   // }, [page])
 
-  // if (loginData?.user?.user_role === 'employee') {
+  // if (loginData?.user?.user_type === 'employee') {
   //   const getDetails = useCallback(async () => {
   //     try {
   //       const result = await fetch(

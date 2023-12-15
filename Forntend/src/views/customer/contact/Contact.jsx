@@ -71,7 +71,7 @@ const Contact = () => {
           {/* {console.log('contactRecord', record?.added_by)} */}
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
@@ -86,7 +86,7 @@ const Contact = () => {
           )}
           {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}

@@ -102,7 +102,7 @@ router.post("/login", userCtrl.login);
  *       password:
  *         type: string
  *         required: true
- *       user_role_id:
+ *       user_type_id:
  *         type: number
  *       fname:
  *         type: string

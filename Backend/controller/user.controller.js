@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
       username,
       password,
       email,
-      user_role,
+      user_type,
       mobile,
       gender,
       location,
@@ -24,19 +24,21 @@ exports.register = async (req, res) => {
       lname,
       parent_id,
       role,
+      isAdminFullRights,
     } = req.body;
 
     let userData;
 
-    if (user_role === "admin") {
+    if (user_type === "admin") {
       userData = {
         username,
         password,
         email,
-        user_role: "admin",
+        isAdminFullRights: "true",
+        user_type: "admin",
       };
-    } else if (user_role === "user") {
-      const admin = await UserModel.User.findOne({ user_role: "admin" });
+    } else if (user_type === "user") {
+      const admin = await UserModel.User.findOne({ user_type: "admin" });
 
       if (admin) {
         userData = {
@@ -45,7 +47,7 @@ exports.register = async (req, res) => {
           email,
           gender,
           lname,
-          user_role,
+          user_type,
           mobile,
           parent_id: admin._id,
         };
@@ -54,12 +56,12 @@ exports.register = async (req, res) => {
           .status(400)
           .send({ message: "No admin found to link as parent" });
       }
-    } else if (user_role === "employee") {
-      // const user = await UserModel.User.findOne({ user_role: "user" });
+    } else if (user_type === "employee") {
+      // const user = await UserModel.User.findOne({ user_type: "user" });
 
       // if (user) {
       userData = {
-        fname,
+        username,
         lname,
         password,
         mobile,
@@ -70,9 +72,10 @@ exports.register = async (req, res) => {
         street,
         plz,
         city,
-        user_role, //admin employee user
+        user_type, //admin employee user
         role, //Manager HR
         parent_id,
+        isAdminFullRights,
       };
       // } else {
       //   return res
@@ -113,25 +116,35 @@ exports.register = async (req, res) => {
 // update Login User
 exports.updateUser = async (req, res) => {
   try {
-  
+    const { password, ...updateData } = req.body;
+
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
+
     const user = await UserModel.User.findByIdAndUpdate(
       req.params.id,
       {
-        ...req.body,
+        ...updateData,
         profileImage: req?.file?.filename,
       },
       {
         new: true,
       }
-    );
+    ).populate("role");
 
     return res.status(200).json({
       success: true,
-      message: "User Updatd Successfully",
-      data: user,
+      message: "User Updated Successfully",
+      user: user,
     });
   } catch (error) {
     console.log(error);
+    // Handle the error and send an appropriate response
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 

@@ -26,50 +26,14 @@ const AppModal = ({ setOpen }) => {
     setData({ ...data, [name]: newValue })
   }
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault()
-  //   try {
-  //     setLoadVale(true)
-  //     const { username, email, password, lname, mobile, gender } = data
+  const [selectedFile, setSelectedFile] = useState(null)
+  const fileInputRef = useRef(null)
 
-  //     if (!email) {
-  //       return notify('Invalid Email')
-  //     }
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]
+    setSelectedFile(file)
+  }
 
-  //     const apiUrl = process.env.REACT_APP_API_URL
-
-  //     const res = await fetch(`${apiUrl}/user/register/${response.user?._id}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         username,
-  //         email,
-  //         password,
-  //         lname,
-  //         mobile,
-  //         gender,
-  //       }),
-  //     })
-
-  //     if (res.status === 200) {
-  //       setLoadVale(false)
-  //       setData({
-  //         username: '',
-  //         lname: '',
-  //         mobile: '',
-  //         password: '',
-  //         gender: '',
-  //       })
-  //       notify('Profile Updated Successfully')
-  //     } else {
-  //       notify('Something Went Wrong')
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -85,10 +49,6 @@ const AppModal = ({ setOpen }) => {
       if (selectedFile) {
         formData.append('profileImage', selectedFile)
       }
-      // const res = await fetch(`${apiUrl}/user//update/${response.user?._id}`, {
-      //   method: 'PUT',
-      //   body: formData,
-      // })
 
       const res = await putFetch(`${apiUrl}/user//update/${response.user?._id}`, formData)
 
@@ -103,9 +63,12 @@ const AppModal = ({ setOpen }) => {
           password: '',
           gender: '',
         })
-        console.log('profile update', data)
+        localStorage.setItem('record', JSON.stringify(res?.data))
+        // console.log('profile update', res?.data)
         setSelectedFile(null)
         notify('Profile Updated Successfully')
+        setOpen(false)
+        // window.location.reload()
       } else {
         notify('Something Went Wrong')
       }
@@ -114,13 +77,6 @@ const AppModal = ({ setOpen }) => {
     }
   }
 
-  const [selectedFile, setSelectedFile] = useState(null)
-  const fileInputRef = useRef(null)
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0]
-    setSelectedFile(file)
-  }
   return (
     <div
       className="modal"
