@@ -24,7 +24,7 @@ const upload = multer({
     destination: function (req, file, cb) {
       cb(null, path.resolve(__dirname, "../public/user"));
     },
-  
+
     filename: function (req, file, cb) {
       cb(null, Date.now() + "_" + file.originalname);
     },
@@ -111,9 +111,9 @@ router.post("/login", userCtrl.login);
  */
 router.post("/register", userCtrl.register);
 router.get("/all", userCtrl.getData);
-
+router.get("/:id", userCtrl.getUserById);
 router.post("/register/record/adduser/:id", userCtrl.addUser);
-// router.get('/register/record', userCtrl.getData);
+// router.get('/register/record', userCtrl.getData);ss
 // router.get('/register/record/:id', userCtrl.getRegisterData);
 // router.get('/register/user/record/:id', userCtrl.getUserData);
 // router.delete('/register/user/record/:id', userCtrl.deleteObjectById);

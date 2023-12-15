@@ -148,8 +148,29 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+// find user by id 
+exports.getUserById=async(req,res)=>{
+  try {
+    const user=await UserModel.User.findById(req.params.id).populate("role")
+
+    if(!user){
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User Find Successfully",
+      user: user,
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 // update Employee Details
-exports.updateEmployeeDetails = async () => {
+exports.updateEmployeeDetails = async (req,res) => {
   try {
     const employee = await UserModel.User.findByIdAndUpdate(
       req.params.id,
