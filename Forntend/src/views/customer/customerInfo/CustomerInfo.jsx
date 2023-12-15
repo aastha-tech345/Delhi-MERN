@@ -3,8 +3,10 @@ import Select from 'react-select'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
+import { useNavigate } from 'react-router-dom'
 
 const CustomerInfo = () => {
+  const navigate = useNavigate()
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const [orderingMaterials, setOrderingMaterials] = useState({
@@ -239,6 +241,10 @@ const CustomerInfo = () => {
       // Show error toast
       notify('Error saving data. Please try again.')
     }
+  }
+
+  const cancelData = () => {
+    navigate('/customerlist')
   }
   return (
     <div style={{ background: '#fff', border: 'none' }}>
@@ -996,6 +1002,7 @@ const CustomerInfo = () => {
           <button
             type="button"
             className="btn btn"
+            onClick={cancelData}
             style={{ background: '#d04545', color: 'white' }}
           >
             Abbrechen
@@ -1007,7 +1014,7 @@ const CustomerInfo = () => {
             className="btn btn"
             onClick={saveData}
           >
-            Speichern Sie
+            Speichern
           </button>
         </div>
       </div>

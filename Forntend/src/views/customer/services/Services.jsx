@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
+import { useNavigate } from 'react-router-dom'
 
 const Services = () => {
+  const navigate = useNavigate()
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const [motivation, setMotivation] = useState({
@@ -85,7 +87,9 @@ const Services = () => {
     dataProtection: '',
   })
   //materialChange started
-
+  const cancelData = () => {
+    navigate('/customer/customer_info')
+  }
   const matarialChange = (e) => {
     const { name, value } = e.target
 
@@ -1447,6 +1451,7 @@ const Services = () => {
           <div className="col-sm-9"></div>
           <div className="col-sm-3">
             <button
+              onClick={cancelData}
               type="button"
               className="btn btn"
               style={{ background: '#d04545', color: 'white' }}

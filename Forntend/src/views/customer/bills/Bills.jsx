@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
+import { useNavigate } from 'react-router-dom'
 
 const Bills = () => {
+  const navigate = useNavigate()
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('customerDatat')
@@ -26,6 +28,9 @@ const Bills = () => {
       ...prevProductData,
       [name]: type === 'checkbox' ? checked : value,
     }))
+  }
+  const cancelData = () => {
+    navigate('/customer/customer_info')
   }
   const saveData = async () => {
     try {
@@ -202,6 +207,7 @@ const Bills = () => {
         <div className="col-sm-3">
           <button
             type="button"
+            onClick={cancelData}
             className="btn btn"
             style={{ background: '#d04545', color: 'white' }}
           >

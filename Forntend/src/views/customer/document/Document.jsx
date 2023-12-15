@@ -64,12 +64,12 @@ const Document = () => {
   const [edit, setEdit] = useState(false)
   const columns = [
     {
-      title: 'Title',
+      title: 'TITLE',
       dataIndex: 'document_title',
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Dokumententyp',
+      title: 'DOKUMENTENTYP',
       dataIndex: 'document_type',
     },
     {
@@ -230,7 +230,7 @@ const Document = () => {
             onClick={handleShow}
           >
             <MdAdd style={{ color: 'white' }} />
-            &nbsp; Dokument erstellen
+            &nbsp; Dokument hochladen
           </button>
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
