@@ -80,7 +80,7 @@ const Document = () => {
         <>
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.isAdminFullRights == 'true' ? (
+          loginData?.user?.isAdminFullRights === 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
@@ -98,7 +98,7 @@ const Document = () => {
 
           {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
-          loginData?.user?.isAdminFullRights == 'true' ? (
+          loginData?.user?.isAdminFullRights === 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}

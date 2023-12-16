@@ -78,7 +78,6 @@ exports.register = async (req, res) => {
         plz,
         city,
         profileImage: null,
-        user_role, //admin employee user
         user_type, //admin employee user
         role, //Manager HR
         parent_id,
@@ -181,7 +180,6 @@ exports.getEmployeeData = async (req, res) => {
     const usermployees = await UserModel.User.find({
       parent_id: req.params.id,
     }).populate("role");
-
     return res.status(200).json({
       success: true,
       message: "User Employees Data Found",
@@ -212,44 +210,48 @@ exports.getRegisterData = async (req, res) => {
   res.send(user);
 };
 
-// exports.getRegisterUpdate = async (req, res) => {
-//   const { password, ...otherFields } = req.body;
-//   if (password) {
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     otherFields.password = hashedPassword;
-//   }
-
-//   try {
-//     const user = await UserModel.User.updateOne(
-//       { _id: req.params.id },
-//       { $set: otherFields }
-//     );
-//     res.send(user);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// };
-
-exports.addUser = async (req, res) => {
+exports.getUserDataDelete = async (req, res) => {
   try {
-    const existingUser = await UserModel.User.findById(req.params.id);
+    const result = await UserModel.User.findOneAndUpdate(
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: { status: "deleted" } },
+      { new: true }
+    ).populate("role");
 
-    existingUser.employee_creation = [
-      ...existingUser.employee_creation,
-      req.body,
-    ];
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found or Already Deleted",
+      });
+    }
 
-    const updatedUser = await existingUser.save();
-
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
-      data: updatedUser,
+      message: "User Deleted Successfully",
+      data: result,
     });
   } catch (error) {
-    res
-      .status(500)
-      .send({ message: "Internal Server Error", error: error.message });
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+exports.getUserSearch = async (req, res) => {
+  try {
+    const searchKey = req.params.searchKey;
+    const result = await UserModel.User.find({
+      $or: [
+        { username: { $regex: searchKey, $options: "i" } },
+        { email: { $regex: searchKey, $options: "i" } },
+      ],
+    });
+    return res.send(result);
+  } catch (error) {
+    console.error("Error searching data:", error.message);
+    res.status(500).send({ error: "Server Error" });
   }
 };
 

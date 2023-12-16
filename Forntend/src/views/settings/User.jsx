@@ -6,7 +6,7 @@ import { ImInfo } from 'react-icons/im'
 const User = () => {
   const navigate = useNavigate()
   let activeTab = localStorage.getItem('tabId') || 'nav-benutzer'
-  console.log(activeTab)
+  // console.log(activeTab)
   const handleTabClick = (tabId, name, e) => {
     if (e && e.target.tagName.toLowerCase() === 'a') {
       e.preventDefault()
