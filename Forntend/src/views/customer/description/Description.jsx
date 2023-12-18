@@ -87,7 +87,13 @@ const Description = () => {
     setData({ ...data, [name]: value })
   }
   let total = { ...data, icon }
-  const handleSumit = async () => {
+  const handleSubmit = async () => {
+    for (const key in data) {
+      if (!data[key]) {
+        notify(`Please fill in the ${key} field`)
+        return
+      }
+    }
     try {
       const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
       if (res?.message === 'activity was created') {
@@ -305,7 +311,7 @@ const Description = () => {
                 <button
                   className="btn mx-2"
                   style={{ background: '#0b5995', color: 'white' }}
-                  onClick={handleSumit}
+                  onClick={handleSubmit}
                 >
                   Aktivität hinzufügen
                 </button>

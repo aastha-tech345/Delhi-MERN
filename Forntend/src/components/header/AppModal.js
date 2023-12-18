@@ -49,8 +49,10 @@ const AppModal = ({ setOpen }) => {
         formData.append('profileImage', selectedFile)
       }
 
-      const res = await putFetch(`${apiUrl}/user//update/${response.user?._id}`, formData)
-      console.log(res)
+      const res = await putFetch(`${apiUrl}/user/update/${response.user?._id}`, formData)
+
+      console.log('updatedProfile', res)
+
       if (res.status === 200) {
         setLoadVale(false)
         notify('Profile Updated Successfully')
@@ -108,7 +110,7 @@ const AppModal = ({ setOpen }) => {
               <img
                 className="mb-3"
                 src={selectedFile ? URL.createObjectURL(selectedFile) : ''}
-                alt="Preview"
+                alt=""
                 style={{ height: '70px', width: '70px', borderRadius: '50%', marginLeft: '45%' }}
                 onClick={() => fileInputRef.current.click()}
               />
@@ -213,7 +215,7 @@ const AppModal = ({ setOpen }) => {
                   onChange={handleChange}
                   checked={data.gender === 'male'}
                 />{' '}
-                &nbsp; Männlich
+                &nbsp; Männlich &nbsp;
                 <input
                   type="radio"
                   name="gender"
@@ -221,7 +223,7 @@ const AppModal = ({ setOpen }) => {
                   onChange={handleChange}
                   checked={data.gender === 'female'}
                 />{' '}
-                &nbsp; Weiblich
+                &nbsp; Weiblich &nbsp;
                 <input
                   type="radio"
                   name="gender"

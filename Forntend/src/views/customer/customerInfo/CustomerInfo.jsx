@@ -3,8 +3,10 @@ import Select from 'react-select'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
+import { useNavigate } from 'react-router-dom'
 
 const CustomerInfo = () => {
+  const navigate = useNavigate()
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const [orderingMaterials, setOrderingMaterials] = useState({
@@ -163,8 +165,12 @@ const CustomerInfo = () => {
   const saveData = async (e) => {
     e.preventDefault()
 
-    // Check if all required data is available before making the request
-    // Add your validation logic here
+    for (const key in data) {
+      if (!data[key]) {
+        notify(`Please fill in the ${key} field`)
+        return
+      }
+    }
 
     try {
       let response = await fetch(`${apiUrl}/customerInfo/create_info`, {
@@ -235,6 +241,10 @@ const CustomerInfo = () => {
       // Show error toast
       notify('Error saving data. Please try again.')
     }
+  }
+
+  const cancelData = () => {
+    navigate('/customerlist')
   }
   return (
     <div style={{ background: '#fff', border: 'none' }}>
@@ -716,7 +726,13 @@ const CustomerInfo = () => {
               </label>
               <div className="col-sm-6">
                 <input
-                  onChange={DeliveryChange}
+                  // onChange={DeliveryChange}
+                  onChange={(e) => {
+                    const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                    if (/^\+?[0-9]*$/.test(inputValue)) {
+                      DeliveryChange({ target: { name: 'mobile', value: inputValue } })
+                    }
+                  }}
                   name="mobile"
                   value={customerDelivery.mobile}
                   type="tel"
@@ -786,7 +802,13 @@ const CustomerInfo = () => {
               </label>
               <div className="col-sm-6">
                 <input
-                  onChange={DeliveryChange}
+                  // onChange={DeliveryChange}
+                  onChange={(e) => {
+                    const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                    if (/^\+?[0-9]*$/.test(inputValue)) {
+                      DeliveryChange({ target: { name: 'phone', value: inputValue } })
+                    }
+                  }}
                   name="phone"
                   value={customerDelivery.phone}
                   className="form-control"
@@ -818,13 +840,13 @@ const CustomerInfo = () => {
         <h3 className="bluetext mx-3">Hinterlegung</h3>
         <div className="row p-3">
           <div className="col-sm-4">
-            Hinterlegung &nbsp;&nbsp;
             <input
               type="checkbox"
               onChange={DepositChange}
               checked={customerDeposit.deposit}
               name="deposit"
             />
+            &nbsp;&nbsp;Hinterlegung&nbsp;[ja]
           </div>
           <div className="col-sm-4"></div>
           <div className="col-sm-4"></div>
@@ -980,6 +1002,7 @@ const CustomerInfo = () => {
           <button
             type="button"
             className="btn btn"
+            onClick={cancelData}
             style={{ background: '#d04545', color: 'white' }}
           >
             Abbrechen
@@ -991,7 +1014,7 @@ const CustomerInfo = () => {
             className="btn btn"
             onClick={saveData}
           >
-            Speichern Sie
+            Speichern
           </button>
         </div>
       </div>

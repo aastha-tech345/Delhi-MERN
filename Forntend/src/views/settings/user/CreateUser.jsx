@@ -71,9 +71,6 @@ const CreateUser = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const onChange = (checked) => {
-    //console.log(`switch to ${checked}`)
-  }
   const handleShowInviteUserModal = () => {
     setShowInviteUserModal(true)
   }
@@ -176,17 +173,6 @@ const CreateUser = () => {
   //     action: 'View', // Provide appropriate action value
   //   },
   // ]
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
-  }
-
   const getRole = async () => {
     try {
       const res = await getFetch(`${apiUrl}/role/get_role`)
@@ -257,12 +243,12 @@ const CreateUser = () => {
                   <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
                       <button
-                        className={`nav-link ${activeTab === 'nav-benutzer' ? 'active' : ''}`}
-                        id="nav-benutzer-tab"
+                        className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
+                        id="nav-home-tab"
                         data-bs-toggle="tab"
                         role="tab"
-                        aria-selected={activeTab === 'nav-benutzer'}
-                        onClick={() => handleTabClick('nav-benutzer')}
+                        aria-selected={activeTab === 'nav-home'}
+                        onClick={() => handleTabClick('nav-home')}
                         style={{ marginRight: '10px', marginLeft: '20px' }}
                       >
                         Benutzer
@@ -326,10 +312,10 @@ const CreateUser = () => {
               <br />
               <div className="tab-content" id="nav-tabContent">
                 <div
-                  className={`tab-pane fade ${activeTab === 'nav-benutzer' ? 'show active' : ''}`}
-                  id="nav-benutzer"
+                  className={`tab-pane fade ${activeTab === 'nav-home' ? 'show active' : ''}`}
+                  id="nav-home"
                   role="tabpanel"
-                  aria-labelledby="nav-benutzer-tab"
+                  aria-labelledby="nav-home-tab"
                 >
                   <div className="row mx-3">
                     {/* <div className="col-sm-6">
@@ -509,9 +495,16 @@ const CreateUser = () => {
       </div>
       <div className="row mx-2">
         <Table
+          rowKey={(record) => record._id}
           rowSelection={{
-            type: selectionType,
-            ...rowSelection,
+            type: 'checkbox',
+            onChange: (selectedRowKeys, selectedRows) => {
+              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+            },
+            getCheckboxProps: (record) => ({
+              disabled: record.name === 'Disabled User',
+              name: record.name,
+            }),
           }}
           style={{ overflowX: 'auto' }}
           columns={columns}

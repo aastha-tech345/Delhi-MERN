@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { MdAdd } from 'react-icons/md'
+import { MdAdd, MdOutlineEdit } from 'react-icons/md'
 import { Divider, Radio, Table } from 'antd'
 import { GrEdit } from 'react-icons/gr'
 import { MdDelete } from 'react-icons/md'
@@ -16,6 +16,7 @@ import EditModal from './EditModal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
+import { RiDeleteBinLine } from 'react-icons/ri'
 
 const columns = [
   {
@@ -64,12 +65,12 @@ const Document = () => {
   const [edit, setEdit] = useState(false)
   const columns = [
     {
-      title: 'Title',
+      title: 'TITLE',
       dataIndex: 'document_title',
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Dokumententyp',
+      title: 'DOKUMENTENTYP',
       dataIndex: 'document_type',
     },
     {
@@ -85,7 +86,7 @@ const Document = () => {
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleEdit(record)}
               >
-                <GrEdit />
+                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
                 &nbsp;&nbsp;Bearbeiten
               </button>
             </>
@@ -103,7 +104,7 @@ const Document = () => {
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleDelete(record._id)}
               >
-                <MdDelete /> Löschen
+                <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
               </button>
             </>
           ) : (
@@ -230,7 +231,7 @@ const Document = () => {
             onClick={handleShow}
           >
             <MdAdd style={{ color: 'white' }} />
-            &nbsp; Dokument erstellen
+            &nbsp; Dokument hochladen
           </button>
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>

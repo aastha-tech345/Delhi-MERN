@@ -3,12 +3,16 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
 import Form from 'react-bootstrap/Form'
+import { useNavigate } from 'react-router-dom'
 const Attorney = () => {
+  const navigate = useNavigate()
   const maxFields = 10
   const initialFields = 3
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
-
+  const cancelData = () => {
+    navigate('/customer/customer_info')
+  }
   const [powerOfAttorney, setPowerOfAttorney] = useState({
     AttorneyMasterData: false,
     adoptDataFromHealthcare: false,
@@ -466,6 +470,7 @@ const Attorney = () => {
             <div className="col-sm-9"></div>
             <div className="col-sm-3 mb-3">
               <button
+                onClick={cancelData}
                 type="button"
                 className="btn btn"
                 style={{ background: '#d04545', color: 'white' }}

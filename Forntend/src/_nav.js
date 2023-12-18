@@ -1,19 +1,4 @@
 import React from 'react'
-import CIcon from '@coreui/icons-react'
-import {
-  cil3d,
-  cilClipboard,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilEnvelopeLetter,
-  cilFilter,
-  cilGroup,
-  cilMobile,
-  cilSettings,
-  cilSpeedometer,
-  cilUser,
-} from '@coreui/icons'
 import { CNavGroup, CNavItem } from '@coreui/react'
 import { verifyPer } from './components/verifyPermission'
 console.log('verify', !verifyPer()[2 === 'null'])

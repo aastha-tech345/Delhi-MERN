@@ -116,7 +116,7 @@ const Roll = () => {
 
   return (
     <div style={{ background: 'white' }}>
-      {/* <AllRoles /> */}
+      <AllRoles />
       <User />
       <div className="row">
         <center className="mx-auto">

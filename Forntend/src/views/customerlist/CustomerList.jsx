@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { GrEdit } from 'react-icons/gr'
-import { MdDelete, MdAdd } from 'react-icons/md'
+// import { GrEdit } from 'react-icons/gr'
+import { RiDeleteBinLine } from 'react-icons/ri'
+import { MdAdd, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
@@ -11,7 +12,7 @@ import Form from 'react-bootstrap/Form'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
-
+import { FiFilter } from 'react-icons/fi'
 const CustomerList = () => {
   console.log('verifyEditPer', verifyEditPer())
   let lgUser = localStorage.getItem('record')
@@ -28,7 +29,7 @@ const CustomerList = () => {
   const [city, setCity] = useState()
   const [street, setStreet] = useState()
   const [group, setGroup] = useState()
-  const [created_by, setCreated_by] = useState(loginData?.user?._id)
+  const [created_by] = useState(loginData?.user?._id)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
@@ -81,6 +82,21 @@ const CustomerList = () => {
     {
       title: 'GRUPPE',
       dataIndex: 'group',
+      render: (text, record) => (
+        <div
+          style={{
+            color: 'white',
+            background:
+              text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
+            borderRadius: '20px',
+            padding: '3px',
+            width: '70px',
+            textAlign: 'center',
+          }}
+        >
+          <b style={{ fontSize: '12px' }}>{text}</b>
+        </div>
+      ),
     },
     {
       title: 'AKTION',
@@ -96,8 +112,8 @@ const CustomerList = () => {
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleEdit(record)}
               >
-                <GrEdit />
-                &nbsp;&nbsp;Bearbeiten
+                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+                &nbsp;Bearbeiten
               </button>
 
               {/* <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
@@ -115,7 +131,7 @@ const CustomerList = () => {
               style={{ background: 'none', border: 'none' }}
               onClick={() => handleIconClick(record._id)}
             >
-              <MdDelete /> Löschen
+              <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
             </button>
           ) : (
             ''
@@ -297,7 +313,6 @@ const CustomerList = () => {
   const searchHandle = async () => {
     try {
       // let key = searchInputRef.current.value
-      //console.log('ashish', search)
       if (search === '') {
         return getDetails()
       }
@@ -344,7 +359,9 @@ const CustomerList = () => {
               className="btn btn text-light"
               style={{ background: '#0b5995' }}
             >
-              filter
+              <FiFilter />
+              &nbsp;
+              <span style={{ fontWeight: 'bold' }}>Filter</span>
             </button>
           </div>
 
@@ -435,7 +452,6 @@ const CustomerList = () => {
                       <input
                         type="email"
                         name="email"
-                        // value={email}
                         onChange={handleEmailChange}
                         placeholder="jo@gmail.com"
                         className="form-control"
@@ -455,7 +471,6 @@ const CustomerList = () => {
                         id="inputTelephone"
                         maxLength={10}
                         minLength={3}
-                        // required={true}
                       />
                     </div>
                   </div>
@@ -616,8 +631,7 @@ const CustomerList = () => {
           </Modal.Title>
           <Modal.Body>
             <p style={{ textAlign: 'center' }}>
-              Möchten Sie diesen Datensatz wirklich löschen? dieser Vorgang kann nicht rückgängig
-              gemacht werden
+              9ieser Vorgang kann nichtF r3ckgBngig gemacht werden
             </p>
           </Modal.Body>
           <Modal.Footer>

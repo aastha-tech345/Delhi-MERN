@@ -22,6 +22,7 @@ exports.register = async (req, res) => {
       city,
       fname,
       lname,
+      profileImage,
       parent_id,
       role,
       isAdminFullRights,
@@ -34,6 +35,8 @@ exports.register = async (req, res) => {
         username,
         password,
         email,
+        profileImage,
+        user_role: "admin",
         isAdminFullRights: "true",
         user_type: "admin",
       };
@@ -47,6 +50,8 @@ exports.register = async (req, res) => {
           email,
           gender,
           lname,
+          profileImage,
+          user_role,
           user_type,
           mobile,
           parent_id: admin._id,
@@ -72,6 +77,7 @@ exports.register = async (req, res) => {
         street,
         plz,
         city,
+        profileImage: null,
         user_type, //admin employee user
         role, //Manager HR
         parent_id,
@@ -226,24 +232,24 @@ exports.getRegisterData = async (req, res) => {
   res.send(user);
 };
 
-exports.getRegisterUpdate = async (req, res) => {
-  const { password, ...otherFields } = req.body;
-  if (password) {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    otherFields.password = hashedPassword;
-  }
+// exports.getRegisterUpdate = async (req, res) => {
+//   const { password, ...otherFields } = req.body;
+//   if (password) {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     otherFields.password = hashedPassword;
+//   }
 
-  try {
-    const user = await UserModel.User.updateOne(
-      { _id: req.params.id },
-      { $set: otherFields }
-    );
-    res.send(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
-};
+//   try {
+//     const user = await UserModel.User.updateOne(
+//       { _id: req.params.id },
+//       { $set: otherFields }
+//     );
+//     res.send(user);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// };
 
 exports.addUser = async (req, res) => {
   try {
@@ -420,7 +426,6 @@ exports.changePassword = async (req, res) => {
     }
 
     user.password = password;
-    // user.password = newpassword;
 
     await user.save();
     return res.status(200).json({

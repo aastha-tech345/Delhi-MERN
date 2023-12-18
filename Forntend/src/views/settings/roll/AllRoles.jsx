@@ -26,10 +26,11 @@ const AllRoles = () => {
     setOpenModal(true)
     setRoleID(id)
   }
+  let updatedRole = localStorage.getItem('updateFunc')
 
   useEffect(() => {
     getAllRolles()
-  }, [])
+  }, [updatedRole])
   return (
     <>
       <div className="row m-3">

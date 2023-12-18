@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Stack from '@mui/material/Stack'
 import Pagination from '@mui/material/Pagination'
 import { useNavigate } from 'react-router-dom'
+import { MdOutlineEdit } from 'react-icons/md'
 
 const EmailList = () => {
   const navigate = useNavigate()
@@ -45,7 +46,7 @@ const EmailList = () => {
       render: (text, record) => (
         <>
           <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
-            <GrEdit />
+            <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
             &nbsp;&nbsp;Bearbeiten
           </button>
         </>
