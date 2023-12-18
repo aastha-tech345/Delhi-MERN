@@ -113,6 +113,7 @@ router.post("/register", userCtrl.register);
 router.get("/all", userCtrl.getData);
 router.get("/get/employeeData/:id", userCtrl.getEmployeeData);
 router.delete("/get/employeeData/:id", userCtrl.getUserDataDelete);
+router.put("/update/employeeData/:id", userCtrl.updateUserData);
 router.post("/forgot-password", userCtrl.forgotPassword);
 router.get("/forgotpassword", userCtrl.forgotPasswordVerification);
 router.post("/changePassword", userCtrl.changePassword);

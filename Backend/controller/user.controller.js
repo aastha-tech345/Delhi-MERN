@@ -205,6 +205,36 @@ exports.getData = async (req, res) => {
   }
 };
 
+exports.updateUserData = async (req, res) => {
+  try {
+    const result = await UserModel.User.findOneAndUpdate(
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: req.body },
+      { new: true }
+    ).populate("role");
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found or Already Deleted",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User Updated Successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
 exports.getRegisterData = async (req, res) => {
   const user = await UserModel.User.findOne({ _id: req.params.id });
   res.send(user);

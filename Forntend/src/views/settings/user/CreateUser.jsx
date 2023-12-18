@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import User from '../User'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import DeleteModal from './DeleteModal'
+import EditUser from './EditUser'
 
 const CreateUser = () => {
   const [userCreateId, setUserCreateId] = useState('')
@@ -35,6 +36,7 @@ const CreateUser = () => {
   const [isAdminFullRights, setIsAdminFullRights] = useState('false')
   const searchInputRef = useRef()
   const [search, setSearch] = useState('')
+  const [edit, setEdit] = useState(false)
   const [employee, setEmployee] = useState({
     username: '',
     lname: '',
@@ -113,13 +115,11 @@ const CreateUser = () => {
       console.log(error)
     }
   }
-
-  // useEffect(() => {
-  //   setEmployeData((prevRole) => ({
-  //     ...prevRole,
-  //     users: employee,
-  //   }))
-  // }, [employee])
+  const handleEdit = (record) => {
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('UserEditDetails', recordData)
+    setEdit(true)
+  }
 
   const columns = [
     {
@@ -158,7 +158,7 @@ const CreateUser = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <button style={{ background: 'none', border: 'none' }}>
+          <button onClick={() => handleEdit(record)} style={{ background: 'none', border: 'none' }}>
             <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
             &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
           </button>
@@ -231,6 +231,7 @@ const CreateUser = () => {
       ) : (
         ''
       )}
+      {edit ? <EditUser setEdit={setEdit} getEmployeeData={getEmployeeData} /> : ''}
       <User />
       <br />
       <div className="topBtnBox mx-3">
