@@ -181,10 +181,12 @@ const Contact = () => {
 
   const saveData = async () => {
     try {
-      if (!email || !data?.fname || !data?.lname || !data?.gender || !data?.phone || !data?.statu) {
+      if (!data?.fname || !data?.lname || !data?.gender || !data?.phone || !data?.statu) {
         return notify('Please Fill All Details')
       }
-
+      if (!email) {
+        return notify('Invaild Email')
+      }
       const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
       // console.log(response)
       if (response.status === 201) {
@@ -211,7 +213,7 @@ const Contact = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  console.log('astha', contactRecord)
+  // console.log('astha', contactRecord)
 
   const searchHandle = async () => {
     try {
@@ -341,12 +343,12 @@ const Contact = () => {
                         name="phone"
                         value={data.phone}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
                           if (/^\+?[0-9]*$/.test(inputValue)) {
                             handleChange({ target: { name: 'phone', value: inputValue } })
                           }
                         }}
-                        placeholder="e.g., 91+ 8354568464"
+                        placeholder="e.g. 91+ 8354568464"
                         className="form-control"
                         id="inputPhone"
                         maxLength={10}

@@ -11,8 +11,8 @@ const invoiceSchema = new Schema({
   deliveryDate:{type:String},
   colleague:{type:String},
   customer_id: { type: mongoose.Schema.Types.ObjectId },
-});
+}, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 
-const Invoice = mongoose.model('invoice', invoiceSchema,'invoice');
+const Invoice = mongoose.model('invoice', invoiceSchema);
 
 module.exports = { Invoice };

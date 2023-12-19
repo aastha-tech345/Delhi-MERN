@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const mailer = require("../mailer/mailer");
 const jwt = require("jsonwebtoken");
 const keysecret = "asbndjhdjdkflfdghgj";
+const Email = require("../models/email.model");
 
 exports.register = async (req, res) => {
   try {
@@ -37,11 +38,11 @@ exports.register = async (req, res) => {
         email,
         profileImage,
         user_role: "admin",
-        isAdminFullRights: "true",
+        isAdminFullRights: true,
         user_type: "admin",
       };
     } else if (user_type === "user") {
-      const admin = await UserModel.User.findOne({ user_type: "admin" });
+      const admin = await UserModel.User.findOne({ user_role: "admin" });
 
       if (admin) {
         userData = {
@@ -51,8 +52,7 @@ exports.register = async (req, res) => {
           gender,
           lname,
           profileImage,
-          user_role,
-          user_type,
+          user_role: "user",
           mobile,
           parent_id: admin._id,
         };
@@ -62,9 +62,6 @@ exports.register = async (req, res) => {
           .send({ message: "No admin found to link as parent" });
       }
     } else if (user_type === "employee") {
-      // const user = await UserModel.User.findOne({ user_type: "user" });
-
-      // if (user) {
       userData = {
         username,
         lname,
@@ -78,18 +75,13 @@ exports.register = async (req, res) => {
         plz,
         city,
         profileImage: null,
-        user_type, //admin employee user
-        role, //Manager HR
+        user_role: "employee",
+        role,
         parent_id,
         isAdminFullRights,
       };
-      // } else {
-      //   return res
-      //     .status(400)
-      //     .send({ message: "No user found to link as parent" });
-      // }
     } else {
-      return res.status(400).send({ message: "Invalid role value" });
+      return res.status(400).send({ message: "Invalid user_type value" });
     }
 
     const userInstance = new UserModel.User(userData);
@@ -97,25 +89,53 @@ exports.register = async (req, res) => {
 
     if (result) {
       const myToken = await userInstance.getAuthToken();
+      const emailTemplate = await Email.EmailTemplate.findOne({
+        findBy: "register",
+        is_deleted: "active",
+      });
+      console.log(emailTemplate);
+      if (emailTemplate) {
+        let mailcontent = emailTemplate.content;
+        mailcontent = mailcontent.replace("{username}", username);
+        mailer.mailerFromTo(
+          email,
+          process.env.NO_REPLY,
+          "Register Template",
+          mailcontent,
+          "",
+          function (error, resp) {
+            if (error) {
+              console.error("Error sending email", error);
+              return res
+                .status(500)
+                .json({ status: 500, message: "Email not sent" });
+            } else {
+              console.log("Email sent successfully", resp.response);
 
-      if (myToken) {
-        return res.status(201).send({
-          status: 201,
-          data: result,
-          message: "Token was generated successfully",
-          token: myToken,
-        });
+              if (myToken) {
+                return res.status(201).send({
+                  status: 201,
+                  data: result,
+                  message: "Token was generated successfully",
+                  token: myToken,
+                });
+              } else {
+                return res
+                  .status(500)
+                  .send({ message: "Token was not generated" });
+              }
+            }
+          }
+        );
       } else {
-        return res.status(500).send({ message: "Token was not generated" });
+        return res.status(404).send({ message: "Email template not found" });
       }
     } else {
       return res.status(404).send({ message: "User was not found" });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).send({
-      message: "Internal Server Error",
-    });
+    return res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
@@ -322,8 +342,6 @@ exports.login = async (req, res) => {
 };
 
 exports.forgotPassword = async (req, res) => {
-  // console.log(req.body);
-
   const { email } = req.body;
 
   if (!email) {
@@ -338,54 +356,70 @@ exports.forgotPassword = async (req, res) => {
     if (!userFind) {
       return res.status(404).json({ status: 404, message: "User not found" });
     }
+    const emailTemplate = await Email.EmailTemplate.findOne({
+      findBy: "forgot",
+      is_deleted: "active",
+    });
+    console.log("link", process.env.PRODUCTION_RESET_URL);
+    if (emailTemplate) {
+      let mailcontent = emailTemplate.content;
+      // let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
+      mailcontent = mailcontent.replace(
+        "{link}",
+        process.env.PRODUCTION_RESET_URL
+      );
+      mailer.mailerFromTo(
+        email,
+        process.env.NO_REPLY,
+        "Forgot Password",
+        mailcontent,
+        "",
+        function (error, resp) {
+          if (error) {
+            console.error("Error sending email", error);
+            return res
+              .status(500)
+              .json({ status: 500, message: "Email not sent" });
+          } else {
+            console.log("Email sent successfully", resp.response);
 
-    // Generate a token for password reset
-    // const token = jwt.sign({ _id: userFind._id }, keysecret, {
-    //   expiresIn: "120s",
-    // });
-
-    // // Update the user document with the generated token
-    // const setUserToken = await UserModel.User.findByIdAndUpdate(
-    //   { _id: userFind._id },
-    //   { verifytoken: token },
-    //   { new: true }
-    // );
-
-    // if (!setUserToken) {
-    //   return res
-    //     .status(500)
-    //     .json({ status: 500, message: "Failed to update user token" });
-    // }
-
-    // Compose the email message
-    // const mailOptions = {
-    //   from: "patientenverfuegung@test.computerbutler.de",
-    //   to: email,
-    //   subject: "Password Reset",
-    //   html: `Click on the following link to reset your password: <a href="http://localhost:3000/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`,
-    // };
-
-    // Send the email
-
-    let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
-
-    mailer.mailerFromTo(
-      email,
-      process.env.NO_REPLY,
-      "Password Reset",
-      mailcontent,
-      "",
-      function (error, resp) {
-        if (error) {
-          console.error("Error sending email", error);
-          return res
-            .status(500)
-            .json({ status: 500, message: "Email not sent" });
-        } else {
-          console.log("Email sent successfully", info.response);
+            if (myToken) {
+              return res.status(201).send({
+                status: 201,
+                data: result,
+                message: "Token was generated successfully",
+                token: myToken,
+              });
+            } else {
+              return res
+                .status(500)
+                .send({ message: "Token was not generated" });
+            }
+          }
         }
-      }
-    );
+      );
+    } else {
+      return res.status(404).send({ message: "Email template not found" });
+    }
+    // let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
+
+    // mailer.mailerFromTo(
+    //   email,
+    //   process.env.NO_REPLY,
+    //   "Password Reset",
+    //   mailcontent,
+    //   "",
+    //   function (error, resp) {
+    //     if (error) {
+    //       console.error("Error sending email", error);
+    //       return res
+    //         .status(500)
+    //         .json({ status: 500, message: "Email not sent" });
+    //     } else {
+    //       console.log("Email sent successfully", info.response);
+    //     }
+    //   }
+    // );
     return res
       .status(200)
       .json({ status: 200, message: "Email sent successfully" });

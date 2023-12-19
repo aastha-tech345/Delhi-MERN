@@ -17,8 +17,8 @@ const contactSchema = new Schema({
   },
   id: { type: String },
   customer_id: { type: mongoose.Schema.Types.ObjectId },
-});
+}, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 
-const Contact = mongoose.model("contact", contactSchema, "contact");
+const Contact = mongoose.model("contact", contactSchema);
 
 module.exports = { Contact };

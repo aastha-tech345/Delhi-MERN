@@ -196,16 +196,17 @@ const EditModal = ({ setHide, getDetails }) => {
               </div>
               <div className="col-sm-6">
                 <input
+                  value={data.phone}
+                  onChange={(e) => {
+                    const inputValue = e.target.value.replace(/[^0-9]/g, '')
+                    handleChange({ target: { name: 'phone', value: inputValue } })
+                  }}
                   type="tel"
                   placeholder="Telefon"
                   className="form-control"
                   id="inputTelephone"
                   maxLength={10}
                   minLength={3}
-                  name="phone"
-                  value={data.phone}
-                  onChange={handleChange}
-                  required={true}
                 />
               </div>
             </div>
@@ -218,7 +219,10 @@ const EditModal = ({ setHide, getDetails }) => {
                   id="inputPassword"
                   name="plz"
                   value={data.plz}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                    setData({ ...data, plz: inputValue })
+                  }}
                   required={true}
                 />
               </div>

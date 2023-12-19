@@ -18,8 +18,8 @@ const filterSchema = new Schema({
   },
   added_by:{type:String},
   parent_id: { type: mongoose.Schema.Types.ObjectId },
-});
+}, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 
-const FilterSchema = mongoose.model("filter", filterSchema, "filter");
+const FilterSchema = mongoose.model("filter", filterSchema);
 
 module.exports = { FilterSchema };

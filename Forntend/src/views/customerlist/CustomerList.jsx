@@ -115,11 +115,6 @@ const CustomerList = () => {
                 <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
                 &nbsp;Bearbeiten
               </button>
-
-              {/* <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
-            <GrEdit />
-            &nbsp;&nbsp;Bearbeiten
-          </button> */}
             </>
           ) : (
             ''
