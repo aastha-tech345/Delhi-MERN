@@ -5,32 +5,33 @@ import 'react-toastify/dist/ReactToastify.css'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import EditRoleModal from './EditRoleModal'
+import PropTypes from 'prop-types'
 
-const AllRoles = () => {
-  const apiUrl = process.env.REACT_APP_API_URL
-  const notify = (dataa) => toast(dataa)
-  const [data, setData] = useState([])
+const AllRoles = ({ data }) => {
+  // const apiUrl = process.env.REACT_APP_API_URL
+  // const notify = (dataa) => toast(dataa)
+  // const [data, setData] = useState([])
   const [roleID, setRoleID] = useState('')
   const [openModal, setOpenModal] = useState(false)
 
-  const getAllRolles = async () => {
-    try {
-      const res = await getFetch(`${apiUrl}/role/get_role`)
-      setData(res?.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const getAllRolles = async () => {
+  //   try {
+  //     const res = await getFetch(`${apiUrl}/role/get_role`)
+  //     setData(res?.data)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const handleOpen = (id) => {
     setOpenModal(true)
     setRoleID(id)
   }
-  let updatedRole = localStorage.getItem('updateFunc')
+  // let updatedRole = localStorage.getItem('updateFunc')
 
-  useEffect(() => {
-    getAllRolles()
-  }, [updatedRole])
+  // useEffect(() => {
+  //   getAllRolles()
+  // }, [updatedRole])
   return (
     <>
       <div className="row m-3">
@@ -92,6 +93,10 @@ const AllRoles = () => {
       {openModal ? <EditRoleModal setOpenModal={setOpenModal} roleID={roleID} /> : ''}
     </>
   )
+}
+
+AllRoles.propTypes = {
+  data: PropTypes.func.isRequired,
 }
 
 export default AllRoles

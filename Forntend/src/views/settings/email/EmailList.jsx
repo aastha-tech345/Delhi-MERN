@@ -19,7 +19,7 @@ const EmailList = () => {
       const result = await fetch(`${apiUrl}/email/get_email?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
-      const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setEmailRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)

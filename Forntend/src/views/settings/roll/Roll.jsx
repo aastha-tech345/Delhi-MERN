@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { MdDelete, MdAdd } from 'react-icons/md'
 import { LuFilePlus } from 'react-icons/lu'
 import User from '../User'
-import { postFetchData } from 'src/Api'
+import { getFetch, postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import AllRoles from './AllRoles'
+import { IoMdAdd } from 'react-icons/io'
+import { StoreContext } from 'src/StoreContext'
 
 const Roll = () => {
+  const { editEmployee, setEditEmployee } = useContext(StoreContext)
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
+  const [data, setData] = useState([])
   const [show, setShow] = useState(false)
-  const [update, setUpdate] = useState(false)
   const [rolePermission, setRolePermission] = useState('')
   const [permissionData, setPermissionData] = useState({
     p_edit: 'no',
@@ -93,7 +96,7 @@ const Roll = () => {
       e.preventDefault()
       const res = await postFetchData(`${apiUrl}/role/create_role`, role)
       if (res?.status === 201) {
-        setUpdate(!update)
+        setEditEmployee(!editEmployee)
         notify('Role Created Successfully')
         return setShow(false)
       }
@@ -101,7 +104,6 @@ const Roll = () => {
       console.log(error)
     }
   }
-  localStorage.setItem('updateFunc', update)
 
   useEffect(() => {
     setRole((prevRole) => ({
@@ -113,20 +115,37 @@ const Roll = () => {
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  const getAllRolles = async () => {
+    try {
+      const res = await getFetch(`${apiUrl}/role/get_role`)
+      setData(res?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
+  useEffect(() => {
+    getAllRolles()
+  }, [editEmployee])
+
+  console.log('data', data)
   return (
     <div style={{ background: 'white' }}>
-      <AllRoles />
       <User />
       <div className="row">
         <center className="mx-auto">
-          <LuFilePlus style={{ fontSize: '50px', marginTop: '100px' }} />
-          <p>Keine Rollen</p>
-          <p>Beginnen Sie mit der Erstellung einer neuen Rolle.</p>
-          {/* <button className="btn btn mb-3" style={{ background: '#0b5995', color: 'white' }}>
-            <IoMdAdd />
-            Rolle erstellen
-          </button> */}
+          {data?.length > 0 ? (
+            <>
+              <AllRoles data={data} />
+            </>
+          ) : (
+            <>
+              <LuFilePlus style={{ fontSize: '50px', marginTop: '100px' }} />
+              <p>Keine Rollen</p>
+              <p>Beginnen Sie mit der Erstellung einer neuen Rolle.</p>
+            </>
+          )}
+
           <div className="col-sm-3">
             <button
               className="btn btn mb-5"

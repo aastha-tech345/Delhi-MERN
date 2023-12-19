@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Divider, Radio, Table } from 'antd'
 import { GrFormAdd, GrAdd } from 'react-icons/gr'
 import Modal from 'react-bootstrap/Modal'
-import { MdAdd, MdDelete } from 'react-icons/md'
+import { MdAdd, MdDelete, MdOutlineEdit } from 'react-icons/md'
 import { GrEdit } from 'react-icons/gr'
 import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
@@ -10,12 +10,20 @@ import { getFetch, postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import User from '../User'
+import { RiDeleteBinLine } from 'react-icons/ri'
+import DeleteModal from './DeleteModal'
+import EditUser from './EditUser'
+import { verifySettingDelPer, verifySettingEditPer } from 'src/components/verifyPermission'
+import { StoreContext } from 'src/StoreContext'
 
 const CreateUser = () => {
+  const { setEditUser, editUser } = useContext(StoreContext)
+  const [userCreateId, setUserCreateId] = useState('')
   const loginUser = localStorage.getItem('record')
   let dataa = JSON.parse(loginUser)
-  const notify = (dataa) => toast(dataa)
 
+  const notify = (dataa) => toast(dataa)
+  const [hide, setHide] = useState(false)
   const [record, setRecord] = useState([])
   const [user_email, setUserEmail] = useState()
   const apiUrl = process.env.REACT_APP_API_URL
@@ -27,10 +35,11 @@ const CreateUser = () => {
   const [activeTab, setActiveTab] = useState('nav-home')
   const [roleList, setRoleList] = useState([])
   const [roleId, setRoleId] = useState('')
-  const [refresh, setRefresh] = useState(false)
   const [getEmployee, setGetEmployee] = useState([])
   const [isAdminFullRights, setIsAdminFullRights] = useState('false')
-
+  const searchInputRef = useRef()
+  const [search, setSearch] = useState('')
+  const [edit, setEdit] = useState(false)
   const [employee, setEmployee] = useState({
     username: '',
     lname: '',
@@ -84,6 +93,11 @@ const CreateUser = () => {
 
     setEmployee({ ...employee, [name]: value })
   }
+  const handleDelete = (userCreateId) => {
+    // console.log(`Deleting employee with ID: ${userCreateId}`)
+    setUserCreateId(userCreateId)
+    setHide(true)
+  }
 
   let localUserData = localStorage.getItem('record')
   let mainRes = JSON.parse(localUserData)
@@ -93,10 +107,10 @@ const CreateUser = () => {
     try {
       e.preventDefault()
       const res = await postFetchData(`${apiUrl}/user/register`, employeData)
-      console.log('response', res)
+      // console.log('response', res)
       if (res.status === 201) {
         notify('Employe Created Successfully')
-        setRefresh(!refresh)
+        setEditUser(!editUser)
         return setShowInviteUserModal(false)
       }
       // console.log('employeData', employeData)
@@ -104,13 +118,11 @@ const CreateUser = () => {
       console.log(error)
     }
   }
-
-  // useEffect(() => {
-  //   setEmployeData((prevRole) => ({
-  //     ...prevRole,
-  //     users: employee,
-  //   }))
-  // }, [employee])
+  const handleEdit = (record) => {
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('UserEditDetails', recordData)
+    setEdit(true)
+  }
 
   const columns = [
     {
@@ -128,51 +140,59 @@ const CreateUser = () => {
     },
     {
       title: 'Super Verwalter',
-      dataIndex: 'isAdminFullRights', // Change 'super verwalter' to 'superVerwalter'
+      dataIndex: 'isAdminFullRights',
+      render: (text, record) => (
+        <div
+          style={{
+            color: 'white',
+            background: text === 'true' ? '#55BC6E' : text === 'false' ? '#0b5995' : 'transparent',
+            borderRadius: '20px',
+            padding: '3px',
+            width: '13px',
+            marginLeft: '10px',
+            height: '13px',
+            borderRight: '50%',
+          }}
+        ></div>
+      ),
     },
     {
       title: 'AKTION',
       dataIndex: 'action',
-      render: () => (
+      render: (_, record) => (
         <>
-          <GrEdit />
-          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-          <MdDelete />
-          Löschen
+          {(dataa?.user?._id === record.parent_id && verifySettingEditPer().includes('owned')) ||
+          verifySettingEditPer().includes('yes') ||
+          dataa?.user?.isAdminFullRights == 'true' ? (
+            <button
+              onClick={() => handleEdit(record)}
+              style={{ background: 'none', border: 'none' }}
+            >
+              <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+              &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+            </button>
+          ) : (
+            ''
+          )}
+
+          {(dataa?.user?._id === record.parent_id && verifySettingDelPer().includes('owned')) ||
+          verifySettingDelPer().includes('yes') ||
+          dataa?.user?.isAdminFullRights == 'true' ? (
+            <button
+              style={{ background: 'none', border: 'none' }}
+              onClick={() => handleDelete(record._id)}
+            >
+              <RiDeleteBinLine className="text-danger text-bold fs-5" />
+              Löschen
+            </button>
+          ) : (
+            ''
+          )}
         </>
       ),
     },
   ]
 
-  // const data = [
-  //   {
-  //     _id: '1',
-  //     user_name: 'John Brown',
-  //     age: 32,
-  //     emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
-  //     emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'Yes',
-  //     action: 'Edit', // Provide appropriate action value
-  //   },
-  //   {
-  //     _id: '2',
-  //     user_name: 'Jim Green',
-  //     age: 42,
-  //     emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
-  //     emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'No',
-  //     action: 'Delete', // Provide appropriate action value
-  //   },
-  //   {
-  //     _id: '3',
-  //     user_name: 'Joe Black',
-  //     age: 32,
-  //     emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
-  //     emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
-  //     superVerwalter: 'Yes',
-  //     action: 'View', // Provide appropriate action value
-  //   },
-  // ]
   const getRole = async () => {
     try {
       const res = await getFetch(`${apiUrl}/role/get_role`)
@@ -185,8 +205,8 @@ const CreateUser = () => {
   const getEmployeeData = async () => {
     try {
       const res = await getFetch(`${apiUrl}/user/get/employeeData/${dataa?.user?._id}`)
-      // console.log('getEmployeeData', res?.data?.data)
-      setGetEmployee(res?.data?.data)
+      const activeEmployees = res?.data?.data.filter((employee) => employee.status === 'active')
+      setGetEmployee(activeEmployees)
     } catch (error) {
       console.log(error)
     }
@@ -196,22 +216,77 @@ const CreateUser = () => {
   useEffect(() => {
     getRole()
     getEmployeeData()
-  }, [localData, refresh])
+  }, [localData, editUser])
 
+  const searchHandle = async () => {
+    try {
+      if (search === '') {
+        return getEmployeeData()
+      }
+
+      const response = await fetch(`${apiUrl}/user/search/${search}`)
+      const data = await response.json()
+
+      const activeRecords = data.filter((record) => record.status === 'active')
+
+      if (activeRecords.length > 0) {
+        setGetEmployee(activeRecords)
+      } else {
+        getEmployeeData()
+        setGetEmployee(data)
+      }
+    } catch (error) {
+      console.error('Error searching data:', error.message)
+    }
+  }
   return (
     <div style={{ background: 'white' }}>
+      {hide ? (
+        <DeleteModal
+          setHide={setHide}
+          userCreateId={userCreateId}
+          getEmployeeData={getEmployeeData}
+        />
+      ) : (
+        ''
+      )}
+      {edit ? <EditUser setEdit={setEdit} getEmployeeData={getEmployeeData} /> : ''}
       <User />
       <br />
       <div className="topBtnBox mx-3">
-        <div className="">
-          <button
-            className="btn btn"
-            onClick={handleShowInviteUserModal}
-            style={{ background: '#0b5995', color: 'white' }}
-          >
-            <MdAdd />
-            &nbsp; Benutzer erstellen
-          </button>
+        <div className="row p-2">
+          <div className="col-sm-2">
+            <button
+              className="btn btn"
+              onClick={handleShowInviteUserModal}
+              style={{ background: '#0b5995', color: 'white' }}
+            >
+              <MdAdd />
+              &nbsp; Benutzer erstellen
+            </button>
+          </div>
+          <div className="col-sm-3">
+            <input
+              ref={searchInputRef}
+              name="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="search"
+              id="form1"
+              placeholder="Ihre Suche eingeben"
+              className="form-control"
+            />
+          </div>
+          <div className="col-sm-1">
+            <button
+              onClick={searchHandle}
+              type="button"
+              className="btn btn text-light"
+              style={{ background: '#0b5995' }}
+            >
+              <AiFillSetting />
+            </button>
+          </div>
           <Modal size="lg" show={showInviteUserModal} onHide={handleCloseInviteUserModal} centered>
             <div className=" row pt-5 px-5">
               <p className="fs-5">
@@ -480,17 +555,6 @@ const CreateUser = () => {
               </div>
             </Modal.Footer>
           </Modal>
-          &nbsp; &nbsp;
-          <input
-            type="search"
-            id="form1"
-            placeholder="Suche"
-            className="form-control boxSearchBtn"
-          />
-          &nbsp; &nbsp;
-          <button type="button" className="btn btn text-light" style={{ background: '#0b5995' }}>
-            <AiFillSetting />
-          </button>
         </div>
       </div>
       <div className="row mx-2">

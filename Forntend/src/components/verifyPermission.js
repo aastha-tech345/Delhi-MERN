@@ -1,8 +1,8 @@
 const data = localStorage.getItem('record')
 const loginUser = JSON.parse(data)
 const userPermission = loginUser?.user?.role?.permission || []
-const isAdmin = loginUser?.user?.user_role === 'admin'
-const isUser = loginUser?.user?.user_role === 'user'
+const isAdmin = loginUser?.user?.user_type === 'admin'
+const isUser = loginUser?.user?.user_type === 'user'
 
 export const verifyPer = () => {
   if (isAdmin || loginUser?.user?.isAdminFullRights == 'true') {
@@ -27,6 +27,7 @@ export const verifyPer = () => {
   })
 }
 
+// for client permission start
 export const verifyEditPer = () => {
   if (isAdmin || loginUser?.user?.isAdminFullRights == 'true') {
     return ['yes']
@@ -54,6 +55,41 @@ export const verifyDelPer = () => {
       return 'owned'
     }
     if (section_name === 'Klientlnnen' && p_delete === 'yes') {
+      return 'yes'
+    }
+  })
+}
+
+// end client permission
+
+// start setting permission
+export const verifySettingEditPer = () => {
+  if (isAdmin || loginUser?.user?.isAdminFullRights == 'true') {
+    return ['yes']
+  }
+
+  return userPermission?.map((elem) => {
+    const { section_name, p_edit } = elem
+    if (section_name === 'Einstellungen' && p_edit === 'owned') {
+      return 'owned'
+    }
+    if (section_name === 'Einstellungen' && p_edit === 'yes') {
+      return 'yes'
+    }
+  })
+}
+
+export const verifySettingDelPer = () => {
+  if (isAdmin || loginUser?.user?.isAdminFullRights == 'true') {
+    return ['yes']
+  }
+
+  return userPermission?.map((elem) => {
+    const { section_name, p_delete } = elem
+    if (section_name === 'Einstellungen' && p_delete === 'owned') {
+      return 'owned'
+    }
+    if (section_name === 'Einstellungen' && p_delete === 'yes') {
       return 'yes'
     }
   })

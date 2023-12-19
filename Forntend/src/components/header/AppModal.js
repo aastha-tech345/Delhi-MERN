@@ -1,14 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { putFetch } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { StoreContext } from 'src/StoreContext'
 
 const AppModal = ({ setOpen }) => {
+  const { updateProfile, setUpdateProfile } = useContext(StoreContext)
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('record')
   let response = JSON.parse(res)
+  console.log(response?.user?.password)
   const [loadValue, setLoadVale] = useState(false)
   const [data, setData] = useState({
     username: response.user?.username,
@@ -54,6 +57,7 @@ const AppModal = ({ setOpen }) => {
       console.log('updatedProfile', res)
 
       if (res.status === 200) {
+        setUpdateProfile(!updateProfile)
         setLoadVale(false)
         notify('Profile Updated Successfully')
         setData({
@@ -66,7 +70,7 @@ const AppModal = ({ setOpen }) => {
         setSelectedFile(null)
         setTimeout(() => {
           setOpen(false)
-          window.location.reload()
+          // window.location.reload()
         }, 2000)
       } else {
         notify('Something Went Wrong')

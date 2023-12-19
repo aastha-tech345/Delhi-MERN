@@ -30,6 +30,11 @@ const userSchema = new Schema({
   user_type: { type: String }, // admin user employee
   parent_id: { type: mongoose.Schema.Types.ObjectId },
   added_by: { type: String },
+  status: {
+    type: String,
+    enum: ["active", "deleted"],
+    default: "active",
+  },
   tokens: [
     {
       token: {

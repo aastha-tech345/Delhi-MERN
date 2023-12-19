@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import PropTypes from 'prop-types'
 import { putFetchData } from 'src/Api'
+import { StoreContext } from 'src/StoreContext'
 
 const EditRoleModal = ({ setOpenModal, roleID }) => {
+  const { setEditEmployee, editEmployee } = useContext(StoreContext)
   const apiUrl = process.env.REACT_APP_API_URL
   const notify = (dataa) => toast(dataa)
-  const [update, setUpdate] = useState(false)
   const [rolePermission, setRolePermission] = useState('')
   const [permissionData, setPermissionData] = useState({
     p_edit: 'no',
@@ -89,22 +90,18 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
       const res = await putFetchData(`${apiUrl}/role/get_role/${roleID}`, role)
       console.log('updatedRole', res)
       if (res?.status === 200) {
-        setUpdate(!update)
+        setEditEmployee(!editEmployee)
         notify('Role Updated Successfully')
         setTimeout(() => {
           setOpenModal(false)
           // window?.location?.reload()
         }, 2000)
       }
-      console.log('updatedRole', role)
     } catch (error) {
       console.log(error)
     }
   }
-  useEffect(() => {
-    localStorage.setItem('updateFunc', update)
-  }, [update])
-  console.log('update', update)
+
   useEffect(() => {
     setRole((prevRole) => ({
       ...prevRole,
