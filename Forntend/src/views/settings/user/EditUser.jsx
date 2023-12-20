@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import PropTypes from 'prop-types'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { getFetch, putFetchData } from 'src/Api'
+import { StoreContext } from 'src/StoreContext'
+
 export default function EditUser({ setEdit, getEmployeeData }) {
   EditUser.propTypes = {
     setEdit: PropTypes.func.isRequired,
@@ -15,6 +17,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
     maxHeight: '100%',
     color: 'black',
   }
+  const { editUser, setEditUser } = useContext(StoreContext)
   let res = localStorage.getItem('UserEditDetails')
   let response = JSON.parse(res)
   const notify = (dataa) => toast(dataa)
@@ -51,7 +54,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
   const getRole = async () => {
     try {
       const res = await getFetch(`${apiUrl}/role/get_role`)
-      setRoleList(res?.data)
+      setRoleList(res?.data?.data)
     } catch (error) {
       console.log(error)
     }
@@ -66,6 +69,8 @@ export default function EditUser({ setEdit, getEmployeeData }) {
       )
       if (res?.status === 200) {
         // setLoadValue(false)
+        // setEditEmployee(!editEmployee)
+        setEditUser(!editUser)
         setEmployee({
           username: '',
           lname: '',
@@ -79,7 +84,8 @@ export default function EditUser({ setEdit, getEmployeeData }) {
           role: '',
         })
         notify('Employee Updated Successfully')
-        getEmployeeData()
+        // getEmployeeData()
+        window.location.reload()
       } else {
         notify('Something Went Wrong')
       }
@@ -91,7 +97,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
 
   useEffect(() => {
     getRole()
-  }, [])
+  }, [editUser])
   return (
     <>
       <div className="modal" tabIndex={-1} style={modalStyle}>
@@ -116,7 +122,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                       role="switch"
                       id="flexSwitchCheckChecked"
                       name="isAdminFullRights"
-                      checked={isAdminFullRights}
+                      checked={JSON.parse(isAdminFullRights)}
                       onChange={(e) => setIsAdminFullRights(e.target.checked)}
                     />
                   </div>

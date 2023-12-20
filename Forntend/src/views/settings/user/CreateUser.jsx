@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Divider, Radio, Table } from 'antd'
 import { GrFormAdd, GrAdd } from 'react-icons/gr'
 import Modal from 'react-bootstrap/Modal'
@@ -13,11 +13,17 @@ import User from '../User'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import DeleteModal from './DeleteModal'
 import EditUser from './EditUser'
+import { verifySettingDelPer, verifySettingEditPer } from 'src/components/verifyPermission'
+import { StoreContext } from 'src/StoreContext'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 const CreateUser = () => {
+  const { setEditUser, editUser } = useContext(StoreContext)
   const [userCreateId, setUserCreateId] = useState('')
   const loginUser = localStorage.getItem('record')
   let dataa = JSON.parse(loginUser)
+
   const notify = (dataa) => toast(dataa)
   const [hide, setHide] = useState(false)
   const [record, setRecord] = useState([])
@@ -31,12 +37,13 @@ const CreateUser = () => {
   const [activeTab, setActiveTab] = useState('nav-home')
   const [roleList, setRoleList] = useState([])
   const [roleId, setRoleId] = useState('')
-  const [refresh, setRefresh] = useState(false)
   const [getEmployee, setGetEmployee] = useState([])
   const [isAdminFullRights, setIsAdminFullRights] = useState('false')
   const searchInputRef = useRef()
   const [search, setSearch] = useState('')
   const [edit, setEdit] = useState(false)
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
   const [employee, setEmployee] = useState({
     username: '',
     lname: '',
@@ -107,7 +114,7 @@ const CreateUser = () => {
       // console.log('response', res)
       if (res.status === 201) {
         notify('Employe Created Successfully')
-        setRefresh(!refresh)
+        setEditUser(!editUser)
         return setShowInviteUserModal(false)
       }
       // console.log('employeData', employeData)
@@ -158,26 +165,46 @@ const CreateUser = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          <button onClick={() => handleEdit(record)} style={{ background: 'none', border: 'none' }}>
-            <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
-            &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-          </button>
-          <button
-            style={{ background: 'none', border: 'none' }}
-            onClick={() => handleDelete(record._id)}
-          >
-            <RiDeleteBinLine className="text-danger text-bold fs-5" />
-            Löschen
-          </button>
+          {(dataa?.user?._id === record.parent_id && verifySettingEditPer().includes('owned')) ||
+          verifySettingEditPer().includes('yes') ||
+          dataa?.user?.isAdminFullRights == 'true' ? (
+            <button
+              onClick={() => handleEdit(record)}
+              style={{ background: 'none', border: 'none' }}
+            >
+              <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+              &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+            </button>
+          ) : (
+            ''
+          )}
+
+          {(dataa?.user?._id === record.parent_id && verifySettingDelPer().includes('owned')) ||
+          verifySettingDelPer().includes('yes') ||
+          dataa?.user?.isAdminFullRights == 'true' ? (
+            <button
+              style={{ background: 'none', border: 'none' }}
+              onClick={() => handleDelete(record._id)}
+            >
+              <RiDeleteBinLine className="text-danger text-bold fs-5" />
+              Löschen
+            </button>
+          ) : (
+            ''
+          )}
         </>
       ),
     },
   ]
 
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
+
   const getRole = async () => {
     try {
-      const res = await getFetch(`${apiUrl}/role/get_role`)
-      setRoleList(res?.data)
+      const res = await getFetch(`${apiUrl}/role/get_roles`)
+      setRoleList(res?.data?.data)
     } catch (error) {
       console.log(error)
     }
@@ -185,19 +212,21 @@ const CreateUser = () => {
 
   const getEmployeeData = async () => {
     try {
-      const res = await getFetch(`${apiUrl}/user/get/employeeData/${dataa?.user?._id}`)
-      const activeEmployees = res?.data?.data.filter((employee) => employee.status === 'active')
+      // const res = await getFetch(`${apiUrl}/user/get/employeeData/${dataa?.user?._id}`)
+      const res = await getFetch(`${apiUrl}/user/get/employeeData?page=${page}`)
+      setCountPage(res?.data?.pageCount)
+      const activeEmployees = res?.data?.data?.filter((employee) => employee.status === 'active')
       setGetEmployee(activeEmployees)
     } catch (error) {
       console.log(error)
     }
   }
 
-  let localData = localStorage.getItem('updateFunc')
+  // let localData = localStorage.getItem('updateFunc')
   useEffect(() => {
     getRole()
     getEmployeeData()
-  }, [localData, refresh])
+  }, [editUser, page])
 
   const searchHandle = async () => {
     try {
@@ -554,7 +583,17 @@ const CreateUser = () => {
           style={{ overflowX: 'auto' }}
           columns={columns}
           dataSource={getEmployee}
+          pagination={false}
         />
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
       <ToastContainer />
     </div>

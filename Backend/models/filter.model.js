@@ -7,11 +7,12 @@ const filterSchema = new Schema({
   dob: { type: String },
   plz: { type: String },
   telephone: { type: String },
-  mobil: { type: String },
+  mobile: { type: String },
   client_id: { type: String },
   next_shipping: { type: String },
   permanent_donors: { type: String },
-  status: {
+  status:{type:String},
+  is_deleted: {
     type: String,
     enum: ["active", "deleted"],
     default: "active",

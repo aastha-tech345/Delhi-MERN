@@ -111,9 +111,10 @@ router.post("/login", userCtrl.login);
  */
 router.post("/register", userCtrl.register);
 router.get("/all", userCtrl.getData);
-router.get("/get/employeeData/:id", userCtrl.getEmployeeData);
+router.get("/:id", userCtrl.getUserById);
+router.get("/get/employeeData", userCtrl.getEmployeeData);
 router.delete("/get/employeeData/:id", userCtrl.getUserDataDelete);
-router.put("/update/employeeData/:id", userCtrl.updateUserData);
+router.put("/update/employeeData/:id", userCtrl.updateEmployeeDetails);
 router.post("/forgot-password", userCtrl.forgotPassword);
 router.get("/forgotpassword", userCtrl.forgotPasswordVerification);
 router.post("/changePassword", userCtrl.changePassword);

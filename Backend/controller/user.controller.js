@@ -5,6 +5,7 @@ const mailer = require("../mailer/mailer");
 const jwt = require("jsonwebtoken");
 const keysecret = "asbndjhdjdkflfdghgj";
 const Email = require("../models/email.model");
+const ApiFeatures = require("../utils/apiFeatures");
 
 exports.register = async (req, res) => {
   try {
@@ -37,8 +38,10 @@ exports.register = async (req, res) => {
         password,
         email,
         profileImage,
-        user_role: "admin",
-        isAdminFullRights: true,
+        // user_role: "admin",
+        // isAdminFullRights: true,
+        // user_role: "admin",
+        isAdminFullRights: "true",
         user_type: "admin",
       };
     } else if (user_type === "user") {
@@ -144,6 +147,8 @@ exports.updateUser = async (req, res) => {
   try {
     const { password, ...updateData } = req.body;
 
+    let userData = await UserModel.User.findById(req.params.id);
+
     if (password) {
       updateData.password = await bcrypt.hash(password, 10);
     }
@@ -159,6 +164,10 @@ exports.updateUser = async (req, res) => {
       }
     ).populate("role");
 
+    if (user?.password == "") {
+      user.password = await userData?.password;
+      await user.save();
+    }
     return res.status(200).json({
       success: true,
       message: "User Updated Successfully",
@@ -174,16 +183,44 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-// update Employee Details
-exports.updateEmployeeDetails = async () => {
+// find user by id
+exports.getUserById = async (req, res) => {
   try {
+    const user = await UserModel.User.findById(req.params.id).populate("role");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User Find Successfully",
+      user: user,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// update Employee Details
+exports.updateEmployeeDetails = async (req, res) => {
+  try {
+    const { password, ...updateData } = req.body;
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
     const employee = await UserModel.User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      {
+        ...updateData,
+      },
       {
         new: true,
       }
     );
+
     return res.status(200).json({
       success: true,
       message: "Employee Updated Successfully",
@@ -197,13 +234,49 @@ exports.updateEmployeeDetails = async () => {
 // get Employee under the user
 exports.getEmployeeData = async (req, res) => {
   try {
-    const usermployees = await UserModel.User.find({
-      parent_id: req.params.id,
-    }).populate("role");
+    // const usermployees = await UserModel.User.find({
+    //   parent_id: req.params.id,
+    // }).populate("role");
+    // const usermployees = await UserModel.User.find({status: "active"}).populate("role");
+    const resultPerPage = 2;
+    const countPage = await UserModel.User.countDocuments({
+      status: "active",
+    });
+
+    let pageCount = Math.ceil(countPage / resultPerPage);
+    const apiFeatures = new ApiFeatures(
+      UserModel.User.find({ status: "active" }).populate("role"),
+      req.query
+    )
+      .reverse()
+      .pagination(resultPerPage);
+
+    const result = await apiFeatures.query;
+
+    // let pageCount = Math.ceil(result?.length / resultPerPage);
+
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        data: updatedResult,
+        pageCount: pageCount,
+      });
+    }
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
+
     return res.status(200).json({
       success: true,
       message: "User Employees Data Found",
-      data: usermployees,
+      data: result,
+      pageCount: pageCount,
     });
   } catch (error) {
     console.log(error);

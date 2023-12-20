@@ -1,4 +1,5 @@
 const roleModel = require("../models/role.model");
+const ApiFeatures = require("../utils/apiFeatures");
 
 exports.roleCreation = async (req, res) => {
   try {
@@ -25,12 +26,61 @@ exports.roleCreation = async (req, res) => {
 
 exports.getRole = async (req, res) => {
   try {
-    const result = await roleModel.Role.find();
-    res.send(result);
+    const resultPerPage = 2;
+    const countPage = await roleModel.Role.countDocuments();
+    // const result = await roleModel.Role.find();
+    let pageCount = Math.ceil(countPage / resultPerPage);
+    const apiFeatures = new ApiFeatures(
+      roleModel.Role.find({}),
+      req.query
+    )
+      .reverse()
+      .pagination(resultPerPage);
+
+    const result = await apiFeatures.query;
+
+    // let pageCount = Math.ceil(result?.length / resultPerPage);
+
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        data: updatedResult,
+        pageCount: pageCount,
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User Roles Data Found",
+      data: result,
+      pageCount: pageCount,
+    });
   } catch (error) {
     res.status(500).send({ error: "Internal Server Error" });
   }
 };
+
+exports.getRoles=async(req,res)=>{
+  try {
+    const result = await roleModel.Role.find({});
+
+    if(!result){
+      return res.status(404).json({
+        success: false,
+        message: "User Roles Data Not Found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "User Roles Data Found",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 exports.getRoleData = async (req, res) => {
   try {

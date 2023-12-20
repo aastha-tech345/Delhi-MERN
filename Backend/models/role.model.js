@@ -16,7 +16,7 @@ const roleSchema = new mongoose.Schema({
     added_by: { type: String },
 }, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 
-const Role = mongoose.model('role', roleSchema);
+const Role = mongoose.model('Role', roleSchema);
 
 module.exports = {
     Role

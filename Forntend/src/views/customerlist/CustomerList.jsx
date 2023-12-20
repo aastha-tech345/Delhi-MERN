@@ -17,7 +17,7 @@ const CustomerList = () => {
   console.log('verifyEditPer', verifyEditPer())
   let lgUser = localStorage.getItem('record')
   let loginData = JSON.parse(lgUser)
-
+  console.log('loginData', loginData)
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
   const [fname, setFname] = useState()
@@ -106,7 +106,7 @@ const CustomerList = () => {
         <>
           {(loginData?.user?._id === record.created_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.isAdminFullRights == 'true' ? (
+          loginData?.user?.isAdminFullRights === 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
@@ -121,7 +121,7 @@ const CustomerList = () => {
           )}
           {(loginData?.user?._id === record.created_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
-          loginData?.user?.isAdminFullRights == 'true' ? (
+          loginData?.user?.isAdminFullRights === 'true' ? (
             <button
               style={{ background: 'none', border: 'none' }}
               onClick={() => handleIconClick(record._id)}

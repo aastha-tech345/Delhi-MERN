@@ -1,15 +1,17 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { putFetch, putFetchData } from 'src/Api'
+import { putFetch } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { StoreContext } from 'src/StoreContext'
 
 const AppModal = ({ setOpen }) => {
+  const { updateProfile, setUpdateProfile } = useContext(StoreContext)
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('record')
   let response = JSON.parse(res)
-
+  console.log(response?.user?.password)
   const [loadValue, setLoadVale] = useState(false)
   const [data, setData] = useState({
     username: response.user?.username,
@@ -50,17 +52,14 @@ const AppModal = ({ setOpen }) => {
         formData.append('profileImage', selectedFile)
       }
 
-      // const res = await fetch(`${apiUrl}/user//update/${response.user?._id}`, {
-      //   method: 'PUT',
-      //   body: formData,
-      // })
-
       const res = await putFetch(`${apiUrl}/user/update/${response.user?._id}`, formData)
 
       console.log('updatedProfile', res)
 
       if (res.status === 200) {
+        setUpdateProfile(!updateProfile)
         setLoadVale(false)
+        notify('Profile Updated Successfully')
         setData({
           username: '',
           lname: '',
@@ -68,12 +67,11 @@ const AppModal = ({ setOpen }) => {
           password: '',
           gender: '',
         })
-        localStorage.setItem('record', JSON.stringify(res?.data))
-        // console.log('profile update', res?.data)
         setSelectedFile(null)
-        notify('Profile Updated Successfully')
-        setOpen(false)
-        // window.location.reload()
+        setTimeout(() => {
+          setOpen(false)
+          // window.location.reload()
+        }, 2000)
       } else {
         notify('Something Went Wrong')
       }
@@ -115,8 +113,12 @@ const AppModal = ({ setOpen }) => {
               />
               <img
                 className="mb-3"
-                src={selectedFile ? URL.createObjectURL(selectedFile) : ''}
-                alt=""
+                src={
+                  selectedFile
+                    ? URL.createObjectURL(selectedFile)
+                    : 'https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg'
+                }
+                alt="Avatar hochladen"
                 style={{ height: '70px', width: '70px', borderRadius: '50%', marginLeft: '45%' }}
                 onClick={() => fileInputRef.current.click()}
               />

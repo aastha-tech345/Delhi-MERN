@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import PropTypes from 'prop-types'
 import { putFetchData } from 'src/Api'
+import { StoreContext } from 'src/StoreContext'
 
 const EditRoleModal = ({ setOpenModal, roleID }) => {
+  const { setEditEmployee, editEmployee } = useContext(StoreContext)
   const apiUrl = process.env.REACT_APP_API_URL
   const notify = (dataa) => toast(dataa)
-  const [update, setUpdate] = useState(false)
   const [rolePermission, setRolePermission] = useState('')
   const [permissionData, setPermissionData] = useState({
     p_edit: 'no',
     p_show: 'no',
     p_delete: 'no',
     p_export: 'no',
-    section_name: 'client',
+    section_name: 'Klientlnnen',
     ownership_check: 'false',
   })
   const [permissionDashboard, setPermissionDashboard] = useState({
@@ -22,12 +23,20 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
     p_show: 'no',
     p_delete: 'no',
     p_export: 'no',
-    section_name: 'dashboard',
+    section_name: 'Dashboard',
+    ownership_check: 'false',
+  })
+  const [permissionSetting, setPermissionSetting] = useState({
+    p_edit: 'no',
+    p_show: 'no',
+    p_delete: 'no',
+    p_export: 'no',
+    section_name: 'Einstellungen',
     ownership_check: 'false',
   })
   const [role, setRole] = useState({
     role_name: rolePermission,
-    permission: [permissionData, permissionDashboard],
+    permission: [],
     added_by: 'admin',
   })
 
@@ -45,6 +54,13 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
     }))
   }
 
+  const handleSetSettingName = (name) => {
+    setPermissionSetting((prevData) => ({
+      ...prevData,
+      section_name: name,
+    }))
+  }
+
   const handlePermissionDataChange = (e) => {
     const { name, value } = e.target
     setPermissionData({ ...permissionData, [name]: value })
@@ -55,41 +71,44 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
     setPermissionDashboard({ ...permissionDashboard, [name]: value })
   }
 
-  useEffect(() => {
-    setRole((prevRole) => ({
-      ...prevRole,
-      role_name: rolePermission,
-      permission: [permissionData, permissionDashboard],
-    }))
-  }, [rolePermission, permissionData, permissionDashboard])
+  const handlePermissionSettingChange = (e) => {
+    const { name, value } = e.target
+    setPermissionSetting({ ...permissionSetting, [name]: value })
+  }
+
+  // useEffect(() => {
+  //   setRole((prevRole) => ({
+  //     ...prevRole,
+  //     role_name: rolePermission,
+  //     permission: [permissionData, permissionDashboard, permissionSetting],
+  //   }))
+  // }, [rolePermission, permissionData, permissionDashboard, permissionSetting])
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault()
       const res = await putFetchData(`${apiUrl}/role/get_role/${roleID}`, role)
-      // console.log('rolePermission', rolePermission)
-      //   console.log('permissionData', permissionData)
-      //   console.log('role', role)
       console.log('updatedRole', res)
-
       if (res?.status === 200) {
-        setUpdate(!update)
+        setEditEmployee(!editEmployee)
         notify('Role Updated Successfully')
-        return setOpenModal(false)
+        setTimeout(() => {
+          setOpenModal(false)
+          // window?.location?.reload()
+        }, 2000)
       }
     } catch (error) {
       console.log(error)
     }
   }
-  //   localStorage.setItem('updateFunc', update)
 
   useEffect(() => {
     setRole((prevRole) => ({
       ...prevRole,
       role_name: rolePermission,
-      permission: [permissionData, permissionDashboard],
+      permission: [permissionData, permissionDashboard, permissionSetting],
     }))
-  }, [rolePermission, permissionData, permissionDashboard])
+  }, [rolePermission, permissionData, permissionDashboard, permissionSetting])
 
   const close = () => {
     setOpenModal(false)
@@ -130,7 +149,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
             />
             <h5 className="mt-2 fw-bold">Berechtigungen</h5>
             <h5 className="mt-3 fw-bold">Klientlnnen</h5>
-            <div className="w-100">
+            <div>
               <div className="row" onClick={() => handleSetName('Klientlnnen')}>
                 <div className="col-sm-3 mt-2">Anzeigen</div>
                 <div className="col-sm-5"></div>
@@ -143,8 +162,8 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionData.p_show}
                       onChange={handlePermissionDataChange}
                     >
-                      <option value="only owned">Nur im Besitz</option>
-                      <option value="Withdraw">Widerrufen</option>
+                      {/* <option value="owned">Nur im Besitz</option> */}
+                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -163,8 +182,8 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionData.p_edit}
                       onChange={handlePermissionDataChange}
                     >
-                      <option value="only owned">Nur im Besitz</option>
-                      <option value="Withdraw">Widerrufen</option>
+                      <option value="owned">Nur im Besitz</option>
+                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -183,8 +202,8 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionData.p_delete}
                       onChange={handlePermissionDataChange}
                     >
-                      <option value="only owned">Nur im Besitz</option>
-                      <option value="Withdraw">Widerrufen</option>
+                      <option value="owned">Nur im Besitz</option>
+                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -203,8 +222,8 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionData.p_export}
                       onChange={handlePermissionDataChange}
                     >
-                      <option value="only owned">Nur im Besitz</option>
-                      <option value="Withdraw">Widerrufen</option>
+                      <option value="owned">Nur im Besitz</option>
+                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -215,7 +234,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
             <h5 className="mt-3 fw-bold">Dashboard</h5>
             <div>
               <div className="row" onClick={() => handleSetDashboardName('Dashboard')}>
-                <div className="row" onClick={() => handleSetName('Dashboard')}>
+                <div className="row">
                   <div className="col-sm-3 mt-2">Anzeigen</div>
                   <div className="col-sm-5"></div>
                   {/*dropdown*/}
@@ -227,8 +246,8 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                         value={permissionDashboard.p_show}
                         onChange={handlePermissionDashboardChange}
                       >
-                        <option value="only owned">Nur im Besitz</option>
-                        <option value="Withdraw">Widerrufen</option>
+                        {/* <option value="owned">Nur im Besitz</option> */}
+                        {/* <option value="Withdraw">Widerrufen</option> */}
                         <option value="no">No</option>
                         <option value="yes">Yes</option>
                       </select>
@@ -247,8 +266,8 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                         style={{ border: 'none', background: 'none' }}
                         onChange={handlePermissionDashboardChange}
                       >
-                        <option value="only owned">Nur im Besitz</option>
-                        <option value="Withdraw">Widerrufen</option>
+                        <option value="owned">Nur im Besitz</option>
+                        {/* <option value="Withdraw">Widerrufen</option> */}
                         <option value="no">No</option>
                         <option value="yes">Yes</option>
                       </select>
@@ -267,8 +286,8 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                         value={permissionDashboard.p_delete}
                         onChange={handlePermissionDashboardChange}
                       >
-                        <option value="only owned">Nur im Besitz</option>
-                        <option value="Withdraw">Widerrufen</option>
+                        <option value="owned">Nur im Besitz</option>
+                        {/* <option value="Withdraw">Widerrufen</option> */}
                         <option value="no">No</option>
                         <option value="yes">Yes</option>
                       </select>
@@ -287,8 +306,94 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                         style={{ border: 'none', background: 'none' }}
                         onChange={handlePermissionDashboardChange}
                       >
-                        <option value="only owned">Nur im Besitz</option>
-                        <option value="Withdraw">Widerrufen</option>
+                        <option value="owned">Nur im Besitz</option>
+                        {/* <option value="Withdraw">Widerrufen</option> */}
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h5 className="mt-3 fw-bold">Setting</h5>
+            <div>
+              <div className="row" onClick={() => handleSetSettingName('Einstellungen')}>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Anzeigen</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <div className="input-group">
+                      <select
+                        style={{ border: 'none', background: 'none' }}
+                        name="p_show"
+                        value={permissionSetting.p_show}
+                        onChange={handlePermissionSettingChange}
+                      >
+                        {/* <option value="owned">Nur im Besitz</option> */}
+                        {/* <option value="Withdraw">Widerrufen</option> */}
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Bearbeiten</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <div className="input-group">
+                      <select
+                        name="p_edit"
+                        value={permissionSetting.p_edit}
+                        style={{ border: 'none', background: 'none' }}
+                        onChange={handlePermissionSettingChange}
+                      >
+                        <option value="owned">Nur im Besitz</option>s
+                        {/* <option value="Withdraw">Widerrufen</option> */}
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Löschen</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <div className="input-group">
+                      <select
+                        style={{ border: 'none', background: 'none' }}
+                        name="p_delete"
+                        value={permissionSetting.p_delete}
+                        onChange={handlePermissionSettingChange}
+                      >
+                        <option value="owned">Nur im Besitz</option>
+                        {/* <option value="Withdraw">Widerrufen</option> */}
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-3 mt-2">Exportieren</div>
+                  <div className="col-sm-5"></div>
+                  {/*dropdown*/}
+                  <div className="col-sm-4 mt-2">
+                    <div className="input-group">
+                      <select
+                        name="p_export"
+                        value={permissionSetting.p_export}
+                        style={{ border: 'none', background: 'none' }}
+                        onChange={handlePermissionSettingChange}
+                      >
+                        <option value="owned">Nur im Besitz</option>
+                        {/* <option value="Withdraw">Widerrufen</option> */}
                         <option value="no">No</option>
                         <option value="yes">Yes</option>
                       </select>

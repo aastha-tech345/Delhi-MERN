@@ -34,11 +34,25 @@ const columns = [
   },
   {
     title: 'MOBIL',
-    dataIndex: 'mobil',
+    dataIndex: 'mobile',
   },
   {
     title: 'STATUS',
     dataIndex: 'status',
+    render: (text, record) => (
+      <div
+        style={{
+          color: 'white',
+          background: text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
+          borderRadius: '20px',
+          padding: '3px',
+          width: '70px',
+          textAlign: 'center',
+        }}
+      >
+        <b style={{ fontSize: '12px' }}>{text}</b>
+      </div>
+    ),
   },
   {
     title: 'ID KLIENTINNEN',
@@ -54,41 +68,6 @@ const columns = [
   },
 ]
 
-const data = [
-  {
-    key: '1',
-    name: 'Russell Crowe',
-    email: 'russellcrowe@left4code.com',
-    status: 'done',
-    phone: '+3 809 291 4525',
-    action: 'active',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    email: 'user@gmail.com',
-    status: 'done',
-    phone: '2934289354',
-    action: 'active',
-  },
-]
-
 const Filter = () => {
   const [search, setSearch] = useState('')
   const [show, setShow] = useState(false)
@@ -98,16 +77,16 @@ const Filter = () => {
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const searchInputRef = useRef()
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
-  const [selectionType] = useState('checkbox')
+  // const handleClose = () => setShow(false)
+  // const handleShow = () => setShow(true)
+  // const [selectionType] = useState('checkbox')
 
   const getDetails = async () => {
     try {
       const result = await fetch(`${apiUrl}/filter/get_filter?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
-      const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setFilterRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
@@ -130,7 +109,7 @@ const Filter = () => {
       const response = await fetch(`${apiUrl}/filter/search/${search}`)
       const data = await response.json()
 
-      const activeRecords = data.filter((record) => record.status === 'active')
+      const activeRecords = data.filter((record) => record.is_deleted === 'active')
 
       if (activeRecords.length > 0) {
         setFilterRecord(activeRecords)

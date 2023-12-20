@@ -27,6 +27,7 @@ export const verifyPer = () => {
   })
 }
 
+// for client permission start
 export const verifyEditPer = () => {
   if (isAdmin || loginUser?.user?.isAdminFullRights === 'true') {
     return ['yes']
@@ -44,7 +45,7 @@ export const verifyEditPer = () => {
 }
 
 export const verifyDelPer = () => {
-  if (isAdmin || loginUser?.user?.isAdminFullRights == 'true') {
+  if (isAdmin || loginUser?.user?.isAdminFullRights === 'true') {
     return ['yes']
   }
 
@@ -54,6 +55,41 @@ export const verifyDelPer = () => {
       return 'owned'
     }
     if (section_name === 'Klientlnnen' && p_delete === 'yes') {
+      return 'yes'
+    }
+  })
+}
+
+// end client permission
+
+// start setting permission
+export const verifySettingEditPer = () => {
+  if (isAdmin || loginUser?.user?.isAdminFullRights === 'true') {
+    return ['yes']
+  }
+
+  return userPermission?.map((elem) => {
+    const { section_name, p_edit } = elem
+    if (section_name === 'Einstellungen' && p_edit === 'owned') {
+      return 'owned'
+    }
+    if (section_name === 'Einstellungen' && p_edit === 'yes') {
+      return 'yes'
+    }
+  })
+}
+
+export const verifySettingDelPer = () => {
+  if (isAdmin || loginUser?.user?.isAdminFullRights === 'true') {
+    return ['yes']
+  }
+
+  return userPermission?.map((elem) => {
+    const { section_name, p_delete } = elem
+    if (section_name === 'Einstellungen' && p_delete === 'owned') {
+      return 'owned'
+    }
+    if (section_name === 'Einstellungen' && p_delete === 'yes') {
       return 'yes'
     }
   })
