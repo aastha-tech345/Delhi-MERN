@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { GrEdit } from 'react-icons/gr'
-import { MdDelete, MdAdd } from 'react-icons/md'
+// import { GrEdit } from 'react-icons/gr'
+import { RiDeleteBinLine } from 'react-icons/ri'
+import { MdAdd, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
@@ -11,12 +12,12 @@ import Form from 'react-bootstrap/Form'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
-
+import { FiFilter } from 'react-icons/fi'
 const CustomerList = () => {
   console.log('verifyEditPer', verifyEditPer())
   let lgUser = localStorage.getItem('record')
   let loginData = JSON.parse(lgUser)
-
+  console.log('loginData', loginData)
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
   const [fname, setFname] = useState()
@@ -28,7 +29,7 @@ const CustomerList = () => {
   const [city, setCity] = useState()
   const [street, setStreet] = useState()
   const [group, setGroup] = useState()
-  const [created_by, setCreated_by] = useState(loginData?.user?._id)
+  const [created_by] = useState(loginData?.user?._id)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
@@ -81,6 +82,21 @@ const CustomerList = () => {
     {
       title: 'GRUPPE',
       dataIndex: 'group',
+      render: (text, record) => (
+        <div
+          style={{
+            color: 'white',
+            background:
+              text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
+            borderRadius: '20px',
+            padding: '3px',
+            width: '70px',
+            textAlign: 'center',
+          }}
+        >
+          <b style={{ fontSize: '12px' }}>{text}</b>
+        </div>
+      ),
     },
     {
       title: 'AKTION',
@@ -90,32 +106,27 @@ const CustomerList = () => {
         <>
           {(loginData?.user?._id === record.created_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights === 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleEdit(record)}
               >
-                <GrEdit />
-                &nbsp;&nbsp;Bearbeiten
+                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+                &nbsp;Bearbeiten
               </button>
-
-              {/* <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
-            <GrEdit />
-            &nbsp;&nbsp;Bearbeiten
-          </button> */}
             </>
           ) : (
             ''
           )}
           {(loginData?.user?._id === record.created_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights === 'true' ? (
             <button
               style={{ background: 'none', border: 'none' }}
               onClick={() => handleIconClick(record._id)}
             >
-              <MdDelete /> Löschen
+              <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
             </button>
           ) : (
             ''
@@ -222,7 +233,7 @@ const CustomerList = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getDetails = useCallback(async () => {
     try {
-      // if (loginData?.user?.user_role === 'admin') {
+      // if (loginData?.user?.user_type === 'admin') {
       const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
@@ -230,7 +241,7 @@ const CustomerList = () => {
       setCustomerRecord(activeRecords)
       // }
 
-      // if (loginData?.user?.user_role === 'employee') {
+      // if (loginData?.user?.user_type === 'employee') {
       //   const result = await fetch(
       //     `${apiUrl}/customer/user/customer/${loginData?.user?._id}?page=${page}`,
       //   )
@@ -247,7 +258,7 @@ const CustomerList = () => {
   //   getDetails()
   // }, [page])
 
-  // if (loginData?.user?.user_role === 'employee') {
+  // if (loginData?.user?.user_type === 'employee') {
   //   const getDetails = useCallback(async () => {
   //     try {
   //       const result = await fetch(
@@ -297,7 +308,6 @@ const CustomerList = () => {
   const searchHandle = async () => {
     try {
       // let key = searchInputRef.current.value
-      //console.log('ashish', search)
       if (search === '') {
         return getDetails()
       }
@@ -344,7 +354,9 @@ const CustomerList = () => {
               className="btn btn text-light"
               style={{ background: '#0b5995' }}
             >
-              filter
+              <FiFilter />
+              &nbsp;
+              <span style={{ fontWeight: 'bold' }}>Filter</span>
             </button>
           </div>
 
@@ -435,7 +447,6 @@ const CustomerList = () => {
                       <input
                         type="email"
                         name="email"
-                        // value={email}
                         onChange={handleEmailChange}
                         placeholder="jo@gmail.com"
                         className="form-control"
@@ -455,7 +466,6 @@ const CustomerList = () => {
                         id="inputTelephone"
                         maxLength={10}
                         minLength={3}
-                        // required={true}
                       />
                     </div>
                   </div>

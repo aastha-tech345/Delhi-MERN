@@ -2,34 +2,35 @@ import React, { useEffect, useState } from 'react'
 import { getFetch } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Pagination from '@mui/material/Pagination'
-import Stack from '@mui/material/Stack'
-import EditRoleModal from './EditRoleModal'
 
-const AllRoles = () => {
-  const apiUrl = process.env.REACT_APP_API_URL
-  const notify = (dataa) => toast(dataa)
-  const [data, setData] = useState([])
+import EditRoleModal from './EditRoleModal'
+import PropTypes from 'prop-types'
+
+const AllRoles = ({ data }) => {
+  // const apiUrl = process.env.REACT_APP_API_URL
+  // const notify = (dataa) => toast(dataa)
+  // const [data, setData] = useState([])
   const [roleID, setRoleID] = useState('')
   const [openModal, setOpenModal] = useState(false)
 
-  const getAllRolles = async () => {
-    try {
-      const res = await getFetch(`${apiUrl}/role/get_role`)
-      setData(res?.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const getAllRolles = async () => {
+  //   try {
+  //     const res = await getFetch(`${apiUrl}/role/get_role`)
+  //     setData(res?.data)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const handleOpen = (id) => {
     setOpenModal(true)
     setRoleID(id)
   }
+  // let updatedRole = localStorage.getItem('updateFunc')
 
-  useEffect(() => {
-    getAllRolles()
-  }, [])
+  // useEffect(() => {
+  //   getAllRolles()
+  // }, [updatedRole])
   return (
     <>
       <div className="row m-3">
@@ -77,20 +78,14 @@ const AllRoles = () => {
         </div>
       </div>
 
-      <Stack spacing={2}>
-        <Pagination
-          //   count={coountPage}
-          count={1}
-          variant="outlined"
-          shape="rounded"
-          //   page={page}
-          //   onChange={handleChange}
-        />
-      </Stack>
       <ToastContainer />
       {openModal ? <EditRoleModal setOpenModal={setOpenModal} roleID={roleID} /> : ''}
     </>
   )
+}
+
+AllRoles.propTypes = {
+  data: PropTypes.func.isRequired,
 }
 
 export default AllRoles

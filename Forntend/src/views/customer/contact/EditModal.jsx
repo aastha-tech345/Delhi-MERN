@@ -25,8 +25,9 @@ const EditModal = ({ setEdit, getDetails }) => {
     fname: response?.fname,
     lname: response?.lname,
     phone: response?.phone,
-    // email: response?.email,
+    statu: response?.statu,
     gender: response?.gender,
+    email: response?.email,
     // customer_id: result?._id,
   })
   const [email, setEmail] = useState(response?.email)
@@ -44,10 +45,9 @@ const EditModal = ({ setEdit, getDetails }) => {
     }
   }
 
-  const handleChange = (e) => {
-    const { name, value, type } = e.target
-
-    const newValue = type === 'radio' ? e.target.value : value
+  const handleChange = ({ e, name, value }) => {
+    const { type } = e.target
+    const newValue = type === 'radio' ? value : value
 
     setData({ ...data, [name]: newValue })
   }
@@ -77,7 +77,7 @@ const EditModal = ({ setEdit, getDetails }) => {
         return notify('Invalid Email')
       }
       const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, dataa)
-      if (res.status == 200) {
+      if (res.status === 200) {
         setLoadVale(false)
         setData({
           fname: '',
@@ -90,7 +90,7 @@ const EditModal = ({ setEdit, getDetails }) => {
         close()
         getDetails()
       } else {
-        notify('Something Went Wrong')
+        notify('Email-`Id Already Exists')
       }
     } catch (error) {
       console.log(error)
@@ -167,19 +167,19 @@ const EditModal = ({ setEdit, getDetails }) => {
                 </label>
                 <div className="col-sm-9">
                   <input
-                    type="tel"
                     name="phone"
                     value={data.phone}
-                    onChange={handleChange}
-                    placeholder="91+ 8354568464"
+                    onChange={(e) => {
+                      const inputValue = e.target.value.replace(/[^0-9]/g, '')
+                      handleChange({ e, name: 'phone', value: inputValue })
+                    }}
+                    type="tel"
+                    placeholder="Telefon"
                     className="form-control"
-                    id="inputPassword"
+                    id="inputTelephone"
+                    maxLength={10}
+                    minLength={3}
                   />
-                  {/* {error && data.phone.trim().length === 0 && (
-                    <p style={{ color: 'red' }}>
-                      <BiErrorCircle /> required
-                    </p>
-                  )} */}
                 </div>
               </div>
               <div className="mb-2 row">
@@ -247,6 +247,22 @@ const EditModal = ({ setEdit, getDetails }) => {
                     checked={data.gender === 'other'}
                   />
                   &nbsp; Andere
+                </div>
+              </div>
+              <div className="mb-2 row">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Status
+                </label>
+                <div className="col-sm-9">
+                  <select
+                    className="form-control"
+                    name="statu"
+                    onChange={handleChange}
+                    value={data.statu}
+                  >
+                    <option value="HVD-PV">HVD-PV</option>
+                    <option value="PV-ALT">PV-ALT</option>
+                  </select>
                 </div>
               </div>
             </div>

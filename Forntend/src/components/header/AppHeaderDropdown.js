@@ -66,6 +66,7 @@ const content = (
   </div>
 )
 const AppHeaderDropdown = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
   const [open, setOpen] = useState(false)
 
   const modalOpen = () => {
@@ -97,9 +98,25 @@ const AppHeaderDropdown = () => {
               </Popover>
             </Badge>
             &nbsp; &nbsp; &nbsp; &nbsp;
-            <div style={{ borderLeft: '0.5px solid gray', height: '40px' }}></div>
+            <div
+              style={{
+                borderLeft: '0.5px solid gray',
+                height: '40px',
+              }}
+            ></div>
             &nbsp; &nbsp; &nbsp; &nbsp;
-            <CAvatar src={avatar8} size="md" />
+            {result?.user?.profileImage?.length > 4 ? (
+              <img
+                src={`${apiUrl}/${result?.user?.profileImage}`}
+                size="md"
+                alt="photo"
+                width="40px"
+                height="40px"
+                style={{ objectFit: 'cover', borderRadius: '100%' }}
+              />
+            ) : (
+              <CAvatar src={avatar8} size="md" />
+            )}
             &nbsp;
             <span className="text-dark mt-2">{result?.user?.username}</span>
           </div>

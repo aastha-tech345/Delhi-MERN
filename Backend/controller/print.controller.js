@@ -30,13 +30,13 @@ exports.getPrint = async (req, res) => {
     const resultPerPage = 10;
 
     const countPage = await PrintInfomation.printTemplate.countDocuments({
-      status: "active",
+      is_deleted: "active",
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
 
     const apiFeatures = new ApiFeatures(
-      PrintInfomation.printTemplate.find({ status: "active" }),
+      PrintInfomation.printTemplate.find({ is_deleted: "active" }),
       req.query
     )
       .reverse()
@@ -69,7 +69,7 @@ exports.getPrintData = async (req, res) => {
   try {
     const result = await PrintInfomation.printTemplate.findOne({
       _id: req.params.id,
-      status: { $ne: "deleted" },
+      is_deleted: { $ne: "deleted" },
     });
     res.send(result);
   } catch (error) {
@@ -81,8 +81,8 @@ exports.getPrintData = async (req, res) => {
 exports.getPrintDataDelete = async (req, res) => {
   try {
     const result = await PrintInfomation.printTemplate.updateOne(
-      { _id: req.params.id, status: { $ne: "deleted" } },
-      { $set: { status: "deleted" } }
+      { _id: req.params.id, is_deleted: { $ne: "deleted" } },
+      { $set: { is_deleted: "deleted" } }
     );
     res.status(200).json({
       success: true,

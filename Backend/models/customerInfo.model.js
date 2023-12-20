@@ -59,23 +59,22 @@ const customerBurialSchema = new mongoose.Schema({
   notTermination: { type: String },
   financialReasons: { type: String },
 });
-const customerInfoSchema = new mongoose.Schema({
-  orderingMaterials: orderingMaterialsSchema,
-  customerInfoStatu: customerInfoStatuSchema,
-  those: { type: String },
-  customerContact: customerContactSchema,
-  customerBills: customerBillSchema,
-  customerDelivery: customerDeliverySchema,
-  customerDeposit: customerDepositSchema,
-  customerBurial: customerBurialSchema,
-  customer_id: { type: mongoose.Schema.Types.ObjectId },
-});
-
-const CustomerInfo = mongoose.model(
-  "customerInfo",
-  customerInfoSchema,
-  "customerInfo"
+const customerInfoSchema = new mongoose.Schema(
+  {
+    orderingMaterials: orderingMaterialsSchema,
+    customerInfoStatu: customerInfoStatuSchema,
+    those: { type: String },
+    customerContact: customerContactSchema,
+    customerBills: customerBillSchema,
+    customerDelivery: customerDeliverySchema,
+    customerDeposit: customerDepositSchema,
+    customerBurial: customerBurialSchema,
+    customer_id: { type: mongoose.Schema.Types.ObjectId },
+  },
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
+
+const CustomerInfo = mongoose.model("customerInfo", customerInfoSchema);
 
 module.exports = {
   CustomerInfo,

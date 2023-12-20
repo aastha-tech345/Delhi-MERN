@@ -7,9 +7,9 @@ const teamSchema = new mongoose.Schema({
     team_manager:{type:String},
     description:{type:String},
     parent_id:{type:String}
-});
+}, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 
-const Teams = mongoose.model('team', teamSchema, 'team');
+const Teams = mongoose.model('team', teamSchema);
 
 module.exports = {
     Teams

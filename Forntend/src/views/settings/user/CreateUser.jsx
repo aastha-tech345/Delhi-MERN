@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Divider, Radio, Table } from 'antd'
 import { GrFormAdd, GrAdd } from 'react-icons/gr'
 import Modal from 'react-bootstrap/Modal'
-import { MdAdd, MdDelete } from 'react-icons/md'
+import { MdAdd, MdDelete, MdOutlineEdit } from 'react-icons/md'
 import { GrEdit } from 'react-icons/gr'
 import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
@@ -10,12 +10,22 @@ import { getFetch, postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import User from '../User'
+import { RiDeleteBinLine } from 'react-icons/ri'
+import DeleteModal from './DeleteModal'
+import EditUser from './EditUser'
+import { verifySettingDelPer, verifySettingEditPer } from 'src/components/verifyPermission'
+import { StoreContext } from 'src/StoreContext'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 const CreateUser = () => {
+  const { setEditUser, editUser } = useContext(StoreContext)
+  const [userCreateId, setUserCreateId] = useState('')
   const loginUser = localStorage.getItem('record')
   let dataa = JSON.parse(loginUser)
-  const notify = (dataa) => toast(dataa)
 
+  const notify = (dataa) => toast(dataa)
+  const [hide, setHide] = useState(false)
   const [record, setRecord] = useState([])
   const [user_email, setUserEmail] = useState()
   const apiUrl = process.env.REACT_APP_API_URL
@@ -27,8 +37,15 @@ const CreateUser = () => {
   const [activeTab, setActiveTab] = useState('nav-home')
   const [roleList, setRoleList] = useState([])
   const [roleId, setRoleId] = useState('')
+  const [getEmployee, setGetEmployee] = useState([])
+  const [isAdminFullRights, setIsAdminFullRights] = useState('false')
+  const searchInputRef = useRef()
+  const [search, setSearch] = useState('')
+  const [edit, setEdit] = useState(false)
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(0)
   const [employee, setEmployee] = useState({
-    fname: '',
+    username: '',
     lname: '',
     street: '',
     plz: '',
@@ -39,11 +56,12 @@ const CreateUser = () => {
     mobile: '',
     role: '',
     password: '123456',
-    user_role: 'employee',
+    user_type: 'employee',
     timezone: '5:30',
     parent_id: dataa?.user?._id,
     added_by: dataa?.user?.username,
   })
+  const employeData = { ...employee, isAdminFullRights }
   // const [employeData, setEmployeData] = useState({
   //   users: {},
   //   password: {
@@ -66,9 +84,6 @@ const CreateUser = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const onChange = (checked) => {
-    //console.log(`switch to ${checked}`)
-  }
   const handleShowInviteUserModal = () => {
     setShowInviteUserModal(true)
   }
@@ -82,6 +97,11 @@ const CreateUser = () => {
 
     setEmployee({ ...employee, [name]: value })
   }
+  const handleDelete = (userCreateId) => {
+    // console.log(`Deleting employee with ID: ${userCreateId}`)
+    setUserCreateId(userCreateId)
+    setHide(true)
+  }
 
   let localUserData = localStorage.getItem('record')
   let mainRes = JSON.parse(localUserData)
@@ -90,139 +110,230 @@ const CreateUser = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault()
-      const res = await postFetchData(`${apiUrl}/user/register`, employee)
-      console.log('response', res)
+      const res = await postFetchData(`${apiUrl}/user/register`, employeData)
+      // console.log('response', res)
       if (res.status === 201) {
         notify('Employe Created Successfully')
-        return setShow(false)
+        setEditUser(!editUser)
+        return setShowInviteUserModal(false)
       }
+      // console.log('employeData', employeData)
     } catch (error) {
       console.log(error)
     }
   }
-
-  // useEffect(() => {
-  //   setEmployeData((prevRole) => ({
-  //     ...prevRole,
-  //     users: employee,
-  //   }))
-  // }, [employee])
+  const handleEdit = (record) => {
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('UserEditDetails', recordData)
+    setEdit(true)
+  }
 
   const columns = [
     {
       title: 'ID',
       dataIndex: '_id',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{text?.slice(-6)}</a>,
     },
     {
       title: 'NAME',
-      dataIndex: 'user_name',
+      dataIndex: 'username',
     },
     {
       title: 'E-Mail Adresse',
-      dataIndex: 'user_email', // Change 'email address' to 'emailAddress'
+      dataIndex: 'email', // Change 'email address' to 'emailAddress'
     },
     {
       title: 'Super Verwalter',
-      dataIndex: 'superVerwalter', // Change 'super verwalter' to 'superVerwalter'
+      dataIndex: 'isAdminFullRights',
+      render: (text, record) => (
+        <div
+          style={{
+            color: 'white',
+            background: text === 'true' ? '#55BC6E' : text === 'false' ? '#0b5995' : 'transparent',
+            borderRadius: '20px',
+            padding: '3px',
+            width: '13px',
+            marginLeft: '10px',
+            height: '13px',
+            borderRight: '50%',
+          }}
+        ></div>
+      ),
     },
     {
       title: 'AKTION',
       dataIndex: 'action',
-      render: () => (
+      render: (_, record) => (
         <>
-          <GrEdit />
-          &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-          <MdDelete />
-          Löschen
+          {(dataa?.user?._id === record.parent_id && verifySettingEditPer().includes('owned')) ||
+          verifySettingEditPer().includes('yes') ||
+          dataa?.user?.isAdminFullRights == 'true' ? (
+            <button
+              onClick={() => handleEdit(record)}
+              style={{ background: 'none', border: 'none' }}
+            >
+              <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+              &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+            </button>
+          ) : (
+            ''
+          )}
+
+          {(dataa?.user?._id === record.parent_id && verifySettingDelPer().includes('owned')) ||
+          verifySettingDelPer().includes('yes') ||
+          dataa?.user?.isAdminFullRights == 'true' ? (
+            <button
+              style={{ background: 'none', border: 'none' }}
+              onClick={() => handleDelete(record._id)}
+            >
+              <RiDeleteBinLine className="text-danger text-bold fs-5" />
+              Löschen
+            </button>
+          ) : (
+            ''
+          )}
         </>
       ),
     },
   ]
 
-  const data = [
-    {
-      _id: '1',
-      user_name: 'John Brown',
-      age: 32,
-      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:john@example.com', // Adjust to a valid email address
-      superVerwalter: 'Yes',
-      action: 'Edit', // Provide appropriate action value
-    },
-    {
-      _id: '2',
-      user_name: 'Jim Green',
-      age: 42,
-      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:jim@example.com', // Adjust to a valid email address
-      superVerwalter: 'No',
-      action: 'Delete', // Provide appropriate action value
-    },
-    {
-      _id: '3',
-      user_name: 'Joe Black',
-      age: 32,
-      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
-      emailAddress: 'mailto:joe@example.com', // Adjust to a valid email address
-      superVerwalter: 'Yes',
-      action: 'View', // Provide appropriate action value
-    },
-  ]
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
+  const handlePageChange = (event, value) => {
+    setPage(value)
   }
 
   const getRole = async () => {
     try {
-      const res = await getFetch(`${apiUrl}/role/get_role`)
-      setRoleList(res?.data)
+      const res = await getFetch(`${apiUrl}/role/get_roles`)
+      setRoleList(res?.data?.data)
     } catch (error) {
       console.log(error)
     }
   }
-  let localData = localStorage.getItem('updateFunc')
+
+  const getEmployeeData = async () => {
+    try {
+      // const res = await getFetch(`${apiUrl}/user/get/employeeData/${dataa?.user?._id}`)
+      const res = await getFetch(`${apiUrl}/user/get/employeeData?page=${page}`)
+      setCountPage(res?.data?.pageCount)
+      const activeEmployees = res?.data?.data?.filter((employee) => employee.status === 'active')
+      setGetEmployee(activeEmployees)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // let localData = localStorage.getItem('updateFunc')
   useEffect(() => {
     getRole()
-  }, [localData])
+    getEmployeeData()
+  }, [editUser, page])
 
+  const searchHandle = async () => {
+    try {
+      if (search === '') {
+        return getEmployeeData()
+      }
+
+      const response = await fetch(`${apiUrl}/user/search/${search}`)
+      const data = await response.json()
+
+      const activeRecords = data.filter((record) => record.status === 'active')
+
+      if (activeRecords.length > 0) {
+        setGetEmployee(activeRecords)
+      } else {
+        getEmployeeData()
+        setGetEmployee(data)
+      }
+    } catch (error) {
+      console.error('Error searching data:', error.message)
+    }
+  }
   return (
     <div style={{ background: 'white' }}>
+      {hide ? (
+        <DeleteModal
+          setHide={setHide}
+          userCreateId={userCreateId}
+          getEmployeeData={getEmployeeData}
+        />
+      ) : (
+        ''
+      )}
+      {edit ? <EditUser setEdit={setEdit} getEmployeeData={getEmployeeData} /> : ''}
       <User />
       <br />
       <div className="topBtnBox mx-3">
-        <div className="">
-          <button
-            className="btn btn"
-            onClick={handleShowInviteUserModal}
-            style={{ background: '#0b5995', color: 'white' }}
-          >
-            <MdAdd />
-            &nbsp; Benutzer erstellen
-          </button>
+        <div className="row p-2">
+          <div className="col-sm-2">
+            <button
+              className="btn btn"
+              onClick={handleShowInviteUserModal}
+              style={{ background: '#0b5995', color: 'white' }}
+            >
+              <MdAdd />
+              &nbsp; Benutzer erstellen
+            </button>
+          </div>
+          <div className="col-sm-3">
+            <input
+              ref={searchInputRef}
+              name="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="search"
+              id="form1"
+              placeholder="Ihre Suche eingeben"
+              className="form-control"
+            />
+          </div>
+          <div className="col-sm-1">
+            <button
+              onClick={searchHandle}
+              type="button"
+              className="btn btn text-light"
+              style={{ background: '#0b5995' }}
+            >
+              <AiFillSetting />
+            </button>
+          </div>
           <Modal size="lg" show={showInviteUserModal} onHide={handleCloseInviteUserModal} centered>
-            <Modal.Header closeButton>
-              <Modal.Title> Benutzer einladen</Modal.Title>
-            </Modal.Header>
+            <div className=" row pt-5 px-5">
+              <p className="fs-5">
+                <b>Super Verwalter</b>
+              </p>
+              <div className="col-sm-9">
+                <p>
+                  Wenn Sie den Super-Admin-Zugang für den Benutzer aktivieren, erhalten Sie vollen
+                  Zugriff auf alle Funktionen ohne jegliche Einschränkungen.
+                </p>
+              </div>
+              <div className="col-sm-3">
+                <div className="form-check mx-5 form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchCheckChecked"
+                    name="isAdminFullRights"
+                    onChange={(e) => setIsAdminFullRights(e.target.checked.toString())}
+                  />
+                </div>
+              </div>
+            </div>
+
             <Modal.Body>
               <div className="row" style={{ background: 'white' }}>
                 <div className="col-sm-12">
                   <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
                       <button
-                        className={`nav-link ${activeTab === 'nav-benutzer' ? 'active' : ''}`}
-                        id="nav-benutzer-tab"
+                        className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
+                        id="nav-home-tab"
                         data-bs-toggle="tab"
                         role="tab"
-                        aria-selected={activeTab === 'nav-benutzer'}
-                        onClick={() => handleTabClick('nav-benutzer')}
+                        aria-selected={activeTab === 'nav-home'}
+                        onClick={() => handleTabClick('nav-home')}
                         style={{ marginRight: '10px', marginLeft: '20px' }}
                       >
                         Benutzer
@@ -286,12 +397,12 @@ const CreateUser = () => {
               <br />
               <div className="tab-content" id="nav-tabContent">
                 <div
-                  className={`tab-pane fade ${activeTab === 'nav-benutzer' ? 'show active' : ''}`}
-                  id="nav-benutzer"
+                  className={`tab-pane fade ${activeTab === 'nav-home' ? 'show active' : ''}`}
+                  id="nav-home"
                   role="tabpanel"
-                  aria-labelledby="nav-benutzer-tab"
+                  aria-labelledby="nav-home-tab"
                 >
-                  <div className="row">
+                  <div className="row mx-3">
                     {/* <div className="col-sm-6">
                       <input
                         className="form-control"
@@ -309,8 +420,8 @@ const CreateUser = () => {
                         className="form-control"
                         placeholder="Name"
                         type="text"
-                        name="fname"
-                        value={employee.fname}
+                        name="username"
+                        value={employee.username}
                         onChange={handleChange}
                       />
                       <br />
@@ -454,29 +565,35 @@ const CreateUser = () => {
               </div>
             </Modal.Footer>
           </Modal>
-          &nbsp; &nbsp;
-          <input
-            type="search"
-            id="form1"
-            placeholder="Suche"
-            className="form-control boxSearchBtn"
-          />
-          &nbsp; &nbsp;
-          <button type="button" className="btn btn text-light" style={{ background: '#0b5995' }}>
-            <AiFillSetting />
-          </button>
         </div>
       </div>
       <div className="row mx-2">
         <Table
+          rowKey={(record) => record._id}
           rowSelection={{
-            type: selectionType,
-            ...rowSelection,
+            type: 'checkbox',
+            onChange: (selectedRowKeys, selectedRows) => {
+              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+            },
+            getCheckboxProps: (record) => ({
+              disabled: record.name === 'Disabled User',
+              name: record.name,
+            }),
           }}
           style={{ overflowX: 'auto' }}
           columns={columns}
-          dataSource={data}
+          dataSource={getEmployee}
+          pagination={false}
         />
+        <Stack spacing={2}>
+          <Pagination
+            count={countPage}
+            variant="outlined"
+            shape="rounded"
+            page={page}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
       <ToastContainer />
     </div>

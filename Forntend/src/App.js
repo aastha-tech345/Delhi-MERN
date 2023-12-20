@@ -1,9 +1,11 @@
-import React, { Component, Suspense } from 'react'
+import React, { Component, Suspense, useContext, useEffect } from 'react'
 import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 import './scss/_custom.scss'
 import ResetPassword from './views/pages/reset/ResetPassword'
 import ForgotPassword from './views/pages/forget/ForgotPassword'
+import { getFetch } from './Api'
+import { StoreContext } from './StoreContext'
 
 const loading = (
   <div className="pt-3 text-center">
@@ -20,6 +22,24 @@ const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 const hasToken = !!window.localStorage.getItem('token')
 
 const App = () => {
+  const { updateProfile, editUser } = useContext(StoreContext)
+  const apiUrl = process.env.REACT_APP_API_URL
+  const id = localStorage.getItem('record_id')
+
+  const getUserById = async () => {
+    try {
+      const user = await getFetch(`${apiUrl}/user/${id}`)
+      if (user?.status === 200) {
+        localStorage.setItem('record', JSON.stringify(user?.data))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getUserById()
+  }, [updateProfile, editUser])
   return (
     <BrowserRouter>
       <Suspense fallback={loading}>

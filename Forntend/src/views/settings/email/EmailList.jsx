@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Stack from '@mui/material/Stack'
 import Pagination from '@mui/material/Pagination'
 import { useNavigate } from 'react-router-dom'
+import { MdOutlineEdit } from 'react-icons/md'
 
 const EmailList = () => {
   const navigate = useNavigate()
@@ -18,7 +19,7 @@ const EmailList = () => {
       const result = await fetch(`${apiUrl}/email/get_email?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
-      const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setEmailRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)
@@ -45,7 +46,7 @@ const EmailList = () => {
       render: (text, record) => (
         <>
           <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
-            <GrEdit />
+            <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
             &nbsp;&nbsp;Bearbeiten
           </button>
         </>

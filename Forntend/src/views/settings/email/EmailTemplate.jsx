@@ -70,6 +70,9 @@ const EmailTemplate = () => {
     }
   }
 
+  const cancelData = () => {
+    navigate('/settings/email')
+  }
   return (
     <>
       <div className="card">
@@ -134,6 +137,7 @@ const EmailTemplate = () => {
           <button
             type="button"
             className="btn btn"
+            onClick={cancelData}
             style={{ background: '#d04545', color: 'white' }}
           >
             Abbrechen

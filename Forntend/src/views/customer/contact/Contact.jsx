@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Divider, Table } from 'antd'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
-import { MdDelete, MdAdd } from 'react-icons/md'
+import { MdAdd, MdOutlineEdit } from 'react-icons/md'
 import { BiFilterAlt } from 'react-icons/bi'
 import { BiErrorCircle } from 'react-icons/bi'
 import axios from 'axios'
@@ -15,6 +15,8 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import Customer from '../Customer'
 import Form from 'react-bootstrap/Form'
+import { RiDeleteBinLine } from 'react-icons/ri'
+import { FiFilter } from 'react-icons/fi'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 
 const Contact = () => {
@@ -26,42 +28,43 @@ const Contact = () => {
 
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
-  const [, setSelectedRowKeys] = useState([])
   const apiUrl = process.env.REACT_APP_API_URL
-
-  // ... (Your existing functions and states)
-
-  const rowSelection = {
-    onChange: (selectedKeys) => {
-      setSelectedRowKeys(selectedKeys)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
-      name: record.name,
-    }),
-  }
-
   const columns = [
     {
-      title: 'Name des Kunden',
+      title: 'NAME DES KUNDEN',
       dataIndex: 'fname',
       render: (text) => <a>{text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}</a>,
     },
     {
-      title: 'Kunden-ID',
+      title: 'KUNDEN-ID',
       dataIndex: 'id',
     },
     {
-      title: 'E-Mail',
+      title: 'E-MAIL',
       dataIndex: 'email',
     },
     {
-      title: 'Telefon',
+      title: 'TELEFON',
       dataIndex: 'phone',
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
+      title: 'STATUS',
+      dataIndex: 'statu',
+      render: (text, record) => (
+        <div
+          style={{
+            color: 'white',
+            background:
+              text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
+            borderRadius: '20px',
+            padding: '3px',
+            width: '70px',
+            textAlign: 'center',
+          }}
+        >
+          <b style={{ fontSize: '12px' }}>{text}</b>
+        </div>
+      ),
     },
     {
       title: 'AKTION',
@@ -71,13 +74,13 @@ const Contact = () => {
           {/* {console.log('contactRecord', record?.added_by)} */}
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleEdit(record)}
               >
-                <GrEdit />
+                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
                 &nbsp;&nbsp;Bearbeiten
               </button>
             </>
@@ -86,13 +89,13 @@ const Contact = () => {
           )}
           {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
-          loginData?.user?.user_role === 'admin' ? (
+          loginData?.user?.isAdminFullRights == 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleDelete(record._id)}
               >
-                <MdDelete />
+                <RiDeleteBinLine className="text-danger text-bold fs-5" />
                 &nbsp; Löschen
               </button>
             </>
@@ -115,6 +118,7 @@ const Contact = () => {
     lname: '',
     phone: '',
     gender: '',
+    statu: '',
     customer_id: loginCustData?._id,
     added_by: loginUserData?.user?._id,
   })
@@ -175,23 +179,21 @@ const Contact = () => {
 
   const TotalData = { ...data, email, id }
 
-  const saveData = async (event) => {
+  const saveData = async () => {
     try {
-      event.preventDefault()
-      event.stopPropagation()
-
-      if (!email || !data?.fname || !data?.lname || !data?.gender || !data?.phone) {
+      if (!data?.fname || !data?.lname || !data?.gender || !data?.phone || !data?.statu) {
         return notify('Please Fill All Details')
       }
-
-      const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
-
-      if (response.response.status === 406) {
-        notify('Email Already Exists')
+      if (!email) {
+        return notify('Invaild Email')
       }
-
-      getDetails()
-      handleClose()
+      const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
+      // console.log(response)
+      if (response.status === 201) {
+        notify('Contact Record was Create Successfully')
+        handleClose()
+        getDetails()
+      }
     } catch (error) {
       console.error('Error during API call:', error)
     }
@@ -275,7 +277,9 @@ const Contact = () => {
             className="btn btn text-light"
             style={{ background: '#0b5995' }}
           >
-            filter
+            <FiFilter />
+            &nbsp;
+            <span style={{ fontWeight: 'bold' }}>Filter</span>
           </button>
         </div>
         <div className="col-sm-3">
@@ -286,7 +290,7 @@ const Contact = () => {
             onClick={handleShow}
           >
             <MdAdd />
-            &nbsp;Neuen Kunden anlegen
+            &nbsp;Neue Kontakte anlegen
           </button>
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
@@ -339,12 +343,12 @@ const Contact = () => {
                         name="phone"
                         value={data.phone}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
                           if (/^\+?[0-9]*$/.test(inputValue)) {
                             handleChange({ target: { name: 'phone', value: inputValue } })
                           }
                         }}
-                        placeholder="e.g., 91+ 8354568464"
+                        placeholder="e.g. 91+ 8354568464"
                         className="form-control"
                         id="inputPhone"
                         maxLength={10}
@@ -403,7 +407,7 @@ const Contact = () => {
                         onChange={handleChange}
                         checked={data.gender === 'male'}
                       />{' '}
-                      &nbsp; Männlich
+                      &nbsp; Männlich &nbsp;
                       <input
                         type="radio"
                         name="gender"
@@ -411,7 +415,7 @@ const Contact = () => {
                         onChange={handleChange}
                         checked={data.gender === 'female'}
                       />{' '}
-                      &nbsp; Weiblich
+                      &nbsp; Weiblich &nbsp;
                       <input
                         type="radio"
                         name="gender"
@@ -420,6 +424,22 @@ const Contact = () => {
                         checked={data.gender === 'other'}
                       />
                       &nbsp; Andere
+                    </div>
+                  </div>
+                  <div className="mb-2 row">
+                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      Status
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control"
+                        name="statu"
+                        onChange={handleChange}
+                        value={data.statu}
+                      >
+                        <option value="HVD-PV">HVD-PV</option>
+                        <option value="PV-ALT">PV-ALT</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -440,7 +460,7 @@ const Contact = () => {
                 onClick={saveData}
                 style={{ background: '#0b5995', color: 'white' }}
               >
-                Aktivität hinzufügen
+                Speichern
               </button>
             </Modal.Footer>
           </Modal>{' '}

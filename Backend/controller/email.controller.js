@@ -4,10 +4,11 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createEmailTemplate = async (req, res) => {
   try {
-    const { designation, content, customer_id } = req.body;
+    const { designation, content, customer_id , findBy } = req.body;
     const email = new EmailModel.EmailTemplate({
       designation,
       content,
+      findBy,
       customer_id,
     });
 
@@ -30,13 +31,13 @@ exports.getEmail = async (req, res) => {
       const resultPerPage = 10;
   
       const countPage = await EmailModel.EmailTemplate.countDocuments({
-        status: "active",
+        is_deleted: "active",
       });
   
       let pageCount = Math.ceil(countPage / resultPerPage);
   
       const apiFeatures = new ApiFeatures(
-        EmailModel.EmailTemplate.find({ status: "active" }),
+        EmailModel.EmailTemplate.find({ is_deleted: "active" }),
         req.query
       )
         .reverse()
@@ -69,7 +70,7 @@ exports.getEmail = async (req, res) => {
     try {
       const result = await EmailModel.EmailTemplate.findOne({
         _id: req.params.id,
-        status: { $ne: "deleted" },
+        is_deleted: { $ne: "deleted" },
       });
       res.send(result);
     } catch (error) {
@@ -81,8 +82,8 @@ exports.getEmail = async (req, res) => {
   exports.getEmailDataDelete = async (req, res) => {
     try {
       const result = await EmailModel.EmailTemplate.updateOne(
-        { _id: req.params.id, status: { $ne: "deleted" } },
-        { $set: { status: "deleted" } }
+        { _id: req.params.id, is_deleted: { $ne: "deleted" } },
+        { $set: { is_deleted: "deleted" } }
       );
       res.status(200).json({
         success: true,

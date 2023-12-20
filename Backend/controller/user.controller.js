@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const mailer = require("../mailer/mailer");
 const jwt = require("jsonwebtoken");
 const keysecret = "asbndjhdjdkflfdghgj";
+const Email = require("../models/email.model");
+const ApiFeatures = require("../utils/apiFeatures");
 
 exports.register = async (req, res) => {
   try {
@@ -11,7 +13,7 @@ exports.register = async (req, res) => {
       username,
       password,
       email,
-      user_role,
+      user_type,
       mobile,
       gender,
       location,
@@ -25,19 +27,24 @@ exports.register = async (req, res) => {
       profileImage,
       parent_id,
       role,
+      isAdminFullRights,
     } = req.body;
 
     let userData;
 
-    if (user_role === "admin") {
+    if (user_type === "admin") {
       userData = {
         username,
         password,
         email,
         profileImage,
-        user_role: "admin",
+        // user_role: "admin",
+        // isAdminFullRights: true,
+        // user_role: "admin",
+        isAdminFullRights: "true",
+        user_type: "admin",
       };
-    } else if (user_role === "user") {
+    } else if (user_type === "user") {
       const admin = await UserModel.User.findOne({ user_role: "admin" });
 
       if (admin) {
@@ -48,7 +55,7 @@ exports.register = async (req, res) => {
           gender,
           lname,
           profileImage,
-          user_role,
+          user_role: "user",
           mobile,
           parent_id: admin._id,
         };
@@ -57,12 +64,9 @@ exports.register = async (req, res) => {
           .status(400)
           .send({ message: "No admin found to link as parent" });
       }
-    } else if (user_role === "employee") {
-      // const user = await UserModel.User.findOne({ user_role: "user" });
-
-      // if (user) {
+    } else if (user_type === "employee") {
       userData = {
-        fname,
+        username,
         lname,
         password,
         mobile,
@@ -74,17 +78,13 @@ exports.register = async (req, res) => {
         plz,
         city,
         profileImage: null,
-        user_role, //admin employee user
-        role, //Manager HR
+        user_role: "employee",
+        role,
         parent_id,
+        isAdminFullRights,
       };
-      // } else {
-      //   return res
-      //     .status(400)
-      //     .send({ message: "No user found to link as parent" });
-      // }
     } else {
-      return res.status(400).send({ message: "Invalid role value" });
+      return res.status(400).send({ message: "Invalid user_type value" });
     }
 
     const userInstance = new UserModel.User(userData);
@@ -92,46 +92,112 @@ exports.register = async (req, res) => {
 
     if (result) {
       const myToken = await userInstance.getAuthToken();
+      const emailTemplate = await Email.EmailTemplate.findOne({
+        findBy: "register",
+        is_deleted: "active",
+      });
+      console.log(emailTemplate);
+      if (emailTemplate) {
+        let mailcontent = emailTemplate.content;
+        mailcontent = mailcontent.replace("{username}", username);
+        mailer.mailerFromTo(
+          email,
+          process.env.NO_REPLY,
+          "Register Template",
+          mailcontent,
+          "",
+          function (error, resp) {
+            if (error) {
+              console.error("Error sending email", error);
+              return res
+                .status(500)
+                .json({ status: 500, message: "Email not sent" });
+            } else {
+              console.log("Email sent successfully", resp.response);
 
-      if (myToken) {
-        return res.status(201).send({
-          status: 201,
-          data: result,
-          message: "Token was generated successfully",
-          token: myToken,
-        });
+              if (myToken) {
+                return res.status(201).send({
+                  status: 201,
+                  data: result,
+                  message: "Token was generated successfully",
+                  token: myToken,
+                });
+              } else {
+                return res
+                  .status(500)
+                  .send({ message: "Token was not generated" });
+              }
+            }
+          }
+        );
       } else {
-        return res.status(500).send({ message: "Token was not generated" });
+        return res.status(404).send({ message: "Email template not found" });
       }
     } else {
       return res.status(404).send({ message: "User was not found" });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).send({
-      message: "Internal Server Error",
-    });
+    return res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
 // update Login User
 exports.updateUser = async (req, res) => {
   try {
+    const { password, ...updateData } = req.body;
+
+    let userData = await UserModel.User.findById(req.params.id);
+
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
+
     const user = await UserModel.User.findByIdAndUpdate(
       req.params.id,
       {
-        ...req.body,
+        ...updateData,
         profileImage: req?.file?.filename,
       },
       {
         new: true,
       }
-    );
+    ).populate("role");
 
+    if (user?.password == "") {
+      user.password = await userData?.password;
+      await user.save();
+    }
     return res.status(200).json({
       success: true,
-      message: "User Updatd Successfully",
-      data: user,
+      message: "User Updated Successfully",
+      user: user,
+    });
+  } catch (error) {
+    console.log(error);
+    // Handle the error and send an appropriate response
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+// find user by id
+exports.getUserById = async (req, res) => {
+  try {
+    const user = await UserModel.User.findById(req.params.id).populate("role");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User Find Successfully",
+      user: user,
     });
   } catch (error) {
     console.log(error);
@@ -139,15 +205,22 @@ exports.updateUser = async (req, res) => {
 };
 
 // update Employee Details
-exports.updateEmployeeDetails = async () => {
+exports.updateEmployeeDetails = async (req, res) => {
   try {
+    const { password, ...updateData } = req.body;
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
     const employee = await UserModel.User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      {
+        ...updateData,
+      },
       {
         new: true,
       }
     );
+
     return res.status(200).json({
       success: true,
       message: "Employee Updated Successfully",
@@ -161,14 +234,49 @@ exports.updateEmployeeDetails = async () => {
 // get Employee under the user
 exports.getEmployeeData = async (req, res) => {
   try {
-    const usermployees = await UserModel.User.find({
-      parent_id: req.params.id,
-    }).populate("role");
+    // const usermployees = await UserModel.User.find({
+    //   parent_id: req.params.id,
+    // }).populate("role");
+    // const usermployees = await UserModel.User.find({status: "active"}).populate("role");
+    const resultPerPage = 2;
+    const countPage = await UserModel.User.countDocuments({
+      status: "active",
+    });
+
+    let pageCount = Math.ceil(countPage / resultPerPage);
+    const apiFeatures = new ApiFeatures(
+      UserModel.User.find({ status: "active" }).populate("role"),
+      req.query
+    )
+      .reverse()
+      .pagination(resultPerPage);
+
+    const result = await apiFeatures.query;
+
+    // let pageCount = Math.ceil(result?.length / resultPerPage);
+
+    if (apiFeatures.getCurrentPage() > pageCount) {
+      apiFeatures.setCurrentPage(pageCount);
+      const updatedResult = await apiFeatures.pagination(resultPerPage).query;
+      return res.status(200).json({
+        success: true,
+        data: updatedResult,
+        pageCount: pageCount,
+      });
+    }
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
 
     return res.status(200).json({
       success: true,
       message: "User Employees Data Found",
-      data: usermployees,
+      data: result,
+      pageCount: pageCount,
     });
   } catch (error) {
     console.log(error);
@@ -190,49 +298,83 @@ exports.getData = async (req, res) => {
   }
 };
 
+exports.updateUserData = async (req, res) => {
+  try {
+    const result = await UserModel.User.findOneAndUpdate(
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: req.body },
+      { new: true }
+    ).populate("role");
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found or Already Deleted",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User Updated Successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
 exports.getRegisterData = async (req, res) => {
   const user = await UserModel.User.findOne({ _id: req.params.id });
   res.send(user);
 };
 
-// exports.getRegisterUpdate = async (req, res) => {
-//   const { password, ...otherFields } = req.body;
-//   if (password) {
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     otherFields.password = hashedPassword;
-//   }
-
-//   try {
-//     const user = await UserModel.User.updateOne(
-//       { _id: req.params.id },
-//       { $set: otherFields }
-//     );
-//     res.send(user);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// };
-
-exports.addUser = async (req, res) => {
+exports.getUserDataDelete = async (req, res) => {
   try {
-    const existingUser = await UserModel.User.findById(req.params.id);
+    const result = await UserModel.User.findOneAndUpdate(
+      { _id: req.params.id, status: { $ne: "deleted" } },
+      { $set: { status: "deleted" } },
+      { new: true }
+    ).populate("role");
 
-    existingUser.employee_creation = [
-      ...existingUser.employee_creation,
-      req.body,
-    ];
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found or Already Deleted",
+      });
+    }
 
-    const updatedUser = await existingUser.save();
-
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
-      data: updatedUser,
+      message: "User Deleted Successfully",
+      data: result,
     });
   } catch (error) {
-    res
-      .status(500)
-      .send({ message: "Internal Server Error", error: error.message });
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+exports.getUserSearch = async (req, res) => {
+  try {
+    const searchKey = req.params.searchKey;
+    const result = await UserModel.User.find({
+      $or: [
+        { username: { $regex: searchKey, $options: "i" } },
+        { email: { $regex: searchKey, $options: "i" } },
+      ],
+    });
+    return res.send(result);
+  } catch (error) {
+    console.error("Error searching data:", error.message);
+    res.status(500).send({ error: "Server Error" });
   }
 };
 
@@ -273,8 +415,6 @@ exports.login = async (req, res) => {
 };
 
 exports.forgotPassword = async (req, res) => {
-  // console.log(req.body);
-
   const { email } = req.body;
 
   if (!email) {
@@ -289,54 +429,70 @@ exports.forgotPassword = async (req, res) => {
     if (!userFind) {
       return res.status(404).json({ status: 404, message: "User not found" });
     }
+    const emailTemplate = await Email.EmailTemplate.findOne({
+      findBy: "forgot",
+      is_deleted: "active",
+    });
+    console.log("link", process.env.PRODUCTION_RESET_URL);
+    if (emailTemplate) {
+      let mailcontent = emailTemplate.content;
+      // let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
+      mailcontent = mailcontent.replace(
+        "{link}",
+        process.env.PRODUCTION_RESET_URL
+      );
+      mailer.mailerFromTo(
+        email,
+        process.env.NO_REPLY,
+        "Forgot Password",
+        mailcontent,
+        "",
+        function (error, resp) {
+          if (error) {
+            console.error("Error sending email", error);
+            return res
+              .status(500)
+              .json({ status: 500, message: "Email not sent" });
+          } else {
+            console.log("Email sent successfully", resp.response);
 
-    // Generate a token for password reset
-    // const token = jwt.sign({ _id: userFind._id }, keysecret, {
-    //   expiresIn: "120s",
-    // });
-
-    // // Update the user document with the generated token
-    // const setUserToken = await UserModel.User.findByIdAndUpdate(
-    //   { _id: userFind._id },
-    //   { verifytoken: token },
-    //   { new: true }
-    // );
-
-    // if (!setUserToken) {
-    //   return res
-    //     .status(500)
-    //     .json({ status: 500, message: "Failed to update user token" });
-    // }
-
-    // Compose the email message
-    // const mailOptions = {
-    //   from: "patientenverfuegung@test.computerbutler.de",
-    //   to: email,
-    //   subject: "Password Reset",
-    //   html: `Click on the following link to reset your password: <a href="http://localhost:3000/forgotpassword/${userFind.id}/${setUserToken.verifytoken}">Reset Password</a>`,
-    // };
-
-    // Send the email
-
-    let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
-
-    mailer.mailerFromTo(
-      email,
-      process.env.NO_REPLY,
-      "Password Reset",
-      mailcontent,
-      "",
-      function (error, resp) {
-        if (error) {
-          console.error("Error sending email", error);
-          return res
-            .status(500)
-            .json({ status: 500, message: "Email not sent" });
-        } else {
-          console.log("Email sent successfully", info.response);
+            if (myToken) {
+              return res.status(201).send({
+                status: 201,
+                data: result,
+                message: "Token was generated successfully",
+                token: myToken,
+              });
+            } else {
+              return res
+                .status(500)
+                .send({ message: "Token was not generated" });
+            }
+          }
         }
-      }
-    );
+      );
+    } else {
+      return res.status(404).send({ message: "Email template not found" });
+    }
+    // let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
+
+    // mailer.mailerFromTo(
+    //   email,
+    //   process.env.NO_REPLY,
+    //   "Password Reset",
+    //   mailcontent,
+    //   "",
+    //   function (error, resp) {
+    //     if (error) {
+    //       console.error("Error sending email", error);
+    //       return res
+    //         .status(500)
+    //         .json({ status: 500, message: "Email not sent" });
+    //     } else {
+    //       console.log("Email sent successfully", info.response);
+    //     }
+    //   }
+    // );
     return res
       .status(200)
       .json({ status: 200, message: "Email sent successfully" });

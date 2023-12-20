@@ -32,14 +32,17 @@ const securingattorneySchema = {
   SecuringMasterData: { type: String },
 };
 
-const attorneySchema = new mongoose.Schema({
-  healthCare: healthCareSchema,
-  powerOfAttorney: powerofattorneySchema,
-  careProvision: careProvisionSchema,
-  securingattorney: securingattorneySchema,
-  customer_id: { type: mongoose.Schema.Types.ObjectId },
-});
+const attorneySchema = new mongoose.Schema(
+  {
+    healthCare: healthCareSchema,
+    powerOfAttorney: powerofattorneySchema,
+    careProvision: careProvisionSchema,
+    securingattorney: securingattorneySchema,
+    customer_id: { type: mongoose.Schema.Types.ObjectId },
+  },
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
+);
 
-const Attorney = mongoose.model("attorney", attorneySchema, "attorney");
+const Attorney = mongoose.model("attorney", attorneySchema);
 
 module.exports = { Attorney };

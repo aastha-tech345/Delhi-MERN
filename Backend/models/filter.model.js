@@ -7,19 +7,20 @@ const filterSchema = new Schema({
   dob: { type: String },
   plz: { type: String },
   telephone: { type: String },
-  mobil: { type: String },
+  mobile: { type: String },
   client_id: { type: String },
   next_shipping: { type: String },
   permanent_donors: { type: String },
-  status: {
+  status:{type:String},
+  is_deleted: {
     type: String,
     enum: ["active", "deleted"],
     default: "active",
   },
   added_by:{type:String},
   parent_id: { type: mongoose.Schema.Types.ObjectId },
-});
+}, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 
-const FilterSchema = mongoose.model("filter", filterSchema, "filter");
+const FilterSchema = mongoose.model("filter", filterSchema);
 
 module.exports = { FilterSchema };

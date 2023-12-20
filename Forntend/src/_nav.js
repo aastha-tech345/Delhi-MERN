@@ -1,8 +1,8 @@
 import React from 'react'
 import { CNavGroup, CNavItem } from '@coreui/react'
 import { verifyPer } from './components/verifyPermission'
-console.log('verify', !verifyPer()[2 === 'null'])
-console.log(verifyPer())
+// console.log('verify', !verifyPer()[2 === 'null'])
+// console.log(verifyPer())
 const _nav = [
   {
     component: CNavItem,

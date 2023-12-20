@@ -14,7 +14,7 @@ const roleSchema = new mongoose.Schema({
     role_name: { type: String },
     permission: [rolePermissionSchema],
     added_by: { type: String },
-});
+}, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 
 const Role = mongoose.model('Role', roleSchema);
 

@@ -3,7 +3,7 @@ import JoditEditor from 'jodit-react'
 import { Divider, Radio, Table } from 'antd'
 import Modal from 'react-bootstrap/Modal'
 import { GrEdit } from 'react-icons/gr'
-import { MdDelete, MdAdd } from 'react-icons/md'
+import { MdDelete, MdAdd, MdOutlineEdit } from 'react-icons/md'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { postFetchContent } from 'src/Api'
@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack'
 import Pagination from '@mui/material/Pagination'
 import DeleteModal from './DeleteModal'
 import EditModal from './EditModal'
+import { RiDeleteBinLine } from 'react-icons/ri'
 
 const PrintTemplate = () => {
   const apiUrl = process.env.REACT_APP_API_URL
@@ -83,7 +84,7 @@ const PrintTemplate = () => {
       render: (_, record) => (
         <>
           <button onClick={() => handleEdit(record)} style={{ background: 'none', border: 'none' }}>
-            <GrEdit />
+            <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
             &nbsp;&nbsp;Bearbeiten
           </button>
           &nbsp;&nbsp;
@@ -91,7 +92,7 @@ const PrintTemplate = () => {
             style={{ background: 'none', border: 'none' }}
             onClick={() => handleDelete(record._id)}
           >
-            <MdDelete /> Löschen
+            <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
           </button>
         </>
       ),
@@ -145,7 +146,7 @@ const PrintTemplate = () => {
       const result = await fetch(`${apiUrl}/print/get_print?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
-      const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setPrintRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)

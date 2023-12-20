@@ -4,7 +4,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createContact = async (req, res) => {
   try {
-    const { fname, lname, email, phone, gender, customer_id, added_by, id } =
+    const { fname,statu, lname, email, phone, gender, customer_id, added_by, id } =
       req.body;
 
     const emailFind = await ContactInfomation.Contact.findOne({ email });
@@ -20,6 +20,7 @@ exports.createContact = async (req, res) => {
       email,
       phone,
       gender,
+      statu,
       customer_id,
       added_by,
       id,
@@ -27,6 +28,7 @@ exports.createContact = async (req, res) => {
 
     const result = await contact.save();
     return res.status(201).json({
+      status:201,
       message: "contact was created",
       result,
     });
@@ -149,6 +151,7 @@ exports.getContactSearch = async (req, res) => {
         { lname: { $regex: searchKey, $options: "i" } },
         { email: { $regex: searchKey, $options: "i" } },
         { phone: { $regex: searchKey, $options: "i" } },
+        { statu: { $regex: searchKey, $options: "i" } },
       ],
     });
     return res.send(result);

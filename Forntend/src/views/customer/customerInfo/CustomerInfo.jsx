@@ -3,8 +3,10 @@ import Select from 'react-select'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
+import { useNavigate } from 'react-router-dom'
 
 const CustomerInfo = () => {
+  const navigate = useNavigate()
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const [orderingMaterials, setOrderingMaterials] = useState({
@@ -35,6 +37,7 @@ const CustomerInfo = () => {
     billLand: '',
     billOrt: '',
   })
+  const [email, setEmail] = useState('')
   const [customerDelivery, setCustomerDelivery] = useState({
     fname: '',
     lname: '',
@@ -42,7 +45,6 @@ const CustomerInfo = () => {
     plz: '',
     land: '',
     ort: '',
-    email: '',
     phone: '',
     mobile: '',
     alreadyPaid: false,
@@ -72,6 +74,7 @@ const CustomerInfo = () => {
     customerBurial: customerBurial,
     customer_id: result._id,
   }
+  const dataa = { ...data, email }
   //materialChange started
   const matarialChange = (e) => {
     const { name, value } = e.target
@@ -130,6 +133,18 @@ const CustomerInfo = () => {
     setCustomerBurial({ ...customerBurial, [name]: checked })
   }
   //customerDeposit end
+
+  const handleEmailChange = (e) => {
+    const inputValue = e.target.value
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+    if (emailRegex.test(inputValue.toLowerCase())) {
+      setEmail(inputValue)
+    } else {
+      setEmail('')
+    }
+  }
+
   const customerInfoChangeMulti = (selectedOptions, actionMeta) => {
     const name = actionMeta && actionMeta.name
 
@@ -169,6 +184,9 @@ const CustomerInfo = () => {
         return
       }
     }
+    if (!email) {
+      return notify('Invalid Email')
+    }
 
     try {
       let response = await fetch(`${apiUrl}/customerInfo/create_info`, {
@@ -176,7 +194,7 @@ const CustomerInfo = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(dataa),
       })
 
       let result = await response.json()
@@ -195,6 +213,7 @@ const CustomerInfo = () => {
           dataCollection: '',
         })
         setThose('')
+        setEmail('')
         setCustomerContact({
           title: '',
           salution: '',
@@ -216,7 +235,6 @@ const CustomerInfo = () => {
           plz: '',
           land: '',
           ort: '',
-          email: '',
           phone: '',
           mobile: '',
         })
@@ -239,6 +257,10 @@ const CustomerInfo = () => {
       // Show error toast
       notify('Error saving data. Please try again.')
     }
+  }
+
+  const cancelData = () => {
+    navigate('/customerlist')
   }
   return (
     <div style={{ background: '#fff', border: 'none' }}>
@@ -705,7 +727,7 @@ const CustomerInfo = () => {
               <div className="col-sm-6">
                 <input
                   type="email"
-                  onChange={DeliveryChange}
+                  onChange={handleEmailChange}
                   name="email"
                   placeholder="E-Mail Adresse"
                   value={customerDelivery.email}
@@ -996,6 +1018,7 @@ const CustomerInfo = () => {
           <button
             type="button"
             className="btn btn"
+            onClick={cancelData}
             style={{ background: '#d04545', color: 'white' }}
           >
             Abbrechen
@@ -1007,7 +1030,7 @@ const CustomerInfo = () => {
             className="btn btn"
             onClick={saveData}
           >
-            Speichern Sie
+            Speichern
           </button>
         </div>
       </div>

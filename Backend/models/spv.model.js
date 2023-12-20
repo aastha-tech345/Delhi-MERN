@@ -95,12 +95,11 @@ const spvInfoSchema = new mongoose.Schema({
     fee:feeSchema,
     information:informationSchema,
   customer_id: { type: mongoose.Schema.Types.ObjectId},
-});
+}, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
 
 const SpvInfo = mongoose.model(
   'spv',
-  spvInfoSchema,
-  'spv'
+  spvInfoSchema
 );
 
 module.exports = {

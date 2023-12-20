@@ -10,7 +10,7 @@ exports.createFilter = async (req, res) => {
       dob,
       plz,
       telephone,
-      mobil,
+      mobile,
       status,
       client_id,
       next_shipping,
@@ -24,7 +24,7 @@ exports.createFilter = async (req, res) => {
       dob,
       plz,
       telephone,
-      mobil,
+      mobile,
       status,
       client_id,
       next_shipping,
@@ -52,13 +52,13 @@ exports.getFilterData = async (req, res) => {
     const resultPerPage = 10;
 
     const countPage = await FilterInfomation.FilterSchema.countDocuments({
-      status: "active",
+      is_deleted: "active",
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
 
     const apiFeatures = new ApiFeatures(
-        FilterInfomation.FilterSchema.find({ status: "active" }),
+        FilterInfomation.FilterSchema.find({ is_deleted: "active" }),
       req.query
     )
       .reverse()
