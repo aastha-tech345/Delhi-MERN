@@ -15,14 +15,14 @@ exports.createCustomerInfo = async (req, res) => {
       customer_id
     } = req.body;
 
-    // const user = await CustomerModel.Customer.findOne({
-    //   created_by: "customer",
-    // });
-    // if (!user) {
-    //   return res
-    //     .status(400)
-    //     .send({ message: "No customer found to link as parent" });
-    // }
+    const emailFind = await CustomerInfomation.CustomerInfo.findOne({ email });
+
+    if (emailFind) {
+      return res.status(407).json({
+        success: false,
+        message: "Email Id Already Exists",
+      });
+    }
     const customerInfo = new CustomerInfomation.CustomerInfo({
       orderingMaterials,
       customerInfoStatu,

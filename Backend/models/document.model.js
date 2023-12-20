@@ -9,7 +9,7 @@ const documentSchema = new Schema(
     // customer_id: { type: String},
     added_by: { type: mongoose.Schema.Types.ObjectId },
     customer_id: { type: mongoose.Schema.Types.ObjectId },
-    status: {
+    is_deleted: {
       type: String,
       enum: ["active", "deleted"],
       default: "active",

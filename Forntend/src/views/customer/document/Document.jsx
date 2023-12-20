@@ -190,7 +190,7 @@ const Document = () => {
       const result = await fetch(`${apiUrl}/document/get_document/${custData?._id}?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
-      const activeRecords = data?.result?.filter((record) => record.status === 'active')
+      const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setDocumentRecord(activeRecords)
     } catch (error) {
       console.error('Error fetching customer record:', error)

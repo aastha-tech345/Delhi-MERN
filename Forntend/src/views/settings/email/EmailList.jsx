@@ -7,8 +7,19 @@ import Stack from '@mui/material/Stack'
 import Pagination from '@mui/material/Pagination'
 import { useNavigate } from 'react-router-dom'
 import { MdOutlineEdit } from 'react-icons/md'
+import { postFetchData } from 'src/Api'
 
 const EmailList = () => {
+  // const [data, setData] = useState({
+  //   findBy: '',
+  //   designation: '',
+  //   content: '',
+  // })
+  // const handleChange = (e) => {
+  //   const { name, value, type } = e.target
+  //   const newValue = type === 'radio' ? e.target.value : value
+  //   setData({ ...data, [name]: newValue })
+  // }
   const navigate = useNavigate()
   const [emailRecord, setEmailRecord] = useState([])
   const apiUrl = process.env.REACT_APP_API_URL
@@ -54,6 +65,18 @@ const EmailList = () => {
     },
   ]
 
+  // const saveData = async () => {
+  //   try {
+  //     const response = await postFetchData(`${apiUrl}/email/create_email`, data)
+  //     // console.log(response)
+  //     if (response.status === 201) {
+  //       getDetails()
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during API call:', error)
+  //   }
+  // }
+
   return (
     <>
       <div className="row">
@@ -68,6 +91,10 @@ const EmailList = () => {
         >
           <h4 className="ms-1 mt-3">E-Mail-Vorlagen</h4>
           <hr className="mx-2" />
+          {/* <input type="text" onChange={handleChange} name="findBy" value={data.findBy} />
+          <input type="text" onChange={handleChange} name="content" value={data.content} />
+          <input type="text" onChange={handleChange} name="designation" value={data.designation} />
+          <button onClick={saveData}>save</button> */}
           <div className="mx-2">
             <Table
               columns={columns}
