@@ -27,14 +27,14 @@ exports.getDocument = async (req, res) => {
     const resultPerPage = 10;
 
     const countPage = await DocumentInfo.Document.countDocuments({
-      status: "active",
+      is_deleted: "active",
     });
     let pageCount = Math.ceil(countPage / resultPerPage);
 
     const apiFeatures = new ApiFeatures(
       DocumentInfo.Document.find({
         customer_id: req.params.id,
-        status: "active",
+        is_deleted: "active",
       }),
       req.query
     )
@@ -68,7 +68,7 @@ exports.getDocumentData = async (req, res) => {
   try {
     const result = await DocumentInfo.Document.findOne({
       _id: req.params.id,
-      status: { $ne: "deleted" },
+      is_deleted: { $ne: "deleted" },
     });
     if (!result) {
       return res.status(404).send({ error: "Document not found" });
@@ -97,8 +97,8 @@ exports.getDocumentDataUpdate = async (req, res) => {
 exports.getDocumentDataDelete = async (req, res) => {
   try {
     const result = await DocumentInfo.Document.updateOne(
-      { _id: req.params.id, status: { $ne: "deleted" } },
-      { $set: { status: "deleted" } }
+      { _id: req.params.id, is_deleted: { $ne: "deleted" } },
+      { $set: { is_deleted: "deleted" } }
     );
 
     if (result.nModified === 0) {

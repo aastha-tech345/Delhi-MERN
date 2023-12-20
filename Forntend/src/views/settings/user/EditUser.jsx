@@ -53,7 +53,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
   }
   const getRole = async () => {
     try {
-      const res = await getFetch(`${apiUrl}/role/get_role`)
+      const res = await getFetch(`${apiUrl}/role/get_roles`)
       setRoleList(res?.data?.data)
     } catch (error) {
       console.log(error)
@@ -302,7 +302,12 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         type="phone"
                         name="tel"
                         value={employee.tel}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                            handleChange({ target: { name: 'tel', value: inputValue } })
+                          }
+                        }}
                       />
                       <br />
                       <input
@@ -310,10 +315,15 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         placeholder="Mobil"
                         maxLength={10}
                         minLength={2}
-                        type="phone"
+                        type="tel"
                         name="mobile"
                         value={employee.mobile}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                            handleChange({ target: { name: 'mobile', value: inputValue } })
+                          }
+                        }}
                       />
                     </div>
                   </div>

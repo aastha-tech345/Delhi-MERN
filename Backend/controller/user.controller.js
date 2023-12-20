@@ -32,6 +32,11 @@ exports.register = async (req, res) => {
 
     let userData;
 
+    const emailData = await UserModel.User.findOne({email})
+    if(emailData){
+      return res.status(409).json({success:false,message:"Email Id Already Exists"})
+    }
+
     if (user_type === "admin") {
       userData = {
         username,
@@ -55,7 +60,7 @@ exports.register = async (req, res) => {
           gender,
           lname,
           profileImage,
-          user_role: "user",
+          user_type: "user",
           mobile,
           parent_id: admin._id,
         };
@@ -78,11 +83,20 @@ exports.register = async (req, res) => {
         plz,
         city,
         profileImage: null,
-        user_role: "employee",
+        user_type: "employee",
         role,
         parent_id,
         isAdminFullRights,
       };
+      const userInstance = new UserModel.User(userData);
+      const result = await userInstance.save();
+      const myToken = await userInstance.getAuthToken();
+      return res.status(201).send({
+        status: 201,
+        data: result,
+        message: "Token was generated successfully",
+        token: myToken,
+      });
     } else {
       return res.status(400).send({ message: "Invalid user_type value" });
     }
@@ -241,11 +255,14 @@ exports.getEmployeeData = async (req, res) => {
     const resultPerPage = 2;
     const countPage = await UserModel.User.countDocuments({
       status: "active",
+      user_type:"employee"
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
     const apiFeatures = new ApiFeatures(
-      UserModel.User.find({ status: "active" }).populate("role"),
+      UserModel.User.find({ status: "active", user_type: "employee" }).populate(
+        "role"
+      ),
       req.query
     )
       .reverse()
