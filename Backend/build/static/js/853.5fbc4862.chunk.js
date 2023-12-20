@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_coreui_coreui_free_react_admin_template=self.webpackChunk_coreui_coreui_free_react_admin_template||[]).push([[853],{23853:(e,r,t)=>{t.d(r,{Ihx:()=>n});var o=t(89983);function n(e){return(0,o.w_)({tag:"svg",attr:{viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round"},child:[{tag:"polygon",attr:{points:"22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"}}]})(e)}}}]);
+//# sourceMappingURL=853.5fbc4862.chunk.js.map

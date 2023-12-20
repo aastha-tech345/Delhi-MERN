@@ -7,30 +7,22 @@ import EditRoleModal from './EditRoleModal'
 import PropTypes from 'prop-types'
 
 const AllRoles = ({ data }) => {
-  // const apiUrl = process.env.REACT_APP_API_URL
-  // const notify = (dataa) => toast(dataa)
-  // const [data, setData] = useState([])
   const [roleID, setRoleID] = useState('')
   const [openModal, setOpenModal] = useState(false)
+  // const [roleData, setRoleData] = useState({})
+  const apiUrl = process.env.REACT_APP_API_URL
 
-  // const getAllRolles = async () => {
-  //   try {
-  //     const res = await getFetch(`${apiUrl}/role/get_role`)
-  //     setData(res?.data)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  const handleOpen = (id) => {
-    setOpenModal(true)
-    setRoleID(id)
+  const handleOpen = async (id) => {
+    try {
+      setOpenModal(true)
+      setRoleID(id)
+      // const user = await getFetch(`${apiUrl}/role/get_role/${id}`)
+      // setRoleData(user?.data)
+    } catch (error) {
+      console.log(error)
+    }
   }
-  // let updatedRole = localStorage.getItem('updateFunc')
 
-  // useEffect(() => {
-  //   getAllRolles()
-  // }, [updatedRole])
   return (
     <>
       <div className="row m-3">

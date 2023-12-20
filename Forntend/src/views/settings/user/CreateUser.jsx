@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Divider, Radio, Table } from 'antd'
-import { GrFormAdd, GrAdd } from 'react-icons/gr'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd, MdDelete, MdOutlineEdit } from 'react-icons/md'
-import { GrEdit } from 'react-icons/gr'
-import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
 import { getFetch, postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
@@ -26,17 +23,11 @@ const CreateUser = () => {
 
   const notify = (dataa) => toast(dataa)
   const [hide, setHide] = useState(false)
-  const [record, setRecord] = useState([])
-  const [user_email, setUserEmail] = useState()
   const apiUrl = process.env.REACT_APP_API_URL
-  const [user_name, setUserName] = useState()
-  const [roll, setRoll] = useState()
-  const [selectionType, setSelectionType] = useState('checkbox')
   const [showInviteUserModal, setShowInviteUserModal] = useState(false)
   const [show, setShow] = useState(false)
   const [activeTab, setActiveTab] = useState('nav-home')
   const [roleList, setRoleList] = useState([])
-  const [roleId, setRoleId] = useState('')
   const [getEmployee, setGetEmployee] = useState([])
   const [isAdminFullRights, setIsAdminFullRights] = useState('false')
   const searchInputRef = useRef()
@@ -128,10 +119,10 @@ const CreateUser = () => {
       e.preventDefault()
       const res = await postFetchData(`${apiUrl}/user/register`, employeData)
       console.log('response', res)
-      if (res?.response.status === 409) {
+      if (res?.response?.status === 409) {
         return notify('Email already exists')
       }
-      if (res.status === 201) {
+      if (res?.status === 201) {
         notify('Employe Created Successfully')
         setEditUser(!editUser)
         return setShowInviteUserModal(false)
