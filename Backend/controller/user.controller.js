@@ -32,6 +32,11 @@ exports.register = async (req, res) => {
 
     let userData;
 
+    const emailData = await UserModel.User.findOne({email})
+    if(emailData){
+      return res.status(409).json({success:false,message:"Email Id Already Exists"})
+    }
+
     if (user_type === "admin") {
       userData = {
         username,
@@ -250,6 +255,7 @@ exports.getEmployeeData = async (req, res) => {
     const resultPerPage = 2;
     const countPage = await UserModel.User.countDocuments({
       status: "active",
+      user_type:"employee"
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);

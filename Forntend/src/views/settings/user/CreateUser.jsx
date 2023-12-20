@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Divider, Radio, Table } from 'antd'
-import { GrFormAdd, GrAdd } from 'react-icons/gr'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd, MdDelete, MdOutlineEdit } from 'react-icons/md'
-import { GrEdit } from 'react-icons/gr'
-import { Switch } from 'antd'
 import { AiOutlineMail, AiFillSetting } from 'react-icons/ai'
 import { getFetch, postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
@@ -26,17 +23,11 @@ const CreateUser = () => {
 
   const notify = (dataa) => toast(dataa)
   const [hide, setHide] = useState(false)
-  const [record, setRecord] = useState([])
-  const [user_email, setUserEmail] = useState()
   const apiUrl = process.env.REACT_APP_API_URL
-  const [user_name, setUserName] = useState()
-  const [roll, setRoll] = useState()
-  const [selectionType, setSelectionType] = useState('checkbox')
   const [showInviteUserModal, setShowInviteUserModal] = useState(false)
   const [show, setShow] = useState(false)
   const [activeTab, setActiveTab] = useState('nav-home')
   const [roleList, setRoleList] = useState([])
-  const [roleId, setRoleId] = useState('')
   const [getEmployee, setGetEmployee] = useState([])
   const [isAdminFullRights, setIsAdminFullRights] = useState('false')
   const searchInputRef = useRef()
@@ -61,7 +52,20 @@ const CreateUser = () => {
     parent_id: dataa?.user?._id,
     added_by: dataa?.user?.username,
   })
-  const employeData = { ...employee, isAdminFullRights }
+  const [email, setEmail] = useState('')
+
+  const handleEmailChange = (e) => {
+    const inputValue = e.target.value
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+    if (emailRegex.test(inputValue.toLowerCase())) {
+      setEmail(inputValue)
+    } else {
+      setEmail('')
+    }
+  }
+  const employeData = { ...employee, isAdminFullRights, email }
+
   // const [employeData, setEmployeData] = useState({
   //   users: {},
   //   password: {
@@ -108,20 +112,28 @@ const CreateUser = () => {
   let userId = mainRes?.user?._id
 
   const handleSubmit = async (e) => {
+    if (!email) {
+      return notify('Invaild Email')
+    }
     try {
       e.preventDefault()
       const res = await postFetchData(`${apiUrl}/user/register`, employeData)
       console.log('response', res)
-      if (res.status === 201) {
+      if (res?.response?.status === 409) {
+        return notify('Email already exists')
+      }
+      if (res?.status === 201) {
         notify('Employe Created Successfully')
         setEditUser(!editUser)
         return setShowInviteUserModal(false)
       }
+
       // console.log('employeData', employeData)
     } catch (error) {
       console.log(error)
     }
   }
+
   const handleEdit = (record) => {
     let recordData = JSON.stringify(record)
     localStorage.setItem('UserEditDetails', recordData)
@@ -496,8 +508,7 @@ const CreateUser = () => {
                         placeholder="E-Mail Adresse"
                         type="email"
                         name="email"
-                        value={employee.email}
-                        onChange={handleChange}
+                        onChange={handleEmailChange}
                       />
                       <br />
 
@@ -506,10 +517,15 @@ const CreateUser = () => {
                         placeholder="Telefon"
                         maxLength={10}
                         minLength={2}
-                        type="phone"
+                        type="tel"
                         name="tel"
                         value={employee.tel}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                            handleChange({ target: { name: 'tel', value: inputValue } })
+                          }
+                        }}
                       />
                       <br />
                       <input
@@ -517,10 +533,16 @@ const CreateUser = () => {
                         placeholder="Mobil"
                         maxLength={10}
                         minLength={2}
-                        type="phone"
+                        type="tel"
                         name="mobile"
                         value={employee.mobile}
-                        onChange={handleChange}
+                        // onChange={handleChange}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                            handleChange({ target: { name: 'mobile', value: inputValue } })
+                          }
+                        }}
                       />
                     </div>
                   </div>
@@ -547,7 +569,7 @@ const CreateUser = () => {
                   <div style={{ float: 'right' }}>
                     <button
                       className="btn"
-                      onClick={handleClose}
+                      onClick={handleCloseInviteUserModal}
                       style={{ background: '#d04545', color: 'white' }}
                     >
                       Abbrechen

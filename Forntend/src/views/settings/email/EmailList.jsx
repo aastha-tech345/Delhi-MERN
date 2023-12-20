@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack'
 import Pagination from '@mui/material/Pagination'
 import { useNavigate } from 'react-router-dom'
 import { MdOutlineEdit } from 'react-icons/md'
+import { postFetchData } from 'src/Api'
 
 const EmailList = () => {
   const navigate = useNavigate()
