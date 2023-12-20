@@ -111,7 +111,7 @@ const CreateUser = () => {
     try {
       e.preventDefault()
       const res = await postFetchData(`${apiUrl}/user/register`, employeData)
-      // console.log('response', res)
+      console.log('response', res)
       if (res.status === 201) {
         notify('Employe Created Successfully')
         setEditUser(!editUser)

@@ -78,11 +78,20 @@ exports.register = async (req, res) => {
         plz,
         city,
         profileImage: null,
-        user_role: "employee",
+        user_type: "employee",
         role,
         parent_id,
         isAdminFullRights,
       };
+      const userInstance = new UserModel.User(userData);
+      const result = await userInstance.save();
+      const myToken = await userInstance.getAuthToken();
+      return res.status(201).send({
+        status: 201,
+        data: result,
+        message: "Token was generated successfully",
+        token: myToken,
+      });
     } else {
       return res.status(400).send({ message: "Invalid user_type value" });
     }
@@ -245,7 +254,9 @@ exports.getEmployeeData = async (req, res) => {
 
     let pageCount = Math.ceil(countPage / resultPerPage);
     const apiFeatures = new ApiFeatures(
-      UserModel.User.find({ status: "active" }).populate("role"),
+      UserModel.User.find({ status: "active", user_type: "employee" }).populate(
+        "role"
+      ),
       req.query
     )
       .reverse()
