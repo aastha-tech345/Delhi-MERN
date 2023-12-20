@@ -45,7 +45,7 @@ exports.register = async (req, res) => {
         user_type: "admin",
       };
     } else if (user_type === "user") {
-      const admin = await UserModel.User.findOne({ user_role: "admin" });
+      const admin = await UserModel.User.findOne({ user_type: "admin" });
 
       if (admin) {
         userData = {
@@ -55,7 +55,7 @@ exports.register = async (req, res) => {
           gender,
           lname,
           profileImage,
-          user_role: "user",
+          user_type: "user",
           mobile,
           parent_id: admin._id,
         };
@@ -485,25 +485,7 @@ exports.forgotPassword = async (req, res) => {
     } else {
       return res.status(404).send({ message: "Email template not found" });
     }
-    // let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
-
-    // mailer.mailerFromTo(
-    //   email,
-    //   process.env.NO_REPLY,
-    //   "Password Reset",
-    //   mailcontent,
-    //   "",
-    //   function (error, resp) {
-    //     if (error) {
-    //       console.error("Error sending email", error);
-    //       return res
-    //         .status(500)
-    //         .json({ status: 500, message: "Email not sent" });
-    //     } else {
-    //       console.log("Email sent successfully", info.response);
-    //     }
-    //   }
-    // );
+ 
     return res
       .status(200)
       .json({ status: 200, message: "Email sent successfully" });
