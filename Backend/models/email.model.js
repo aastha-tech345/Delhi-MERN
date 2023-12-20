@@ -21,6 +21,6 @@ const emailSchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-const EmailTemplate = mongoose.model("email-template", emailSchema);
+const EmailTemplate = mongoose.model("emailTemplate", emailSchema);
 
 module.exports = { EmailTemplate };

@@ -147,7 +147,7 @@ const Roll = () => {
           {data?.length > 0 ? (
             <>
               <AllRoles data={data} countPage={countPage} />
-              <Stack spacing={2}>
+              <Stack className="mx-3" spacing={2}>
                 <Pagination
                   count={countPage}
                   variant="outlined"
