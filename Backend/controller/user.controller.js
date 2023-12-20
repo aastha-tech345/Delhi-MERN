@@ -32,9 +32,11 @@ exports.register = async (req, res) => {
 
     let userData;
 
-    const emailData = await UserModel.User.findOne({email})
-    if(emailData){
-      return res.status(409).json({success:false,message:"Email Id Already Exists"})
+    const emailData = await UserModel.User.findOne({ email });
+    if (emailData) {
+      return res
+        .status(409)
+        .json({ success: false, message: "Email Id Already Exists" });
     }
 
     if (user_type === "admin") {
@@ -108,9 +110,9 @@ exports.register = async (req, res) => {
       const myToken = await userInstance.getAuthToken();
       const emailTemplate = await Email.EmailTemplate.findOne({
         findBy: "register",
-        is_deleted: "active",
+        // is_deleted: "active",
       });
-      console.log(emailTemplate);
+      // console.log(emailTemplate);
       if (emailTemplate) {
         let mailcontent = emailTemplate.content;
         mailcontent = mailcontent.replace("{username}", username);
@@ -145,7 +147,16 @@ exports.register = async (req, res) => {
           }
         );
       } else {
-        return res.status(404).send({ message: "Email template not found" });
+        if (myToken) {
+          return res.status(201).send({
+            status: 201,
+            data: result,
+            message: "Token was generated successfully",
+            token: myToken,
+          });
+        } else {
+          return res.status(500).send({ message: "Token was not generated" });
+        }
       }
     } else {
       return res.status(404).send({ message: "User was not found" });
@@ -255,7 +266,7 @@ exports.getEmployeeData = async (req, res) => {
     const resultPerPage = 2;
     const countPage = await UserModel.User.countDocuments({
       status: "active",
-      user_type:"employee"
+      user_type: "employee",
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
@@ -448,7 +459,7 @@ exports.forgotPassword = async (req, res) => {
     }
     const emailTemplate = await Email.EmailTemplate.findOne({
       findBy: "forgot",
-      is_deleted: "active",
+      // is_deleted: "active",
     });
     console.log("link", process.env.PRODUCTION_RESET_URL);
     if (emailTemplate) {
@@ -489,7 +500,25 @@ exports.forgotPassword = async (req, res) => {
         }
       );
     } else {
-      return res.status(404).send({ message: "Email template not found" });
+      let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
+
+      mailer.mailerFromTo(
+        email,
+        process.env.NO_REPLY,
+        "Password Reset",
+        mailcontent,
+        "",
+        function (error, resp) {
+          if (error) {
+            console.error("Error sending email", error);
+            return res
+              .status(500)
+              .json({ status: 500, message: "Email not sent" });
+          } else {
+            console.log("Email sent successfully", info.response);
+          }
+        }
+      );
     }
     // let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
 
