@@ -168,7 +168,7 @@ const Bills = () => {
             </label>
             <div className="col-sm-6 mt-2">
               <input
-                type="text"
+                type="number"
                 placeholder="Rechnungsbetrag"
                 className="form-control"
                 name="invoiceAmount"

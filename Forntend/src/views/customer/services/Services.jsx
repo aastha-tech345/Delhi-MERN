@@ -1279,11 +1279,15 @@ const Services = () => {
                       </label>
                       <div className="col-sm-8">
                         <input
+                          type="tel"
                           value={information.plz}
-                          onChange={(e) => informationChange(e)}
-                          name="plz"
-                          type="text"
+                          onChange={(e) => {
+                            const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                            setInformation({ ...information, plz: inputValue })
+                          }}
                           placeholder="PLZ"
+                          className="form-control"
+                          id="inputPassword"
                           style={{
                             border: '1px solid #ebedef',
                             paddingLeft: '10px',
@@ -1291,6 +1295,9 @@ const Services = () => {
                             height: '40px',
                             width: '150px',
                           }}
+                          maxLength={6}
+                          minLength={3}
+                          required={true}
                         />
                       </div>
                     </div>
@@ -1299,20 +1306,6 @@ const Services = () => {
                         Telefon
                       </label>
                       <div className="col-sm-8">
-                        {/* <input
-                          value={information.phone}
-                          onChange={(e) => informationChange(e)}
-                          name="phone"
-                          type="text"
-                          placeholder="Telepon"
-                          style={{
-                            border: '1px solid #ebedef',
-                            paddingLeft: '10px',
-                            borderRadius: '5px 5px 5px 5px',
-                            height: '40px',
-                            width: '150px',
-                          }}
-                        /> */}
                         <input
                           type="tel"
                           name="phone"
@@ -1323,7 +1316,7 @@ const Services = () => {
                               informationChange({ target: { name: 'phone', value: inputValue } })
                             }
                           }}
-                          placeholder="e.g., 91+ 8354568464"
+                          placeholder="e.g. 91+ 8354568464"
                           className="form-control"
                           id="inputPhone"
                           maxLength={10}
@@ -1332,7 +1325,6 @@ const Services = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className="col-sm-6 mb-3">
                     <div className=" row mt-2">
                       <label htmlFor="inputtext" className="col-sm-4 col-form-label">
