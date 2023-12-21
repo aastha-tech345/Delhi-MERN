@@ -495,12 +495,18 @@ const CreateUser = () => {
                       />
                       <br />
                       <input
-                        className="form-control"
-                        type="text"
-                        placeholder="PLZ"
-                        name="plz"
+                        type="tel"
                         value={employee.plz}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                          setEmployee({ ...employee, plz: inputValue })
+                        }}
+                        placeholder="PLZ"
+                        className="form-control"
+                        id="inputPassword"
+                        maxLength={6}
+                        minLength={3}
+                        required={true}
                       />
                       <br />
                       <input

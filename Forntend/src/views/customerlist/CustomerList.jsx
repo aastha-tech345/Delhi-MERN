@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
+import { ReactToPrint } from 'react-to-print'
 // import { GrEdit } from 'react-icons/gr'
 import { RiDeleteBinLine } from 'react-icons/ri'
-import { MdAdd, MdOutlineEdit } from 'react-icons/md'
+import { MdAdd, MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
@@ -48,11 +49,17 @@ const CustomerList = () => {
   const handlePageChange = (event, value) => {
     setPage(value)
   }
-
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const searchInputRef = useRef()
   const [selectedRecordId, setSelectedRecordId] = useState(null)
+
+  const handlePrint = (record) => {
+    let res = JSON.stringify(record)
+    localStorage.setItem('CustomerRecord', res)
+    console.log('record', record)
+    window.print()
+  }
   const columns = [
     {
       title: 'NAME DES KUNDEN',
@@ -358,6 +365,11 @@ const CustomerList = () => {
               &nbsp;
               <span style={{ fontWeight: 'bold' }}>Filter</span>
             </button>
+
+            {/* <button style={{ background: 'none', border: 'none' }} onClick={() => handlePrint()}>
+              {' '}
+              Drucken <MdLocalPrintshop />
+            </button> */}
           </div>
 
           {/* Number of row selection completed */}
@@ -472,15 +484,17 @@ const CustomerList = () => {
                   <div className="row p-3">
                     <div className="col-sm-6">
                       <input
-                        type="text"
+                        type="tel"
                         value={plz}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                          const inputValue = e.target.value.replace(/[^0-9]/g, '')
                           setPlz(inputValue)
                         }}
                         placeholder="PLZ"
                         className="form-control"
                         id="inputPassword"
+                        maxLength={6}
+                        minLength={3}
                       />
                     </div>
                     <div className="col-sm-6">

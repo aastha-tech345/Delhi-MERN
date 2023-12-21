@@ -178,12 +178,12 @@ const CustomerInfo = () => {
   const saveData = async (e) => {
     e.preventDefault()
 
-    for (const key in data) {
-      if (!data[key]) {
-        notify(`Please fill in the ${key} field`)
-        return
-      }
-    }
+    // for (const key in data) {
+    //   if (!data[key]) {
+    //     notify(`Please fill in the ${key} field`)
+    //     return
+    //   }
+    // }
     if (!email) {
       return notify('Invalid Email')
     }
@@ -620,13 +620,18 @@ const CustomerInfo = () => {
               </label>
               <div className="col-sm-6">
                 <input
-                  type="text"
-                  onChange={BillChange}
-                  name="billPlz"
-                  placeholder="PLZ"
+                  type="tel"
                   value={customerBills.billPlz}
+                  onChange={(e) => {
+                    const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                    setCustomerBills({ ...customerBills, billPlz: inputValue })
+                  }}
+                  placeholder="PLZ"
                   className="form-control"
                   id="inputPassword"
+                  maxLength={6}
+                  minLength={3}
+                  required={true}
                 />
               </div>
             </div>
@@ -784,14 +789,29 @@ const CustomerInfo = () => {
                 PLZ
               </label>
               <div className="col-sm-6">
-                <input
+                {/* <input
                   type="text"
+                  
                   onChange={DeliveryChange}
                   name="plz"
                   placeholder="PLZ"
                   value={customerDelivery.plz}
                   className="form-control"
                   id="inputPassword"
+                /> */}
+                <input
+                  type="tel"
+                  value={customerDelivery.plz}
+                  onChange={(e) => {
+                    const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                    setCustomerDelivery({ ...customerDelivery, plz: inputValue })
+                  }}
+                  placeholder="PLZ"
+                  className="form-control"
+                  id="inputPassword"
+                  maxLength={6}
+                  minLength={3}
+                  required={true}
                 />
               </div>
             </div>
