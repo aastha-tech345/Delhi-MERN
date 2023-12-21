@@ -366,10 +366,10 @@ const CustomerList = () => {
               <span style={{ fontWeight: 'bold' }}>Filter</span>
             </button>
 
-            <button style={{ background: 'none', border: 'none' }} onClick={() => handlePrint()}>
+            {/* <button style={{ background: 'none', border: 'none' }} onClick={() => handlePrint()}>
               {' '}
               Drucken <MdLocalPrintshop />
-            </button>
+            </button> */}
           </div>
 
           {/* Number of row selection completed */}
