@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { getFetch } from 'src/Api'
+import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import EditRoleModal from './EditRoleModal'
 import PropTypes from 'prop-types'
+import { verifySettingDelPer, verifySettingEditPer } from 'src/components/verifyPermission'
 
 const AllRoles = ({ data }) => {
+  let lgUser = localStorage.getItem('record')
+  let loginData = JSON.parse(lgUser)
   const [roleID, setRoleID] = useState('')
   const [openModal, setOpenModal] = useState(false)
-  // const [roleData, setRoleData] = useState({})
-  const apiUrl = process.env.REACT_APP_API_URL
+  // const apiUrl = process.env.REACT_APP_API_URL
 
   const handleOpen = async (id) => {
     try {
       setOpenModal(true)
       setRoleID(id)
-      // const user = await getFetch(`${apiUrl}/role/get_role/${id}`)
-      // setRoleData(user?.data)
     } catch (error) {
       console.log(error)
     }
@@ -32,35 +31,55 @@ const AllRoles = ({ data }) => {
               <tr>
                 <th>ID</th>
                 <th>Role</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                {(loginData?.user?._id && verifySettingEditPer().includes('owned')) ||
+                verifySettingEditPer().includes('yes') ||
+                loginData?.user?.isAdminFullRights === 'true' ? (
+                  <th>Edit</th>
+                ) : (
+                  ''
+                )}
+
+                {(loginData?.user?._id && verifySettingDelPer().includes('owned')) ||
+                verifySettingDelPer().includes('yes') ||
+                loginData?.user?.isAdminFullRights === 'true' ? (
+                  <th>Delete</th>
+                ) : (
+                  ''
+                )}
               </tr>
             </thead>
             <tbody>
               {data?.map((elem) => {
+                console.log('elem', elem)
                 const { _id, role_name } = elem
                 return (
                   <>
                     <tr>
-                      <td>323</td>
+                      <td>{_id?.slice(-6)}</td>
                       <td>{role_name}</td>
-                      <td>
-                        <button
-                          className="btn"
-                          style={{ background: 'none', border: 'none' }}
-                          onClick={() => handleOpen(_id)}
-                        >
-                          Edit
-                        </button>
-                      </td>
-                      <td>
-                        {/* <div className="col-sm-1 m-auto">{_id}</div>
-                          <div className="col-sm-5 text-center m-auto">{role_name}</div>
-                          <div className="col-sm-3 m-auto" onClick={() => handleOpen(_id)}>
+                      {(loginData?.user?._id && verifySettingEditPer().includes('owned')) ||
+                      verifySettingEditPer().includes('yes') ||
+                      loginData?.user?.isAdminFullRights === 'true' ? (
+                        <td>
+                          <button
+                            className="btn"
+                            style={{ background: 'none', border: 'none' }}
+                            onClick={() => handleOpen(_id)}
+                          >
                             Edit
-                          </div> */}
-                        Delete
-                      </td>
+                          </button>
+                        </td>
+                      ) : (
+                        ''
+                      )}
+
+                      {(loginData?.user?._id && verifySettingDelPer().includes('owned')) ||
+                      verifySettingDelPer().includes('yes') ||
+                      loginData?.user?.isAdminFullRights === 'true' ? (
+                        <th>Delete</th>
+                      ) : (
+                        ''
+                      )}
                     </tr>
                   </>
                 )

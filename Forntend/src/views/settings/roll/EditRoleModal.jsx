@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import PropTypes from 'prop-types'
-import { putFetchData } from 'src/Api'
+import { getFetch, putFetchData } from 'src/Api'
 import { StoreContext } from 'src/StoreContext'
 
 const EditRoleModal = ({ setOpenModal, roleID }) => {
   const { setEditEmployee, editEmployee } = useContext(StoreContext)
   const apiUrl = process.env.REACT_APP_API_URL
   const notify = (dataa) => toast(dataa)
+  const [roleData, setRoleData] = useState({})
   const [rolePermission, setRolePermission] = useState('')
   const [permissionData, setPermissionData] = useState({
     p_edit: 'no',
@@ -35,7 +36,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
     ownership_check: 'false',
   })
   const [role, setRole] = useState({
-    role_name: rolePermission,
+    role_name: '',
     permission: [],
     added_by: 'admin',
   })
@@ -94,13 +95,62 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
         notify('Role Updated Successfully')
         setTimeout(() => {
           setOpenModal(false)
-          // window?.location?.reload()
         }, 2000)
       }
     } catch (error) {
       console.log(error)
     }
   }
+
+  const getRoleById = async () => {
+    try {
+      const role = await getFetch(`${apiUrl}/role/get_role/${roleID}`)
+      setRoleData(role?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  let clientPermission = roleData?.permission
+
+  useEffect(() => {
+    setRolePermission(roleData?.role_name)
+
+    clientPermission?.map((elem) => {
+      if (elem?.section_name === 'Klientlnnen') {
+        setPermissionData({
+          p_edit: elem?.p_edit || 'no',
+          p_show: elem?.p_show || 'no',
+          p_delete: elem?.p_delete || 'no',
+          p_export: elem?.p_export || 'no',
+          section_name: elem?.section_name || 'no',
+          ownership_check: elem?.ownership_check || 'no',
+        })
+      } else if (elem?.section_name === 'Dashboard') {
+        setPermissionDashboard({
+          p_edit: elem?.p_edit || 'no',
+          p_show: elem?.p_show || 'no',
+          p_delete: elem?.p_delete || 'no',
+          p_export: elem?.p_export || 'no',
+          section_name: elem?.section_name || 'no',
+          ownership_check: elem?.ownership_check || 'no',
+        })
+      } else if (elem?.section_name === 'Einstellungen') {
+        setPermissionSetting({
+          p_edit: elem?.p_edit || 'no',
+          p_show: elem?.p_show || 'no',
+          p_delete: elem?.p_delete || 'no',
+          p_export: elem?.p_export || 'no',
+          section_name: elem?.section_name || 'no',
+          ownership_check: elem?.ownership_check || 'no',
+        })
+      }
+    })
+  }, [roleData])
+
+  useEffect(() => {
+    getRoleById()
+  }, [])
 
   useEffect(() => {
     setRole((prevRole) => ({

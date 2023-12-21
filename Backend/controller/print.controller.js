@@ -1,14 +1,15 @@
 const PrintInfomation = require("../models/print.model");
-const { UserModel } = require("../models/user.model");
 const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createPrintTemplate = async (req, res) => {
   try {
-    const { designation, content, customer_id } = req.body;
+    const { designation, content, customer_id, findBy, email_type } = req.body;
     const print = new PrintInfomation.printTemplate({
       designation,
       content,
       customer_id,
+      email_type,
+      findBy,
     });
 
     const result = await print.save();
