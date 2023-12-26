@@ -166,15 +166,11 @@ const CustomerInfo = () => {
     { value: '1', label: 'SPV alt' },
     { value: '2', label: 'OPV alt' },
     { value: '3', label: 'Dauerspenderlnner' },
-    {
-      label: 'Backend',
-      options: [
-        { value: '4', label: 'Materialbestellung' },
-        { value: '5', label: 'Newsletter Abonnent' },
-        { value: '6', label: 'Offen' },
-      ],
-    },
+    { value: '4', label: 'Materialbestellung' },
+    { value: '5', label: 'Newsletter Abonnent' },
+    { value: '6', label: 'Offen' },
   ]
+
   const saveData = async (e) => {
     e.preventDefault()
 
@@ -358,7 +354,7 @@ const CustomerInfo = () => {
         <br />
         <hr className="mx-3" />
         {/* customerInfoStatu start */}
-        <h3 className="bluetext mx-3">status</h3>
+        <h3 className="bluetext mx-3">Status</h3>
         <div className="row p-3">
           <div className="col-sm-6">
             <br />
@@ -387,7 +383,7 @@ const CustomerInfo = () => {
                 <select
                   onChange={customerInfoChange}
                   value={customerInfoStatu.employee}
-                  className="form-control"
+                  className="form-control form-select"
                   name="employee"
                   defaultValue="MitarbeiterInnen"
                 >
@@ -445,21 +441,32 @@ const CustomerInfo = () => {
         <div className="row p-3">
           <h3 className="bluetext">Quelle</h3>
           <div className="col-sm-4">
-            <select
-              className="form-control"
-              value={those}
-              onChange={(e) => {
-                setThose(e.target.value)
-              }}
-            >
-              <option value="alte db">Alte DB</option>
-              <option value="formula">Formular</option>
-              <option value="call">Call</option>
-              <option value="email">E-mail</option>
-              <option value="order">Auftag</option>
-            </select>
+            <div className="input-group">
+              <select
+                className="form-control form-select"
+                value={those}
+                onChange={(e) => {
+                  setThose(e.target.value)
+                }}
+              >
+                <option value="alte db">Alte DB</option>
+                <option value="order">Auftrag(Online-Maske)</option>
+                <option value="contact form">Kontaktformula</option>
+                <option value="order print">Auftrag(Print)</option>
+                <option value="website">Websit</option>
+                <option value="call">Anruf</option>
+                <option value="letter">Zuschrift (Post)</option>
+                <option value="HVD regional association">HVD-Landesverban</option>
+                <option value="Regional association MOL">Regionalverban MOL</option>
+                <option value="Northern Regional Association">Regionalverban Nord</option>
+                <option value="Potsda regional association">Regionalverban Potsda</option>
+                <option value="inter">inter</option>
+                <option value="email">E-mail</option>
+              </select>
+            </div>
           </div>
         </div>
+
         <br />
       </div>
       <div className="p-3 mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
@@ -489,7 +496,7 @@ const CustomerInfo = () => {
               </label>
               <div className="col-sm-6">
                 <select
-                  className="form-control"
+                  className="form-control form-select"
                   value={customerContact.salution}
                   name="salution"
                   onChange={ContactChange}

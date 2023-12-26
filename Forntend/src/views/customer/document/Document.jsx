@@ -238,43 +238,64 @@ const Document = () => {
               <Modal.Title>Details zum Dokument</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <label htmlFor="title">Titel</label>
-              <input
-                id="title"
-                required
-                name="document_title"
-                value={data.document_title}
-                onChange={handleChange}
-                type="text"
-                className="form-control"
-              />
-              <label htmlFor="documentType">Documenttype</label>
-              <select
-                id="document_type"
-                name="document_type"
-                value={data.document_type}
-                onChange={handleChange}
-                className="form-control"
-              >
-                <option>--select--</option>
-                <option value="Living will">Patientenverfügung</option>
-                <option value="Health care power of attorney">Gesundheitsvollmacht</option>
-                <option value="Power of attorney">Vorsorgevollmacht</option>
-                <option value="care order">Betreuungsverfügung</option>
-                <option value="Feces pass">Kotfallpass</option>
-                <option value="Power of attorney digital test">Vollmacht digitales Prbe</option>
-                <option value="Write to">Anschreiben</option>
-                <option value="Personal document">Persönliches Dokument</option>
-                <option value="Other">Anderes</option>
-              </select>
-              <label htmlFor="fileUpload">Datei-Upload</label>
-              <input
-                id="fileUpload"
-                type="file"
-                className="form-control"
-                name="document_upload"
-                onChange={(e) => setDocumentUpload(e.target.files[0])}
-              />
+              <div className="mb-6 row">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Titel
+                </label>
+                <div className="col-sm-9">
+                  <input
+                    id="title"
+                    required
+                    name="document_title"
+                    value={data.document_title}
+                    onChange={handleChange}
+                    type="text"
+                    className="form-control"
+                    placeholder="Steuer"
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="mb-6 row">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Documenttype
+                </label>
+                <div className="col-sm-9">
+                  <select
+                    id="document_type"
+                    name="document_type"
+                    value={data.document_type}
+                    onChange={handleChange}
+                    className="form-control form-select"
+                  >
+                    <option>--select--</option>
+                    <option value="Living will">Patientenverfügung</option>
+                    <option value="Health care power of attorney">Gesundheitsvollmacht</option>
+                    <option value="Power of attorney">Vorsorgevollmacht</option>
+                    <option value="care order">Betreuungsverfügung</option>
+                    <option value="Feces pass">Kotfallpass</option>
+                    <option value="Power of attorney digital test">Vollmacht digitales Prbe</option>
+                    <option value="Write to">Anschreiben</option>
+                    <option value="Personal document">Persönliches Dokument</option>
+                    <option value="Other">Anderes</option>
+                  </select>
+                </div>
+              </div>
+              <br />
+              <div className="mb-6 row">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Datei-Upload
+                </label>
+                <div className="col-sm-9">
+                  <input
+                    id="fileUpload"
+                    type="file"
+                    className="form-control"
+                    name="document_upload"
+                    onChange={(e) => setDocumentUpload(e.target.files[0])}
+                  />
+                </div>
+              </div>
             </Modal.Body>
             <Modal.Footer>
               <div className="modal-footer">

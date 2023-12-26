@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Bills = () => {
   const navigate = useNavigate()
+  const [activityData, setActivityData] = useState([])
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('customerDatat')
@@ -65,12 +66,26 @@ const Bills = () => {
         invoiceAmount: '',
         deliveryDate: '',
       })
+      // getDetails()
     } catch (error) {
       notify('Please Fill in all details')
       console.error('Error during API call:', error)
     }
   }
 
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/invoice/get_invoice`)
+  //     const data = await result.json()
+  //     setActivityData(data)
+  //   } catch (error) {
+  //     console.error('Error fetching customer record:', error)
+  //   }
+  // }
+  // // console.log('aastha', activityData)
+  // useEffect(() => {
+  //   getDetails()
+  // }, [])
   return (
     <div style={{ background: '#fff' }}>
       <Customer />
@@ -85,7 +100,7 @@ const Bills = () => {
             </label>
             <div className="col-sm-6 mt-2">
               <select
-                className="form-control"
+                className="form-control form-select"
                 name="product"
                 value={productData.product}
                 onChange={handleInputChange}
@@ -103,7 +118,7 @@ const Bills = () => {
             </label>
             <div className="col-sm-6 mt-2">
               <select
-                className="form-control"
+                className="form-control form-select"
                 name="paymentMethod"
                 value={productData.paymentMethod}
                 onChange={handleInputChange}
@@ -127,7 +142,6 @@ const Bills = () => {
                 name="invoiceDate"
                 checked={productData.invoiceDate}
                 onChange={handleInputChange}
-                placeholder="02/09/2004"
                 className="form-control"
               />
             </div>
@@ -187,7 +201,6 @@ const Bills = () => {
                 name="deliveryDate"
                 value={productData.deliveryDate}
                 onChange={handleInputChange}
-                placeholder="09/09/2000"
                 className="form-control"
               />
             </div>

@@ -1,4 +1,4 @@
-const { Attorney } = require("../models/attorney.model");
+const AttorneyInfo = require("../models/attorney.model");
 
 exports.createAttorney = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ exports.createAttorney = async (req, res) => {
     } = req.body;
 
     // Create a new Attorney instance
-    const attorney = new Attorney({
+    const attorney = new AttorneyInfo({
       healthCare,
       powerOfAttorney,
       careProvision,
@@ -37,7 +37,7 @@ exports.createAttorney = async (req, res) => {
 
 exports.getAttorney = async (req, res) => {
   try {
-    const result = await AttorneyInformation.Attorney.find();
+    const result = await AttorneyInfo.Attorney.find();
     res.send(result);
   } catch (error) {
     res.status(500).send({ error: "Internal Server Error" });

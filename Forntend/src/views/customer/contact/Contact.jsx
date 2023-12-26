@@ -191,6 +191,7 @@ const Contact = () => {
       // console.log(response)
       if (response.status === 201) {
         notify('Contact Record was Create Successfully')
+        setData('')
         handleClose()
         getDetails()
       }

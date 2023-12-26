@@ -107,45 +107,65 @@ const EditModal = ({ setEdit, getDetails }) => {
           </div>
           <Form noValidate validated={validated}>
             <div className="modal-body">
-              <label htmlFor="title">Titel</label>
-              <input
-                id="title"
-                required
-                name="document_title"
-                value={data.document_title}
-                onChange={handleChange}
-                type="text"
-                className="form-control"
-              />
-              <label htmlFor="documentType">Dokumenttyp</label>
-              <select
-                id="document_type"
-                name="document_type"
-                value={data.document_type}
-                onChange={handleChange}
-                className="form-control"
-              >
-                <option>--select--</option>
-                <option value="Living will">Patientenverfügung</option>
-                <option value="Health care power of attorney">Gesundheitsvollmacht</option>
-                <option value="Power of attorney">Vorsorgevollmacht</option>
-                <option value="care order">Betreuungsverfügung</option>
-                <option value="Feces pass">Kotfallpass</option>
-                <option value="Power of attorney digital test">Vollmacht digitales Prbe</option>
-                <option value="Write to">Anschreiben</option>
-                <option value="Personal document">Persönliches Dokument</option>
-                <option value="Other">Anderes</option>
-                <option value="Living will">Patientenverfügung</option>
-                {/* Add other options as needed */}
-              </select>
-              <label htmlFor="fileUpload">Datei-Upload</label>
-              <input
-                id="fileUpload"
-                type="file"
-                className="form-control"
-                name="document_upload"
-                onChange={handleFileChange}
-              />
+              <div className="mb-6 row">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Titel
+                </label>
+                <div className="col-sm-9">
+                  <input
+                    id="title"
+                    required
+                    name="document_title"
+                    value={data.document_title}
+                    onChange={handleChange}
+                    type="text"
+                    className="form-control"
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="row mb-6">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Dokumenttyp
+                </label>
+                <div className="col-sm-9">
+                  <select
+                    id="document_type"
+                    name="document_type"
+                    value={data.document_type}
+                    onChange={handleChange}
+                    className="form-control form-select"
+                  >
+                    <option>--select--</option>
+                    <option value="Living will">Patientenverfügung</option>
+                    <option value="Health care power of attorney">Gesundheitsvollmacht</option>
+                    <option value="Power of attorney">Vorsorgevollmacht</option>
+                    <option value="care order">Betreuungsverfügung</option>
+                    <option value="Feces pass">Kotfallpass</option>
+                    <option value="Power of attorney digital test">Vollmacht digitales Prbe</option>
+                    <option value="Write to">Anschreiben</option>
+                    <option value="Personal document">Persönliches Dokument</option>
+                    <option value="Other">Anderes</option>
+                    <option value="Living will">Patientenverfügung</option>
+                    {/* Add other options as needed */}
+                  </select>
+                </div>
+              </div>
+              <br />
+              <div className="row mb-6">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Datei-Upload
+                </label>
+                <div className="col-sm-9">
+                  <input
+                    id="fileUpload"
+                    type="file"
+                    className="form-control"
+                    name="document_upload"
+                    onChange={handleFileChange}
+                  />
+                </div>
+              </div>
             </div>
           </Form>
           <div className="modal-footer">

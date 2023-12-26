@@ -197,7 +197,9 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                 setRolePermission(e.target.value)
               }}
             />
-            <h5 className="mt-2 fw-bold">Berechtigungen</h5>
+            <h5 className="mt-2 fw-bold" style={{ float: 'left' }}>
+              Berechtigungen
+            </h5>
             <h5 className="mt-3 fw-bold">Klientlnnen</h5>
             <div>
               <div className="row" onClick={() => handleSetName('Klientlnnen')}>
@@ -281,8 +283,11 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                 </div>
               </div>
             </div>
-            <h5 className="mt-3 fw-bold">Dashboard</h5>
-            <div>
+            <h5 className="mt-3 fw-bold" style={{ float: 'left' }}>
+              Dashboard
+            </h5>
+            <br />
+            <div style={{ float: 'left' }}>
               <div className="row" onClick={() => handleSetDashboardName('Dashboard')}>
                 <div className="row">
                   <div className="col-sm-3 mt-2">Anzeigen</div>
@@ -325,7 +330,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-sm-3 mt-2">Löschen</div>
+                  <div className="col-sm-3 mt-2 ">Löschen</div>
                   <div className="col-sm-5"></div>
                   {/*dropdown*/}
                   <div className="col-sm-4 mt-2">
@@ -345,7 +350,9 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-sm-3 mt-2">Exportieren</div>
+                  <div className="col-sm-3 mt-2" style={{ float: 'left' }}>
+                    Exportieren
+                  </div>
                   <div className="col-sm-5"></div>
                   {/*dropdown*/}
                   <div className="col-sm-4 mt-2">
@@ -367,8 +374,10 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
               </div>
             </div>
 
-            <h5 className="mt-3 fw-bold">Setting</h5>
-            <div>
+            <h5 className="mt-3 fw-bold" style={{ float: 'left' }}>
+              Einstellungen
+            </h5>
+            <div style={{ float: 'left' }}>
               <div className="row" onClick={() => handleSetSettingName('Einstellungen')}>
                 <div className="row">
                   <div className="col-sm-3 mt-2">Anzeigen</div>
