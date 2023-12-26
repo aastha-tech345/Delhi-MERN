@@ -160,7 +160,7 @@ const Document = () => {
   const saveData = async (e) => {
     try {
       if (!data.document_title || !data.document_type) {
-        return notify('Please fill all details')
+        return toast.error('Please fill all details')
       }
 
       e.preventDefault()
@@ -176,7 +176,7 @@ const Document = () => {
       // const url = `${apiUrl}/document/create_document?page=${page}`
       // console.log(url)
       const response = await postFetchUser(url, myForm)
-      notify('Data Saved Successfully')
+      toast.success('Data Saved Successfully')
       setData('')
       handleClose()
       getDetails()
@@ -193,7 +193,7 @@ const Document = () => {
       const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setDocumentRecord(activeRecords)
     } catch (error) {
-      console.error('Error fetching customer record:', error)
+      console.error('Error fetching document record:', error)
     }
   }
 

@@ -13,13 +13,14 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
       try {
         const response = await deleteFetch(`${apiUrl}/document/get_document`, documentId)
         if (response.status === 200) {
-          notify('Data Deleted Successfully')
+          toast.success('Data Deleted Successfully')
         }
         getDetails()
 
         setHide(false)
       } catch (error) {
-        console.error('An error occurred while deleting the record:', error)
+        toast.error('An error occurred while deleting the record')
+        // console.error('An error occurred while deleting the record:', error)
         setHide(false)
       }
     }

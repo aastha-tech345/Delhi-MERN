@@ -101,11 +101,11 @@ const EditModal = ({ setHide, getDetails }) => {
           group: '',
         })
         setEmail('')
-        notify(res?.data?.message)
+        toast.success(res?.data?.message)
         close()
         getDetails()
       } else {
-        notify('Something Went Wrong')
+        toast.error('Something Went Wrong')
       }
     } catch (error) {
       console.log(error)

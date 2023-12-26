@@ -45,12 +45,13 @@ const EditModal = ({ setEdit, getDetails }) => {
     }
   }
 
-  const handleChange = ({ e, name, value }) => {
+  const handleChange = (e) => {
     const { type } = e.target
-    const newValue = type === 'radio' ? value : value
+    const newValue = type === 'radio' ? e.target.value : e.target.value
 
-    setData({ ...data, [name]: newValue })
+    setData({ ...data, [e.target.name]: newValue })
   }
+
   const notify = (dataa) => toast(dataa)
   const close = () => {
     setEdit(false)
@@ -74,7 +75,7 @@ const EditModal = ({ setEdit, getDetails }) => {
         return
       }
       if (!email) {
-        return notify('Invalid Email')
+        return toast.error('Invalid Email')
       }
       const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, dataa)
       if (res.status === 200) {
@@ -86,11 +87,11 @@ const EditModal = ({ setEdit, getDetails }) => {
           gender: '',
         })
         setEmail('')
-        notify('Contact Updated Successfully')
+        toast.success('Contact Updated Successfully')
         close()
         getDetails()
       } else {
-        notify('Email-`Id Already Exists')
+        toast.error('Email-`Id Already Exists')
       }
     } catch (error) {
       console.log(error)
@@ -260,6 +261,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     value={data.statu}
                   >
+                    <option value="">--select--</option>
                     <option value="HVD-PV">HVD-PV</option>
                     <option value="PV-ALT">PV-ALT</option>
                   </select>

@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   PhoneOutlined,
   CheckCircleOutlined,
   PrinterOutlined,
   RedEnvelopeOutlined,
-  BarChartOutlined,
-  CalendarOutlined,
-  BellOutlined,
-  LinkOutlined,
 } from '@ant-design/icons'
-import { getFetch, postFetchData } from 'src/Api'
+import { postFetchData } from 'src/Api'
 import GetDescriptionData from './GetActivityData'
 import Customer from '../Customer'
 import { MdAdd } from 'react-icons/md'
@@ -90,14 +86,14 @@ const Activity = () => {
   const handleSubmit = async () => {
     for (const key in data) {
       if (!data[key]) {
-        notify(`Please fill in the ${key} field`)
+        toast.error(`Please fill in the ${key} field`)
         return
       }
     }
     try {
       const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
       if (res?.message === 'activity was created') {
-        notify('activity was created')
+        toast.success('activity was created')
         setOpenMessage(false)
         setData({
           message: '',
@@ -107,7 +103,7 @@ const Activity = () => {
         setColor2('white')
         setColor('white')
       } else {
-        notify('Something Went Wrong')
+        toast.error('Something Went Wrong')
       }
       setUpdateData(!updateData)
       setOpenMessage(false)
@@ -229,42 +225,42 @@ const Activity = () => {
           <PhoneOutlined
             className="p-2"
             style={{
-              border: '1px solid black',
+              border: '1px solid lightgray',
               borderRadius: '5px',
               marginRight: '10px',
               background: color,
             }}
-            onClick={() => selectIcon('PhoneOutlined', 'red')}
+            onClick={() => selectIcon('PhoneOutlined', '#015290')}
           />
           <CheckCircleOutlined
             className="p-2"
             style={{
-              border: '1px solid black',
+              border: '1px solid lightgray',
               borderRadius: '5px',
               marginRight: '10px',
               background: color1,
             }}
-            onClick={() => selectIcon('CheckCircleOutlined', 'red')}
+            onClick={() => selectIcon('CheckCircleOutlined', '#015290')}
           />
           <RedEnvelopeOutlined
             className="p-2"
             style={{
-              border: '1px solid black',
+              border: '1px solid lightgray',
               borderRadius: '5px',
               marginRight: '10px',
               background: color2,
             }}
-            onClick={() => selectIcon('RedEnvelopeOutlined', 'red')}
+            onClick={() => selectIcon('RedEnvelopeOutlined', '#015290')}
           />
           <PrinterOutlined
             className="p-2"
             style={{
-              border: '1px solid black',
+              border: '1px solid lightgray',
               borderRadius: '5px',
               marginRight: '10px',
               background: color3,
             }}
-            onClick={() => selectIcon('PrinterOutlined', 'red')}
+            onClick={() => selectIcon('PrinterOutlined', '#015290')}
           />
         </div>
       </div>

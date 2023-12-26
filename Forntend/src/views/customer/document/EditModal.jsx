@@ -48,7 +48,7 @@ const EditModal = ({ setEdit, getDetails }) => {
 
     const { document_title, document_type, document_upload } = data
     if (!document_title || !document_type) {
-      return notify('Please fill in all the details.')
+      return toast.error('Please fill in all the details.')
     }
 
     try {
@@ -62,7 +62,7 @@ const EditModal = ({ setEdit, getDetails }) => {
         `${apiUrl}/document/get_document/update/${response?._id}`,
         formData,
       )
-      console.log('document page', res)
+      // console.log('document page', res)
 
       if (res?.status === 200) {
         setLoadValue(false)
@@ -71,10 +71,10 @@ const EditModal = ({ setEdit, getDetails }) => {
           document_type: '',
           document_upload: null,
         })
-        notify('Document Updated Successfully')
+        toast.success('Document Updated Successfully')
         getDetails()
       } else {
-        notify('Something Went Wrong')
+        toast.error('Something Went Wrong')
       }
       close()
     } catch (error) {

@@ -168,7 +168,7 @@ const CustomerList = () => {
 
         if (response.ok) {
           getDetails()
-          notify('Record was deleted successfully')
+          toast.success('Record was deleted successfully')
         } else {
           const errorData = await response.json()
           console.error('Failed to delete record:', response.status, response.statusText, errorData)
@@ -221,7 +221,7 @@ const CustomerList = () => {
       }
 
       let result = await response.json()
-      notify(result?.message)
+      toast.success(result?.message)
       setFname('')
       setLand('')
       setLname('')
@@ -237,7 +237,7 @@ const CustomerList = () => {
     } catch (error) {
       // console.error('Error during API call:', error)
 
-      notify('Email-`Id Already Exists')
+      toast.error('Email-`Id Already Exists')
     }
   }
 
