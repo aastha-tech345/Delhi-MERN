@@ -181,7 +181,7 @@ const CustomerInfo = () => {
     //   }
     // }
     if (!email) {
-      return notify('Invalid Email')
+      return toast.error('Invalid Email')
     }
 
     try {
@@ -197,7 +197,7 @@ const CustomerInfo = () => {
       // console.log(result)
 
       if (result?.message === 'CustomerInfo was created') {
-        notify('Data saved successfully!')
+        toast.success('Data saved successfully!')
         setOrderingMaterials({
           orderNumber: '',
           newsletterDate: '',
@@ -251,7 +251,7 @@ const CustomerInfo = () => {
       console.log('Error saving data:', error)
 
       // Show error toast
-      notify('Error saving data. Please try again.')
+      toast.error('Error saving data. Please try again.')
     }
   }
 

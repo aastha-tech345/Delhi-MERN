@@ -28,7 +28,7 @@ const DeleteModal = ({ setHide, contactId, getDetails }) => {
 
         getDetails()
         if (response?.status === 200) {
-          notify(response?.data?.message)
+          toast.success(response?.data?.message)
         }
         setHide(false)
       } catch (error) {

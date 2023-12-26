@@ -173,7 +173,7 @@ const Attorney = () => {
       }
 
       if (!isAnyFieldFilled) {
-        notify('Please fill in at least one field')
+        toast.info('Please fill in at least one field')
         return
       }
 
@@ -187,11 +187,11 @@ const Attorney = () => {
       })
 
       let result = await response.json()
-      console.log(result.status)
+      // console.log(result.status)
       if (result.status === 201) {
-        notify('Data saved successfully!')
+        toast.success('Data saved successfully!')
       } else {
-        notify('Please fill in at least one field!')
+        toast.warning('Please fill in at least one field!')
       }
       // notify('Data saved successfully!')
       setHealthCare((prevHealthCare) => ({
@@ -227,9 +227,9 @@ const Attorney = () => {
       console.log('Error saving data:', error)
 
       // Show error toast
-      notify('Error saving data. Please try again.')
+      toast.error('Error saving data. Please try again.')
     }
-    console.log(data)
+    // console.log(data)
   }
 
   useEffect(() => {

@@ -186,7 +186,7 @@ const GetActivityData = ({ updateData, search }) => {
           </table>
         </div>
       </div>
-
+      <br />
       {/* <div className="mx-3">
         <Stack spacing={2}>
           <Pagination

@@ -53,6 +53,7 @@ const App = () => {
           <Route path="/password-reset" element={<ResetPassword />} />
           <Route exact path="/forgotpassword" element={<ForgotPassword />} />
           {hasToken && <Route path="*" element={<DefaultLayout />} />}
+          <Route path="*" element={<Login />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

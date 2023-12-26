@@ -37,7 +37,7 @@ const Bills = () => {
     try {
       for (const key in productData) {
         if (!productData[key]) {
-          notify(`Please fill in the ${key} field`)
+          toast.error(`Please fill in the ${key} field`)
           return
         }
       }
@@ -56,8 +56,8 @@ const Bills = () => {
       }
 
       let result = await response.json()
-      console.log(result)
-      notify('Data Saved Successfully')
+      // console.log(result)
+      toast.success('Data Saved Successfully')
       setProductData({
         product: '',
         paymentMethod: '',
@@ -68,8 +68,8 @@ const Bills = () => {
       })
       // getDetails()
     } catch (error) {
-      notify('Please Fill in all details')
-      console.error('Error during API call:', error)
+      toast.error('Please Fill in all details')
+      // console.error('Error during API call:', error)
     }
   }
 

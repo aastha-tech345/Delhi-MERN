@@ -190,7 +190,7 @@ const Contact = () => {
       const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
       // console.log(response)
       if (response.status === 201) {
-        notify('Contact Record was Create Successfully')
+        toast.success('Contact Record was Create Successfully')
         setData('')
         handleClose()
         getDetails()

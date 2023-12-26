@@ -225,7 +225,7 @@ const Services = () => {
       }
 
       if (!isAnyFieldFilled) {
-        notify('Please fill in at least one field')
+        toast.warning('Please fill in at least one field')
         return
       }
 
@@ -243,14 +243,14 @@ const Services = () => {
       }
 
       let result = await response.json()
-      console.log('aastha', result)
-      notify('Data Saved Successfully')
+      // console.log('aastha', result)
+      toast.success('Data Saved Successfully')
 
       // Reset all state variables to initial values
       resetStateVariables()
     } catch (error) {
-      notify('Please Fill in all details')
-      console.error('Error during API call:', error)
+      toast.error('Please Fill in all details')
+      // console.error('Error during API call:', error)
     }
   }
 
