@@ -31,16 +31,25 @@ const Attorney = () => {
   const [securingattorney, setSecuringattorney] = useState({
     SecuringMasterData: false,
   })
+
   const healthCareChange = (e, index) => {
-    const { name, value } = e.target
+    const { name, value, type, checked } = e.target
 
     setHealthCare((prevHealthCare) => {
       const updatedHealthCareData = [...prevHealthCare.healthCareData]
-      const newValue = name === 'healthCare_phone' ? formatPhoneNumber(value) : value
 
-      updatedHealthCareData[index] = {
-        ...updatedHealthCareData[index],
-        [name]: newValue,
+      if (type === 'checkbox') {
+        updatedHealthCareData[index] = {
+          ...updatedHealthCareData[index],
+          [name]: checked,
+        }
+      } else {
+        const newValue = name === 'healthCare_phone' ? formatPhoneNumber(value) : value
+
+        updatedHealthCareData[index] = {
+          ...updatedHealthCareData[index],
+          [name]: newValue,
+        }
       }
 
       return { ...prevHealthCare, healthCareData: updatedHealthCareData }
@@ -156,28 +165,6 @@ const Attorney = () => {
   }
   const saveData = async () => {
     try {
-      const sections = [healthCare, powerOfAttorney, careProvision, securingattorney]
-
-      let isAnyFieldFilled = false
-
-      for (const section of sections) {
-        for (const key in section) {
-          if (section[key] !== '') {
-            isAnyFieldFilled = true
-            break
-          }
-        }
-        if (isAnyFieldFilled) {
-          break
-        }
-      }
-
-      if (!isAnyFieldFilled) {
-        toast.info('Please fill in at least one field')
-        return
-      }
-
-      // Assuming `data` is defined somewhere in your code
       let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
         method: 'POST',
         headers: {
@@ -187,49 +174,46 @@ const Attorney = () => {
       })
 
       let result = await response.json()
-      // console.log(result.status)
       if (result.status === 201) {
         toast.success('Data saved successfully!')
+        resetStateVariables()
       } else {
-        toast.warning('Please fill in at least one field!')
+        toast.error('Fill Full details')
       }
-      // notify('Data saved successfully!')
-      setHealthCare((prevHealthCare) => ({
-        ...prevHealthCare,
-        healthCareData: Array.from({ length: initialFields + 1 }, () => ({
-          healthCare_fname: '',
-          healthCare_lname: '',
-          healthCare_address: '',
-          healthCare_phone: '',
-        })),
-      }))
-
-      setPowerOfAttorney((prevPowerOfAttorney) => ({
-        ...prevPowerOfAttorney,
-        powerOfAttorneyData: Array.from({ length: initialFields + 1 }, () => ({
-          powerOfAttorney_fname: '',
-          powerOfAttorney_lname: '',
-          powerOfAttorney_address: '',
-          powerOfAttorney_phone: '',
-        })),
-      }))
-
-      setCareProvision((prevCareProvision) => ({
-        ...prevCareProvision,
-        CareProvisionMasterData: '',
-      }))
-
-      setSecuringattorney((prevSecuringMasterData) => ({
-        ...prevSecuringMasterData,
-        prevSecuringMasterData: '',
-      }))
     } catch (error) {
-      console.log('Error saving data:', error)
-
-      // Show error toast
       toast.error('Error saving data. Please try again.')
     }
-    // console.log(data)
+  }
+
+  const resetStateVariables = () => {
+    setHealthCare(() => ({
+      healthCareData: Array.from({ length: initialFields + 1 }, () => ({
+        healthCareMasterData: false,
+        healthCare_fname: '',
+        healthCare_lname: '',
+        healthCare_address: '',
+        healthCare_phone: '',
+      })),
+    }))
+
+    setPowerOfAttorney(() => ({
+      powerOfAttorneyData: Array.from({ length: initialFields + 1 }, () => ({
+        AttorneyMasterData: false,
+        adoptDataFromHealthcare: false,
+        powerOfAttorney_fname: '',
+        powerOfAttorney_lname: '',
+        powerOfAttorney_address: '',
+        powerOfAttorney_phone: '',
+      })),
+    }))
+
+    setCareProvision(() => ({
+      CareProvisionMasterData: false,
+    }))
+
+    setSecuringattorney({
+      prevSecuringMasterData: false,
+    })
   }
 
   useEffect(() => {
@@ -250,8 +234,14 @@ const Attorney = () => {
                 &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
                 <input
                   type="checkbox"
-                  onChange={healthCareChange}
-                  value={healthCare.healthCareMasterData}
+                  onChange={() =>
+                    setHealthCare((prevHealthCare) => ({
+                      ...prevHealthCare,
+                      healthCareMasterData: !prevHealthCare.healthCareMasterData,
+                      healthCareData: [...prevHealthCare.healthCareData],
+                    }))
+                  }
+                  checked={healthCare.healthCareMasterData}
                   name="healthCareMasterData"
                 />
                 <br />
@@ -341,8 +331,15 @@ const Attorney = () => {
                 &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
                 <input
                   type="checkbox"
-                  onChange={powerOfAttorneyChange}
-                  value={powerOfAttorney.AttorneyMasterData}
+                  // onChange={powerOfAttorneyChange}
+                  onChange={() =>
+                    setPowerOfAttorney((prevPowerOfAttorney) => ({
+                      ...prevPowerOfAttorney,
+                      AttorneyMasterData: !prevPowerOfAttorney.AttorneyMasterData,
+                      powerOfAttorneyData: [...prevPowerOfAttorney.powerOfAttorneyData],
+                    }))
+                  }
+                  checked={powerOfAttorney.AttorneyMasterData}
                   name="AttorneyMasterData"
                 />
                 <br />
@@ -350,8 +347,15 @@ const Attorney = () => {
                 &nbsp;Datensatz aus Gesundheitsvollmacht übernehmen&nbsp;&nbsp;&nbsp;
                 <input
                   type="checkbox"
-                  onChange={powerOfAttorneyChange}
-                  value={powerOfAttorney.adoptDataFromHealthcare}
+                  // onChange={powerOfAttorneyChange}
+                  onChange={() =>
+                    setPowerOfAttorney((prevPowerOfAttorney) => ({
+                      ...prevPowerOfAttorney,
+                      adoptDataFromHealthcare: !prevPowerOfAttorney.adoptDataFromHealthcare,
+                      powerOfAttorneyData: [...prevPowerOfAttorney.powerOfAttorneyData],
+                    }))
+                  }
+                  checked={powerOfAttorney.adoptDataFromHealthcare}
                   name="adoptDataFromHealthcare"
                 />
                 <div className="row">
@@ -447,7 +451,7 @@ const Attorney = () => {
               <input
                 type="checkbox"
                 onChange={careProvisionChange}
-                value={careProvision.CareProvisionMasterData}
+                checked={careProvision.CareProvisionMasterData}
                 name="CareProvisionMasterData"
               />
             </div>
@@ -460,7 +464,7 @@ const Attorney = () => {
               <input
                 type="checkbox"
                 onChange={securingattorneyChange}
-                value={securingattorney.SecuringMasterData}
+                checked={securingattorney.SecuringMasterData}
                 name="SecuringMasterData"
               />
             </div>

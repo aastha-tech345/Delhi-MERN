@@ -11,7 +11,7 @@ exports.createAttorney = async (req, res) => {
     } = req.body;
 
     // Create a new Attorney instance
-    const attorney = new AttorneyInfo({
+    const attorney = new AttorneyInfo.Attorney({
       healthCare,
       powerOfAttorney,
       careProvision,
@@ -46,7 +46,7 @@ exports.getAttorney = async (req, res) => {
 
 exports.getAttorneyData = async (req, res) => {
   try {
-    const result = await Attorney.findOne({
+    const result = await AttorneyInfo.Attorney.findOne({
       _id: req.params.id,
     });
     if (!result) {
@@ -60,7 +60,7 @@ exports.getAttorneyData = async (req, res) => {
 
 exports.getAttorneyDataUpdate = async (req, res) => {
   try {
-    const result = await Attorney.updateOne(
+    const result = await AttorneyInfo.Attorney.updateOne(
       { _id: req.params.id },
       { $set: req.body }
     );
@@ -73,7 +73,7 @@ exports.getAttorneyDataUpdate = async (req, res) => {
 
 exports.getAttorneyDataDelete = async (req, res) => {
   try {
-    const result = await Attorney.deleteOne({
+    const result = await AttorneyInfo.Attorney.deleteOne({
       _id: req.params.id,
     });
     res.send(result);
@@ -84,7 +84,7 @@ exports.getAttorneyDataDelete = async (req, res) => {
 
 exports.getAttorneySearch = async (req, res) => {
   try {
-    const result = await Attorney.find({
+    const result = await AttorneyInfo.Attorney.find({
       $or: [{ administration: { $regex: req.params.key } }],
     });
     res.send(result);

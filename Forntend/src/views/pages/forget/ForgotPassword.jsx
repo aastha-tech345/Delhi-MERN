@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import logo from '../../../assets/images/logo-hvd-bundesverband.png'
+import logo from '../../../assets/images/logo.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
@@ -99,12 +99,16 @@ const ForgotPassword = () => {
         <>
           <div
             className=" min-vh-100 d-flex flex-row align-items-center"
-            style={{ background: '#015291' }}
+            style={{ background: '#2B1F7B' }}
           >
             <CContainer>
               <CRow className="justify-content-center">
                 <CCol md={4}>
-                  <img src={logo} style={{ width: '400px' }} alt="..." />
+                  <img
+                    src={logo}
+                    style={{ width: '100%', height: '90px', background: 'none' }}
+                    alt="..."
+                  />
                   <br />
                   <CCardGroup>
                     <CCard className="p-4">
