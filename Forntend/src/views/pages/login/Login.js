@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import InputGroup from 'react-bootstrap/InputGroup'
 import Row from 'react-bootstrap/Row'
-import { Link, useNavigate } from 'react-router-dom'
-import ReCAPTCHA from 'react-google-recaptcha'
-import logo from '../../../assets/images/hvd-logo.png'
+import { useNavigate } from 'react-router-dom'
+// import ReCAPTCHA from 'react-google-recaptcha'
+// import logo from '../../../assets/images/hvd-logo1.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
@@ -42,7 +41,7 @@ const Login = () => {
       })
 
       const result = await response.json()
-      console.log('aastha', result)
+      // console.log('aastha', result)
 
       if (result.success === true) {
         notify('User Login Successfully')
@@ -59,16 +58,8 @@ const Login = () => {
     }
   }
 
-  const registerPage = () => {
-    navigate('/register')
-  }
-
   const forgetPassword = () => {
     navigate('/password-reset')
-  }
-
-  function onChange(value) {
-    console.log('Captcha value:', value)
   }
 
   return (
@@ -79,7 +70,8 @@ const Login = () => {
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={4}>
-            <img src={logo} style={{ width: '400px', background: 'none' }} alt="..." />
+            {/* <img src={logo} style={{ width: '100%', background: 'none' }} alt="..." /> */}
+
             <br />
             <CCardGroup>
               <CCard className="p-4">

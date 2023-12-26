@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { ReactToPrint } from 'react-to-print'
 // import { GrEdit } from 'react-icons/gr'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { MdAdd, MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
@@ -21,6 +20,7 @@ const CustomerList = () => {
   console.log('loginData', loginData)
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
+  const [print, setPrintRecord] = useState([])
   const [fname, setFname] = useState()
   const [lname, setLname] = useState()
   const [phone, setPhone] = useState()
@@ -36,6 +36,7 @@ const CustomerList = () => {
   const [validated, setValidated] = useState(false)
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
+  // const navigate = useNavigate()
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
   }
@@ -54,12 +55,6 @@ const CustomerList = () => {
   const searchInputRef = useRef()
   const [selectedRecordId, setSelectedRecordId] = useState(null)
 
-  const handlePrint = (record) => {
-    let res = JSON.stringify(record)
-    localStorage.setItem('CustomerRecord', res)
-    console.log('record', record)
-    window.print()
-  }
   const columns = [
     {
       title: 'NAME DES KUNDEN',
@@ -138,6 +133,15 @@ const CustomerList = () => {
           ) : (
             ''
           )}
+
+          {/* <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => handlePrint(record)}
+          >
+            {' '}
+            <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
+            &nbsp;Drucke
+          </button> */}
         </>
       ),
       // hidden: 'true',
@@ -238,29 +242,29 @@ const CustomerList = () => {
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getDetails = useCallback(async () => {
+  const getDetails = async () => {
     try {
-      // if (loginData?.user?.user_type === 'admin') {
       const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setCustomerRecord(activeRecords)
-      // }
-
-      // if (loginData?.user?.user_type === 'employee') {
-      //   const result = await fetch(
-      //     `${apiUrl}/customer/user/customer/${loginData?.user?._id}?page=${page}`,
-      //   )
-      //   const data = await result.json()
-      //   setCountPage(data?.pageCount)
-      //   const activeRecords = data?.result?.filter((record) => record.status === 'active')
-      //   setCustomerRecord(activeRecords)
-      // }
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
-  })
+  }
+
+  const getPrintDetails = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/print/get_print?page=${page}`)
+      const data = await result.json()
+      setCountPage(data?.pageCount)
+      const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
+      setPrintRecord(activeRecords)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
   // useEffect(() => {
   //   getDetails()
   // }, [page])
@@ -333,8 +337,62 @@ const CustomerList = () => {
     }
   }
 
+  let customerRecord = localStorage.getItem('CustomerRecord')
+  const customerItems = []
+
+  print.map((item) => {
+    // console.log('item record', item)
+    if (item.findBy === 'customer') {
+      // console.log('customer')
+      customerItems.push(item)
+    }
+    return null
+  })
+
+  // console.log('Customer items:', customerItems)
+  // const handlePrint = (record) => {
+  //   // console.log('aastha print')
+  //   if (customerRecord && customerRecord.length > 0) {
+  //     if (customerItems.length > 0) {
+  //       const printTemplate = customerItems[0].content
+
+  //       let contentToPrint = ''
+
+  //       const recordContent = printTemplate
+  //         .replace('{fname}', record.fname)
+  //         .replace('{email}', record.email)
+  //         .replace('{id}', record.id)
+  //         .replace('{phone}', record.phone)
+  //         .replace('{group}', record.group)
+
+  //       contentToPrint += `<div>${recordContent}</div>`
+
+  //       // const printWindow = window.open('', '_blank')
+  //       window.document.write(`
+  //         <html>
+  //           <head>
+  //           </head>
+  //           <body>
+  //             ${contentToPrint}
+  //           </body>
+  //         </html>
+  //       `)
+
+  //       window.print()
+  //     } else {
+  //       console.error("No 'customerItems' found or 'content' property is missing.")
+  //     }
+  //   } else {
+  //     console.error("Invalid data format or missing content in 'customerRecord' array.")
+  //   }
+  // }
+
+  // const handleEditRecord = () => {
+  //   navigate('/customer/customer_info')
+  // }
   useEffect(() => {
     getDetails()
+    getPrintDetails()
   }, [page])
 
   return (
@@ -365,11 +423,6 @@ const CustomerList = () => {
               &nbsp;
               <span style={{ fontWeight: 'bold' }}>Filter</span>
             </button>
-
-            {/* <button style={{ background: 'none', border: 'none' }} onClick={() => handlePrint()}>
-              {' '}
-              Drucken <MdLocalPrintshop />
-            </button> */}
           </div>
 
           {/* Number of row selection completed */}
@@ -560,6 +613,7 @@ const CustomerList = () => {
               <Modal.Footer>
                 <button
                   className="btn btn"
+                  // onClick={handleEditRecord}
                   onClick={handleClose}
                   style={{ border: '1px solid #0b5995', marginRight: '120px', color: 'black' }}
                 >
@@ -599,10 +653,9 @@ const CustomerList = () => {
             onChange={handlePageChange}
           />
         </Stack>
-        <Modal show={isModalVisible} onHide={handleModalClose} centered>
-          <Modal.Title>
+        <Modal size="sm" show={isModalVisible} onHide={handleModalClose} centered>
+          <Modal.Title className="text-center mt-4">
             <svg
-              style={{ marginLeft: '200px', marginTop: '25px' }}
               width="44"
               height="53"
               viewBox="0 0 44 53"
@@ -636,32 +689,30 @@ const CustomerList = () => {
             </svg>
             <br />
             <br />
-            <h4 style={{ marginLeft: '150px', color: 'black' }}>Sind Sie sicher?</h4>
+            <h4 style={{ textAlign: 'center', color: 'black' }}>Sind Sie sicher?</h4>
           </Modal.Title>
-          <Modal.Body>
-            <p style={{ textAlign: 'center' }}>
-              9ieser Vorgang kann nichtF r3ckgBngig gemacht werden
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <div>
-              <button
-                className="btn btn w-25"
-                style={{ background: '#015291', color: 'white' }}
-                onClick={handleModalClose}
-              >
-                Abbrechen
-              </button>
-              &nbsp;&nbsp;
-              <button
-                className="btn btn w-25"
-                style={{ background: '#d04545', color: 'white' }}
-                onClick={handleDeleteConfirm}
-              >
-                Löschen
-              </button>
-            </div>
-          </Modal.Footer>
+          <p style={{ textAlign: 'center' }} className="mx-4 p-3">
+            {/* Dieser Vorgang kann nichtF r3ckgBngig gemacht werden */}
+            Dieser Vorgang kann nicht r3ckgBngig gemacht werden
+          </p>
+          <div className="text-center">
+            <button
+              className="btn"
+              style={{ background: '#015291', color: 'white' }}
+              onClick={handleModalClose}
+            >
+              Abbrechen
+            </button>
+            &nbsp;&nbsp;
+            <button
+              className="btn"
+              style={{ background: '#d04545', color: 'white' }}
+              onClick={handleDeleteConfirm}
+            >
+              Löschen
+            </button>
+          </div>
+          <br />
         </Modal>
       </div>
       <ToastContainer />

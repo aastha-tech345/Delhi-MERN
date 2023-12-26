@@ -2,13 +2,9 @@ const data = localStorage.getItem('record')
 const loginUser = JSON.parse(data)
 const userPermission = loginUser?.user?.role?.permission || []
 const isAdmin = loginUser?.user?.user_type === 'admin'
-const isUser = loginUser?.user?.user_type === 'user'
-
 export const verifyPer = () => {
   if (isAdmin || loginUser?.user?.isAdminFullRights === 'true') {
     return ['Klientlnnen', 'Dashboard', 'Einstellungen']
-  } else if (isUser) {
-    return ['Klientlnnen', 'Einstellungen']
   }
 
   return userPermission?.map((elem) => {
