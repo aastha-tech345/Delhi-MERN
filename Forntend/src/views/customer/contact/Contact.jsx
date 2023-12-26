@@ -181,8 +181,8 @@ const Contact = () => {
 
   const saveData = async () => {
     try {
-      if (!data?.fname || !data?.lname || !data?.gender || !data?.phone || !data?.statu) {
-        return notify('Please Fill All Details')
+      if (!data?.fname || !data?.lname) {
+        return toast.warning('Please Fill Fname & Lname Details')
       }
       if (!email) {
         return notify('Invaild Email')
@@ -194,6 +194,8 @@ const Contact = () => {
         setData('')
         handleClose()
         getDetails()
+      } else {
+        toast.error('Email Already Exists.')
       }
     } catch (error) {
       console.error('Error during API call:', error)

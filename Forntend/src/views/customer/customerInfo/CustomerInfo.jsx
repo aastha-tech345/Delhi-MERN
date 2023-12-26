@@ -140,8 +140,6 @@ const CustomerInfo = () => {
 
     if (emailRegex.test(inputValue.toLowerCase())) {
       setEmail(inputValue)
-    } else {
-      setEmail('')
     }
   }
 
@@ -194,7 +192,7 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
-      // console.log(result)
+      console.log(result)
 
       if (result?.message === 'CustomerInfo was created') {
         toast.success('Data saved successfully!')
@@ -202,6 +200,7 @@ const CustomerInfo = () => {
           orderNumber: '',
           newsletterDate: '',
           extras: '',
+          dataProtection: '',
         })
         setCustomerInfoStatu({
           clientStatus: '',
@@ -224,6 +223,7 @@ const CustomerInfo = () => {
           billLand: '',
           billOrt: '',
         })
+
         setCustomerDelivery({
           fname: '',
           lname: '',
@@ -233,6 +233,7 @@ const CustomerInfo = () => {
           ort: '',
           phone: '',
           mobile: '',
+          alreadyPaid: '',
         })
         setCustomerDeposit({
           deposit: '',
@@ -412,7 +413,7 @@ const CustomerInfo = () => {
                   type="checkbox"
                   name="dataProtection"
                   onChange={customerInfoChange}
-                  value={customerInfoStatu.dataProtection}
+                  checked={customerInfoStatu.dataProtection}
                   id="inputPassword"
                 />
               </div>
@@ -739,10 +740,13 @@ const CustomerInfo = () => {
               <div className="col-sm-6">
                 <input
                   type="email"
-                  onChange={handleEmailChange}
+                  // onChange={handleEmailChange}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                  }}
                   name="email"
                   placeholder="E-Mail Adresse"
-                  value={customerDelivery.email}
+                  value={email}
                   className="form-control"
                   id="inputPassword"
                 />
@@ -871,7 +875,7 @@ const CustomerInfo = () => {
                 <input
                   onChange={DeliveryChange}
                   name="alreadyPaid"
-                  value={customerDelivery.alreadyPaid}
+                  checked={customerDelivery.alreadyPaid}
                   type="checkbox"
                 />
                 &nbsp; ja
