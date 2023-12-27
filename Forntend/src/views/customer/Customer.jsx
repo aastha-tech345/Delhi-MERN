@@ -21,7 +21,7 @@ const Customer = () => {
     } else if (name === 'Kontakte') {
       return navigate('/customer/contact')
     } else if (name === 'Aktivitat') {
-      return navigate('/customer/description')
+      return navigate('/customer/activity')
     } else if (name === 'Dokumente') {
       return navigate('/customer/document')
     } else if (name === 'Vollmachten') {

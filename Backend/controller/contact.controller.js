@@ -4,8 +4,17 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createContact = async (req, res) => {
   try {
-    const { fname,statu, lname, email, phone, gender, customer_id, added_by, id } =
-      req.body;
+    const {
+      fname,
+      statu,
+      lname,
+      email,
+      phone,
+      gender,
+      customer_id,
+      added_by,
+      id,
+    } = req.body;
 
     const emailFind = await ContactInfomation.Contact.findOne({ email });
     if (emailFind) {
@@ -28,12 +37,11 @@ exports.createContact = async (req, res) => {
 
     const result = await contact.save();
     return res.status(201).json({
-      status:201,
+      status: 201,
       message: "contact was created",
       result,
     });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "An error occurred while creating contact" });
   }
 };
@@ -60,6 +68,13 @@ exports.getContact = async (req, res) => {
       .pagination(resultPerPage);
 
     const result = await apiFeatures.query;
+
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
 
     if (apiFeatures.getCurrentPage() > pageCount) {
       apiFeatures.setCurrentPage(pageCount);
@@ -152,6 +167,7 @@ exports.getContactSearch = async (req, res) => {
         { email: { $regex: searchKey, $options: "i" } },
         { phone: { $regex: searchKey, $options: "i" } },
         { statu: { $regex: searchKey, $options: "i" } },
+        { id: { $regex: searchKey, $options: "i" } },
       ],
     });
     return res.send(result);

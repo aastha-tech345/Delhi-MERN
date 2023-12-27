@@ -12,7 +12,7 @@ const Bills = React.lazy(() => import('./views/customer/bills/Bills'))
 const Tasks = React.lazy(() => import('./views/customer/task/Tasks'))
 const Document = React.lazy(() => import('./views/customer/document/Document'))
 const Services = React.lazy(() => import('./views/customer/services/Services'))
-const Description = React.lazy(() => import('./views/customer/description/Description'))
+const Activity = React.lazy(() => import('./views/customer/activity/Activity'))
 const PrintTemplate = React.lazy(() => import('./views/settings/print/PrintTemplate'))
 
 //settings
@@ -44,7 +44,7 @@ if (auth) {
     { path: '/customer/contact', name: 'Kontakte', element: Contact },
     { path: '/customer/bills', name: 'Rechnungen', element: Bills },
     { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
-    { path: '/customer/description', name: 'Aktivitat', element: Description },
+    { path: '/customer/activity', name: 'Aktivitat', element: Activity },
     { path: '/customer/document', name: 'Dokumente', element: Document },
     { path: '/customer/services', name: 'SPV', element: Services },
     { path: '/settings', name: 'Einstellungen', element: Setting },

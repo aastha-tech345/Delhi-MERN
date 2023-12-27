@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import InputGroup from 'react-bootstrap/InputGroup'
 import Row from 'react-bootstrap/Row'
-import { Link, useNavigate } from 'react-router-dom'
-import ReCAPTCHA from 'react-google-recaptcha'
-import logo from '../../../assets/images/hvd-logo.png'
+import { useNavigate } from 'react-router-dom'
+// import ReCAPTCHA from 'react-google-recaptcha'
+import logo from '../../../assets/images/logo.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
@@ -42,44 +41,42 @@ const Login = () => {
       })
 
       const result = await response.json()
-      console.log('aastha', result)
+      // console.log('aastha', result)
 
       if (result.success === true) {
-        notify('User Login Successfully')
+        toast.success('User Login Successfully')
         const token = result?.user?.tokens[0]?.token
         window.localStorage.setItem('token', token)
         window.localStorage.setItem('record_id', result?.user?._id)
         navigate('/dashboard')
         window.location.reload()
+      } else {
+        notify('Invalid Credentials')
       }
-      notify('Invalid Credentials')
     } catch (error) {
       console.error('Error:', error)
-      notify('Invalid Credentials')
+      toast.error('Invalid Credentials')
     }
-  }
-
-  const registerPage = () => {
-    navigate('/register')
   }
 
   const forgetPassword = () => {
     navigate('/password-reset')
   }
 
-  function onChange(value) {
-    console.log('Captcha value:', value)
-  }
-
   return (
     <div
       className=" min-vh-100 d-flex flex-row align-items-center"
-      style={{ background: '#015291' }}
+      style={{ background: '#2B237C' }}
     >
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={4}>
-            <img src={logo} style={{ width: '400px', background: 'none' }} alt="..." />
+            <img
+              src={logo}
+              style={{ width: '100%', height: '90px', background: 'none' }}
+              alt="..."
+            />
+
             <br />
             <CCardGroup>
               <CCard className="p-4">

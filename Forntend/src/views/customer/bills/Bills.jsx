@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
@@ -6,48 +6,52 @@ import { useNavigate } from 'react-router-dom'
 
 const Bills = () => {
   const navigate = useNavigate()
-  const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
   const [productData, setProductData] = useState({
     product: '',
     paymentMethod: '',
-    invoiceDate: '',
-    colleague: '',
     alreadyPaid: false,
     invoiceAmount: '',
     deliveryDate: '',
     customer_id: result?._id,
   })
+  const [colleague, setColleague] = useState('')
+  const [invoiceDate, setInvoiceDate] = useState('')
+
+  // const handleInputChange = (e) => {
+  //   const { name, value, type, checked } = e.target
+
+  //   setProductData((prevProductData) => ({
+  //     ...prevProductData,
+  //     [name]: type === 'checkbox' ? checked : value,
+  //   }))
+  // }
 
   const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target
+    const { name, value, type } = e.target
 
     setProductData((prevProductData) => ({
       ...prevProductData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === 'radio' ? value : value,
     }))
   }
   const cancelData = () => {
     navigate('/customer/customer_info')
   }
+  let data = { ...productData, colleague, invoiceDate }
   const saveData = async () => {
+    if (!productData?.product) {
+      return toast.warning('Please Product Name...')
+    }
     try {
-      for (const key in productData) {
-        if (!productData[key]) {
-          notify(`Please fill in the ${key} field`)
-          return
-        }
-      }
-
-      // console.log('ashishhhh', productData)
       let response = await fetch(`${apiUrl}/invoice/create_invoice`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(productData),
+        body: JSON.stringify(data),
       })
 
       if (!response.ok) {
@@ -55,22 +59,36 @@ const Bills = () => {
       }
 
       let result = await response.json()
-      console.log(result)
-      notify('Data Saved Successfully')
+      // console.log(result)
+      toast.success('Data Saved Successfully')
       setProductData({
         product: '',
         paymentMethod: '',
-        invoiceDate: '',
-        colleague: '',
         invoiceAmount: '',
         deliveryDate: '',
       })
+      setColleague('')
+      setInvoiceDate('')
+      // getDetails()
     } catch (error) {
-      notify('Please Fill in all details')
-      console.error('Error during API call:', error)
+      toast.error('Please Fill in all details')
+      // console.error('Error during API call:', error)
     }
   }
 
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/invoice/get_invoice`)
+  //     const data = await result.json()
+  //     setActivityData(data)
+  //   } catch (error) {
+  //     console.error('Error fetching customer record:', error)
+  //   }
+  // }
+  // // console.log('aastha', activityData)
+  // useEffect(() => {
+  //   getDetails()
+  // }, [])
   return (
     <div style={{ background: '#fff' }}>
       <Customer />
@@ -85,7 +103,7 @@ const Bills = () => {
             </label>
             <div className="col-sm-6 mt-2">
               <select
-                className="form-control"
+                className="form-control form-select"
                 name="product"
                 value={productData.product}
                 onChange={handleInputChange}
@@ -103,7 +121,7 @@ const Bills = () => {
             </label>
             <div className="col-sm-6 mt-2">
               <select
-                className="form-control"
+                className="form-control form-select"
                 name="paymentMethod"
                 value={productData.paymentMethod}
                 onChange={handleInputChange}
@@ -125,9 +143,11 @@ const Bills = () => {
               <input
                 type="date"
                 name="invoiceDate"
-                checked={productData.invoiceDate}
-                onChange={handleInputChange}
-                placeholder="02/09/2004"
+                value={invoiceDate}
+                // checked={productData.invoiceDate}
+                onChange={(e) => {
+                  setInvoiceDate(e.target.value)
+                }}
                 className="form-control"
               />
             </div>
@@ -140,8 +160,11 @@ const Bills = () => {
               <input
                 type="text"
                 name="colleague"
-                checked={productData.colleague}
-                onChange={handleInputChange}
+                // checked={productData.colleague}
+                value={colleague}
+                onChange={(e) => {
+                  setColleague(e.target.value)
+                }}
                 placeholder="MitarbeiterIn"
                 className="form-control"
               />
@@ -187,7 +210,6 @@ const Bills = () => {
                 name="deliveryDate"
                 value={productData.deliveryDate}
                 onChange={handleInputChange}
-                placeholder="09/09/2000"
                 className="form-control"
               />
             </div>

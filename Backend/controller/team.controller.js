@@ -1,40 +1,46 @@
-const teamModel = require('../models/team.model');
+const teamModel = require("../models/team.model");
 const UserModel = require("../models/user.model");
-
 
 exports.teamCreation = async (req, res) => {
   try {
-    const {
-      team_name,
-      team_members,
-      team_manager,
-      description,
-      created_by,
-      parent_id
-    } = req.body;
+    const { team_name, team_members, team_manager, description } = req.body;
 
-    const employee = await UserModel.User.findOne({ role: 'employee' });
-    if (employee) {
-      defaultValues = {
-        created_by: null,
-        parent_id: employee._id,
-      };
-    } else {
-      return res.status(400).send({ message: "No employee found to link as parent" });
-    }
-    let userData = {
+    const userData = {
       team_name,
       team_members,
       team_manager,
       description,
-      ...defaultValues,
     };
+
     const userInstance = new teamModel.Teams(userData);
     const result = await userInstance.save();
 
-    return res.status(200).send({ message: 'Customer created successfully', data: result });
+    return res
+      .status(200)
+      .send({ message: "Team created successfully", data: result });
   } catch (error) {
-    console.error(error);
-    return res.status(500).send({ message: 'Server Error' });
+    console.error("Error creating team:", error.message);
+    return res.status(500).send({ message: "Server Error" });
+  }
+};
+
+exports.getActivity = async (req, res) => {
+  try {
+    const user = await teamModel.Teams.findById(req.params.id)
+      .populate("role")
+    // console.log("user", user);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User Find Successfully",
+      user: user,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

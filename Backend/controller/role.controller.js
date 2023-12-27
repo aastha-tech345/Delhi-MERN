@@ -39,6 +39,13 @@ exports.getRole = async (req, res) => {
 
     const result = await apiFeatures.query;
 
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
+
     // let pageCount = Math.ceil(result?.length / resultPerPage);
 
     if (apiFeatures.getCurrentPage() > pageCount) {

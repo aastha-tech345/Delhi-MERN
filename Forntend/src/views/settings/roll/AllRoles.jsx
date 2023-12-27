@@ -50,7 +50,7 @@ const AllRoles = ({ data }) => {
             </thead>
             <tbody>
               {data?.map((elem) => {
-                console.log('elem', elem)
+                // console.log('elem', elem)
                 const { _id, role_name } = elem
                 return (
                   <>
