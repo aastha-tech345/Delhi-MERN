@@ -259,10 +259,12 @@ exports.updateEmployeeDetails = async (req, res) => {
 // get Employee under the user
 exports.getEmployeeData = async (req, res) => {
   try {
+    // console.log("req",req.body)
     // const usermployees = await UserModel.User.find({
     //   parent_id: req.params.id,
     // }).populate("role");
     // const usermployees = await UserModel.User.find({status: "active"}).populate("role");
+    // const resultPerPage = req.body.resultPerPage;
     const resultPerPage = 2;
     const countPage = await UserModel.User.countDocuments({
       status: "active",
@@ -281,6 +283,13 @@ exports.getEmployeeData = async (req, res) => {
 
     const result = await apiFeatures.query;
 
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
+
     // let pageCount = Math.ceil(result?.length / resultPerPage);
 
     if (apiFeatures.getCurrentPage() > pageCount) {
@@ -293,7 +302,7 @@ exports.getEmployeeData = async (req, res) => {
       });
     }
 
-    if (!result) {
+    if (result?.length === 0) {
       return res.status(404).json({
         success: false,
         message: "Data not found",

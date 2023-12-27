@@ -50,6 +50,13 @@ exports.getActivity = async (req, res) => {
     // const products = await productDatabase.find()
     const result = await apiFeatures.query;
 
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
+
     // const result = await ActivityInfomation.Activity.find();
     return res.status(200).json({
       success: true,
