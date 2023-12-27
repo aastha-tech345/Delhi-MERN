@@ -197,10 +197,11 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                 setRolePermission(e.target.value)
               }}
             />
-            <h5 className="mt-2 fw-bold" style={{ float: 'left' }}>
-              Berechtigungen
+            <h5 className="mt-2 fw-bold">Berechtigungen</h5>
+
+            <h5 className="mt-3 fw-bold" style={{ marginRight: '75%' }}>
+              Klientlnnen
             </h5>
-            <h5 className="mt-3 fw-bold">Klientlnnen</h5>
             <div>
               <div className="row" onClick={() => handleSetName('Klientlnnen')}>
                 <div className="col-sm-3 mt-2">Anzeigen</div>

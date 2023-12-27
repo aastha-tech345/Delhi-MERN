@@ -14,10 +14,10 @@ import Stack from '@mui/material/Stack'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import { FiFilter } from 'react-icons/fi'
 const CustomerList = () => {
-  console.log('verifyEditPer', verifyEditPer())
+  // console.log('verifyEditPer', verifyEditPer())
   let lgUser = localStorage.getItem('record')
   let loginData = JSON.parse(lgUser)
-  console.log('loginData', loginData)
+  // console.log('loginData', loginData)
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
   const [print, setPrintRecord] = useState([])
@@ -35,7 +35,8 @@ const CustomerList = () => {
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
   const [page, setPage] = useState(1)
-  const [countPage, setCountPage] = useState(0)
+  const [countPage, setCountPage] = useState(1)
+  // console.log('countPage 39', countPage)
   // const navigate = useNavigate()
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
@@ -245,7 +246,8 @@ const CustomerList = () => {
   const getDetails = async () => {
     try {
       const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
-      const data = await result.json()
+      const data = await result?.json()
+      // console.log('data 258', data)
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setCustomerRecord(activeRecords)
@@ -258,7 +260,7 @@ const CustomerList = () => {
     try {
       const result = await fetch(`${apiUrl}/print/get_print?page=${page}`)
       const data = await result.json()
-      setCountPage(data?.pageCount)
+      // setCountPage(data?.pageCount)`
       const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setPrintRecord(activeRecords)
     } catch (error) {
@@ -340,11 +342,11 @@ const CustomerList = () => {
   let customerRecord = localStorage.getItem('CustomerRecord')
   const customerItems = []
 
-  print.map((item) => {
+  print?.map((item) => {
     // console.log('item record', item)
-    if (item.findBy === 'customer') {
+    if (item?.findBy === 'customer') {
       // console.log('customer')
-      customerItems.push(item)
+      customerItems?.push(item)
     }
     return null
   })

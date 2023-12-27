@@ -50,6 +50,8 @@ const Login = () => {
         window.localStorage.setItem('record_id', result?.user?._id)
         navigate('/dashboard')
         window.location.reload()
+      } else {
+        notify('Invalid Credentials')
       }
     } catch (error) {
       console.error('Error:', error)
