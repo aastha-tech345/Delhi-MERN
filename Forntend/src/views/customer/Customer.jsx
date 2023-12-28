@@ -7,34 +7,41 @@ import { useNavigate } from 'react-router-dom'
 const Customer = () => {
   // const [activeTab, setActiveTab] = useState('')
   const navigate = useNavigate()
-  let activeTab = localStorage.getItem('tabId')
+  let activeTab = localStorage.getItem('tabId') || 'nav-home'
 
   const handleTabClick = (tabId, name, e) => {
     if (e && e.target.tagName.toLowerCase() === 'a') {
       e.preventDefault()
     }
-    localStorage.setItem('tabId', tabId)
+    // localStorage.setItem('tabId', tabId)
     // setActiveTab(id)
     // setActiveTab(tabId)
     if (name === 'KlientInnen') {
+      localStorage.setItem('tabId', 'nav-home')
       return navigate('/customer/customer_info')
     } else if (name === 'Kontakte') {
+      localStorage.setItem('tabId', 'nav-kontakte')
       return navigate('/customer/contact')
     } else if (name === 'Aktivitat') {
+      localStorage.setItem('tabId', 'nav-aufgaben')
       return navigate('/customer/activity')
     } else if (name === 'Dokumente') {
+      localStorage.setItem('tabId', 'nav-dokumente')
       return navigate('/customer/document')
     } else if (name === 'Vollmachten') {
+      localStorage.setItem('tabId', 'nav-vollmachten')
       return navigate('/customer/attorney')
     } else if (name === 'SPV') {
+      localStorage.setItem('tabId', 'nav-spv')
       return navigate('/customer/services')
     } else if (name === 'Rechnung') {
+      localStorage.setItem('tabId', 'nav-leistungen')
       return navigate('/customer/bills')
     }
   }
   useEffect(() => {
-    handleTabClick('nav-home')
-  }, [])
+    handleTabClick()
+  }, [activeTab])
   let data = localStorage.getItem('customerDatat')
   let res = JSON.parse(data)
   // console.log(res)
@@ -121,34 +128,6 @@ const Customer = () => {
                     Aktivitat
                   </button>
                   <button
-                    className={`nav-link ${activeTab === 'nav-rechnungen' ? 'active' : ''}`}
-                    id="nav-rechnungen-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-rechnungen"
-                    role="tab"
-                    aria-controls="nav-rechnungen"
-                    aria-selected={activeTab === 'nav-rechnungen'}
-                    onClick={(e) => handleTabClick('nav-rechnungen', 'Dokumente', e)}
-                    style={{ marginRight: '50px' }}
-                  >
-                    <i className="fa-regular fa-file fa-fw"></i>
-                    Dokumente
-                  </button>
-                  <button
-                    className={`nav-link ${activeTab === 'nav-beschreibung' ? 'active' : ''}`}
-                    id="nav-beschreibung-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-beschreibung"
-                    role="tab"
-                    aria-controls="nav-beschreibung"
-                    aria-selected={activeTab === 'nav-beschreibung'}
-                    onClick={(e) => handleTabClick('nav-beschreibung', 'Vollmachten', e)}
-                    style={{ marginRight: '50px' }}
-                  >
-                    <i className="fa-solid fa-paint-roller fa-fw"></i>
-                    Vollmachten
-                  </button>
-                  <button
                     className={`nav-link ${activeTab === 'nav-dokumente' ? 'active' : ''}`}
                     id="nav-dokumente-tab"
                     data-bs-toggle="tab"
@@ -156,7 +135,35 @@ const Customer = () => {
                     role="tab"
                     aria-controls="nav-dokumente"
                     aria-selected={activeTab === 'nav-dokumente'}
-                    onClick={(e) => handleTabClick('nav-dokumente', 'SPV', e)}
+                    onClick={(e) => handleTabClick('nav-dokumente', 'Dokumente', e)}
+                    style={{ marginRight: '50px' }}
+                  >
+                    <i className="fa-regular fa-file fa-fw"></i>
+                    Dokumente
+                  </button>
+                  <button
+                    className={`nav-link ${activeTab === 'nav-vollmachten' ? 'active' : ''}`}
+                    id="nav-vollmachten-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-vollmachten"
+                    role="tab"
+                    aria-controls="nav-vollmachten"
+                    aria-selected={activeTab === 'nav-vollmachten'}
+                    onClick={(e) => handleTabClick('nav-vollmachten', 'Vollmachten', e)}
+                    style={{ marginRight: '50px' }}
+                  >
+                    <i className="fa-solid fa-paint-roller fa-fw"></i>
+                    Vollmachten
+                  </button>
+                  <button
+                    className={`nav-link ${activeTab === 'nav-spv' ? 'active' : ''}`}
+                    id="nav-spv-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-spv"
+                    role="tab"
+                    aria-controls="nav-spv"
+                    aria-selected={activeTab === 'nav-spv'}
+                    onClick={(e) => handleTabClick('nav-spv', 'SPV', e)}
                     style={{ marginRight: '50px' }}
                   >
                     {' '}
