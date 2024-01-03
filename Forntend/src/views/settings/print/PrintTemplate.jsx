@@ -190,7 +190,7 @@ const PrintTemplate = () => {
 
             <Modal size="lg" show={show} onHide={handleClose} centered>
               <Modal.Header closeButton style={{ borderBottom: 'none' }}>
-                <Modal.Title>Neue E-Mail Vorlage anlegen</Modal.Title>
+                <Modal.Title>Neue E-Mail-Vorlage anlegen</Modal.Title>
               </Modal.Header>
               <div>
                 <div className="row px-4">
@@ -208,7 +208,7 @@ const PrintTemplate = () => {
                   </div>
                 </div>
                 <div className="row px-4">
-                  <label>Inhalt</label>
+                  <label style={{ margin: '15px 0px 15px 0px' }}>Inhalt</label>
                   <div className="col-sm-12">
                     {/* Assuming JoditEditor returns a value directly, if not, adjust accordingly */}
                     <JoditEditor
