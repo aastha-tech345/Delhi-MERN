@@ -38,6 +38,7 @@ const CustomerList = () => {
   const [page, setPage] = useState(1)
   const [content, setContent] = useState('')
   const [countPage, setCountPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(25)
   // console.log('countPage 39', countPage)
   // const navigate = useNavigate()
   const generateRandomId = () => {
@@ -157,6 +158,10 @@ const CustomerList = () => {
       // hidden: 'true',
     },
   ]
+
+  const handleItemsPerPageChange = (event) => {
+    setItemsPerPage(Number(event.target.value))
+  }
 
   const handleIconClick = (recordId) => {
     setSelectedRecordId(recordId)
@@ -641,15 +646,32 @@ const CustomerList = () => {
           dataSource={data}
           pagination={false}
         />
-        <Stack spacing={2}>
-          <Pagination
-            count={countPage}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        <div className="row">
+          <div className="col-sm-10">
+            <Stack spacing={2}>
+              <Pagination
+                count={countPage}
+                variant="outlined"
+                shape="rounded"
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </div>
+          <div className="col-sm-2 text-end">
+            <select
+              className="form-control form-select"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+            >
+              <option value={10}>10 pro Seite</option>
+              <option value={20}>20 pro Seite</option>
+              <option value={50}>50 pro Seite</option>
+              <option value={100}>100 pro Seite</option>
+            </select>
+          </div>
+        </div>
+        <br />
         <Modal size="sm" show={isModalVisible} onHide={handleModalClose} centered>
           <Modal.Title className="text-center mt-4">
             <svg

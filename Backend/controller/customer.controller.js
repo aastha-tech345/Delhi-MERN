@@ -91,7 +91,7 @@ exports.getCustomer = async (req, res) => {
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
-//  console.log("pageCount",pageCount)
+    //  console.log("pageCount",pageCount)
     const apiFeatures = new ApiFeatures(
       Customer.find({ status: "active" }),
       req.query
@@ -117,7 +117,6 @@ exports.getCustomer = async (req, res) => {
         pageCount: pageCount,
       });
     }
-
 
     return res.status(200).json({
       success: true,
@@ -204,27 +203,90 @@ exports.searchCustomer = async (req, res) => {
   }
 };
 
+// exports.getUserCustomer = async (req, res) => {
+//   try {
+//     const resultPerPage = 10;
+//     const baseQuery = Customer.find({
+//       created_by: req.params.id,
+//       status: "active",
+//     });
+
+//     // Use ApiFeatures to apply reverse, pagination, etc.
+//     const apiFeatures = new ApiFeatures(baseQuery, req.query)
+//       .reverse()
+//       .pagination(resultPerPage);
+
+//     const result = await apiFeatures.query;
+
+//     if (result.length === 0) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "No Data Found",
+//       });
+//     }
+
+//     const pageCount = Math.ceil(result.length / resultPerPage);
+
+//     // Ensure the current page is within valid range
+//     if (apiFeatures.getCurrentPage() > pageCount) {
+//       apiFeatures.setCurrentPage(pageCount);
+
+//       // Use ApiFeatures again to apply pagination on updated page
+//       const updatedResult = await new ApiFeatures(baseQuery, req.query)
+//         .reverse()
+//         .pagination(resultPerPage).query;
+
+//       return res.status(200).json({
+//         success: true,
+//         result: updatedResult,
+//         pageCount: pageCount,
+//       });
+//     }
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Customers under the user",
+//       result: result,
+//       pageCount: pageCount,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({
+//       success: false,
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
+
 exports.getUserCustomer = async (req, res) => {
   try {
-    let resultPerPage = 10;
-    const baseQuery = Customer.find({
-      created_by: req.params.id,
+    const resultPerPage = 10;
+
+    const countPage = await ContactInfomation.Contact.countDocuments({
       status: "active",
     });
-    const apiFeatures = new ApiFeatures(baseQuery, req.query)
+
+    let pageCount = Math.ceil(countPage / resultPerPage);
+
+    const apiFeatures = new ApiFeatures(
+      ContactInfomation.Contact.find({
+        customer_id: req.params.first,
+        // added_by: req.params.second,
+        status: "active",
+      }),
+      req.query
+    )
       .reverse()
       .pagination(resultPerPage);
 
     const result = await apiFeatures.query;
 
-    if (!result) {
+    if (result?.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "No Data Found",
+        message: "Data not found",
       });
     }
-
-    let pageCount = Math.ceil(result?.length / resultPerPage);
 
     if (apiFeatures.getCurrentPage() > pageCount) {
       apiFeatures.setCurrentPage(pageCount);
@@ -238,15 +300,11 @@ exports.getUserCustomer = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Customer under user",
       result: result,
       pageCount: pageCount,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: "Internal Server Error",
-    });
+    console.error(error);
+    return res.status(500).send({ message: "Server Error" });
   }
 };
