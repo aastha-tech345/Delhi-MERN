@@ -298,7 +298,7 @@ const Document = () => {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <div className="modal-footer">
+              <div className="modal-footer" style={{ display: 'flex', justifyContent: 'end' }}>
                 <button
                   className="btn btn"
                   onClick={handleClose}

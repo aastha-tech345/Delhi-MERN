@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 // import { GrEdit } from 'react-icons/gr'
+import JoditEditor from 'jodit-react'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { MdAdd, MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
@@ -35,6 +36,7 @@ const CustomerList = () => {
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
   const [page, setPage] = useState(1)
+  const [content, setContent] = useState('')
   const [countPage, setCountPage] = useState(1)
   // console.log('countPage 39', countPage)
   // const navigate = useNavigate()
@@ -51,11 +53,18 @@ const CustomerList = () => {
   const handlePageChange = (event, value) => {
     setPage(value)
   }
+  const editor = useRef(null)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const searchInputRef = useRef()
   const [selectedRecordId, setSelectedRecordId] = useState(null)
-
+  // const handleChange = (value, name) => {
+  //   if (name) {
+  //     setData({ ...data, [name]: value })
+  //   } else {
+  //     setContent(value)
+  //   }
+  // }
   const columns = [
     {
       title: 'NAME DES KUNDEN',
@@ -135,14 +144,14 @@ const CustomerList = () => {
             ''
           )}
 
-          {/* <button
+          <button
             style={{ background: 'none', border: 'none' }}
             onClick={() => handlePrint(record)}
           >
             {' '}
             <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
             &nbsp;Drucke
-          </button> */}
+          </button>
         </>
       ),
       // hidden: 'true',
@@ -305,7 +314,7 @@ const CustomerList = () => {
     localStorage.setItem('CustomerRecord', res)
     setHide(true)
   }
-  const [, setSelectedRowKeys] = useState([])
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const rowSelection = {
     // onChange: (selectedRowKeys, selectedRows) => {},
     onChange: (selectedKeys) => {
@@ -351,47 +360,37 @@ const CustomerList = () => {
     return null
   })
 
-  // console.log('Customer items:', customerItems)
-  // const handlePrint = (record) => {
-  //   // console.log('aastha print')
-  //   if (customerRecord && customerRecord.length > 0) {
-  //     if (customerItems.length > 0) {
-  //       const printTemplate = customerItems[0].content
+  console.log('Customer items:', customerItems)
 
-  //       let contentToPrint = ''
+  const handlePrint = (record) => {
+    console.log('aastha print')
+    const printTemplate = customerItems[0].content
 
-  //       const recordContent = printTemplate
-  //         .replace('{fname}', record.fname)
-  //         .replace('{email}', record.email)
-  //         .replace('{id}', record.id)
-  //         .replace('{phone}', record.phone)
-  //         .replace('{group}', record.group)
+    let contentToPrint = ''
 
-  //       contentToPrint += `<div>${recordContent}</div>`
+    const recordContent = printTemplate
+      .replace('{fname}', record.fname)
+      .replace('{email}', record.email)
+      .replace('{id}', record.id)
+      .replace('{phone}', record.phone)
+      .replace('{group}', record.group)
 
-  //       // const printWindow = window.open('', '_blank')
-  //       window.document.write(`
-  //         <html>
-  //           <head>
-  //           </head>
-  //           <body>
-  //             ${contentToPrint}
-  //           </body>
-  //         </html>
-  //       `)
+    contentToPrint += `<div>${recordContent}</div>`
 
-  //       window.print()
-  //     } else {
-  //       console.error("No 'customerItems' found or 'content' property is missing.")
-  //     }
-  //   } else {
-  //     console.error("Invalid data format or missing content in 'customerRecord' array.")
-  //   }
-  // }
+    // const printWindow = window.open('', '_blank')
+    window.document.write(`
+          <html>
+            <head>
+            </head>
+            <body>
+              ${contentToPrint}
+            </body>
+          </html>
+        `)
 
-  // const handleEditRecord = () => {
-  //   navigate('/customer/customer_info')
-  // }
+    window.print()
+  }
+
   useEffect(() => {
     getDetails()
     getPrintDetails()
@@ -415,7 +414,7 @@ const CustomerList = () => {
               className="form-control"
             />
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <button
               onClick={searchHandle}
               className="btn btn text-light"
@@ -426,13 +425,9 @@ const CustomerList = () => {
               <span style={{ fontWeight: 'bold' }}>Filter</span>
             </button>
           </div>
-
-          {/* Number of row selection completed */}
-          {/* <div className="col-sm-6">
-            <p>Number of rows selected: {selectedRowKeys.length}</p>
-          </div> */}
-          {/* Number of row selection completed */}
-
+          <div className="col-sm-2 text-end mt-1">
+            <p>{selectedRowKeys.length} Ausgewählte</p>
+          </div>
           <div className="col-sm-3">
             <button
               className="btn btn"
