@@ -66,7 +66,7 @@ const Login = () => {
   return (
     <div
       className=" min-vh-100 d-flex flex-row align-items-center"
-      style={{ background: '#2B237C' }}
+      style={{ background: '#015291' }}
     >
       <CContainer>
         <CRow className="justify-content-center">
@@ -82,7 +82,7 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <Form noValidate validated={validated}>
-                    <h4 style={{ color: '#015291', fontWeight: 'bold', textAlign: 'center' }}>
+                    <h4 style={{ color: '#015291', fontWeight: 'normal', textAlign: 'center' }}>
                       Anmeldung
                     </h4>
                     <Row className="mb-3">

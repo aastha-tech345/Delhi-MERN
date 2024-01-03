@@ -277,7 +277,7 @@ const CreateUser = () => {
       <br />
       <div className="topBtnBox mx-3">
         <div className="row p-2">
-          <div className="col-sm-2">
+          <div className="col-sm-3">
             <button
               className="btn btn"
               onClick={handleShowInviteUserModal}

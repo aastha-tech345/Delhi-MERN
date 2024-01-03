@@ -286,7 +286,7 @@ const Contact = () => {
           </button>
         </div>
         <div className="col-sm-3">
-          &nbsp;&nbsp;
+          {/* &nbsp;&nbsp; */}
           <button
             className="btn btn"
             style={{ background: '#0b5995', color: 'white' }}

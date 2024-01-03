@@ -471,8 +471,8 @@ const Attorney = () => {
           </div>
           <hr className="mx-3" />
           <div className="row ">
-            <div className="col-sm-9"></div>
-            <div className="col-sm-3 mb-3">
+            <div className="col-sm-6"></div>
+            <div className="col-sm-6 mb-3 text-end">
               <button
                 onClick={cancelData}
                 type="button"

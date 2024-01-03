@@ -223,7 +223,7 @@ const Activity = () => {
 
         <div className="col-sm-10">
           <PhoneOutlined
-            className="p-2"
+            className="p-2 "
             style={{
               border: '1px solid lightgray',
               borderRadius: '5px',
@@ -327,8 +327,8 @@ const Activity = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className="col-sm-6"></div>
-          <div className="col-sm-2">
+          <div className="col-sm-2"></div>
+          <div className="col-sm-6 text-end ">
             <button
               className="btn btn"
               style={{ background: '#015291', color: 'white' }}

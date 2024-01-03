@@ -305,3 +305,12 @@ h3.bluetext {
 .jodit-status-bar__item.jodit-status-bar__item-right {
   display: none !important;
 }
+
+/*Mukesh css 03-01-2023*/
+.ant-checkbox-inner {
+  border: 1px solid #0b5995!important;
+}
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #0b5995;
+  border-color: #0b5995;
+}
