@@ -95,7 +95,7 @@ const Bills = () => {
       <h5 className="mx-4">Rechnung</h5>
       <hr />
       <div className="row m-4 p-4 " style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
-        <p style={{ color: 'blue' }}>Rechnungstellung</p>
+        <p style={{ color: '#244D92' }}>Rechnungstellung</p>
         <div className="col-sm-6">
           <div className="mb-6 row">
             <label htmlFor="product" className="col-sm-4 col-form-label">
