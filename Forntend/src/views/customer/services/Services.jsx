@@ -1205,19 +1205,12 @@ const Services = () => {
               >
                 <p>Erstellung</p>
                 <input
+                  className="form-control w-25"
                   value={information.creation}
                   onChange={(e) => informationChange(e)}
                   name="creation"
                   type="date"
-                  default
-                  style={{
-                    background: '#ebedef',
-                    paddingLeft: '10px',
-                    borderRadius: '5px 5px 5px 5px',
-                    height: '40px',
-                    width: '200px',
-                    border: 'none',
-                  }}
+                  disabled={information.urgency !== 'yes'}
                 />
               </div>
               <div
@@ -1242,6 +1235,7 @@ const Services = () => {
                           name="fname"
                           type="text"
                           placeholder="Name"
+                          disabled={information.alternateAddress !== 'yes'}
                           style={{
                             border: '1px solid #ebedef',
                             paddingLeft: '10px',
@@ -1262,6 +1256,7 @@ const Services = () => {
                           value={information.street}
                           onChange={(e) => informationChange(e)}
                           name="street"
+                          disabled={information.alternateAddress !== 'yes'}
                           placeholder=" Straße mit Hausnummer"
                           style={{
                             border: '1px solid #ebedef',
@@ -1286,6 +1281,7 @@ const Services = () => {
                             setInformation({ ...information, plz: inputValue })
                           }}
                           placeholder="PLZ"
+                          disabled={information.alternateAddress !== 'yes'}
                           className="form-control"
                           id="inputPassword"
                           style={{
@@ -1317,6 +1313,7 @@ const Services = () => {
                             }
                           }}
                           placeholder="e.g. 91+ 8354568464"
+                          disabled={information.alternateAddress !== 'yes'}
                           className="form-control"
                           id="inputPhone"
                           maxLength={10}
@@ -1337,6 +1334,7 @@ const Services = () => {
                           name="lname"
                           type="text"
                           placeholder="Vorname"
+                          disabled={information.alternateAddress !== 'yes'}
                           style={{
                             border: '1px solid #ebedef',
                             paddingLeft: '10px',
@@ -1358,6 +1356,7 @@ const Services = () => {
                           name="address"
                           type="text"
                           placeholder="Adresszusatz"
+                          disabled={information.alternateAddress !== 'yes'}
                           style={{
                             border: '1px solid #ebedef',
                             paddingLeft: '10px',
@@ -1379,6 +1378,7 @@ const Services = () => {
                           name="ort"
                           type="text"
                           placeholder=" Ort"
+                          disabled={information.alternateAddress !== 'yes'}
                           style={{
                             border: '1px solid #ebedef',
                             paddingLeft: '10px',
@@ -1405,6 +1405,7 @@ const Services = () => {
                             }
                           }}
                           placeholder="e.g., 91+ 8354568464"
+                          disabled={information.alternateAddress !== 'yes'}
                           className="form-control"
                           id="inputPhone"
                           maxLength={10}
