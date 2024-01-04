@@ -38,7 +38,7 @@ const CustomerList = () => {
   const [page, setPage] = useState(1)
   const [content, setContent] = useState('')
   const [countPage, setCountPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(25)
+  const [itemsPerPage, setItemsPerPage] = useState('')
   // console.log('countPage 39', countPage)
   // const navigate = useNavigate()
   const generateRandomId = () => {
@@ -159,10 +159,6 @@ const CustomerList = () => {
     },
   ]
 
-  const handleItemsPerPageChange = (event) => {
-    setItemsPerPage(Number(event.target.value))
-  }
-
   const handleIconClick = (recordId) => {
     setSelectedRecordId(recordId)
     setIsModalVisible(true)
@@ -257,11 +253,26 @@ const CustomerList = () => {
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
+  //     const data = await result?.json()
+  //     // console.log('data 258', data)
+  //     setCountPage(data?.pageCount)
+  //     const activeRecords = data?.result?.filter((record) => record.status === 'active')
+  //     setCustomerRecord(activeRecords)
+  //   } catch (error) {
+  //     console.error('Error fetching customer record:', error)
+  //   }
+  // }
+
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
-      const data = await result?.json()
-      // console.log('data 258', data)
+      const result = await fetch(
+        `${apiUrl}/customer/get_record?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
+      const data = await result.json()
+
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setCustomerRecord(activeRecords)
@@ -269,6 +280,12 @@ const CustomerList = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
+  }
+  console.log('itemperpage', itemsPerPage)
 
   const getPrintDetails = async () => {
     try {
@@ -281,6 +298,10 @@ const CustomerList = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+  useEffect(() => {
+    getDetails()
+    getPrintDetails()
+  }, [page, itemsPerPage])
   // useEffect(() => {
   //   getDetails()
   // }, [page])
@@ -396,10 +417,10 @@ const CustomerList = () => {
     window.print()
   }
 
-  useEffect(() => {
-    getDetails()
-    getPrintDetails()
-  }, [page])
+  // useEffect(() => {
+  //   getDetails()
+  //   getPrintDetails()
+  // }, [page])
 
   return (
     <>
