@@ -263,6 +263,7 @@ const Contact = () => {
         }}
       >
         <div className="col-sm-3">
+          <div className="searchInput">
           <input
             ref={searchInputRef}
             name="search"
@@ -271,8 +272,10 @@ const Contact = () => {
             type="search"
             id="form1"
             placeholder="Ihre Suche eingeben"
-            className="form-control"
+            className="form-control searchInputIcon"
           />
+          <i className="fas fa-search fa-fw"></i>
+          </div>
         </div>
         <div className="col-sm-6">
           <button
@@ -282,7 +285,7 @@ const Contact = () => {
           >
             <FiFilter />
             &nbsp;
-            <span style={{ fontWeight: 'bold' }}>Filter</span>
+            <span style={{ fontWeight: 'normal' }}>Filter</span>
           </button>
         </div>
         <div className="col-sm-3">
