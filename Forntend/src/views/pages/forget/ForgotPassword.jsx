@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import logo from '../../../assets/images/logo.png'
+import logo from '../../../assets/images/hvd-logo.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
@@ -104,11 +104,8 @@ const ForgotPassword = () => {
             <CContainer>
               <CRow className="justify-content-center">
                 <CCol md={4}>
-                  <img
-                    src={logo}
-                    style={{ width: '100%', height: '90px', background: 'none' }}
-                    alt="..."
-                  />
+                  <img className="mb-2" src={logo} style={{ height: '90px' }} alt="..." />
+
                   <br />
                   <CCardGroup>
                     <CCard className="p-4">

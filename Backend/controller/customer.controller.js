@@ -84,7 +84,7 @@ exports.editCustomer = async (req, res) => {
 
 exports.getCustomer = async (req, res) => {
   try {
-    const resultPerPage = req.query.resultPerPage || 20;
+    const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await Customer.countDocuments({
       status: "active",

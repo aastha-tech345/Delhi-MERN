@@ -265,7 +265,7 @@ exports.getEmployeeData = async (req, res) => {
     // }).populate("role");
     // const usermployees = await UserModel.User.find({status: "active"}).populate("role");
     // const resultPerPage = req.body.resultPerPage;
-    const resultPerPage = 2;
+    const resultPerPage = req.query.resultPerPage || 10;
     const countPage = await UserModel.User.countDocuments({
       status: "active",
       user_type: "employee",

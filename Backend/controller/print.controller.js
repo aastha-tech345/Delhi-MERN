@@ -28,7 +28,7 @@ exports.createPrintTemplate = async (req, res) => {
 
 exports.getPrint = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await PrintInfomation.printTemplate.countDocuments({
       is_deleted: "active",

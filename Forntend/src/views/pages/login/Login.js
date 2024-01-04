@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import { useNavigate } from 'react-router-dom'
 // import ReCAPTCHA from 'react-google-recaptcha'
-import logo from '../../../assets/images/170373730056664920.png'
+import logo from '../../../assets/images/hvd-logo.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
@@ -71,11 +71,7 @@ const Login = () => {
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={4}>
-            <img
-              src={logo}
-              style={{ width: '100%', height: '90px', background: 'none' }}
-              alt="..."
-            />
+            <img className="mb-2" src={logo} style={{ height: '90px' }} alt="..." />
 
             <br />
             <CCardGroup>

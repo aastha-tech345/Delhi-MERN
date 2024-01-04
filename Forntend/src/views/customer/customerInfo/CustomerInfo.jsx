@@ -1000,7 +1000,7 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div>
- <hr />
+        <hr />
         <h3 className="bluetext mx-3">Beedigung</h3>
         <div className="row p-3">
           <div className="col-sm-3">

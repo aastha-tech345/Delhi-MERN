@@ -26,7 +26,7 @@ exports.roleCreation = async (req, res) => {
 
 exports.getRole = async (req, res) => {
   try {
-    const resultPerPage = 2;
+    const resultPerPage = req.query.resultPerPage || 2;
     const countPage = await roleModel.Role.countDocuments();
     // const result = await roleModel.Role.find();
     let pageCount = Math.ceil(countPage / resultPerPage);

@@ -285,7 +285,7 @@ const CustomerList = () => {
     setItemsPerPage(parseInt(e.target.value, 10))
     setPage(1)
   }
-  console.log('itemperpage', itemsPerPage)
+  // console.log('itemperpage', itemsPerPage)
 
   const getPrintDetails = async () => {
     try {

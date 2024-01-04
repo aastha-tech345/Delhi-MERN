@@ -135,7 +135,7 @@ const Contact = () => {
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [id, setId] = useState('')
-
+  const [itemsPerPage, setItemsPerPage] = useState('')
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
   }
@@ -216,6 +216,10 @@ const Contact = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
+  }
   // console.log('astha', contactRecord)
 
   const searchHandle = async () => {
@@ -264,17 +268,17 @@ const Contact = () => {
       >
         <div className="col-sm-3">
           <div className="searchInput">
-          <input
-            ref={searchInputRef}
-            name="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            type="search"
-            id="form1"
-            placeholder="Ihre Suche eingeben"
-            className="form-control searchInputIcon"
-          />
-          <i className="fas fa-search fa-fw"></i>
+            <input
+              ref={searchInputRef}
+              name="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="search"
+              id="form1"
+              placeholder="Ihre Suche eingeben"
+              className="form-control searchInputIcon"
+            />
+            <i className="fas fa-search fa-fw"></i>
           </div>
         </div>
         <div className="col-sm-6">
@@ -491,15 +495,31 @@ const Contact = () => {
           }}
         />
 
-        <Stack spacing={2}>
-          <Pagination
-            count={countPage}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        <div className="row">
+          <div className="col-sm-10">
+            <Stack spacing={2}>
+              <Pagination
+                count={countPage}
+                variant="outlined"
+                shape="rounded"
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </div>
+          <div className="col-sm-2 text-end">
+            <select
+              className="form-control form-select"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+            >
+              <option value={10}>10 pro Seite</option>
+              <option value={20}>20 pro Seite</option>
+              <option value={50}>50 pro Seite</option>
+              <option value={100}>100 pro Seite</option>
+            </select>
+          </div>
+        </div>
         <br />
       </div>
 

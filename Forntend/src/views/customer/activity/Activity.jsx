@@ -280,7 +280,14 @@ const Activity = () => {
         //   ></textarea>
         // </div>
 
-        <div style={{ border: '1px solid lightgray', borderRadius: '5px', marginLeft:'15px', marginRight:'15px' }}>
+        <div
+          style={{
+            border: '1px solid lightgray',
+            borderRadius: '5px',
+            marginLeft: '15px',
+            marginRight: '15px',
+          }}
+        >
           <div className="row px-4 pt-2">
             <br />
             <textarea
@@ -293,28 +300,28 @@ const Activity = () => {
             ></textarea>
           </div>
           <div className="bottomBtnBg">
-          <div className="row">
-            <div className="col-sm-12">
-              <div style={{ float: 'right' }}>
-                <button
-                  className="btn"
-                  style={{ background: '#d04545', color: 'white' }}
-                  onClick={() => setOpenMessage(false)}
-                >
-                  Abbrechen
-                </button>
-                &nbsp;&nbsp;
-                <button
-                  className="btn mx-2"
-                  style={{ background: '#0b5995', color: 'white' }}
-                  onClick={handleSubmit}
-                >
-                  Aktivität hinzufügen
-                </button>
+            <div className="row">
+              <div className="col-sm-12">
+                <div style={{ float: 'right' }}>
+                  <button
+                    className="btn"
+                    style={{ background: '#d04545', color: 'white' }}
+                    onClick={() => setOpenMessage(false)}
+                  >
+                    Abbrechen
+                  </button>
+                  &nbsp;&nbsp;
+                  <button
+                    className="btn mx-2"
+                    style={{ background: '#0b5995', color: 'white' }}
+                    onClick={handleSubmit}
+                  >
+                    Aktivität hinzufügen
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       ) : (
         <div className="row p-3 m-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>

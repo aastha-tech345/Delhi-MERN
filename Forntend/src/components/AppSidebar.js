@@ -8,7 +8,7 @@ import { AppSidebarNav } from './AppSidebarNav'
 
 import { logoNegative } from 'src/assets/brand/logo-negative'
 import { sygnet } from 'src/assets/brand/sygnet'
-import HvdImage from 'src/assets/images/logo.png'
+import HvdImage from 'src/assets/images/hvd-logo.png'
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
@@ -31,7 +31,7 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <CCardImage orientation="top" src={HvdImage} />
+        <CCardImage orientation="top px-3" src={HvdImage} />
         <CIcon className="sidebar-brand-full" src={HvdImage} height={50} />
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={50} />
       </CSidebarBrand>
