@@ -94,7 +94,7 @@ const Customer = () => {
                     role="tab"
                     aria-selected={activeTab === 'nav-home'}
                     onClick={(e) => handleTabClick('nav-home', 'KlientInnen', e)}
-                    style={{ marginRight: '50px', marginLeft: '20px' }}
+                    style={{ marginRight: '10px', marginLeft: '20px' }}
                   >
                     <i className="fa-solid fa-info fa-fw infoIcon"></i>
                     KlientInnen
@@ -107,7 +107,7 @@ const Customer = () => {
                     aria-controls="nav-kontakte"
                     aria-selected={activeTab === 'nav-kontakte'}
                     onClick={(e) => handleTabClick('nav-kontakte', 'Kontakte', e)}
-                    style={{ marginRight: '50px' }}
+                    style={{ marginRight: '10px' }}
                   >
                     {' '}
                     <i className="fa-regular fa-address-book fa-fw"></i>
@@ -122,7 +122,7 @@ const Customer = () => {
                     aria-controls="nav-aufgaben"
                     aria-selected={activeTab === 'nav-aufgaben'}
                     onClick={(e) => handleTabClick('nav-aufgaben', 'Aktivitat', e)}
-                    style={{ marginRight: '50px' }}
+                    style={{ marginRight: '10px' }}
                   >
                     <i className="fa-solid fa-heart-pulse fa-fw"></i>
                     Aktivitat
@@ -136,7 +136,7 @@ const Customer = () => {
                     aria-controls="nav-dokumente"
                     aria-selected={activeTab === 'nav-dokumente'}
                     onClick={(e) => handleTabClick('nav-dokumente', 'Dokumente', e)}
-                    style={{ marginRight: '50px' }}
+                    style={{ marginRight: '10px' }}
                   >
                     <i className="fa-regular fa-file fa-fw"></i>
                     Dokumente
@@ -150,7 +150,7 @@ const Customer = () => {
                     aria-controls="nav-vollmachten"
                     aria-selected={activeTab === 'nav-vollmachten'}
                     onClick={(e) => handleTabClick('nav-vollmachten', 'Vollmachten', e)}
-                    style={{ marginRight: '50px' }}
+                    style={{ marginRight: '10px' }}
                   >
                     <i className="fa-solid fa-paint-roller fa-fw"></i>
                     Vollmachten
@@ -164,7 +164,7 @@ const Customer = () => {
                     aria-controls="nav-spv"
                     aria-selected={activeTab === 'nav-spv'}
                     onClick={(e) => handleTabClick('nav-spv', 'SPV', e)}
-                    style={{ marginRight: '50px' }}
+                    style={{ marginRight: '10px' }}
                   >
                     {' '}
                     <i className="fa-regular fa-lightbulb fa-fw"></i>
@@ -179,7 +179,7 @@ const Customer = () => {
                     aria-controls="nav-leistungen"
                     aria-selected={activeTab === 'nav-leistungen'}
                     onClick={(e) => handleTabClick('nav-leistungen', 'Rechnung', e)}
-                    style={{ marginRight: '50px' }}
+                    style={{ marginRight: '10px' }}
                   >
                     <i className="fa-regular fa-file-lines fa-fw"></i>
                     Rechnung

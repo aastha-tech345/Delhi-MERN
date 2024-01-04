@@ -440,7 +440,7 @@ const CustomerList = () => {
               className="form-control"
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-2">
             <button
               onClick={searchHandle}
               className="btn btn text-light"
@@ -451,10 +451,10 @@ const CustomerList = () => {
               <span style={{ fontWeight: 'bold' }}>Filter</span>
             </button>
           </div>
-          <div className="col-sm-2 text-end mt-1">
+          <div className="col-sm-3 text-end mt-1">
             <p>{selectedRowKeys.length} Ausgewählte</p>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-4 text-end ">
             <button
               className="btn btn"
               style={{ background: '#0b5995', color: 'white' }}
