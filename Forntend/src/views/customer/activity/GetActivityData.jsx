@@ -163,9 +163,7 @@ const GetActivityData = ({ updateData, search }) => {
                           </div>
                         </div>
                         <div className="col-sm-1 m-auto">{outputDateString} </div>
-                        <div className="col-sm-3 text-center m-auto">
-                          Lorem Ipsum is simply dummy text{' '}
-                        </div>
+                        <div className="col-sm-3  m-auto">Lorem Ipsum is simply dummy text </div>
                         <div className="col-sm-4 m-auto">
                           <p>{message}</p>
                         </div>

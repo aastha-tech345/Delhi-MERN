@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import { useNavigate } from 'react-router-dom'
 // import ReCAPTCHA from 'react-google-recaptcha'
-import logo from '../../../assets/images/170373730056664920.png'
+import logo from '../../../assets/images/hvd-logo.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
@@ -66,23 +66,19 @@ const Login = () => {
   return (
     <div
       className=" min-vh-100 d-flex flex-row align-items-center"
-      style={{ background: '#2B237C' }}
+      style={{ background: '#015291' }}
     >
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={4}>
-            <img
-              src={logo}
-              style={{ width: '100%', height: '90px', background: 'none' }}
-              alt="..."
-            />
+            <img className="mb-2" src={logo} style={{ height: '90px' }} alt="..." />
 
             <br />
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
                   <Form noValidate validated={validated}>
-                    <h4 style={{ color: '#015291', fontWeight: 'bold', textAlign: 'center' }}>
+                    <h4 style={{ color: '#015291', fontWeight: 'normal', textAlign: 'center' }}>
                       Anmeldung
                     </h4>
                     <Row className="mb-3">

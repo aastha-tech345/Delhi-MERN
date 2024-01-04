@@ -26,6 +26,7 @@ const PrintTemplate = () => {
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [show, setShow] = useState(false)
+  const [itemsPerPage, setItemsPerPage] = useState('')
   const handlePageChange = (event, value) => {
     setPage(value)
   }
@@ -143,7 +144,9 @@ const PrintTemplate = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/print/get_print?page=${page}`)
+      const result = await fetch(
+        `${apiUrl}/print/get_print?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
@@ -152,12 +155,16 @@ const PrintTemplate = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
+  }
+  console.log('perpage', itemsPerPage)
   // console.log('print data', printRecord)
 
   useEffect(() => {
     getDetails()
-  }, [page])
+  }, [page, itemsPerPage])
 
   return (
     <>
@@ -271,16 +278,33 @@ const PrintTemplate = () => {
                 }),
               }}
             />
-            <Stack spacing={2}>
-              <Pagination
-                count={countPage}
-                variant="outlined"
-                shape="rounded"
-                page={page}
-                onChange={handlePageChange}
-              />
-              <br />
-            </Stack>
+            <div className="row">
+              <div className="col-sm-10">
+                <Stack spacing={2}>
+                  <Pagination
+                    count={countPage}
+                    variant="outlined"
+                    shape="rounded"
+                    page={page}
+                    onChange={handlePageChange}
+                  />
+                  <br />
+                </Stack>
+              </div>
+              <div className="col-sm-2 text-end">
+                <select
+                  className="form-control form-select"
+                  value={itemsPerPage}
+                  onChange={handleItemsPerPageChange}
+                >
+                  <option value={10}>10 pro Seite</option>
+                  <option value={20}>20 pro Seite</option>
+                  <option value={50}>50 pro Seite</option>
+                  <option value={100}>100 pro Seite</option>
+                </select>
+              </div>
+            </div>
+
             <Modal show={isModalVisible} onHide={handleDeleteCancel} centered size="sm">
               <Modal.Title>
                 <svg
