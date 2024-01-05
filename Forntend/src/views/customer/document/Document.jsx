@@ -18,42 +18,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import { RiDeleteBinLine } from 'react-icons/ri'
 
-const columns = [
-  {
-    title: 'Title',
-    dataIndex: 'document_title',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Dokumententyp',
-    dataIndex: 'document_type',
-  },
-  {
-    title: 'AKTION',
-    dataIndex: 'action',
-    render: (_, record) => (
-      <>
-        <GrEdit />
-        &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
-        <MdDelete />
-        Löschen
-      </>
-    ),
-  },
-]
-
-// rowSelection object indicates the need for row selection
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
-    // Column configuration not to be checked
-    name: record.name,
-  }),
-}
-
 const Document = () => {
   let lgCust = localStorage.getItem('customerDatat')
   let custData = JSON.parse(lgCust)
@@ -63,6 +27,57 @@ const Document = () => {
 
   const notify = (dataa) => toast(dataa)
   const [edit, setEdit] = useState(false)
+  // const columns = [
+  //   {
+  //     title: 'TITLE',
+  //     dataIndex: 'document_title',
+  //     render: (text) => <a>{text}</a>,
+  //   },
+  //   {
+  //     title: 'DOKUMENTENTYP',
+  //     dataIndex: 'document_type',
+  //   },
+  //   {
+  //     title: 'AKTION',
+  //     dataIndex: 'action',
+  //     render: (_, record) => (
+  //       <>
+  //         {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
+  //         verifyEditPer().includes('yes') ||
+  //         loginData?.user?.isAdminFullRights === 'true' ? (
+  //           <>
+  //             <button
+  //               style={{ background: 'none', border: 'none' }}
+  //               onClick={() => handleEdit(record)}
+  //             >
+  //               <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+  //               &nbsp;&nbsp;Bearbeiten
+  //             </button>
+  //           </>
+  //         ) : (
+  //           ''
+  //         )}
+
+  //         {/ &nbsp;&nbsp; /}
+
+  //         {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
+  //         verifyDelPer().includes('yes') ||
+  //         loginData?.user?.isAdminFullRights === 'true' ? (
+  //           <>
+  //             <button
+  //               style={{ background: 'none', border: 'none' }}
+  //               onClick={() => handleDelete(record._id)}
+  //             >
+  //               <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
+  //             </button>
+  //           </>
+  //         ) : (
+  //           ''
+  //         )}
+  //       </>
+  //     ),
+  //   },
+  // ]
   const columns = [
     {
       title: 'TITLE',
@@ -93,8 +108,6 @@ const Document = () => {
           ) : (
             ''
           )}
-
-          {/* &nbsp;&nbsp; */}
 
           {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
@@ -139,7 +152,7 @@ const Document = () => {
   }
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
-
+  const [itemsPerPage, setItemsPerPage] = useState('')
   const handlePageChange = (event, value) => {
     setPage(value)
   }
@@ -160,7 +173,7 @@ const Document = () => {
   const saveData = async (e) => {
     try {
       if (!data.document_title || !data.document_type) {
-        return toast.error('Please fill all details')
+        return notify('Please fill all details')
       }
 
       e.preventDefault()
@@ -176,7 +189,7 @@ const Document = () => {
       // const url = `${apiUrl}/document/create_document?page=${page}`
       // console.log(url)
       const response = await postFetchUser(url, myForm)
-      toast.success('Data Saved Successfully')
+      notify('Data Saved Successfully')
       setData('')
       handleClose()
       getDetails()
@@ -187,21 +200,28 @@ const Document = () => {
 
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/document/get_document/${custData?._id}?page=${page}`)
+      const result = await fetch(
+        `${apiUrl}/document/get_document/${custData?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setDocumentRecord(activeRecords)
     } catch (error) {
-      console.error('Error fetching document record:', error)
+      console.error('Error fetching customer record:', error)
     }
+  }
+
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
   }
 
   // console.log('document page', documentRecord)
   useEffect(() => {
     // setId(generateRandomId())
     getDetails()
-  }, [page])
+  }, [page, itemsPerPage])
 
   return (
     <div style={{ background: '#fff' }}>
@@ -238,64 +258,43 @@ const Document = () => {
               <Modal.Title>Details zum Dokument</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="mb-6 row">
-                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                  Titel
-                </label>
-                <div className="col-sm-9">
-                  <input
-                    id="title"
-                    required
-                    name="document_title"
-                    value={data.document_title}
-                    onChange={handleChange}
-                    type="text"
-                    className="form-control"
-                    placeholder="Steuer"
-                  />
-                </div>
-              </div>
-              <br />
-              <div className="mb-6 row">
-                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                  Documenttype
-                </label>
-                <div className="col-sm-9">
-                  <select
-                    id="document_type"
-                    name="document_type"
-                    value={data.document_type}
-                    onChange={handleChange}
-                    className="form-control form-select"
-                  >
-                    <option>--select--</option>
-                    <option value="Living will">Patientenverfügung</option>
-                    <option value="Health care power of attorney">Gesundheitsvollmacht</option>
-                    <option value="Power of attorney">Vorsorgevollmacht</option>
-                    <option value="care order">Betreuungsverfügung</option>
-                    <option value="Feces pass">Kotfallpass</option>
-                    <option value="Power of attorney digital test">Vollmacht digitales Prbe</option>
-                    <option value="Write to">Anschreiben</option>
-                    <option value="Personal document">Persönliches Dokument</option>
-                    <option value="Other">Anderes</option>
-                  </select>
-                </div>
-              </div>
-              <br />
-              <div className="mb-6 row">
-                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                  Datei-Upload
-                </label>
-                <div className="col-sm-9">
-                  <input
-                    id="fileUpload"
-                    type="file"
-                    className="form-control"
-                    name="document_upload"
-                    onChange={(e) => setDocumentUpload(e.target.files[0])}
-                  />
-                </div>
-              </div>
+              <label htmlFor="title">Titel</label>
+              <input
+                id="title"
+                required
+                name="document_title"
+                value={data.document_title}
+                onChange={handleChange}
+                type="text"
+                className="form-control"
+              />
+              <label htmlFor="documentType">Documenttype</label>
+              <select
+                id="document_type"
+                name="document_type"
+                value={data.document_type}
+                onChange={handleChange}
+                className="form-control"
+              >
+                <option>--select--</option>
+                <option value="Living will">Patientenverfügung</option>
+                <option value="Health care power of attorney">Gesundheitsvollmacht</option>
+                <option value="Power of attorney">Vorsorgevollmacht</option>
+                <option value="care order">Betreuungsverfügung</option>
+                <option value="Feces pass">Kotfallpass</option>
+                <option value="Power of attorney digital test">Vollmacht digitales Prbe</option>
+                <option value="Write to">Anschreiben</option>
+                <option value="Personal document">Persönliches Dokument</option>
+                <option value="Other">Anderes</option>
+              </select>
+              <label htmlFor="fileUpload">Datei-Upload</label>
+              <input
+                id="fileUpload"
+                type="file"
+                className="form-control"
+                name="document_upload"
+                onChange={(e) => setDocumentUpload(e.target.files[0])}
+              />
             </Modal.Body>
             <Modal.Footer>
               <div className="modal-footer">
@@ -339,21 +338,35 @@ const Document = () => {
               }),
             }}
           />
-          {/* <Pagination defaultCurrent={2} total={50} /> */}
         </div>
-        <div className="">
-          <Stack spacing={2}>
-            <Pagination
-              count={countPage}
-              variant="outlined"
-              shape="rounded"
-              page={page}
-              onChange={handlePageChange}
-            />
-          </Stack>
-          <br />
+        <div className="row">
+          <div className="col-sm-10">
+            <Stack spacing={2}>
+              <Pagination
+                count={countPage}
+                variant="outlined"
+                shape="rounded"
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </div>
+          <div className="col-sm-2 text-end">
+            <select
+              className="form-control form-select"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+            >
+              <option value={10}>10 pro Seite</option>
+              <option value={20}>20 pro Seite</option>
+              <option value={50}>50 pro Seite</option>
+              <option value={100}>100 pro Seite</option>
+            </select>
+          </div>
         </div>
+        <br />
       </div>
+      <br />
       <ToastContainer />
     </div>
   )
