@@ -23,7 +23,7 @@ exports.createContact = async (req, res) => {
         success: false,
       });
     }
-    const contact = new ContactInfomation.Contact({
+    const result = await ContactInfomation.Contact.create({
       fname,
       lname,
       email,
@@ -35,7 +35,7 @@ exports.createContact = async (req, res) => {
       id,
     });
 
-    const result = await contact.save();
+    // const result = await contact.save();
     return res.status(201).json({
       status: 201,
       message: "contact was created",
@@ -48,7 +48,7 @@ exports.createContact = async (req, res) => {
 
 exports.getContact = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await ContactInfomation.Contact.countDocuments({
       status: "active",
@@ -58,7 +58,7 @@ exports.getContact = async (req, res) => {
 
     const apiFeatures = new ApiFeatures(
       ContactInfomation.Contact.find({
-        customer_id: req.params.first,
+        customer_id: req.params.id,
         // added_by: req.params.second,
         status: "active",
       }),

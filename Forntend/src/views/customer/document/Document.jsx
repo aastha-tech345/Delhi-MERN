@@ -171,7 +171,7 @@ const Document = () => {
   useEffect(() => {
     // setId(generateRandomId())
     getDetails()
-  }, [page])
+  }, [page, itemsPerPage])
 
   return (
     <div style={{ background: '#fff' }}>
