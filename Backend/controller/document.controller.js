@@ -8,6 +8,8 @@ exports.createDocument = async (req, res) => {
       document_upload: req?.file?.filename,
     });
 
+    // console.log("ashishhh", document);
+
     // const result = await document.save();
     return res.status(201).json({
       message: "document was created",

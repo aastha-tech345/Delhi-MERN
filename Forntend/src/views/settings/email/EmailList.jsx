@@ -15,9 +15,12 @@ const EmailList = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
+  const [itemsPerPage, setItemsPerPage] = useState('')
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/email/get_email?page=${page}`)
+      const result = await fetch(
+        `${apiUrl}/email/get_email?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
@@ -25,6 +28,10 @@ const EmailList = () => {
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
+  }
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
   }
   const handleEdit = (record) => {
     let recordData = JSON.stringify(record)
@@ -86,10 +93,27 @@ const EmailList = () => {
                 }),
               }}
             />
-            <Stack spacing={2}>
-              <Pagination variant="outlined" shape="rounded" />
-              <br />
-            </Stack>
+            <div className="row">
+              <div className="col-sm-10">
+                {' '}
+                <Stack spacing={2}>
+                  <Pagination variant="outlined" shape="rounded" />
+                  <br />
+                </Stack>
+              </div>
+              <div className="col-sm-2 text-end">
+                <select
+                  className="form-control form-select"
+                  value={itemsPerPage}
+                  onChange={handleItemsPerPageChange}
+                >
+                  <option value={10}>10 pro Seite</option>
+                  <option value={20}>20 pro Seite</option>
+                  <option value={50}>50 pro Seite</option>
+                  <option value={100}>100 pro Seite</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
         <ToastContainer />

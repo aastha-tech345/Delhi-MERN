@@ -107,11 +107,12 @@ const Contact = () => {
       ),
     },
   ]
-  let loginCust = localStorage.getItem('customerDatat')
-  let loginCustData = JSON.parse(loginCust)
+  // let loginCust = localStorage.getItem('customerDatat')
+  // let loginCustData = JSON.parse(loginCust)
 
-  const loginUser = localStorage.getItem('record')
-  const loginUserData = JSON.parse(loginUser)
+  // const loginUser = localStorage.getItem('record')
+  // const loginUserData = JSON.parse(loginUser)
+  console.log('customerId', custData?._id)
 
   const [data, setData] = useState({
     fname: '',
@@ -119,8 +120,8 @@ const Contact = () => {
     phone: '',
     gender: '',
     statu: '',
-    customer_id: loginCustData?._id,
-    added_by: loginUserData?.user?._id,
+    customer_id: custData?._id,
+    added_by: loginData?.user?._id,
   })
 
   const [email, setEmail] = useState('')
@@ -207,7 +208,9 @@ const Contact = () => {
       // const result = await fetch(
       //   `${apiUrl}/contact/get_contact/${custData?._id}/${loginUserData?.user?._id}?page=${page}`,
       // )
-      const result = await fetch(`${apiUrl}/contact/get_contact/${custData?._id}?page=${page}`)
+      const result = await fetch(
+        `${apiUrl}/contact/get_contact/${custData?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
@@ -249,7 +252,7 @@ const Contact = () => {
   useEffect(() => {
     setId(generateRandomId())
     getDetails()
-  }, [page])
+  }, [page, itemsPerPage])
 
   return (
     <div style={{ background: '#fff' }}>
