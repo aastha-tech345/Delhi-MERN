@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { deleteFetch } from 'src/Api'
@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
 
 const DeleteModal = ({ setHide, documentId, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
-  const notify = (dataa) => toast(dataa)
   const handleDeleteConfirm = async () => {
     if (documentId) {
       try {
@@ -20,7 +19,6 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
         setHide(false)
       } catch (error) {
         toast.error('An error occurred while deleting the record')
-        // console.error('An error occurred while deleting the record:', error)
         setHide(false)
       }
     }

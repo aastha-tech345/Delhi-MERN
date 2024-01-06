@@ -308,13 +308,13 @@ h3.bluetext {
 
 /*Mukesh css 03-01-2023*/
 .ant-checkbox-inner {
-  border: 1px solid #0b5995!important;
+  border: 1px solid #0b5995 !important;
 }
 .ant-checkbox-checked .ant-checkbox-inner {
   background-color: #0b5995;
   border-color: #0b5995;
 }
-input[type=number]::-webkit-inner-spin-button {
+input[type='number']::-webkit-inner-spin-button {
   opacity: 1;
 }
 .form-multi-select .css-1p3m7a8-multiValue {
@@ -322,8 +322,7 @@ input[type=number]::-webkit-inner-spin-button {
   color: #fff;
   border-radius: 4px;
 }
-.form-multi-select .css-1p3m7a8-multiValue .css-wsp0cs-MultiValueGeneric
-{
+.form-multi-select .css-1p3m7a8-multiValue .css-wsp0cs-MultiValueGeneric {
   color: #fff;
 }
 .searchInput i {
@@ -338,7 +337,7 @@ input[type=number]::-webkit-inner-spin-button {
 span.anticon.anticon-phone svg {
   transform: rotate(105deg);
 }
-.table>:not(:last-child)>:last-child>* {
+.table > :not(:last-child) > :last-child > * {
   border-bottom-color: lightgray;
 }
 .bottomBtnBg {
@@ -347,18 +346,19 @@ span.anticon.anticon-phone svg {
   border-top: 1px solid lightgray;
   padding: 10px 0;
 }
-@media only screen and (max-width:767px) {
-.header nav {
-  position: absolute;
-  left: 30px;
-  top: 70px;
-}
-.header.header-sticky {
-  margin-bottom: 40px!important;
-}
-.nav-tabs .nav-link {
-  color: #000;
-  text-align: left;
-  margin-left: 0!important;
-}
+
+@media only screen and (max-width: 767px) {
+  .header nav {
+    position: absolute;
+    left: 30px;
+    top: 70px;
+  }
+  .header.header-sticky {
+    margin-bottom: 40px !important;
+  }
+  .nav-tabs .nav-link {
+    color: #000;
+    text-align: left;
+    margin-left: 0 !important;
+  }
 }
