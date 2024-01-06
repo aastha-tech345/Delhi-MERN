@@ -21,6 +21,6 @@ const printSchema = new Schema(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-const printTemplate = mongoose.model("print-template", printSchema);
+const printTemplate = mongoose.model("printTemplate", printSchema);
 
 module.exports = { printTemplate };
