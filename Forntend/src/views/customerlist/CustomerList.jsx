@@ -357,7 +357,7 @@ const CustomerList = () => {
 
   print?.map((item) => {
     // console.log('item record', item)
-    if (item?.findBy === 'customer') {
+    if (item?.designation === 'customer') {
       // console.log('customer')
       customerItems?.push(item)
     }
