@@ -302,28 +302,6 @@ const CustomerList = () => {
     getDetails()
     getPrintDetails()
   }, [page, itemsPerPage])
-  // useEffect(() => {
-  //   getDetails()
-  // }, [page])
-
-  // if (loginData?.user?.user_type === 'employee') {
-  //   const getDetails = useCallback(async () => {
-  //     try {
-  //       const result = await fetch(
-  //         `${apiUrl}/customer/user/customer/${loginData?.user?._id}?page=${page}`,
-  //       )
-  //       const data = await result.json()
-  //       setCountPage(data?.pageCount)
-  //       const activeRecords = data?.result?.filter((record) => record.status === 'active')
-  //       setCustomerRecord(activeRecords)
-  //     } catch (error) {
-  //       console.error('Error fetching customer record:', error)
-  //     }
-  //   })
-  //   useEffect(() => {
-  //     getDetails()
-  //   }, [page])
-  // }
 
   let data = customer_record
   const handleStore = (data, record) => {

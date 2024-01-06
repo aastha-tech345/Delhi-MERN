@@ -23,7 +23,7 @@ exports.createContact = async (req, res) => {
         success: false,
       });
     }
-    const result = await ContactInfomation.Contact.create({
+    const contact = new ContactInfomation.Contact({
       fname,
       lname,
       email,
@@ -35,7 +35,7 @@ exports.createContact = async (req, res) => {
       id,
     });
 
-    // const result = await contact.save();
+    const result = await contact.save();
     return res.status(201).json({
       status: 201,
       message: "contact was created",
@@ -58,7 +58,7 @@ exports.getContact = async (req, res) => {
 
     const apiFeatures = new ApiFeatures(
       ContactInfomation.Contact.find({
-        customer_id: req.params.id,
+        customer_id: req.params.first,
         // added_by: req.params.second,
         status: "active",
       }),

@@ -180,26 +180,42 @@ const Contact = () => {
 
   const TotalData = { ...data, email, id }
 
-  const saveData = async () => {
+  const saveData = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
+    setValidated(true)
+    if (!email) {
+      return notify('Invalid Email')
+    }
+    if (!data?.fname || !data?.lname) {
+      return toast.warning('Please Fill Fname & Lname Details')
+    }
     try {
-      if (!data?.fname || !data?.lname) {
-        return toast.warning('Please Fill Fname & Lname Details')
+      let response = await fetch(`${apiUrl}/contact/create_contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(TotalData),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+        // console.log("rerror found")
       }
-      if (!email) {
-        return notify('Invaild Email')
-      }
-      const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
-      // console.log(response)
-      if (response.status === 201) {
-        toast.success('Contact Record was Create Successfully')
-        setData('')
-        handleClose()
-        getDetails()
-      } else {
-        toast.error('Email Already Exists.')
-      }
+
+      let result = await response.json()
+      toast.success(result?.message)
+      handleClose()
+      getDetails()
     } catch (error) {
-      console.error('Error during API call:', error)
+      // console.error('Error during API call:', error)
+
+      toast.error('Email-`Id Already Exists')
     }
   }
 
@@ -246,7 +262,6 @@ const Contact = () => {
       console.error('Error searching data:', error.message)
     }
   }
-  // console.log(contactRecord)
   let dataa = contactRecord
 
   useEffect(() => {
