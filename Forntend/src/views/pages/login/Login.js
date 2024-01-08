@@ -72,7 +72,7 @@ const Login = () => {
       <CContainer className="form-container">
         <CRow className="justify-content-center">
           <CCol md={4}>
-            <img className="mb-2" src={logo} style={{ height: '90px' }} alt="..." />
+            <img className="logo-login" src={logo} alt="..." />
             <CCardGroup className="mt-3">
               <CCard className="p-4">
                 <CCardBody className="p-0">
