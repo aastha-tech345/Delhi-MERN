@@ -375,6 +375,13 @@ span.anticon.anticon-phone svg {
 
 
 .form-container{
+  .logo-login{
+    margin: 0 auto 30px;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+  }
   .h4-heading{
     color: $primary-color;
     font-weight: 400;
