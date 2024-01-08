@@ -481,3 +481,87 @@ span.anticon.anticon-phone svg {
     height: 40px;
   }
 }
+
+.page-wrap {
+  .sidebar-nav {
+    .nav-item {
+      .nav-link {
+        border-right: 3px solid transparent;
+
+        &.active {
+          border-right-color: $white;
+        }
+
+        &:hover {
+          border-right-color: $white;
+        }
+
+        svg {
+          margin-right: 16px;
+        }
+      }
+    }
+
+    .nav-group {
+      &.show {
+        background: transparent;
+      }
+
+      .nav-link {
+
+        &.nav-group-toggle {
+          &::after {
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 7px solid #e8e8e8;
+            width: 0;
+            height: 0;
+            margin-top: 3px;
+          }
+
+          svg {
+            margin-right: 16px;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+
+.dd-links{
+  border: 1px solid #ccc;
+  &::after {
+    content: "";
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    background-color: rgb(235, 237, 239);
+    top: -3px;
+    left: 50%;
+    border-top: 2px solid #ccc;
+    border-left: 2px solid #ccc;
+    transform: rotate(45deg) translateX(-50%);
+  }
+  li{
+    a{
+      &.dropdown-item{
+        font-size: 14px;
+        padding: 8px;
+        svg{
+          fill: #005291;
+          margin-right: 12px;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
+
+
+.h5-heading{
+  font-weight: 400;
+  font-size: 14px;
+}

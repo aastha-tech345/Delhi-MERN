@@ -6,7 +6,7 @@ import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/inde
 ></link>
 const DefaultLayout = () => {
   return (
-    <div>
+    <div className="page-wrap">
       <AppSidebar />
       <div className="wrapper min-vh-100 bg-light">
         <AppHeader />
