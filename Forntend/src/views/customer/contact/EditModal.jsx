@@ -106,7 +106,7 @@ const EditModal = ({ setEdit, getDetails }) => {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Kunden Aktualisieren</h5>
+            <h5 className="modal-title">Kontakt hinzufügen</h5>
             <button
               type="button"
               className="btn-close"
@@ -270,13 +270,13 @@ const EditModal = ({ setEdit, getDetails }) => {
             </div>
           </Form>
 
-          <div className="modal-footer">
+          <div className="modal-footer" style={{ display: 'flex', justifyItems: 'end' }}>
             <button
               type="button"
               className="btn btn-secondary w-25"
               data-bs-dismiss="modal"
               onClick={close}
-              style={{ background: '#015291', color: 'white' }}
+              style={{ background: '#d04545', color: 'white' }}
             >
               Abbrechen
             </button>
@@ -291,9 +291,9 @@ const EditModal = ({ setEdit, getDetails }) => {
               type="button"
               className="btn  w-25"
               onClick={handleSubmit}
-              style={{ background: '#d04545', color: 'white' }}
+              style={{ background: '#015291', color: 'white' }}
             >
-              {loadValue ? <Loader /> : <div> Aktualisieren</div>}
+              {loadValue ? <Loader /> : <div> Speichern</div>}
             </button>
             {/* )} */}
           </div>

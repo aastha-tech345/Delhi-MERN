@@ -48,7 +48,7 @@ exports.createContact = async (req, res) => {
 
 exports.getContact = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await ContactInfomation.Contact.countDocuments({
       status: "active",

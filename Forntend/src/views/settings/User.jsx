@@ -5,23 +5,28 @@ import { ImInfo } from 'react-icons/im'
 
 const User = () => {
   const navigate = useNavigate()
-  let activeTab = localStorage.getItem('tabId') || 'nav-benutzer'
+  let activeTab = localStorage.getItem('tabIdd') || 'nav-benutzer'
+  localStorage.setItem('tabIdd', 'nav-benutzer')
+  // activeTab = localStorage.getItem('tabIdd') || 'nav-benutzer'
   // console.log(activeTab)
   const handleTabClick = (tabId, name, e) => {
+    localStorage.setItem('tabIdd', tabId)
     if (e && e.target.tagName.toLowerCase() === 'a') {
       e.preventDefault()
     }
-    localStorage.setItem('tabId', tabId)
-    if (name === 'user') {
-      return navigate('/settings/createuser')
-    } else if (name === 'role') {
-      return navigate('/settings/role')
+    console.log(localStorage.getItem('tabIdd'))
+    if ('nav-benutzer' == localStorage.getItem('tabIdd')) {
+      navigate('/settings/createuser')
+    }
+
+    if ('nav-rollen' == localStorage.getItem('tabIdd')) {
+      navigate('/settings/role')
     }
   }
-  useEffect(() => {
-    localStorage.setItem('tabId', 'nav-benutzer')
-    // return handleTabClick('nav-benutzer')
-  }, [])
+
+  // useEffect(() => {
+  //   handleTabClick('nav-benutzer')
+  // }, [])
 
   return (
     <>

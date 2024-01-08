@@ -84,14 +84,15 @@ exports.editCustomer = async (req, res) => {
 
 exports.getCustomer = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await Customer.countDocuments({
       status: "active",
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
-//  console.log("pageCount",pageCount)
+    //  console.log("pageCount",pageCount)
+    //console.log("pageCount",pageCount)
     const apiFeatures = new ApiFeatures(
       Customer.find({ status: "active" }),
       req.query
@@ -117,7 +118,6 @@ exports.getCustomer = async (req, res) => {
         pageCount: pageCount,
       });
     }
-
 
     return res.status(200).json({
       success: true,

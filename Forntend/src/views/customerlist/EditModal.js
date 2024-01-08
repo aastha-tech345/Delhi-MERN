@@ -296,32 +296,44 @@ const EditModal = ({ setHide, getDetails }) => {
             </div>
           </Form>
 
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary w-25"
-              data-bs-dismiss="modal"
-              onClick={close}
-              style={{ background: '#015291', color: 'white' }}
-            >
-              Abbrechen
-            </button>
-            {/* {loadValue ? (
-              <div  >
-                <Loader />
-            
+          <div
+            className="modal-footer"
+            style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
+          >
+            <div className=" w-25">
+              <button
+                type="button"
+                className="btn btn-secondary "
+                data-bs-dismiss="modal"
+                onClick={close}
+                style={{ background: '#ffff', color: 'Black' }}
+              >
+                Bearbeiten
+              </button>
             </div>
-            ) : ( */}
-
-            <button
-              type="button"
-              className="btn  w-25"
-              onClick={handleSubmit}
-              style={{ background: '#d04545', color: 'white' }}
-            >
-              {loadValue ? <Loader /> : <div> Aktualisieren</div>}
-            </button>
-            {/* )} */}
+            <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px' }}>
+              <div className=" w-25">
+                <button
+                  type="button"
+                  className="btn btn-secondary "
+                  data-bs-dismiss="modal"
+                  onClick={close}
+                  style={{ background: '#d04545', color: 'white', marginRight: '15px' }}
+                >
+                  Abbrechen
+                </button>
+              </div>
+              <div className=" w-25">
+                <button
+                  type="button"
+                  className="btn  "
+                  onClick={handleSubmit}
+                  style={{ background: '#015291', color: 'white' }}
+                >
+                  {loadValue ? <Loader /> : <div> Speichern</div>}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

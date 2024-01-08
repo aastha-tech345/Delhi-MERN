@@ -168,7 +168,7 @@ const EditModal = ({ setEdit, getDetails }) => {
               </div>
             </div>
           </Form>
-          <div className="modal-footer">
+          <div className="modal-footer" style={{ display: 'flex', justifyContent: 'end' }}>
             <button
               type="button"
               className="btn btn-secondary w-25"

@@ -107,11 +107,12 @@ const Contact = () => {
       ),
     },
   ]
-  let loginCust = localStorage.getItem('customerDatat')
-  let loginCustData = JSON.parse(loginCust)
+  // let loginCust = localStorage.getItem('customerDatat')
+  // let loginCustData = JSON.parse(loginCust)
 
-  const loginUser = localStorage.getItem('record')
-  const loginUserData = JSON.parse(loginUser)
+  // const loginUser = localStorage.getItem('record')
+  // const loginUserData = JSON.parse(loginUser)
+  console.log('customerId', custData?._id)
 
   const [data, setData] = useState({
     fname: '',
@@ -119,8 +120,8 @@ const Contact = () => {
     phone: '',
     gender: '',
     statu: '',
-    customer_id: loginCustData?._id,
-    added_by: loginUserData?.user?._id,
+    customer_id: custData?._id,
+    added_by: loginData?.user?._id,
   })
 
   const [email, setEmail] = useState('')
@@ -135,7 +136,7 @@ const Contact = () => {
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [id, setId] = useState('')
-
+  const [itemsPerPage, setItemsPerPage] = useState('')
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
   }
@@ -179,26 +180,42 @@ const Contact = () => {
 
   const TotalData = { ...data, email, id }
 
-  const saveData = async () => {
+  const saveData = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
+    setValidated(true)
+    if (!email) {
+      return notify('Invalid Email')
+    }
+    if (!data?.fname || !data?.lname) {
+      return toast.warning('Please Fill Fname & Lname Details')
+    }
     try {
-      if (!data?.fname || !data?.lname) {
-        return toast.warning('Please Fill Fname & Lname Details')
+      let response = await fetch(`${apiUrl}/contact/create_contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(TotalData),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+        // console.log("rerror found")
       }
-      if (!email) {
-        return notify('Invaild Email')
-      }
-      const response = await postFetchData(`${apiUrl}/contact/create_contact`, TotalData)
-      // console.log(response)
-      if (response.status === 201) {
-        toast.success('Contact Record was Create Successfully')
-        setData('')
-        handleClose()
-        getDetails()
-      } else {
-        toast.error('Email Already Exists.')
-      }
+
+      let result = await response.json()
+      toast.success(result?.message)
+      handleClose()
+      getDetails()
     } catch (error) {
-      console.error('Error during API call:', error)
+      // console.error('Error during API call:', error)
+
+      toast.error('Email-`Id Already Exists')
     }
   }
 
@@ -207,7 +224,9 @@ const Contact = () => {
       // const result = await fetch(
       //   `${apiUrl}/contact/get_contact/${custData?._id}/${loginUserData?.user?._id}?page=${page}`,
       // )
-      const result = await fetch(`${apiUrl}/contact/get_contact/${custData?._id}?page=${page}`)
+      const result = await fetch(
+        `${apiUrl}/contact/get_contact/${custData?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
@@ -215,6 +234,10 @@ const Contact = () => {
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
+  }
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
   }
   // console.log('astha', contactRecord)
 
@@ -239,13 +262,12 @@ const Contact = () => {
       console.error('Error searching data:', error.message)
     }
   }
-  // console.log(contactRecord)
   let dataa = contactRecord
 
   useEffect(() => {
     setId(generateRandomId())
     getDetails()
-  }, [page])
+  }, [page, itemsPerPage])
 
   return (
     <div style={{ background: '#fff' }}>
@@ -263,16 +285,19 @@ const Contact = () => {
         }}
       >
         <div className="col-sm-3">
-          <input
-            ref={searchInputRef}
-            name="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            type="search"
-            id="form1"
-            placeholder="Ihre Suche eingeben"
-            className="form-control"
-          />
+          <div className="searchInput">
+            <input
+              ref={searchInputRef}
+              name="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="search"
+              id="form1"
+              placeholder="Ihre Suche eingeben"
+              className="form-control searchInputIcon"
+            />
+            <i className="fas fa-search fa-fw"></i>
+          </div>
         </div>
         <div className="col-sm-6">
           <button
@@ -282,11 +307,11 @@ const Contact = () => {
           >
             <FiFilter />
             &nbsp;
-            <span style={{ fontWeight: 'bold' }}>Filter</span>
+            <span style={{ fontWeight: 'normal' }}>Filter</span>
           </button>
         </div>
         <div className="col-sm-3">
-          &nbsp;&nbsp;
+          {/* &nbsp;&nbsp; */}
           <button
             className="btn btn"
             style={{ background: '#0b5995', color: 'white' }}
@@ -488,15 +513,31 @@ const Contact = () => {
           }}
         />
 
-        <Stack spacing={2}>
-          <Pagination
-            count={countPage}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        <div className="row">
+          <div className="col-sm-10">
+            <Stack spacing={2}>
+              <Pagination
+                count={countPage}
+                variant="outlined"
+                shape="rounded"
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </div>
+          <div className="col-sm-2 text-end">
+            <select
+              className="form-control form-select"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+            >
+              <option value={10}>10 pro Seite</option>
+              <option value={20}>20 pro Seite</option>
+              <option value={50}>50 pro Seite</option>
+              <option value={100}>100 pro Seite</option>
+            </select>
+          </div>
+        </div>
         <br />
       </div>
 

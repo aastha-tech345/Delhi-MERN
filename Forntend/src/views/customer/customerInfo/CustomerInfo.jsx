@@ -358,7 +358,7 @@ const CustomerInfo = () => {
         <h3 className="bluetext mx-3">Status</h3>
         <div className="row p-3">
           <div className="col-sm-6">
-            <br />
+            {/* <br /> */}
             <div className="mb-6 row">
               <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                 Status
@@ -376,7 +376,7 @@ const CustomerInfo = () => {
               </div>
             </div>
             <br />
-            <div className="mb-6 row">
+            <div className=" row">
               <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                 MitarbeiterInnen
               </label>
@@ -399,12 +399,10 @@ const CustomerInfo = () => {
                 </select>
               </div>
             </div>
-
-            <div></div>
           </div>
           <div className="col-sm-6">
             <br />
-            <div className="mb-6 row">
+            <div className=" row">
               <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                 Zustimmung Datenschutz
               </label>
@@ -419,7 +417,7 @@ const CustomerInfo = () => {
               </div>
             </div>
             <br />
-            <div className="mb-5 row">
+            <div className=" row">
               <label htmlFor="inputDate" className="col-sm-4 col-form-label">
                 Datum Datenerfassung
               </label>
@@ -886,7 +884,7 @@ const CustomerInfo = () => {
         <hr />
         <h3 className="bluetext mx-3">Hinterlegung</h3>
         <div className="row p-3">
-          <div className="col-sm-4">
+          <div className="col-sm-12">
             <input
               type="checkbox"
               onChange={DepositChange}
@@ -895,10 +893,10 @@ const CustomerInfo = () => {
             />
             &nbsp;&nbsp;Hinterlegung&nbsp;[ja]
           </div>
-          <div className="col-sm-4"></div>
-          <div className="col-sm-4"></div>
+          {/* <div className="col-sm-4"></div>
+          <div className="col-sm-4"></div> */}
         </div>
-        <br />
+        {/* <br /> */}
         <div className="row p-3">
           <div className="col-sm-6">
             <div className="mb-6 row">
@@ -952,7 +950,7 @@ const CustomerInfo = () => {
                 />
               </div>
             </div>
-            <div className="mb-5 row ">
+            <div className=" row ">
               <label className="col-sm-4 col-form-label">Rücksendung letzte Marke</label>
               <div className="col-sm-6">
                 <input
@@ -982,6 +980,7 @@ const CustomerInfo = () => {
               </div>
             </div>
           </div>
+
           <div className="col-sm-6">
             <div className="mb-6 row">
               <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
@@ -1001,7 +1000,7 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div>
-
+        <hr />
         <h3 className="bluetext mx-3">Beedigung</h3>
         <div className="row p-3">
           <div className="col-sm-3">

@@ -28,7 +28,7 @@ exports.createPrintTemplate = async (req, res) => {
 
 exports.getPrint = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await PrintInfomation.printTemplate.countDocuments({
       is_deleted: "active",
@@ -44,6 +44,13 @@ exports.getPrint = async (req, res) => {
       .pagination(resultPerPage);
 
     const result = await apiFeatures.query;
+
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
 
     if (apiFeatures.getCurrentPage() > pageCount) {
       apiFeatures.setCurrentPage(pageCount);

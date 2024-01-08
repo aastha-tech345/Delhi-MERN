@@ -81,7 +81,7 @@ const CreateUser = () => {
   //     notification: 'null',
   //   },
   // })
-
+  const [itemsPerPage, setItemsPerPage] = useState('')
   const handleTabClick = (tabId) => {
     setActiveTab(tabId)
   }
@@ -225,7 +225,9 @@ const CreateUser = () => {
   const getEmployeeData = async () => {
     try {
       // const res = await getFetch(`${apiUrl}/user/get/employeeData/${dataa?.user?._id}`)
-      const res = await getFetch(`${apiUrl}/user/get/employeeData?page=${page}`)
+      const res = await getFetch(
+        `${apiUrl}/user/get/employeeData?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
       setCountPage(res?.data?.pageCount)
       const activeEmployees = res?.data?.data?.filter((employee) => employee.status === 'active')
       setGetEmployee(activeEmployees)
@@ -233,12 +235,15 @@ const CreateUser = () => {
       console.log(error)
     }
   }
-
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
+  }
   // let localData = localStorage.getItem('updateFunc')
   useEffect(() => {
     getRole()
     getEmployeeData()
-  }, [editUser, page])
+  }, [editUser, page, itemsPerPage])
 
   const searchHandle = async () => {
     try {
@@ -277,7 +282,7 @@ const CreateUser = () => {
       <br />
       <div className="topBtnBox mx-3">
         <div className="row p-2">
-          <div className="col-sm-2">
+          <div className="col-sm-3">
             <button
               className="btn btn"
               onClick={handleShowInviteUserModal}
@@ -613,15 +618,31 @@ const CreateUser = () => {
           dataSource={getEmployee}
           pagination={false}
         />
-        <Stack spacing={2}>
-          <Pagination
-            count={countPage}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        <div className="row">
+          <div className="col-sm-10">
+            <Stack spacing={2}>
+              <Pagination
+                count={countPage}
+                variant="outlined"
+                shape="rounded"
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </div>
+          <div className="col-sm-2 text-end">
+            <select
+              className="form-control form-select"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+            >
+              <option value={10}>10 pro Seite</option>
+              <option value={20}>20 pro Seite</option>
+              <option value={50}>50 pro Seite</option>
+              <option value={100}>100 pro Seite</option>
+            </select>
+          </div>
+        </div>
       </div>
       <br />
       <ToastContainer />

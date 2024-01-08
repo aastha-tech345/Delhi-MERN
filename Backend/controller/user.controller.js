@@ -52,7 +52,7 @@ exports.register = async (req, res) => {
         user_type: "admin",
       };
     } else if (user_type === "user") {
-      const admin = await UserModel.User.findOne({ user_role: "admin" });
+      const admin = await UserModel.User.findOne({ user_type: "admin" });
 
       if (admin) {
         userData = {
@@ -265,7 +265,7 @@ exports.getEmployeeData = async (req, res) => {
     // }).populate("role");
     // const usermployees = await UserModel.User.find({status: "active"}).populate("role");
     // const resultPerPage = req.body.resultPerPage;
-    const resultPerPage = 2;
+    const resultPerPage = req.query.resultPerPage || 10;
     const countPage = await UserModel.User.countDocuments({
       status: "active",
       user_type: "employee",
@@ -308,6 +308,12 @@ exports.getEmployeeData = async (req, res) => {
         message: "Data not found",
       });
     }
+    // if (result?.length === 0) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: "Data not found",
+    //   });
+    // }
 
     return res.status(200).json({
       success: true,
@@ -529,25 +535,7 @@ exports.forgotPassword = async (req, res) => {
         }
       );
     }
-    // let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
 
-    // mailer.mailerFromTo(
-    //   email,
-    //   process.env.NO_REPLY,
-    //   "Password Reset",
-    //   mailcontent,
-    //   "",
-    //   function (error, resp) {
-    //     if (error) {
-    //       console.error("Error sending email", error);
-    //       return res
-    //         .status(500)
-    //         .json({ status: 500, message: "Email not sent" });
-    //     } else {
-    //       console.log("Email sent successfully", info.response);
-    //     }
-    //   }
-    // );
     return res
       .status(200)
       .json({ status: 200, message: "Email sent successfully" });

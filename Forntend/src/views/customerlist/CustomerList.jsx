@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 // import { GrEdit } from 'react-icons/gr'
+import JoditEditor from 'jodit-react'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { MdAdd, MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
@@ -35,7 +36,9 @@ const CustomerList = () => {
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
   const [page, setPage] = useState(1)
+  const [content, setContent] = useState('')
   const [countPage, setCountPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState('')
   // console.log('countPage 39', countPage)
   // const navigate = useNavigate()
   const generateRandomId = () => {
@@ -51,11 +54,18 @@ const CustomerList = () => {
   const handlePageChange = (event, value) => {
     setPage(value)
   }
+  const editor = useRef(null)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   const searchInputRef = useRef()
   const [selectedRecordId, setSelectedRecordId] = useState(null)
-
+  // const handleChange = (value, name) => {
+  //   if (name) {
+  //     setData({ ...data, [name]: value })
+  //   } else {
+  //     setContent(value)
+  //   }
+  // }
   const columns = [
     {
       title: 'NAME DES KUNDEN',
@@ -135,14 +145,14 @@ const CustomerList = () => {
             ''
           )}
 
-          {/* <button
+          <button
             style={{ background: 'none', border: 'none' }}
             onClick={() => handlePrint(record)}
           >
             {' '}
             <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
             &nbsp;Drucke
-          </button> */}
+          </button>
         </>
       ),
       // hidden: 'true',
@@ -243,11 +253,26 @@ const CustomerList = () => {
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
+  //     const data = await result?.json()
+  //     // console.log('data 258', data)
+  //     setCountPage(data?.pageCount)
+  //     const activeRecords = data?.result?.filter((record) => record.status === 'active')
+  //     setCustomerRecord(activeRecords)
+  //   } catch (error) {
+  //     console.error('Error fetching customer record:', error)
+  //   }
+  // }
+
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
-      const data = await result?.json()
-      // console.log('data 258', data)
+      const result = await fetch(
+        `${apiUrl}/customer/get_record?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
+      const data = await result.json()
+
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setCustomerRecord(activeRecords)
@@ -255,6 +280,12 @@ const CustomerList = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
+  }
+  // console.log('itemperpage', itemsPerPage)
 
   const getPrintDetails = async () => {
     try {
@@ -267,28 +298,10 @@ const CustomerList = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  // useEffect(() => {
-  //   getDetails()
-  // }, [page])
-
-  // if (loginData?.user?.user_type === 'employee') {
-  //   const getDetails = useCallback(async () => {
-  //     try {
-  //       const result = await fetch(
-  //         `${apiUrl}/customer/user/customer/${loginData?.user?._id}?page=${page}`,
-  //       )
-  //       const data = await result.json()
-  //       setCountPage(data?.pageCount)
-  //       const activeRecords = data?.result?.filter((record) => record.status === 'active')
-  //       setCustomerRecord(activeRecords)
-  //     } catch (error) {
-  //       console.error('Error fetching customer record:', error)
-  //     }
-  //   })
-  //   useEffect(() => {
-  //     getDetails()
-  //   }, [page])
-  // }
+  useEffect(() => {
+    getDetails()
+    getPrintDetails()
+  }, [page, itemsPerPage])
 
   let data = customer_record
   const handleStore = (data, record) => {
@@ -305,7 +318,7 @@ const CustomerList = () => {
     localStorage.setItem('CustomerRecord', res)
     setHide(true)
   }
-  const [, setSelectedRowKeys] = useState([])
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const rowSelection = {
     // onChange: (selectedRowKeys, selectedRows) => {},
     onChange: (selectedKeys) => {
@@ -344,58 +357,48 @@ const CustomerList = () => {
 
   print?.map((item) => {
     // console.log('item record', item)
-    if (item?.findBy === 'customer') {
+    if (item?.designation === 'customer') {
       // console.log('customer')
       customerItems?.push(item)
     }
     return null
   })
 
-  // console.log('Customer items:', customerItems)
-  // const handlePrint = (record) => {
-  //   // console.log('aastha print')
-  //   if (customerRecord && customerRecord.length > 0) {
-  //     if (customerItems.length > 0) {
-  //       const printTemplate = customerItems[0].content
+  console.log('Customer items:', customerItems)
 
-  //       let contentToPrint = ''
+  const handlePrint = (record) => {
+    console.log('aastha print')
+    const printTemplate = customerItems[0].content
 
-  //       const recordContent = printTemplate
-  //         .replace('{fname}', record.fname)
-  //         .replace('{email}', record.email)
-  //         .replace('{id}', record.id)
-  //         .replace('{phone}', record.phone)
-  //         .replace('{group}', record.group)
+    let contentToPrint = ''
 
-  //       contentToPrint += `<div>${recordContent}</div>`
+    const recordContent = printTemplate
+      .replace('{fname}', record.fname)
+      .replace('{email}', record.email)
+      .replace('{id}', record.id)
+      .replace('{phone}', record.phone)
+      .replace('{group}', record.group)
 
-  //       // const printWindow = window.open('', '_blank')
-  //       window.document.write(`
-  //         <html>
-  //           <head>
-  //           </head>
-  //           <body>
-  //             ${contentToPrint}
-  //           </body>
-  //         </html>
-  //       `)
+    contentToPrint += `<div>${recordContent}</div>`
 
-  //       window.print()
-  //     } else {
-  //       console.error("No 'customerItems' found or 'content' property is missing.")
-  //     }
-  //   } else {
-  //     console.error("Invalid data format or missing content in 'customerRecord' array.")
-  //   }
-  // }
+    // const printWindow = window.open('', '_blank')
+    window.document.write(`
+          <html>
+            <head>
+            </head>
+            <body>
+              ${contentToPrint}
+            </body>
+          </html>
+        `)
 
-  // const handleEditRecord = () => {
-  //   navigate('/customer/customer_info')
-  // }
-  useEffect(() => {
-    getDetails()
-    getPrintDetails()
-  }, [page])
+    window.print()
+  }
+
+  // useEffect(() => {
+  //   getDetails()
+  //   getPrintDetails()
+  // }, [page])
 
   return (
     <>
@@ -415,7 +418,7 @@ const CustomerList = () => {
               className="form-control"
             />
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-2">
             <button
               onClick={searchHandle}
               className="btn btn text-light"
@@ -426,14 +429,10 @@ const CustomerList = () => {
               <span style={{ fontWeight: 'bold' }}>Filter</span>
             </button>
           </div>
-
-          {/* Number of row selection completed */}
-          {/* <div className="col-sm-6">
-            <p>Number of rows selected: {selectedRowKeys.length}</p>
-          </div> */}
-          {/* Number of row selection completed */}
-
-          <div className="col-sm-3">
+          <div className="col-sm-3 text-end mt-1">
+            <p>{selectedRowKeys.length} Ausgewählte</p>
+          </div>
+          <div className="col-sm-4 text-end ">
             <button
               className="btn btn"
               style={{ background: '#0b5995', color: 'white' }}
@@ -646,15 +645,32 @@ const CustomerList = () => {
           dataSource={data}
           pagination={false}
         />
-        <Stack spacing={2}>
-          <Pagination
-            count={countPage}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Stack>
+        <div className="row">
+          <div className="col-sm-10">
+            <Stack spacing={2}>
+              <Pagination
+                count={countPage}
+                variant="outlined"
+                shape="rounded"
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </div>
+          <div className="col-sm-2 text-end">
+            <select
+              className="form-control form-select"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+            >
+              <option value={10}>10 pro Seite</option>
+              <option value={20}>20 pro Seite</option>
+              <option value={50}>50 pro Seite</option>
+              <option value={100}>100 pro Seite</option>
+            </select>
+          </div>
+        </div>
+        <br />
         <Modal size="sm" show={isModalVisible} onHide={handleModalClose} centered>
           <Modal.Title className="text-center mt-4">
             <svg
