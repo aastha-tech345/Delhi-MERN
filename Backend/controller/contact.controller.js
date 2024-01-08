@@ -69,6 +69,13 @@ exports.getContact = async (req, res) => {
 
     const result = await apiFeatures.query;
 
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
+
     if (apiFeatures.getCurrentPage() > pageCount) {
       apiFeatures.setCurrentPage(pageCount);
       const updatedResult = await apiFeatures.pagination(resultPerPage).query;

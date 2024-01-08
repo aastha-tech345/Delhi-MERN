@@ -91,7 +91,7 @@ exports.getCustomer = async (req, res) => {
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
-
+//  console.log("pageCount",pageCount)
     const apiFeatures = new ApiFeatures(
       Customer.find({ status: "active" }),
       req.query
@@ -100,6 +100,13 @@ exports.getCustomer = async (req, res) => {
       .pagination(resultPerPage);
 
     const result = await apiFeatures.query;
+
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
 
     if (apiFeatures.getCurrentPage() > pageCount) {
       apiFeatures.setCurrentPage(pageCount);
@@ -110,6 +117,7 @@ exports.getCustomer = async (req, res) => {
         pageCount: pageCount,
       });
     }
+
 
     return res.status(200).json({
       success: true,

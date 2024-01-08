@@ -8,8 +8,6 @@ exports.createDocument = async (req, res) => {
       document_upload: req?.file?.filename,
     });
 
-    // console.log("ashishhh", document);
-
     // const result = await document.save();
     return res.status(201).json({
       message: "document was created",
@@ -22,9 +20,10 @@ exports.createDocument = async (req, res) => {
       .json({ error: "An error occurred while creating document" });
   }
 };
+
 exports.getDocument = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await DocumentInfo.Document.countDocuments({
       is_deleted: "active",
@@ -42,6 +41,13 @@ exports.getDocument = async (req, res) => {
       .pagination(resultPerPage);
 
     const result = await apiFeatures.query;
+
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
 
     if (apiFeatures.getCurrentPage() > pageCount) {
       apiFeatures.setCurrentPage(pageCount);
