@@ -1,8 +1,18 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 // Here you can add other styles
 // Here you can add other styles
 // * {
 //   font-family: Georgia;
 // }
+
+$primary-color: #005291;
+$white: #fff;
+
+*{
+  font-family: 'Play', sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
 .text-right {
   text-align: right;
 }
@@ -360,5 +370,30 @@ span.anticon.anticon-phone svg {
     color: #000;
     text-align: left;
     margin-left: 0 !important;
+  }
+}
+
+
+.form-container{
+  .h4-heading{
+    color: $primary-color;
+    font-weight: 400;
+    text-align: center;
+    margin: 0 0 20px;
+    font-family: 'Roboto', sans-serif;
+  }
+  .form-label{
+    font-size: 13px;
+    color: #686868;
+  }
+  .form-control{
+    font-size: 13px;
+    color: #000;
+  }
+  .form-btn{
+    background: $primary-color;
+    color: $white;
+    font-weight: 500;
+    font-size: 14px;
   }
 }
