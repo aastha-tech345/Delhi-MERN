@@ -1,7 +1,14 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { CCardImage, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
+import {
+  CCardImage,
+  CSidebar,
+  CSidebarBrand,
+  CSidebarNav,
+  CSidebarToggler,
+  CHeaderToggler,
+} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
@@ -30,7 +37,27 @@ const AppSidebar = () => {
         dispatch({ type: 'set', sidebarShow: visible })
       }}
     >
-      <CSidebarBrand className="d-none d-md-flex mb-4 bg-transparent pt-3" to="/">
+      <CHeaderToggler
+        className="hamburger-icon"
+        onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+      >
+        <span>
+          {/* <CIcon icon={cilMenu} size="lg" /> */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+          >
+            <path
+              d="M4.26281 6.56673C4.02438 6.80516 4.02438 7.1907 4.26281 7.4266L8.32119 11.4875C8.55962 11.7259 8.94517 11.7259 9.18106 11.4875C9.41695 11.2491 9.41949 10.8635 9.18106 10.6276L5.55388 6.99793L9.1836 3.37075C9.42203 3.13232 9.42203 2.74677 9.1836 2.51088C8.94517 2.27499 8.55962 2.27245 8.32373 2.51088L4.26281 6.56673Z"
+              fill="#313131"
+            />
+          </svg>
+        </span>
+      </CHeaderToggler>
+      <CSidebarBrand className="mb-4 bg-transparent pt-1" to="/">
         <CCardImage orientation="top px-3" src={HvdImage} />
         <CIcon className="sidebar-brand-full" src={HvdImage} height={50} />
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={50} />

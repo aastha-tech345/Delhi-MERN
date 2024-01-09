@@ -20,7 +20,7 @@ import { AppHeaderDropdown } from './header/index'
 import { logo } from 'src/assets/brand/logo'
 import { Button, Popover } from 'antd'
 const content = (
-  <div style={{ width: '220px' }}>
+  <div style={{ width: '220px' }} className="notification-wrap">
     <p>Benachrichtigungen</p>
     <hr />
     <div className="row">
@@ -73,19 +73,15 @@ const AppHeader = () => {
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
-        <CHeaderToggler
-          className="ps-1"
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
-        >
-          <CIcon icon={cilMenu} size="lg" />
-        </CHeaderToggler>
-        {/* <CHeaderBrand className="mx-auto d-md-none" to="/">
+        <div className="d-flex justify-content-end align-items-center w-100">
+          {/* <CHeaderBrand className="mx-auto d-md-none" to="/">
           <CIcon icon={logo} alt="Logo" />
         </CHeaderBrand> */}
-        <AppBreadcrumb />
-        <CHeaderNav className="ms-3">
-          <AppHeaderDropdown />
-        </CHeaderNav>
+          <AppBreadcrumb />
+          <CHeaderNav className="ms-3">
+            <AppHeaderDropdown />
+          </CHeaderNav>
+        </div>
       </CContainer>
     </CHeader>
   )

@@ -8,17 +8,13 @@ const User = () => {
   let activeTab = localStorage.getItem('tabIdd') || 'createuser'
 
   const handleTabClick = (tabId, name, e) => {
-    // if ('createuser' === localStorage.getItem('tabIdd')) {
-    //   navigate('/settings/createuser')
-    // }
-
-    // if ('role' === localStorage.getItem('tabIdd')) {
-    //   navigate('/settings/role')
-    // }
-    if (name === 'user') {
+    if (e && e.target.tagName.toLowerCase() === 'a') {
+      e.preventDefault()
+    }
+    if (name === 'Mitarbeiterlnnen') {
       localStorage.setItem('tabIdd', 'createuser')
       return navigate('/settings/createuser')
-    } else if (name === 'role') {
+    } else if (name === 'Rollen') {
       localStorage.setItem('tabIdd', 'role')
       return navigate('/settings/role')
     }
@@ -39,7 +35,7 @@ const User = () => {
               data-bs-toggle="tab"
               role="tab"
               aria-selected={activeTab === 'createuser'}
-              onClick={(e) => handleTabClick('createuser', 'user', e)}
+              onClick={(e) => handleTabClick('createuser', 'Mitarbeiterlnnen', e)}
               style={{ marginRight: '60px', marginLeft: '20px' }}
             >
               <CiUser />
@@ -52,7 +48,7 @@ const User = () => {
               role="tab"
               aria-controls="role"
               aria-selected={activeTab === 'role'}
-              onClick={(e) => handleTabClick('role', 'role', e)}
+              onClick={(e) => handleTabClick('role', 'Rollen', e)}
               style={{ marginRight: '60px' }}
             >
               <ImInfo />
