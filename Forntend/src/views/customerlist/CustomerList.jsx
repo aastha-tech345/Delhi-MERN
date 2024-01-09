@@ -410,7 +410,7 @@ const CustomerList = () => {
           <h2>KlientInnen-Listen</h2>
         </div>
         <div className="search-filter-row" style={{ background: 'white', borderRadius: '5px' }}>
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <div className="col-md-6">
                 <div className="d-flex align-items-center">
