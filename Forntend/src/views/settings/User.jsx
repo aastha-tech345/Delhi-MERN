@@ -24,9 +24,10 @@ const User = () => {
     }
   }
 
-  // useEffect(() => {
-  //   handleTabClick('nav-benutzer')
-  // }, [])
+  useEffect(() => {
+    handleTabClick()
+    localStorage.removeItem('tabIdd')
+  }, [activeTab])
 
   return (
     <>

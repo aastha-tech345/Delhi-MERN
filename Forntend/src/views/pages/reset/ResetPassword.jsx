@@ -67,29 +67,23 @@ const ResetPassword = () => {
     <>
       <div
         className=" min-vh-100 d-flex flex-row align-items-center"
-        style={{ background: '#2B1F7B' }}
+        style={{ background: '#015291' }}
       >
-        <CContainer>
+        <CContainer className="form-container">
           <CRow className="justify-content-center">
             <CCol md={4}>
-              <img className="mb-2" src={logo} style={{ height: '90px' }} alt="..." />
-
-              <br />
-              <CCardGroup>
+              <img className="logo-login" src={logo} alt="..." />
+              <CCardGroup className="mt-3">
                 <CCard className="p-4">
                   {/* <CCardBody> */}
-                  <div className="text-right" onClick={cancleData}>
-                    <RxCross2 style={{ text: 'bold', color: '#33077C' }} />
+                  <div className="text-right cross-icon" onClick={cancleData}>
+                    <RxCross2 />
                   </div>
                   <Form noValidate validated={validated}>
-                    <p style={{ color: '#015291', fontSize: '30px', textAlign: 'center' }}>
-                      Passwort vergessen?
-                    </p>
-                    <hr />
-                    <br />
+                    <h4 className="h4-heading border-b pb-3">Passwort vergessen?</h4>
                     <Row className="mb-3">
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
-                        <Form.Label>
+                        <Form.Label className="text-gray">
                           Geben Sie Ihre E-Mail-Adresse ein, um Ihr Passwort zurückzusetzen
                         </Form.Label>
                         <Form.Control
@@ -105,9 +99,9 @@ const ResetPassword = () => {
                     </Row>
                     <div>
                       <button
-                        className="form-control btn"
+                        className="form-control form-btn"
                         onClick={sendLink}
-                        style={{ background: '#015291', color: 'white' }}
+                        style={{ background: '#005291', color: 'white' }}
                       >
                         Senden
                       </button>

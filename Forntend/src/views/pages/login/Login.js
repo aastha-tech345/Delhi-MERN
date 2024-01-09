@@ -118,6 +118,7 @@ const Login = () => {
                           color: '#005291',
                           fontSize: '13px',
                           margin: 0,
+                          cursor: 'pointer',
                         }}
                         color="primary"
                         onClick={forgetPassword}

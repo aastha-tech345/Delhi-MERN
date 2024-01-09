@@ -99,12 +99,12 @@ const ForgotPassword = () => {
         <>
           <div
             className=" min-vh-100 d-flex flex-row align-items-center"
-            style={{ background: '#2B1F7B' }}
+            style={{ background: '#015291' }}
           >
-            <CContainer>
+            <CContainer className="form-container">
               <CRow className="justify-content-center">
                 <CCol md={4}>
-                  <img className="mb-2" src={logo} style={{ height: '90px' }} alt="..." />
+                  <img className="logo-login" src={logo} alt="..." />
 
                   <br />
                   <CCardGroup>
