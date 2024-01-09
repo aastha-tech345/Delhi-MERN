@@ -273,7 +273,7 @@ const AppModal = ({ setOpen }) => {
           <div className="modal-footer d-flex">
             <button
               type="button"
-              className="btn btn-secondary w-25"
+              className="btn btn-secondary"
               data-bs-dismiss="modal"
               onClick={() => setOpen(false)}
               style={{ background: '#d04545', color: 'white' }}
@@ -282,7 +282,7 @@ const AppModal = ({ setOpen }) => {
             </button>
             <button
               type="button"
-              className="btn w-25"
+              className="btn"
               onClick={handleSubmit}
               style={{ background: '#005291', color: 'white' }}
             >
