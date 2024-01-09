@@ -92,7 +92,7 @@ const AppModal = ({ setOpen }) => {
       }}
     >
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+        <div className="modal-content modal-form-wrap">
           <div className="modal-header">
             <h5 className="modal-title">Profil MitarbeiterInnen bearbeiten</h5>
             <button
@@ -103,27 +103,43 @@ const AppModal = ({ setOpen }) => {
               onClick={() => setOpen(false)}
             />
           </div>
-          <div className="p-3">
-            <div>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-                ref={fileInputRef}
-              />
-              <img
-                className="mb-3"
-                src={
-                  selectedFile
-                    ? URL.createObjectURL(selectedFile)
-                    : 'https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg'
-                }
-                alt="Avatar hochladen"
-                style={{ height: '70px', width: '70px', borderRadius: '50%', marginLeft: '45%' }}
-                onClick={() => fileInputRef.current.click()}
-              />
+          <div className="p-3 text-center">
+            <div className="upload-avatar-wrap">
+              <input type="file" onChange={handleFileChange} ref={fileInputRef} />
+              <figure>
+                <img
+                  src={
+                    selectedFile
+                      ? URL.createObjectURL(selectedFile)
+                      : 'https://img.freepik.com/premium-vector/young-smiling-man-avatar-man-with-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-3d-vector-people-character-illustration-cartoon-minimal-style_365941-860.jpg'
+                  }
+                  alt="Avatar hochladen"
+                  onClick={() => fileInputRef.current.click()}
+                />
+                <figcaption>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <g clipPath="url(#clip0_176_8191)">
+                      <path
+                        d="M19.3596 4.16405L19.8359 4.64036C20.206 5.01038 20.206 5.60872 19.8359 5.97481L18.6904 7.12424L16.8758 5.30955L18.0213 4.16405C18.3913 3.79403 18.9896 3.79403 19.3557 4.16405H19.3596ZM10.2586 11.9306L15.5413 6.644L17.356 8.45869L12.0694 13.7414C11.9552 13.8555 11.8135 13.9382 11.66 13.9815L9.35718 14.6389L10.0146 12.3361C10.0579 12.1826 10.1405 12.0408 10.2547 11.9267L10.2586 11.9306ZM16.6868 2.8296L8.92024 10.5922C8.57777 10.9347 8.32977 11.3559 8.19987 11.8165L7.07405 15.7529C6.97958 16.0836 7.07012 16.4378 7.31418 16.6819C7.55823 16.9259 7.91251 17.0165 8.24317 16.922L12.1796 15.7962C12.6441 15.6624 13.0653 15.4144 13.4038 15.0758L21.1704 7.31319C22.2765 6.20706 22.2765 4.41205 21.1704 3.30591L20.6941 2.8296C19.588 1.72347 17.7929 1.72347 16.6868 2.8296ZM5.46406 4.36481C3.55095 4.36481 2 5.91576 2 7.82886V18.5359C2 20.449 3.55095 22 5.46406 22H16.1711C18.0842 22 19.6352 20.449 19.6352 18.5359V14.1271C19.6352 13.6036 19.214 13.1824 18.6904 13.1824C18.1669 13.1824 17.7457 13.6036 17.7457 14.1271V18.5359C17.7457 19.4059 17.0411 20.1105 16.1711 20.1105H5.46406C4.59411 20.1105 3.88948 19.4059 3.88948 18.5359V7.82886C3.88948 6.95891 4.59411 6.25429 5.46406 6.25429H9.87285C10.3964 6.25429 10.8176 5.8331 10.8176 5.30955C10.8176 4.78601 10.3964 4.36481 9.87285 4.36481H5.46406Z"
+                        fill="black"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_176_8191">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </figcaption>
+              </figure>
             </div>
-            <div className="mb-2 row">
+            <div className="mb-3 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Vorname
               </label>
@@ -139,7 +155,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-2 row">
+            <div className="mb-3 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Nachname
               </label>
@@ -155,7 +171,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-2 row">
+            <div className="mb-3 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Telefon
               </label>
@@ -178,7 +194,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-2 row">
+            <div className="mb-3 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Passwort
               </label>
@@ -194,7 +210,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-2 row">
+            <div className="mb-3 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Mail
               </label>
@@ -211,45 +227,56 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-2 row">
+            <div className="mb-3 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Geschlecht
               </label>
               <div className="col-sm-9">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  onChange={handleChange}
-                  checked={data.gender === 'male'}
-                />{' '}
-                &nbsp; Männlich &nbsp;
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  onChange={handleChange}
-                  checked={data.gender === 'female'}
-                />{' '}
-                &nbsp; Weiblich &nbsp;
-                <input
-                  type="radio"
-                  name="gender"
-                  value="other"
-                  onChange={handleChange}
-                  checked={data.gender === 'other'}
-                />
-                &nbsp; Andere
+                <div className="radio-wrap">
+                  <div className="radio-input">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      onChange={handleChange}
+                      checked={data.gender === 'male'}
+                      id="male"
+                    />{' '}
+                    <label htmlFor="male">Männlich</label>
+                  </div>
+                  <div className="radio-input">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      onChange={handleChange}
+                      checked={data.gender === 'female'}
+                      id="femail"
+                    />{' '}
+                    <label htmlFor="femail">Weiblich</label>
+                  </div>
+                  <div className="radio-input">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="other"
+                      onChange={handleChange}
+                      checked={data.gender === 'other'}
+                      id="other"
+                    />
+                    <label htmlFor="other">Andere</label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="modal-footer">
+          <div className="modal-footer d-flex">
             <button
               type="button"
               className="btn btn-secondary w-25"
               data-bs-dismiss="modal"
               onClick={() => setOpen(false)}
-              style={{ background: '#015291', color: 'white' }}
+              style={{ background: '#d04545', color: 'white' }}
             >
               Abbrechen
             </button>
@@ -257,7 +284,7 @@ const AppModal = ({ setOpen }) => {
               type="button"
               className="btn w-25"
               onClick={handleSubmit}
-              style={{ background: '#d04545', color: 'white' }}
+              style={{ background: '#005291', color: 'white' }}
             >
               Aktualisieren
             </button>

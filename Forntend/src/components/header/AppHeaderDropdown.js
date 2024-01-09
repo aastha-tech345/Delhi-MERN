@@ -19,13 +19,17 @@ import { Link, useNavigate } from 'react-router-dom'
 import AppModal from './AppModal'
 
 const content = (
-  <div style={{ width: '220px' }}>
-    <h5 className="h5-heading border-bottom mb-3 pb-3 d-flex justify-content-between align-items-center">
-      <span>Benachrichtigungen</span>
-      <Badge count={3}></Badge>
-    </h5>
-    <div className="row align-items-center pb-3 mb-3 border-bottom">
-      <div className="col-sm-2">
+  <div className="notification-wrap px-2">
+    <div className="row align-items-center mb-3 border-bottom">
+      <div className="col-12">
+        <h5 className="h5-heading d-flex justify-content-between align-items-center">
+          <span>Benachrichtigungen</span>
+          <Badge count={3} className="customBadge"></Badge>
+        </h5>
+      </div>
+    </div>
+    <div className="row align-items-center pb-2 mb-2 border-bottom">
+      <div className="col-2 col-sm-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -39,7 +43,7 @@ const content = (
           />
         </svg>
       </div>
-      <div className="col-sm-10">
+      <div className="col-10 col-sm-10 border-start">
         <p className="m-0">
           Lorem Ipsum ist einfach{' '}
           <Link style={{ textDecoration: 'none', color: '#015291' }}>
@@ -49,8 +53,8 @@ const content = (
       </div>
     </div>
 
-    <div className="row align-items-center pb-3 mb-3 border-bottom">
-      <div className="col-sm-2">
+    <div className="row align-items-center pb-2 mb-2 border-bottom">
+      <div className="col-2 col-sm-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -64,7 +68,7 @@ const content = (
           />
         </svg>
       </div>
-      <div className="col-sm-10">
+      <div className="col-10 col-sm-10 border-start">
         <p className="m-0">
           Lorem Ipsum ist einfach{' '}
           <Link style={{ textDecoration: 'none', color: '#015291' }}>
@@ -74,8 +78,8 @@ const content = (
       </div>
     </div>
 
-    <div className="row align-items-center">
-      <div className="col-sm-2">
+    <div className="row align-items-center pb-2 mb-2 border-bottom">
+      <div className="col-2 col-sm-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -89,7 +93,7 @@ const content = (
           />
         </svg>
       </div>
-      <div className="col-sm-10">
+      <div className="col-10 col-sm-10 border-start">
         <p className="m-0">
           Lorem Ipsum ist einfach{' '}
           <Link style={{ textDecoration: 'none', color: '#015291' }}>
@@ -97,6 +101,10 @@ const content = (
           </Link>
         </p>
       </div>
+    </div>
+
+    <div className="row align-items-center justify-content-center text-center">
+      <Link style={{ textDecoration: 'none', color: '#015291' }}>Alle Benachrichtigungen</Link>
     </div>
   </div>
 )
@@ -124,39 +132,58 @@ const AppHeaderDropdown = () => {
       {open ? <AppModal setOpen={setOpen} /> : ''}
 
       <CDropdown variant="nav-item">
-        <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-          <div className="d-flex">
-            &nbsp;
-            <Badge count={3}>
-              <Popover content={content}>
-                <CIcon icon={cilBell} style={{ height: '25px', width: '25px', marginTop: '8px' }} />
-              </Popover>
-            </Badge>
-            &nbsp; &nbsp; &nbsp; &nbsp;
-            <div
-              style={{
-                borderLeft: '0.5px solid gray',
-                height: '40px',
-              }}
-            ></div>
-            &nbsp; &nbsp; &nbsp; &nbsp;
+        <div className="top-right-header">
+          <Badge count={3} className="customBadge">
+            <Popover content={content}>
+              {/* <CIcon icon={cilBell} style={{ height: '25px', width: '25px', marginTop: '8px' }} /> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <g clipPath="url(#clip0_164_7506)">
+                  <path
+                    d="M11.8742 3C11.2519 3 10.7492 3.50273 10.7492 4.125V4.7543C8.20039 5.15859 6.24921 7.36641 6.24921 10.0312V11.2055C6.24921 12.8016 5.70429 14.352 4.70937 15.5965L4.18554 16.2539C3.98164 16.507 3.94296 16.8551 4.08359 17.1469C4.22421 17.4387 4.51953 17.625 4.84296 17.625H18.9055C19.2289 17.625 19.5242 17.4387 19.6648 17.1469C19.8055 16.8551 19.7668 16.507 19.5629 16.2539L19.0391 15.6C18.0441 14.352 17.4992 12.8016 17.4992 11.2055V10.0312C17.4992 7.36641 15.548 5.15859 12.9992 4.7543V4.125C12.9992 3.50273 12.4965 3 11.8742 3ZM11.8742 6.375H12.1555C14.1734 6.375 15.8117 8.01328 15.8117 10.0312V11.2055C15.8117 12.8895 16.3004 14.5312 17.2074 15.9375H6.54101C7.44804 14.5312 7.93671 12.8895 7.93671 11.2055V10.0312C7.93671 8.01328 9.57499 6.375 11.593 6.375H11.8742ZM14.1242 18.75H11.8742H9.62421C9.62421 19.3477 9.85976 19.9207 10.2816 20.3426C10.7035 20.7645 11.2766 21 11.8742 21C12.4719 21 13.0449 20.7645 13.4668 20.3426C13.8887 19.9207 14.1242 19.3477 14.1242 18.75Z"
+                    fill="black"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_164_7506">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </Popover>
+          </Badge>
+          <div className="seperator"></div>
+          <CDropdownToggle placement="bottom-end" className="user-link-dropdown py-0" caret={false}>
             {result?.user?.profileImage?.length > 4 ? (
-              <img
-                src={`${apiUrl}/${result?.user?.profileImage}`}
-                size="md"
-                alt="photo"
-                width="40px"
-                height="40px"
-                style={{ objectFit: 'cover', borderRadius: '100%' }}
-              />
+              <figure className="profile-pic">
+                <img src={`${apiUrl}/${result?.user?.profileImage}`} size="md" alt="photo" />
+              </figure>
             ) : (
               <CAvatar src={avatar8} size="md" />
             )}
-            &nbsp;
-            <span className="text-dark mt-2">{result?.user?.username}</span>
-          </div>
-        </CDropdownToggle>
-        <CDropdownMenu className="pt-0 dd-links" placement="bottom-end">
+            <div className="user-name">
+              <span>{result?.user?.username}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="13"
+                viewBox="0 0 12 13"
+                fill="none"
+              >
+                <path
+                  d="M6.3711 8.3711C6.16673 8.57547 5.83626 8.57547 5.63407 8.3711L2.15328 4.89248C1.94891 4.68811 1.94891 4.35765 2.15328 4.15545C2.35765 3.95326 2.68811 3.95108 2.89031 4.15545L5.99932 7.26446L9.11051 4.15328C9.31488 3.94891 9.64534 3.94891 9.84754 4.15328C10.0497 4.35765 10.0519 4.68811 9.84754 4.89031L6.3711 8.3711Z"
+                  fill="#8F8F8F"
+                />
+              </svg>
+            </div>
+          </CDropdownToggle>
+        </div>
+        <CDropdownMenu className="pt-0 mt-3 dd-links" placement="bottom-end">
           <CDropdownHeader className="bg-light fw-semibold py-2 border-radius-5">
             Account
           </CDropdownHeader>
