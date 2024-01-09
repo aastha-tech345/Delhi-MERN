@@ -22,7 +22,7 @@ const content = (
   <div style={{ width: '220px' }}>
     <h5 className="h5-heading border-bottom mb-3 pb-3 d-flex justify-content-between align-items-center">
       <span>Benachrichtigungen</span>
-      <Badge count={3}></Badge>
+      <Badge count={3} color="#295596"></Badge>
     </h5>
     <div className="row align-items-center pb-3 mb-3 border-bottom">
       <div className="col-sm-2">
@@ -127,7 +127,7 @@ const AppHeaderDropdown = () => {
         <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
           <div className="d-flex">
             &nbsp;
-            <Badge count={3}>
+            <Badge count={3} color="#295596">
               <Popover content={content}>
                 <CIcon icon={cilBell} style={{ height: '25px', width: '25px', marginTop: '8px' }} />
               </Popover>
