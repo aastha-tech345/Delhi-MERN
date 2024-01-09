@@ -212,6 +212,7 @@ const Contact = () => {
       toast.success(result?.message)
       handleClose()
       getDetails()
+      setData('')
     } catch (error) {
       // console.error('Error during API call:', error)
 
