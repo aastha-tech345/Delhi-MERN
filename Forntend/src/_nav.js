@@ -3,6 +3,8 @@ import { CNavGroup, CNavItem } from '@coreui/react'
 import { verifyPer } from './components/verifyPermission'
 // console.log('verify', !verifyPer()[2 === 'null'])
 // console.log(verifyPer())
+let id = localStorage.getItem('tabIdd') || 'createuser'
+console.log('aastha', id)
 const _nav = [
   {
     component: CNavItem,
@@ -120,7 +122,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Mitarbeiterlnnen',
-        to: '/settings/createuser',
+        to: `/settings/${id}`,
         icon: (
           <svg
             width="24"

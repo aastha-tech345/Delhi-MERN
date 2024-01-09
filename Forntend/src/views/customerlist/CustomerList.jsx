@@ -66,6 +66,9 @@ const CustomerList = () => {
   //     setContent(value)
   //   }
   // }
+
+  let a = localStorage.getItem('tabId') || 'customer_info'
+  console.log('aastha', a)
   const columns = [
     {
       title: 'NAME DES KUNDEN',
@@ -73,7 +76,7 @@ const CustomerList = () => {
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
-          to={`/customer/customer_info`}
+          to={`/customer/${a}`}
           onClick={() => handleStore(text, record)}
         >
           {text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}
