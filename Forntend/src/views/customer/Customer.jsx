@@ -37,7 +37,6 @@ const Customer = () => {
   }
   useEffect(() => {
     handleTabClick()
-    // localStorage.removeItem('tabId')
   }, [activeTab])
 
   let data = localStorage.getItem('customerDatat')
@@ -86,12 +85,12 @@ const Customer = () => {
               <nav>
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
                   <button
-                    className={`nav-link ${activeTab === 'customerInfo' ? 'active' : ''}`}
-                    id="customerInfo-tab"
+                    className={`nav-link ${activeTab === 'customer_info' ? 'active' : ''}`}
+                    id="customer_info-tab"
                     data-bs-toggle="tab"
                     role="tab"
-                    aria-selected={activeTab === 'customerInfo'}
-                    onClick={(e) => handleTabClick('customerInfo', 'KlientInnen', e)}
+                    aria-selected={activeTab === 'customer_info'}
+                    onClick={(e) => handleTabClick('customer_info', 'KlientInnen', e)}
                     style={{ marginRight: '10px', marginLeft: '20px' }}
                   >
                     <i className="fa-solid fa-info fa-fw infoIcon"></i>

@@ -30,7 +30,7 @@ const AppSidebar = () => {
         dispatch({ type: 'set', sidebarShow: visible })
       }}
     >
-      <CSidebarBrand className="d-none d-md-flex" to="/">
+      <CSidebarBrand className="d-none d-md-flex mb-4 bg-transparent pt-3" to="/">
         <CCardImage orientation="top px-3" src={HvdImage} />
         <CIcon className="sidebar-brand-full" src={HvdImage} height={50} />
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={50} />

@@ -5,28 +5,27 @@ import { ImInfo } from 'react-icons/im'
 
 const User = () => {
   const navigate = useNavigate()
-  let activeTab = localStorage.getItem('tabIdd') || 'nav-benutzer'
-  localStorage.setItem('tabIdd', 'nav-benutzer')
-  // activeTab = localStorage.getItem('tabIdd') || 'nav-benutzer'
-  // console.log(activeTab)
-  const handleTabClick = (tabId, name, e) => {
-    localStorage.setItem('tabIdd', tabId)
-    if (e && e.target.tagName.toLowerCase() === 'a') {
-      e.preventDefault()
-    }
-    console.log(localStorage.getItem('tabIdd'))
-    if ('nav-benutzer' == localStorage.getItem('tabIdd')) {
-      navigate('/settings/createuser')
-    }
+  let activeTab = localStorage.getItem('tabIdd') || 'createuser'
 
-    if ('nav-rollen' == localStorage.getItem('tabIdd')) {
-      navigate('/settings/role')
+  const handleTabClick = (tabId, name, e) => {
+    // if ('createuser' === localStorage.getItem('tabIdd')) {
+    //   navigate('/settings/createuser')
+    // }
+
+    // if ('role' === localStorage.getItem('tabIdd')) {
+    //   navigate('/settings/role')
+    // }
+    if (name === 'user') {
+      localStorage.setItem('tabIdd', 'createuser')
+      return navigate('/settings/createuser')
+    } else if (name === 'role') {
+      localStorage.setItem('tabIdd', 'role')
+      return navigate('/settings/role')
     }
   }
 
   useEffect(() => {
     handleTabClick()
-    localStorage.removeItem('tabIdd')
   }, [activeTab])
 
   return (
@@ -35,25 +34,25 @@ const User = () => {
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
             <button
-              className={`nav-link ${activeTab === 'nav-benutzer' ? 'active' : ''}`}
-              id="nav-benutzer-tab"
+              className={`nav-link ${activeTab === 'createuser' ? 'active' : ''}`}
+              id="createuser-tab"
               data-bs-toggle="tab"
               role="tab"
-              aria-selected={activeTab === 'nav-benutzer'}
-              onClick={(e) => handleTabClick('nav-benutzer', 'user', e)}
+              aria-selected={activeTab === 'createuser'}
+              onClick={(e) => handleTabClick('createuser', 'user', e)}
               style={{ marginRight: '60px', marginLeft: '20px' }}
             >
               <CiUser />
               &nbsp; Mitarbeiterlnnen
             </button>
             <button
-              className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
-              id="nav-rollen-tab"
+              className={`nav-link ${activeTab === 'role' ? 'active' : ''}`}
+              id="role-tab"
               data-bs-toggle="tab"
               role="tab"
-              aria-controls="nav-rollen"
-              aria-selected={activeTab === 'nav-rollen'}
-              onClick={(e) => handleTabClick('nav-rollen', 'role', e)}
+              aria-controls="role"
+              aria-selected={activeTab === 'role'}
+              onClick={(e) => handleTabClick('role', 'role', e)}
               style={{ marginRight: '60px' }}
             >
               <ImInfo />
