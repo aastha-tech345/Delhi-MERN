@@ -20,45 +20,80 @@ import AppModal from './AppModal'
 
 const content = (
   <div style={{ width: '220px' }}>
-    <p>Benachrichtigungen</p>
-    <hr />
-    <div className="row">
+    <h5 className="h5-heading border-bottom mb-3 pb-3 d-flex justify-content-between align-items-center">
+      <span>Benachrichtigungen</span>
+      <Badge count={3}></Badge>
+    </h5>
+    <div className="row align-items-center pb-3 mb-3 border-bottom">
       <div className="col-sm-2">
-        <AiOutlineMail style={{ color: 'black' }} />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="15"
+          viewBox="0 0 20 15"
+          fill="none"
+        >
+          <path
+            d="M2.5 1.875C2.15625 1.875 1.875 2.15625 1.875 2.5V3.36328L8.61328 8.89453C9.42188 9.55859 10.582 9.55859 11.3906 8.89453L18.125 3.36328V2.5C18.125 2.15625 17.8438 1.875 17.5 1.875H2.5ZM1.875 5.78906V12.5C1.875 12.8438 2.15625 13.125 2.5 13.125H17.5C17.8438 13.125 18.125 12.8438 18.125 12.5V5.78906L12.5781 10.3438C11.0781 11.5742 8.91797 11.5742 7.42188 10.3438L1.875 5.78906ZM0 2.5C0 1.12109 1.12109 0 2.5 0H17.5C18.8789 0 20 1.12109 20 2.5V12.5C20 13.8789 18.8789 15 17.5 15H2.5C1.12109 15 0 13.8789 0 12.5V2.5Z"
+            fill="#bbb"
+          />
+        </svg>
       </div>
       <div className="col-sm-10">
-        <p>
+        <p className="m-0">
           Lorem Ipsum ist einfach{' '}
           <Link style={{ textDecoration: 'none', color: '#015291' }}>
-            Lorem Ipsum ist einfach ei
+            <small className="m-0">Lorem Ipsum ist einfach ei</small>
           </Link>
         </p>
       </div>
     </div>
-    <hr style={{ marginTop: '-10px' }} />
-    <div className="row">
+
+    <div className="row align-items-center pb-3 mb-3 border-bottom">
       <div className="col-sm-2">
-        <AiOutlineMail style={{ color: 'black' }} />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="15"
+          viewBox="0 0 20 15"
+          fill="none"
+        >
+          <path
+            d="M2.5 1.875C2.15625 1.875 1.875 2.15625 1.875 2.5V3.36328L8.61328 8.89453C9.42188 9.55859 10.582 9.55859 11.3906 8.89453L18.125 3.36328V2.5C18.125 2.15625 17.8438 1.875 17.5 1.875H2.5ZM1.875 5.78906V12.5C1.875 12.8438 2.15625 13.125 2.5 13.125H17.5C17.8438 13.125 18.125 12.8438 18.125 12.5V5.78906L12.5781 10.3438C11.0781 11.5742 8.91797 11.5742 7.42188 10.3438L1.875 5.78906ZM0 2.5C0 1.12109 1.12109 0 2.5 0H17.5C18.8789 0 20 1.12109 20 2.5V12.5C20 13.8789 18.8789 15 17.5 15H2.5C1.12109 15 0 13.8789 0 12.5V2.5Z"
+            fill="#bbb"
+          />
+        </svg>
       </div>
       <div className="col-sm-10">
-        <p>
-          Lorem Ipsum ist einfach ein{' '}
+        <p className="m-0">
+          Lorem Ipsum ist einfach{' '}
           <Link style={{ textDecoration: 'none', color: '#015291' }}>
-            Lorem Ipsum ist einfach ei
+            <small className="m-0">Lorem Ipsum ist einfach ei</small>
           </Link>
         </p>
       </div>
     </div>
-    <hr style={{ marginTop: '-10px' }} />
-    <div className="row">
+
+    <div className="row align-items-center">
       <div className="col-sm-2">
-        <AiOutlineMail style={{ color: 'black' }} />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="15"
+          viewBox="0 0 20 15"
+          fill="none"
+        >
+          <path
+            d="M2.5 1.875C2.15625 1.875 1.875 2.15625 1.875 2.5V3.36328L8.61328 8.89453C9.42188 9.55859 10.582 9.55859 11.3906 8.89453L18.125 3.36328V2.5C18.125 2.15625 17.8438 1.875 17.5 1.875H2.5ZM1.875 5.78906V12.5C1.875 12.8438 2.15625 13.125 2.5 13.125H17.5C17.8438 13.125 18.125 12.8438 18.125 12.5V5.78906L12.5781 10.3438C11.0781 11.5742 8.91797 11.5742 7.42188 10.3438L1.875 5.78906ZM0 2.5C0 1.12109 1.12109 0 2.5 0H17.5C18.8789 0 20 1.12109 20 2.5V12.5C20 13.8789 18.8789 15 17.5 15H2.5C1.12109 15 0 13.8789 0 12.5V2.5Z"
+            fill="#bbb"
+          />
+        </svg>
       </div>
       <div className="col-sm-10">
-        <p>
+        <p className="m-0">
           Lorem Ipsum ist einfach{' '}
           <Link style={{ textDecoration: 'none', color: '#015291' }}>
-            Lorem Ipsum ist einfach ei
+            <small className="m-0">Lorem Ipsum ist einfach ei</small>
           </Link>
         </p>
       </div>
@@ -121,13 +156,14 @@ const AppHeaderDropdown = () => {
             <span className="text-dark mt-2">{result?.user?.username}</span>
           </div>
         </CDropdownToggle>
-        <CDropdownMenu className="pt-0" placement="bottom-end">
-          <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
+        <CDropdownMenu className="pt-0 dd-links" placement="bottom-end">
+          <CDropdownHeader className="bg-light fw-semibold py-2 border-radius-5">
+            Account
+          </CDropdownHeader>
           <CDropdownItem onClick={modalOpen}>
             <svg
               width="20"
               height="20"
-              style={{ marginRight: '5px' }}
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +187,6 @@ const AppHeaderDropdown = () => {
             <svg
               width="19"
               height="20"
-              style={{ marginRight: '5px' }}
               viewBox="0 0 19 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -174,7 +209,6 @@ const AppHeaderDropdown = () => {
             <svg
               width="19"
               height="20"
-              style={{ marginRight: '5px' }}
               viewBox="0 0 19 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +231,6 @@ const AppHeaderDropdown = () => {
             <svg
               width="19"
               height="20"
-              style={{ marginRight: '5px' }}
               viewBox="0 0 19 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

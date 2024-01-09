@@ -302,6 +302,12 @@ exports.getEmployeeData = async (req, res) => {
       });
     }
 
+    if (result?.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Data not found",
+      });
+    }
     // if (result?.length === 0) {
     //   return res.status(404).json({
     //     success: false,
@@ -529,7 +535,7 @@ exports.forgotPassword = async (req, res) => {
         }
       );
     }
- 
+
     return res
       .status(200)
       .json({ status: 200, message: "Email sent successfully" });

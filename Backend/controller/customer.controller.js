@@ -91,6 +91,7 @@ exports.getCustomer = async (req, res) => {
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
+    //  console.log("pageCount",pageCount)
     //console.log("pageCount",pageCount)
     const apiFeatures = new ApiFeatures(
       Customer.find({ status: "active" }),
@@ -117,7 +118,6 @@ exports.getCustomer = async (req, res) => {
         pageCount: pageCount,
       });
     }
-
 
     return res.status(200).json({
       success: true,

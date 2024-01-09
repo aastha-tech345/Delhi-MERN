@@ -5,43 +5,40 @@ import { ImLocation2 } from 'react-icons/im'
 import { useNavigate } from 'react-router-dom'
 
 const Customer = () => {
-  // const [activeTab, setActiveTab] = useState('')
   const navigate = useNavigate()
-  let activeTab = localStorage.getItem('tabId') || 'nav-home'
+  let activeTab = localStorage.getItem('tabId') || 'customer_info'
 
   const handleTabClick = (tabId, name, e) => {
     if (e && e.target.tagName.toLowerCase() === 'a') {
       e.preventDefault()
     }
-    // localStorage.setItem('tabId', tabId)
-    // setActiveTab(id)
-    // setActiveTab(tabId)
     if (name === 'KlientInnen') {
-      localStorage.setItem('tabId', 'nav-home')
+      localStorage.setItem('tabId', 'customer_info')
       return navigate('/customer/customer_info')
     } else if (name === 'Kontakte') {
-      localStorage.setItem('tabId', 'nav-kontakte')
+      localStorage.setItem('tabId', 'contact')
       return navigate('/customer/contact')
     } else if (name === 'Aktivitat') {
-      localStorage.setItem('tabId', 'nav-aufgaben')
+      localStorage.setItem('tabId', 'activity')
       return navigate('/customer/activity')
     } else if (name === 'Dokumente') {
-      localStorage.setItem('tabId', 'nav-dokumente')
+      localStorage.setItem('tabId', 'document')
       return navigate('/customer/document')
     } else if (name === 'Vollmachten') {
-      localStorage.setItem('tabId', 'nav-vollmachten')
+      localStorage.setItem('tabId', 'attorney')
       return navigate('/customer/attorney')
     } else if (name === 'SPV') {
-      localStorage.setItem('tabId', 'nav-spv')
+      localStorage.setItem('tabId', 'services')
       return navigate('/customer/services')
     } else if (name === 'Rechnung') {
-      localStorage.setItem('tabId', 'nav-leistungen')
+      localStorage.setItem('tabId', 'bills')
       return navigate('/customer/bills')
     }
   }
   useEffect(() => {
     handleTabClick()
   }, [activeTab])
+
   let data = localStorage.getItem('customerDatat')
   let res = JSON.parse(data)
   // console.log(res)
@@ -88,25 +85,25 @@ const Customer = () => {
               <nav>
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
                   <button
-                    className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
-                    id="nav-home-tab"
+                    className={`nav-link ${activeTab === 'customer_info' ? 'active' : ''}`}
+                    id="customer_info-tab"
                     data-bs-toggle="tab"
                     role="tab"
-                    aria-selected={activeTab === 'nav-home'}
-                    onClick={(e) => handleTabClick('nav-home', 'KlientInnen', e)}
+                    aria-selected={activeTab === 'customer_info'}
+                    onClick={(e) => handleTabClick('customer_info', 'KlientInnen', e)}
                     style={{ marginRight: '10px', marginLeft: '20px' }}
                   >
                     <i className="fa-solid fa-info fa-fw infoIcon"></i>
                     KlientInnen
                   </button>
                   <button
-                    className={`nav-link ${activeTab === 'nav-kontakte' ? 'active' : ''}`}
-                    id="nav-kontakte-tab"
+                    className={`nav-link ${activeTab === 'contact' ? 'active' : ''}`}
+                    id="contact-tab"
                     data-bs-toggle="tab"
                     role="tab"
-                    aria-controls="nav-kontakte"
-                    aria-selected={activeTab === 'nav-kontakte'}
-                    onClick={(e) => handleTabClick('nav-kontakte', 'Kontakte', e)}
+                    aria-controls="contact"
+                    aria-selected={activeTab === 'contact'}
+                    onClick={(e) => handleTabClick('contact', 'Kontakte', e)}
                     style={{ marginRight: '10px' }}
                   >
                     {' '}
@@ -114,56 +111,56 @@ const Customer = () => {
                     Kontakte
                   </button>
                   <button
-                    className={`nav-link ${activeTab === 'nav-aufgaben' ? 'active' : ''}`}
-                    id="nav-aufgaben-tab"
+                    className={`nav-link ${activeTab === 'activity' ? 'active' : ''}`}
+                    id="activity-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#nav-aufgaben"
+                    data-bs-target="#activity"
                     role="tab"
-                    aria-controls="nav-aufgaben"
-                    aria-selected={activeTab === 'nav-aufgaben'}
-                    onClick={(e) => handleTabClick('nav-aufgaben', 'Aktivitat', e)}
+                    aria-controls="activity"
+                    aria-selected={activeTab === 'activity'}
+                    onClick={(e) => handleTabClick('activity', 'Aktivitat', e)}
                     style={{ marginRight: '10px' }}
                   >
                     <i className="fa-solid fa-heart-pulse fa-fw"></i>
                     Aktivitat
                   </button>
                   <button
-                    className={`nav-link ${activeTab === 'nav-dokumente' ? 'active' : ''}`}
-                    id="nav-dokumente-tab"
+                    className={`nav-link ${activeTab === 'document' ? 'active' : ''}`}
+                    id="document-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#nav-dokumente"
+                    data-bs-target="#document"
                     role="tab"
-                    aria-controls="nav-dokumente"
-                    aria-selected={activeTab === 'nav-dokumente'}
-                    onClick={(e) => handleTabClick('nav-dokumente', 'Dokumente', e)}
+                    aria-controls="document"
+                    aria-selected={activeTab === 'document'}
+                    onClick={(e) => handleTabClick('document', 'Dokumente', e)}
                     style={{ marginRight: '10px' }}
                   >
                     <i className="fa-regular fa-file fa-fw"></i>
                     Dokumente
                   </button>
                   <button
-                    className={`nav-link ${activeTab === 'nav-vollmachten' ? 'active' : ''}`}
-                    id="nav-vollmachten-tab"
+                    className={`nav-link ${activeTab === 'attorney' ? 'active' : ''}`}
+                    id="attorney-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#nav-vollmachten"
+                    data-bs-target="#attorney"
                     role="tab"
-                    aria-controls="nav-vollmachten"
-                    aria-selected={activeTab === 'nav-vollmachten'}
-                    onClick={(e) => handleTabClick('nav-vollmachten', 'Vollmachten', e)}
+                    aria-controls="attorney"
+                    aria-selected={activeTab === 'attorney'}
+                    onClick={(e) => handleTabClick('attorney', 'Vollmachten', e)}
                     style={{ marginRight: '10px' }}
                   >
                     <i className="fa-solid fa-paint-roller fa-fw"></i>
                     Vollmachten
                   </button>
                   <button
-                    className={`nav-link ${activeTab === 'nav-spv' ? 'active' : ''}`}
-                    id="nav-spv-tab"
+                    className={`nav-link ${activeTab === 'services' ? 'active' : ''}`}
+                    id="services-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#nav-spv"
+                    data-bs-target="#services"
                     role="tab"
-                    aria-controls="nav-spv"
-                    aria-selected={activeTab === 'nav-spv'}
-                    onClick={(e) => handleTabClick('nav-spv', 'SPV', e)}
+                    aria-controls="services"
+                    aria-selected={activeTab === 'services'}
+                    onClick={(e) => handleTabClick('services', 'SPV', e)}
                     style={{ marginRight: '10px' }}
                   >
                     {' '}
@@ -171,14 +168,14 @@ const Customer = () => {
                     SPV
                   </button>
                   <button
-                    className={`nav-link ${activeTab === 'nav-leistungen' ? 'active' : ''}`}
-                    id="nav-leistungen-tab"
+                    className={`nav-link ${activeTab === 'bills' ? 'active' : ''}`}
+                    id="bills-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#nav-leistungen"
+                    data-bs-target="#bills"
                     role="tab"
-                    aria-controls="nav-leistungen"
-                    aria-selected={activeTab === 'nav-leistungen'}
-                    onClick={(e) => handleTabClick('nav-leistungen', 'Rechnung', e)}
+                    aria-controls="bills"
+                    aria-selected={activeTab === 'bills'}
+                    onClick={(e) => handleTabClick('bills', 'Rechnung', e)}
                     style={{ marginRight: '10px' }}
                   >
                     <i className="fa-regular fa-file-lines fa-fw"></i>

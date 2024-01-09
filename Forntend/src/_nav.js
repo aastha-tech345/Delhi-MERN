@@ -3,6 +3,8 @@ import { CNavGroup, CNavItem } from '@coreui/react'
 import { verifyPer } from './components/verifyPermission'
 // console.log('verify', !verifyPer()[2 === 'null'])
 // console.log(verifyPer())
+let id = localStorage.getItem('tabIdd') || 'createuser'
+console.log('aastha', id)
 const _nav = [
   {
     component: CNavItem,
@@ -10,21 +12,20 @@ const _nav = [
     to: '/dashboard',
     icon: (
       <svg
+        xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
-        style={{ marginRight: '5px' }}
         viewBox="0 0 24 24"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
       >
-        <g clipPath="url(#clip0_382_11250)">
+        <g clipPath="url(#clip0_437_16035)">
           <path
             d="M4.14286 4.14286V11.2857H8.42857V4.14286H4.14286ZM2 4.14286C2 2.95982 2.95982 2 4.14286 2H8.42857C9.61161 2 10.5714 2.95982 10.5714 4.14286V11.2857C10.5714 12.4688 9.61161 13.4286 8.42857 13.4286H4.14286C2.95982 13.4286 2 12.4688 2 11.2857V4.14286ZM15.5714 12.7143V19.8571H19.8571V12.7143H15.5714ZM13.4286 12.7143C13.4286 11.5312 14.3884 10.5714 15.5714 10.5714H19.8571C21.0402 10.5714 22 11.5312 22 12.7143V19.8571C22 21.0402 21.0402 22 19.8571 22H15.5714C14.3884 22 13.4286 21.0402 13.4286 19.8571V12.7143ZM8.42857 17H4.14286V19.8571H8.42857V17ZM4.14286 14.8571H8.42857C9.61161 14.8571 10.5714 15.817 10.5714 17V19.8571C10.5714 21.0402 9.61161 22 8.42857 22H4.14286C2.95982 22 2 21.0402 2 19.8571V17C2 15.817 2.95982 14.8571 4.14286 14.8571ZM15.5714 4.14286V7H19.8571V4.14286H15.5714ZM13.4286 4.14286C13.4286 2.95982 14.3884 2 15.5714 2H19.8571C21.0402 2 22 2.95982 22 4.14286V7C22 8.18304 21.0402 9.14286 19.8571 9.14286H15.5714C14.3884 9.14286 13.4286 8.18304 13.4286 7V4.14286Z"
             fill="white"
           />
         </g>
         <defs>
-          <clipPath id="clip0_382_11250">
+          <clipPath id="clip0_437_16035">
             <rect width="24" height="24" fill="white" />
           </clipPath>
         </defs>
@@ -46,7 +47,6 @@ const _nav = [
       <svg
         width="24"
         height="24"
-        style={{ marginRight: '5px' }}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,6 @@ const _nav = [
       <svg
         width="24"
         height="24"
-        style={{ marginRight: '5px' }}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +101,6 @@ const _nav = [
           <svg
             width="24"
             height="24"
-            style={{ marginRight: '5px' }}
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -124,12 +122,11 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Mitarbeiterlnnen',
-        to: '/settings/createuser',
+        to: `/settings/${id}`,
         icon: (
           <svg
             width="24"
             height="24"
-            style={{ marginRight: '5px' }}
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +153,6 @@ const _nav = [
           <svg
             width="20"
             height="15"
-            style={{ marginRight: '5px' }}
             viewBox="0 0 20 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -183,7 +179,6 @@ const _nav = [
           <svg
             width="18"
             height="18"
-            style={{ marginRight: '5px' }}
             viewBox="0 0 18 18"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -203,7 +198,6 @@ const _nav = [
           <svg
             width="24"
             height="24"
-            style={{ marginRight: '5px' }}
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -230,7 +224,6 @@ const _nav = [
           <svg
             width="24"
             height="24"
-            style={{ marginRight: '5px' }}
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

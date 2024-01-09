@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row'
 import { useNavigate } from 'react-router-dom'
 // import ReCAPTCHA from 'react-google-recaptcha'
 import logo from '../../../assets/images/hvd-logo.png'
+// import logo from '../../../assets/images/hvd-logo-fig.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
@@ -68,19 +69,15 @@ const Login = () => {
       className=" min-vh-100 d-flex flex-row align-items-center"
       style={{ background: '#015291' }}
     >
-      <CContainer>
+      <CContainer className="form-container">
         <CRow className="justify-content-center">
           <CCol md={4}>
-            <img className="mb-2" src={logo} style={{ height: '90px' }} alt="..." />
-
-            <br />
-            <CCardGroup>
+            <img className="logo-login" src={logo} alt="..." />
+            <CCardGroup className="mt-3">
               <CCard className="p-4">
-                <CCardBody>
+                <CCardBody className="p-0">
                   <Form noValidate validated={validated}>
-                    <h4 style={{ color: '#015291', fontWeight: 'normal', textAlign: 'center' }}>
-                      Anmeldung
-                    </h4>
+                    <h4 className="h4-heading">Anmeldung</h4>
                     <Row className="mb-3">
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
                         <Form.Label>E-Mail Adresse</Form.Label>
@@ -93,7 +90,7 @@ const Login = () => {
                         />
                       </Form.Group>
                     </Row>
-                    <Row className="mb-3">
+                    <Row className="mb-2">
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
                         <Form.Label>Passwort</Form.Label>
                         <Form.Control
@@ -109,17 +106,23 @@ const Login = () => {
                       {/* <ReCAPTCHA sitekey="Your client site key" onChange={onChange} /> */}
                       <br />
                       <Button
-                        className="form-control"
-                        style={{ background: '#015291' }}
+                        className="form-control form-btn"
+                        style={{ background: '#005291' }}
                         onClick={login}
                       >
                         Senden
                       </Button>
                       <p
-                        style={{ textAlign: 'center', color: '#015291' }}
+                        style={{
+                          textAlign: 'center',
+                          color: '#005291',
+                          fontSize: '13px',
+                          margin: 0,
+                          cursor: 'pointer',
+                        }}
                         color="primary"
                         onClick={forgetPassword}
-                        className="mt-1 mx-3"
+                        className="mt-3 mx-3 mb-0"
                         tabIndex={-1}
                       >
                         Passwort vergessen ?

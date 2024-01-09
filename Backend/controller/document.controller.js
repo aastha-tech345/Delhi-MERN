@@ -8,8 +8,6 @@ exports.createDocument = async (req, res) => {
       document_upload: req?.file?.filename,
     });
 
-    // console.log("ashishhh", document);
-
     // const result = await document.save();
     return res.status(201).json({
       message: "document was created",
@@ -22,6 +20,7 @@ exports.createDocument = async (req, res) => {
       .json({ error: "An error occurred while creating document" });
   }
 };
+
 exports.getDocument = async (req, res) => {
   try {
     const resultPerPage = req.query.resultPerPage || 10;
