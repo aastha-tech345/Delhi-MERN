@@ -38,6 +38,7 @@ const Bills = () => {
     }))
   }
   const cancelData = () => {
+    localStorage.removeItem('tabId')
     navigate('/customer/customer_info')
   }
   let data = { ...productData, colleague, invoiceDate }
@@ -224,29 +225,26 @@ const Bills = () => {
           marginBottom: '10px',
         }}
       ></div>
-      <div className="row mb-4 mt-4">
-        <div className="col-sm-9"></div>
-        <div className="col-sm-3">
-          <button
-            type="button"
-            onClick={cancelData}
-            className="btn btn"
-            style={{ background: '#d04545', color: 'white' }}
-          >
-            Abbrechen
-          </button>
-          &nbsp; &nbsp;
-          <button
-            onClick={saveData}
-            type="button"
-            style={{ background: '#0b5995', color: 'white' }}
-            className="btn btn"
-          >
-            Speichern Sie
-          </button>
-        </div>
+      <div className="text-end mx-3">
+        <button
+          type="button"
+          onClick={cancelData}
+          className="btn btn"
+          style={{ background: '#d04545', color: 'white' }}
+        >
+          Abbrechen
+        </button>
+        &nbsp; &nbsp;
+        <button
+          onClick={saveData}
+          type="button"
+          style={{ background: '#0b5995', color: 'white' }}
+          className="btn btn"
+        >
+          Speichern Sie
+        </button>
       </div>
-      <hr />
+      <br />
       <ToastContainer />
     </div>
   )

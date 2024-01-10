@@ -67,7 +67,7 @@ const CustomerList = () => {
   // }
 
   let a = localStorage.getItem('tabId') || 'customer_info'
-  console.log('aastha', a)
+  // console.log('aastha', a)
   const columns = [
     {
       title: 'NAME DES KUNDEN',
@@ -300,10 +300,6 @@ const CustomerList = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  useEffect(() => {
-    getDetails()
-    getPrintDetails()
-  }, [page, itemsPerPage])
 
   let data = customer_record
   const handleStore = (data, record) => {
@@ -397,6 +393,10 @@ const CustomerList = () => {
     window.print()
   }
 
+  useEffect(() => {
+    getDetails()
+    getPrintDetails()
+  }, [page, itemsPerPage])
   // useEffect(() => {
   //   getDetails()
   //   getPrintDetails()
@@ -448,7 +448,7 @@ const CustomerList = () => {
                   <p className="mb-0 me-3">
                     <strong>{selectedRowKeys.length}</strong> Ausgewählte
                   </p>
-                  <button className="primary-btn" onClick={handleShow}>
+                  <button className="primary-btn" style={{ border: 'none' }} onClick={handleShow}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -683,6 +683,7 @@ const CustomerList = () => {
         <Table
           rowKey="_id"
           rowSelection={rowSelection}
+          responsive
           columns={columns}
           dataSource={data}
           pagination={false}

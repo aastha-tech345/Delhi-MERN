@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CiUser } from 'react-icons/ci'
 import { ImInfo } from 'react-icons/im'
 
 const User = () => {
+  const params = useParams()
+  // console.log('parama', `/${params['*']}`)
   const navigate = useNavigate()
   let activeTab = localStorage.getItem('tabIdd') || 'createuser'
 
