@@ -27,57 +27,6 @@ const Document = () => {
 
   const notify = (dataa) => toast(dataa)
   const [edit, setEdit] = useState(false)
-  // const columns = [
-  //   {
-  //     title: 'TITLE',
-  //     dataIndex: 'document_title',
-  //     render: (text) => <a>{text}</a>,
-  //   },
-  //   {
-  //     title: 'DOKUMENTENTYP',
-  //     dataIndex: 'document_type',
-  //   },
-  //   {
-  //     title: 'AKTION',
-  //     dataIndex: 'action',
-  //     render: (_, record) => (
-  //       <>
-  //         {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
-  //         verifyEditPer().includes('yes') ||
-  //         loginData?.user?.isAdminFullRights === 'true' ? (
-  //           <>
-  //             <button
-  //               style={{ background: 'none', border: 'none' }}
-  //               onClick={() => handleEdit(record)}
-  //             >
-  //               <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
-  //               &nbsp;&nbsp;Bearbeiten
-  //             </button>
-  //           </>
-  //         ) : (
-  //           ''
-  //         )}
-
-  //         {/ &nbsp;&nbsp; /}
-
-  //         {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
-  //         verifyDelPer().includes('yes') ||
-  //         loginData?.user?.isAdminFullRights === 'true' ? (
-  //           <>
-  //             <button
-  //               style={{ background: 'none', border: 'none' }}
-  //               onClick={() => handleDelete(record._id)}
-  //             >
-  //               <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
-  //             </button>
-  //           </>
-  //         ) : (
-  //           ''
-  //         )}
-  //       </>
-  //     ),
-  //   },
-  // ]
   const columns = [
     {
       title: 'TITLE',
@@ -91,6 +40,7 @@ const Document = () => {
     {
       title: 'AKTION',
       dataIndex: 'action',
+      responsive: ['md'],
       render: (_, record) => (
         <>
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
@@ -326,6 +276,7 @@ const Document = () => {
             dataSource={documentRecord}
             columns={columns}
             pagination={false}
+            responsive="stack"
             rowKey={(record) => record._id}
             rowSelection={{
               type: 'checkbox',

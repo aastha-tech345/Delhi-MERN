@@ -21,6 +21,7 @@ const EditModal = ({ setEdit, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('ContactEditDetails')
   let response = JSON.parse(res)
+  console.log('aastha', response.email)
   const [data, setData] = useState({
     fname: response?.fname,
     lname: response?.lname,
@@ -30,6 +31,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     email: response?.email,
     // customer_id: result?._id,
   })
+
   const [email, setEmail] = useState(response?.email)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadVale] = useState(false)
@@ -44,7 +46,6 @@ const EditModal = ({ setEdit, getDetails }) => {
       setEmail('')
     }
   }
-
   const handleChange = (e) => {
     const { type } = e.target
     const newValue = type === 'radio' ? e.target.value : e.target.value
@@ -59,20 +60,20 @@ const EditModal = ({ setEdit, getDetails }) => {
 
   const dataa = { ...data, email }
 
-  const handleSubmit = async (e) => {
-    const form = e.currentTarget
-    if (form.checkValidity() === false) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
+  const handleSubmit = async () => {
+    // const form = e.currentTarget
+    // if (form.checkValidity() === false) {
+    //   e.preventDefault()
+    //   e.stopPropagation()
+    // }
 
-    setValidated(true)
-    e.preventDefault()
+    // setValidated(true)
+    // e.preventDefault()
     try {
-      setLoadVale(true)
-      const { fname, lname, gender, phone } = data
-      if (!fname || !lname || !phone || !gender) {
-        return
+      // setLoadVale(true)
+      // const { fname, lname, gender, phone } = data
+      if (!data.fname || !data.lname) {
+        return toast.warning('Please fill Fname & Lname')
       }
       if (!email) {
         return toast.error('Invalid Email')
@@ -201,7 +202,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                   <input
                     type="email"
                     name="email"
-                    // value={email}
+                    value={email}
                     onChange={handleEmailChange}
                     placeholder="jo@gmail.com"
                     className="form-control"

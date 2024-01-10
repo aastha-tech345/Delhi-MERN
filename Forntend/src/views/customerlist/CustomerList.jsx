@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 // import { GrEdit } from 'react-icons/gr'
 import JoditEditor from 'jodit-react'
 import { RiDeleteBinLine } from 'react-icons/ri'
-import { MdAdd, MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
+import { MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
@@ -13,7 +13,6 @@ import Form from 'react-bootstrap/Form'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
-import { FiFilter } from 'react-icons/fi'
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
   let lgUser = localStorage.getItem('record')
@@ -68,7 +67,7 @@ const CustomerList = () => {
   // }
 
   let a = localStorage.getItem('tabId') || 'customer_info'
-  console.log('aastha', a)
+  // console.log('aastha', a)
   const columns = [
     {
       title: 'NAME DES KUNDEN',
@@ -301,10 +300,6 @@ const CustomerList = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  useEffect(() => {
-    getDetails()
-    getPrintDetails()
-  }, [page, itemsPerPage])
 
   let data = customer_record
   const handleStore = (data, record) => {
@@ -398,6 +393,10 @@ const CustomerList = () => {
     window.print()
   }
 
+  useEffect(() => {
+    getDetails()
+    getPrintDetails()
+  }, [page, itemsPerPage])
   // useEffect(() => {
   //   getDetails()
   //   getPrintDetails()
@@ -407,43 +406,83 @@ const CustomerList = () => {
     <>
       <div>
         {hide ? <EditModal setHide={setHide} getDetails={getDetails} /> : ''}
-        <h5 style={{ fontWeight: 'bold' }}>KlientInnen-Listen</h5>
-        <div className="row m-1 p-4 " style={{ background: 'white', borderRadius: '5px' }}>
-          <div className="col-sm-3">
-            <input
-              ref={searchInputRef}
-              name="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              type="search"
-              id="form1"
-              placeholder="Ihre Suche eingeben"
-              className="form-control"
-            />
-          </div>
-          <div className="col-sm-2">
-            <button
-              onClick={searchHandle}
-              className="btn btn text-light"
-              style={{ background: '#0b5995' }}
-            >
-              <FiFilter />
-              &nbsp;
-              <span style={{ fontWeight: 'bold' }}>Filter</span>
-            </button>
-          </div>
-          <div className="col-sm-3 text-end mt-1">
-            <p>{selectedRowKeys.length} Ausgewählte</p>
-          </div>
-          <div className="col-sm-4 text-end ">
-            <button
-              className="btn btn"
-              style={{ background: '#0b5995', color: 'white' }}
-              onClick={handleShow}
-            >
-              <MdAdd />
-              Neue KlientInnen anlegen
-            </button>
+        <div className="page-title">
+          <h2>KlientInnen-Listen</h2>
+        </div>
+        <div className="search-filter-row" style={{ background: 'white', borderRadius: '5px' }}>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="d-flex align-items-center">
+                  <input
+                    ref={searchInputRef}
+                    name="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    type="search"
+                    id="form1"
+                    placeholder="Ihre Suche eingeben"
+                    className="form-control form-search-control"
+                  />
+                  <button onClick={searchHandle} className="filter-btn">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                    >
+                      <path
+                        d="M17.2837 3.19758L17.2819 3.19982L11.4249 10.3893L11.3125 10.5272V10.7051V15.7395C11.3125 16.0891 11.0266 16.375 10.677 16.375C10.538 16.375 10.4145 16.3294 10.3142 16.2343L10.2972 16.2182L10.2788 16.2037L7.02898 13.6566C6.81324 13.4832 6.6875 13.2225 6.6875 12.948V10.7051V10.5272L6.57512 10.3892L0.717141 3.19979L0.716307 3.19877C0.5768 3.02847 0.5 2.81363 0.5 2.59102C0.5 2.05751 0.932509 1.625 1.46602 1.625H16.534C17.0667 1.625 17.5 2.05774 17.5 2.59102C17.5 2.81391 17.4234 3.02809 17.2837 3.19758ZM1.93219 2.3125H0.879712L1.54459 3.12837L7.29738 10.1875C7.29744 10.1876 7.2975 10.1877 7.29756 10.1877C7.34744 10.2491 7.375 10.3272 7.375 10.4062V12.8109V13.0524L7.56415 13.2026L9.81415 14.9885L10.625 15.6321V14.5969V10.4062C10.625 10.3272 10.6526 10.2491 10.7025 10.1877C10.7025 10.1876 10.7026 10.1876 10.7026 10.1875L16.454 3.12832L17.1187 2.3125H16.0664H1.93219Z"
+                        fill="#1C1D21"
+                        stroke="white"
+                      />
+                    </svg>
+                    <span>Filter</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="col-md-6 text-end">
+                <div className="d-flex align-items-center justify-content-end text-end">
+                  <p className="mb-0 me-3">
+                    <strong>{selectedRowKeys.length}</strong> Ausgewählte
+                  </p>
+                  <button className="primary-btn" style={{ border: 'none' }} onClick={handleShow}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <g clipPath="url(#clip0_437_8819)">
+                        <path
+                          d="M12 5V19"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M5 12H19"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_437_8819">
+                          <rect width="24" height="24" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    <span> Neue KlientInnen anlegen</span>
+                  </button>
+                </div>
+              </div>
+            </div>
             <Modal show={show} onHide={handleClose} centered>
               <Modal.Header closeButton>
                 <Modal.Title>Neue KlientInnen anlegen</Modal.Title>
@@ -644,6 +683,7 @@ const CustomerList = () => {
         <Table
           rowKey="_id"
           rowSelection={rowSelection}
+          responsive
           columns={columns}
           dataSource={data}
           pagination={false}
