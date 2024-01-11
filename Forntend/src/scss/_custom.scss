@@ -220,14 +220,15 @@ h4.h4Popup {
 
 .ant-table-wrapper .ant-table-tbody > tr > td {
   transition:
-    background 0.2s,
-    border-color 0.2s;
+  background 0.2s,
+  border-color 0.2s;
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #d9d9d9;
   font-size: 14px;
   font-weight: 400;
   color: #1c1d21;
   line-height: 20px;
+  text-wrap: nowrap;
 }
 
 .ant-table-wrapper table {
@@ -244,6 +245,7 @@ h4.h4Popup {
   font-weight: 500;
   color: #1c1d21;
   line-height: 20px;
+  text-wrap: nowrap;
 }
 
 .ant-table-wrapper .ant-table-pagination-right {
@@ -259,6 +261,16 @@ h4.h4Popup {
 .header nav {
   position: absolute;
   left: 30px;
+  @media only screen and (max-width: 767px) {
+      position: absolute;
+      top: 65px;
+      left:0;
+      background: #fff;
+      width: 100%;
+      left: 0;
+      text-align: left;
+      padding: 10px 15px;
+    }
 }
 
 /*blue box table*/
@@ -458,12 +470,6 @@ span.anticon.anticon-phone svg {
 }
 
 @media only screen and (max-width: 767px) {
-  .header nav {
-    position: absolute;
-    left: 30px;
-    top: 70px;
-  }
-
   .header.header-sticky {
     margin-bottom: 40px !important;
   }
@@ -511,6 +517,14 @@ span.anticon.anticon-phone svg {
       transition: 0.5s all ease-in-out;
 
       @media screen and (max-width: 767.98px) {
+      }
+    }
+    & + .wrapper{
+      .header{
+        nav{
+          left: 60px;
+          transition: 0.5s all ease-in-out;
+        }
       }
     }
   }
@@ -901,7 +915,9 @@ span.anticon.anticon-phone svg {
   width: 100%;
   display: flex;
   margin-bottom: 20px;
-
+  @media screen and (max-width:767px){
+    margin-top: 20px;
+  }
   h2 {
     color: $text-color;
     font-size: 20px;
@@ -995,6 +1011,11 @@ span.anticon.anticon-phone svg {
   }
 }
 
+.ant-table-content{
+  overflow: hidden;
+  overflow-x: auto;
+}
+
 .dm-badge {
   color: $white;
   background: transparent;
@@ -1003,6 +1024,72 @@ span.anticon.anticon-phone svg {
   max-width: 90px;
   width: 100%;
   text-align: center;
+  @media screen and (max-width: 991px){
+    padding: 3px 10px;
+  }
+}
+
+
+.pagination-row{
+  .form-select{
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+    background: #FFF url('../assets/icons/icon-down-arrow.png') 96% center no-repeat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: $text-color;
+    &:focus{
+      outline: none;
+      box-shadow: none;
+      border: 1px solid $primary-color;
+    }
+  }
+}
+
+.modal-delete{
+  .modal-content{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .modal-title{
+      &.h4{
+      margin: 0;
+      }
+    }
+    h4{
+      margin: 30px auto;
+      color: #000;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 32px;
+    }
+    p{
+      color: #000;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      margin: 0 auto 30px; 
+    }
+    .modal-btn{
+      padding: 10px 16px;
+      color: $white;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      border-radius: 6px;
+      &.delete-btn{
+        background: #C20F0F;
+      }
+      &.close-btn{
+        background: $primary-color;
+      }
+    }
+  }
 }
 
 /* Responsive styles */
