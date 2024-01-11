@@ -171,6 +171,12 @@ const Contact = () => {
   let TotalData = { ...data, email, id, customer_id, added_by }
 
   const saveData = async () => {
+    if (!email) {
+      return toast.error('Invalid Email')
+    }
+    if (!data.fname || !data.lname) {
+      return toast.warning('Please Fill Fname & Lname')
+    }
     try {
       let response = await fetch(`${apiUrl}/contact/create_contact`, {
         method: 'POST',
