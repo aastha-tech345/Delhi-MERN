@@ -40,7 +40,6 @@ $text-color: #1c1d21;
   background: none;
 }
 
-
 .ant-table-wrapper table {
   width: 100%;
   text-align: start;
@@ -79,7 +78,9 @@ $text-color: #1c1d21;
 
 .ant-table-wrapper .ant-table-tbody > tr > th,
 .ant-table-wrapper .ant-table-tbody > tr > td {
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
   border-bottom: 1px solid #c4c4c4;
   border-top: 1px solid #c4c4c4;
 }
@@ -112,15 +113,11 @@ $text-color: #1c1d21;
 .ant-table-wrapper
   .ant-table-thead
   > tr
-  > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not(
-    [colspan]
-  )::before,
+  > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before,
 .ant-table-wrapper
   .ant-table-thead
   > tr
-  > td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not(
-    [colspan]
-  )::before {
+  > td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
   width: 0px;
 }
 
@@ -220,8 +217,8 @@ h4.h4Popup {
 
 .ant-table-wrapper .ant-table-tbody > tr > td {
   transition:
-  background 0.2s,
-  border-color 0.2s;
+    background 0.2s,
+    border-color 0.2s;
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #d9d9d9;
   font-size: 14px;
@@ -262,31 +259,15 @@ h4.h4Popup {
   position: absolute;
   left: 30px;
   @media only screen and (max-width: 767px) {
-      position: absolute;
-      top: 65px;
-      left:0;
-      background: #fff;
-      width: 100%;
-      left: 0;
-      text-align: left;
-      padding: 10px 15px;
-    }
-}
-
-/*blue box table*/
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-item.show .nav-link {
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
-  border-bottom: 3px solid $primary-color;
-  color: $primary-color;
-}
-
-.nav-tabs .nav-link {
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    left: 0;
+    text-align: left;
+    padding: 10px 15px;
+  }
 }
 
 .ant-checkbox-checked {
@@ -298,9 +279,9 @@ h4.h4Popup {
       width: 8px;
       height: 16px;
       display: inline-block;
-      border: 3px solid #fff; 
+      border: 3px solid #fff;
       border-top: 0;
-      border-inline-start:0
+      border-inline-start: 0;
     }
   }
 }
@@ -337,20 +318,66 @@ h4.h4Popup {
 
 .whiteBox {
   background: #fff;
+  .blueBoxTop {
+    background: $primary-color;
+    border-radius: 10px 10px 0px 0px;
+    height: auto;
+    padding: 20px 5px;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      color: $white;
+    }
+  }
+  address {
+    margin: 0;
+    display: flex;
+    span {
+      margin-left: 16px;
+      color: $white;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+  }
+
+  .btn-outline {
+    border-radius: 6px;
+    border: 1px solid #fff;
+    padding: 10px 16px;
+    color: $white;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
 }
 
 .whiteBoxWithPdLR {
   background: #fff;
-  padding-left: 20px;
-  padding-right: 20px;
-}
+  padding: 10px 5px 20px 5px;
+  .nav-tabs .nav-link.active,
+  .nav-tabs .nav-item.show .nav-link {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 3px solid $primary-color;
+    color: $primary-color;
+    svg{
+      fill: $primary-color
+    }
+  }
 
-.blueBoxTop {
-  background: $primary-color;
-  border-radius: 5px 5px 0px 0px;
-  height: auto;
-  margin-left: 1px;
-  padding: 10px 20px 20px 20px;
+  .nav-tabs .nav-link {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+  }
 }
 
 .nav-tabs .nav-link {
@@ -519,9 +546,9 @@ span.anticon.anticon-phone svg {
       @media screen and (max-width: 767.98px) {
       }
     }
-    & + .wrapper{
-      .header{
-        nav{
+    & + .wrapper {
+      .header {
+        nav {
           left: 60px;
           transition: 0.5s all ease-in-out;
         }
@@ -915,7 +942,7 @@ span.anticon.anticon-phone svg {
   width: 100%;
   display: flex;
   margin-bottom: 20px;
-  @media screen and (max-width:767px){
+  @media screen and (max-width: 767px) {
     margin-top: 20px;
   }
   h2 {
@@ -1011,7 +1038,7 @@ span.anticon.anticon-phone svg {
   }
 }
 
-.ant-table-content{
+.ant-table-content {
   overflow: hidden;
   overflow-x: auto;
 }
@@ -1024,23 +1051,22 @@ span.anticon.anticon-phone svg {
   max-width: 90px;
   width: 100%;
   text-align: center;
-  @media screen and (max-width: 991px){
+  @media screen and (max-width: 991px) {
     padding: 3px 10px;
   }
 }
 
-
-.pagination-row{
-  .form-select{
+.pagination-row {
+  .form-select {
     border-radius: 4px;
-    border: 1px solid #D9D9D9;
-    background: #FFF url('../assets/icons/icon-down-arrow.png') 96% center no-repeat;
+    border: 1px solid #d9d9d9;
+    background: #fff url("../assets/icons/icon-down-arrow.png") 96% center no-repeat;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
     color: $text-color;
-    &:focus{
+    &:focus {
       outline: none;
       box-shadow: none;
       border: 1px solid $primary-color;
@@ -1048,44 +1074,113 @@ span.anticon.anticon-phone svg {
   }
 }
 
-.modal-delete{
-  .modal-content{
+.modal-delete {
+  .modal-content {
     padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    .modal-title{
-      &.h4{
-      margin: 0;
+    .modal-title {
+      &.h4 {
+        margin: 0;
       }
     }
-    h4{
+    h4 {
       margin: 30px auto;
       color: #000;
       font-size: 24px;
       font-weight: 700;
       line-height: 32px;
     }
-    p{
+    p {
       color: #000;
       text-align: center;
       font-size: 16px;
       font-weight: 400;
       line-height: 20px;
-      margin: 0 auto 30px; 
+      margin: 0 auto 30px;
     }
-    .modal-btn{
+    .modal-btn {
       padding: 10px 16px;
       color: $white;
       font-size: 16px;
       font-weight: 700;
       line-height: 20px;
       border-radius: 6px;
-      &.delete-btn{
-        background: #C20F0F;
+      &.delete-btn {
+        background: #c20f0f;
       }
-      &.close-btn{
+      &.close-btn {
+        background: $primary-color;
+      }
+    }
+  }
+}
+
+.modal-form {
+  .modal-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #d9d9d9;
+    @media screen and (max-width: 585px) {
+      padding: 15px;
+    }
+    .modal-title {
+      color: #000;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px;
+    }
+  }
+  .modal-body {
+    padding: 30px;
+    @media screen and (max-width: 585px) {
+      padding: 15px;
+    }
+    .form-control {
+      border-radius: 6px;
+      border: 1px solid #d9d9d9;
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      height: 36px;
+      &::placeholder {
+        color: #8f8f8f;
+      }
+      &:focus {
+        outline: none;
+        box-shadow: none;
+        border: 1px solid $primary-color;
+      }
+    }
+  }
+  .modal-footer {
+    justify-content: space-between;
+    display: flex;
+    padding: 20px 30px;
+    @media screen and (max-width: 585px) {
+      padding: 15px;
+    }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+      border: 1px solid $primary-color;
+      color: $white;
+      margin: 0;
+      height: 40px;
+      &.btn-modal-close {
+        border-color: $primary-color;
+        color: $text-color;
+      }
+      &.btn-cancel {
+        background: #c20f0f;
+        border-color: #c20f0f;
+      }
+      &.btn-save {
         background: $primary-color;
       }
     }

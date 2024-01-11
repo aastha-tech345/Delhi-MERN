@@ -565,14 +565,14 @@ const CustomerList = () => {
                 </div>
               </div>
             </div>
-            <Modal show={show} onHide={handleClose} centered>
+            <Modal show={show} onHide={handleClose} centered className="modal-form">
               <Modal.Header closeButton>
                 <Modal.Title>Neue KlientInnen anlegen</Modal.Title>
               </Modal.Header>
 
               <Modal.Body>
                 <Form noValidate validated={validated}>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-6">
                       <input
                         value={fname}
@@ -600,7 +600,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-12">
                       <input
                         value={street}
@@ -615,7 +615,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-6">
                       {/* <input
                         type="email"
@@ -659,7 +659,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-6">
                       <input
                         type="tel"
@@ -689,7 +689,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-6">
                       <input
                         value={dob}
@@ -717,10 +717,10 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-6">
                       <select
-                        className="form-control"
+                        className="form-control mb-0"
                         value={group}
                         onChange={(e) => {
                           setGroup(e.target.value)
@@ -737,27 +737,20 @@ const CustomerList = () => {
               </Modal.Body>
               <Modal.Footer>
                 <button
-                  className="btn btn"
+                  className="btn btn-modal-close"
                   // onClick={handleEditRecord}
                   onClick={handleClose}
-                  style={{ border: '1px solid #0b5995', marginRight: '120px', color: 'black' }}
                 >
                   Bearbeiten
                 </button>
-                <button
-                  className="btn btn"
-                  onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
-                >
-                  Stornieren
-                </button>
-                <button
-                  className="btn btn"
-                  onClick={saveData}
-                  style={{ background: '#0b5995', color: 'white' }}
-                >
-                  Einreichen
-                </button>
+                <div className="btn-wrap">
+                  <button className="btn btn-cancel" onClick={handleClose}>
+                    Stornieren
+                  </button>
+                  <button className="btn btn-save ms-3" onClick={saveData}>
+                    Einreichen
+                  </button>
+                </div>
               </Modal.Footer>
             </Modal>
           </div>
