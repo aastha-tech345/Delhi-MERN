@@ -164,8 +164,14 @@ const Attorney = () => {
     securingattorney,
     customer_id: result?._id,
   }
+
   const saveData = async () => {
-    console.log('aastha', data)
+    // Check if CareProvisionMasterData is false
+    if (healthCare && healthCare.healthCareMasterData === false) {
+      toast.error('Eintrag der Stammdaten')
+      return
+    }
+
     try {
       let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
         method: 'POST',
@@ -180,8 +186,11 @@ const Attorney = () => {
       if (result.status === 201) {
         toast.success('Data saved successfully!')
         resetStateVariables()
+      } else {
+        toast.error('Error saving data. Please check the console for details.')
       }
     } catch (error) {
+      console.error('Error during API call:', error)
       toast.error('Error saving data. Please try again.')
     }
   }
@@ -246,6 +255,7 @@ const Attorney = () => {
                   }
                   checked={healthCare.healthCareMasterData}
                   name="healthCareMasterData"
+                  required={true}
                 />
                 <p className="mt-3" style={{ color: '#244D92' }}>
                   Bevollmächtigte Person(en):

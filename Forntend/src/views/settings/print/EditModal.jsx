@@ -123,7 +123,7 @@ const EditModal = ({ setEdit, getDetails }) => {
               className="btn btn-secondary w-25"
               data-bs-dismiss="modal"
               onClick={close}
-              style={{ background: '#015291', color: 'white' }}
+              style={{ background: '#d04545', color: 'white' }}
             >
               Abbrechen
             </button>
@@ -131,7 +131,7 @@ const EditModal = ({ setEdit, getDetails }) => {
               type="button"
               className="btn w-25"
               onClick={handleSubmit}
-              style={{ background: '#d04545', color: 'white' }}
+              style={{ background: '#015291', color: 'white' }}
             >
               {loadValue ? <Loader /> : 'Aktualisieren'}
             </button>
