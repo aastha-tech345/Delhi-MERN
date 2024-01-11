@@ -99,17 +99,19 @@ const CustomerList = () => {
       dataIndex: 'group',
       render: (text, record) => (
         <div
+          className="dm-badge"
           style={{
-            color: 'white',
             background:
-              text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
-            borderRadius: '20px',
-            padding: '3px',
-            width: '70px',
-            textAlign: 'center',
+              text === 'PV-ALT' ? '#C20F0F' : text === 'HVD-PV' ? '#4EB772' : 'transparent',
+            border:
+              text === 'PV-ALT'
+                ? '1px solid transparent'
+                : text === 'HVD-PV'
+                ? '1px solid rgba(78, 183, 114, 0.50)'
+                : '',
           }}
         >
-          <b style={{ fontSize: '12px' }}>{text}</b>
+          <b>{text}</b>
         </div>
       ),
     },
@@ -127,8 +129,37 @@ const CustomerList = () => {
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleEdit(record)}
               >
-                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
-                &nbsp;Bearbeiten
+                {/* <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} /> */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <g clipPath="url(#clip0_476_24741)">
+                    <path
+                      d="M4 20.0003H8L18.5 9.5003C19.0304 8.96987 19.3284 8.25045 19.3284 7.5003C19.3284 6.75016 19.0304 6.03074 18.5 5.5003C17.9696 4.96987 17.2501 4.67188 16.5 4.67188C15.7499 4.67187 15.0304 4.96987 14.5 5.5003L4 16.0003V20.0003Z"
+                      stroke="#005291"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M13.5 6.5L17.5 10.5"
+                      stroke="#005291"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_476_24741">
+                      <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <span>Bearbeiten</span>
               </button>
             </>
           ) : (
@@ -141,7 +172,58 @@ const CustomerList = () => {
               style={{ background: 'none', border: 'none' }}
               onClick={() => handleIconClick(record._id)}
             >
-              <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
+              {/* <RiDeleteBinLine className="text-danger text-bold fs-5" /> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <g clipPath="url(#clip0_431_1048)">
+                  <path
+                    d="M5 8H19"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M10 11V16"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M14 11V16"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_431_1048">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              <span> Löschen</span>
             </button>
           ) : (
             ''
@@ -412,7 +494,7 @@ const CustomerList = () => {
         <div className="search-filter-row" style={{ background: 'white', borderRadius: '5px' }}>
           <div className="container-fluid">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-6 mb-md-0 mb-3">
                 <div className="d-flex align-items-center">
                   <input
                     ref={searchInputRef}
@@ -444,7 +526,7 @@ const CustomerList = () => {
               </div>
 
               <div className="col-md-6 text-end">
-                <div className="d-flex align-items-center justify-content-end text-end">
+                <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
                   <p className="mb-0 me-3">
                     <strong>{selectedRowKeys.length}</strong> Ausgewählte
                   </p>
@@ -680,6 +762,7 @@ const CustomerList = () => {
             </Modal>
           </div>
         </div>
+
         <Table
           rowKey="_id"
           rowSelection={rowSelection}
