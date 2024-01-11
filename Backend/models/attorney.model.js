@@ -16,13 +16,13 @@ const authPowerPersonSchema = {
 
 const healthCareSchema = {
   healthCareMasterData: { type: String },
-  healthCareData: [authPersonSchema],
+  healthCareData: [],
 };
 
 const powerofattorneySchema = {
   AttorneyMasterData: { type: String },
   adoptDataFromHealthcare: { type: String },
-  powerOfAttorneyData: [authPowerPersonSchema],
+  powerOfAttorneyData: [],
 };
 const careProvisionSchema = {
   CareProvisionMasterData: { type: String },

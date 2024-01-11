@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Divider, Table } from 'antd'
 import Modal from 'react-bootstrap/Modal'
-import { GrEdit } from 'react-icons/gr'
-import { MdAdd, MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
-import { BiFilterAlt } from 'react-icons/bi'
-import { BiErrorCircle } from 'react-icons/bi'
-import axios from 'axios'
+import { MdAdd, MdOutlineEdit } from 'react-icons/md'
 import DeleteModal from './DeleteModal'
-import { postFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
@@ -120,16 +115,13 @@ const Contact = () => {
     phone: '',
     gender: '',
     statu: '',
-    customer_id: custData?._id,
-    added_by: loginData?.user?._id,
   })
-
+  let customer_id = custData?._id
+  let added_by = loginData?.user?._id
   const [email, setEmail] = useState('')
   const [show, setShow] = useState(false)
-  const [error, setError] = useState(false)
   const [contactRecord, setContactRecord] = useState([])
   const [search, setSearch] = useState('')
-  const [selectionType] = useState('checkbox')
   const [hide, setHide] = useState(false)
   const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
@@ -165,8 +157,6 @@ const Contact = () => {
     setEdit(true)
   }
 
-  const notify = (dataa) => toast(dataa)
-
   const handleEmailChange = (e) => {
     const inputValue = e.target.value
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -178,21 +168,14 @@ const Contact = () => {
     }
   }
 
-  const TotalData = { ...data, email, id }
+  let TotalData = { ...data, email, id, customer_id, added_by }
 
-  const saveData = async (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-
-    setValidated(true)
+  const saveData = async () => {
     if (!email) {
-      return notify('Invalid Email')
+      return toast.error('Invalid Email')
     }
-    if (!data?.fname || !data?.lname) {
-      return toast.warning('Please Fill Fname & Lname Details')
+    if (!data.fname || !data.lname) {
+      return toast.warning('Please Fill Fname & Lname')
     }
     try {
       let response = await fetch(`${apiUrl}/contact/create_contact`, {
@@ -210,9 +193,10 @@ const Contact = () => {
 
       let result = await response.json()
       toast.success(result?.message)
+      setData('')
+      setEmail('')
       handleClose()
       getDetails()
-      setData('')
     } catch (error) {
       // console.error('Error during API call:', error)
 
@@ -276,244 +260,229 @@ const Contact = () => {
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
       <Customer />
       <h5 className="mx-4">Kontakte</h5>
-      <div
-        className="row p-3 mx-4"
-        style={{
-          borderRadius: '5px',
-          margin: '0px',
-          border: '1px solid lightgray',
-          background: '#fff',
-        }}
-      >
-        <div className="col-sm-3">
-          <div className="searchInput">
-            <input
-              ref={searchInputRef}
-              name="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              type="search"
-              id="form1"
-              placeholder="Ihre Suche eingeben"
-              className="form-control searchInputIcon"
-            />
-            <i className="fas fa-search fa-fw"></i>
+      <div className="container-fluid">
+        <div
+          className="row search-filter-row"
+          style={{
+            borderRadius: '5px',
+            margin: '0px',
+            border: '1px solid lightgray',
+            background: '#fff',
+          }}
+        >
+          <div className="col-md-9">
+            <div className="d-flex align-items-center">
+              <input
+                ref={searchInputRef}
+                name="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                type="search"
+                id="form1"
+                placeholder="Ihre Suche eingeben"
+                className="form-control form-search-control"
+              />
+              <button onClick={searchHandle} className="filter-btn">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                >
+                  <path
+                    d="M17.2837 3.19758L17.2819 3.19982L11.4249 10.3893L11.3125 10.5272V10.7051V15.7395C11.3125 16.0891 11.0266 16.375 10.677 16.375C10.538 16.375 10.4145 16.3294 10.3142 16.2343L10.2972 16.2182L10.2788 16.2037L7.02898 13.6566C6.81324 13.4832 6.6875 13.2225 6.6875 12.948V10.7051V10.5272L6.57512 10.3892L0.717141 3.19979L0.716307 3.19877C0.5768 3.02847 0.5 2.81363 0.5 2.59102C0.5 2.05751 0.932509 1.625 1.46602 1.625H16.534C17.0667 1.625 17.5 2.05774 17.5 2.59102C17.5 2.81391 17.4234 3.02809 17.2837 3.19758ZM1.93219 2.3125H0.879712L1.54459 3.12837L7.29738 10.1875C7.29744 10.1876 7.2975 10.1877 7.29756 10.1877C7.34744 10.2491 7.375 10.3272 7.375 10.4062V12.8109V13.0524L7.56415 13.2026L9.81415 14.9885L10.625 15.6321V14.5969V10.4062C10.625 10.3272 10.6526 10.2491 10.7025 10.1877C10.7025 10.1876 10.7026 10.1876 10.7026 10.1875L16.454 3.12832L17.1187 2.3125H16.0664H1.93219Z"
+                    fill="#1C1D21"
+                    stroke="white"
+                  />
+                </svg>
+                <span>Filter</span>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="col-sm-6">
-          <button
-            onClick={searchHandle}
-            className="btn btn text-light"
-            style={{ background: '#0b5995' }}
-          >
-            <FiFilter />
-            &nbsp;
-            <span style={{ fontWeight: 'normal' }}>Filter</span>
-          </button>
-        </div>
-        <div className="col-sm-3">
-          {/* &nbsp;&nbsp; */}
-          <button
-            className="btn btn"
-            style={{ background: '#0b5995', color: 'white' }}
-            onClick={handleShow}
-          >
-            <MdAdd />
-            &nbsp;Neue Kontakte anlegen
-          </button>
-          <Modal show={show} onHide={handleClose} centered>
-            <Modal.Header closeButton>
-              <Modal.Title>Kontakt hinzufügen</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form noValidate validated={validated}>
-                <div className="row p-3">
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Vorname
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="text"
-                        name="fname"
-                        value={data.fname}
-                        onChange={handleChange}
-                        placeholder="jo"
-                        className="form-control"
-                        id="inputPassword"
-                        required={true}
-                      />
+          <div className="col-sm-3">
+            {/* &nbsp;&nbsp; */}
+            <button
+              className="btn btn"
+              style={{ background: '#0b5995', color: 'white' }}
+              onClick={handleShow}
+            >
+              <MdAdd />
+              &nbsp;Neue Kontakte anlegen
+            </button>
+            <Modal show={show} onHide={handleClose} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Kontakt hinzufügen</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form noValidate validated={validated}>
+                  <div className="row p-3">
+                    <div className="mb-2 row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Vorname
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="text"
+                          name="fname"
+                          value={data.fname}
+                          onChange={handleChange}
+                          placeholder="jo"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="mb-2 row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Nachname
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="text"
+                          name="lname"
+                          value={data.lname}
+                          onChange={handleChange}
+                          placeholder="verma"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="mb-2 row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Telefon
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={data.phone}
+                          onChange={(e) => {
+                            const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                            if (/^\+?[0-9]*$/.test(inputValue)) {
+                              handleChange({ target: { name: 'phone', value: inputValue } })
+                            }
+                          }}
+                          placeholder="e.g. 91+ 8354568464"
+                          className="form-control"
+                          id="inputPhone"
+                          maxLength={10}
+                          minLength={3}
+                        />
+                      </div>
+                    </div>
+                    <div className="mb-2 row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Mail
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="email"
+                          name="email"
+                          // value={email}
+                          onChange={handleEmailChange}
+                          placeholder="jo@gmail.com"
+                          className="form-control"
+                          id="inputPassword"
+                        />
+                      </div>
+                    </div>
+                    <div className="mb-2 row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Geschlecht
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="male"
+                          onChange={handleChange}
+                          checked={data.gender === 'male'}
+                        />{' '}
+                        &nbsp; Männlich &nbsp;
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="female"
+                          onChange={handleChange}
+                          checked={data.gender === 'female'}
+                        />{' '}
+                        &nbsp; Weiblich &nbsp;
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="other"
+                          onChange={handleChange}
+                          checked={data.gender === 'other'}
+                        />
+                        &nbsp; Andere
+                      </div>
+                    </div>
+                    <div className="mb-2 row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Status
+                      </label>
+                      <div className="col-sm-9">
+                        <select
+                          className="form-control"
+                          name="statu"
+                          onChange={handleChange}
+                          value={data.statu}
+                        >
+                          <option value="HVD-PV">HVD-PV</option>
+                          <option value="PV-ALT">PV-ALT</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Nachname
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="text"
-                        name="lname"
-                        value={data.lname}
-                        onChange={handleChange}
-                        placeholder="verma"
-                        className="form-control"
-                        id="inputPassword"
-                        required={true}
-                      />
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Telefon
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={data.phone}
-                        onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                          if (/^\+?[0-9]*$/.test(inputValue)) {
-                            handleChange({ target: { name: 'phone', value: inputValue } })
-                          }
-                        }}
-                        placeholder="e.g. 91+ 8354568464"
-                        className="form-control"
-                        id="inputPhone"
-                        maxLength={10}
-                        minLength={3}
-                      />
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Mail
-                    </label>
-                    <div className="col-sm-9">
-                      {/* <input
-                        type="email"
-                        name="email"
-                        // value={email}
-                        onChange={(e) => {
-                          const inputValue = e.target.value
-                          if (inputValue.toLowerCase().includes('@gmail.com')) {
-                            setEmail(inputValue)
-                          } else {
-                            setEmail('')
-                          }
-                        }}
-                        placeholder="jo@gmail.com"
-                        className="form-control"
-                        id="inputPassword"
-                      /> */}
-
-                      <input
-                        type="email"
-                        name="email"
-                        // value={email}
-                        onChange={handleEmailChange}
-                        placeholder="jo@gmail.com"
-                        className="form-control"
-                        id="inputPassword"
-                      />
-
-                      {error && email.trim().length === 0 && (
-                        <p style={{ color: 'red' }}>
-                          <BiErrorCircle /> required
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Geschlecht
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="male"
-                        onChange={handleChange}
-                        checked={data.gender === 'male'}
-                      />{' '}
-                      &nbsp; Männlich &nbsp;
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="female"
-                        onChange={handleChange}
-                        checked={data.gender === 'female'}
-                      />{' '}
-                      &nbsp; Weiblich &nbsp;
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="other"
-                        onChange={handleChange}
-                        checked={data.gender === 'other'}
-                      />
-                      &nbsp; Andere
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Status
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        name="statu"
-                        onChange={handleChange}
-                        value={data.statu}
-                      >
-                        <option value="HVD-PV">HVD-PV</option>
-                        <option value="PV-ALT">PV-ALT</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <button
-                className="btn btn"
-                onClick={handleClose}
-                style={{ background: '#d04545', color: 'white' }}
-              >
-                {' '}
-                Abbrechen
-              </button>
-              &nbsp; &nbsp;
-              <button
-                className="btn btn"
-                onClick={saveData}
-                style={{ background: '#0b5995', color: 'white' }}
-              >
-                Speichern
-              </button>
-            </Modal.Footer>
-          </Modal>{' '}
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <button
+                  className="btn btn"
+                  onClick={handleClose}
+                  style={{ background: '#d04545', color: 'white' }}
+                >
+                  {' '}
+                  Abbrechen
+                </button>
+                &nbsp; &nbsp;
+                <button
+                  className="btn btn"
+                  onClick={saveData}
+                  style={{ background: '#0b5995', color: 'white' }}
+                >
+                  Speichern
+                </button>
+              </Modal.Footer>
+            </Modal>{' '}
+          </div>
         </div>
       </div>
       <div style={{ background: '#fff' }} className="mx-3">
         <Divider />
-        <Table
-          dataSource={dataa}
-          columns={columns}
-          pagination={false}
-          rowKey={(record) => record._id}
-          rowSelection={{
-            type: 'checkbox',
-            onChange: (selectedRowKeys, selectedRows) => {
-              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-            },
-            getCheckboxProps: (record) => ({
-              disabled: record.name === 'Disabled User',
-              name: record.name,
-            }),
-          }}
-        />
-
+        <div className="responsive-table-container">
+          <Table
+            dataSource={dataa}
+            columns={columns}
+            pagination={false}
+            responsive
+            rowKey={(record) => record._id}
+            rowSelection={{
+              type: 'checkbox',
+              onChange: (selectedRowKeys, selectedRows) => {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+              },
+              getCheckboxProps: (record) => ({
+                disabled: record.name === 'Disabled User',
+                name: record.name,
+              }),
+            }}
+          />
+        </div>
         <div className="row">
           <div className="col-sm-10">
             <Stack spacing={2}>

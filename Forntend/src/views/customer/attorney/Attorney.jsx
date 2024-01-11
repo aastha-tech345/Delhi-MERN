@@ -11,6 +11,7 @@ const Attorney = () => {
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const cancelData = () => {
+    localStorage.removeItem('tabId')
     navigate('/customer/customer_info')
   }
   const [powerOfAttorney, setPowerOfAttorney] = useState({
@@ -163,7 +164,14 @@ const Attorney = () => {
     securingattorney,
     customer_id: result?._id,
   }
+
   const saveData = async () => {
+    // Check if CareProvisionMasterData is false
+    if (healthCare && healthCare.healthCareMasterData === false) {
+      toast.error('Eintrag der Stammdaten')
+      return
+    }
+
     try {
       let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
         method: 'POST',
@@ -174,13 +182,15 @@ const Attorney = () => {
       })
 
       let result = await response.json()
+      console.log(result)
       if (result.status === 201) {
         toast.success('Data saved successfully!')
         resetStateVariables()
       } else {
-        toast.error('Fill Full details')
+        toast.error('Error saving data. Please check the console for details.')
       }
     } catch (error) {
+      console.error('Error during API call:', error)
       toast.error('Error saving data. Please try again.')
     }
   }
@@ -225,13 +235,15 @@ const Attorney = () => {
     <>
       <div style={{ background: '#fff' }}>
         <Customer />
-        <h5 className="mx-4">Vollmachten</h5>
+        <h5 className="mx-4" style={{ color: '#244D92' }}>
+          Vollmachten
+        </h5>
         <div className="mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
           <div className="card">
             <div className="row p-3">
               <div className="col-sm-12">
-                <p style={{ color: 'blue' }}>GESUNDHEITSVOLLMACHT</p>
-                &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
+                <p style={{ color: '#244D92' }}>GESUNDHEITSVOLLMACHT</p>
+                &nbsp;Eintrag der Stammdaten &nbsp;&nbsp;
                 <input
                   type="checkbox"
                   onChange={() =>
@@ -243,9 +255,11 @@ const Attorney = () => {
                   }
                   checked={healthCare.healthCareMasterData}
                   name="healthCareMasterData"
+                  required={true}
                 />
-                <br />
-                <p style={{ color: 'blue' }}>Bevollmächtigte Person(en):</p>
+                <p className="mt-3" style={{ color: '#244D92' }}>
+                  Bevollmächtigte Person(en):
+                </p>
                 <div>
                   <div className="row">
                     <div className="col-sm-3">Vorname</div>
@@ -327,7 +341,7 @@ const Attorney = () => {
             </div>
             <div className="row p-3">
               <div className="col-sm-12">
-                <p style={{ color: 'blue' }}>VORSORGEVOLLMACHT</p>
+                <p style={{ color: '#244D92' }}>VORSORGEVOLLMACHT</p>
                 &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
                 <input
                   type="checkbox"
@@ -343,7 +357,9 @@ const Attorney = () => {
                   name="AttorneyMasterData"
                 />
                 <br />
-                <p style={{ color: 'blue' }}>Bevollmächtigte Person(en):</p>
+                <p className="mt-3" style={{ color: '#244D92' }}>
+                  Bevollmächtigte Person(en):
+                </p>
                 &nbsp;Datensatz aus Gesundheitsvollmacht übernehmen&nbsp;&nbsp;&nbsp;
                 <input
                   type="checkbox"
@@ -358,17 +374,25 @@ const Attorney = () => {
                   checked={powerOfAttorney.adoptDataFromHealthcare}
                   name="adoptDataFromHealthcare"
                 />
-                <div className="row">
-                  <div className="col-sm-3">Vorname</div>
-                  <div className="col-sm-3">Nachname</div>
-                  <div className="col-sm-3">Adresse</div>
-                  <div className="col-sm-3">Telefone</div>
+                <div className="row mt-3 mb-2">
+                  <div className="col-sm-3">
+                    <b>Vorname</b>
+                  </div>
+                  <div className="col-sm-3">
+                    <b>Nachname</b>
+                  </div>
+                  <div className="col-sm-3">
+                    <b>Adresse</b>
+                  </div>
+                  <div className="col-sm-3">
+                    <b>Telefone</b>
+                  </div>
                 </div>
                 {powerOfAttorney.powerOfAttorneyData &&
                   powerOfAttorney.powerOfAttorneyData.map((field, index) => (
                     <div className="row mb-2" key={index}>
                       <div className="col-sm-3">
-                        <div className="row">
+                        <div className="mb-2 row">
                           <div className="col-sm-12">
                             <input
                               onChange={(e) => powerOfAttorneyChange(e, index)}
@@ -446,7 +470,7 @@ const Attorney = () => {
           </div>
           <div className="row p-3">
             <div className="col-sm-12">
-              <p style={{ color: 'blue' }}>BETREUUNGSVER FÜGUNG</p>
+              <p style={{ color: '#244D92' }}>BETREUUNGSVER FÜGUNG</p>
               &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
               <input
                 type="checkbox"
@@ -459,7 +483,7 @@ const Attorney = () => {
           <hr className="mx-3" />
           <div className="row p-3">
             <div className="col-sm-12">
-              <p style={{ color: 'blue' }}>VOLLMACHT Z UR A B SICHERUNG DES DIGITALEN ER B ES</p>
+              <p style={{ color: '#244D92' }}>VOLLMACHT Z UR A B SICHERUNG DES DIGITALEN ER B ES</p>
               &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
               <input
                 type="checkbox"
@@ -470,28 +494,26 @@ const Attorney = () => {
             </div>
           </div>
           <hr className="mx-3" />
-          <div className="row ">
-            <div className="col-sm-6"></div>
-            <div className="col-sm-6 mb-3 text-end">
-              <button
-                onClick={cancelData}
-                type="button"
-                className="btn btn"
-                style={{ background: '#d04545', color: 'white' }}
-              >
-                Abbrechen
-              </button>
-              &nbsp; &nbsp;
-              <button
-                onClick={saveData}
-                type="button"
-                style={{ background: '#0b5995', color: 'white' }}
-                className="btn btn"
-              >
-                Speichern Sie
-              </button>
-            </div>
+          <div className="text-end mx-3">
+            <button
+              onClick={cancelData}
+              type="button"
+              className="btn btn"
+              style={{ background: '#d04545', color: 'white' }}
+            >
+              Abbrechen
+            </button>
+            &nbsp; &nbsp;
+            <button
+              onClick={saveData}
+              type="button"
+              style={{ background: '#0b5995', color: 'white' }}
+              className="btn btn"
+            >
+              Speichern Sie
+            </button>
           </div>
+          <br />
         </div>
         <ToastContainer />
       </div>

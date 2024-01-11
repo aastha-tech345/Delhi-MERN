@@ -66,22 +66,11 @@ const EditModal = ({ setHide, getDetails }) => {
     }
 
     setValidated(true)
-    const { fname, lname, street, city, phone, plz, land, dob, group } = data
-    if (
-      !fname ||
-      // !lname ||
-      !street ||
-      !city ||
-      !phone ||
-      !plz ||
-      !land ||
-      !dob ||
-      !group
-    ) {
-      return
+    if (!data.fname || !data.lname) {
+      return toast.warning('Please Fill Fname & Lname')
     }
     if (!email) {
-      return notify('Invalid Email')
+      return toast.warning('Invalid Email')
     }
     e.preventDefault()
     try {
@@ -155,6 +144,7 @@ const EditModal = ({ setHide, getDetails }) => {
                   name="lname"
                   value={data.lname}
                   onChange={handleChange}
+                  required={true}
                 />
               </div>
             </div>
@@ -168,7 +158,7 @@ const EditModal = ({ setHide, getDetails }) => {
                   name="street"
                   value={data.street}
                   onChange={handleChange}
-                  required={true}
+                  // required={true}
                 />
               </div>
             </div>
@@ -187,11 +177,12 @@ const EditModal = ({ setHide, getDetails }) => {
                 <input
                   type="email"
                   name="email"
-                  // value={email}
+                  value={email}
                   onChange={handleEmailChange}
                   placeholder="jo@gmail.com"
                   className="form-control"
                   id="inputPassword"
+                  required={true}
                 />
               </div>
               <div className="col-sm-6">

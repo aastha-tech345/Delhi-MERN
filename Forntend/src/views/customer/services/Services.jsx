@@ -88,6 +88,7 @@ const Services = () => {
   })
   //materialChange started
   const cancelData = () => {
+    localStorage.removeItem('tabId')
     navigate('/customer/customer_info')
   }
   const matarialChange = (e) => {
@@ -351,7 +352,7 @@ const Services = () => {
             style={{ border: '2px solid #ebedef', borderRadius: '5px 5px 5px 5px' }}
           >
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Motivation</p>
+              <h6 style={{ color: '#244D92' }}>Motivation</h6>
               <div className="col-sm-3">Vorsorge</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -451,9 +452,7 @@ const Services = () => {
             <br />
 
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>
-                Intensivmedizin und Wiederbelebung
-              </p>
+              <h6 style={{ color: '#244D92' }}>Intensivmedizin und Wiederbelebung</h6>
               <div className="col-sm-3">Intensivmedizin gewünscht</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -534,7 +533,7 @@ const Services = () => {
             <br />
 
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Situationen am Lebensende</p>
+              <h6 style={{ color: '#244D92' }}>Situationen am Lebensende</h6>
               <div className="col-sm-3">Sterbeprozess</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -596,7 +595,7 @@ const Services = () => {
             <br />
 
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Medizinische Festlegungen</p>
+              <h6 style={{ color: '#244D92' }}>Medizinische Festlegungen</h6>
               <div className="col-sm-3">Unverzichtbare Basisversorgung</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -867,7 +866,7 @@ const Services = () => {
             <br />
 
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Aufenthaltsort am Lebensende</p>
+              <h6 style={{ color: '#244D92' }}>Aufenthaltsort am Lebensende</h6>
               <div className="col-sm-3">Vertraute Umgebung</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -947,7 +946,7 @@ const Services = () => {
             </div>
             <br />
             <br />
-            <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Begleitung am Lebensende</p>
+            <h6 style={{ color: '#244D92' }}>Begleitung am Lebensende</h6>
             <div className=" row mt-2">
               <label htmlFor="inputtext" className="col-sm-2 col-form-label">
                 Arztin
@@ -994,7 +993,7 @@ const Services = () => {
             </div>
             <hr />
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Bestattungswunsche</p>
+              <h6 style={{ color: '#244D92' }}>Bestattungswunsche</h6>
               <div className="col-sm-3">Feuerbestattung</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -1065,7 +1064,7 @@ const Services = () => {
             </div>
             <hr />
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Vollmachten</p>
+              <h6 style={{ color: '#244D92' }}>Vollmachten</h6>
               <div className="col-sm-3">Blanko-formulare</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -1108,7 +1107,7 @@ const Services = () => {
             <br />
             <br />
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Gebühr</p>
+              <h6 style={{ color: '#244D92' }}>Gebühr</h6>
               <div className="col-sm-3">Regulär</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -1151,7 +1150,7 @@ const Services = () => {
             <br />
             <br />
             <div className="row">
-              <p style={{ color: '#0b5995', fontWeight: 'bold' }}>Weitere Angaben</p>
+              <h6 style={{ color: '#244D92' }}>Weitere Angaben</h6>
               <div className="col-sm-3">Dringlichkeit</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -1455,7 +1454,7 @@ const Services = () => {
             <button
               onClick={saveData}
               type="button"
-              style={{ background: '#0b5995', color: 'white' }}
+              style={{ background: '#244D92', color: 'white' }}
               className="btn btn"
             >
               Speichern Sie

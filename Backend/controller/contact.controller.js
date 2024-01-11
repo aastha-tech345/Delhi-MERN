@@ -139,26 +139,8 @@ exports.getContactDataDelete = async (req, res) => {
   }
 };
 
-// exports.getContactSearch = async (req, res) => {
-//   try {
-//     const result = await ContactInfomation.CustomerContact.find({
-//       "$or": [
-//         { fname: { $regex: req.params.key, $options: 'i' } },
-//         { lname: { $regex: req.params.key, $options: 'i' } }
-//       ]
-//     });
-//     res.send(result);
-//   } catch (error) {
-//     console.error("Error searching for contact info:", error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// };
 exports.getContactSearch = async (req, res) => {
   try {
-    // const result = await ContactInfomation.CustomerContact.find({
-    // $or: [
-    // { fname: { $regex: req.params.key, $options: "i" } },
-    // { lname: { $regex: req.params.key, $options: "i" } },
     const searchKey = req.params.searchKey;
     const result = await ContactInfomation.Contact.find({
       $or: [

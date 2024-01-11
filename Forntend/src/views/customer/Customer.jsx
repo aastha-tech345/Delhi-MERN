@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { HiOutlineMail } from 'react-icons/hi'
 import { IoIosCall } from 'react-icons/io'
 import { ImLocation2 } from 'react-icons/im'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Customer = () => {
   const navigate = useNavigate()
+
   let activeTab = localStorage.getItem('tabId') || 'customer_info'
 
   const handleTabClick = (tabId, name, e) => {

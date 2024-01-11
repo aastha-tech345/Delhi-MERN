@@ -197,7 +197,7 @@ exports.searchCustomer = async (req, res) => {
       ],
     });
     res.send(result);
-    return res.send(result);
+    // return res.send(result);
   } catch (error) {
     console.error("Error searching data:", error.message);
     res.status(500).send({ error: "Server Error" });

@@ -325,7 +325,7 @@ const Activity = () => {
         </div>
       ) : (
         <div className="row p-3 m-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
-          <div className="col-sm-6">
+          <div className="col-sm-6 ">
             <p>Planen und verwalten Sie Aktivitäten mit KlientInnen.</p>
             <input
               type="search"
