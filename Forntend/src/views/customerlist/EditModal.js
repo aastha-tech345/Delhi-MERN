@@ -29,7 +29,6 @@ const EditModal = ({ setHide, getDetails }) => {
     phone: response?.phone,
     plz: response?.plz,
     city: response?.city,
-    dob: response?.dob,
     land: response?.land,
     group: response.group,
   })
@@ -76,7 +75,7 @@ const EditModal = ({ setHide, getDetails }) => {
     try {
       setLoadVale(true)
       const res = await putFetchData(`${apiUrl}/customer/get_record/edit/${response?._id}`, dataa)
-      if (res.data.success == true) {
+      if (res.data.success === true) {
         setLoadVale(false)
         setData({
           fname: '',
@@ -85,7 +84,6 @@ const EditModal = ({ setHide, getDetails }) => {
           phone: '',
           plz: '',
           city: '',
-          dob: '',
           land: '',
           group: '',
         })
@@ -245,32 +243,7 @@ const EditModal = ({ setHide, getDetails }) => {
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-sm-6">
-                  <input
-                    type="date"
-                    placeholder="Geburtsdatum"
-                    className="form-control"
-                    id="inputPassword"
-                    name="dob"
-                    value={data.dob}
-                    onChange={handleChange}
-                    required={true}
-                  />
-                </div>
-                <div className="col-sm-6">
-                  <input
-                    type="text"
-                    placeholder="Land"
-                    className="form-control"
-                    id="inputPassword"
-                    name="land"
-                    value={data.land}
-                    onChange={handleChange}
-                    required={true}
-                  />
-                </div>
-              </div>
+
               <div className="row">
                 <div className="col-sm-6">
                   <select
