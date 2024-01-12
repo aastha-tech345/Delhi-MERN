@@ -172,11 +172,11 @@ const PrintTemplate = () => {
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
       <div className="row">
         <div
-          className="col-sm-12 ms-3"
+          className="col-sm-12"
           style={{
             background: 'white',
-            Height: '640px',
-            borderRadius: '5px 5px 5px 5px ',
+            // Height: '640px',
+            borderRadius: '5px ',
           }}
         >
           <h4 className="ms-1 mt-3">Druckvorlage</h4>
@@ -251,17 +251,6 @@ const PrintTemplate = () => {
             </Modal>
           </div>
           <div className="mx-2">
-            {/* <Divider /> */}
-
-            {/* <Table
-              rowSelection={{
-                type: selectionType,
-                ...rowSelection,
-              }}
-              columns={columns}
-              dataSource={printRecord}
-              pagination={false}
-            /> */}
             <Table
               dataSource={printRecord}
               columns={columns}
@@ -278,30 +267,32 @@ const PrintTemplate = () => {
                 }),
               }}
             />
-            <div className="row">
-              <div className="col-sm-10">
-                <Stack spacing={2}>
-                  <Pagination
-                    count={countPage}
-                    variant="outlined"
-                    shape="rounded"
-                    page={page}
-                    onChange={handlePageChange}
-                  />
-                  <br />
-                </Stack>
-              </div>
-              <div className="col-sm-2 text-end">
-                <select
-                  className="form-control form-select"
-                  value={itemsPerPage}
-                  onChange={handleItemsPerPageChange}
-                >
-                  <option value={10}>10 pro Seite</option>
-                  <option value={20}>20 pro Seite</option>
-                  <option value={50}>50 pro Seite</option>
-                  <option value={100}>100 pro Seite</option>
-                </select>
+            <div className="container-fluid pagination-row">
+              <div className="row">
+                <div className="col-sm-10 ps-md-0 text-center text-md-start">
+                  <Stack spacing={2}>
+                    <Pagination
+                      count={countPage}
+                      variant="outlined"
+                      shape="rounded"
+                      page={page}
+                      onChange={handlePageChange}
+                    />
+                    <br />
+                  </Stack>
+                </div>
+                <div className="col-md-2 pe-md-0 mt-3 mt-md-0 text-md-end">
+                  <select
+                    className="form-control form-select"
+                    value={itemsPerPage}
+                    onChange={handleItemsPerPageChange}
+                  >
+                    <option value={10}>10 pro Seite</option>
+                    <option value={20}>20 pro Seite</option>
+                    <option value={50}>50 pro Seite</option>
+                    <option value={100}>100 pro Seite</option>
+                  </select>
+                </div>
               </div>
             </div>
 

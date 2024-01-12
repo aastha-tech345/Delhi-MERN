@@ -267,7 +267,7 @@ const CreateUser = () => {
     }
   }
   return (
-    <div style={{ background: 'white' }}>
+    <div>
       {hide ? (
         <DeleteModal
           setHide={setHide}
@@ -278,149 +278,159 @@ const CreateUser = () => {
         ''
       )}
       {edit ? <EditUser setEdit={setEdit} getEmployeeData={getEmployeeData} /> : ''}
-      <User />
-      <br />
-      <div className="topBtnBox mx-3">
-        <div className="row p-2">
-          <div className="col-sm-3">
-            <button
-              className="btn btn"
-              onClick={handleShowInviteUserModal}
-              style={{ background: '#0b5995', color: 'white' }}
-            >
-              <MdAdd />
-              &nbsp; Benutzer erstellen
-            </button>
-          </div>
-          <div className="col-sm-3">
-            <input
-              ref={searchInputRef}
-              name="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              type="search"
-              id="form1"
-              placeholder="Ihre Suche eingeben"
-              className="form-control"
-            />
-          </div>
-          <div className="col-sm-1">
-            <button
-              onClick={searchHandle}
-              type="button"
-              className="btn btn text-light"
-              style={{ background: '#0b5995' }}
-            >
-              <AiFillSetting />
-            </button>
-          </div>
-          <Modal size="lg" show={showInviteUserModal} onHide={handleCloseInviteUserModal} centered>
-            <div className=" row pt-5 px-5">
-              <p className="fs-5">
-                <b>Super Verwalter</b>
-              </p>
-              <div className="col-sm-9">
-                <p>
-                  Wenn Sie den Super-Admin-Zugang für den Benutzer aktivieren, erhalten Sie vollen
-                  Zugriff auf alle Funktionen ohne jegliche Einschränkungen.
-                </p>
-              </div>
-              <div className="col-sm-3">
-                <div className="form-check mx-5 form-switch">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    id="flexSwitchCheckChecked"
-                    name="isAdminFullRights"
-                    onChange={(e) => setIsAdminFullRights(e.target.checked.toString())}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <Modal.Body>
-              <div className="row" style={{ background: 'white' }}>
-                <div className="col-sm-12">
-                  <nav>
-                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                      <button
-                        className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
-                        id="nav-home-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected={activeTab === 'nav-home'}
-                        onClick={() => handleTabClick('nav-home')}
-                        style={{ marginRight: '10px', marginLeft: '20px' }}
-                      >
-                        Benutzer
-                      </button>
-                      <button
-                        className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
-                        id="nav-rollen-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-controls="nav-rollen"
-                        aria-selected={activeTab === 'nav-rollen'}
-                        onClick={() => handleTabClick('nav-rollen')}
-                        style={{ marginRight: '10px' }}
-                      >
-                        Passwort
-                      </button>
-                      <button
-                        className={`nav-link ${activeTab === 'nav-lokalisierung' ? 'active' : ''}`}
-                        id="nav-lokalisierung-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-controls="nav-lokalisierung"
-                        aria-selected={activeTab === 'nav-lokalisierung'}
-                        onClick={() => handleTabClick('nav-lokalisierung')}
-                        style={{ marginRight: '10px' }}
-                      >
-                        Lokalisierung
-                      </button>
-                      <button
-                        className={`nav-link ${
-                          activeTab === 'nav-benachrichtigungen' ? 'active' : ''
-                        }`}
-                        id="nav-benachrichtigungen-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-controls="nav-benachrichtigungen"
-                        aria-selected={activeTab === 'nav-benachrichtigungen'}
-                        onClick={() => handleTabClick('nav-benachrichtigungen')}
-                        style={{ marginRight: '10px' }}
-                      >
-                        Benachrichtigungen
-                      </button>
-                      <button
-                        className={`nav-link ${
-                          activeTab === 'nav-fortgeschrittene' ? 'active' : ''
-                        }`}
-                        id="nav-fortgeschrittene-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-controls="nav-fortgeschrittene"
-                        aria-selected={activeTab === 'nav-fortgeschrittene'}
-                        onClick={() => handleTabClick('nav-fortgeschrittene')}
-                        style={{ marginRight: '10px' }}
-                      >
-                        Fortgeschrittene
-                      </button>
-                    </div>
-                  </nav>
-                </div>
-              </div>
-              <br />
-              <div className="tab-content" id="nav-tabContent">
-                <div
-                  className={`tab-pane fade ${activeTab === 'nav-home' ? 'show active' : ''}`}
-                  id="nav-home"
-                  role="tabpanel"
-                  aria-labelledby="nav-home-tab"
+      <div
+        className="search-filter-row"
+        style={{
+          border: 'none',
+        }}
+      >
+        <div className="container-fluid">
+          <User />
+          <h4 className="mx-3">Benutzer</h4>
+          <hr />
+          <div className="topBtnBox">
+            <div className="row p-2">
+              <div className="col-md-3">
+                <button
+                  className="btn btn"
+                  onClick={handleShowInviteUserModal}
+                  style={{ background: '#0b5995', color: 'white' }}
                 >
-                  <div className="row mx-3">
-                    {/* <div className="col-sm-6">
+                  <MdAdd />
+                  &nbsp; MitarbeiterInnen erstellen
+                </button>
+              </div>
+              <div className="col-md-6 mb-md-0 mb-3">
+                <div className="d-flex align-items-center">
+                  <input
+                    ref={searchInputRef}
+                    name="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    type="search"
+                    id="form1"
+                    placeholder="Ihre Suche eingeben"
+                    className="form-control form-search-control"
+                  />
+                  <button onClick={searchHandle} className="filter-setting">
+                    <AiFillSetting className="setting-icon" />
+                  </button>
+                </div>
+              </div>
+              <Modal
+                size="lg"
+                show={showInviteUserModal}
+                onHide={handleCloseInviteUserModal}
+                centered
+              >
+                <div className=" row pt-5 px-5">
+                  <p className="fs-5">
+                    <b>Super Verwalter</b>
+                  </p>
+                  <div className="col-sm-9">
+                    <p>
+                      Wenn Sie den Super-Admin-Zugang für den Benutzer aktivieren, erhalten Sie
+                      vollen Zugriff auf alle Funktionen ohne jegliche Einschränkungen.
+                    </p>
+                  </div>
+                  <div className="col-sm-3">
+                    <div className="form-check mx-5 form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                        name="isAdminFullRights"
+                        onChange={(e) => setIsAdminFullRights(e.target.checked.toString())}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <Modal.Body>
+                  <div className="row" style={{ background: 'white' }}>
+                    <div className="col-sm-12">
+                      <nav>
+                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-selected={activeTab === 'nav-home'}
+                            onClick={() => handleTabClick('nav-home')}
+                            style={{ marginRight: '10px', marginLeft: '20px' }}
+                          >
+                            Benutzer
+                          </button>
+                          <button
+                            className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
+                            id="nav-rollen-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-controls="nav-rollen"
+                            aria-selected={activeTab === 'nav-rollen'}
+                            onClick={() => handleTabClick('nav-rollen')}
+                            style={{ marginRight: '10px' }}
+                          >
+                            Passwort
+                          </button>
+                          <button
+                            className={`nav-link ${
+                              activeTab === 'nav-lokalisierung' ? 'active' : ''
+                            }`}
+                            id="nav-lokalisierung-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-controls="nav-lokalisierung"
+                            aria-selected={activeTab === 'nav-lokalisierung'}
+                            onClick={() => handleTabClick('nav-lokalisierung')}
+                            style={{ marginRight: '10px' }}
+                          >
+                            Lokalisierung
+                          </button>
+                          <button
+                            className={`nav-link ${
+                              activeTab === 'nav-benachrichtigungen' ? 'active' : ''
+                            }`}
+                            id="nav-benachrichtigungen-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-controls="nav-benachrichtigungen"
+                            aria-selected={activeTab === 'nav-benachrichtigungen'}
+                            onClick={() => handleTabClick('nav-benachrichtigungen')}
+                            style={{ marginRight: '10px' }}
+                          >
+                            Benachrichtigungen
+                          </button>
+                          <button
+                            className={`nav-link ${
+                              activeTab === 'nav-fortgeschrittene' ? 'active' : ''
+                            }`}
+                            id="nav-fortgeschrittene-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-controls="nav-fortgeschrittene"
+                            aria-selected={activeTab === 'nav-fortgeschrittene'}
+                            onClick={() => handleTabClick('nav-fortgeschrittene')}
+                            style={{ marginRight: '10px' }}
+                          >
+                            Fortgeschrittene
+                          </button>
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
+                  <br />
+                  <div className="tab-content" id="nav-tabContent">
+                    <div
+                      className={`tab-pane fade ${activeTab === 'nav-home' ? 'show active' : ''}`}
+                      id="nav-home"
+                      role="tabpanel"
+                      aria-labelledby="nav-home-tab"
+                    >
+                      <div className="row mx-3">
+                        {/* <div className="col-sm-6">
                       <input
                         className="form-control"
                         placeholder="Name"
@@ -432,215 +442,219 @@ const CreateUser = () => {
                         }}
                       />
                     </div> */}
-                    <div className="col-sm-6">
-                      <input
-                        className="form-control"
-                        placeholder="Name"
-                        type="text"
-                        name="username"
-                        value={employee.username}
-                        onChange={handleChange}
-                      />
-                      <br />
-                      <input
-                        className="form-control"
-                        placeholder="Straße mit Hausnummer"
-                        type="text"
-                        name="street"
-                        value={employee.street}
-                        onChange={handleChange}
-                      />
-                      <br />
-                      <input
-                        className="form-control"
-                        placeholder="Stadt"
-                        type="text"
-                        name="city"
-                        value={employee.city}
-                        onChange={handleChange}
-                      />
+                        <div className="col-sm-6">
+                          <input
+                            className="form-control"
+                            placeholder="Name"
+                            type="text"
+                            name="username"
+                            value={employee.username}
+                            onChange={handleChange}
+                          />
+                          <br />
+                          <input
+                            className="form-control"
+                            placeholder="Straße mit Hausnummer"
+                            type="text"
+                            name="street"
+                            value={employee.street}
+                            onChange={handleChange}
+                          />
+                          <br />
+                          <input
+                            className="form-control"
+                            placeholder="Stadt"
+                            type="text"
+                            name="city"
+                            value={employee.city}
+                            onChange={handleChange}
+                          />
 
-                      <br />
-                      <input
-                        className="form-control"
-                        placeholder="Standort"
-                        type="text"
-                        name="location"
-                        value={employee.location}
-                        onChange={handleChange}
-                      />
-                      <br />
-                      <select
-                        className="form-control"
-                        // type="text"
-                        name="role"
-                        value={employee.role}
-                        onChange={handleChange}
-                      >
-                        <option value="">Select Role</option>
-                        {roleList?.map((value) => {
-                          const { role_name, _id } = value
+                          <br />
+                          <input
+                            className="form-control"
+                            placeholder="Standort"
+                            type="text"
+                            name="location"
+                            value={employee.location}
+                            onChange={handleChange}
+                          />
+                          <br />
+                          <select
+                            className="form-control"
+                            // type="text"
+                            name="role"
+                            value={employee.role}
+                            onChange={handleChange}
+                          >
+                            <option value="">Select Role</option>
+                            {roleList?.map((value) => {
+                              const { role_name, _id } = value
 
-                          return (
-                            <option key={_id} value={_id}>
-                              {role_name}
-                            </option>
-                          )
-                        })}
-                      </select>
+                              return (
+                                <option key={_id} value={_id}>
+                                  {role_name}
+                                </option>
+                              )
+                            })}
+                          </select>
+                        </div>
+                        <div className="col-sm-6">
+                          <input
+                            className="form-control"
+                            placeholder="Vorname"
+                            type="text"
+                            name="lname"
+                            value={employee.lname}
+                            onChange={handleChange}
+                          />
+                          <br />
+                          <input
+                            type="tel"
+                            value={employee.plz}
+                            onChange={(e) => {
+                              const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                              setEmployee({ ...employee, plz: inputValue })
+                            }}
+                            placeholder="PLZ"
+                            className="form-control"
+                            id="inputPassword"
+                            maxLength={6}
+                            minLength={3}
+                            required={true}
+                          />
+                          <br />
+                          <input
+                            className="form-control"
+                            placeholder="E-Mail Adresse"
+                            type="email"
+                            name="email"
+                            onChange={handleEmailChange}
+                          />
+                          <br />
+
+                          <input
+                            className="form-control"
+                            placeholder="Telefon"
+                            maxLength={10}
+                            minLength={2}
+                            type="tel"
+                            name="tel"
+                            value={employee.tel}
+                            onChange={(e) => {
+                              const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                              if (/^\+?[0-9]*$/.test(inputValue)) {
+                                handleChange({ target: { name: 'tel', value: inputValue } })
+                              }
+                            }}
+                          />
+                          <br />
+                          <input
+                            className="form-control"
+                            placeholder="Mobil"
+                            maxLength={10}
+                            minLength={2}
+                            type="tel"
+                            name="mobile"
+                            value={employee.mobile}
+                            // onChange={handleChange}
+                            onChange={(e) => {
+                              const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                              if (/^\+?[0-9]*$/.test(inputValue)) {
+                                handleChange({ target: { name: 'mobile', value: inputValue } })
+                              }
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="col-sm-6">
-                      <input
-                        className="form-control"
-                        placeholder="Vorname"
-                        type="text"
-                        name="lname"
-                        value={employee.lname}
-                        onChange={handleChange}
-                      />
-                      <br />
-                      <input
-                        type="tel"
-                        value={employee.plz}
-                        onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
-                          setEmployee({ ...employee, plz: inputValue })
-                        }}
-                        placeholder="PLZ"
-                        className="form-control"
-                        id="inputPassword"
-                        maxLength={6}
-                        minLength={3}
-                        required={true}
-                      />
-                      <br />
-                      <input
-                        className="form-control"
-                        placeholder="E-Mail Adresse"
-                        type="email"
-                        name="email"
-                        onChange={handleEmailChange}
-                      />
-                      <br />
-
-                      <input
-                        className="form-control"
-                        placeholder="Telefon"
-                        maxLength={10}
-                        minLength={2}
-                        type="tel"
-                        name="tel"
-                        value={employee.tel}
-                        onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                          if (/^\+?[0-9]*$/.test(inputValue)) {
-                            handleChange({ target: { name: 'tel', value: inputValue } })
-                          }
-                        }}
-                      />
-                      <br />
-                      <input
-                        className="form-control"
-                        placeholder="Mobil"
-                        maxLength={10}
-                        minLength={2}
-                        type="tel"
-                        name="mobile"
-                        value={employee.mobile}
-                        // onChange={handleChange}
-                        onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                          if (/^\+?[0-9]*$/.test(inputValue)) {
-                            handleChange({ target: { name: 'mobile', value: inputValue } })
-                          }
-                        }}
-                      />
+                    <div
+                      className={`tab-pane fade ${activeTab === 'nav-rollen' ? 'show active' : ''}`}
+                      id="nav-rollen"
+                      role="tabpanel"
+                      aria-labelledby="nav-rollen-tab"
+                    ></div>
+                    <div
+                      className={`tab-pane fade ${
+                        activeTab === 'nav-mannschaften' ? 'show active' : ''
+                      }`}
+                      id="nav-mannschaften"
+                      role="tabpanel"
+                      aria-labelledby="nav-mannschaften-tab"
+                    ></div>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <div className="row mb-2">
+                    <div className="col-sm-12">
+                      <div style={{ float: 'right' }}>
+                        <button
+                          className="btn"
+                          onClick={handleCloseInviteUserModal}
+                          style={{ background: '#d04545', color: 'white' }}
+                        >
+                          Abbrechen
+                        </button>
+                        &nbsp;&nbsp;
+                        <button
+                          className="btn mx-2"
+                          onClick={handleSubmit}
+                          style={{ background: '#0b5995', color: 'white' }}
+                        >
+                          Speichern
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div
-                  className={`tab-pane fade ${activeTab === 'nav-rollen' ? 'show active' : ''}`}
-                  id="nav-rollen"
-                  role="tabpanel"
-                  aria-labelledby="nav-rollen-tab"
-                ></div>
-                <div
-                  className={`tab-pane fade ${
-                    activeTab === 'nav-mannschaften' ? 'show active' : ''
-                  }`}
-                  id="nav-mannschaften"
-                  role="tabpanel"
-                  aria-labelledby="nav-mannschaften-tab"
-                ></div>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <div className="row mb-2">
-                <div className="col-sm-12">
-                  <div style={{ float: 'right' }}>
-                    <button
-                      className="btn"
-                      onClick={handleCloseInviteUserModal}
-                      style={{ background: '#d04545', color: 'white' }}
-                    >
-                      Abbrechen
-                    </button>
-                    &nbsp;&nbsp;
-                    <button
-                      className="btn mx-2"
-                      onClick={handleSubmit}
-                      style={{ background: '#0b5995', color: 'white' }}
-                    >
-                      Speichern
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </Modal.Footer>
-          </Modal>
-        </div>
-      </div>
-      <div className="row mx-2">
-        <Table
-          rowKey={(record) => record._id}
-          rowSelection={{
-            type: 'checkbox',
-            onChange: (selectedRowKeys, selectedRows) => {
-              console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-            },
-            getCheckboxProps: (record) => ({
-              disabled: record.name === 'Disabled User',
-              name: record.name,
-            }),
-          }}
-          style={{ overflowX: 'auto' }}
-          columns={columns}
-          dataSource={getEmployee}
-          pagination={false}
-        />
-        <div className="row">
-          <div className="col-sm-10">
-            <Stack spacing={2}>
-              <Pagination
-                count={countPage}
-                variant="outlined"
-                shape="rounded"
-                page={page}
-                onChange={handlePageChange}
-              />
-            </Stack>
+                </Modal.Footer>
+              </Modal>
+            </div>
           </div>
-          <div className="col-sm-2 text-end">
-            <select
-              className="form-control form-select"
-              value={itemsPerPage}
-              onChange={handleItemsPerPageChange}
-            >
-              <option value={10}>10 pro Seite</option>
-              <option value={20}>20 pro Seite</option>
-              <option value={50}>50 pro Seite</option>
-              <option value={100}>100 pro Seite</option>
-            </select>
+          <div className="row">
+            <Table
+              rowKey={(record) => record._id}
+              rowSelection={{
+                type: 'checkbox',
+                onChange: (selectedRowKeys, selectedRows) => {
+                  console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+                },
+                getCheckboxProps: (record) => ({
+                  disabled: record.name === 'Disabled User',
+                  name: record.name,
+                }),
+              }}
+              style={{ overflowX: 'auto' }}
+              columns={columns}
+              dataSource={getEmployee}
+              pagination={false}
+            />
+          </div>
+          <div className="container-fluid pagination-row">
+            <div className="row">
+              <div className="col-md-10 ps-md-0 text-center text-md-start">
+                <Stack spacing={2}>
+                  <Pagination
+                    count={countPage}
+                    variant="outlined"
+                    shape="rounded"
+                    page={page}
+                    onChange={handlePageChange}
+                  />
+                </Stack>
+              </div>
+              <div className="col-md-2 pe-md-0 mt-3 mt-md-0 text-md-end">
+                <select
+                  className="form-control form-select"
+                  value={itemsPerPage}
+                  onChange={handleItemsPerPageChange}
+                >
+                  <option value={10}>10 pro Seite</option>
+                  <option value={20}>20 pro Seite</option>
+                  <option value={50}>50 pro Seite</option>
+                  <option value={100}>100 pro Seite</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
