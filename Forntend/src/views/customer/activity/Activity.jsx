@@ -121,7 +121,7 @@ const Activity = () => {
   }
 
   return (
-    <div style={{ background: '#fff' }}>
+    <div className="inner-page-wrap">
       <Customer />
       {/* <h4 className="mx-3">Beschreibung</h4>
       <hr /> */}
@@ -216,143 +216,146 @@ const Activity = () => {
         </div>
       </div> */}
 
-      <div className="row p-3">
-        <div className="col-sm-2">
-          <h4 className="mx-3">Beschreibung</h4>
+      <div className="tab-content">
+        <div className="tab-title">
+          <h4>Beschreibung</h4>
         </div>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col">
+              <div className="block-wrap">
+                <div className="border-bottom w-100 mb-2 pb-3">
+                  <div className="container-fluid">
+                    <div className="row mb-3">
+                      <div className="col">
+                        <PhoneOutlined
+                          className="p-2 btn-icon"
+                          style={{
+                            border: '1px solid lightgray',
+                            borderRadius: '5px',
+                            marginRight: '10px',
+                            background: color,
+                          }}
+                          onClick={() => selectIcon('PhoneOutlined', '#015290')}
+                        />
+                        <CheckCircleOutlined
+                          className="p-2 btn-icon"
+                          style={{
+                            border: '1px solid lightgray',
+                            borderRadius: '5px',
+                            marginRight: '10px',
+                            background: color1,
+                          }}
+                          onClick={() => selectIcon('CheckCircleOutlined', '#015290')}
+                        />
+                        <RedEnvelopeOutlined
+                          className="p-2 btn-icon"
+                          style={{
+                            border: '1px solid lightgray',
+                            borderRadius: '5px',
+                            marginRight: '10px',
+                            background: color2,
+                          }}
+                          onClick={() => selectIcon('RedEnvelopeOutlined', '#015290')}
+                        />
+                        <PrinterOutlined
+                          className="p-2 btn-icon"
+                          style={{
+                            border: '1px solid lightgray',
+                            borderRadius: '5px',
+                            marginRight: '10px',
+                            background: color3,
+                          }}
+                          onClick={() => selectIcon('PrinterOutlined', '#015290')}
+                        />
+                      </div>
+                    </div>
 
-        <div className="col-sm-10">
-          <PhoneOutlined
-            className="p-2 "
-            style={{
-              border: '1px solid lightgray',
-              borderRadius: '5px',
-              marginRight: '10px',
-              background: color,
-            }}
-            onClick={() => selectIcon('PhoneOutlined', '#015290')}
-          />
-          <CheckCircleOutlined
-            className="p-2"
-            style={{
-              border: '1px solid lightgray',
-              borderRadius: '5px',
-              marginRight: '10px',
-              background: color1,
-            }}
-            onClick={() => selectIcon('CheckCircleOutlined', '#015290')}
-          />
-          <RedEnvelopeOutlined
-            className="p-2"
-            style={{
-              border: '1px solid lightgray',
-              borderRadius: '5px',
-              marginRight: '10px',
-              background: color2,
-            }}
-            onClick={() => selectIcon('RedEnvelopeOutlined', '#015290')}
-          />
-          <PrinterOutlined
-            className="p-2"
-            style={{
-              border: '1px solid lightgray',
-              borderRadius: '5px',
-              marginRight: '10px',
-              background: color3,
-            }}
-            onClick={() => selectIcon('PrinterOutlined', '#015290')}
-          />
-        </div>
-      </div>
+                    {/* button with search */}
+                    {openMessage ? (
+                      // <div className="row p-3 m-3">
+                      //   <br />
+                      //   <textarea
+                      //     className="form-control mx-2"
+                      //     rows={6}
+                      //     name="message"
+                      //     value={data?.message}
+                      //     onChange={handleChange}
+                      //   ></textarea>
+                      // </div>
 
-      <hr />
-
-      {/* button with search */}
-      {openMessage ? (
-        // <div className="row p-3 m-3">
-        //   <br />
-        //   <textarea
-        //     className="form-control mx-2"
-        //     rows={6}
-        //     name="message"
-        //     value={data?.message}
-        //     onChange={handleChange}
-        //   ></textarea>
-        // </div>
-
-        <div
-          style={{
-            border: '1px solid lightgray',
-            borderRadius: '5px',
-            marginLeft: '15px',
-            marginRight: '15px',
-          }}
-        >
-          <div className="row px-4 pt-2">
-            <br />
-            <textarea
-              className="form-control"
-              rows={6}
-              name="message"
-              placeholder="Notiz"
-              value={data?.message}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-          <div className="bottomBtnBg">
-            <div className="row">
-              <div className="col-sm-12">
-                <div style={{ float: 'right' }}>
-                  <button
-                    className="btn"
-                    style={{ background: '#d04545', color: 'white' }}
-                    onClick={() => setOpenMessage(false)}
-                  >
-                    Abbrechen
-                  </button>
-                  &nbsp;&nbsp;
-                  <button
-                    className="btn mx-2"
-                    style={{ background: '#0b5995', color: 'white' }}
-                    onClick={handleSubmit}
-                  >
-                    Aktivität hinzufügen
-                  </button>
+                      <div className="mt-2">
+                        <div className="row">
+                          <textarea
+                            className="form-control"
+                            rows={6}
+                            name="message"
+                            placeholder="Notiz"
+                            value={data?.message}
+                            onChange={handleChange}
+                          ></textarea>
+                        </div>
+                        <div className="bottomBtnBg">
+                          <div className="row">
+                            <div className="col-sm-12">
+                              <div style={{ float: 'right' }}>
+                                <button
+                                  className="btn"
+                                  style={{ background: '#d04545', color: 'white' }}
+                                  onClick={() => setOpenMessage(false)}
+                                >
+                                  Abbrechen
+                                </button>
+                                &nbsp;&nbsp;
+                                <button
+                                  className="btn mx-2"
+                                  style={{ background: '#0b5995', color: 'white' }}
+                                  onClick={handleSubmit}
+                                >
+                                  Aktivität hinzufügen
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <p>Planen und verwalten Sie Aktivitäten mit KlientInnen.</p>
+                          <input
+                            type="search"
+                            className="form-control"
+                            placeholder="Ihre Suche eingeben"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                          />
+                        </div>
+                        {/* <div className="col-sm-2"></div> */}
+                        <div className="col-sm-6">
+                          <button
+                            className="btn btn"
+                            style={{ background: '#015291', color: 'white' }}
+                            onClick={openText}
+                          >
+                            <MdAdd />
+                            Aktivität hinzufügen
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      ) : (
-        <div className="row p-3 m-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
-          <div className="col-sm-6 ">
-            <p>Planen und verwalten Sie Aktivitäten mit KlientInnen.</p>
-            <input
-              type="search"
-              className="form-control"
-              placeholder="Ihre Suche eingeben"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          {/* <div className="col-sm-2"></div> */}
-          <div className="col-sm-6 text-end ">
-            <button
-              className="btn btn"
-              style={{ background: '#015291', color: 'white' }}
-              onClick={openText}
-            >
-              <MdAdd />
-              Aktivität hinzufügen
-            </button>
-          </div>
-        </div>
-      )}
 
-      {/* button with search end */}
+        {/* button with search end */}
 
-      <GetDescriptionData updateData={updateData} search={search} />
-      <ToastContainer />
+        <GetDescriptionData updateData={updateData} search={search} />
+        <ToastContainer />
+      </div>
     </div>
   )
 }

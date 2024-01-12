@@ -118,73 +118,68 @@ const GetActivityData = ({ updateData, search }) => {
         </tbody>
       </table> */}
 
-      <div className="row m-3">
-        <div style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
-          <table className="table table">
-            <thead>
-              <tr>
-                <th>
-                  <div className="row">
-                    <div className="col-1"></div>
-                    <div className="col-1">DATUM</div>
-                    <div className="col-3 text-center">TITEL</div>
-                    <div className="col-4 text-center">VERWALTUNG</div>
-                    <div className="col-3 text-center">BEARBEITER</div>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {activityData?.map((elem) => {
-                const { createdAt, icon, message, _id } = elem
-                const inputDate = new Date(createdAt)
-                const day = inputDate?.getUTCDate()
-                const month = inputDate?.getUTCMonth() + 1
-                const year = inputDate?.getUTCFullYear() % 100
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col">
+            <div className="block-wrap">
+              <div className="table-responsive">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>DATUM</th>
+                      <th>TITEL</th>
+                      <th>VERWALTUNG</th>
+                      <th>BEARBEITER</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activityData?.map((elem) => {
+                      const { createdAt, icon, message, _id } = elem
+                      const inputDate = new Date(createdAt)
+                      const day = inputDate?.getUTCDate()
+                      const month = inputDate?.getUTCMonth() + 1
+                      const year = inputDate?.getUTCFullYear() % 100
 
-                const outputDateString = `${day}-${month < 10 ? '0' : ''}${month}-${
-                  year < 10 ? '0' : ''
-                }${year}`
-                return (
-                  <tr key={_id}>
-                    <td>
-                      <div className="row">
-                        <div className="col-sm-1 m-auto">
-                          <div
-                            style={{
-                              border: '1px solid #015291',
-                              borderRadius: '5px',
-                              width: '30px',
-                              height: '30px',
-                              textAlign: 'center',
-                            }}
-                          >
-                            {getIconData(icon)}
-                          </div>
-                        </div>
-                        <div className="col-sm-1 m-auto">{outputDateString} </div>
-                        <div className="col-sm-3  m-auto">Lorem Ipsum is simply dummy text </div>
-                        <div className="col-sm-4 m-auto">
-                          <p>{message}</p>
-                        </div>
-                        <div className="col-sm-3 m-auto">
-                          <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry standard dummy text ever
-                            since the 1500s, when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book.{' '}
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+                      const outputDateString = `${day}-${month < 10 ? '0' : ''}${month}-${
+                        year < 10 ? '0' : ''
+                      }${year}`
+                      return (
+                        <tr key={_id}>
+                          <td>
+                            <span
+                              style={{
+                                border: '1px solid #015291',
+                                borderRadius: '5px',
+                                width: '30px',
+                                height: '30px',
+                                textAlign: 'center',
+                              }}
+                            >
+                              {getIconData(icon)}
+                            </span>
+                          </td>
+                          <td>{outputDateString} </td>
+                          <td>Lorem Ipsum is simply dummy text </td>
+                          <td>{message}</td>
+                          <td>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting
+                              industry. Lorem Ipsum has been the industry standard dummy text ever
+                              since the 1500s, when an unknown printer took a galley of type and
+                              scrambled it to make a type specimen book.{' '}
+                            </p>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <br />
       {/* <div className="mx-3">
         <Stack spacing={2}>
           <Pagination

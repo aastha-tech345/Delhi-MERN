@@ -103,7 +103,7 @@ const EditModal = ({ setHide, getDetails }) => {
     setLoadVale(false)
   }, 5000)
   return (
-    <div className="modal modal-form" tabIndex={-1} style={modalStyle}>
+    <div className="modal modal-form edit-modal-form" tabIndex={-1} style={modalStyle}>
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
