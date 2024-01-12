@@ -16,6 +16,9 @@ const EmailList = () => {
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState('')
+  const handlePageChange = (event, value) => {
+    setPage(value)
+  }
   const getDetails = async () => {
     try {
       const result = await fetch(
@@ -41,7 +44,7 @@ const EmailList = () => {
 
   useEffect(() => {
     getDetails()
-  }, [page])
+  }, [page, itemsPerPage])
   const columns = [
     {
       title: 'Name des Kunden',
@@ -66,7 +69,7 @@ const EmailList = () => {
     <>
       <div className="row">
         <div
-          className="col-sm-12 ms-3"
+          className="col-sm-12"
           style={{
             background: 'white',
             Height: '640px',
@@ -93,27 +96,34 @@ const EmailList = () => {
                 }),
               }}
             />
-            <div className="row">
-              <div className="col-sm-10">
-                {' '}
-                <Stack spacing={2}>
-                  <Pagination variant="outlined" shape="rounded" />
-                  <br />
-                </Stack>
-              </div>
-              <div className="col-sm-2 text-end">
-                <select
-                  className="form-control form-select"
-                  value={itemsPerPage}
-                  onChange={handleItemsPerPageChange}
-                >
-                  <option value={10}>10 pro Seite</option>
-                  <option value={20}>20 pro Seite</option>
-                  <option value={50}>50 pro Seite</option>
-                  <option value={100}>100 pro Seite</option>
-                </select>
+            <div className="container-fluid pagination-row">
+              <div className="row">
+                <div className="col-md-10 ps-md-0 text-center text-md-start">
+                  <Stack spacing={2}>
+                    <Pagination
+                      count={countPage}
+                      variant="outlined"
+                      shape="rounded"
+                      page={page}
+                      onChange={handlePageChange}
+                    />
+                  </Stack>
+                </div>
+                <div className="col-md-2 pe-md-0 mt-3 mt-md-0 text-md-end">
+                  <select
+                    className="form-control form-select"
+                    value={itemsPerPage}
+                    onChange={handleItemsPerPageChange}
+                  >
+                    <option value={10}>10 pro Seite</option>
+                    <option value={20}>20 pro Seite</option>
+                    <option value={50}>50 pro Seite</option>
+                    <option value={100}>100 pro Seite</option>
+                  </select>
+                </div>
               </div>
             </div>
+            <br />
           </div>
         </div>
         <ToastContainer />

@@ -77,13 +77,16 @@ const Filter = () => {
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const searchInputRef = useRef()
-  // const handleClose = () => setShow(false)
-  // const handleShow = () => setShow(true)
-  // const [selectionType] = useState('checkbox')
-
+  const [itemsPerPage, setItemsPerPage] = useState('')
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value, 10))
+    setPage(1)
+  }
   const getDetails = async () => {
     try {
-      const result = await fetch(`${apiUrl}/filter/get_filter?page=${page}`)
+      const result = await fetch(
+        `${apiUrl}/filter/get_filter?page=${page}&resultPerPage=${itemsPerPage}`,
+      )
       const data = await result.json()
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
@@ -98,7 +101,7 @@ const Filter = () => {
   // console.log('aastha', filterRecord)
   useEffect(() => {
     getDetails()
-  }, [page])
+  }, [page, itemsPerPage])
 
   const searchHandle = async () => {
     try {
@@ -123,260 +126,97 @@ const Filter = () => {
   }
 
   return (
-    <div style={{ background: 'white', borderRadius: '5px' }}>
-      <h4 className="px-3 pt-3">Filter</h4>
-      <hr />
-      <div className="m-2">
-        <div
-          className="row m-3 p-3"
-          style={{ border: '1px solid lightgray', borderRadius: '5px ' }}
-        >
-          <div className="col-sm-3">
-            <input
-              ref={searchInputRef}
-              name="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              type="search"
-              id="form1"
-              placeholder="Ihre Suche eingeben"
-              className="form-control"
-            />
-          </div>
-          <div className="col-sm-3">
-            <button
-              className="btn btn text-light"
-              onClick={searchHandle}
-              style={{ background: '#0b5995' }}
-            >
-              <BiFilterAlt />
-              &nbsp; Filter
-            </button>
-          </div>
-
-          <div className="col-sm-6 text-right">
-            {/* <button
-              className="btn btn"
-              style={{ background: '#0b5995', color: 'white', marginLeft: '30px' }}
-            >
-              <AiOutlineMail />
-              &nbsp; Einladung versenden
-            </button>{' '}
-            &nbsp;&nbsp;
-            <button
-              className="btn btn"
-              style={{ background: '#0b5995', color: 'white' }}
-              onClick={handleShow}
-            >
-              <MdAdd />
-              &nbsp;Neuen Kunden anlegen
-            </button>
-            <Modal show={show} onHide={handleClose} centered>
-              <Modal.Header closeButton>
-                <Modal.Title>Kontakt hinzufügen</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <div className="row p-3">
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Vorname
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="text"
-                        value={fname}
-                        onChange={(e) => {
-                          setFname(e.target.value)
-                        }}
-                        placeholder="jo"
-                        className="form-control"
-                        id="inputPassword"
-                      />
-                      {error && fname.trim().length === 0 && (
-                        <p style={{ color: 'red' }}>
-                          <BiErrorCircle /> required
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Nachname
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="text"
-                        value={lname}
-                        onChange={(e) => {
-                          setLname(e.target.value)
-                        }}
-                        placeholder="verma"
-                        className="form-control"
-                        id="inputPassword"
-                      />
-                      {error && lname.trim().length === 0 && (
-                        <p style={{ color: 'red' }}>
-                          <BiErrorCircle /> required
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Telefon
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="number"
-                        value={phone}
-                        onChange={(e) => {
-                          setPhone(e.target.value)
-                        }}
-                        placeholder="91+ 8354568464"
-                        className="form-control"
-                        id="inputPassword"
-                      />
-                      {error && phone.trim().length === 0 && (
-                        <p style={{ color: 'red' }}>
-                          <BiErrorCircle /> required
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Mail
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value)
-                        }}
-                        placeholder="jo@gmail.com"
-                        className="form-control"
-                        id="inputPassword"
-                      />
-                      {error && email.trim().length === 0 && (
-                        <p style={{ color: 'red' }}>
-                          <BiErrorCircle /> required
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Skype
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="text"
-                        value={skype}
-                        onChange={(e) => {
-                          setSkype(e.target.value)
-                        }}
-                        placeholder="Skype"
-                        className="form-control"
-                        id="inputPassword"
-                      />
-                      {error && skype.trim().length === 0 && (
-                        <p style={{ color: 'red' }}>
-                          <BiErrorCircle /> Required
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Geschlecht
-                    </label>
-                    {error && gender.trim().length === 0 && (
-                      <p style={{ color: 'red' }}>
-                        <BiErrorCircle /> required
-                      </p>
-                    )}
-                    <div className="col-sm-9">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="male"
-                        onChange={(e) => {
-                          setGender(e.target.value)
-                        }}
-                      />{' '}
-                      &nbsp; Männlich
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="female"
-                        onChange={(e) => {
-                          setGender(e.target.value)
-                        }}
-                      />{' '}
-                      &nbsp; Weiblich
-                      <input
-                        type="radio"
-                        name="gender"
-                        value="other"
-                        onChange={(e) => {
-                          setGender(e.target.value)
-                        }}
-                      />
-                      &nbsp; Andere
-                    </div>
+    <div>
+      <div className="px-3" style={{ background: 'white', borderRadius: '5px' }}>
+        <div className="container-fluid">
+          <h4 className="px-3 pt-3">Filter</h4>
+          <hr />
+          <div className="search-filter-row" style={{ boxShadow: 'none' }}>
+            <div className="container-fluid ">
+              <div className="row">
+                <div className="col-md-6 mb-md-0 mb-3">
+                  <div className="d-flex align-items-center">
+                    <input
+                      ref={searchInputRef}
+                      name="search"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      type="search"
+                      id="form1"
+                      placeholder="Ihre Suche eingeben"
+                      className="form-control form-search-control"
+                    />
+                    <button onClick={searchHandle} className="filter-btn">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                      >
+                        <path
+                          d="M17.2837 3.19758L17.2819 3.19982L11.4249 10.3893L11.3125 10.5272V10.7051V15.7395C11.3125 16.0891 11.0266 16.375 10.677 16.375C10.538 16.375 10.4145 16.3294 10.3142 16.2343L10.2972 16.2182L10.2788 16.2037L7.02898 13.6566C6.81324 13.4832 6.6875 13.2225 6.6875 12.948V10.7051V10.5272L6.57512 10.3892L0.717141 3.19979L0.716307 3.19877C0.5768 3.02847 0.5 2.81363 0.5 2.59102C0.5 2.05751 0.932509 1.625 1.46602 1.625H16.534C17.0667 1.625 17.5 2.05774 17.5 2.59102C17.5 2.81391 17.4234 3.02809 17.2837 3.19758ZM1.93219 2.3125H0.879712L1.54459 3.12837L7.29738 10.1875C7.29744 10.1876 7.2975 10.1877 7.29756 10.1877C7.34744 10.2491 7.375 10.3272 7.375 10.4062V12.8109V13.0524L7.56415 13.2026L9.81415 14.9885L10.625 15.6321V14.5969V10.4062C10.625 10.3272 10.6526 10.2491 10.7025 10.1877C10.7025 10.1876 10.7026 10.1876 10.7026 10.1875L16.454 3.12832L17.1187 2.3125H16.0664H1.93219Z"
+                          fill="#1C1D21"
+                          stroke="white"
+                        />
+                      </svg>
+                      <span>Filter</span>
+                    </button>
                   </div>
                 </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <button
-                  className="btn btn"
-                  onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
-                >
-                  {' '}
-                  Abbrechen
-                </button>
-                &nbsp; &nbsp;
-                <button
-                  className="btn btn"
-                  onClick={saveData}
-                  style={{ background: '#0b5995', color: 'white' }}
-                >
-                  Aktivität hinzufügen
-                </button>
-              </Modal.Footer>
-            </Modal>{' '} */}
+
+                <div className="col-md-6 text-end">
+                  <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column"></div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="m-3">
-          <Table
-            rowKey={(record) => record._id}
-            rowSelection={{
-              type: 'checkbox',
-              onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-              },
-              getCheckboxProps: (record) => ({
-                disabled: record.name === 'Disabled User',
-                name: record.name,
-              }),
-            }}
-            style={{ overflowX: 'auto' }}
-            columns={columns}
-            dataSource={filterRecord}
-            pagination={false}
-          />
-          <Stack spacing={2}>
-            <Pagination
-              count={countPage}
-              variant="outlined"
-              shape="rounded"
-              page={page}
-              onChange={handlePageChange}
+          <div className="">
+            <Table
+              rowKey={(record) => record._id}
+              rowSelection={{
+                type: 'checkbox',
+                onChange: (selectedRowKeys, selectedRows) => {
+                  console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+                },
+                getCheckboxProps: (record) => ({
+                  disabled: record.name === 'Disabled User',
+                  name: record.name,
+                }),
+              }}
+              style={{ overflowX: 'auto' }}
+              columns={columns}
+              dataSource={filterRecord}
+              pagination={false}
             />
-          </Stack>
-          <br />
+            <div className="row d-flex">
+              <div className="col-sm-10">
+                {' '}
+                <Stack spacing={2}>
+                  <Pagination
+                    count={countPage}
+                    variant="outlined"
+                    shape="rounded"
+                    page={page}
+                    onChange={handlePageChange}
+                  />
+                </Stack>
+              </div>
+              <div className="col-sm-2 text-end">
+                <select
+                  className="form-control form-select"
+                  value={itemsPerPage}
+                  onChange={handleItemsPerPageChange}
+                >
+                  <option value={10}>10 pro Seite</option>
+                  <option value={20}>20 pro Seite</option>
+                  <option value={50}>50 pro Seite</option>
+                  <option value={100}>100 pro Seite</option>
+                </select>
+              </div>
+            </div>
+            <br />
+          </div>
         </div>
       </div>
     </div>

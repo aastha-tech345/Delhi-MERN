@@ -261,11 +261,19 @@ const Attorney = () => {
                   Bevollmächtigte Person(en):
                 </p>
                 <div>
-                  <div className="row">
-                    <div className="col-sm-3">Vorname</div>
-                    <div className="col-sm-3">Nachname</div>
-                    <div className="col-sm-3">Adresse</div>
-                    <div className="col-sm-3">Telefone</div>
+                  <div className="row mb-2">
+                    <div className="col-sm-3">
+                      <b>Vorname</b>
+                    </div>
+                    <div className="col-sm-3">
+                      <b>Nachname</b>
+                    </div>
+                    <div className="col-sm-3">
+                      <b>Adresse</b>
+                    </div>
+                    <div className="col-sm-3">
+                      <b>Telefone</b>
+                    </div>
                   </div>
                   {healthCare.healthCareData &&
                     healthCare.healthCareData.map((field, index) => (

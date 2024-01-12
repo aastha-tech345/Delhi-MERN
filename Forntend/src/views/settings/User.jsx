@@ -28,37 +28,42 @@ const User = () => {
 
   return (
     <>
-      <div className="row mx-1" style={{ background: 'white' }}>
-        <nav>
-          <div className="nav nav-tabs" id="nav-tab" role="tablist">
-            <button
-              className={`nav-link ${activeTab === 'createuser' ? 'active' : ''}`}
-              id="createuser-tab"
-              data-bs-toggle="tab"
-              role="tab"
-              aria-selected={activeTab === 'createuser'}
-              onClick={(e) => handleTabClick('createuser', 'Mitarbeiterlnnen', e)}
-              style={{ marginRight: '60px', marginLeft: '20px' }}
-            >
-              <CiUser />
-              &nbsp; Mitarbeiterlnnen
-            </button>
-            <button
-              className={`nav-link ${activeTab === 'role' ? 'active' : ''}`}
-              id="role-tab"
-              data-bs-toggle="tab"
-              role="tab"
-              aria-controls="role"
-              aria-selected={activeTab === 'role'}
-              onClick={(e) => handleTabClick('role', 'Rollen', e)}
-              style={{ marginRight: '60px' }}
-            >
-              <ImInfo />
-              &nbsp; Rollen
-            </button>
+      <div className="whiteBoxWithPdLR">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-12">
+              <nav>
+                <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button
+                    className={`nav-link ${activeTab === 'createuser' ? 'active' : ''}`}
+                    id="createuser-tab"
+                    data-bs-toggle="tab"
+                    role="tab"
+                    aria-selected={activeTab === 'createuser'}
+                    onClick={(e) => handleTabClick('createuser', 'Mitarbeiterlnnen', e)}
+                    style={{ marginRight: '60px', marginLeft: '20px' }}
+                  >
+                    <CiUser />
+                    &nbsp; Mitarbeiterlnnen
+                  </button>
+                  <button
+                    className={`nav-link ${activeTab === 'role' ? 'active' : ''}`}
+                    id="role-tab"
+                    data-bs-toggle="tab"
+                    role="tab"
+                    aria-controls="role"
+                    aria-selected={activeTab === 'role'}
+                    onClick={(e) => handleTabClick('role', 'Rollen', e)}
+                    style={{ marginRight: '60px' }}
+                  >
+                    <ImInfo />
+                    &nbsp; Rollen
+                  </button>
+                </div>
+              </nav>
+            </div>
           </div>
-        </nav>
-        <br />
+        </div>
       </div>
     </>
   )
