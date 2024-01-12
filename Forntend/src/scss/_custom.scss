@@ -361,31 +361,45 @@ h4.h4Popup {
 .whiteBoxWithPdLR {
   background: #fff;
   padding: 10px 5px 20px 5px;
-  .nav-tabs .nav-link.active,
-  .nav-tabs .nav-item.show .nav-link {
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
-    border-bottom: 3px solid $primary-color;
-    color: $primary-color;
-    svg{
-      fill: $primary-color
+  nav {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    .nav-tabs {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      .nav-link {
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+        color: #000;
+        padding-left: 0;
+        padding-right: 0;
+        svg {
+          fill: #8f8f8f;
+          margin-right: 10px;
+        }
+        &.active {
+          border-left: 0;
+          border-right: 0;
+          border-top: 0;
+          border-bottom: 3px solid $primary-color;
+          color: $primary-color;
+          svg {
+            fill: $primary-color;
+          }
+        }
+        &.show {
+          .nav-link {
+            @extend .active;
+          }
+        }
+      }
     }
   }
-
-  .nav-tabs .nav-link {
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
-  }
-}
-
-.nav-tabs .nav-link {
-  color: #000;
-}
-
-.nav-tabs .nav-link i {
-  margin-right: 5px;
 }
 
 .nav-tabs .nav-link i.fa-solid.fa-info.fa-fw.infoIcon {
@@ -1183,6 +1197,12 @@ span.anticon.anticon-phone svg {
       &.btn-save {
         background: $primary-color;
       }
+    }
+  }
+  &.edit-modal-form{
+    .form-control{
+      background: #fff url(../assets/icons/icon-pencil.png) 96% center no-repeat;
+      padding-right: 40px;
     }
   }
 }
