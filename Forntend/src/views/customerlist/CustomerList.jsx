@@ -99,17 +99,19 @@ const CustomerList = () => {
       dataIndex: 'group',
       render: (text, record) => (
         <div
+          className="dm-badge"
           style={{
-            color: 'white',
             background:
-              text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
-            borderRadius: '20px',
-            padding: '3px',
-            width: '70px',
-            textAlign: 'center',
+              text === 'PV-ALT' ? '#C20F0F' : text === 'HVD-PV' ? '#4EB772' : 'transparent',
+            border:
+              text === 'PV-ALT'
+                ? '1px solid transparent'
+                : text === 'HVD-PV'
+                ? '1px solid rgba(78, 183, 114, 0.50)'
+                : '',
           }}
         >
-          <b style={{ fontSize: '12px' }}>{text}</b>
+          <b>{text}</b>
         </div>
       ),
     },
@@ -127,8 +129,37 @@ const CustomerList = () => {
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => handleEdit(record)}
               >
-                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
-                &nbsp;Bearbeiten
+                {/* <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} /> */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <g clipPath="url(#clip0_476_24741)">
+                    <path
+                      d="M4 20.0003H8L18.5 9.5003C19.0304 8.96987 19.3284 8.25045 19.3284 7.5003C19.3284 6.75016 19.0304 6.03074 18.5 5.5003C17.9696 4.96987 17.2501 4.67188 16.5 4.67188C15.7499 4.67187 15.0304 4.96987 14.5 5.5003L4 16.0003V20.0003Z"
+                      stroke="#005291"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M13.5 6.5L17.5 10.5"
+                      stroke="#005291"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_476_24741">
+                      <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <span>Bearbeiten</span>
               </button>
             </>
           ) : (
@@ -141,7 +172,58 @@ const CustomerList = () => {
               style={{ background: 'none', border: 'none' }}
               onClick={() => handleIconClick(record._id)}
             >
-              <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
+              {/* <RiDeleteBinLine className="text-danger text-bold fs-5" /> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <g clipPath="url(#clip0_431_1048)">
+                  <path
+                    d="M5 8H19"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M10 11V16"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M14 11V16"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
+                    stroke="#C20F0F"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_431_1048">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              <span> Löschen</span>
             </button>
           ) : (
             ''
@@ -212,7 +294,7 @@ const CustomerList = () => {
     }
 
     setValidated(true)
-    let data = { fname, lname, street, city, phone, plz, email, land, dob, group, id, created_by }
+    let data = { fname, lname, street, city, phone, plz, email, land, group, id, created_by }
     if (!email) {
       return notify('Invalid Email')
     }
@@ -412,7 +494,7 @@ const CustomerList = () => {
         <div className="search-filter-row" style={{ background: 'white', borderRadius: '5px' }}>
           <div className="container-fluid">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-6 mb-md-0 mb-3">
                 <div className="d-flex align-items-center">
                   <input
                     ref={searchInputRef}
@@ -444,7 +526,7 @@ const CustomerList = () => {
               </div>
 
               <div className="col-md-6 text-end">
-                <div className="d-flex align-items-center justify-content-end text-end">
+                <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
                   <p className="mb-0 me-3">
                     <strong>{selectedRowKeys.length}</strong> Ausgewählte
                   </p>
@@ -483,14 +565,14 @@ const CustomerList = () => {
                 </div>
               </div>
             </div>
-            <Modal show={show} onHide={handleClose} centered>
+            <Modal show={show} onHide={handleClose} centered className="modal-form">
               <Modal.Header closeButton>
                 <Modal.Title>Neue KlientInnen anlegen</Modal.Title>
               </Modal.Header>
 
               <Modal.Body>
                 <Form noValidate validated={validated}>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-6">
                       <input
                         value={fname}
@@ -518,7 +600,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-12">
                       <input
                         value={street}
@@ -533,7 +615,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-6">
                       {/* <input
                         type="email"
@@ -577,7 +659,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="col-sm-6">
                       <input
                         type="tel"
@@ -607,38 +689,11 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row p-3">
-                    <div className="col-sm-6">
-                      <input
-                        value={dob}
-                        onChange={(e) => {
-                          setDob(e.target.value)
-                        }}
-                        type="date"
-                        placeholder="Geburtsdatum"
-                        className="form-control"
-                        id="inputPassword"
-                        // required={true}
-                      />
-                    </div>
-                    <div className="col-sm-6">
-                      <input
-                        value={land}
-                        onChange={(e) => {
-                          setLand(e.target.value)
-                        }}
-                        type="text"
-                        placeholder="Land"
-                        className="form-control"
-                        id="inputPassword"
-                        // required={true}
-                      />
-                    </div>
-                  </div>
-                  <div className="row p-3">
+
+                  <div className="row">
                     <div className="col-sm-6">
                       <select
-                        className="form-control"
+                        className="form-control mb-0"
                         value={group}
                         onChange={(e) => {
                           setGroup(e.target.value)
@@ -655,31 +710,25 @@ const CustomerList = () => {
               </Modal.Body>
               <Modal.Footer>
                 <button
-                  className="btn btn"
+                  className="btn btn-modal-close"
                   // onClick={handleEditRecord}
                   onClick={handleClose}
-                  style={{ border: '1px solid #0b5995', marginRight: '120px', color: 'black' }}
                 >
                   Bearbeiten
                 </button>
-                <button
-                  className="btn btn"
-                  onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
-                >
-                  Stornieren
-                </button>
-                <button
-                  className="btn btn"
-                  onClick={saveData}
-                  style={{ background: '#0b5995', color: 'white' }}
-                >
-                  Einreichen
-                </button>
+                <div className="btn-wrap">
+                  <button className="btn btn-cancel" onClick={handleClose}>
+                    Stornieren
+                  </button>
+                  <button className="btn btn-save ms-3" onClick={saveData}>
+                    Einreichen
+                  </button>
+                </div>
               </Modal.Footer>
             </Modal>
           </div>
         </div>
+
         <Table
           rowKey="_id"
           rowSelection={rowSelection}
@@ -688,92 +737,91 @@ const CustomerList = () => {
           dataSource={data}
           pagination={false}
         />
-        <div className="row">
-          <div className="col-sm-10">
-            <Stack spacing={2}>
-              <Pagination
-                count={countPage}
-                variant="outlined"
-                shape="rounded"
-                page={page}
-                onChange={handlePageChange}
-              />
-            </Stack>
-          </div>
-          <div className="col-sm-2 text-end">
-            <select
-              className="form-control form-select"
-              value={itemsPerPage}
-              onChange={handleItemsPerPageChange}
-            >
-              <option value={10}>10 pro Seite</option>
-              <option value={20}>20 pro Seite</option>
-              <option value={50}>50 pro Seite</option>
-              <option value={100}>100 pro Seite</option>
-            </select>
+        <div className="container-fluid pagination-row">
+          <div className="row">
+            <div className="col-md-10 ps-md-0 text-center text-md-start">
+              <Stack spacing={2}>
+                <Pagination
+                  count={countPage}
+                  variant="outlined"
+                  shape="rounded"
+                  page={page}
+                  onChange={handlePageChange}
+                />
+              </Stack>
+            </div>
+            <div className="col-md-2 pe-md-0 mt-3 mt-md-0 text-md-end">
+              <select
+                className="form-control form-select"
+                value={itemsPerPage}
+                onChange={handleItemsPerPageChange}
+              >
+                <option value={10}>10 pro Seite</option>
+                <option value={20}>20 pro Seite</option>
+                <option value={50}>50 pro Seite</option>
+                <option value={100}>100 pro Seite</option>
+              </select>
+            </div>
           </div>
         </div>
-        <br />
-        <Modal size="sm" show={isModalVisible} onHide={handleModalClose} centered>
-          <Modal.Title className="text-center mt-4">
+
+        <Modal
+          size="md"
+          show={isModalVisible}
+          onHide={handleModalClose}
+          centered
+          className="modal-delete"
+        >
+          <Modal.Title className="text-center">
             <svg
+              xmlns="http://www.w3.org/2000/svg"
               width="44"
               height="53"
               viewBox="0 0 44 53"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
-                d="M15.9193 0C19.9914 0 24.0636 0 28.1357 0C28.1978 0.0248302 28.2599 0.0620762 28.322 0.0744913C30.5194 0.397284 32.2948 2.30921 32.3941 4.50668C32.4313 5.13985 32.4562 5.77302 32.481 6.44343C32.7169 6.44343 32.928 6.44343 33.1266 6.44343C35.1751 6.46826 37.236 6.4186 39.2845 6.51792C41.4199 6.62966 43.158 8.35535 43.4808 10.5032C43.7912 12.6634 42.5745 14.8236 40.5632 15.5561C40.1287 15.7175 40.017 15.9286 40.017 16.3631C40.0294 26.1586 40.0294 35.9541 40.0294 45.7496C40.0294 46.271 40.0046 46.78 39.9425 47.3015C39.6569 50.008 37.7202 52.2179 35.0882 52.851C34.9144 52.8883 34.7281 52.9503 34.5543 53C26.199 53 17.856 53 9.50069 53C9.40137 52.9628 9.31446 52.9131 9.21514 52.9007C8.03571 52.6896 6.99284 52.1806 6.11137 51.3488C4.59673 49.9211 4.0008 48.1333 4.0008 46.0848C4.0008 36.1651 4.00081 26.2455 4.01322 16.3258C4.01322 15.8913 3.88907 15.7051 3.47937 15.5685C2.62273 15.283 1.9399 14.7243 1.41847 13.9918C0.363183 12.4896 0.164543 10.8632 0.946693 9.19958C1.67918 7.62286 2.95794 6.61724 4.70846 6.51792C6.76937 6.40618 8.84269 6.45585 10.916 6.43102C11.1146 6.43102 11.3133 6.43102 11.574 6.43102C11.574 5.922 11.5616 5.48747 11.574 5.04053C11.5988 3.35207 12.1948 1.91192 13.6101 0.955961C14.3053 0.521433 15.1495 0.310377 15.9193 0ZM37.5464 15.9286C27.1674 15.9286 16.8504 15.9286 6.50865 15.9286C6.50865 16.1024 6.50865 16.2389 6.50865 16.3755C6.50865 26.2952 6.50865 36.2148 6.50865 46.1345C6.50865 46.4821 6.53348 46.8297 6.59556 47.1649C6.90593 49.1637 8.44541 50.517 10.4442 50.517C18.1788 50.5294 25.901 50.517 33.6356 50.517C34.604 50.517 35.4606 50.219 36.1807 49.561C37.2112 48.6175 37.5464 47.4008 37.5464 46.06C37.5464 36.19 37.5464 26.32 37.5464 16.45C37.5464 16.2886 37.5464 16.1272 37.5464 15.9286ZM21.9779 13.4083C27.4157 13.4083 32.841 13.4083 38.2789 13.4083C38.5396 13.4083 38.8003 13.3959 39.0486 13.371C40.1039 13.2593 40.886 12.4647 40.9978 11.4219C41.1095 10.3542 40.4887 9.36098 39.4707 9.06301C39.1355 8.96369 38.763 8.93886 38.403 8.93886C27.4901 8.92645 16.5649 8.93886 5.65201 8.93886C5.3913 8.93886 5.13058 8.95128 4.88228 8.98852C3.82699 9.14992 3.06967 10.0066 3.00759 11.0867C2.94552 12.0923 3.6656 13.0855 4.65881 13.3214C5.00643 13.4083 5.37888 13.4083 5.73891 13.4083C11.1395 13.4083 16.5649 13.4083 21.9779 13.4083ZM14.0446 6.40619C19.3955 6.40619 24.6595 6.40619 29.9235 6.40619C29.9235 5.7606 29.9732 5.16468 29.9111 4.56875C29.7869 3.41415 28.8558 2.50785 27.6888 2.50785C23.9146 2.48302 20.128 2.48302 16.3538 2.50785C15.2489 2.52026 14.3177 3.31483 14.1439 4.40736C14.0322 5.05294 14.0694 5.72336 14.0446 6.40619Z"
+                d="M15.9195 0C19.9917 0 24.0638 0 28.136 0C28.1981 0.0248302 28.2601 0.0620762 28.3222 0.0744913C30.5197 0.397284 32.295 2.30921 32.3943 4.50668C32.4316 5.13985 32.4564 5.77302 32.4813 6.44343C32.7171 6.44343 32.9282 6.44343 33.1268 6.44343C35.1753 6.46826 37.2362 6.4186 39.2847 6.51792C41.4201 6.62966 43.1582 8.35535 43.481 10.5032C43.7914 12.6634 42.5747 14.8236 40.5635 15.5561C40.1289 15.7175 40.0172 15.9286 40.0172 16.3631C40.0296 26.1586 40.0296 35.9541 40.0296 45.7496C40.0296 46.271 40.0048 46.78 39.9427 47.3015C39.6572 50.008 37.7204 52.2179 35.0884 52.851C34.9146 52.8883 34.7284 52.9503 34.5546 53C26.1992 53 17.8563 53 9.50094 53C9.40162 52.9628 9.3147 52.9131 9.21538 52.9007C8.03595 52.6896 6.99308 52.1806 6.11161 51.3488C4.59697 49.9211 4.00105 48.1333 4.00105 46.0848C4.00105 36.1651 4.00105 26.2455 4.01347 16.3258C4.01347 15.8913 3.88932 15.7051 3.47962 15.5685C2.62298 15.283 1.94014 14.7243 1.41871 13.9918C0.363427 12.4896 0.164787 10.8632 0.946937 9.19958C1.67943 7.62286 2.95818 6.61724 4.70871 6.51792C6.76961 6.40618 8.84293 6.45585 10.9163 6.43102C11.1149 6.43102 11.3135 6.43102 11.5742 6.43102C11.5742 5.922 11.5618 5.48747 11.5742 5.04053C11.5991 3.35207 12.195 1.91192 13.6103 0.955961C14.3056 0.521433 15.1498 0.310377 15.9195 0ZM37.5466 15.9286C27.1676 15.9286 16.8507 15.9286 6.50889 15.9286C6.50889 16.1024 6.50889 16.2389 6.50889 16.3755C6.50889 26.2952 6.50889 36.2148 6.50889 46.1345C6.50889 46.4821 6.53373 46.8297 6.5958 47.1649C6.90618 49.1637 8.44565 50.517 10.4445 50.517C18.1791 50.5294 25.9013 50.517 33.6359 50.517C34.6042 50.517 35.4609 50.219 36.181 49.561C37.2114 48.6175 37.5466 47.4008 37.5466 46.06C37.5466 36.19 37.5466 26.32 37.5466 16.45C37.5466 16.2886 37.5466 16.1272 37.5466 15.9286ZM21.9781 13.4083C27.4159 13.4083 32.8413 13.4083 38.2791 13.4083C38.5398 13.4083 38.8005 13.3959 39.0488 13.371C40.1041 13.2593 40.8863 12.4647 40.998 11.4219C41.1097 10.3542 40.489 9.36098 39.4709 9.06301C39.1357 8.96369 38.7633 8.93886 38.4033 8.93886C27.4904 8.92645 16.5651 8.93886 5.65226 8.93886C5.39154 8.93886 5.13082 8.95128 4.88252 8.98852C3.82724 9.14992 3.06991 10.0066 3.00784 11.0867C2.94576 12.0923 3.66584 13.0855 4.65905 13.3214C5.00667 13.4083 5.37912 13.4083 5.73916 13.4083C11.1397 13.4083 16.5651 13.4083 21.9781 13.4083ZM14.0449 6.40619C19.3958 6.40619 24.6598 6.40619 29.9238 6.40619C29.9238 5.7606 29.9734 5.16468 29.9113 4.56875C29.7872 3.41415 28.8561 2.50785 27.689 2.50785C23.9149 2.48302 20.1282 2.48302 16.3541 2.50785C15.2491 2.52026 14.318 3.31483 14.1442 4.40736C14.0324 5.05294 14.0697 5.72336 14.0449 6.40619Z"
                 fill="#C20F0F"
               />
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
-                d="M15.9322 32.217C15.9322 35.9787 15.9322 39.7405 15.9322 43.4899C15.9322 44.5576 15.5101 45.1287 14.7156 45.1411C13.9086 45.1535 13.4492 44.5576 13.4492 43.4775C13.4492 35.9415 13.4492 28.4055 13.4492 20.8696C13.4492 20.6337 13.474 20.3854 13.5237 20.1495C13.6479 19.5784 14.1072 19.2308 14.6783 19.2308C15.237 19.2184 15.7212 19.566 15.8577 20.1123C15.9198 20.3481 15.9198 20.584 15.9198 20.8323C15.9322 24.6189 15.9322 28.418 15.9322 32.217Z"
+                d="M15.932 32.2171C15.932 35.9789 15.932 39.7407 15.932 43.49C15.932 44.5577 15.5099 45.1288 14.7153 45.1412C13.9083 45.1537 13.449 44.5577 13.449 43.4776C13.449 35.9417 13.449 28.4057 13.449 20.8697C13.449 20.6339 13.4738 20.3856 13.5235 20.1497C13.6476 19.5786 14.107 19.231 14.6781 19.231C15.2367 19.2185 15.7209 19.5662 15.8575 20.1124C15.9196 20.3483 15.9196 20.5842 15.9196 20.8325C15.932 24.6191 15.932 28.4181 15.932 32.2171Z"
                 fill="#C20F0F"
               />
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
-                d="M20.7852 32.2046C20.7852 28.3807 20.7852 24.5444 20.7852 20.7206C20.7852 20.1495 20.9217 19.6653 21.4556 19.3674C22.1012 19.0073 22.9702 19.3549 23.1813 20.0626C23.2558 20.3233 23.2806 20.6089 23.2806 20.882C23.2806 28.4179 23.2806 35.9539 23.2806 43.4899C23.2806 43.7257 23.2682 43.974 23.2061 44.2099C23.0695 44.781 22.5729 45.1659 22.0143 45.1535C21.468 45.1411 20.9838 44.7686 20.8597 44.2099C20.81 43.974 20.7976 43.7257 20.7976 43.4899C20.7852 39.7281 20.7852 35.9663 20.7852 32.2046Z"
+                d="M20.7861 32.2047C20.7861 28.3809 20.7861 24.5446 20.7861 20.7208C20.7861 20.1497 20.9227 19.6655 21.4566 19.3675C22.1021 19.0075 22.9712 19.3551 23.1822 20.0628C23.2567 20.3235 23.2816 20.609 23.2816 20.8822C23.2816 28.4181 23.2816 35.9541 23.2816 43.49C23.2816 43.7259 23.2692 43.9742 23.2071 44.2101C23.0705 44.7812 22.5739 45.1661 22.0152 45.1537C21.469 45.1413 20.9848 44.7688 20.8606 44.2101C20.811 43.9742 20.7986 43.7259 20.7986 43.49C20.7861 39.7283 20.7861 35.9665 20.7861 32.2047Z"
                 fill="#C20F0F"
               />
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
-                d="M28.1113 32.1548C28.1113 28.393 28.1113 24.6312 28.1113 20.8819C28.1113 19.7893 28.5459 19.2183 29.3653 19.2307C30.1598 19.2431 30.5943 19.8142 30.5943 20.8695C30.5943 28.4054 30.5943 35.9414 30.5943 43.4773C30.5943 44.5574 30.135 45.1534 29.328 45.141C28.5334 45.1285 28.1113 44.5574 28.1113 43.4897C28.1113 39.7156 28.1113 35.9414 28.1113 32.1548Z"
+                d="M28.1113 32.1551C28.1113 28.3933 28.1113 24.6315 28.1113 20.8822C28.1113 19.7896 28.5459 19.2186 29.3653 19.231C30.1598 19.2434 30.5943 19.8145 30.5943 20.8698C30.5943 28.4057 30.5943 35.9417 30.5943 43.4776C30.5943 44.5578 30.135 45.1537 29.328 45.1413C28.5334 45.1288 28.1113 44.5577 28.1113 43.4901C28.1113 39.7159 28.1113 35.9417 28.1113 32.1551Z"
                 fill="#C20F0F"
               />
             </svg>
-            <br />
-            <br />
-            <h4 style={{ textAlign: 'center', color: 'black' }}>Sind Sie sicher?</h4>
+
+            <h4>Sind Sie sicher?</h4>
           </Modal.Title>
-          <p style={{ textAlign: 'center' }} className="mx-4 p-3">
+          <p>
             {/* Dieser Vorgang kann nichtF r3ckgBngig gemacht werden */}
-            Dieser Vorgang kann nicht r3ckgBngig gemacht werden
+            {/* Dieser Vorgang kann nicht r3ckgBngig gemacht werden */}
+            Möchten Sie diesen Datensatz wirklich löschen? dieser Vorgang kann nicht rückgängig
+            gemacht werden
           </p>
           <div className="text-center">
-            <button
-              className="btn"
-              style={{ background: '#015291', color: 'white' }}
-              onClick={handleModalClose}
-            >
-              Abbrechen
-            </button>
-            &nbsp;&nbsp;
-            <button
-              className="btn"
-              style={{ background: '#d04545', color: 'white' }}
-              onClick={handleDeleteConfirm}
-            >
+            <button className="btn modal-btn delete-btn me-3" onClick={handleDeleteConfirm}>
               Löschen
             </button>
+            <button className="btn modal-btn close-btn" onClick={handleModalClose}>
+              Abbrechen
+            </button>
           </div>
-          <br />
         </Modal>
       </div>
       <ToastContainer />

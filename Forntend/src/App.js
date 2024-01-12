@@ -1,7 +1,7 @@
 import React, { Component, Suspense, useContext, useEffect } from 'react'
 import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
-import './scss/_custom.scss'
+// import './scss/_custom.scss'
 import ResetPassword from './views/pages/reset/ResetPassword'
 import ForgotPassword from './views/pages/forget/ForgotPassword'
 import { getFetch } from './Api'

@@ -32,7 +32,7 @@ const AppBreadcrumb = () => {
   const breadcrumbs = getBreadcrumbs(currentLocation)
 
   return (
-    <CBreadcrumb className="m-0" style={{ float: 'right' }}>
+    <CBreadcrumb className="m-0">
       <CBreadcrumbItem>Startseite</CBreadcrumbItem>
       {breadcrumbs.map((breadcrumb, index) => {
         return (
