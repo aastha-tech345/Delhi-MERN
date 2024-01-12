@@ -54,7 +54,7 @@ const Customer = () => {
         <div className="blueBoxTop">
           <div className="container-fluid">
             <div className="row d-flex align-items-center">
-              <div className="col-sm-4">
+              <div className="col-md-4">
                 {/* <p style={{ color: 'white', marginTop: '5px' }}>KlientInnen: {res.fname}</p>
               <ImLocation2 style={{ color: 'white' }} />
               <span style={{ color: 'white' }}>{res.street}</span> */}
@@ -83,8 +83,8 @@ const Customer = () => {
                   <span>{street}</span>
                 </address>
               </div>
-              <div className="col-sm-8 text-end">
-                <div className="d-flex justify-content-end">
+              <div className="col-md-8 text-md-end">
+                <div className="d-flex justify-content-md-end justify-content-between">
                   <button className="btn btn-outline me-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
