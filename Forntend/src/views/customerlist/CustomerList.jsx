@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 // import { GrEdit } from 'react-icons/gr'
-import JoditEditor from 'jodit-react'
-import { RiDeleteBinLine } from 'react-icons/ri'
+import PaginationItem from '@mui/material/PaginationItem'
 import { MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
 import { Link } from 'react-router-dom'
@@ -747,6 +746,15 @@ const CustomerList = () => {
                   shape="rounded"
                   page={page}
                   onChange={handlePageChange}
+                  renderItem={(item) => (
+                    <PaginationItem
+                      slots={{
+                        previous: MdLocalPrintshop,
+                        next: 'next',
+                      }}
+                      {...item}
+                    />
+                  )}
                 />
               </Stack>
             </div>

@@ -29,7 +29,7 @@ exports.createFilter = async (req, res) => {
       client_id,
       next_shipping,
       permanent_donors,
-      added_by:"user",
+      added_by: "user",
       parent_id,
     });
 
@@ -41,15 +41,13 @@ exports.createFilter = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while creating Filter" });
+    res.status(500).json({ error: "An error occurred while creating Filter" });
   }
 };
 
 exports.getFilterData = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await FilterInfomation.FilterSchema.countDocuments({
       is_deleted: "active",
@@ -58,7 +56,7 @@ exports.getFilterData = async (req, res) => {
     let pageCount = Math.ceil(countPage / resultPerPage);
 
     const apiFeatures = new ApiFeatures(
-        FilterInfomation.FilterSchema.find({ is_deleted: "active" }),
+      FilterInfomation.FilterSchema.find({ is_deleted: "active" }),
       req.query
     )
       .reverse()
@@ -88,25 +86,25 @@ exports.getFilterData = async (req, res) => {
 };
 
 exports.getFilterSearch = async (req, res) => {
-    try {
-      const searchKey = req.params.searchKey;
-      const result = await FilterInfomation.FilterSchema.find({
-        $or: [
-          { fname: { $regex: searchKey, $options: "i" } },
-          { lname: { $regex: searchKey, $options: "i" } },
-          { email: { $regex: searchKey, $options: "i" } },
-          { telephone: { $regex: searchKey, $options: "i" } },
-          { client_id: { $regex: searchKey, $options: "i" } },
-          { mobil: { $regex: searchKey, $options: "i" } },
-          { next_shipping: { $regex: searchKey, $options: "i" } },
-          { permanent_donors: { $regex: searchKey, $options: "i" } },
-          { dob: { $regex: searchKey, $options: "i" } },
-          { plz: { $regex: searchKey, $options: "i" } },
-        ],
-      });
-      return res.send(result);
-    } catch (error) {
-      console.error("Error searching data:", error.message);
-      res.status(500).send({ error: "Server Error" });
-    }
-  };
+  try {
+    const searchKey = req.params.searchKey;
+    const result = await FilterInfomation.FilterSchema.find({
+      $or: [
+        { fname: { $regex: searchKey, $options: "i" } },
+        { lname: { $regex: searchKey, $options: "i" } },
+        { email: { $regex: searchKey, $options: "i" } },
+        { telephone: { $regex: searchKey, $options: "i" } },
+        { client_id: { $regex: searchKey, $options: "i" } },
+        { mobil: { $regex: searchKey, $options: "i" } },
+        { next_shipping: { $regex: searchKey, $options: "i" } },
+        { permanent_donors: { $regex: searchKey, $options: "i" } },
+        { dob: { $regex: searchKey, $options: "i" } },
+        { plz: { $regex: searchKey, $options: "i" } },
+      ],
+    });
+    return res.send(result);
+  } catch (error) {
+    console.error("Error searching data:", error.message);
+    res.status(500).send({ error: "Server Error" });
+  }
+};
