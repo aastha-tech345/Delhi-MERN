@@ -294,7 +294,7 @@ const CustomerList = () => {
     }
 
     setValidated(true)
-    let data = { fname, lname, street, city, phone, plz, email, land, dob, group, id, created_by }
+    let data = { fname, lname, street, city, phone, plz, email, land, group, id, created_by }
     if (!email) {
       return notify('Invalid Email')
     }
@@ -689,34 +689,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <input
-                        value={dob}
-                        onChange={(e) => {
-                          setDob(e.target.value)
-                        }}
-                        type="date"
-                        placeholder="Geburtsdatum"
-                        className="form-control"
-                        id="inputPassword"
-                        // required={true}
-                      />
-                    </div>
-                    <div className="col-sm-6">
-                      <input
-                        value={land}
-                        onChange={(e) => {
-                          setLand(e.target.value)
-                        }}
-                        type="text"
-                        placeholder="Land"
-                        className="form-control"
-                        id="inputPassword"
-                        // required={true}
-                      />
-                    </div>
-                  </div>
+
                   <div className="row">
                     <div className="col-sm-6">
                       <select
