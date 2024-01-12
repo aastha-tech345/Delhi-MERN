@@ -748,11 +748,14 @@ const CustomerList = () => {
                   onChange={handlePageChange}
                   renderItem={(item) => (
                     <PaginationItem
-                      slots={{
-                        previous: MdLocalPrintshop,
-                        next: 'next',
-                      }}
                       {...item}
+                      text={
+                        item.type === 'previous'
+                          ? 'Previous'
+                          : item.type === 'next'
+                          ? 'Next'
+                          : item.page
+                      }
                     />
                   )}
                 />
