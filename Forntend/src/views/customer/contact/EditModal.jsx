@@ -103,8 +103,8 @@ const EditModal = ({ setEdit, getDetails }) => {
     setLoadVale(false)
   }, 5000)
   return (
-    <div className="modal" tabIndex={-1} style={modalStyle}>
-      <div className="modal-dialog modal-dialog-centered">
+    <div className="modal modal-form edit-modal-form" tabIndex={-1} style={modalStyle}>
+      <div className="modal-dialog modal-dialog-centered ">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Kontakt hinzufügen</h5>
@@ -120,8 +120,8 @@ const EditModal = ({ setEdit, getDetails }) => {
            hello
           </div> */}
           <Form noValidate validated={validated}>
-            <div className="row p-3">
-              <div className="mb-2 row">
+            <div className="row p-3 modal-body modal-form">
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Vorname
                 </label>
@@ -135,14 +135,9 @@ const EditModal = ({ setEdit, getDetails }) => {
                     className="form-control"
                     id="inputPassword"
                   />
-                  {/* {error && data.fname.trim().length === 0 && (
-                    <p style={{ color: 'red' }}>
-                      <BiErrorCircle /> required
-                    </p>
-                  )} */}
                 </div>
               </div>
-              <div className="mb-2 row">
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Nachname
                 </label>
@@ -163,7 +158,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                   )} */}
                 </div>
               </div>
-              <div className="mb-2 row">
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Telefon
                 </label>
@@ -184,21 +179,11 @@ const EditModal = ({ setEdit, getDetails }) => {
                   />
                 </div>
               </div>
-              <div className="mb-2 row">
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Mail
                 </label>
                 <div className="col-sm-9">
-                  {/* <input
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    onChange={handleChange}
-                    placeholder="jo@gmail.com"
-                    className="form-control"
-                    id="inputPassword"
-                  /> */}
-
                   <input
                     type="email"
                     name="email"
@@ -208,22 +193,12 @@ const EditModal = ({ setEdit, getDetails }) => {
                     className="form-control"
                     id="inputPassword"
                   />
-                  {/* {error && data.email.trim().length === 0 && (
-                    <p style={{ color: 'red' }}>
-                      <BiErrorCircle /> required
-                    </p>
-                  )} */}
                 </div>
               </div>
-              <div className="mb-2 row">
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Geschlecht
                 </label>
-                {/* {error && data.gender.trim().length === 0 && (
-                  <p style={{ color: 'red' }}>
-                    <BiErrorCircle /> required
-                  </p>
-                )} */}
                 <div className="col-sm-9">
                   <input
                     type="radio"
@@ -232,7 +207,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     checked={data.gender === 'male'}
                   />{' '}
-                  &nbsp; Männlich
+                  &nbsp; Männlich &nbsp;
                   <input
                     type="radio"
                     name="gender"
@@ -240,7 +215,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     checked={data.gender === 'female'}
                   />{' '}
-                  &nbsp; Weiblich
+                  &nbsp; Weiblich &nbsp;
                   <input
                     type="radio"
                     name="gender"
@@ -251,7 +226,8 @@ const EditModal = ({ setEdit, getDetails }) => {
                   &nbsp; Andere
                 </div>
               </div>
-              <div className="mb-2 row">
+
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Status
                 </label>
@@ -272,30 +248,25 @@ const EditModal = ({ setEdit, getDetails }) => {
           </Form>
 
           <div className="modal-footer" style={{ display: 'flex', justifyItems: 'end' }}>
-            <button
-              type="button"
-              className="btn btn-secondary w-25"
-              data-bs-dismiss="modal"
-              onClick={close}
-              style={{ background: '#d04545', color: 'white' }}
-            >
-              Abbrechen
-            </button>
-            {/* {loadValue ? (
-              <div  >
-                <Loader />
-            
+            <div className="mx-auto ">
+              <button
+                type="button"
+                className="btn btn mx-2"
+                data-bs-dismiss="modal"
+                onClick={close}
+                style={{ background: '#d04545', border: '#d04545', color: 'white' }}
+              >
+                Abbrechen
+              </button>
+              <button
+                type="button"
+                className="btn"
+                onClick={handleSubmit}
+                style={{ background: '#015291', color: 'white' }}
+              >
+                {loadValue ? <Loader /> : <div> Speichern</div>}
+              </button>
             </div>
-            ) : ( */}
-
-            <button
-              type="button"
-              className="btn  w-25"
-              onClick={handleSubmit}
-              style={{ background: '#015291', color: 'white' }}
-            >
-              {loadValue ? <Loader /> : <div> Speichern</div>}
-            </button>
             {/* )} */}
           </div>
         </div>

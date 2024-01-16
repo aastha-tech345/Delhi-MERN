@@ -93,8 +93,8 @@ const EditModal = ({ setEdit, getDetails }) => {
         color: 'black',
       }}
     >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+      <div className="modal-dialog modal-form modal-dialog-centered edit-modal-form ">
+        <div className="modal-content modal-form">
           <div className="modal-header">
             <h5 className="modal-title">Dokument aktualisieren</h5>
             <button
@@ -106,13 +106,14 @@ const EditModal = ({ setEdit, getDetails }) => {
             />
           </div>
           <Form noValidate validated={validated}>
-            <div className="modal-body">
-              <div className="mb-6 row">
+            <div className="modal-body modal-form">
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Titel
                 </label>
                 <div className="col-sm-9">
                   <input
+                    style={{ marginBottom: '0px' }}
                     id="title"
                     required
                     name="document_title"
@@ -124,12 +125,13 @@ const EditModal = ({ setEdit, getDetails }) => {
                 </div>
               </div>
               <br />
-              <div className="row mb-6">
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Dokumenttyp
                 </label>
                 <div className="col-sm-9">
                   <select
+                    style={{ marginBottom: '0px' }}
                     id="document_type"
                     name="document_type"
                     value={data.document_type}
@@ -152,12 +154,13 @@ const EditModal = ({ setEdit, getDetails }) => {
                 </div>
               </div>
               <br />
-              <div className="row mb-6">
+              <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Datei-Upload
                 </label>
                 <div className="col-sm-9">
                   <input
+                    style={{ marginBottom: '0px' }}
                     id="fileUpload"
                     type="file"
                     className="form-control"
@@ -171,18 +174,18 @@ const EditModal = ({ setEdit, getDetails }) => {
           <div className="modal-footer" style={{ display: 'flex', justifyContent: 'end' }}>
             <button
               type="button"
-              className="btn btn-secondary w-25"
+              className="btn"
               data-bs-dismiss="modal"
               onClick={close}
-              style={{ background: '#015291', color: 'white' }}
+              style={{ background: '#015291', border: '#015291', color: 'white' }}
             >
               Abbrechen
             </button>
             <button
               type="button"
-              className="btn w-25"
+              className="btn mx-2"
               onClick={handleSubmit}
-              style={{ background: '#d04545', color: 'white' }}
+              style={{ background: '#d04545', border: '#d04545', color: 'white' }}
             >
               {loadValue ? <Loader /> : 'Aktualisieren'}
             </button>

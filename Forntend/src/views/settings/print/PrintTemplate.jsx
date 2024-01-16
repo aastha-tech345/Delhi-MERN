@@ -167,10 +167,10 @@ const PrintTemplate = () => {
   }, [page, itemsPerPage])
 
   return (
-    <>
+    <div className="inner-page-warp">
       {hide ? <DeleteModal setHide={setHide} printId={printId} getDetails={getDetails} /> : ''}
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
-      <div className="row">
+      <div className="row tab-content">
         <div
           className="col-sm-12"
           style={{
@@ -179,13 +179,11 @@ const PrintTemplate = () => {
             borderRadius: '5px ',
           }}
         >
-          <h4 className="ms-1 mt-3">Druckvorlage</h4>
-          <hr className="mx-2" />
+          <div className="tab-title">
+            <h4>Druckvorlage</h4>
+          </div>
           <div>
-            <div
-              className="p-2 mx-2"
-              style={{ border: '1px solid lightgray', borderRadius: '5px' }}
-            >
+            <div className="p-2" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
               <button
                 className="btn btn m-2"
                 style={{ background: '#0b5995', color: 'white' }}
@@ -195,55 +193,52 @@ const PrintTemplate = () => {
               </button>
             </div>
 
-            <Modal size="lg" show={show} onHide={handleClose} centered>
+            <Modal size="lg" show={show} onHide={handleClose} centered className="modal-form">
               <Modal.Header closeButton style={{ borderBottom: 'none' }}>
                 <Modal.Title>Neue E-Mail-Vorlage anlegen</Modal.Title>
               </Modal.Header>
-              <div>
-                <div className="row px-4">
-                  <div className="col-sm-12">
-                    <label>Bezeichnung</label>
-                    <input
-                      value={designation}
-                      onChange={(e) => {
-                        setDesignation(e.target.value)
-                      }}
-                      type="text"
-                      className="form-control"
-                      placeholder="{{ activity.title }} Aktivität ist fällig am {{ activity.due_date }}"
-                    />
-                  </div>
-                </div>
-                <div className="row px-4">
-                  <label style={{ margin: '15px 0px 15px 0px' }}>Inhalt</label>
-                  <div className="col-sm-12">
-                    {/* Assuming JoditEditor returns a value directly, if not, adjust accordingly */}
-                    <JoditEditor
-                      value={content}
-                      onChange={(newContent) => {
-                        setContent(newContent)
-                      }}
-                      // Other JoditEditor props
-                    />
+              <div className="row-wrap">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col">
+                      <div className="block-wrap p-2">
+                        <div>
+                          <label>Bezeichnung</label>
+                          <input
+                            value={designation}
+                            onChange={(e) => {
+                              setDesignation(e.target.value)
+                            }}
+                            type="text"
+                            className="form-control"
+                            placeholder="{{ activity.title }} Aktivität ist fällig am {{ activity.due_date }}"
+                          />
+                        </div>
+                        <div>
+                          <label style={{ margin: '15px 0px 15px 0px' }}>Inhalt</label>
+                          <div className="col-sm-12">
+                            {/* Assuming JoditEditor returns a value directly, if not, adjust accordingly */}
+                            <JoditEditor
+                              value={content}
+                              onChange={(newContent) => {
+                                setContent(newContent)
+                              }}
+                              // Other JoditEditor props
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <Modal.Body></Modal.Body>
               <Modal.Footer>
-                <div className="text-right">
-                  <button
-                    className="btn btn"
-                    onClick={handleClose}
-                    style={{ background: '#d04545', color: 'white' }}
-                  >
+                <button style={{ border: 'none', background: 'none' }}></button>
+                <div className="btn-wrap">
+                  <button className="btn btn-cancel" onClick={handleClose}>
                     Abbrechen
                   </button>
-                  &nbsp;&nbsp;&nbsp;
-                  <button
-                    className="btn btn"
-                    onClick={saveData}
-                    style={{ background: '#0b5995', color: 'white', marginRight: '8px' }}
-                  >
+                  <button className="btn btn-save ms-3" onClick={saveData}>
                     Speichern
                   </button>
                 </div>
@@ -342,14 +337,14 @@ const PrintTemplate = () => {
                 <div className="popupfooterBtn">
                   <button
                     className="btn btn"
-                    style={{ background: '#d04545', color: 'white' }}
+                    style={{ background: '#d04545', border: '#d04545', color: 'white' }}
                     onClick={handleDeleteCancel}
                   >
                     Löschen
                   </button>
                   <button
                     className="btn btn"
-                    style={{ background: '#015291', color: 'white' }}
+                    style={{ background: '#015291', border: '#015291', color: 'white' }}
                     onClick={handleDeleteConfirm}
                   >
                     Abbrechen
@@ -361,7 +356,7 @@ const PrintTemplate = () => {
         </div>
         <ToastContainer />
       </div>
-    </>
+    </div>
   )
 }
 

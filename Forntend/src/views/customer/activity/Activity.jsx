@@ -24,6 +24,10 @@ const Activity = () => {
   const [color1, setColor1] = useState('white')
   const [color2, setColor2] = useState('white')
   const [color3, setColor3] = useState('white')
+  const [iconBack, setIconBack] = useState(false)
+  const [iconBack1, setIconBack1] = useState(false)
+  const [iconBack2, setIconBack2] = useState(false)
+  const [iconBack3, setIconBack3] = useState(false)
   const [updateData, setUpdateData] = useState(false)
   const [icon, setIcon] = useState('')
   const [search, setSearch] = useState('')
@@ -46,28 +50,44 @@ const Activity = () => {
   //   }
   // }
   // let countData = activityData?.length / 10
-  const selectIcon = (iconName, selectedColor) => {
+  const selectIcon = (iconName, selectedColor, color) => {
     setIcon(iconName)
     switch (iconName) {
       case 'PhoneOutlined':
+        setIconBack(true)
+        setIconBack1(false)
+        setIconBack2(false)
+        setIconBack3(false)
         setColor(selectedColor)
         setColor1('white')
         setColor2('white')
         setColor3('white')
         break
       case 'CheckCircleOutlined':
+        setIconBack1(true)
+        setIconBack(false)
+        setIconBack2(false)
+        setIconBack3(false)
         setColor1(selectedColor)
         setColor('white')
         setColor2('white')
         setColor3('white')
         break
       case 'RedEnvelopeOutlined':
+        setIconBack2(true)
+        setIconBack1(false)
+        setIconBack(false)
+        setIconBack3(false)
         setColor2(selectedColor)
         setColor1('white')
         setColor('white')
         setColor3('white')
         break
       case 'PrinterOutlined':
+        setIconBack3(true)
+        setIconBack2(false)
+        setIconBack1(false)
+        setIconBack(false)
         setColor3(selectedColor)
         setColor1('white')
         setColor2('white')
@@ -121,7 +141,7 @@ const Activity = () => {
   }
 
   return (
-    <div className="inner-page-wrap">
+    <div className="inner-page-wrap" style={{ background: 'white' }}>
       <Customer />
       {/* <h4 className="mx-3">Beschreibung</h4>
       <hr /> */}
@@ -144,7 +164,7 @@ const Activity = () => {
           <PhoneOutlined
             className="p-2"
             style={{
-              border: '1px solid black',
+              border: '1px solid #0b5995',
               borderRadius: '5px',
               marginRight: '10px',
               background: color,
@@ -157,7 +177,7 @@ const Activity = () => {
           <CheckCircleOutlined
             className="p-2"
             style={{
-              border: '1px solid black',
+              border: '1px solid #0b5995',
               borderRadius: '5px',
               marginRight: '10px',
               background: color1,
@@ -167,7 +187,7 @@ const Activity = () => {
           <RedEnvelopeOutlined
             className="p-2"
             style={{
-              border: '1px solid black',
+              border: '1px solid #0b5995',
               borderRadius: '5px',
               marginRight: '10px',
               background: color2,
@@ -177,7 +197,7 @@ const Activity = () => {
           <PrinterOutlined
             className="p-2"
             style={{
-              border: '1px solid black',
+              border: '1px solid #0b5995',
               borderRadius: '5px',
               marginRight: '10px',
               background: color3,
@@ -200,7 +220,7 @@ const Activity = () => {
       {/* <div className="row">
         <div className="col-sm-8"></div>
         <div className="col-sm-4">
-          <button className="btn btn" style={{ background: '#d04545', color: 'white' }}>
+          <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
             {' '}
             Abbrechen
           </button>
@@ -217,134 +237,137 @@ const Activity = () => {
       </div> */}
 
       <div className="tab-content">
-        <div className="tab-title">
-          <h4>Beschreibung</h4>
+        <div className="tab-title d-flex">
+          <h4 className="">Beschreibung</h4>
+          <div className="row mb-3 mx-3">
+            <div className="col">
+              <PhoneOutlined
+                className="p-2"
+                style={{
+                  border: '1px solid #244D92',
+                  borderRadius: '5px',
+                  marginRight: '10px',
+                  background: color,
+                  color: iconBack ? 'white' : '#244D92',
+                }}
+                onClick={() => selectIcon('PhoneOutlined', '#015290')}
+              />
+              <CheckCircleOutlined
+                className="p-2"
+                style={{
+                  border: '1px solid #244D92',
+                  borderRadius: '5px',
+                  marginRight: '10px',
+                  background: color1,
+                  color: iconBack1 ? 'white' : '#244D92',
+                }}
+                onClick={() => selectIcon('CheckCircleOutlined', '#015290')}
+              />
+              <RedEnvelopeOutlined
+                className="p-2"
+                style={{
+                  border: '1px solid #244D92',
+                  borderRadius: '5px',
+                  marginRight: '10px',
+                  background: color2,
+                  color: iconBack2 ? 'white' : '#244D92',
+                }}
+                onClick={() => selectIcon('RedEnvelopeOutlined', '#015290')}
+              />
+              <PrinterOutlined
+                className="p-2"
+                style={{
+                  border: '1px solid #244D92',
+                  borderRadius: '5px',
+                  marginRight: '10px',
+                  background: color3,
+                  color: iconBack3 ? 'white' : '#244D92',
+                }}
+                onClick={() => selectIcon('PrinterOutlined', '#015290')}
+              />
+            </div>
+          </div>
         </div>
         <div className="container-fluid">
           <div className="row">
             <div className="col">
               <div className="block-wrap">
-                <div className="border-bottom w-100 mb-2 pb-3">
-                  <div className="container-fluid">
-                    <div className="row mb-3">
-                      <div className="col">
-                        <PhoneOutlined
-                          className="p-2 btn-icon"
-                          style={{
-                            border: '1px solid lightgray',
-                            borderRadius: '5px',
-                            marginRight: '10px',
-                            background: color,
-                          }}
-                          onClick={() => selectIcon('PhoneOutlined', '#015290')}
-                        />
-                        <CheckCircleOutlined
-                          className="p-2 btn-icon"
-                          style={{
-                            border: '1px solid lightgray',
-                            borderRadius: '5px',
-                            marginRight: '10px',
-                            background: color1,
-                          }}
-                          onClick={() => selectIcon('CheckCircleOutlined', '#015290')}
-                        />
-                        <RedEnvelopeOutlined
-                          className="p-2 btn-icon"
-                          style={{
-                            border: '1px solid lightgray',
-                            borderRadius: '5px',
-                            marginRight: '10px',
-                            background: color2,
-                          }}
-                          onClick={() => selectIcon('RedEnvelopeOutlined', '#015290')}
-                        />
-                        <PrinterOutlined
-                          className="p-2 btn-icon"
-                          style={{
-                            border: '1px solid lightgray',
-                            borderRadius: '5px',
-                            marginRight: '10px',
-                            background: color3,
-                          }}
-                          onClick={() => selectIcon('PrinterOutlined', '#015290')}
-                        />
+                <div className="container-fluid">
+                  {/* button with search */}
+                  {openMessage ? (
+                    // <div className="row p-3 m-3">
+                    //   <br />
+                    //   <textarea
+                    //     className="form-control mx-2"
+                    //     rows={6}
+                    //     name="message"
+                    //     value={data?.message}
+                    //     onChange={handleChange}
+                    //   ></textarea>
+                    // </div>
+
+                    <div className="mt-2">
+                      <div className="row">
+                        <textarea
+                          className="form-control"
+                          rows={6}
+                          name="message"
+                          placeholder="Notiz"
+                          value={data?.message}
+                          onChange={handleChange}
+                        ></textarea>
                       </div>
-                    </div>
-
-                    {/* button with search */}
-                    {openMessage ? (
-                      // <div className="row p-3 m-3">
-                      //   <br />
-                      //   <textarea
-                      //     className="form-control mx-2"
-                      //     rows={6}
-                      //     name="message"
-                      //     value={data?.message}
-                      //     onChange={handleChange}
-                      //   ></textarea>
-                      // </div>
-
-                      <div className="mt-2">
+                      <div className="bottomBtnBg">
                         <div className="row">
-                          <textarea
-                            className="form-control"
-                            rows={6}
-                            name="message"
-                            placeholder="Notiz"
-                            value={data?.message}
-                            onChange={handleChange}
-                          ></textarea>
-                        </div>
-                        <div className="bottomBtnBg">
-                          <div className="row">
-                            <div className="col-sm-12">
-                              <div style={{ float: 'right' }}>
-                                <button
-                                  className="btn"
-                                  style={{ background: '#d04545', color: 'white' }}
-                                  onClick={() => setOpenMessage(false)}
-                                >
-                                  Abbrechen
-                                </button>
-                                &nbsp;&nbsp;
-                                <button
-                                  className="btn mx-2"
-                                  style={{ background: '#0b5995', color: 'white' }}
-                                  onClick={handleSubmit}
-                                >
-                                  Aktivität hinzufügen
-                                </button>
-                              </div>
+                          <div className="col-sm-12">
+                            <div style={{ float: 'right' }}>
+                              <button
+                                className="btn"
+                                style={{ background: '#d04545', color: 'white' }}
+                                onClick={() => setOpenMessage(false)}
+                              >
+                                Abbrechen
+                              </button>
+                              &nbsp;&nbsp;
+                              <button
+                                className="btn mx-2"
+                                style={{ background: '#0b5995', color: 'white' }}
+                                onClick={handleSubmit}
+                              >
+                                Aktivität hinzufügen
+                              </button>
                             </div>
                           </div>
                         </div>
                       </div>
-                    ) : (
-                      <div className="row">
-                        <div className="col-sm-12">
-                          <p>Planen und verwalten Sie Aktivitäten mit KlientInnen.</p>
+                    </div>
+                  ) : (
+                    <div className="row">
+                      <div className="col-sm-4">
+                        <p>Planen und verwalten Sie Aktivitäten mit KlientInnen.</p>
+                        <div className="form-search-control">
                           <input
                             type="search"
-                            className="form-control"
+                            className="form-control  form-search"
                             placeholder="Ihre Suche eingeben"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                           />
                         </div>
-                        {/* <div className="col-sm-2"></div> */}
-                        <div className="col-sm-6">
-                          <button
-                            className="btn btn"
-                            style={{ background: '#015291', color: 'white' }}
-                            onClick={openText}
-                          >
-                            <MdAdd />
-                            Aktivität hinzufügen
-                          </button>
-                        </div>
                       </div>
-                    )}
-                  </div>
+                      {/* <div className="col-sm-2"></div> */}
+                      <div className="col-sm-8 text-right">
+                        <button
+                          className="btn btn"
+                          style={{ background: '#015291', color: 'white' }}
+                          onClick={openText}
+                        >
+                          <MdAdd />
+                          Aktivität hinzufügen
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

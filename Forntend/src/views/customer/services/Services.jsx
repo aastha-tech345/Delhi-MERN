@@ -356,6 +356,7 @@ const Services = () => {
               <div className="col-sm-3">Vorsorge</div>
               <div className="col-sm-2 d-flex">
                 <input
+                  className="check"
                   type="checkbox"
                   checked={motivation.prevention === 'yes'}
                   onChange={matarialChange}
@@ -1439,13 +1440,13 @@ const Services = () => {
             </div>
           </div>
         </div>
-        <div className="row mb-4 mt-4">
+        <div className="row mb-4 mt-4 ">
           <div className="col-sm-9"></div>
           <div className="col-sm-3">
             <button
               onClick={cancelData}
               type="button"
-              className="btn btn"
+              className="btn btn "
               style={{ background: '#d04545', color: 'white' }}
             >
               Abbrechen

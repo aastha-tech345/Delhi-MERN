@@ -41,7 +41,6 @@ const User = () => {
                     role="tab"
                     aria-selected={activeTab === 'createuser'}
                     onClick={(e) => handleTabClick('createuser', 'Mitarbeiterlnnen', e)}
-                    style={{ marginRight: '60px', marginLeft: '20px' }}
                   >
                     <CiUser />
                     &nbsp; Mitarbeiterlnnen
@@ -54,7 +53,6 @@ const User = () => {
                     aria-controls="role"
                     aria-selected={activeTab === 'role'}
                     onClick={(e) => handleTabClick('role', 'Rollen', e)}
-                    style={{ marginRight: '60px' }}
                   >
                     <ImInfo />
                     &nbsp; Rollen
