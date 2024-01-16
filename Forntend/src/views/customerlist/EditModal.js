@@ -116,9 +116,6 @@ const EditModal = ({ setHide, getDetails }) => {
               onClick={close}
             />
           </div>
-          {/* <div className="modal-body">
-           hello
-          </div> */}
           <div className="modal-body">
             <Form noValidate validated={validated}>
               <div className="row">

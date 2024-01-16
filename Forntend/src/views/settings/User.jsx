@@ -1,29 +1,37 @@
 import React, { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { CiUser } from 'react-icons/ci'
 import { ImInfo } from 'react-icons/im'
 
 const User = () => {
-  const params = useParams()
+  const location = useLocation()
+  console.log('location', location)
   // console.log('parama', `/${params['*']}`)
   const navigate = useNavigate()
+
   let activeTab = localStorage.getItem('tabIdd') || 'createuser'
+
+  if (location.pathname === '/settings/role') {
+    activeTab = 'role'
+  }
 
   const handleTabClick = (tabId, name, e) => {
     if (e && e.target.tagName.toLowerCase() === 'a') {
       e.preventDefault()
     }
+
     if (name === 'Mitarbeiterlnnen') {
       localStorage.setItem('tabIdd', 'createuser')
-      return navigate('/settings/createuser')
+      navigate('/settings/createuser')
     } else if (name === 'Rollen') {
       localStorage.setItem('tabIdd', 'role')
-      return navigate('/settings/role')
+      navigate('/settings/role')
     }
   }
 
   useEffect(() => {
     handleTabClick()
+    localStorage.removeItem('tabIdd')
   }, [activeTab])
 
   return (
@@ -41,7 +49,6 @@ const User = () => {
                     role="tab"
                     aria-selected={activeTab === 'createuser'}
                     onClick={(e) => handleTabClick('createuser', 'Mitarbeiterlnnen', e)}
-                    style={{ marginRight: '60px', marginLeft: '20px' }}
                   >
                     <CiUser />
                     &nbsp; Mitarbeiterlnnen
@@ -54,7 +61,6 @@ const User = () => {
                     aria-controls="role"
                     aria-selected={activeTab === 'role'}
                     onClick={(e) => handleTabClick('role', 'Rollen', e)}
-                    style={{ marginRight: '60px' }}
                   >
                     <ImInfo />
                     &nbsp; Rollen

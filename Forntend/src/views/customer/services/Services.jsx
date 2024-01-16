@@ -85,6 +85,7 @@ const Services = () => {
     phone: '',
     mobile: '',
     dataProtection: '',
+    deposit: '',
   })
   //materialChange started
   const cancelData = () => {
@@ -356,6 +357,7 @@ const Services = () => {
               <div className="col-sm-3">Vorsorge</div>
               <div className="col-sm-2 d-flex">
                 <input
+                  className="check "
                   type="checkbox"
                   checked={motivation.prevention === 'yes'}
                   onChange={matarialChange}
@@ -1197,7 +1199,7 @@ const Services = () => {
                 className="col-sm-5 ms-3 me-3 pt-2 "
                 style={{
                   height: '100px',
-                  width: '580px',
+                  width: '560px',
                   border: '1px solid #ebedef',
                   borderRadius: '5px 5px 5px 5px',
                 }}
@@ -1219,9 +1221,10 @@ const Services = () => {
                   width: '580px',
                   border: '2px solid #ebedef',
                   borderRadius: '5px 5px 5px 5px',
+                  marginLeft: '4%',
                 }}
               >
-                <div className="row">
+                <div className="row ">
                   <div className="col-sm-6 mb-3">
                     <div className=" row mt-2">
                       <label htmlFor="inputtext" className="col-sm-4 col-form-label">
@@ -1296,7 +1299,7 @@ const Services = () => {
                         />
                       </div>
                     </div>
-                    <div className=" row mt-2">
+                    <div className=" row me-1 mt-2">
                       <label htmlFor="inputtext" className="col-sm-4 col-form-label">
                         Telefon
                       </label>
@@ -1388,7 +1391,7 @@ const Services = () => {
                         />
                       </div>
                     </div>
-                    <div className=" row mt-2">
+                    <div className=" row me-1 mt-2">
                       <label htmlFor="inputtext" className="col-sm-4 col-form-label">
                         Mobil
                       </label>
@@ -1436,12 +1439,24 @@ const Services = () => {
                 />{' '}
                 &nbsp; nein
               </div>
+
+              <div className="col-sm-3">Hinterlegung</div>
+              <div className="col-sm-2 d-flex">
+                <input
+                  type="checkbox"
+                  checked={information.deposit === 'yes'}
+                  onChange={informationChange}
+                  name="deposit"
+                  value="yes"
+                />{' '}
+                &nbsp; ja &nbsp; &nbsp;
+              </div>
             </div>
           </div>
         </div>
-        <div className="row mb-4 mt-4">
+        <div className="row pb-2 m-4 justify-content-end">
           <div className="col-sm-9"></div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 d-flex justify-content-end">
             <button
               onClick={cancelData}
               type="button"
@@ -1450,7 +1465,7 @@ const Services = () => {
             >
               Abbrechen
             </button>
-            &nbsp; &nbsp;
+            <span className="mx-2"></span>
             <button
               onClick={saveData}
               type="button"
@@ -1461,6 +1476,7 @@ const Services = () => {
             </button>
           </div>
         </div>
+
         <ToastContainer />
       </div>
     </>

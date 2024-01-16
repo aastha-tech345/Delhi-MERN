@@ -72,17 +72,17 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <div>
+          <div className="mx-auto">
             <button
-              className="btn btn w-25"
-              style={{ background: '#015291', color: 'white' }}
+              className="btn"
+              style={{ background: '#015291', border: '#015291', color: 'white' }}
               onClick={() => setHide(false)}
             >
               Abbrechen
             </button>
             &nbsp;&nbsp;
             <button
-              className="btn btn w-25"
+              className="btn"
               style={{ background: '#d04545', color: 'white' }}
               onClick={handleDeleteConfirm}
             >

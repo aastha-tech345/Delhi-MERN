@@ -66,8 +66,8 @@ const EmailList = () => {
   ]
 
   return (
-    <>
-      <div className="row">
+    <div className="inner-page-wrap">
+      <div className="row tab-content">
         <div
           className="col-sm-12"
           style={{
@@ -77,8 +77,9 @@ const EmailList = () => {
             borderRadius: '5px 5px 5px 5px ',
           }}
         >
-          <h4 className="ms-1 mt-3">E-Mail-Vorlagen</h4>
-          <hr className="mx-2" />
+          <div className="tab-title">
+            <h4>E-Mail-Vorlagen</h4>
+          </div>
           <div className="mx-2">
             <Table
               columns={columns}
@@ -128,7 +129,7 @@ const EmailList = () => {
         </div>
         <ToastContainer />
       </div>
-    </>
+    </div>
   )
 }
 

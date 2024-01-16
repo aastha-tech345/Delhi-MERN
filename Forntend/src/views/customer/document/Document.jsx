@@ -203,7 +203,7 @@ const Document = () => {
             <MdAdd style={{ color: 'white' }} />
             &nbsp; Dokument hochladen
           </button>
-          <Modal show={show} onHide={handleClose} centered>
+          <Modal show={show} onHide={handleClose} centered className="modal-form">
             <Modal.Header closeButton>
               <Modal.Title>Details zum Dokument</Modal.Title>
             </Modal.Header>
@@ -247,11 +247,11 @@ const Document = () => {
               />
             </Modal.Body>
             <Modal.Footer>
-              <div className="modal-footer">
+              <div className="mx-auto">
                 <button
                   className="btn btn"
                   onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
+                  style={{ background: '#d04545', border: '#d04545', color: 'white' }}
                 >
                   {' '}
                   Abbrechen

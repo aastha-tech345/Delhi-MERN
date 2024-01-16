@@ -286,7 +286,9 @@ const CreateUser = () => {
       >
         <div className="container-fluid">
           <User />
-          <h4 className="mx-3">Benutzer</h4>
+          <div className="tab-title">
+            <h4>Benutzer</h4>
+          </div>
           <hr />
           <div className="topBtnBox">
             <div className="row p-2">
@@ -322,6 +324,7 @@ const CreateUser = () => {
                 show={showInviteUserModal}
                 onHide={handleCloseInviteUserModal}
                 centered
+                className="modal-form"
               >
                 <div className=" row pt-5 px-5">
                   <p className="fs-5">
@@ -348,77 +351,76 @@ const CreateUser = () => {
                 </div>
 
                 <Modal.Body>
-                  <div className="row" style={{ background: 'white' }}>
-                    <div className="col-sm-12">
-                      <nav>
-                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                          <button
-                            className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
-                            id="nav-home-tab"
-                            data-bs-toggle="tab"
-                            role="tab"
-                            aria-selected={activeTab === 'nav-home'}
-                            onClick={() => handleTabClick('nav-home')}
-                            style={{ marginRight: '10px', marginLeft: '20px' }}
-                          >
-                            Benutzer
-                          </button>
-                          <button
-                            className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
-                            id="nav-rollen-tab"
-                            data-bs-toggle="tab"
-                            role="tab"
-                            aria-controls="nav-rollen"
-                            aria-selected={activeTab === 'nav-rollen'}
-                            onClick={() => handleTabClick('nav-rollen')}
-                            style={{ marginRight: '10px' }}
-                          >
-                            Passwort
-                          </button>
-                          <button
-                            className={`nav-link ${
-                              activeTab === 'nav-lokalisierung' ? 'active' : ''
-                            }`}
-                            id="nav-lokalisierung-tab"
-                            data-bs-toggle="tab"
-                            role="tab"
-                            aria-controls="nav-lokalisierung"
-                            aria-selected={activeTab === 'nav-lokalisierung'}
-                            onClick={() => handleTabClick('nav-lokalisierung')}
-                            style={{ marginRight: '10px' }}
-                          >
-                            Lokalisierung
-                          </button>
-                          <button
-                            className={`nav-link ${
-                              activeTab === 'nav-benachrichtigungen' ? 'active' : ''
-                            }`}
-                            id="nav-benachrichtigungen-tab"
-                            data-bs-toggle="tab"
-                            role="tab"
-                            aria-controls="nav-benachrichtigungen"
-                            aria-selected={activeTab === 'nav-benachrichtigungen'}
-                            onClick={() => handleTabClick('nav-benachrichtigungen')}
-                            style={{ marginRight: '10px' }}
-                          >
-                            Benachrichtigungen
-                          </button>
-                          <button
-                            className={`nav-link ${
-                              activeTab === 'nav-fortgeschrittene' ? 'active' : ''
-                            }`}
-                            id="nav-fortgeschrittene-tab"
-                            data-bs-toggle="tab"
-                            role="tab"
-                            aria-controls="nav-fortgeschrittene"
-                            aria-selected={activeTab === 'nav-fortgeschrittene'}
-                            onClick={() => handleTabClick('nav-fortgeschrittene')}
-                            style={{ marginRight: '10px' }}
-                          >
-                            Fortgeschrittene
-                          </button>
+                  <div className="whiteBoxWithPdLR">
+                    <div className="container-fluid">
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <nav>
+                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                              <button
+                                className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
+                                id="nav-home-tab"
+                                data-bs-toggle="tab"
+                                role="tab"
+                                aria-selected={activeTab === 'nav-home'}
+                                onClick={() => handleTabClick('nav-home')}
+                              >
+                                Benutzer
+                              </button>
+                              <button
+                                className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
+                                id="nav-rollen-tab"
+                                data-bs-toggle="tab"
+                                role="tab"
+                                aria-controls="nav-rollen"
+                                aria-selected={activeTab === 'nav-rollen'}
+                                onClick={() => handleTabClick('nav-rollen')}
+                              >
+                                Passwort
+                              </button>
+                              <button
+                                className={`nav-link ${
+                                  activeTab === 'nav-lokalisierung' ? 'active' : ''
+                                }`}
+                                id="nav-lokalisierung-tab"
+                                data-bs-toggle="tab"
+                                role="tab"
+                                aria-controls="nav-lokalisierung"
+                                aria-selected={activeTab === 'nav-lokalisierung'}
+                                onClick={() => handleTabClick('nav-lokalisierung')}
+                              >
+                                Lokalisierung
+                              </button>
+                              <button
+                                className={`nav-link ${
+                                  activeTab === 'nav-benachrichtigungen' ? 'active' : ''
+                                }`}
+                                id="nav-benachrichtigungen-tab"
+                                data-bs-toggle="tab"
+                                role="tab"
+                                aria-controls="nav-benachrichtigungen"
+                                aria-selected={activeTab === 'nav-benachrichtigungen'}
+                                onClick={() => handleTabClick('nav-benachrichtigungen')}
+                              >
+                                Benachrichtigungen
+                              </button>
+                              <button
+                                className={`nav-link ${
+                                  activeTab === 'nav-fortgeschrittene' ? 'active' : ''
+                                }`}
+                                id="nav-fortgeschrittene-tab"
+                                data-bs-toggle="tab"
+                                role="tab"
+                                aria-controls="nav-fortgeschrittene"
+                                aria-selected={activeTab === 'nav-fortgeschrittene'}
+                                onClick={() => handleTabClick('nav-fortgeschrittene')}
+                              >
+                                Fortgeschrittene
+                              </button>
+                            </div>
+                          </nav>
                         </div>
-                      </nav>
+                      </div>
                     </div>
                   </div>
                   <br />
@@ -451,7 +453,7 @@ const CreateUser = () => {
                             value={employee.username}
                             onChange={handleChange}
                           />
-                          <br />
+
                           <input
                             className="form-control"
                             placeholder="Straße mit Hausnummer"
@@ -460,7 +462,7 @@ const CreateUser = () => {
                             value={employee.street}
                             onChange={handleChange}
                           />
-                          <br />
+
                           <input
                             className="form-control"
                             placeholder="Stadt"
@@ -470,7 +472,6 @@ const CreateUser = () => {
                             onChange={handleChange}
                           />
 
-                          <br />
                           <input
                             className="form-control"
                             placeholder="Standort"
@@ -479,7 +480,7 @@ const CreateUser = () => {
                             value={employee.location}
                             onChange={handleChange}
                           />
-                          <br />
+
                           <select
                             className="form-control"
                             // type="text"
@@ -508,7 +509,7 @@ const CreateUser = () => {
                             value={employee.lname}
                             onChange={handleChange}
                           />
-                          <br />
+
                           <input
                             type="tel"
                             value={employee.plz}
@@ -523,7 +524,7 @@ const CreateUser = () => {
                             minLength={3}
                             required={true}
                           />
-                          <br />
+
                           <input
                             className="form-control"
                             placeholder="E-Mail Adresse"
@@ -531,7 +532,6 @@ const CreateUser = () => {
                             name="email"
                             onChange={handleEmailChange}
                           />
-                          <br />
 
                           <input
                             className="form-control"
@@ -548,7 +548,6 @@ const CreateUser = () => {
                               }
                             }}
                           />
-                          <br />
                           <input
                             className="form-control"
                             placeholder="Mobil"
@@ -585,26 +584,14 @@ const CreateUser = () => {
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  <div className="row mb-2">
-                    <div className="col-sm-12">
-                      <div style={{ float: 'right' }}>
-                        <button
-                          className="btn"
-                          onClick={handleCloseInviteUserModal}
-                          style={{ background: '#d04545', color: 'white' }}
-                        >
-                          Abbrechen
-                        </button>
-                        &nbsp;&nbsp;
-                        <button
-                          className="btn mx-2"
-                          onClick={handleSubmit}
-                          style={{ background: '#0b5995', color: 'white' }}
-                        >
-                          Speichern
-                        </button>
-                      </div>
-                    </div>
+                  <button style={{ border: 'none', background: 'none' }}></button>
+                  <div className="btn-wrap">
+                    <button className="btn btn-cancel" onClick={handleCloseInviteUserModal}>
+                      Abbrechen
+                    </button>
+                    <button className="btn btn-save ms-3" onClick={handleSubmit}>
+                      Speichern
+                    </button>
                   </div>
                 </Modal.Footer>
               </Modal>
@@ -658,7 +645,7 @@ const CreateUser = () => {
           </div>
         </div>
       </div>
-      <br />
+
       <ToastContainer />
     </div>
   )

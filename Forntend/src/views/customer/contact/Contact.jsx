@@ -310,14 +310,14 @@ const Contact = () => {
               <MdAdd />
               &nbsp;Neue Kontakte anlegen
             </button>
-            <Modal show={show} onHide={handleClose} centered>
+            <Modal show={show} onHide={handleClose} centered className="modal-form">
               <Modal.Header closeButton>
                 <Modal.Title>Kontakt hinzufügen</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form noValidate validated={validated}>
                   <div className="row p-3">
-                    <div className="mb-2 row">
+                    <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Vorname
                       </label>
@@ -334,7 +334,7 @@ const Contact = () => {
                         />
                       </div>
                     </div>
-                    <div className="mb-2 row">
+                    <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Nachname
                       </label>
@@ -351,7 +351,7 @@ const Contact = () => {
                         />
                       </div>
                     </div>
-                    <div className="mb-2 row">
+                    <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Telefon
                       </label>
@@ -374,7 +374,7 @@ const Contact = () => {
                         />
                       </div>
                     </div>
-                    <div className="mb-2 row">
+                    <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Mail
                       </label>
@@ -390,7 +390,7 @@ const Contact = () => {
                         />
                       </div>
                     </div>
-                    <div className="mb-2 row">
+                    <div className="row ">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Geschlecht
                       </label>
@@ -421,7 +421,7 @@ const Contact = () => {
                         &nbsp; Andere
                       </div>
                     </div>
-                    <div className="mb-2 row">
+                    <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Status
                       </label>
@@ -432,6 +432,7 @@ const Contact = () => {
                           onChange={handleChange}
                           value={data.statu}
                         >
+                          <option value="">--select--</option>
                           <option value="HVD-PV">HVD-PV</option>
                           <option value="PV-ALT">PV-ALT</option>
                         </select>
@@ -441,22 +442,22 @@ const Contact = () => {
                 </Form>
               </Modal.Body>
               <Modal.Footer>
-                <button
-                  className="btn btn"
-                  onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
-                >
-                  {' '}
-                  Abbrechen
-                </button>
-                &nbsp; &nbsp;
-                <button
-                  className="btn btn"
-                  onClick={saveData}
-                  style={{ background: '#0b5995', color: 'white' }}
-                >
-                  Speichern
-                </button>
+                <div className="mx-auto">
+                  <button
+                    className="btn btn mx-2"
+                    onClick={handleClose}
+                    style={{ background: '#d04545', border: '#d04545', color: 'white' }}
+                  >
+                    Abbrechen
+                  </button>
+                  <button
+                    className="btn btn"
+                    onClick={saveData}
+                    style={{ background: '#0b5995', color: 'white' }}
+                  >
+                    Speichern
+                  </button>
+                </div>
               </Modal.Footer>
             </Modal>{' '}
           </div>

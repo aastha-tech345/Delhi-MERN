@@ -30,13 +30,14 @@ const Bills = () => {
   // }
 
   const handleInputChange = (e) => {
-    const { name, value, type } = e.target
+    const { name, value, type, checked } = e.target
 
     setProductData((prevProductData) => ({
       ...prevProductData,
-      [name]: type === 'radio' ? value : value,
+      [name]: type === 'checkbox' ? checked : value,
     }))
   }
+
   const cancelData = () => {
     localStorage.removeItem('tabId')
     navigate('/customer/customer_info')
@@ -91,161 +92,178 @@ const Bills = () => {
   //   getDetails()
   // }, [])
   return (
-    <div style={{ background: '#fff' }}>
-      <Customer />
-      <h5 className="mx-4">Rechnung</h5>
-      <hr />
-      <div className="row m-4 p-4 " style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
-        <p style={{ color: '#244D92' }}>Rechnungstellung</p>
-        <div className="col-sm-6">
-          <div className="mb-6 row">
-            <label htmlFor="product" className="col-sm-4 col-form-label">
-              Produkt
-            </label>
-            <div className="col-sm-6 mt-2">
-              <select
-                className="form-control form-select"
-                name="product"
-                value={productData.product}
-                onChange={handleInputChange}
-              >
-                <option value="hvd">HVD-PV</option>
-                <option value="speech">Vortrag</option>
-                <option value="spv">SPV</option>
-                <option value="opv">OPV</option>
-              </select>
+    <div className="inner-page-wrap">
+      <div style={{ background: '#fff' }}>
+        <Customer />
+        <div className="tab-content">
+          <div className="tab-title">
+            <h4>Rechnung</h4>
+          </div>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="block-wrap">
+                  <h3>Rechnungstellung</h3>
+                  <div className="container-fluid">
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <div className="row">
+                          <label htmlFor="product" className="col-sm-4 col-form-label">
+                            Produkt
+                          </label>
+                          <div className="col-sm-6">
+                            <select
+                              className="form-control form-select"
+                              name="product"
+                              value={productData.product}
+                              onChange={handleInputChange}
+                            >
+                              <option value="hvd">HVD-PV</option>
+                              <option value="speech">Vortrag</option>
+                              <option value="spv">SPV</option>
+                              <option value="opv">OPV</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            Zahlungsart
+                          </label>
+                          <div className="col-sm-6">
+                            <select
+                              className="form-control form-select"
+                              name="paymentMethod"
+                              value={productData.paymentMethod}
+                              onChange={handleInputChange}
+                            >
+                              <option value="cash payment">Barzahlung</option>
+                              <option value="the invoice">Rechnung</option>
+                              <option value="paypal">PayPal</option>
+                              <option value="klarna">Klarna</option>
+                              <option value="credit card">Kreditkarte (für die Zukunft)</option>
+                              <option value="other">Andere</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="mb-6 row">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            Rechnungsdatum
+                          </label>
+                          <div className="col-sm-6">
+                            <input
+                              type="date"
+                              name="invoiceDate"
+                              value={invoiceDate}
+                              // checked={productData.invoiceDate}
+                              onChange={(e) => {
+                                setInvoiceDate(e.target.value)
+                              }}
+                              className="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div className="mb-6 row">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            MitarbeiterIn
+                          </label>
+                          <div className="col-sm-6">
+                            <input
+                              type="text"
+                              name="colleague"
+                              // checked={productData.colleague}
+                              value={colleague}
+                              onChange={(e) => {
+                                setColleague(e.target.value)
+                              }}
+                              placeholder="MitarbeiterIn"
+                              className="form-control"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="mb-6 row">
+                          <label htmlFor="alreadyPaid" className="col-sm-4 col-form-label">
+                            Bereits bezahlt
+                          </label>
+                          <div className="col-sm-6 radio-check-wrap">
+                            <input
+                              type="checkbox"
+                              name="alreadyPaid"
+                              checked={productData.alreadyPaid}
+                              onChange={handleInputChange}
+                              onClick={(e) => e.stopPropagation()}
+                            />
+                            <span></span>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <label htmlFor="invoiceAmount" className="col-sm-4 col-form-label">
+                            Rechnungsbetrag eintragen
+                          </label>
+                          <div className="col-sm-6">
+                            <input
+                              type="number"
+                              placeholder="Rechnungsbetrag"
+                              className="form-control"
+                              name="invoiceAmount"
+                              value={productData.invoiceAmount}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="row">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            Lieferdatum
+                          </label>
+                          <div className="col-sm-6">
+                            <input
+                              type="date"
+                              name="deliveryDate"
+                              value={productData.deliveryDate}
+                              onChange={handleInputChange}
+                              className="form-control"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="mb-6 row">
-            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-              Zahlungsart
-            </label>
-            <div className="col-sm-6 mt-2">
-              <select
-                className="form-control form-select"
-                name="paymentMethod"
-                value={productData.paymentMethod}
-                onChange={handleInputChange}
-              >
-                <option value="cash payment">Barzahlung</option>
-                <option value="the invoice">Rechnung</option>
-                <option value="paypal">PayPal</option>
-                <option value="klarna">Klarna</option>
-                <option value="credit card">Kreditkarte (für die Zukunft)</option>
-                <option value="other">Andere</option>
-              </select>
-            </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '10px',
+            }}
+          ></div>
+          <div className="text-end mx-3">
+            <button
+              type="button"
+              onClick={cancelData}
+              className="btn btn"
+              style={{ background: '#d04545', color: 'white' }}
+            >
+              Abbrechen
+            </button>
+            &nbsp; &nbsp;
+            <button
+              onClick={saveData}
+              type="button"
+              style={{ background: '#0b5995', color: 'white' }}
+              className="btn btn"
+            >
+              Speichern Sie
+            </button>
           </div>
-          <div className="mb-6 row">
-            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-              Rechnungsdatum
-            </label>
-            <div className="col-sm-6 mt-2">
-              <input
-                type="date"
-                name="invoiceDate"
-                value={invoiceDate}
-                // checked={productData.invoiceDate}
-                onChange={(e) => {
-                  setInvoiceDate(e.target.value)
-                }}
-                className="form-control"
-              />
-            </div>
-          </div>
-          <div className="mb-6 row">
-            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-              MitarbeiterIn
-            </label>
-            <div className="col-sm-6 mt-2">
-              <input
-                type="text"
-                name="colleague"
-                // checked={productData.colleague}
-                value={colleague}
-                onChange={(e) => {
-                  setColleague(e.target.value)
-                }}
-                placeholder="MitarbeiterIn"
-                className="form-control"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-6">
-          <div className="mb-6 row">
-            <label htmlFor="alreadyPaid" className="col-sm-4 col-form-label">
-              Bereits bezahlt
-            </label>
-            <div className="col-sm-6 mt-2">
-              <input
-                type="checkbox"
-                name="alreadyPaid"
-                checked={productData.alreadyPaid}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-          <div className="mb-6 row">
-            <label htmlFor="invoiceAmount" className="col-sm-4 col-form-label">
-              Rechnungsbetrag eintragen
-            </label>
-            <div className="col-sm-6 mt-2">
-              <input
-                type="number"
-                placeholder="Rechnungsbetrag"
-                className="form-control"
-                name="invoiceAmount"
-                value={productData.invoiceAmount}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-          <div className="mb-6 row">
-            <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-              Lieferdatum
-            </label>
-            <div className="col-sm-6 mt-2">
-              <input
-                type="date"
-                name="deliveryDate"
-                value={productData.deliveryDate}
-                onChange={handleInputChange}
-                className="form-control"
-              />
-            </div>
-          </div>
+          <br />
+          <ToastContainer />
         </div>
       </div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '10px',
-        }}
-      ></div>
-      <div className="text-end mx-3">
-        <button
-          type="button"
-          onClick={cancelData}
-          className="btn btn"
-          style={{ background: '#d04545', color: 'white' }}
-        >
-          Abbrechen
-        </button>
-        &nbsp; &nbsp;
-        <button
-          onClick={saveData}
-          type="button"
-          style={{ background: '#0b5995', color: 'white' }}
-          className="btn btn"
-        >
-          Speichern Sie
-        </button>
-      </div>
-      <br />
-      <ToastContainer />
     </div>
   )
 }
