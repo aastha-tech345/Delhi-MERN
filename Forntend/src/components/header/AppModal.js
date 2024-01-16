@@ -11,12 +11,12 @@ const AppModal = ({ setOpen }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('record')
   let response = JSON.parse(res)
-  console.log(response?.user?.password)
+
   const [loadValue, setLoadVale] = useState(false)
   const [data, setData] = useState({
     username: response.user?.username,
     email: response.user?.email,
-    lname: response.user?.lname,
+    lname: response?.user?.lname,
     mobile: response.user?.mobile,
     password: '',
     gender: response.user?.gender,
