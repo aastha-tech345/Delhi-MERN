@@ -67,14 +67,14 @@ const EmailList = () => {
 
   return (
     <div className="inner-page-wrap">
-      <div className="row tab-content">
+      <div className="row tab-content" style={{ borderRadius: '5px' }}>
         <div
           className="col-sm-12"
           style={{
             background: 'white',
             Height: '640px',
             // width: '1210px',
-            borderRadius: '5px 5px 5px 5px ',
+            borderRadius: '5px ',
           }}
         >
           <div className="tab-title">

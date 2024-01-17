@@ -180,8 +180,9 @@ const PrintTemplate = () => {
           }}
         >
           <div className="tab-title">
-            <h4>Druckvorlage</h4>
+            <h4 className="mx-3 mt-2">Druckvorlage</h4>
           </div>
+          <hr />
           <div>
             <div className="p-2" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
               <button
@@ -201,9 +202,9 @@ const PrintTemplate = () => {
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col">
-                      <div className="block-wrap p-2">
+                      <div className=" p-2">
                         <div>
-                          <label>Bezeichnung</label>
+                          <label className="mb-2">Bezeichnung</label>
                           <input
                             value={designation}
                             onChange={(e) => {
@@ -215,7 +216,8 @@ const PrintTemplate = () => {
                           />
                         </div>
                         <div>
-                          <label style={{ margin: '15px 0px 15px 0px' }}>Inhalt</label>
+                          <br />
+                          <label className="mb-2">Inhalt</label>
                           <div className="col-sm-12">
                             {/* Assuming JoditEditor returns a value directly, if not, adjust accordingly */}
                             <JoditEditor
