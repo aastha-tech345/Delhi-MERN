@@ -100,8 +100,8 @@ export default function EditUser({ setEdit, getEmployeeData }) {
   }, [editUser])
   return (
     <>
-      <div className="modal" tabIndex={-1} style={modalStyle}>
-        <div className="modal-dialog modal-dialog-centered modal-lg">
+      <div className="modal modal-form edit-modal-form" tabIndex={-1} style={modalStyle}>
+        <div className="modal-dialog  modal-dialog-centered modal-lg">
           <div className="modal-content">
             <Modal.Body>
               <div className=" row pt-5 px-5">
@@ -128,75 +128,81 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                   </div>
                 </div>
               </div>
-              <div className="row" style={{ background: 'white' }}>
-                <div className="col-sm-12">
-                  <nav>
-                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                      <button
-                        className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
-                        id="nav-home-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-selected={activeTab === 'nav-home'}
-                        onClick={() => handleTabClick('nav-home')}
-                        style={{ marginRight: '10px', marginLeft: '20px' }}
-                      >
-                        Benutzer
-                      </button>
-                      <button
-                        className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
-                        id="nav-rollen-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-controls="nav-rollen"
-                        aria-selected={activeTab === 'nav-rollen'}
-                        onClick={() => handleTabClick('nav-rollen')}
-                        style={{ marginRight: '10px' }}
-                      >
-                        Passwort
-                      </button>
-                      <button
-                        className={`nav-link ${activeTab === 'nav-lokalisierung' ? 'active' : ''}`}
-                        id="nav-lokalisierung-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-controls="nav-lokalisierung"
-                        aria-selected={activeTab === 'nav-lokalisierung'}
-                        onClick={() => handleTabClick('nav-lokalisierung')}
-                        style={{ marginRight: '10px' }}
-                      >
-                        Lokalisierung
-                      </button>
-                      <button
-                        className={`nav-link ${
-                          activeTab === 'nav-benachrichtigungen' ? 'active' : ''
-                        }`}
-                        id="nav-benachrichtigungen-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-controls="nav-benachrichtigungen"
-                        aria-selected={activeTab === 'nav-benachrichtigungen'}
-                        onClick={() => handleTabClick('nav-benachrichtigungen')}
-                        style={{ marginRight: '10px' }}
-                      >
-                        Benachrichtigungen
-                      </button>
-                      <button
-                        className={`nav-link ${
-                          activeTab === 'nav-fortgeschrittene' ? 'active' : ''
-                        }`}
-                        id="nav-fortgeschrittene-tab"
-                        data-bs-toggle="tab"
-                        role="tab"
-                        aria-controls="nav-fortgeschrittene"
-                        aria-selected={activeTab === 'nav-fortgeschrittene'}
-                        onClick={() => handleTabClick('nav-fortgeschrittene')}
-                        style={{ marginRight: '10px' }}
-                      >
-                        Fortgeschrittene
-                      </button>
+              <div className="whiteBoxWithPdLR">
+                <div className="container-fluid">
+                  <div className="row" style={{ background: 'white' }}>
+                    <div className="col-sm-12">
+                      <nav>
+                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-selected={activeTab === 'nav-home'}
+                            onClick={() => handleTabClick('nav-home')}
+                            style={{ marginRight: '10px', marginLeft: '20px' }}
+                          >
+                            Benutzer
+                          </button>
+                          <button
+                            className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
+                            id="nav-rollen-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-controls="nav-rollen"
+                            aria-selected={activeTab === 'nav-rollen'}
+                            onClick={() => handleTabClick('nav-rollen')}
+                            style={{ marginRight: '10px' }}
+                          >
+                            Passwort
+                          </button>
+                          <button
+                            className={`nav-link ${
+                              activeTab === 'nav-lokalisierung' ? 'active' : ''
+                            }`}
+                            id="nav-lokalisierung-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-controls="nav-lokalisierung"
+                            aria-selected={activeTab === 'nav-lokalisierung'}
+                            onClick={() => handleTabClick('nav-lokalisierung')}
+                            style={{ marginRight: '10px' }}
+                          >
+                            Lokalisierung
+                          </button>
+                          <button
+                            className={`nav-link ${
+                              activeTab === 'nav-benachrichtigungen' ? 'active' : ''
+                            }`}
+                            id="nav-benachrichtigungen-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-controls="nav-benachrichtigungen"
+                            aria-selected={activeTab === 'nav-benachrichtigungen'}
+                            onClick={() => handleTabClick('nav-benachrichtigungen')}
+                            style={{ marginRight: '10px' }}
+                          >
+                            Benachrichtigungen
+                          </button>
+                          <button
+                            className={`nav-link ${
+                              activeTab === 'nav-fortgeschrittene' ? 'active' : ''
+                            }`}
+                            id="nav-fortgeschrittene-tab"
+                            data-bs-toggle="tab"
+                            role="tab"
+                            aria-controls="nav-fortgeschrittene"
+                            aria-selected={activeTab === 'nav-fortgeschrittene'}
+                            onClick={() => handleTabClick('nav-fortgeschrittene')}
+                            style={{ marginRight: '10px' }}
+                          >
+                            Fortgeschrittene
+                          </button>
+                        </div>
+                      </nav>
                     </div>
-                  </nav>
+                  </div>
                 </div>
               </div>
               <br />
@@ -217,7 +223,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         value={employee.username}
                         onChange={handleChange}
                       />
-                      <br />
+
                       <input
                         className="form-control"
                         placeholder="Straße mit Hausnummer"
@@ -226,7 +232,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         value={employee.street}
                         onChange={handleChange}
                       />
-                      <br />
+
                       <input
                         className="form-control"
                         placeholder="Stadt"
@@ -236,7 +242,6 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         onChange={handleChange}
                       />
 
-                      <br />
                       <input
                         className="form-control"
                         placeholder="Standort"
@@ -245,7 +250,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         value={employee.location}
                         onChange={handleChange}
                       />
-                      <br />
+
                       <select
                         className="form-control"
                         // type="text"
@@ -274,7 +279,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         value={employee.lname}
                         onChange={handleChange}
                       />
-                      <br />
+
                       <input
                         className="form-control"
                         type="text"
@@ -283,7 +288,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         value={employee.plz}
                         onChange={handleChange}
                       />
-                      <br />
+
                       <input
                         className="form-control"
                         placeholder="E-Mail Adresse"
@@ -292,7 +297,6 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                         value={employee.email}
                         onChange={handleChange}
                       />
-                      <br />
 
                       <input
                         className="form-control"
@@ -309,7 +313,7 @@ export default function EditUser({ setEdit, getEmployeeData }) {
                           }
                         }}
                       />
-                      <br />
+
                       <input
                         className="form-control"
                         placeholder="Mobil"

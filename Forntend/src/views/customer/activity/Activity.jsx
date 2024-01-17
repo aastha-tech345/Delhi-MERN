@@ -122,6 +122,10 @@ const Activity = () => {
         setColor1('white')
         setColor2('white')
         setColor('white')
+        setIconBack3(false)
+        setIconBack2(false)
+        setIconBack1(false)
+        setIconBack(false)
       } else {
         toast.error('Something Went Wrong')
       }
