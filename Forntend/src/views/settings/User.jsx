@@ -41,30 +41,35 @@ const User = () => {
           <div className="row">
             <div className="col-sm-12">
               <nav>
-                <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                  <button
-                    className={`nav-link ${activeTab === 'createuser' ? 'active' : ''}`}
-                    id="createuser-tab"
-                    data-bs-toggle="tab"
-                    role="tab"
-                    aria-selected={activeTab === 'createuser'}
-                    onClick={(e) => handleTabClick('createuser', 'Mitarbeiterlnnen', e)}
-                  >
-                    <CiUser />
-                    &nbsp; Mitarbeiterlnnen
-                  </button>
-                  <button
-                    className={`nav-link ${activeTab === 'role' ? 'active' : ''}`}
-                    id="role-tab"
-                    data-bs-toggle="tab"
-                    role="tab"
-                    aria-controls="role"
-                    aria-selected={activeTab === 'role'}
-                    onClick={(e) => handleTabClick('role', 'Rollen', e)}
-                  >
-                    <ImInfo />
-                    &nbsp; Rollen
-                  </button>
+                <div className="row nav nav-tabs" id="nav-tab" role="tablist">
+                  <div className="col-sm-3">
+                    <button
+                      className={`nav-link ${activeTab === 'createuser' ? 'active' : ''}`}
+                      id="createuser-tab"
+                      data-bs-toggle="tab"
+                      role="tab"
+                      aria-selected={activeTab === 'createuser'}
+                      onClick={(e) => handleTabClick('createuser', 'Mitarbeiterlnnen', e)}
+                    >
+                      <CiUser />
+                      &nbsp; Mitarbeiterlnnen
+                    </button>
+                  </div>
+                  <div className="col-sm-3">
+                    <button
+                      className={`nav-link ${activeTab === 'role' ? 'active' : ''}`}
+                      id="role-tab"
+                      data-bs-toggle="tab"
+                      role="tab"
+                      aria-controls="role"
+                      aria-selected={activeTab === 'role'}
+                      onClick={(e) => handleTabClick('role', 'Rollen', e)}
+                    >
+                      <ImInfo />
+                      &nbsp; Rollen
+                    </button>
+                  </div>
+                  <div className="col-sm-6"></div>
                 </div>
               </nav>
             </div>

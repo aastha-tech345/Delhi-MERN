@@ -151,9 +151,11 @@ const GetActivityData = ({ updateData, search }) => {
                               style={{
                                 border: '1px solid #015291',
                                 borderRadius: '5px',
-                                width: '30px',
-                                height: '30px',
+                                width: '40px',
+                                height: '40px',
+                                padding: '5px',
                                 textAlign: 'center',
+                                color: '#015291',
                               }}
                             >
                               {getIconData(icon)}
