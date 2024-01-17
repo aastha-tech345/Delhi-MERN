@@ -105,8 +105,6 @@ const ForgotPassword = () => {
               <CRow className="justify-content-center">
                 <CCol md={4}>
                   <img className="logo-login" src={logo} alt="..." />
-
-                  <br />
                   <CCardGroup>
                     <CCard className="p-4">
                       <CCardBody>
@@ -115,7 +113,6 @@ const ForgotPassword = () => {
                             Passwort vergessen?
                           </p>
                           <hr />
-                          <br />
                           <Row className="mb-3">
                             <Form.Group as={Col} md="12" controlId="validationCustom01">
                               <Form.Label>
