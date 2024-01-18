@@ -40,7 +40,7 @@ if (auth) {
     { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
     { path: '/customerlist', name: 'KlientInnen', element: CustomerList },
     { path: '/customer', name: 'Kunden', element: Customer },
-    { path: '/customer/customer_info', name: 'KundenInfo', element: CustomerInfo },
+    { path: '/customer/customer_info', name: 'KlientInnen', element: CustomerInfo },
     { path: '/customer/contact', name: 'Kontakte', element: Contact },
     { path: '/customer/bills', name: 'Rechnungen', element: Bills },
     { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },

@@ -69,7 +69,7 @@ const CustomerList = () => {
   // console.log('aastha', a)
   const columns = [
     {
-      title: 'NAME DES KUNDEN',
+      title: 'KLIENTNNEN',
       dataIndex: 'fname',
       render: (text, record) => (
         <Link
@@ -82,7 +82,7 @@ const CustomerList = () => {
       ),
     },
     {
-      title: 'KUNDEN-ID',
+      title: 'KLIENTNNEN-ID',
       dataIndex: 'id',
     },
     {
