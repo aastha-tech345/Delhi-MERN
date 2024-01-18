@@ -62,8 +62,8 @@ $text-color: #1c1d21;
 //      background: red;
 //     height: 100%;
 // }
-.ant-table-wrapper .ant-table-tbody > tr > th,
-.ant-table-wrapper .ant-table-tbody > tr > td {
+.ant-table-wrapper .ant-table-tbody>tr>th,
+.ant-table-wrapper .ant-table-tbody>tr>td {
   background: #fff;
 }
 
@@ -71,19 +71,19 @@ $text-color: #1c1d21;
   background: none;
 }
 
-.ant-table-wrapper .ant-table-container table > thead > tr:first-child > *:first-child {
+.ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:first-child {
   border-start-start-radius: 0px;
   background: none !important;
 }
 
-.ant-table-wrapper .ant-table-tbody > tr > th,
-.ant-table-wrapper .ant-table-tbody > tr > td {
+.ant-table-wrapper .ant-table-tbody>tr>th,
+.ant-table-wrapper .ant-table-tbody>tr>td {
   transition: background 0.2s, border-color 0.2s;
   border-bottom: 1px solid #c4c4c4;
   border-top: 1px solid #c4c4c4;
 }
 
-.ant-table-wrapper .ant-table-thead > tr > th {
+.ant-table-wrapper .ant-table-thead>tr>th {
   background: none;
 }
 
@@ -91,12 +91,12 @@ $text-color: #1c1d21;
   justify-content: flex-start;
 }
 
-.ant-table-wrapper .ant-table-tbody > tr > td:first-child {
+.ant-table-wrapper .ant-table-tbody>tr>td:first-child {
   border-left: 1px solid #c4c4c4;
   border-radius: 6px 0px 0px 6px;
 }
 
-.ant-table-wrapper .ant-table-tbody > tr > td:last-child {
+.ant-table-wrapper .ant-table-tbody>tr>td:last-child {
   border-right: 1px solid #c4c4c4;
   border-radius: 0px 6px 6px 0px;
 }
@@ -108,18 +108,8 @@ $text-color: #1c1d21;
   background: #fff;
 }
 
-.ant-table-wrapper
-  .ant-table-thead
-  > tr
-  > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not(
-    [colspan]
-  )::before,
-.ant-table-wrapper
-  .ant-table-thead
-  > tr
-  > td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not(
-    [colspan]
-  )::before {
+.ant-table-wrapper .ant-table-thead>tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before,
+.ant-table-wrapper .ant-table-thead>tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
   width: 0px;
 }
 
@@ -207,17 +197,17 @@ h4.h4Popup {
 }
 
 /*new css 16-11-2023*/
-.ant-table-wrapper .ant-table-tbody > tr > td:first-child {
+.ant-table-wrapper .ant-table-tbody>tr>td:first-child {
   border-radius: 6px 0px 0px 6px;
   border-left: 1px solid #d9d9d9;
 }
 
-.ant-table-wrapper .ant-table-tbody > tr > td:last-child {
+.ant-table-wrapper .ant-table-tbody>tr>td:last-child {
   border-radius: 0px 6px 6px 0px;
   border-right: 1px solid #d9d9d9;
 }
 
-.ant-table-wrapper .ant-table-tbody > tr > td {
+.ant-table-wrapper .ant-table-tbody>tr>td {
   transition: background 0.2s, border-color 0.2s;
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #d9d9d9;
@@ -233,8 +223,8 @@ h4.h4Popup {
   border-spacing: 0px 8px;
 }
 
-.ant-table-wrapper .ant-table-thead > tr > th,
-.ant-table-wrapper .ant-table-thead > tr > td {
+.ant-table-wrapper .ant-table-thead>tr>th,
+.ant-table-wrapper .ant-table-thead>tr>td {
   background: none;
   border-bottom: 0px solid #f0f0f0;
   transition: background 0.2s ease;
@@ -258,6 +248,7 @@ h4.h4Popup {
 .header nav {
   position: absolute;
   left: 30px;
+
   @media only screen and (max-width: 767px) {
     position: absolute;
     top: 65px;
@@ -289,6 +280,7 @@ h4.h4Popup {
 .ant-checkbox-indeterminate {
   .ant-checkbox-inner {
     background-color: $primary-color;
+
     &:after {
       background: $white;
       height: 2px;
@@ -318,11 +310,13 @@ h4.h4Popup {
 
 .whiteBox {
   background: #fff;
+
   .blueBoxTop {
     background: $primary-color;
     border-radius: 10px 10px 0px 0px;
     height: auto;
     padding: 20px 5px;
+
     @media screen and (max-width: 414px) {
       .text-md-end {
         .d-flex.justify-content-md-end {
@@ -339,12 +333,15 @@ h4.h4Popup {
       color: $white;
     }
   }
+
   address {
     margin: 0;
     display: flex;
+
     @media screen and (max-width: 767px) {
       margin-bottom: 16px;
     }
+
     span {
       margin-left: 16px;
       color: $white;
@@ -366,6 +363,7 @@ h4.h4Popup {
     display: flex;
     gap: 16px;
     align-items: center;
+
     @media screen and (max-width: 767px) {
       gap: 8px;
       padding: 10px 8px;
@@ -376,22 +374,26 @@ h4.h4Popup {
 .whiteBoxWithPdLR {
   background: #fff;
   padding: 10px 5px 10px 5px;
+
   nav {
     display: flex;
     overflow: hidden;
     width: 100%;
+
     .nav-tabs {
       display: flex;
       flex-wrap: nowrap;
       justify-content: space-between;
       align-items: center;
       width: 100%;
+
       @media screen and (max-width: 1024px) {
         overflow: hidden;
         overflow-x: auto;
         flex-wrap: nowrap;
         gap: 20px;
       }
+
       .nav-link {
         border-left: 0;
         border-right: 0;
@@ -399,20 +401,24 @@ h4.h4Popup {
         color: #000;
         padding-left: 0;
         padding-right: 0;
+
         svg {
           fill: #8f8f8f;
           margin-right: 10px;
         }
+
         &.active {
           border-left: 0;
           border-right: 0;
           border-top: 0;
           border-bottom: 3px solid $primary-color;
           color: $primary-color;
+
           svg {
             fill: $primary-color;
           }
         }
+
         &.show {
           .nav-link {
             @extend .active;
@@ -520,7 +526,7 @@ span.anticon.anticon-phone svg {
   transform: rotate(105deg);
 }
 
-.table > :not(:last-child) > :last-child > * {
+.table> :not(:last-child)> :last-child>* {
   border-bottom-color: lightgray;
 }
 
@@ -578,10 +584,10 @@ span.anticon.anticon-phone svg {
       left: calc(1 * var(--cui-sidebar-width) + 15px);
       transition: 0.5s all ease-in-out;
 
-      @media screen and (max-width: 767.98px) {
-      }
+      @media screen and (max-width: 767.98px) {}
     }
-    & + .wrapper {
+
+    &+.wrapper {
       .header {
         nav {
           left: 60px;
@@ -920,7 +926,7 @@ span.anticon.anticon-phone svg {
         cursor: pointer;
 
         &:checked {
-          & + label {
+          &+label {
             &::before {
               background-color: $primary-color;
             }
@@ -977,9 +983,11 @@ span.anticon.anticon-phone svg {
   width: 100%;
   display: flex;
   margin-bottom: 20px;
+
   @media screen and (max-width: 767px) {
     margin-top: 20px;
   }
+
   h2 {
     color: $text-color;
     font-size: 20px;
@@ -1038,6 +1046,7 @@ span.anticon.anticon-phone svg {
       line-height: 20px;
     }
   }
+
   .filter-setting {
     display: flex;
     border-radius: 6px;
@@ -1047,6 +1056,7 @@ span.anticon.anticon-phone svg {
     box-shadow: none;
     color: white;
   }
+
   .setting-icon {
     font-size: 20px;
     text-align: center;
@@ -1060,6 +1070,7 @@ span.anticon.anticon-phone svg {
     font-weight: 400;
     line-height: 24px;
     margin: 0;
+
     @media screen and (max-width: 768px) {
       font-size: 14px;
     }
@@ -1075,10 +1086,12 @@ span.anticon.anticon-phone svg {
   align-items: center;
   gap: 10px;
   border-radius: 6px;
+
   @media screen and (max-width: 768px) {
     gap: 0px;
     padding: 8px;
   }
+
   span {
     font-size: 14px;
     font-style: normal;
@@ -1100,6 +1113,7 @@ span.anticon.anticon-phone svg {
   max-width: 90px;
   width: 100%;
   text-align: center;
+
   @media screen and (max-width: 991px) {
     padding: 3px 10px;
   }
@@ -1115,6 +1129,7 @@ span.anticon.anticon-phone svg {
     font-weight: 400;
     line-height: 20px;
     color: $text-color;
+
     &:focus {
       outline: none;
       box-shadow: none;
@@ -1130,11 +1145,13 @@ span.anticon.anticon-phone svg {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     .modal-title {
       &.h4 {
         margin: 0;
       }
     }
+
     h4 {
       margin: 30px auto;
       color: #000;
@@ -1142,6 +1159,7 @@ span.anticon.anticon-phone svg {
       font-weight: 700;
       line-height: 32px;
     }
+
     p {
       color: #000;
       text-align: center;
@@ -1150,6 +1168,7 @@ span.anticon.anticon-phone svg {
       line-height: 20px;
       margin: 0 auto 30px;
     }
+
     .modal-btn {
       padding: 10px 16px;
       color: $white;
@@ -1157,9 +1176,11 @@ span.anticon.anticon-phone svg {
       font-weight: 700;
       line-height: 20px;
       border-radius: 6px;
+
       &.delete-btn {
         background: #c20f0f;
       }
+
       &.close-btn {
         background: $primary-color;
       }
@@ -1171,9 +1192,11 @@ span.anticon.anticon-phone svg {
   .modal-header {
     padding: 20px 30px;
     border-bottom: 1px solid #d9d9d9;
+
     @media screen and (max-width: 585px) {
       padding: 15px;
     }
+
     .modal-title {
       color: #000;
       font-size: 20px;
@@ -1182,11 +1205,14 @@ span.anticon.anticon-phone svg {
       line-height: 24px;
     }
   }
+
   .modal-body {
     padding: 30px;
+
     @media screen and (max-width: 585px) {
       padding: 15px;
     }
+
     .form-control {
       border-radius: 6px;
       border: 1px solid #d9d9d9;
@@ -1194,9 +1220,11 @@ span.anticon.anticon-phone svg {
       font-weight: 400;
       margin-bottom: 16px;
       height: 36px;
+
       &::placeholder {
         color: #8f8f8f;
       }
+
       &:focus {
         outline: none;
         box-shadow: none;
@@ -1204,13 +1232,16 @@ span.anticon.anticon-phone svg {
       }
     }
   }
+
   .modal-footer {
     justify-content: space-between;
     display: flex;
     padding: 20px 30px;
+
     @media screen and (max-width: 585px) {
       padding: 15px;
     }
+
     .btn {
       padding: 10px 16px;
       border-radius: 6px;
@@ -1221,19 +1252,23 @@ span.anticon.anticon-phone svg {
       color: $white;
       margin: 0;
       height: 40px;
+
       &.btn-modal-close {
         border-color: $primary-color;
         color: $text-color;
       }
+
       &.btn-cancel {
         background: #c20f0f;
         border-color: #c20f0f;
       }
+
       &.btn-save {
         background: $primary-color;
       }
     }
   }
+
   &.edit-modal-form {
     .form-control {
       background: #fff url(../assets/icons/icon-pencil.png) 96% center no-repeat;
@@ -1246,15 +1281,18 @@ span.anticon.anticon-phone svg {
   width: 100%;
   border: 0;
   position: relative;
+
   .tab-content {
     width: 100%;
     background: $white;
+
     .tab-title {
       width: 100%;
       border-bottom: 1px solid #d9d9d9;
       padding: 10px 20px 16px;
       background: $white;
       margin-bottom: 16px;
+
       h4 {
         color: $text-color;
         font-size: 20px;
@@ -1263,77 +1301,98 @@ span.anticon.anticon-phone svg {
         margin: 0;
       }
     }
+
     .block-wrap {
       border-radius: 6px;
       border: 1px solid #d9d9d9;
       box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
       padding: 20px;
       margin-bottom: 16px;
+      font-size: 14px;
+
       @media screen and (max-width: 767px) {
         padding: 20px 0;
       }
+
       h3 {
         color: $primary-color;
         font-size: 16px;
         font-weight: 500;
         line-height: 24px;
         margin: 0 0 20px;
+
         @media screen and (max-width: 767px) {
           padding: 0 15px;
         }
+
         @media screen and (max-width: 585px) {
           padding: 0 10px;
           margin: 0 0 10px;
         }
       }
+
       .row-wrap {
         width: 100%;
         margin-bottom: 10px;
         border-bottom: 1px solid #d9d9d9;
         padding-bottom: 16px;
+
         .col-form-label {
           display: inline-flex;
           align-items: center;
           padding: 0;
           width: auto;
           margin-right: 16px;
+
           @media screen and (max-width: 1280px) {
             margin: 0;
             text-wrap: nowrap;
           }
+
           @media screen and (max-width: 767px) {
             width: 100%;
             margin-bottom: 7px;
           }
         }
+
         .form-control {
           margin-bottom: 0px;
           width: 110px;
           display: inline-flex;
+
           @media screen and (max-width: 1280px) {
             width: 100%;
           }
+
           @media screen and (max-width: 991px) {
             margin-bottom: 16px;
           }
         }
       }
+
       label {
         color: #686868;
         font-size: 14px;
         font-weight: 500;
         line-height: 20px;
-        @media screen and (max-width: 1280px) {
+
+        &.col-form-label {
+          font-size: 14px;
+          font-weight: normal;
         }
       }
+
       .form-control {
         border: 1px solid #d9d9d9;
         margin-bottom: 16px;
+        font-size: 14px;
+        resize: none;
         &:focus {
           outline: none;
           box-shadow: none;
           border-color: $primary-color;
         }
+
         &.form-select {
           background: #fff url(../assets/icons/icon-down-arrow.png) 97% center no-repeat;
         }
@@ -1346,11 +1405,13 @@ span.anticon.anticon-phone svg {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .radio-input {
       padding: 0 10px;
       position: relative;
       display: flex;
       align-items: center;
+
       &:first-child {
         padding-left: 0;
       }
@@ -1364,7 +1425,7 @@ span.anticon.anticon-phone svg {
         cursor: pointer;
 
         &:checked {
-          & + span {
+          &+span {
             &::before {
               background-color: $primary-color;
             }
@@ -1422,13 +1483,16 @@ span.anticon.anticon-phone svg {
   display: inline-flex;
   justify-content: space-between;
   padding: 0 10px;
+
   @media screen and (max-width: 1280px) {
     padding: 10px;
   }
+
   @media screen and (max-width: 1280px) {
     padding: 0;
     width: auto;
   }
+
   @media screen and (max-width: 991px) {
     padding: 0 10px;
     width: 80px;
@@ -1446,15 +1510,18 @@ span.anticon.anticon-phone svg {
     top: 0;
     left: 0;
     z-index: 1;
-    &:checked + span {
+
+    &:checked+span {
       &:before {
         background: $primary-color;
       }
+
       &:after {
         opacity: 1;
       }
     }
   }
+
   span {
     color: #686868;
     font-size: 14px;
@@ -1462,6 +1529,7 @@ span.anticon.anticon-phone svg {
     line-height: 20px;
     padding: 0 24px;
     position: relative;
+
     &::before {
       width: 16px;
       height: 16px;
@@ -1473,6 +1541,7 @@ span.anticon.anticon-phone svg {
       transition: all 0.5s ease-in-out;
       left: 0;
     }
+
     &::after {
       content: "";
       transform: rotate(45deg) scale(0.7);
@@ -1502,14 +1571,17 @@ span.anticon.anticon-phone svg {
     color: $white;
     margin: 0;
     height: 40px;
+
     &.btn-modal-close {
       border-color: $primary-color;
       color: $text-color;
     }
+
     &.btn-cancel {
       background: #c20f0f;
       border-color: #c20f0f;
     }
+
     &.btn-save {
       background: $primary-color;
     }
@@ -1517,9 +1589,9 @@ span.anticon.anticon-phone svg {
 }
 
 
-.btn-icon{
-  &:hover{
-    svg{
+.btn-icon {
+  &:hover {
+    svg {
       fill: $white;
       transition: all .4s ease;
     }
