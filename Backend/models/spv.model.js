@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const motivationSchema = new mongoose.Schema({
   prevention: { type: String },
@@ -36,8 +36,10 @@ const determinationSchema = new mongoose.Schema({
   suicideOption: { type: String },
   commitment: { type: String },
   discretionaryArea: { type: String },
+  rejection_organ: { type: String },
+  pacemaker: { type: String },
+  determination_noIntensive: { type: String },
 });
-
 
 const whereaboutSchema = new mongoose.Schema({
   familiarEnvironment: { type: String },
@@ -46,63 +48,62 @@ const whereaboutSchema = new mongoose.Schema({
   notHospital: { type: String },
 });
 const supportSchema = new mongoose.Schema({
-    doctor: { type: String },
-    mentalSupport: { type: String },
-    absolutelyNot: { type: String },
-  });
-  const funeralwishesSchema = new mongoose.Schema({
-    cremation: { type: String },
-    burial: { type: String },
-    arrangement: { type: String },
-    miscellaneous: { type: String },
-  });
-  const atorneySchema = new mongoose.Schema({
-    forms: { type: String },
-    careOrder: { type: String },
-  });
+  doctor: { type: String },
+  mentalSupport: { type: String },
+  absolutelyNot: { type: String },
+});
+const funeralwishesSchema = new mongoose.Schema({
+  cremation: { type: String },
+  burial: { type: String },
+  arrangement: { type: String },
+  miscellaneous: { type: String },
+});
+const atorneySchema = new mongoose.Schema({
+  forms: { type: String },
+  careOrder: { type: String },
+});
 
-  const feeSchema = new mongoose.Schema({
-    regular: { type: String },
-    reduced: { type: String },
-  });
+const feeSchema = new mongoose.Schema({
+  regular: { type: String },
+  reduced: { type: String },
+});
 
-  const informationSchema = new mongoose.Schema({
-    urgency: { type: String },
-    alternateAddress: { type: String },
-    creation: { type: String },
-    cntactdetails: { type: String },
-    fname: { type: String },
-    lname: { type: String },
-    address: { type: String },
-    street: { type: String },
-    plz: { type: String },
-    ort: { type: String },
-    phone: { type: String },
-    mobile: { type: String },
-    dataProtection: { type: String },
-    deposit: { type: String },
-  });
+const informationSchema = new mongoose.Schema({
+  urgency: { type: String },
+  alternateAddress: { type: String },
+  creation: { type: String },
+  cntactdetails: { type: String },
+  fname: { type: String },
+  lname: { type: String },
+  address: { type: String },
+  street: { type: String },
+  plz: { type: String },
+  ort: { type: String },
+  phone: { type: String },
+  mobile: { type: String },
+  dataProtection: { type: String },
+  deposit: { type: String },
+});
 
-const spvInfoSchema = new mongoose.Schema({
-    motivation:motivationSchema,
-    resuscitation:resuscitationSchema,
-    situation:situationSchema,
-    determination:determinationSchema,
-    whereabout:whereaboutSchema,
-    support:supportSchema,
-    funeralwishes:funeralwishesSchema,
-    atorney:atorneySchema,
-    fee:feeSchema,
-    information:informationSchema,
-  customer_id: { type: mongoose.Schema.Types.ObjectId},
-}, { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } });
-
-const SpvInfo = mongoose.model(
-  'spv',
-  spvInfoSchema
+const spvInfoSchema = new mongoose.Schema(
+  {
+    motivation: motivationSchema,
+    resuscitation: resuscitationSchema,
+    situation: situationSchema,
+    determination: determinationSchema,
+    whereabout: whereaboutSchema,
+    support: supportSchema,
+    funeralwishes: funeralwishesSchema,
+    atorney: atorneySchema,
+    fee: feeSchema,
+    information: informationSchema,
+    customer_id: { type: mongoose.Schema.Types.ObjectId },
+  },
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
+
+const SpvInfo = mongoose.model("spv", spvInfoSchema);
 
 module.exports = {
   SpvInfo,
 };
-

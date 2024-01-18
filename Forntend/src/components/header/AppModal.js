@@ -139,7 +139,7 @@ const AppModal = ({ setOpen }) => {
                 </figcaption>
               </figure>
             </div>
-            <div className="mb-3 row">
+            <div className="mb-3 px-2 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Vorname
               </label>
@@ -155,7 +155,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-3 row">
+            <div className="mb-3 px-2 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Nachname
               </label>
@@ -171,7 +171,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-3 row">
+            <div className="mb-3 px-2 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Telefon
               </label>
@@ -194,7 +194,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-3 row">
+            <div className="mb-3 px-2 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Passwort
               </label>
@@ -210,7 +210,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-3 row">
+            <div className="mb-3 px-2 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Mail
               </label>
@@ -227,7 +227,7 @@ const AppModal = ({ setOpen }) => {
                 />
               </div>
             </div>
-            <div className="mb-3 row">
+            <div className="mb-3 px-2 row">
               <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                 Geschlecht
               </label>
@@ -286,7 +286,7 @@ const AppModal = ({ setOpen }) => {
               onClick={handleSubmit}
               style={{ background: '#005291', color: 'white' }}
             >
-              Aktualisieren
+              Speichern
             </button>
           </div>
         </div>

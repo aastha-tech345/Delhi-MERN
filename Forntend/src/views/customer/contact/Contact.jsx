@@ -316,7 +316,7 @@ const Contact = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form noValidate validated={validated}>
-                  <div className="row p-3">
+                  <div className="row">
                     <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Vorname
