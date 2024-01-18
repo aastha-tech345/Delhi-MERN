@@ -42,6 +42,9 @@ const Services = () => {
     suicideOption: '',
     commitment: '',
     discretionaryArea: '',
+    determination_noIntensive: '',
+    rejection_organ: '',
+    pacemaker: '',
   })
 
   const [whereabout, setWhereabout] = useState({
@@ -293,6 +296,9 @@ const Services = () => {
       suicideOption: '',
       commitment: '',
       discretionaryArea: '',
+      rejection_organ: '',
+      pacemaker: '',
+      determination_noIntensive: '',
     })
 
     setWhereabout({
@@ -617,6 +623,25 @@ const Services = () => {
                 />{' '}
                 &nbsp; nein
               </div>
+              <div className="col-sm-3">Keine Intensivmedizin</div>
+              <div className="col-sm-2 d-flex">
+                <input
+                  type="checkbox"
+                  name="determination_noIntensive"
+                  value="yes"
+                  checked={determination.determination_noIntensive === 'yes'}
+                  onChange={determinationChange}
+                />{' '}
+                &nbsp; ja &nbsp; &nbsp;
+                <input
+                  type="checkbox"
+                  name="determination_noIntensive"
+                  value="no"
+                  checked={determination.determination_noIntensive === 'no'}
+                  onChange={determinationChange}
+                />{' '}
+                &nbsp; nein
+              </div>
               <div className="col-sm-3">Schwerstpflegebedurftigkeit</div>
               <div className="col-sm-2 d-flex">
                 <input
@@ -765,6 +790,44 @@ const Services = () => {
                   checked={determination.researchPurpose === 'no'}
                   onChange={determinationChange}
                   name="researchPurpose"
+                  value="no"
+                />{' '}
+                &nbsp; nein
+              </div>
+              <div className="col-sm-3">Ablehnung Organspende</div>
+              <div className="col-sm-2 d-flex">
+                <input
+                  type="checkbox"
+                  checked={determination.rejection_organ === 'yes'}
+                  onChange={determinationChange}
+                  name="rejection_organ"
+                  value="yes"
+                />{' '}
+                &nbsp; ja &nbsp; &nbsp;
+                <input
+                  type="checkbox"
+                  checked={determination.rejection_organ === 'no'}
+                  onChange={determinationChange}
+                  name="rejection_organ"
+                  value="no"
+                />{' '}
+                &nbsp; nein
+              </div>
+              <div className="col-sm-3">Herzschrittmacher</div>
+              <div className="col-sm-2 d-flex">
+                <input
+                  type="checkbox"
+                  checked={determination.pacemaker === 'yes'}
+                  onChange={determinationChange}
+                  name="pacemaker"
+                  value="yes"
+                />{' '}
+                &nbsp; ja &nbsp; &nbsp;
+                <input
+                  type="checkbox"
+                  checked={determination.pacemaker === 'no'}
+                  onChange={determinationChange}
+                  name="pacemaker"
                   value="no"
                 />{' '}
                 &nbsp; nein

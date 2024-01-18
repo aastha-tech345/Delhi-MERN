@@ -215,6 +215,7 @@ const Document = () => {
                 name="document_title"
                 value={data.document_title}
                 onChange={handleChange}
+                placeholder="Steuer"
                 type="text"
                 className="form-control"
               />
@@ -224,9 +225,9 @@ const Document = () => {
                 name="document_type"
                 value={data.document_type}
                 onChange={handleChange}
-                className="form-control"
+                className="form-control form-select"
               >
-                <option>--select--</option>
+                <option>Gesundheitsvollmacht</option>
                 <option value="Living will">Patientenverfügung</option>
                 <option value="Health care power of attorney">Gesundheitsvollmacht</option>
                 <option value="Power of attorney">Vorsorgevollmacht</option>
