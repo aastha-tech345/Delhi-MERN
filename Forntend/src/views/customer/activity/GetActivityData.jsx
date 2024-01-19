@@ -126,11 +126,11 @@ const GetActivityData = ({ updateData, search }) => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th>DATUM</th>
-                      <th>TITEL</th>
-                      <th>VERWALTUNG</th>
-                      <th>BEARBEITER</th>
+                      <th className="col-1 "></th>
+                      <th className="col-1 ">DATUM</th>
+                      <th className="col-2 ">TITEL</th>
+                      <th className="col-4 ">VERWALTUNG</th>
+                      <th className="col-4 ">BEARBEITER</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -145,7 +145,15 @@ const GetActivityData = ({ updateData, search }) => {
                         year < 10 ? '0' : ''
                       }${year}`
                       return (
-                        <tr key={_id}>
+                        <tr
+                          key={_id}
+                          style={{
+                            margin: 'auto',
+                            width: '50%',
+
+                            padding: ' 10px',
+                          }}
+                        >
                           <td>
                             <span
                               style={{
@@ -156,6 +164,9 @@ const GetActivityData = ({ updateData, search }) => {
                                 padding: '5px',
                                 textAlign: 'center',
                                 color: '#015291',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
                               }}
                             >
                               {getIconData(icon)}
