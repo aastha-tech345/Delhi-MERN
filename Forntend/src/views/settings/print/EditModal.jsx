@@ -54,10 +54,10 @@ const EditModal = ({ setEdit, getDetails }) => {
           content: '',
           designation: '',
         })
-        notify('PrintTemplate Updated Successfully')
+        toast.success('PrintTemplate erfolgreich aktualisiert')
         getDetails()
       } else {
-        notify('Something Went Wrong')
+        notify('Etwas ist schief gelaufen')
       }
       close()
     } catch (error) {

@@ -9,7 +9,6 @@ const EmailTemplate = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const editor = useRef(null)
   const [content, setContent] = useState('')
-  const notify = (dataa) => toast(dataa)
   const navigate = useNavigate()
   const placeholder = `Hallo {{ activity.user }}
 
@@ -53,17 +52,17 @@ const EmailTemplate = () => {
         return
       }
       const res = await putFetchData(`${apiUrl}/email/get_email/${response?._id}`, data)
-      if (res.status == 200) {
+      if (res.status === 200) {
         setData({
           content: '',
           designation: '',
         })
-        notify('EmailTemplate Updated Successfully')
+        toast.success('EmailTemplate erfolgreich aktualisiert')
         setTimeout(() => {
           navigate('/settings/email')
         }, 3000)
       } else {
-        notify('Something Went Wrong')
+        toast.error('Etwas ist schief gelaufen')
       }
     } catch (error) {
       console.log(error)

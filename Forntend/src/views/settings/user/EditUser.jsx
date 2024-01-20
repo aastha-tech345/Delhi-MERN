@@ -83,11 +83,11 @@ export default function EditUser({ setEdit, getEmployeeData }) {
           mobile: '',
           role: '',
         })
-        notify('Employee Updated Successfully')
+        notify('Mitarbeiter erfolgreich aktualisiert')
         // getEmployeeData()
-        window.location.reload()
+        // window.location.reload()
       } else {
-        notify('Something Went Wrong')
+        notify('Etwas ist schief gelaufen')
       }
       close()
     } catch (error) {

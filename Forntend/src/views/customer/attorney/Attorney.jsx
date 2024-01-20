@@ -184,10 +184,12 @@ const Attorney = () => {
       let result = await response.json()
       console.log(result)
       if (result.status === 201) {
-        toast.success('Data saved successfully!')
+        toast.success('Anwaltsdaten erfolgreich gespeichert!')
         resetStateVariables()
       } else {
-        toast.error('Error saving data. Please check the console for details.')
+        toast.error(
+          'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
+        )
       }
     } catch (error) {
       console.error('Error during API call:', error)

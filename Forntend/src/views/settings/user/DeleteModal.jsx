@@ -22,7 +22,7 @@ const DeleteModal = ({ setHide, userCreateId, getEmployeeData }) => {
         const response = await deleteFetch(`${apiUrl}/user/get/employeeData`, userCreateId)
         // console.log('data delete', response)
         if (response.status === 200) {
-          notify('Data Deleted Successfully')
+          notify('Daten erfolgreich gelöscht')
         }
         getEmployeeData()
         setHide(false)

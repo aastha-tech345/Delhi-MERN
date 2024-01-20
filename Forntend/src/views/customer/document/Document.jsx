@@ -123,7 +123,7 @@ const Document = () => {
   const saveData = async (e) => {
     try {
       if (!data.document_title || !data.document_type) {
-        return notify('Please fill all details')
+        return notify('Bitte füllen Sie alle Angaben aus')
       }
 
       e.preventDefault()
@@ -139,7 +139,7 @@ const Document = () => {
       // const url = `${apiUrl}/document/create_document?page=${page}`
       // console.log(url)
       const response = await postFetchUser(url, myForm)
-      notify('Data Saved Successfully')
+      notify('Dokumentdaten erfolgreich gespeichert')
       setData('')
       handleClose()
       getDetails()

@@ -12,13 +12,13 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
       try {
         const response = await deleteFetch(`${apiUrl}/document/get_document`, documentId)
         if (response.status === 200) {
-          toast.success('Data Deleted Successfully')
+          toast.success('Daten erfolgreich gelöscht')
         }
         getDetails()
 
         setHide(false)
       } catch (error) {
-        toast.error('An error occurred while deleting the record')
+        toast.error('Beim Löschen des Datensatzes ist ein Fehler aufgetreten')
         setHide(false)
       }
     }

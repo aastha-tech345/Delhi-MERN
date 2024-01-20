@@ -36,9 +36,9 @@ const User = () => {
 
   return (
     <>
-      <div className="whiteBoxWithPdLR">
+      <div className="whiteBoxWithPdLR" style={{ borderRadius: '5px' }}>
         <div className="row">
-          <div className="col-sm-12">
+          <div className="col-sm-12 mx-3">
             <nav>
               <div className="row nav nav-tabs" id="nav-tab" role="tablist">
                 <div className="col-sm-3">
