@@ -113,22 +113,38 @@ const CreateUser = () => {
 
   const handleSubmit = async (e) => {
     if (!email) {
-      return notify('Invaild Email')
+      return toast.warning('Ungültige E-Mail')
+    } else if (!employee.role) {
+      return toast.warning('Bitte geben Sie den Rollennamen ein')
     }
+
     try {
       e.preventDefault()
       const res = await postFetchData(`${apiUrl}/user/register`, employeData)
       console.log('response', res)
       if (res?.response?.status === 409) {
-        return notify('Email already exists')
+        return notify('E-Mail existiert bereits')
       }
       if (res?.status === 201) {
-        notify('Employe Created Successfully')
+        notify('Mitarbeiter erfolgreich erstellt')
         setEditUser(!editUser)
-        return setShowInviteUserModal(false)
+        setShowInviteUserModal(false)
+        setEmployee({
+          email: '',
+          username: '',
+          lname: '',
+          street: '',
+          plz: '',
+          city: '',
+          location: '',
+          tel: '',
+          mobile: '',
+          role: '',
+          password: '123456',
+          user_type: 'employee',
+          timezone: '5:30',
+        })
       }
-
-      // console.log('employeData', employeData)
     } catch (error) {
       console.log(error)
     }
@@ -267,7 +283,7 @@ const CreateUser = () => {
     }
   }
   return (
-    <div>
+    <>
       {hide ? (
         <DeleteModal
           setHide={setHide}
@@ -279,7 +295,7 @@ const CreateUser = () => {
       )}
       {edit ? <EditUser setEdit={setEdit} getEmployeeData={getEmployeeData} /> : ''}
       <div
-        className="search-filter-row"
+        className="search-filter-row-user"
         style={{
           border: 'none',
         }}
@@ -616,6 +632,7 @@ const CreateUser = () => {
               pagination={false}
             />
           </div>
+
           <div className="container-fluid pagination-row">
             <div className="row">
               <div className="col-md-10 ps-md-0 text-center text-md-start">
@@ -643,11 +660,12 @@ const CreateUser = () => {
               </div>
             </div>
           </div>
+          <br />
         </div>
       </div>
 
       <ToastContainer />
-    </div>
+    </>
   )
 }
 

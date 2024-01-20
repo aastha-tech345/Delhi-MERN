@@ -106,14 +106,14 @@ const Activity = () => {
   const handleSubmit = async () => {
     for (const key in data) {
       if (!data[key]) {
-        toast.error(`Please fill in the ${key} field`)
+        toast.error(`Bitte füllen Sie das Feld ${key} aus`)
         return
       }
     }
     try {
       const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
       if (res?.message === 'activity was created') {
-        toast.success('activity was created')
+        toast.success('Aktivitätsdaten wurden erfolgreich erstellt')
         setOpenMessage(false)
         setData({
           message: '',
@@ -127,7 +127,7 @@ const Activity = () => {
         setIconBack1(false)
         setIconBack(false)
       } else {
-        toast.error('Something Went Wrong')
+        toast.error('Etwas ist schief gelaufen')
       }
       setUpdateData(!updateData)
       setOpenMessage(false)
@@ -346,13 +346,13 @@ const Activity = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="row">
+                    <div className="row ">
                       <div className="col-sm-4">
                         <p>Planen und verwalten Sie Aktivitäten mit KlientInnen.</p>
                         <div className="form-search-control">
                           <input
                             type="search"
-                            className="form-control  form-search"
+                            className="form-control form-search"
                             placeholder="Ihre Suche eingeben"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}

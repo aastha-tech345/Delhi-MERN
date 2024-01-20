@@ -118,7 +118,7 @@ const PrintTemplate = () => {
     try {
       const { content, designation } = data
       if (!content || !designation) {
-        notify('Please fill all details')
+        toast.warning('Bitte füllen Sie alle Angaben aus')
         return
       }
       const url = `${apiUrl}/print/create_print`
@@ -126,7 +126,7 @@ const PrintTemplate = () => {
 
       // console.log(response.status)
       if (response.status === 201) {
-        notify('Data Saved Successfully')
+        toast.success('PrintTemplate-Daten erfolgreich gespeichert')
       }
 
       setData({

@@ -28,7 +28,7 @@ const DeleteModal = ({ setHide, contactId, getDetails }) => {
 
         getDetails()
         if (response?.status === 200) {
-          toast.success(response?.data?.message)
+          toast.success('Kontaktdaten erfolgreich gelöscht')
         }
         setHide(false)
       } catch (error) {

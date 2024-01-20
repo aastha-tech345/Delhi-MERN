@@ -13,13 +13,13 @@ const DeleteModal = ({ setHide, printId, getDetails }) => {
       try {
         const response = await deleteFetch(`${apiUrl}/print/get_print`, printId)
         if (response.status === 200) {
-          notify('PrintTemplate Data Deleted Successfully')
+          notify('PrintTemplate-Daten erfolgreich gelöscht')
         }
         getDetails()
 
         setHide(false)
       } catch (error) {
-        console.error('An error occurred while deleting the record:', error)
+        console.error('Beim Löschen des Datensatzes ist ein Fehler aufgetreten:', error)
         setHide(false)
       }
     }
@@ -73,9 +73,9 @@ const DeleteModal = ({ setHide, printId, getDetails }) => {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <div>
+          <div className="mx-auto">
             <button
-              className="btn btn w-25"
+              className="btn"
               style={{ background: '#015291', color: 'white' }}
               onClick={() => setHide(false)}
             >
@@ -83,7 +83,7 @@ const DeleteModal = ({ setHide, printId, getDetails }) => {
             </button>
             &nbsp;&nbsp;
             <button
-              className="btn btn w-25"
+              className="btn"
               style={{ background: '#d04545', color: 'white' }}
               onClick={handleDeleteConfirm}
             >

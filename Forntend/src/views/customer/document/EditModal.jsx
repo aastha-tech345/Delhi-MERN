@@ -48,7 +48,7 @@ const EditModal = ({ setEdit, getDetails }) => {
 
     const { document_title, document_type, document_upload } = data
     if (!document_title || !document_type) {
-      return toast.error('Please fill in all the details.')
+      return toast.error('Bitte füllen Sie alle Angaben aus.')
     }
 
     try {
@@ -71,10 +71,10 @@ const EditModal = ({ setEdit, getDetails }) => {
           document_type: '',
           document_upload: null,
         })
-        toast.success('Document Updated Successfully')
+        toast.success('Dokument erfolgreich aktualisiert')
         getDetails()
       } else {
-        toast.error('Something Went Wrong')
+        toast.error('Etwas ist schief gelaufen')
       }
       close()
     } catch (error) {

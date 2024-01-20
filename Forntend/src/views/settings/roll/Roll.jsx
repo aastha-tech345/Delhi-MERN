@@ -98,10 +98,17 @@ const Roll = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault()
+      const isAnyFieldBlank = Object.values(role).some((value) => value === '' || value === null)
+
+      if (isAnyFieldBlank) {
+        return toast.warning('Bitte füllen Sie alle Felder aus.')
+      }
+
       const res = await postFetchData(`${apiUrl}/role/create_role`, role)
+
       if (res?.status === 201) {
         setEditEmployee(!editEmployee)
-        notify('Role Created Successfully')
+        toast.success('Rolle erfolgreich erstellt')
         return setShow(false)
       }
     } catch (error) {
@@ -140,7 +147,7 @@ const Roll = () => {
 
   // console.log('data', data)
   return (
-    <div style={{ background: 'white' }}>
+    <div style={{ background: 'white', borderRadius: '5px' }}>
       <User />
       <div className="row">
         <center className="mx-auto">
