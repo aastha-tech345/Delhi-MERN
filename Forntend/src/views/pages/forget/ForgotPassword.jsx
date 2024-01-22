@@ -54,12 +54,12 @@ const ForgotPassword = () => {
       e.preventDefault()
 
       if (password === '') {
-        return toast.error('password is required!', {
+        return toast.error('Passwort wird benötigt!', {
           position: 'top-center',
         })
       }
       if (password.length < 6) {
-        return toast.error('password must be 6 char!', {
+        return toast.error('Passwort muss 6 Zeichen lang sein!', {
           position: 'top-center',
         })
       }

@@ -71,6 +71,7 @@ const CustomerList = () => {
     {
       title: 'KLIENTNNEN',
       dataIndex: 'fname',
+      width: '20%',
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
@@ -84,18 +85,22 @@ const CustomerList = () => {
     {
       title: 'KLIENTNNEN-ID',
       dataIndex: 'id',
+      width: '20%',
     },
     {
       title: 'E-MAIL',
       dataIndex: 'email',
+      width: '20%',
     },
     {
       title: 'TELEFON',
       dataIndex: 'phone',
+      width: '20%',
     },
     {
       title: 'GRUPPE',
       dataIndex: 'group',
+      width: '20%',
       render: (text, record) => (
         <div
           className="dm-badge"
@@ -498,7 +503,7 @@ const CustomerList = () => {
         <div className="search-filter-row" style={{ background: 'white', borderRadius: '5px' }}>
           <div className="container-fluid">
             <div className="row">
-              <div className="col-md-6 mb-md-0 mb-3">
+              <div className="col-md-7 mb-md-0 mb-3">
                 <div className="d-flex align-items-center">
                   <input
                     ref={searchInputRef}
@@ -529,7 +534,7 @@ const CustomerList = () => {
                 </div>
               </div>
 
-              <div className="col-md-6 text-end">
+              <div className="col-md-5 text-end">
                 <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
                   <p className="mb-0 me-3">
                     <strong>{selectedRowKeys.length}</strong> Ausgewählte

@@ -81,6 +81,9 @@ const EditModal = ({ setEdit, getDetails }) => {
       console.error(error)
     }
   }
+  const cancelData = () => {
+    setData('')
+  }
 
   return (
     <div
@@ -176,13 +179,16 @@ const EditModal = ({ setEdit, getDetails }) => {
                     />
                     <div className="file-input-wrap">
                       <div className="filename-field">
-                        <span></span>
+                        <span>
+                          {data.document_upload ? data.document_upload : 'sample.Fragebogen'}
+                        </span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
                           height="16"
                           viewBox="0 0 16 16"
                           fill="none"
+                          onClick={cancelData}
                         >
                           <g clipPath="url(#clip0_493_7693)">
                             <path

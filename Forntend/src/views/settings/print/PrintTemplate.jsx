@@ -78,6 +78,7 @@ const PrintTemplate = () => {
       title: 'Name des Kunden',
       dataIndex: 'designation',
       render: (text) => <a>{text}</a>,
+      width: '100%',
     },
     {
       title: 'AKTION',

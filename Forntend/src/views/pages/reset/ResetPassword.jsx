@@ -44,7 +44,7 @@ const ResetPassword = () => {
       console.log('Response:', data)
 
       if (data.status === 200) {
-        notify('Der Link zum Zurücksetzen des Passworts wurde erfolgreich gesendet')
+        notify('Link zum Zurücksetzen des Passworts erfolgreich gesendet')
         setEmail('')
       } else if (data.status === 401) {
         console.log('Unauthorized error')

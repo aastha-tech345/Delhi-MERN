@@ -32,15 +32,16 @@ const Document = () => {
       title: 'TITLE',
       dataIndex: 'document_title',
       render: (text) => <a>{text}</a>,
+      width: '20%',
     },
     {
       title: 'DOKUMENTENTYP',
       dataIndex: 'document_type',
+      width: '80%',
     },
     {
       title: 'AKTION',
       dataIndex: 'action',
-      responsive: ['md'],
       render: (_, record) => (
         <>
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
@@ -93,6 +94,7 @@ const Document = () => {
     customer_id: result?._id,
     added_by: loginData?.user?._id,
   })
+
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
   const handleEdit = (record) => {
@@ -100,6 +102,7 @@ const Document = () => {
     localStorage.setItem('DocumentEditDetails', recordData)
     setEdit(true)
   }
+  console.log('asjhjdgas', document_upload.name)
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState('')
@@ -148,6 +151,10 @@ const Document = () => {
     }
   }
 
+  const cancelData = () => {
+    setDocumentUpload('')
+  }
+
   const getDetails = async () => {
     try {
       const result = await fetch(
@@ -185,15 +192,15 @@ const Document = () => {
       <h5 className="mx-3">Dokumente</h5>
       <hr className="mx-3" />
       <div className="row p-3 mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
-        <div className="col-sm-7">
+        <div className="col-sm-9">
           <h5>Dokumente verwalten</h5>
           <p>
             Senden Sie anpassbare Angebote, Vorschläge und Verträge, um Geschäfte schneller
             abzuschließen.
           </p>
         </div>
-        <div className="col-sm-2"></div>
-        <div className="col-sm-3 mt-3">
+        {/* <div className="col-sm-2"></div> */}
+        <div className="col-sm-3 mt-3 text-end">
           <button
             type="button"
             className="btn btn text-light"
@@ -269,13 +276,17 @@ const Document = () => {
                       />
                       <div className="file-input-wrap">
                         <div className="filename-field">
-                          <span>sample.Fragebogen</span>
+                          <span>
+                            {document_upload ? document_upload.name : 'sample.Fragebogen'}
+                          </span>
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
                             height="16"
                             viewBox="0 0 16 16"
                             fill="none"
+                            onClick={cancelData}
                           >
                             <g clipPath="url(#clip0_493_7693)">
                               <path
