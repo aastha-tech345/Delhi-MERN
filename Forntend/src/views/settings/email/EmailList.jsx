@@ -8,6 +8,7 @@ import Pagination from '@mui/material/Pagination'
 import { useNavigate } from 'react-router-dom'
 import { MdOutlineEdit } from 'react-icons/md'
 import { postFetchData } from 'src/Api'
+import { RiDeleteBinLine } from 'react-icons/ri'
 
 const EmailList = () => {
   const navigate = useNavigate()
@@ -50,6 +51,7 @@ const EmailList = () => {
       title: 'Name des Kunden',
       dataIndex: 'designation',
       render: (text) => <a>{text}</a>,
+      width: '100%',
     },
     {
       title: 'AKTION',
@@ -59,6 +61,13 @@ const EmailList = () => {
           <button style={{ background: 'none', border: 'none' }} onClick={() => handleEdit(record)}>
             <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
             &nbsp;&nbsp;Bearbeiten
+          </button>
+          <button
+            style={{ background: 'none', border: 'none' }}
+            // onClick={() => handleDelete(record._id)}
+            disabled
+          >
+            <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
           </button>
         </>
       ),

@@ -32,15 +32,16 @@ const Document = () => {
       title: 'TITLE',
       dataIndex: 'document_title',
       render: (text) => <a>{text}</a>,
+      width: '20%',
     },
     {
       title: 'DOKUMENTENTYP',
       dataIndex: 'document_type',
+      width: '80%',
     },
     {
       title: 'AKTION',
       dataIndex: 'action',
-      responsive: ['md'],
       render: (_, record) => (
         <>
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
@@ -93,6 +94,7 @@ const Document = () => {
     customer_id: result?._id,
     added_by: loginData?.user?._id,
   })
+
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
   const handleEdit = (record) => {
@@ -100,6 +102,7 @@ const Document = () => {
     localStorage.setItem('DocumentEditDetails', recordData)
     setEdit(true)
   }
+  console.log('asjhjdgas', document_upload.name)
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState('')
@@ -148,6 +151,10 @@ const Document = () => {
     }
   }
 
+  const cancelData = () => {
+    setDocumentUpload('')
+  }
+
   const getDetails = async () => {
     try {
       const result = await fetch(
@@ -185,15 +192,15 @@ const Document = () => {
       <h5 className="mx-3">Dokumente</h5>
       <hr className="mx-3" />
       <div className="row p-3 mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
-        <div className="col-sm-7">
+        <div className="col-sm-9">
           <h5>Dokumente verwalten</h5>
           <p>
             Senden Sie anpassbare Angebote, Vorschläge und Verträge, um Geschäfte schneller
             abzuschließen.
           </p>
         </div>
-        <div className="col-sm-2"></div>
-        <div className="col-sm-3 mt-3">
+        {/* <div className="col-sm-2"></div> */}
+        <div className="col-sm-3 mt-3 text-end">
           <button
             type="button"
             className="btn btn text-light"
@@ -203,66 +210,111 @@ const Document = () => {
             <MdAdd style={{ color: 'white' }} />
             &nbsp; Dokument hochladen
           </button>
-          <Modal show={show} onHide={handleClose} centered className="modal-form">
-            <Modal.Header closeButton>
-              <Modal.Title>Details zum Dokument</Modal.Title>
+          <Modal show={show} onHide={handleClose} centered className="modal-form modal-form-wrap">
+            <Modal.Header closeButton className="border-0 p-3 pb-0">
+              <Modal.Title className="modal-title">Details zum Dokument</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              <label htmlFor="title">Titel</label>
-              <input
-                id="title"
-                required
-                name="document_title"
-                value={data.document_title}
-                onChange={handleChange}
-                placeholder="Steuer"
-                type="text"
-                className="form-control"
-              />
-              <label htmlFor="documentType">Documenttype</label>
-              <select
-                id="document_type"
-                name="document_type"
-                value={data.document_type}
-                onChange={handleChange}
-                className="form-control form-select"
-              >
-                <option>Gesundheitsvollmacht</option>
-                <option value="Living will">Patientenverfügung</option>
-                <option value="Health care power of attorney">Gesundheitsvollmacht</option>
-                <option value="Power of attorney">Vorsorgevollmacht</option>
-                <option value="care order">Betreuungsverfügung</option>
-                <option value="Feces pass">Kotfallpass</option>
-                <option value="Power of attorney digital test">Vollmacht digitales Prbe</option>
-                <option value="Write to">Anschreiben</option>
-                <option value="Personal document">Persönliches Dokument</option>
-                <option value="Other">Anderes</option>
-              </select>
-              <label htmlFor="fileUpload">Datei-Upload</label>
-              <input
-                id="fileUpload"
-                type="file"
-                className="form-control"
-                name="document_upload"
-                onChange={(e) => setDocumentUpload(e.target.files[0])}
-              />
+            <Modal.Body className="p-3 pb-0">
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-md-3">
+                    <label htmlFor="title">Titel</label>
+                  </div>
+                  <div className="col-md-9">
+                    <input
+                      id="title"
+                      required
+                      name="document_title"
+                      value={data.document_title}
+                      onChange={handleChange}
+                      placeholder="Steuer"
+                      type="text"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-3">
+                    <label htmlFor="documentType">Documenttype</label>
+                  </div>
+                  <div className="col-md-9">
+                    <select
+                      id="document_type"
+                      name="document_type"
+                      value={data.document_type}
+                      onChange={handleChange}
+                      className="form-control form-select"
+                    >
+                      <option>Gesundheitsvollmacht</option>
+                      <option value="Living will">Patientenverfügung</option>
+                      <option value="Health care power of attorney">Gesundheitsvollmacht</option>
+                      <option value="Power of attorney">Vorsorgevollmacht</option>
+                      <option value="care order">Betreuungsverfügung</option>
+                      <option value="Feces pass">Kotfallpass</option>
+                      <option value="Power of attorney digital test">
+                        Vollmacht digitales Prbe
+                      </option>
+                      <option value="Write to">Anschreiben</option>
+                      <option value="Personal document">Persönliches Dokument</option>
+                      <option value="Other">Anderes</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-3">
+                    <label htmlFor="fileUpload">Datei-Upload</label>
+                  </div>
+                  <div className="col-md-9">
+                    <div className="file-upload-wrap">
+                      <input
+                        id="fileUpload"
+                        type="file"
+                        className="form-control"
+                        name="document_upload"
+                        onChange={(e) => setDocumentUpload(e.target.files[0])}
+                      />
+                      <div className="file-input-wrap">
+                        <div className="filename-field">
+                          <span>
+                            {document_upload ? document_upload.name : 'sample.Fragebogen'}
+                          </span>
+
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            onClick={cancelData}
+                          >
+                            <g clipPath="url(#clip0_493_7693)">
+                              <path
+                                d="M5.89128 5.89128C6.13607 5.64909 6.5319 5.64909 6.75326 5.89128L7.97721 7.11784L9.22461 5.89128C9.4694 5.64909 9.86524 5.64909 10.0866 5.89128C10.3522 6.13607 10.3522 6.5319 10.0866 6.75326L8.88346 7.97721L10.0866 9.22461C10.3522 9.4694 10.3522 9.86524 10.0866 10.0866C9.86524 10.3522 9.4694 10.3522 9.22461 10.0866L7.97721 8.88346L6.75326 10.0866C6.5319 10.3522 6.13607 10.3522 5.89128 10.0866C5.64909 9.86524 5.64909 9.4694 5.89128 9.22461L7.11784 7.97721L5.89128 6.75326C5.64909 6.5319 5.64909 6.13607 5.89128 5.89128ZM14.6673 8.00065C14.6673 11.6829 11.6829 14.6673 8.00065 14.6673C4.31836 14.6673 1.33398 11.6829 1.33398 8.00065C1.33398 4.31836 4.31836 1.33398 8.00065 1.33398C11.6829 1.33398 14.6673 4.31836 14.6673 8.00065ZM8.00065 2.58398C5.00846 2.58398 2.58398 5.00846 2.58398 8.00065C2.58398 10.9928 5.00846 13.4173 8.00065 13.4173C10.9928 13.4173 13.4173 10.9928 13.4173 8.00065C13.4173 5.00846 10.9928 2.58398 8.00065 2.58398Z"
+                                fill="#005291"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_493_7693">
+                                <rect width="16" height="16" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </div>
+                        <div className="file-btn">Durchsuche</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </Modal.Body>
-            <Modal.Footer>
-              <div className="mx-auto">
-                <button
-                  className="btn btn"
-                  onClick={handleClose}
-                  style={{ background: '#d04545', border: '#d04545', color: 'white' }}
-                >
+            <Modal.Footer className="border-top-0 p-3 pt-0 mt-3">
+              <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
+                <button className="btn btn-cancel" onClick={handleClose}>
                   {' '}
                   Abbrechen
                 </button>
-                &nbsp; &nbsp;
-                <button
-                  className="btn btn"
-                  onClick={saveData}
-                  style={{ background: '#0b5995', color: 'white' }}
-                >
+                <button className="btn btn-save ms-3" onClick={saveData}>
                   Speichern
                 </button>
               </div>
