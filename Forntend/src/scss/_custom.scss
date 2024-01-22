@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Roboto:wght@100;300;400;500;700;900&display=swap");
 // Here you can add other styles
 // Here you can add other styles
 // * {
@@ -10,8 +10,8 @@ $white: #fff;
 $text-color: #1c1d21;
 
 * {
-  font-family: 'Play', sans-serif;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Play", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .text-right {
@@ -78,7 +78,9 @@ $text-color: #1c1d21;
 
 .ant-table-wrapper .ant-table-tbody > tr > th,
 .ant-table-wrapper .ant-table-tbody > tr > td {
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
   border-bottom: 1px solid #c4c4c4;
   border-top: 1px solid #c4c4c4;
 }
@@ -111,15 +113,11 @@ $text-color: #1c1d21;
 .ant-table-wrapper
   .ant-table-thead
   > tr
-  > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not(
-    [colspan]
-  )::before,
+  > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before,
 .ant-table-wrapper
   .ant-table-thead
   > tr
-  > td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not(
-    [colspan]
-  )::before {
+  > td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
   width: 0px;
 }
 
@@ -218,7 +216,9 @@ h4.h4Popup {
 }
 
 .ant-table-wrapper .ant-table-tbody > tr > td {
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #d9d9d9;
   font-size: 14px;
@@ -507,7 +507,7 @@ h3.bluetext {
   border-color: $primary-color;
 }
 
-input[type='number']::-webkit-inner-spin-button {
+input[type="number"]::-webkit-inner-spin-button {
   opacity: 1;
 }
 
@@ -631,7 +631,7 @@ span.anticon.anticon-phone svg {
     font-weight: 400;
     text-align: center;
     margin: 0 0 20px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 
     &.border-b {
       border-bottom: 1px solid #efefef;
@@ -816,7 +816,7 @@ span.anticon.anticon-phone svg {
   top: 100%;
 
   &::after {
-    content: '';
+    content: "";
     height: 12px;
     width: 12px;
     position: absolute;
@@ -959,7 +959,7 @@ span.anticon.anticon-phone svg {
           border-radius: 100%;
           border: 1px solid $primary-color;
           background-color: $white;
-          content: '';
+          content: "";
           display: inline-block;
           vertical-align: middle;
           position: absolute;
@@ -972,7 +972,7 @@ span.anticon.anticon-phone svg {
           border-radius: 100%;
           border: 1px solid #005291;
           background-color: #fff;
-          content: '';
+          content: "";
           display: inline-block;
           vertical-align: middle;
           position: absolute;
@@ -1134,7 +1134,7 @@ span.anticon.anticon-phone svg {
   .form-select {
     border-radius: 4px;
     border: 1px solid #d9d9d9;
-    background: #fff url('../assets/icons/icon-down-arrow.png') 96% center no-repeat;
+    background: #fff url("../assets/icons/icon-down-arrow.png") 96% center no-repeat;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -1231,7 +1231,7 @@ span.anticon.anticon-phone svg {
       font-weight: 400;
       margin-bottom: 16px;
       height: 36px;
-
+      color: $text-color;
       &::placeholder {
         color: #8f8f8f;
       }
@@ -1240,6 +1240,11 @@ span.anticon.anticon-phone svg {
         outline: none;
         box-shadow: none;
         border: 1px solid $primary-color;
+      }
+      &.form-select {
+        background: #fff url("../assets/icons/icon-down-arrow.png") 96% center no-repeat;
+        line-height: 20px;
+        color: $text-color;
       }
     }
   }
@@ -1459,7 +1464,7 @@ span.anticon.anticon-phone svg {
           border-radius: 100%;
           border: 1px solid $primary-color;
           background-color: $white;
-          content: '';
+          content: "";
           display: inline-block;
           vertical-align: middle;
           position: absolute;
@@ -1474,7 +1479,7 @@ span.anticon.anticon-phone svg {
           border-radius: 100%;
           border: 1px solid #005291;
           background-color: #fff;
-          content: '';
+          content: "";
           display: inline-block;
           vertical-align: middle;
           position: absolute;
@@ -1544,7 +1549,7 @@ span.anticon.anticon-phone svg {
     &::before {
       width: 16px;
       height: 16px;
-      content: '';
+      content: "";
       position: absolute;
       border: 1px solid $primary-color;
       border-radius: 3px;
@@ -1554,7 +1559,7 @@ span.anticon.anticon-phone svg {
     }
 
     &::after {
-      content: '';
+      content: "";
       transform: rotate(45deg) scale(0.7);
       position: absolute;
       top: -1px;
@@ -1727,6 +1732,74 @@ span.anticon.anticon-phone svg {
 
     @media screen and (max-width: 768px) {
       font-size: 14px;
+    }
+  }
+}
+
+.file-upload-wrap {
+  position: relative;
+  width: 100%;
+  height: 42px;
+  input {
+    position: absolute;
+    max-width: 108px;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    top: 0;
+    z-index: 2;
+    opacity: 0;
+  }
+  .file-input-wrap {
+    position: relative;
+    display: flex;
+    border-radius: 6px;
+    background: #fff;
+    padding: 0;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    .filename-field {
+      background: #fff;
+      color: $text-color;
+      border-radius: 6px 0 0 6px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      border: 1px solid #d9d9d9;
+      width: calc(100% - 108px);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      span {
+        min-width: 190px;
+        display: inline-flex;
+        align-items: center;
+        padding: 10px;
+        position: relative;
+        height: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      svg{
+        cursor: pointer;
+      }
+    }
+    .file-btn {
+      background: $primary-color;
+      color: $white;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1px;
+      padding: 10px 16px;
+      height: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0 6px 6px 0;
+      border: 1px solid $primary-color;
+      width: 108px;
     }
   }
 }
