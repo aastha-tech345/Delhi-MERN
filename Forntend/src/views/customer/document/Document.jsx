@@ -93,6 +93,7 @@ const Document = () => {
     customer_id: result?._id,
     added_by: loginData?.user?._id,
   })
+
   const [document_upload, setDocumentUpload] = useState('')
   const [documentRecord, setDocumentRecord] = useState([])
   const handleEdit = (record) => {
@@ -100,6 +101,7 @@ const Document = () => {
     localStorage.setItem('DocumentEditDetails', recordData)
     setEdit(true)
   }
+  console.log('asjhjdgas', document_upload.name)
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState('')
@@ -146,6 +148,10 @@ const Document = () => {
     } catch (error) {
       return error
     }
+  }
+
+  const cancelData = () => {
+    setDocumentUpload('')
   }
 
   const getDetails = async () => {
@@ -269,13 +275,17 @@ const Document = () => {
                       />
                       <div className="file-input-wrap">
                         <div className="filename-field">
-                          <span>sample.Fragebogen</span>
+                          <span>
+                            {document_upload ? document_upload.name : 'sample.Fragebogen'}
+                          </span>
+
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
                             height="16"
                             viewBox="0 0 16 16"
                             fill="none"
+                            onClick={cancelData}
                           >
                             <g clipPath="url(#clip0_493_7693)">
                               <path
