@@ -165,7 +165,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
   }
   return (
     <div
-      className="modal"
+      className="modal modal-form"
       tabIndex={-1}
       style={{
         display: 'block',
@@ -177,7 +177,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
       <div className="modal-dialog modal-dialog-centered  ">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">Rolle erstellen</h5>
+            <h4 className="modal-title">Rolle erstellen</h4>
             <button
               type="button"
               className="btn-close"
@@ -186,7 +186,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
               onClick={close}
             />
           </div>
-          <div className="m-auto me-4 ms-4 mt-2">
+          <div className="modal-body">
             <input
               type="text"
               placeholder="Name"
@@ -197,20 +197,35 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                 setRolePermission(e.target.value)
               }}
             />
-            <h5 className="mt-2 fw-bold">Berechtigungen</h5>
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <h4 className="heading-4">Berechtigungen</h4>
+                </div>
+              </div>
+            </div>
 
-            <h5 className="mt-3 fw-bold" style={{ marginRight: '75%' }}>
-              Klientlnnen
-            </h5>
-            <div>
-              <div className="row" onClick={() => handleSetName('Klientlnnen')}>
-                <div className="col-sm-3 mt-2">Anzeigen</div>
-                <div className="col-sm-5"></div>
+            <div className="container-fluid mt-2">
+              <div className="row">
+                <div className="col-12">
+                  <h4 className="heading-4">Klientlnnen</h4>
+                </div>
+              </div>
+
+              <div
+                className="row d-flex justify-content-between align-items-center"
+                onClick={() => handleSetName('Klientlnnen')}
+              >
+                <div className="col-sm-3 text-start">
+                  <label> Anzeigen</label>
+                </div>
+
                 {/*dropdown*/}
-                <div className="col-sm-4 mt-2">
+                <div className="col-sm-4 text-end">
                   <div className="input-group">
                     <select
-                      style={{ border: 'none', background: 'none' }}
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
                       name="p_show"
                       value={permissionData.p_show}
                       onChange={handlePermissionDataChange}
@@ -223,14 +238,18 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-sm-3 mt-2">Bearbeiten</div>
-                <div className="col-sm-5"></div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label> Bearbeiten</label>
+                </div>
+
                 {/*dropdown*/}
-                <div className="col-sm-4 mt-2">
+                <div className="col-sm-4 text-end">
                   <div className="input-group">
                     <select
-                      style={{ border: 'none', background: 'none' }}
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
                       name="p_edit"
                       value={permissionData.p_edit}
                       onChange={handlePermissionDataChange}
@@ -243,14 +262,18 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-sm-3 mt-2">Löschen</div>
-                <div className="col-sm-5"></div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label> Löschen</label>
+                </div>
+
                 {/*dropdown*/}
-                <div className="col-sm-4 mt-2">
+                <div className="col-sm-4 text-end">
                   <div className="input-group">
                     <select
-                      style={{ border: 'none', background: 'none' }}
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
                       name="p_delete"
                       value={permissionData.p_delete}
                       onChange={handlePermissionDataChange}
@@ -263,14 +286,18 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-sm-3 mt-2">Exportieren</div>
-                <div className="col-sm-5"></div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label> Exportieren </label>
+                </div>
+
                 {/*dropdown*/}
-                <div className="col-sm-4 mt-2">
+                <div className="col-sm-4 text-end">
                   <div className="input-group">
                     <select
-                      style={{ border: 'none', background: 'none' }}
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
                       name="p_export"
                       value={permissionData.p_export}
                       onChange={handlePermissionDataChange}
@@ -284,203 +311,235 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                 </div>
               </div>
             </div>
-            <h5 className="mt-3 fw-bold" style={{ float: 'left' }}>
-              Dashboard
-            </h5>
-            <br />
-            <div style={{ float: 'left' }}>
-              <div className="row" onClick={() => handleSetDashboardName('Dashboard')}>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Anzeigen</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select
-                        style={{ border: 'none', background: 'none' }}
-                        name="p_show"
-                        value={permissionDashboard.p_show}
-                        onChange={handlePermissionDashboardChange}
-                      >
-                        {/* <option value="owned">Nur im Besitz</option> */}
-                        {/* <option value="Withdraw">Widerrufen</option> */}
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
-                    </div>
+
+            <div
+              className="container-fluid mt-3"
+              onClick={() => handleSetDashboardName('Dashboard')}
+            >
+              <div className="row">
+                <div className="col-12">
+                  <h4 className="heading-4">Dashboard</h4>
+                </div>
+              </div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label> Anzeigen</label>
+                </div>
+
+                {/*dropdown*/}
+                <div className="col-sm-4 text-end">
+                  <div className="input-group">
+                    <select
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
+                      name="p_show"
+                      value={permissionDashboard.p_show}
+                      onChange={handlePermissionDashboardChange}
+                    >
+                      {/* <option value="owned">Nur im Besitz</option> */}
+                      {/* <option value="Withdraw">Widerrufen</option> */}
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Bearbeiten</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select
-                        name="p_edit"
-                        value={permissionDashboard.p_edit}
-                        style={{ border: 'none', background: 'none' }}
-                        onChange={handlePermissionDashboardChange}
-                      >
-                        <option value="owned">Nur im Besitz</option>
-                        {/* <option value="Withdraw">Widerrufen</option> */}
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
-                    </div>
+              </div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label>Bearbeiten </label>
+                </div>
+
+                {/*dropdown*/}
+                <div className="col-sm-4 text-end">
+                  <div className="input-group">
+                    <select
+                      name="p_edit"
+                      value={permissionDashboard.p_edit}
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
+                      onChange={handlePermissionDashboardChange}
+                    >
+                      <option value="owned">Nur im Besitz</option>
+                      {/* <option value="Withdraw">Widerrufen</option> */}
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2 ">Löschen</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select
-                        style={{ border: 'none', background: 'none' }}
-                        name="p_delete"
-                        value={permissionDashboard.p_delete}
-                        onChange={handlePermissionDashboardChange}
-                      >
-                        <option value="owned">Nur im Besitz</option>
-                        {/* <option value="Withdraw">Widerrufen</option> */}
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
-                    </div>
+              </div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label>Löschen </label>
+                </div>
+
+                {/*dropdown*/}
+                <div className="col-sm-4 text-end">
+                  <div className="input-group">
+                    <select
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
+                      name="p_delete"
+                      value={permissionDashboard.p_delete}
+                      onChange={handlePermissionDashboardChange}
+                    >
+                      <option value="owned">Nur im Besitz</option>
+                      {/* <option value="Withdraw">Widerrufen</option> */}
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2" style={{ float: 'left' }}>
-                    Exportieren
-                  </div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select
-                        name="p_export"
-                        value={permissionDashboard.p_export}
-                        style={{ border: 'none', background: 'none' }}
-                        onChange={handlePermissionDashboardChange}
-                      >
-                        <option value="owned">Nur im Besitz</option>
-                        {/* <option value="Withdraw">Widerrufen</option> */}
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
-                    </div>
+              </div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label>Exportieren</label>
+                </div>
+
+                {/*dropdown*/}
+                <div className="col-sm-4 text-end">
+                  <div className="input-group">
+                    <select
+                      name="p_export"
+                      value={permissionDashboard.p_export}
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
+                      onChange={handlePermissionDashboardChange}
+                    >
+                      <option value="owned">Nur im Besitz</option>
+                      {/* <option value="Withdraw">Widerrufen</option> */}
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h5 className="mt-3 fw-bold" style={{ float: 'left' }}>
-              Einstellungen
-            </h5>
-            <div style={{ float: 'left' }}>
-              <div className="row" onClick={() => handleSetSettingName('Einstellungen')}>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Anzeigen</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select
-                        style={{ border: 'none', background: 'none' }}
-                        name="p_show"
-                        value={permissionSetting.p_show}
-                        onChange={handlePermissionSettingChange}
-                      >
-                        {/* <option value="owned">Nur im Besitz</option> */}
-                        {/* <option value="Withdraw">Widerrufen</option> */}
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
-                    </div>
+            <div
+              className="container-fluid mt-3"
+              onClick={() => handleSetSettingName('Einstellungen')}
+            >
+              <div className="row">
+                <div className="col-12">
+                  <h4 className="heading-4">Setting</h4>
+                </div>
+              </div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label>Anzeigen </label>
+                </div>
+
+                {/*dropdown*/}
+                <div className="col-sm-4 text-end">
+                  <div className="input-group">
+                    <select
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
+                      name="p_show"
+                      value={permissionSetting.p_show}
+                      onChange={handlePermissionSettingChange}
+                    >
+                      {/* <option value="owned">Nur im Besitz</option> */}
+                      {/* <option value="Withdraw">Widerrufen</option> */}
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Bearbeiten</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select
-                        name="p_edit"
-                        value={permissionSetting.p_edit}
-                        style={{ border: 'none', background: 'none' }}
-                        onChange={handlePermissionSettingChange}
-                      >
-                        <option value="owned">Nur im Besitz</option>s
-                        {/* <option value="Withdraw">Widerrufen</option> */}
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
-                    </div>
+              </div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label>Bearbeiten </label>
+                </div>
+
+                {/*dropdown*/}
+                <div className="col-sm-4 text-end">
+                  <div className="input-group">
+                    <select
+                      name="p_edit"
+                      value={permissionSetting.p_edit}
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
+                      onChange={handlePermissionSettingChange}
+                    >
+                      <option value="owned">Nur im Besitz</option>s
+                      {/* <option value="Withdraw">Widerrufen</option> */}
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Löschen</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select
-                        style={{ border: 'none', background: 'none' }}
-                        name="p_delete"
-                        value={permissionSetting.p_delete}
-                        onChange={handlePermissionSettingChange}
-                      >
-                        <option value="owned">Nur im Besitz</option>
-                        {/* <option value="Withdraw">Widerrufen</option> */}
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
-                    </div>
+              </div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label>Löschen </label>
+                </div>
+
+                {/*dropdown*/}
+                <div className="col-sm-4 text-end">
+                  <div className="input-group">
+                    <select
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
+                      name="p_delete"
+                      value={permissionSetting.p_delete}
+                      onChange={handlePermissionSettingChange}
+                    >
+                      <option value="owned">Nur im Besitz</option>
+                      {/* <option value="Withdraw">Widerrufen</option> */}
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-3 mt-2">Exportieren</div>
-                  <div className="col-sm-5"></div>
-                  {/*dropdown*/}
-                  <div className="col-sm-4 mt-2">
-                    <div className="input-group">
-                      <select
-                        name="p_export"
-                        value={permissionSetting.p_export}
-                        style={{ border: 'none', background: 'none' }}
-                        onChange={handlePermissionSettingChange}
-                      >
-                        <option value="owned">Nur im Besitz</option>
-                        {/* <option value="Withdraw">Widerrufen</option> */}
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                      </select>
-                    </div>
+              </div>
+
+              <div className="row d-flex justify-content-between align-items-center">
+                <div className="col-sm-3 text-start">
+                  <label> Exportieren </label>
+                </div>
+                {/*dropdown*/}
+                <div className="col-sm-4 text-end">
+                  <div className="input-group">
+                    <select
+                      name="p_export"
+                      value={permissionSetting.p_export}
+                      style={{ border: 'none' }}
+                      className="form-control form-select text-primary m-0 p-0"
+                      onChange={handlePermissionSettingChange}
+                    >
+                      <option value="owned">Nur im Besitz</option>
+                      {/* <option value="Withdraw">Widerrufen</option> */}
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary w-25"
-              data-bs-dismiss="modal"
-              onClick={close}
-              style={{ background: '#015291', color: 'white' }}
-            >
-              Abbrechen
-            </button>
-            <button
-              type="button"
-              className="btn w-25"
-              onClick={handleSubmit}
-              style={{ background: '#d04545', color: 'white' }}
-            >
-              Aktualisieren
-            </button>
+            <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
+              <button
+                type="button"
+                className="btn btn-cancel"
+                data-bs-dismiss="modal"
+                onClick={close}
+              >
+                Abbrechen
+              </button>
+              <button type="button" className="btn btn-save ms-3" onClick={handleSubmit}>
+                Aktualisieren
+              </button>
+            </div>
           </div>
         </div>
       </div>
