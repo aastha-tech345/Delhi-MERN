@@ -367,7 +367,7 @@ const Services = () => {
                           <div className="col-sm-3">Vorsorge</div>
 
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 className="check "
                                 type="checkbox"
@@ -378,7 +378,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.prevention === 'no'}
@@ -391,7 +391,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Krankheit</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.illness === 'yes'}
@@ -401,7 +401,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.illness === 'no'}
@@ -414,7 +414,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Selbstbestimmung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.selfDetermination === 'yes'}
@@ -424,7 +424,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.selfDetermination === 'no'}
@@ -437,7 +437,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Angehörigenentlastung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.relatives === 'yes'}
@@ -447,7 +447,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.relatives === 'no'}
@@ -460,7 +460,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Erfahrungen</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.lessons === 'yes'}
@@ -470,7 +470,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={motivation.lessons === 'no'}
@@ -488,7 +488,7 @@ const Services = () => {
                           <h6 style={{ color: '#244D92' }}>Intensivmedizin und Wiederbelebung</h6>
                           <div className="col-sm-3">Intensivmedizin gewünscht</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="medicineDesired"
@@ -498,7 +498,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="medicineDesired"
@@ -511,7 +511,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Keine Intensivmedizin</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="noIntensive"
@@ -521,7 +521,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="noIntensive"
@@ -534,7 +534,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Wiederbelebung gewünscht</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="revival"
@@ -544,7 +544,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="revival"
@@ -557,7 +557,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Keine Wiederbelebung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="noRevival"
@@ -567,7 +567,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="noRevival"
@@ -585,7 +585,7 @@ const Services = () => {
                           <h6 style={{ color: '#244D92' }}>Situationen am Lebensende</h6>
                           <div className="col-sm-3">Sterbeprozess</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="dyingProcess"
@@ -595,7 +595,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="dyingProcess"
@@ -608,7 +608,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Gehirnshädigung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="brainInjury"
@@ -618,7 +618,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="brainInjury"
@@ -631,7 +631,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Demenz</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="dementia"
@@ -641,7 +641,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="dementia"
@@ -659,7 +659,7 @@ const Services = () => {
                           <h6 style={{ color: '#244D92' }}>Medizinische Festlegungen</h6>
                           <div className="col-sm-3">Unverzichtbare Basisversorgung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.essential === 'yes'}
@@ -669,7 +669,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.essential === 'no'}
@@ -682,7 +682,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Keine Intensivmedizin</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="determination_noIntensive"
@@ -692,7 +692,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 name="determination_noIntensive"
@@ -705,7 +705,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Schwerstpflegebedurftigkeit</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.servere === 'yes'}
@@ -715,7 +715,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.servere === 'no'}
@@ -728,7 +728,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Kunstliche Enahrung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.noIntensive === 'yes'}
@@ -738,7 +738,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.noIntensive === 'no'}
@@ -751,7 +751,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Kunstliche Flussigkeitszufuhr</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.artificialHydration === 'yes'}
@@ -761,7 +761,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.artificialHydration === 'no'}
@@ -774,7 +774,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Schmerz- und Beschwerdelinderung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.discomfort === 'yes'}
@@ -784,7 +784,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.discomfort === 'no'}
@@ -797,7 +797,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Medikamente zur Linderung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.medication === 'yes'}
@@ -807,7 +807,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.medication === 'no'}
@@ -820,7 +820,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Medikamentenverzicht</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.medicines === 'yes'}
@@ -830,7 +830,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.medicines === 'no'}
@@ -843,7 +843,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Organspende</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.organDonation === 'yes'}
@@ -853,7 +853,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.organDonation === 'no'}
@@ -866,7 +866,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Forschungszwecke</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.researchPurpose === 'yes'}
@@ -876,7 +876,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.researchPurpose === 'no'}
@@ -889,7 +889,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Ablehnung Organspende</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.rejection_organ === 'yes'}
@@ -899,7 +899,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.rejection_organ === 'no'}
@@ -912,7 +912,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Herzschrittmacher</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.pacemaker === 'yes'}
@@ -922,7 +922,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.pacemaker === 'no'}
@@ -935,7 +935,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Defibrillator</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.defibrillator === 'yes'}
@@ -945,7 +945,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.defibrillator === 'no'}
@@ -958,7 +958,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Sterbeheife</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.dyingYeast === 'yes'}
@@ -968,7 +968,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.dyingYeast === 'no'}
@@ -981,7 +981,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Suizidoption</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.suicideOption === 'yes'}
@@ -991,7 +991,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.suicideOption === 'no'}
@@ -1004,7 +1004,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Verbindlichkeit</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.commitment === 'yes'}
@@ -1014,7 +1014,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.commitment === 'no'}
@@ -1027,7 +1027,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Ermessensbereich Bevollmachtigte</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.discretionaryArea === 'yes'}
@@ -1037,7 +1037,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={determination.discretionaryArea === 'no'}
@@ -1055,7 +1055,7 @@ const Services = () => {
                           <h6 style={{ color: '#244D92' }}>Aufenthaltsort am Lebensende</h6>
                           <div className="col-sm-3">Vertraute Umgebung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={whereabout.familiarEnvironment === 'yes'}
@@ -1065,7 +1065,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={whereabout.familiarEnvironment === 'no'}
@@ -1078,7 +1078,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Hospiz</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={whereabout.hospice === 'yes'}
@@ -1088,7 +1088,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={whereabout.hospice === 'no'}
@@ -1101,7 +1101,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Ins Krankenhaus</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={whereabout.toHospital === 'yes'}
@@ -1111,7 +1111,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={whereabout.toHospital === 'no'}
@@ -1124,7 +1124,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Kein Krankenhaus</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={whereabout.notHospital === 'yes'}
@@ -1134,7 +1134,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={whereabout.notHospital === 'no'}
@@ -1198,7 +1198,7 @@ const Services = () => {
                           <h6 style={{ color: '#244D92' }}>Bestattungswunsche</h6>
                           <div className="col-sm-3">Feuerbestattung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={funeralwishes.cremation === 'yes'}
@@ -1208,7 +1208,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={funeralwishes.cremation === 'no'}
@@ -1221,7 +1221,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Erdbestattung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={funeralwishes.burial === 'yes'}
@@ -1231,7 +1231,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={funeralwishes.burial === 'no'}
@@ -1277,7 +1277,7 @@ const Services = () => {
                           <h6 style={{ color: '#244D92' }}>Vollmachten</h6>
                           <div className="col-sm-3">Blanko-formulare</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={atorney.forms === 'yes'}
@@ -1287,7 +1287,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={atorney.forms === 'no'}
@@ -1300,7 +1300,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Betreuungsverfugung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={atorney.careOrder === 'yes'}
@@ -1310,7 +1310,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={atorney.careOrder === 'no'}
@@ -1328,7 +1328,7 @@ const Services = () => {
                           <h6 style={{ color: '#244D92' }}>Gebühr</h6>
                           <div className="col-sm-3">Regulär</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={fee.regular === 'yes'}
@@ -1338,7 +1338,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={fee.regular === 'no'}
@@ -1351,7 +1351,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Ermäßigt</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={fee.reduced === 'yes'}
@@ -1361,7 +1361,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={fee.reduced === 'no'}
@@ -1379,7 +1379,7 @@ const Services = () => {
                           <h6 style={{ color: '#244D92' }}>Weitere Angaben</h6>
                           <div className="col-sm-3">Dringlichkeit</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={information.urgency === 'yes'}
@@ -1389,7 +1389,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={information.urgency === 'no'}
@@ -1402,7 +1402,7 @@ const Services = () => {
                           </div>
                           <div className="col-sm-3">Abweichende Lieferanschrift</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={information.alternateAddress === 'yes'}
@@ -1412,7 +1412,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={information.alternateAddress === 'no'}
@@ -1429,7 +1429,7 @@ const Services = () => {
                         <div className="container-fluid">
                           <div className="row">
                             <div
-                              className="col-md-5 col-sm-7"
+                              className="col-md-5 col-sm-12"
                               style={{
                                 border: '1px solid lightgray',
                                 borderRadius: '5px',
@@ -1447,7 +1447,7 @@ const Services = () => {
                               />
                             </div>
                             {/* <div className="col-sm-2"></div> */}
-                            <div className="col-md-7 col-sm-6">
+                            <div className="col-md-7 col-sm-12 px-md-2 p-0 mt-md-0  mt-2">
                               <div
                                 className="container-fluid"
                                 style={{ border: '1px solid lightgray', borderRadius: '5px' }}
@@ -1649,7 +1649,7 @@ const Services = () => {
                         <div className="row mt-3 mb-5 ">
                           <div className="col-sm-3">Datenschutz</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={information.dataProtection === 'yes'}
@@ -1659,7 +1659,7 @@ const Services = () => {
                               />{' '}
                               <span>ja</span>
                             </div>
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={information.dataProtection === 'no'}
@@ -1673,7 +1673,7 @@ const Services = () => {
 
                           <div className="col-sm-3">Hinterlegung</div>
                           <div className="col-sm-2 d-flex">
-                            <div className="radio-check-wrap">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
                                 checked={information.deposit === 'yes'}
