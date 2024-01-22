@@ -470,7 +470,12 @@ const CustomerList = () => {
             </body>
           </html>
         `)
-
+    const cancelButton = window.document.getElementById('cancelButton')
+    if (cancelButton) {
+      cancelButton.addEventListener('click', () => {
+        window.close() // Close the print page
+      })
+    }
     window.print()
   }
 
