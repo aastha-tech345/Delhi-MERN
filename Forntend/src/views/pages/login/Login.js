@@ -45,7 +45,7 @@ const Login = () => {
       // console.log('aastha', result)
 
       if (result.success === true) {
-        toast.success('User Login Successfully')
+        toast.success('Benutzeranmeldung erfolgreich')
         const token = result?.user?.tokens[0]?.token
         window.localStorage.setItem('token', token)
         window.localStorage.setItem('record_id', result?.user?._id)

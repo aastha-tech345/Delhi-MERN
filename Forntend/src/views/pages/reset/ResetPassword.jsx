@@ -22,11 +22,10 @@ const ResetPassword = () => {
 
     if (email === '') {
       // Handle case when email is empty
-      console.log('Email is required')
-      return notify('Email Field Required')
+      return notify('E-Mail ist erforderlich')
     } else if (!email.includes('@')) {
       // Handle case when email is invalid
-      console.log('Invalid email format')
+      console.log('Ungültiges Email-Format')
       return
     }
 
@@ -45,9 +44,8 @@ const ResetPassword = () => {
       console.log('Response:', data)
 
       if (data.status === 200) {
-        notify('Password reset link sent successfully')
+        notify('Der Link zum Zurücksetzen des Passworts wurde erfolgreich gesendet')
         setEmail('')
-        setMessage('Password reset link sent successfully')
       } else if (data.status === 401) {
         console.log('Unauthorized error')
       } else if (data.status === 404) {
