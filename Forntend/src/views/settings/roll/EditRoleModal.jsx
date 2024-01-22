@@ -92,7 +92,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
       console.log('updatedRole', res)
       if (res?.status === 200) {
         setEditEmployee(!editEmployee)
-        notify('Role Updated Successfully')
+        notify('Rolle erfolgreich aktualisiert')
         setTimeout(() => {
           setOpenModal(false)
         }, 2000)

@@ -230,7 +230,7 @@ const Services = () => {
       }
 
       if (!isAnyFieldFilled) {
-        toast.warning('Please fill in at least one field')
+        toast.warning('Bitte fülle mindestens ein Feld aus')
         return
       }
 
@@ -249,7 +249,7 @@ const Services = () => {
 
       let result = await response.json()
       // console.log('aastha', result)
-      toast.success('Data Saved Successfully')
+      toast.success('SPV-Daten erfolgreich gespeichert')
 
       // Reset all state variables to initial values
       resetStateVariables()

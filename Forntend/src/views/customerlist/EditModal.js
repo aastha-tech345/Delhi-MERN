@@ -66,10 +66,10 @@ const EditModal = ({ setHide, getDetails }) => {
 
     setValidated(true)
     if (!data.fname || !data.lname) {
-      return toast.warning('Please Fill Fname & Lname')
+      return toast.warning('Bitte geben Sie Fname und Lname ein')
     }
     if (!email) {
-      return toast.warning('Invalid Email')
+      return toast.warning('Ungültige E-Mail')
     }
     e.preventDefault()
     try {
@@ -88,11 +88,11 @@ const EditModal = ({ setHide, getDetails }) => {
           group: '',
         })
         setEmail('')
-        toast.success(res?.data?.message)
+        toast.success('Kundendatensatz erfolgreich aktualisiert')
         close()
         getDetails()
       } else {
-        toast.error('Something Went Wrong')
+        toast.error('Etwas ist schief gelaufen')
       }
     } catch (error) {
       console.log(error)

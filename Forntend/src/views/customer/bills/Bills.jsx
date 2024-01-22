@@ -45,7 +45,7 @@ const Bills = () => {
   let data = { ...productData, colleague, invoiceDate }
   const saveData = async () => {
     if (!productData?.product) {
-      return toast.warning('Please Product Name...')
+      return toast.warning('Bitte Produktname...')
     }
     try {
       let response = await fetch(`${apiUrl}/invoice/create_invoice`, {
@@ -62,7 +62,7 @@ const Bills = () => {
 
       let result = await response.json()
       // console.log(result)
-      toast.success('Data Saved Successfully')
+      toast.success('Rechnungsdaten erfolgreich gespeichert')
       setProductData({
         product: '',
         paymentMethod: '',
@@ -73,7 +73,7 @@ const Bills = () => {
       setInvoiceDate('')
       // getDetails()
     } catch (error) {
-      toast.error('Please Fill in all details')
+      toast.error('Bitte füllen Sie alle Angaben aus')
       // console.error('Error during API call:', error)
     }
   }

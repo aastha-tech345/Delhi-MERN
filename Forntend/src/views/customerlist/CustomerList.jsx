@@ -262,13 +262,13 @@ const CustomerList = () => {
 
         if (response.ok) {
           getDetails()
-          toast.success('Record was deleted successfully')
+          toast.success('Der Datensatz wurde erfolgreich gelöscht')
         } else {
           const errorData = await response.json()
           console.error('Failed to delete record:', response.status, response.statusText, errorData)
         }
       } catch (error) {
-        console.error('An error occurred while deleting the record:', error)
+        toast.error('Beim Löschen des Datensatzes ist ein Fehler aufgetreten')
       }
       setIsModalVisible(false)
     }
@@ -315,7 +315,7 @@ const CustomerList = () => {
       }
 
       let result = await response.json()
-      toast.success(result?.message)
+      toast.success('Kundendatensatz erfolgreich gespeichert')
       setFname('')
       setLand('')
       setLname('')
@@ -331,7 +331,7 @@ const CustomerList = () => {
     } catch (error) {
       // console.error('Error during API call:', error)
 
-      toast.error('Email-`Id Already Exists')
+      toast.error('E-Mail-ID existiert bereits')
     }
   }
 
@@ -378,7 +378,7 @@ const CustomerList = () => {
       const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
       setPrintRecord(activeRecords)
     } catch (error) {
-      console.error('Error fetching customer record:', error)
+      toast.error('Fehler beim Abrufen des Kundendatensatzes:')
     }
   }
 

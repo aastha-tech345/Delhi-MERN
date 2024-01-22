@@ -73,10 +73,10 @@ const EditModal = ({ setEdit, getDetails }) => {
       // setLoadVale(true)
       // const { fname, lname, gender, phone } = data
       if (!data.fname || !data.lname) {
-        return toast.warning('Please fill Fname & Lname')
+        return toast.warning('Bitte geben Sie Fname und Lname ein')
       }
       if (!email) {
-        return toast.error('Invalid Email')
+        return toast.error('Ungültige E-Mail')
       }
       const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, dataa)
       if (res.status === 200) {
@@ -88,11 +88,11 @@ const EditModal = ({ setEdit, getDetails }) => {
           gender: '',
         })
         setEmail('')
-        toast.success('Contact Updated Successfully')
+        toast.success('Kontakt erfolgreich aktualisiert')
         close()
         getDetails()
       } else {
-        toast.error('Email-`Id Already Exists')
+        toast.error('E-Mail-ID existiert bereits')
       }
     } catch (error) {
       console.log(error)
@@ -167,8 +167,10 @@ const EditModal = ({ setEdit, getDetails }) => {
                     name="phone"
                     value={data.phone}
                     onChange={(e) => {
-                      const inputValue = e.target.value.replace(/[^0-9]/g, '')
-                      handleChange({ e, name: 'phone', value: inputValue })
+                      const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                      if (/^\+?[0-9]*$/.test(inputValue)) {
+                        handleChange({ target: { name: 'phone', value: inputValue } })
+                      }
                     }}
                     type="tel"
                     placeholder="Telefon"

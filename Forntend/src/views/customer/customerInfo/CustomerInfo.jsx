@@ -54,6 +54,9 @@ const CustomerInfo = () => {
     emergencyPass: '',
     updateStamp: '',
     nextBrand: '',
+    lastStamp: '',
+    startDeposit: '',
+    reminderStamp: '',
   })
   const [customerBurial, setCustomerBurial] = useState({
     termination: false,
@@ -84,9 +87,10 @@ const CustomerInfo = () => {
 
   //customerInfoChange started
   const customerInfoChange = (e) => {
-    const { name, value } = e.target
-    setCustomerInfoStatu({ ...customerInfoStatu, [name]: value })
+    const { name, value, checked, type } = e.target
+    setCustomerInfoStatu({ ...customerInfoStatu, [name]: type === 'checkbox' ? checked : value })
   }
+
   //customerInfoChange end
 
   // const customerChange = (e) => {
@@ -112,8 +116,8 @@ const CustomerInfo = () => {
   //customerContact end
   //customerContact started
   const DeliveryChange = (e) => {
-    const { name, value } = e.target
-    setCustomerDelivery({ ...customerDelivery, [name]: value })
+    const { name, value, type, checked } = e.target
+    setCustomerDelivery({ ...customerDelivery, [name]: type === 'checkbox' ? checked : value })
   }
   //customerContact end
 
@@ -179,7 +183,7 @@ const CustomerInfo = () => {
     //   }
     // }
     if (!email) {
-      return toast.error('Invalid Email')
+      return toast.error('Ungültige E-Mail')
     }
 
     try {
@@ -195,17 +199,18 @@ const CustomerInfo = () => {
       console.log(result)
 
       if (result?.message === 'CustomerInfo was created') {
-        toast.success('Data saved successfully!')
+        toast.success('Kundeninfo erfolgreich gespeichert')
         setOrderingMaterials({
           orderNumber: '',
           newsletterDate: '',
           extras: '',
-          dataProtection: '',
+          newsletterSubscription: '',
         })
         setCustomerInfoStatu({
           clientStatus: '',
           employee: '',
           dataCollection: '',
+          dataProtection: '',
         })
         setThose('')
         setEmail('')
@@ -252,7 +257,7 @@ const CustomerInfo = () => {
       console.log('Error saving data:', error)
 
       // Show error toast
-      toast.error('Error saving data. Please try again.')
+      toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
     }
   }
 
@@ -414,6 +419,7 @@ const CustomerInfo = () => {
                                 onChange={customerInfoChange}
                                 checked={customerInfoStatu.dataProtection}
                                 id="inputPassword"
+                                onClick={(e) => e.stopPropagation()}
                               />
                               <span></span>
                             </div>
@@ -796,9 +802,7 @@ const CustomerInfo = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Name
-                        </label>
+                        <label className="col-sm-4 col-form-label">Name</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -807,7 +811,6 @@ const CustomerInfo = () => {
                             name="lname"
                             value={customerDelivery.lname}
                             className="form-control"
-                            id="inputPassword"
                           />
                         </div>
                       </div>
@@ -875,9 +878,7 @@ const CustomerInfo = () => {
                         </div>
                       </div>
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Bereits bezahlt
-                        </label>
+                        <label className="col-sm-4 col-form-label">Bereits bezahlt</label>
                         <div className="col-sm-6">
                           <div className="radio-check-wrap">
                             <input
@@ -885,6 +886,7 @@ const CustomerInfo = () => {
                               name="alreadyPaid"
                               checked={customerDelivery.alreadyPaid}
                               type="checkbox"
+                              onClick={(e) => e.stopPropagation()}
                             />
                             <span>ja</span>
                           </div>

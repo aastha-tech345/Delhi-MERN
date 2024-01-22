@@ -172,10 +172,10 @@ const Contact = () => {
 
   const saveData = async () => {
     if (!email) {
-      return toast.error('Invalid Email')
+      return toast.error('Ungültige E-Mail')
     }
     if (!data.fname || !data.lname) {
-      return toast.warning('Please Fill Fname & Lname')
+      return toast.warning('Bitte geben Sie Fname und Lname ein')
     }
     try {
       let response = await fetch(`${apiUrl}/contact/create_contact`, {
@@ -192,7 +192,7 @@ const Contact = () => {
       }
 
       let result = await response.json()
-      toast.success(result?.message)
+      toast.success('Kontaktdaten erfolgreich erstellt')
       setData('')
       setEmail('')
       handleClose()
@@ -200,7 +200,7 @@ const Contact = () => {
     } catch (error) {
       // console.error('Error during API call:', error)
 
-      toast.error('Email-`Id Already Exists')
+      toast.error('E-Mail-ID existiert bereits')
     }
   }
 
@@ -213,6 +213,7 @@ const Contact = () => {
         `${apiUrl}/contact/get_contact/${custData?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
+      console.log('data', data)
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setContactRecord(activeRecords)
