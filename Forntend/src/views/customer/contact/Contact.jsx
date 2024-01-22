@@ -29,22 +29,27 @@ const Contact = () => {
       title: 'NAME DES KUNDEN',
       dataIndex: 'fname',
       render: (text) => <a>{text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}</a>,
+      width: '20%',
     },
     {
       title: 'KUNDEN-ID',
       dataIndex: 'id',
+      width: '20%',
     },
     {
       title: 'E-MAIL',
       dataIndex: 'email',
+      width: '20%',
     },
     {
       title: 'TELEFON',
       dataIndex: 'phone',
+      width: '20%',
     },
     {
       title: 'STATUS',
       dataIndex: 'statu',
+      width: '20%',
       render: (text, record) => (
         <div
           style={{
@@ -301,7 +306,7 @@ const Contact = () => {
               </button>
             </div>
           </div>
-          <div className="col-sm-3">
+          <div className="col-sm-3 text-end">
             {/* &nbsp;&nbsp; */}
             <button
               className="btn btn"

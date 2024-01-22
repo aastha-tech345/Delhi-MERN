@@ -52,11 +52,11 @@ const Login = () => {
         navigate('/dashboard')
         window.location.reload()
       } else {
-        notify('Invalid Credentials')
+        notify('Ungültige Anmeldeinformationen')
       }
     } catch (error) {
       console.error('Error:', error)
-      toast.error('Invalid Credentials')
+      toast.error('Ungültige Anmeldeinformationen')
     }
   }
 

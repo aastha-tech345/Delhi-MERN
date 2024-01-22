@@ -161,18 +161,22 @@ const CreateUser = () => {
       title: 'ID',
       dataIndex: '_id',
       render: (text) => <a>{text?.slice(-6)}</a>,
+      width: '20%',
     },
     {
       title: 'NAME',
       dataIndex: 'username',
+      width: '30%',
     },
     {
       title: 'E-Mail Adresse',
       dataIndex: 'email', // Change 'email address' to 'emailAddress'
+      width: '30%',
     },
     {
       title: 'Super Verwalter',
       dataIndex: 'isAdminFullRights',
+      width: '20%',
       render: (text, record) => (
         <div
           style={{
