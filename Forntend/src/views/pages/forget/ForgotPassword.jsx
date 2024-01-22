@@ -75,6 +75,7 @@ const ForgotPassword = () => {
       const data = await res.json()
       console.log('dataa', data)
       if (data?.message === 'Das Passwort wurde erfolgreich geändert.') {
+        toast.success('Passwort erfolgreich zurückgesetzt')
         localStorage.removeItem('email')
         return navigate('/')
       }
