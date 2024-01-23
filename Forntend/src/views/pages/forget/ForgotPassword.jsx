@@ -74,11 +74,13 @@ const ForgotPassword = () => {
 
       const data = await res.json()
       console.log('dataa', data)
-      if (data?.status === 200) {
-        notify('Passwort erfolgreich zurückgesetzt')
+      if (data?.message === 'Password changed successfully.') {
+        notify('Password Resest Successfully')
         localStorage.removeItem('email')
         return navigate('/')
       }
+
+      notify('Please Verify Your Email First')
     } catch (error) {
       console.log(error)
     }
