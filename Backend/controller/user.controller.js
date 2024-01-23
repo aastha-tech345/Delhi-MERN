@@ -591,6 +591,7 @@ exports.changePassword = async (req, res) => {
 
     await user.save();
     return res.status(200).json({
+      status: 200,
       message: "Password changed successfully.",
       user,
     });

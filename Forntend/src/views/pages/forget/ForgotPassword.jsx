@@ -54,12 +54,12 @@ const ForgotPassword = () => {
       e.preventDefault()
 
       if (password === '') {
-        return toast.error('Passwort wird benötigt!', {
+        return toast.error('password is required!', {
           position: 'top-center',
         })
       }
       if (password.length < 6) {
-        return toast.error('Passwort muss 6 Zeichen lang sein!', {
+        return toast.error('password must be 6 char!', {
           position: 'top-center',
         })
       }
@@ -74,13 +74,11 @@ const ForgotPassword = () => {
 
       const data = await res.json()
       console.log('dataa', data)
-      if (data?.message === 'Password changed successfully.') {
-        toast.success('Passwort erfolgreich zurückgesetzt')
+      if (data?.status === 200) {
+        notify('Passwort erfolgreich zurückgesetzt')
         localStorage.removeItem('email')
         return navigate('/')
       }
-
-      toast.warning('Bitte überprüfen Sie zuerst Ihre E-Mail')
     } catch (error) {
       console.log(error)
     }
