@@ -12,6 +12,7 @@ import Form from 'react-bootstrap/Form'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
+import PrintModal from './PrintModal'
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
   let lgUser = localStorage.getItem('record')
@@ -19,7 +20,7 @@ const CustomerList = () => {
   // console.log('loginData', loginData)
   const apiUrl = process.env.REACT_APP_API_URL
   const [customer_record, setCustomerRecord] = useState([])
-  const [print, setPrintRecord] = useState([])
+  const [printRecord, setPrintRecord] = useState([])
   const [fname, setFname] = useState()
   const [lname, setLname] = useState()
   const [phone, setPhone] = useState()
@@ -34,7 +35,6 @@ const CustomerList = () => {
   const [show, setShow] = useState(false)
   const [validated, setValidated] = useState(false)
   const [page, setPage] = useState(1)
-  const [content, setContent] = useState('')
   const [countPage, setCountPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState('')
   // console.log('countPage 39', countPage)
@@ -64,6 +64,7 @@ const CustomerList = () => {
   //     setContent(value)
   //   }
   // }
+  const [print, setPrint] = useState(false)
 
   let a = localStorage.getItem('tabId') || 'customer_info'
   // console.log('aastha', a)
@@ -439,7 +440,7 @@ const CustomerList = () => {
   let customerRecord = localStorage.getItem('CustomerRecord')
   const customerItems = []
 
-  print?.map((item) => {
+  printRecord?.map((item) => {
     // console.log('item record', item)
     if (item?.designation === 'customer') {
       // console.log('customer')
@@ -451,52 +452,21 @@ const CustomerList = () => {
   console.log('Customer items:', customerItems)
 
   const handlePrint = (record) => {
-    console.log('aastha print')
-    const printTemplate = customerItems[0].content
-
-    let contentToPrint = ''
-
-    const recordContent = printTemplate
-      .replace('{fname}', record.fname)
-      .replace('{email}', record.email)
-      .replace('{id}', record.id)
-      .replace('{phone}', record.phone)
-      .replace('{group}', record.group)
-
-    contentToPrint += `<div>${recordContent}</div>`
-
-    // const printWindow = window.open('', '_blank')
-    window.document.write(`
-          <html>
-            <head>
-            </head>
-            <body>
-              ${contentToPrint}
-            </body>
-          </html>
-        `)
-    const cancelButton = window.document.getElementById('cancelButton')
-    if (cancelButton) {
-      cancelButton.addEventListener('click', () => {
-        window.close() // Close the print page
-      })
-    }
-    window.print()
+    let res = JSON.stringify(record)
+    localStorage.setItem('CustomerRecord', res)
+    setPrint(true)
   }
 
   useEffect(() => {
     getDetails()
     getPrintDetails()
   }, [page, itemsPerPage])
-  // useEffect(() => {
-  //   getDetails()
-  //   getPrintDetails()
-  // }, [page])
 
   return (
     <>
       <div>
         {hide ? <EditModal setHide={setHide} getDetails={getDetails} /> : ''}
+        {print ? <PrintModal setPrint={setPrint} getDetails={getDetails} /> : ''}
         <div className="page-title">
           <h2>KlientInnen-Listen</h2>
         </div>

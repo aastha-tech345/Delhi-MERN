@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Divider, Table } from 'antd'
 import Modal from 'react-bootstrap/Modal'
-import { MdAdd, MdOutlineEdit } from 'react-icons/md'
+import { MdAdd, MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import DeleteModal from './DeleteModal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { FiFilter } from 'react-icons/fi'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
+import PrintModal from './PrintModal'
 
 const Contact = () => {
   let lgUser = localStorage.getItem('record')
@@ -74,7 +75,7 @@ const Contact = () => {
           {/* {console.log('contactRecord', record?.added_by)} */}
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
-          loginData?.user?.isAdminFullRights == 'true' ? (
+          loginData?.user?.isAdminFullRights === 'true' ? (
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
@@ -103,6 +104,14 @@ const Contact = () => {
             ''
           )}
           {/* &nbsp; */}
+          <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => handlePrint(record)}
+          >
+            {' '}
+            <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
+            &nbsp;Drucke
+          </button>
         </>
       ),
     },
@@ -128,6 +137,7 @@ const Contact = () => {
   const [contactRecord, setContactRecord] = useState([])
   const [search, setSearch] = useState('')
   const [hide, setHide] = useState(false)
+  const [print, setPrint] = useState(false)
   const [edit, setEdit] = useState(false)
   const [contactId, setContactId] = useState('')
   const [page, setPage] = useState(1)
@@ -156,10 +166,10 @@ const Contact = () => {
     setHide(true)
   }
 
-  const handleEdit = (record) => {
+  const handlePrint = (record) => {
     let recordData = JSON.stringify(record)
     localStorage.setItem('ContactEditDetails', recordData)
-    setEdit(true)
+    setPrint(true)
   }
 
   const handleEmailChange = (e) => {
@@ -226,6 +236,7 @@ const Contact = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(parseInt(e.target.value, 10))
     setPage(1)
@@ -255,6 +266,11 @@ const Contact = () => {
   }
   let dataa = contactRecord
 
+  const handleEdit = (record) => {
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('ContactEditDetails', recordData)
+    setEdit(true)
+  }
   useEffect(() => {
     setId(generateRandomId())
     getDetails()
@@ -264,6 +280,7 @@ const Contact = () => {
     <div style={{ background: '#fff' }}>
       {hide ? <DeleteModal setHide={setHide} contactId={contactId} getDetails={getDetails} /> : ''}
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
+      {print ? <PrintModal setPrint={setPrint} getDetails={getDetails} /> : ''}
       <Customer />
       <h5 className="mx-4">Kontakte</h5>
       <div className="container-fluid">
