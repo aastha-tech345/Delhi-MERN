@@ -29,7 +29,7 @@ const Contact = () => {
     {
       title: 'NAME DES KUNDEN',
       dataIndex: 'fname',
-      render: (text) => <a>{text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}</a>,
+      render: (text) => <a>{text?.slice(0, 1)?.toUpperCase() + text?.slice(1)?.toLowerCase()}</a>,
       width: '20%',
     },
     {

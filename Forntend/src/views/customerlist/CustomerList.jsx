@@ -123,7 +123,7 @@ const CustomerList = () => {
     {
       title: 'AKTION',
       dataIndex: 'action',
-      hidden: true,
+      // hidden: true,
       render: (_, record) => (
         <>
           {(loginData?.user?._id === record.created_by && verifyEditPer().includes('owned')) ||
