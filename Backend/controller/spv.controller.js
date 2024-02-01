@@ -3,6 +3,7 @@ const CustomerModel = require("../models/customer.model");
 
 exports.createSpv = async (req, res) => {
   try {
+    console.log("dsgdsdfjdhkgjkdf", req.body);
     const {
       motivation,
       resuscitation,
@@ -28,7 +29,7 @@ exports.createSpv = async (req, res) => {
       atorney,
       fee,
       information,
-      customer_id
+      customer_id,
     });
 
     const result = await spv.save();
@@ -47,7 +48,7 @@ exports.getSpv = async (req, res) => {
     const result = await SpvInfomation.SpvInfo.find();
     res.send(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
@@ -55,41 +56,44 @@ exports.getSpvData = async (req, res) => {
   try {
     const result = await SpvInfomation.SpvInfo.findOne({ _id: req.params.id });
     if (!result) {
-      return res.status(404).send({ error: 'SPV information not found' });
+      return res.status(404).send({ error: "SPV information not found" });
     }
     res.send(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
 exports.getSpvDataUpdate = async (req, res) => {
   try {
-    const result = await SpvInfomation.SpvInfo.updateOne({ _id: req.params.id }, { $set: req.body });
+    const result = await SpvInfomation.SpvInfo.updateOne(
+      { _id: req.params.id },
+      { $set: req.body }
+    );
     res.send(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
 exports.getSpvDataDelete = async (req, res) => {
   try {
-    const result = await SpvInfomation.SpvInfo.deleteOne({ _id: req.params.id });
+    const result = await SpvInfomation.SpvInfo.deleteOne({
+      _id: req.params.id,
+    });
     res.send(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: "Internal Server Error" });
   }
 };
 
 exports.getSpvSearch = async (req, res) => {
   try {
     const result = await SpvInfomation.SpvInfo.find({
-      "$or": [
-        { fname: { $regex: req.params.key } }
-      ]
+      $or: [{ fname: { $regex: req.params.key } }],
     });
     res.send(result);
   } catch (error) {
-    res.status(500).send({ error: 'Internal Server Error' });
+    res.status(500).send({ error: "Internal Server Error" });
   }
 };

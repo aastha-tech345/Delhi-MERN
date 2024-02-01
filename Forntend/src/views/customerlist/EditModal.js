@@ -25,7 +25,7 @@ const EditModal = ({ setHide, getDetails }) => {
     fname: response?.fname,
     lname: response?.lname,
     street: response?.street,
-    // email: response?.email,
+    dob: response?.dob,
     phone: response?.phone,
     plz: response?.plz,
     city: response?.city,
@@ -58,6 +58,7 @@ const EditModal = ({ setHide, getDetails }) => {
   const dataa = { ...data, email }
 
   const handleSubmit = async (e) => {
+    console.log('data', dataa)
     const form = e.currentTarget
     if (form.checkValidity() === false) {
       e.preventDefault()
@@ -86,6 +87,7 @@ const EditModal = ({ setHide, getDetails }) => {
           city: '',
           land: '',
           group: '',
+          dob: '',
         })
         setEmail('')
         toast.success('Kundendatensatz erfolgreich aktualisiert')
@@ -240,7 +242,31 @@ const EditModal = ({ setHide, getDetails }) => {
                   />
                 </div>
               </div>
-
+              <div className="row">
+                <div className="col-sm-6">
+                  <input
+                    value={data.dob}
+                    onChange={handleChange}
+                    type="date"
+                    placeholder="Geburtsdatum"
+                    className="form-control"
+                    id="inputTelephone"
+                    maxLength={10}
+                    minLength={3}
+                  />
+                </div>
+                <div className="col-sm-6">
+                  <input
+                    type="text"
+                    name="land"
+                    value={data.land}
+                    onChange={handleChange}
+                    placeholder="Land"
+                    className="form-control"
+                    id="inputPassword"
+                  />
+                </div>
+              </div>
               <div className="row">
                 <div className="col-sm-6">
                   <select

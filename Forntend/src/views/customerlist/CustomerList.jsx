@@ -299,7 +299,7 @@ const CustomerList = () => {
     }
 
     setValidated(true)
-    let data = { fname, lname, street, city, phone, plz, email, land, group, id, created_by }
+    let data = { fname, lname, street, city, phone, dob, plz, email, land, group, id, created_by }
     if (!email) {
       return notify('Invalid Email')
     }
@@ -663,6 +663,34 @@ const CustomerList = () => {
                           setCity(inputValue)
                         }}
                         placeholder="Stadt"
+                        className="form-control"
+                        id="inputPassword"
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <input
+                        value={dob}
+                        onChange={(e) => {
+                          setDob(e.target.value)
+                        }}
+                        type="date"
+                        placeholder="Geburtsdatum"
+                        className="form-control"
+                        id="inputTelephone"
+                        maxLength={10}
+                        minLength={3}
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <input
+                        type="text"
+                        value={land}
+                        onChange={(e) => {
+                          setLand(e.target.value)
+                        }}
+                        placeholder="Land"
                         className="form-control"
                         id="inputPassword"
                       />

@@ -6,6 +6,7 @@ const motivationSchema = new mongoose.Schema({
   selfDetermination: { type: String },
   relatives: { type: String },
   lessons: { type: String },
+  matarialInformation: { type: String },
 });
 
 const resuscitationSchema = new mongoose.Schema({
@@ -13,12 +14,14 @@ const resuscitationSchema = new mongoose.Schema({
   noIntensive: { type: String },
   revival: { type: String },
   noRevival: { type: String },
+  resuscitationInformation: { type: String },
 });
 
 const situationSchema = new mongoose.Schema({
   dyingProcess: { type: String },
   brainInjury: { type: String },
   dementia: { type: String },
+  situationInformation: { type: String },
 });
 
 const determinationSchema = new mongoose.Schema({
@@ -39,6 +42,7 @@ const determinationSchema = new mongoose.Schema({
   rejection_organ: { type: String },
   pacemaker: { type: String },
   determination_noIntensive: { type: String },
+  determinationInformation: { type: String },
 });
 
 const whereaboutSchema = new mongoose.Schema({
@@ -51,12 +55,14 @@ const supportSchema = new mongoose.Schema({
   doctor: { type: String },
   mentalSupport: { type: String },
   absolutelyNot: { type: String },
+  mentalInformation: { type: String },
 });
 const funeralwishesSchema = new mongoose.Schema({
   cremation: { type: String },
   burial: { type: String },
   arrangement: { type: String },
   miscellaneous: { type: String },
+  funeralInformation: { type: String },
 });
 const atorneySchema = new mongoose.Schema({
   forms: { type: String },
@@ -66,6 +72,7 @@ const atorneySchema = new mongoose.Schema({
 const feeSchema = new mongoose.Schema({
   regular: { type: String },
   reduced: { type: String },
+  feeInformation: { type: String },
 });
 
 const informationSchema = new mongoose.Schema({

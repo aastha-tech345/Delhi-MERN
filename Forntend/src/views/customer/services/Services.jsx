@@ -14,18 +14,21 @@ const Services = () => {
     selfDetermination: '',
     relatives: '',
     lessons: '',
+    matarialInformation: '',
   })
   const [resuscitation, setResuscitation] = useState({
     medicineDesired: '',
     noIntensive: '',
     revival: '',
     noRevival: '',
+    resuscitationInformation: '',
   })
 
   const [situation, setSituation] = useState({
     dyingProcess: '',
     brainInjury: '',
     dementia: '',
+    situationInformation: '',
   })
   const [determination, setDetermination] = useState({
     essential: '',
@@ -45,6 +48,7 @@ const Services = () => {
     determination_noIntensive: '',
     rejection_organ: '',
     pacemaker: '',
+    determinationInformation: '',
   })
 
   const [whereabout, setWhereabout] = useState({
@@ -58,6 +62,7 @@ const Services = () => {
     doctor: '',
     mentalSupport: '',
     absolutelyNot: '',
+    mentalInformation: '',
   })
 
   const [funeralwishes, setFuneralwishes] = useState({
@@ -65,6 +70,7 @@ const Services = () => {
     burial: '',
     arrangement: '',
     miscellaneous: '',
+    funeralInformation: '',
   })
 
   const [atorney, setAtorney] = useState({
@@ -74,6 +80,7 @@ const Services = () => {
   const [fee, setFee] = useState({
     regular: '',
     reduced: '',
+    feeInformation: '',
   })
   const [information, setInformation] = useState({
     urgency: '',
@@ -200,6 +207,7 @@ const Services = () => {
   }
 
   const saveData = async () => {
+    console.log('data', data)
     try {
       // Check if at least one field is filled
       const sections = [
@@ -248,7 +256,7 @@ const Services = () => {
       }
 
       let result = await response.json()
-      // console.log('aastha', result)
+      console.log('aastha', result)
       toast.success('SPV-Daten erfolgreich gespeichert')
 
       // Reset all state variables to initial values
@@ -481,6 +489,18 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
+                          <div className="col-md-3">Weitere Angaben</div>
+                          <div className="col-sm-2">
+                            <input
+                              type="text"
+                              name="matarialInformation"
+                              value={motivation.matarialInformation}
+                              onChange={matarialChange}
+                              placeholder="Weitere Angaben"
+                              className="form-control"
+                              id="inputPassword"
+                            />
+                          </div>
                         </div>
                         <br />
 
@@ -578,6 +598,19 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
+                          <div className="col-md-3">Weitere Angaben</div>
+                          <div className="col-sm-2">
+                            <input
+                              type="text"
+                              name="resuscitationInformation"
+                              value={resuscitation.resuscitationInformation}
+                              onChange={resuscitationChange}
+                              placeholder="Weitere Angaben"
+                              className="form-control"
+                              id="inputPassword"
+                              required={true}
+                            />
+                          </div>
                         </div>
                         <br />
 
@@ -628,6 +661,19 @@ const Services = () => {
                               />{' '}
                               <span>nein</span>
                             </div>
+                          </div>
+                          <div className="col-md-3">Weitere Angaben</div>
+                          <div className="col-sm-2">
+                            <input
+                              type="text"
+                              name="situationInformation"
+                              value={data.situationInformation}
+                              onChange={situationChange}
+                              placeholder="Weitere Angaben"
+                              className="form-control"
+                              id="inputPassword"
+                              required={true}
+                            />
                           </div>
                           <div className="col-md-3">Demenz</div>
                           <div className="col-md-2 d-flex">
@@ -680,7 +726,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Keine Intensivmedizin</div>
+                          {/* <div className="col-md-3">Keine Intensivmedizin</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
@@ -699,6 +745,29 @@ const Services = () => {
                                 value="no"
                                 checked={determination.determination_noIntensive === 'no'}
                                 onChange={determinationChange}
+                              />{' '}
+                              <span>nein</span>
+                            </div>
+                          </div> */}
+                          <div className="col-md-3">Ermessensbereich Bevollmachtigte</div>
+                          <div className="col-md-2 d-flex">
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                              <input
+                                type="checkbox"
+                                checked={determination.discretionaryArea === 'yes'}
+                                onChange={determinationChange}
+                                name="discretionaryArea"
+                                value="yes"
+                              />{' '}
+                              <span>ja</span>
+                            </div>
+                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                              <input
+                                type="checkbox"
+                                checked={determination.discretionaryArea === 'no'}
+                                onChange={determinationChange}
+                                name="discretionaryArea"
+                                value="no"
                               />{' '}
                               <span>nein</span>
                             </div>
@@ -1002,6 +1071,19 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
+                          <div className="col-md-3">Weitere Angaben</div>
+                          <div className="col-sm-2">
+                            <input
+                              type="text"
+                              name="determinationInformation"
+                              value={determination.determinationInformation}
+                              onChange={determinationChange}
+                              placeholder="Weitere Angaben"
+                              className="form-control"
+                              id="inputPassword"
+                              required={true}
+                            />
+                          </div>
                           <div className="col-md-3">Verbindlichkeit</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
@@ -1020,29 +1102,6 @@ const Services = () => {
                                 checked={determination.commitment === 'no'}
                                 onChange={determinationChange}
                                 name="commitment"
-                                value="no"
-                              />{' '}
-                              <span>nein</span>
-                            </div>
-                          </div>
-                          <div className="col-md-3">Ermessensbereich Bevollmachtigte</div>
-                          <div className="col-md-2 d-flex">
-                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
-                              <input
-                                type="checkbox"
-                                checked={determination.discretionaryArea === 'yes'}
-                                onChange={determinationChange}
-                                name="discretionaryArea"
-                                value="yes"
-                              />{' '}
-                              <span>ja</span>
-                            </div>
-                            <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
-                              <input
-                                type="checkbox"
-                                checked={determination.discretionaryArea === 'no'}
-                                onChange={determinationChange}
-                                name="discretionaryArea"
                                 value="no"
                               />{' '}
                               <span>nein</span>
@@ -1148,7 +1207,7 @@ const Services = () => {
                         </div>
                         <br />
                         <br />
-                        <h6 style={{ color: '#244D92' }}>Begleitung am Lebensende</h6>
+                        {/* <h6 style={{ color: '#244D92' }}>Begleitung am Lebensende</h6> */}
                         <div className="row mt-md-2">
                           <label htmlFor="inputtext" className="col-md-2 col-form-label">
                             Arztin
@@ -1172,7 +1231,7 @@ const Services = () => {
                             <textarea
                               value={support.mentalSupport}
                               onChange={(e) => onChange('mentalSupport', e.target.value)}
-                              name="lname"
+                              name="mentalSupport"
                               type="text"
                               className="form-control"
                               placeholder="Seelischer Beistand"
@@ -1191,6 +1250,23 @@ const Services = () => {
                               type="text"
                               className="form-control"
                               placeholder="Keinesfalls"
+                            />
+                          </div>
+                        </div>
+                        <div className="row mt-md-2">
+                          <label htmlFor="inputtext" className="col-md-2 col-form-label">
+                            Weitere Angaben
+                          </label>
+                          <div className="col-sm-3">
+                            <input
+                              type="text"
+                              name="mentalInformation"
+                              value={support.mentalInformation}
+                              onChange={(e) => onChange('mentalInformation', e.target.value)}
+                              placeholder="Weitere Angaben"
+                              className="form-control"
+                              id="inputPassword"
+                              required={true}
                             />
                           </div>
                         </div>
@@ -1273,6 +1349,23 @@ const Services = () => {
                             />
                           </div>
                         </div>
+                        <div className="row mt-md-2">
+                          <label htmlFor="inputtext" className="col-md-2 col-form-label">
+                            Weitere Angaben
+                          </label>
+                          <div className="col-sm-3">
+                            <input
+                              type="text"
+                              name="funeralInformation"
+                              value={funeralwishes.funeralInformation}
+                              onChange={(e) => funeralwishesChange(e)}
+                              placeholder="Weitere Angaben"
+                              className="form-control"
+                              id="inputPassword"
+                              required={true}
+                            />
+                          </div>
+                        </div>
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Vollmachten</h6>
                           <div className="col-md-3">Blanko-formulare</div>
@@ -1349,6 +1442,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
+
                           <div className="col-md-3">Ermäßigt</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
@@ -1371,6 +1465,20 @@ const Services = () => {
                               />{' '}
                               <span>nein</span>
                             </div>
+                          </div>
+                          <br />
+                          <div className="col-md-3">Weitere Angaben</div>
+                          <div className="col-sm-2">
+                            <input
+                              type="text"
+                              name="feeInformation"
+                              value={fee.feeInformation}
+                              onChange={feeChange}
+                              placeholder="Weitere Angaben"
+                              className="form-control"
+                              id="inputPassword"
+                              required={true}
+                            />
                           </div>
                         </div>
                         <br />
