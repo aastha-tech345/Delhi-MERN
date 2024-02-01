@@ -72,7 +72,6 @@ const Contact = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
-          {/* {console.log('contactRecord', record?.added_by)} */}
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
           loginData?.user?.isAdminFullRights === 'true' ? (

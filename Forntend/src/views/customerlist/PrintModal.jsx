@@ -66,6 +66,8 @@ const PrintModal = ({ setPrint, getDetails }) => {
     .replace('{id}', response?.id)
     .replace('{phone}', response?.phone)
     .replace('{group}', response?.group)
+    .replace('{dob}', response?.dob)
+    .replace('{street}', response?.street)
   let dataa = `
   <html>
     <head>
