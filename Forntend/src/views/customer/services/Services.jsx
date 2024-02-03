@@ -274,6 +274,7 @@ const Services = () => {
       selfDetermination: '',
       relatives: '',
       lessons: '',
+      matarialInformation: '',
     })
 
     setResuscitation({
@@ -281,12 +282,14 @@ const Services = () => {
       noIntensive: '',
       revival: '',
       noRevival: '',
+      resuscitationInformation: '',
     })
 
     setSituation({
       dyingProcess: '',
       brainInjury: '',
       dementia: '',
+      situationInformation: '',
     })
 
     setDetermination({
@@ -307,6 +310,7 @@ const Services = () => {
       rejection_organ: '',
       pacemaker: '',
       determination_noIntensive: '',
+      determinationInformation: '',
     })
 
     setWhereabout({
@@ -320,6 +324,7 @@ const Services = () => {
       doctor: '',
       mentalSupport: '',
       absolutelyNot: '',
+      mentalInformation: '',
     })
 
     setFuneralwishes({
@@ -327,6 +332,7 @@ const Services = () => {
       burial: '',
       arrangement: '',
       miscellaneous: '',
+      funeralInformation: '',
     })
 
     setAtorney({
@@ -337,6 +343,7 @@ const Services = () => {
     setFee({
       regular: '',
       reduced: '',
+      feeInformation: '',
     })
 
     setInformation({

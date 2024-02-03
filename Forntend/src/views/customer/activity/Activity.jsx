@@ -220,6 +220,67 @@ const Activity = () => {
           onChange={handleChange}
         ></textarea>
       </div> */}
+      <div className="row  mt-2 mx-3">
+        <div className="col-md-2 tab-title-activity d-flex">
+          <h4>Beschreibung</h4>
+        </div>
+        <div className="col-md-7">
+          <PhoneOutlined
+            className="p-2"
+            style={{
+              border: '1px solid #244D92',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color,
+              color: iconBack ? 'white' : '#244D92',
+            }}
+            onClick={() => selectIcon('PhoneOutlined', '#015290')}
+          />
+          <CheckCircleOutlined
+            className="p-2"
+            style={{
+              border: '1px solid #244D92',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color1,
+              color: iconBack1 ? 'white' : '#244D92',
+            }}
+            onClick={() => selectIcon('CheckCircleOutlined', '#015290')}
+          />
+          <RedEnvelopeOutlined
+            className="p-2"
+            style={{
+              border: '1px solid #244D92',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color2,
+              color: iconBack2 ? 'white' : '#244D92',
+            }}
+            onClick={() => selectIcon('RedEnvelopeOutlined', '#015290')}
+          />
+          <PrinterOutlined
+            className="p-2"
+            style={{
+              border: '1px solid #244D92',
+              borderRadius: '5px',
+              marginRight: '10px',
+              background: color3,
+              color: iconBack3 ? 'white' : '#244D92',
+            }}
+            onClick={() => selectIcon('PrinterOutlined', '#015290')}
+          />
+        </div>
+        <div className="col-md-3 text-end">
+          <button
+            className="btn btn"
+            style={{ background: '#015291', color: 'white' }}
+            onClick={openText}
+          >
+            <MdAdd />
+            Aktivität hinzufügen
+          </button>
+        </div>
+      </div>
       <hr />
       {/* <div className="row">
         <div className="col-sm-8"></div>
@@ -241,57 +302,6 @@ const Activity = () => {
       </div> */}
 
       <div className="tab-content">
-        <div className="tab-title d-flex">
-          <h4 className="">Beschreibung</h4>
-          <div className="row mb-3 mx-3">
-            <div className="col">
-              <PhoneOutlined
-                className="p-2"
-                style={{
-                  border: '1px solid #244D92',
-                  borderRadius: '5px',
-                  marginRight: '10px',
-                  background: color,
-                  color: iconBack ? 'white' : '#244D92',
-                }}
-                onClick={() => selectIcon('PhoneOutlined', '#015290')}
-              />
-              <CheckCircleOutlined
-                className="p-2"
-                style={{
-                  border: '1px solid #244D92',
-                  borderRadius: '5px',
-                  marginRight: '10px',
-                  background: color1,
-                  color: iconBack1 ? 'white' : '#244D92',
-                }}
-                onClick={() => selectIcon('CheckCircleOutlined', '#015290')}
-              />
-              <RedEnvelopeOutlined
-                className="p-2"
-                style={{
-                  border: '1px solid #244D92',
-                  borderRadius: '5px',
-                  marginRight: '10px',
-                  background: color2,
-                  color: iconBack2 ? 'white' : '#244D92',
-                }}
-                onClick={() => selectIcon('RedEnvelopeOutlined', '#015290')}
-              />
-              <PrinterOutlined
-                className="p-2"
-                style={{
-                  border: '1px solid #244D92',
-                  borderRadius: '5px',
-                  marginRight: '10px',
-                  background: color3,
-                  color: iconBack3 ? 'white' : '#244D92',
-                }}
-                onClick={() => selectIcon('PrinterOutlined', '#015290')}
-              />
-            </div>
-          </div>
-        </div>
         <div className="container-fluid">
           <div className="row">
             <div className="col">
@@ -361,14 +371,14 @@ const Activity = () => {
                       </div>
                       {/* <div className="col-sm-2"></div> */}
                       <div className="col-sm-8 text-right">
-                        <button
+                        {/* <button
                           className="btn btn"
                           style={{ background: '#015291', color: 'white' }}
                           onClick={openText}
                         >
                           <MdAdd />
                           Aktivität hinzufügen
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                   )}

@@ -103,7 +103,11 @@ const EditModal = ({ setEdit, getDetails }) => {
     setLoadVale(false)
   }, 5000)
   return (
-    <div className="modal modal-form edit-modal-form" tabIndex={-1} style={modalStyle}>
+    <div
+      className="modal modal-form edit-modal-form inner-page-wrap"
+      tabIndex={-1}
+      style={modalStyle}
+    >
       <div className="modal-dialog modal-dialog-centered ">
         <div className="modal-content">
           <div className="modal-header">
@@ -197,35 +201,48 @@ const EditModal = ({ setEdit, getDetails }) => {
                   />
                 </div>
               </div>
-              <div className="row">
+              <div className="mb-6 row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Geschlecht
                 </label>
                 <div className="col-sm-9">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="male"
-                    onChange={handleChange}
-                    checked={data.gender === 'male'}
-                  />{' '}
-                  &nbsp; Männlich &nbsp;
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="female"
-                    onChange={handleChange}
-                    checked={data.gender === 'female'}
-                  />{' '}
-                  &nbsp; Weiblich &nbsp;
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="other"
-                    onChange={handleChange}
-                    checked={data.gender === 'other'}
-                  />
-                  &nbsp; Andere
+                  {/* <div className="d-flex"> */}
+                  <div className="radio-wrap">
+                    <div className="radio-input">
+                      <input
+                        type="radio"
+                        id="male"
+                        value="male"
+                        name="gender"
+                        onChange={handleChange}
+                        checked={data.gender === 'male'}
+                      />
+                      <span>Männlich</span>
+                    </div>
+
+                    <div className="radio-input">
+                      <input
+                        type="radio"
+                        id="female"
+                        value="female"
+                        name="gender"
+                        onChange={handleChange}
+                        checked={data.gender === 'female'}
+                      />
+                      <span>Weiblich</span>
+                    </div>
+                    <div className="radio-input">
+                      <input
+                        type="radio"
+                        id="divers"
+                        value="other"
+                        name="gender"
+                        onChange={handleChange}
+                        checked={data.gender === 'other'}
+                      />
+                      <span>Divers</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -250,7 +267,7 @@ const EditModal = ({ setEdit, getDetails }) => {
           </Form>
 
           <div className="modal-footer" style={{ display: 'flex', justifyItems: 'end' }}>
-            <div className="mx-auto ">
+            {/* <div className="mx-auto ">
               <button
                 type="button"
                 className="btn btn mx-2"
@@ -267,6 +284,15 @@ const EditModal = ({ setEdit, getDetails }) => {
                 style={{ background: '#015291', color: 'white' }}
               >
                 {loadValue ? <Loader /> : <div> Speichern</div>}
+              </button>
+            </div> */}
+            <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
+              <button className="btn btn-cancel" onClick={close}>
+                {' '}
+                Abbrechen
+              </button>
+              <button className="btn btn-save ms-3" onClick={handleSubmit}>
+                Speichern
               </button>
             </div>
             {/* )} */}

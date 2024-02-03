@@ -499,7 +499,7 @@ const Attorney = () => {
             </div>
             <div className="row p-3">
               <div className="col-sm-12">
-                <p style={{ color: '#244D92' }}>BETREUUNGSVER FÜGUNG</p>
+                <p style={{ color: '#244D92' }}>BETREUUNGSVERFÜGUNG</p>
                 <div className="row">
                   <label htmlFor="CareProvisionMasterData" className="col-sm-2 col-form-label fs-6">
                     Eintrag der Stammdaten
@@ -519,9 +519,7 @@ const Attorney = () => {
             <hr />
             <div className="row p-3">
               <div className="col-sm-12">
-                <p style={{ color: '#244D92' }}>
-                  VOLLMACHT Z UR A B SICHERUNG DES DIGITALEN ER B ES
-                </p>
+                <p style={{ color: '#244D92' }}>VOLLMACHT ZUR ABSICHERUNG DES DIGITALEN ERBES</p>
                 <div className="row">
                   <label htmlFor="SecuringMasterData" className="col-sm-2 col-form-label fs-6">
                     Eintrag der Stammdaten
@@ -562,7 +560,7 @@ const Attorney = () => {
                 style={{ background: '#0b5995', color: 'white' }}
                 className="btn btn"
               >
-                Speichern Sie
+                Speichern
               </button>
             </div>
           </div>

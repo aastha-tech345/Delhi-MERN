@@ -257,7 +257,7 @@ const Bills = () => {
               style={{ background: '#0b5995', color: 'white' }}
               className="btn btn"
             >
-              Speichern Sie
+              Speichern
             </button>
           </div>
           <br />

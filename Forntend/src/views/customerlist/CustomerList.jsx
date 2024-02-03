@@ -99,7 +99,7 @@ const CustomerList = () => {
       width: '20%',
     },
     {
-      title: 'GRUPPE',
+      title: 'STATUS',
       dataIndex: 'group',
       width: '20%',
       render: (text, record) => (
@@ -587,7 +587,7 @@ const CustomerList = () => {
                           setStreet(e.target.value)
                         }}
                         type="text"
-                        placeholder="Straβe + Hnr"
+                        placeholder="Straße + Hausnummer"
                         className="form-control"
                         id="inputPassword"
                         // required={true}
@@ -617,7 +617,7 @@ const CustomerList = () => {
                         type="email"
                         name="email"
                         onChange={handleEmailChange}
-                        placeholder="jo@gmail.com"
+                        placeholder="E-Mail"
                         className="form-control"
                         id="inputPassword"
                       />

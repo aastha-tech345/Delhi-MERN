@@ -572,10 +572,10 @@ const CustomerInfo = () => {
                               <input
                                 type="radio"
                                 id="male"
-                                value="Männlich"
+                                value="male"
                                 name="gender"
                                 onChange={ContactChange}
-                                checked={customerContact.gender === 'Männlich'}
+                                checked={customerContact.gender === 'male'}
                               />
                               <span>Männlich</span>
                             </div>
@@ -584,10 +584,10 @@ const CustomerInfo = () => {
                               <input
                                 type="radio"
                                 id="female"
-                                value="Weiblich"
+                                value="female"
                                 name="gender"
                                 onChange={ContactChange}
-                                checked={customerContact.gender === 'Weiblich'}
+                                checked={customerContact.gender === 'female'}
                               />
                               <span>Weiblich</span>
                             </div>
@@ -595,10 +595,10 @@ const CustomerInfo = () => {
                               <input
                                 type="radio"
                                 id="divers"
-                                value="Divers"
+                                value="other"
                                 name="gender"
                                 onChange={ContactChange}
-                                checked={customerContact.gender === 'Divers'}
+                                checked={customerContact.gender === 'other'}
                               />
                               <span>Divers</span>
                             </div>

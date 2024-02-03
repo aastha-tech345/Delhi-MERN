@@ -207,7 +207,7 @@ const AppHeaderDropdown = () => {
                 </clipPath>
               </defs>
             </svg>
-            Profile
+            Profil
           </CDropdownItem>
 
           <CDropdownItem href="#">
