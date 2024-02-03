@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -260,6 +260,35 @@ const CustomerInfo = () => {
       toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
     }
   }
+  useEffect(() => {
+    setOrderingMaterials((prev) => ({
+      ...prev,
+      newsletterDate: getCurrentDate(),
+    }))
+    setCustomerInfoStatu((prev) => ({
+      ...prev,
+      dataCollection: getCurrentDate(),
+    }))
+    setCustomerContact((prev) => ({
+      ...prev,
+      dob: getCurrentDate(),
+    }))
+    setCustomerDeposit((prev) => ({
+      ...prev,
+      updateStamp: getCurrentDate(),
+      nextBrand: getCurrentDate(),
+      startDeposit: getCurrentDate(),
+      reminderStamp: getCurrentDate(),
+      lastStamp: getCurrentDate(),
+    }))
+  }, [])
+  function getCurrentDate() {
+    const currentDate = new Date()
+    const year = currentDate.getFullYear().toString()
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
+    const day = currentDate.getDate().toString().padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
 
   const cancelData = () => {
     navigate('/customerlist')
@@ -309,14 +338,10 @@ const CustomerInfo = () => {
                         />
                       </div>
 
-                      <div className="col">
+                      {/* <div className="col">
                         <label htmlFor="inputPassword" className="col-form-label">
                           Newsletter-Datum
                         </label>
-
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker value={orderingMaterials.newsletterDate} onChange={matarialChange} />
-                </LocalizationProvider> */}
                         <input
                           type="date"
                           name="newsletterDate"
@@ -325,6 +350,23 @@ const CustomerInfo = () => {
                           className="form-control"
                           placeholder="01/09/2000"
                         />
+                      </div> */}
+                      <div className="col">
+                        <label htmlFor="inputPassword" className="col-form-label">
+                          Newsletter-Datum
+                        </label>
+                        <input
+                          type="date"
+                          name="newsletterDate"
+                          value={orderingMaterials.newsletterDate}
+                          onChange={matarialChange}
+                          className="form-control"
+                          pattern="d{4}.d{2}.d{2}"
+                        />
+                        {/* <span>
+                          {orderingMaterials.newsletterDate &&
+                            formatDate(orderingMaterials.newsletterDate)}
+                        </span> */}
                       </div>
 
                       <div className="col">

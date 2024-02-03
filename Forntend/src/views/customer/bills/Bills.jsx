@@ -91,6 +91,21 @@ const Bills = () => {
   // useEffect(() => {
   //   getDetails()
   // }, [])
+  useEffect(() => {
+    setInvoiceDate(getCurrentDate())
+    setProductData((prev) => ({
+      ...prev,
+      deliveryDate: getCurrentDate(),
+    }))
+  }, [])
+
+  function getCurrentDate() {
+    const currentDate = new Date()
+    const year = currentDate.getFullYear().toString()
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
+    const day = currentDate.getDate().toString().padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
   return (
     <div className="inner-page-wrap">
       <div style={{ background: '#fff' }}>

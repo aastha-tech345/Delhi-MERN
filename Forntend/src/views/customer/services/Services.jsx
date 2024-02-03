@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
@@ -360,6 +360,19 @@ const Services = () => {
       mobile: '',
       dataProtection: '',
     })
+  }
+  useEffect(() => {
+    setInformation((prev) => ({
+      ...prev,
+      creation: getCurrentDate(),
+    }))
+  }, [])
+  function getCurrentDate() {
+    const currentDate = new Date()
+    const year = currentDate.getFullYear().toString()
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
+    const day = currentDate.getDate().toString().padStart(2, '0')
+    return `${year}-${month}-${day}`
   }
 
   return (

@@ -47,9 +47,11 @@ const customerDeliverySchema = new mongoose.Schema({
 const customerDepositSchema = new mongoose.Schema({
   deposit: { type: String },
   emergencyPass: { type: String },
-  reminderBrand: { type: String },
+  reminderStamp: { type: String },
   updateStamp: { type: String },
   nextBrand: { type: String },
+  lastStamp: { type: String },
+  startDeposit: { type: String },
 });
 
 const customerBurialSchema = new mongoose.Schema({
@@ -63,7 +65,7 @@ const customerInfoSchema = new mongoose.Schema(
     orderingMaterials: orderingMaterialsSchema,
     customerInfoStatu: customerInfoStatuSchema,
     those: { type: String },
-    email:{type:String},
+    email: { type: String },
     customerContact: customerContactSchema,
     customerBills: customerBillSchema,
     customerDelivery: customerDeliverySchema,
