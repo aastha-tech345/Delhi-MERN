@@ -32,6 +32,8 @@ const EditModal = ({ setHide, getDetails }) => {
     land: response?.land,
     group: response.group,
   })
+
+  // console.log('jhsd', response?.dob)
   const [email, setEmail] = useState(response?.email)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadVale] = useState(false)
@@ -58,7 +60,7 @@ const EditModal = ({ setHide, getDetails }) => {
   const dataa = { ...data, email }
 
   const handleSubmit = async (e) => {
-    console.log('data', dataa)
+    // console.log('data', dataa)
     const form = e.currentTarget
     if (form.checkValidity() === false) {
       e.preventDefault()
@@ -246,6 +248,7 @@ const EditModal = ({ setHide, getDetails }) => {
                 <div className="col-sm-6">
                   <input
                     value={data.dob}
+                    name="dob"
                     onChange={handleChange}
                     type="text"
                     placeholder="Geburtsdatum"

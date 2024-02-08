@@ -17,7 +17,7 @@ const customerSchema = new Schema(
       default: "active",
     },
     land: { type: String },
-    group: { type: String },
+    group: { type: String, default: "HVD-PV" },
     dob: { type: String },
     id: { type: String },
     // parent_id: { type: Schema.Types.ObjectId, ref: 'User' },

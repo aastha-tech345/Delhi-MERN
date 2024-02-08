@@ -449,7 +449,7 @@ const CustomerList = () => {
     return null
   })
 
-  console.log('Customer items:', customerItems)
+  // console.log('Customer items:', customerItems)
 
   const handlePrint = (record) => {
     let res = JSON.stringify(record)
