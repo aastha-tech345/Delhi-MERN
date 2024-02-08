@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import PaginationItem from '@mui/material/PaginationItem'
 import { MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
+import { DatePicker } from 'react-datepicker'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -688,7 +689,7 @@ const CustomerList = () => {
                   </div>
                   <div className="row">
                     <div className="col-sm-6">
-                      <input
+                      {/* <input
                         value={dob}
                         onChange={(e) => {
                           setDob(e.target.value)
@@ -697,6 +698,12 @@ const CustomerList = () => {
                         placeholder="Geburtsdatum"
                         className="form-control"
                         id="inputTelephone"
+                      /> */}
+                      <DatePicker
+                        selected={dob}
+                        onChange={(e) => {
+                          setDob(e.target.value)
+                        }}
                       />
                     </div>
                     <div className="col-sm-6">
@@ -732,15 +739,9 @@ const CustomerList = () => {
                 </Form>
               </Modal.Body>
               <Modal.Footer>
-                <button
-                  className="btn btn-modal-close"
-                  // onClick={handleEditRecord}
-                  onClick={handleClose}
-                >
-                  Bearbeiten
-                </button>
-                <div className="btn-wrap">
+                <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
                   <button className="btn btn-cancel" onClick={handleClose}>
+                    {' '}
                     Abbrechen
                   </button>
                   <button className="btn btn-save ms-3" onClick={saveData}>
