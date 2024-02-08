@@ -247,12 +247,12 @@ const EditModal = ({ setHide, getDetails }) => {
                   <input
                     value={data.dob}
                     onChange={handleChange}
-                    type="date"
+                    type="text"
                     placeholder="Geburtsdatum"
                     className="form-control"
                     id="inputTelephone"
-                    maxLength={10}
-                    minLength={3}
+                    // maxLength={10}
+                    // minLength={3}
                   />
                 </div>
                 <div className="col-sm-6">
@@ -267,7 +267,7 @@ const EditModal = ({ setHide, getDetails }) => {
                   />
                 </div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-sm-6">
                   <select
                     className="form-control mb-0"
@@ -281,7 +281,7 @@ const EditModal = ({ setHide, getDetails }) => {
                     <option value="PV-ALT">ALT</option>
                   </select>
                 </div>
-              </div>
+              </div> */}
             </Form>
           </div>
 

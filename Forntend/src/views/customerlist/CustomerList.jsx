@@ -86,7 +86,7 @@ const CustomerList = () => {
     {
       title: 'KLIENTNNEN-ID',
       dataIndex: 'id',
-      width: '20%',
+      // width: '20%',
     },
     {
       title: 'E-MAIL',
@@ -96,12 +96,12 @@ const CustomerList = () => {
     {
       title: 'TELEFON',
       dataIndex: 'phone',
-      width: '20%',
+      // width: '20%',
     },
     {
       title: 'STATUS',
       dataIndex: 'group',
-      width: '20%',
+      // width: '20%',
       render: (text, record) => (
         <div
           className="dm-badge"
@@ -462,7 +462,7 @@ const CustomerList = () => {
     getPrintDetails()
   }, [page, itemsPerPage])
   useEffect(() => {
-    setDob(getCurrentDate())
+    // setDob(getCurrentDate())
   }, [])
 
   function getCurrentDate() {
@@ -686,12 +686,10 @@ const CustomerList = () => {
                         onChange={(e) => {
                           setDob(e.target.value)
                         }}
-                        type="date"
+                        type="text"
                         placeholder="Geburtsdatum"
                         className="form-control"
                         id="inputTelephone"
-                        maxLength={10}
-                        minLength={3}
                       />
                     </div>
                     <div className="col-sm-6">
@@ -707,7 +705,7 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-
+                  {/* 
                   <div className="row">
                     <div className="col-sm-6">
                       <select
@@ -723,7 +721,7 @@ const CustomerList = () => {
                         <option value="PV-ALT">ALT</option>
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                 </Form>
               </Modal.Body>
               <Modal.Footer>
@@ -736,10 +734,10 @@ const CustomerList = () => {
                 </button>
                 <div className="btn-wrap">
                   <button className="btn btn-cancel" onClick={handleClose}>
-                    Stornieren
+                    Abbrechen
                   </button>
                   <button className="btn btn-save ms-3" onClick={saveData}>
-                    Einreichen
+                    Speichern
                   </button>
                 </div>
               </Modal.Footer>
@@ -796,11 +794,12 @@ const CustomerList = () => {
         </div>
 
         <Modal
-          size="md"
+          // size="sm"
+          // style={{ width: '634px', height: '359px' }}
           show={isModalVisible}
           onHide={handleModalClose}
           centered
-          className="modal-delete"
+          className="modal-delete custom-modal"
         >
           <Modal.Title className="text-center">
             <svg
@@ -841,8 +840,7 @@ const CustomerList = () => {
           <p>
             {/* Dieser Vorgang kann nichtF r3ckgBngig gemacht werden */}
             {/* Dieser Vorgang kann nicht r3ckgBngig gemacht werden */}
-            Möchten Sie diesen Datensatz wirklich löschen? dieser Vorgang kann nicht rückgängig
-            gemacht werden
+            Dieser Vorgang kann nicht  rückgängig gemacht werden.
           </p>
           <div className="text-center">
             <button className="btn modal-btn delete-btn me-3" onClick={handleDeleteConfirm}>

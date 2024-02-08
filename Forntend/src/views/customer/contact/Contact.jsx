@@ -165,11 +165,11 @@ const Contact = () => {
     setHide(true)
   }
 
-  const handlePrint = (record) => {
-    let recordData = JSON.stringify(record)
-    localStorage.setItem('ContactEditDetails', recordData)
-    setPrint(true)
-  }
+  // const handlePrint = (record) => {
+  //   let recordData = JSON.stringify(record)
+  //   localStorage.setItem('ContactEditDetails', recordData)
+  //   setPrint(true)
+  // }
 
   const handleEmailChange = (e) => {
     const inputValue = e.target.value
@@ -220,9 +220,6 @@ const Contact = () => {
 
   const getDetails = async () => {
     try {
-      // const result = await fetch(
-      //   `${apiUrl}/contact/get_contact/${custData?._id}/${loginUserData?.user?._id}?page=${page}`,
-      // )
       const result = await fetch(
         `${apiUrl}/contact/get_contact/${custData?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
       )
