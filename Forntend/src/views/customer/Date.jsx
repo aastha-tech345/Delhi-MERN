@@ -1,53 +1,40 @@
-import React, { useState } from 'react'
-import Multiselect from 'multiselect-react-dropdown'
+// import React, { useState } from 'react'
+// import DatePicker from 'react-datepicker'
 
-const Date = () => {
-  const [options, setOptions] = useState([
-    { name: 'Option 1️', id: 1 },
-    { name: 'Option 2️', id: 2 },
-    { name: 'Option 23', id: 2 },
-    { name: 'Option 2s3', id: 2 },
-    { name: 'Option wre2️wer', id: 2 },
-    { name: 'Option rew2️', id: 2 },
-  ])
-  const [selectedValues, setSelectedValues] = useState([])
+// import 'react-datepicker/dist/react-datepicker.css'
 
-  //   const onSelect = (selectedList, selectedItem) => {
-  //     setSelectedValues(selectedList)
-  //     // Your additional logic here
-  //   }
+// // CSS Modules, react-datepicker-cssmodules.css
+// // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-  //   const onRemove = (selectedList, removedItem) => {
-  //     setSelectedValues(selectedList)
-  //     // Your additional logic here
-  //   }
+// export default const Date = () => {
+//   const [startDate, setStartDate] = useState(new Date())
+//   return <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+// }
 
-  const customRender = (selected, displayValue, key) => {
-    return (
-      <div key={key}>
-        <input
-          type="checkbox"
-          checked={selected}
-          onChange={() => {}}
-          //   style={{ marginRight: '5px' }}
-        />
-        <span>{displayValue}</span>
-      </div>
-    )
+import React, { useState, useEffect } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import PropTypes from 'prop-types'
+
+const DatePiker = ({ onChange, selected }) => {
+  DatePiker.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    selected: PropTypes.func.isRequired,
   }
+  // const [startDate, setStartDate] = useState(null)
+
+  useEffect(() => {
+    // setStartDate(new Date())
+  }, []) // Empty dependency array ensures this effect runs only once
 
   return (
-    <Multiselect
-      options={options}
-      selectedValues={selectedValues}
-      //   onSelect={onSelect}
-      //   onRemove={onRemove}
-      displayValue="name"
-      showCheckbox={true}
-      closeIcon="close"
-      customRender={customRender}
+    <DatePicker
+      className="form-control"
+      placeholderText="Geburtsdatum"
+      selected={selected}
+      onChange={onChange}
     />
   )
 }
 
-export default Date
+export default DatePiker

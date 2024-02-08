@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-// import { GrEdit } from 'react-icons/gr'
 import PaginationItem from '@mui/material/PaginationItem'
 import { MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
@@ -14,6 +13,10 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import PrintModal from './PrintModal'
+import 'react-datepicker/dist/react-datepicker.css'
+import DatePiker from '../customer/Date'
+import warning from 'antd/es/_util/warning'
+
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
   let lgUser = localStorage.getItem('record')
@@ -25,7 +28,7 @@ const CustomerList = () => {
   const [fname, setFname] = useState()
   const [lname, setLname] = useState()
   const [phone, setPhone] = useState()
-  const [dob, setDob] = useState()
+  const [startDate, setStartDate] = useState(null)
   const [land, setLand] = useState()
   const [plz, setPlz] = useState()
   const [city, setCity] = useState()
@@ -305,12 +308,25 @@ const CustomerList = () => {
     }
 
     setValidated(true)
-    let data = { fname, lname, street, city, phone, dob, plz, email, land, group, id, created_by }
+    let data = {
+      fname,
+      lname,
+      street,
+      city,
+      phone,
+      startDate,
+      plz,
+      email,
+      land,
+      group,
+      id,
+      created_by,
+    }
     if (!email) {
       return notify('Invalid Email')
     }
     if (!fname || !lname || !email) {
-      return
+      return warning('Füllen Sie den Datensatz')
     }
     try {
       let response = await fetch(`${apiUrl}/customer/create`, {
@@ -320,13 +336,13 @@ const CustomerList = () => {
         },
         body: JSON.stringify(data),
       })
-      console.log('sajdsd', response.body)
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
         // console.log("rerror found")
       }
 
       let result = await response.json()
+      console.log('result', result)
       toast.success('Kundendatensatz erfolgreich gespeichert')
       setFname('')
       setLand('')
@@ -337,7 +353,7 @@ const CustomerList = () => {
       setGroup('')
       setPhone('')
       setCity('')
-      setDob('')
+      setStartDate('')
       setValidated(false)
       // window.location.reload()
       handleClose()
@@ -470,7 +486,7 @@ const CustomerList = () => {
     getPrintDetails()
   }, [page, itemsPerPage])
   useEffect(() => {
-    // setDob(getCurrentDate())
+    // setstartDate(getCurrentDate())
   }, [])
 
   function getCurrentDate() {
@@ -480,7 +496,16 @@ const CustomerList = () => {
     const day = currentDate.getDate().toString().padStart(2, '0')
     return `${year}-${month}-${day}`
   }
+  useEffect(() => {
+    setStartDate(null)
+  }, [])
 
+  const handleDateChange = (e) => {
+    console.log('ashish', e)
+    // const { name, value } = e.target
+    setStartDate(e)
+  }
+  console.log('Selected date:', startDate)
   return (
     <>
       <div>
@@ -652,7 +677,7 @@ const CustomerList = () => {
                         placeholder="Telefon"
                         className="form-control"
                         id="inputTelephone"
-                        maxLength={10}
+                        maxLength={30}
                         minLength={3}
                       />
                     </div>
@@ -660,7 +685,7 @@ const CustomerList = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <input
-                        type="tel"
+                        type="text"
                         value={plz}
                         onChange={(e) => {
                           const inputValue = e.target.value.replace(/[^0-9]/g, '')
@@ -690,28 +715,27 @@ const CustomerList = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       {/* <input
-                        value={dob}
+                        value={startDate}
                         onChange={(e) => {
-                          setDob(e.target.value)
+                          setstartDate(e.target.value)
                         }}
                         type="text"
                         placeholder="Geburtsdatum"
                         className="form-control"
                         id="inputTelephone"
                       /> */}
-                      <DatePicker
-                        selected={dob}
-                        onChange={(e) => {
-                          setDob(e.target.value)
-                        }}
-                      />
+                      <DatePiker selected={startDate} onChange={handleDateChange} />
                     </div>
                     <div className="col-sm-6">
                       <input
                         type="text"
                         value={land}
+                        // onChange={(e) => {
+                        //   setLand(e.target.value)
+                        // }}
                         onChange={(e) => {
-                          setLand(e.target.value)
+                          const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                          setLand(inputValue)
                         }}
                         placeholder="Land"
                         className="form-control"

@@ -113,6 +113,7 @@ const Activity = () => {
         setIconBack2(false)
         setIconBack1(false)
         setIconBack(false)
+        setButtonHide(true)
       } else {
         toast.error('Etwas ist schief gelaufen')
       }
