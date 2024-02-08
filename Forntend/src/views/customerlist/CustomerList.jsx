@@ -501,11 +501,13 @@ const CustomerList = () => {
   }, [])
 
   const handleDateChange = (e) => {
-    console.log('ashish', e)
+    let a = new Date().getFullYear()
+    if (e.getFullYear() > a) {
+      toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
+    }
     // const { name, value } = e.target
     setStartDate(e)
   }
-  console.log('Selected date:', startDate)
   return (
     <>
       <div>
