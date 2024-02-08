@@ -91,13 +91,13 @@ const Bills = () => {
   // useEffect(() => {
   //   getDetails()
   // }, [])
-  useEffect(() => {
-    setInvoiceDate(getCurrentDate())
-    setProductData((prev) => ({
-      ...prev,
-      deliveryDate: getCurrentDate(),
-    }))
-  }, [])
+  // useEffect(() => {
+  //   setInvoiceDate(getCurrentDate())
+  //   setProductData((prev) => ({
+  //     ...prev,
+  //     deliveryDate: getCurrentDate(),
+  //   }))
+  // }, [])
 
   function getCurrentDate() {
     const currentDate = new Date()
@@ -166,9 +166,10 @@ const Bills = () => {
                           </label>
                           <div className="col-sm-6">
                             <input
-                              type="date"
+                              type="text"
                               name="invoiceDate"
                               value={invoiceDate}
+                              placeholder="10.10.13"
                               // checked={productData.invoiceDate}
                               onChange={(e) => {
                                 setInvoiceDate(e.target.value)
@@ -218,8 +219,8 @@ const Bills = () => {
                           </label>
                           <div className="col-sm-6">
                             <input
-                              type="number"
-                              placeholder="Rechnungsbetrag"
+                              type="text"
+                              placeholder="Rechnungsbetrag eintragen"
                               className="form-control"
                               name="invoiceAmount"
                               value={productData.invoiceAmount}
@@ -233,7 +234,8 @@ const Bills = () => {
                           </label>
                           <div className="col-sm-6">
                             <input
-                              type="date"
+                              type="text"
+                              placeholder="10.10.13"
                               name="deliveryDate"
                               value={productData.deliveryDate}
                               onChange={handleInputChange}
@@ -256,7 +258,7 @@ const Bills = () => {
               marginBottom: '10px',
             }}
           ></div>
-          <div className="text-end mx-3">
+          {/* <div className="text-end mx-3">
             <button
               type="button"
               onClick={cancelData}
@@ -274,7 +276,7 @@ const Bills = () => {
             >
               Speichern
             </button>
-          </div>
+          </div> */}
           <br />
           <ToastContainer />
         </div>

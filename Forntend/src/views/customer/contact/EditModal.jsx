@@ -112,13 +112,13 @@ const EditModal = ({ setEdit, getDetails }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Kontakt hinzufügen</h5>
-            <button
+            {/* <button
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
               onClick={close}
-            />
+            /> */}
           </div>
           {/* <div className="modal-body">
            hello
@@ -246,7 +246,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                 </div>
               </div>
 
-              <div className="row">
+              {/* <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Status
                 </label>
@@ -262,7 +262,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                     <option value="PV-ALT">PV-ALT</option>
                   </select>
                 </div>
-              </div>
+              </div> */}
             </div>
           </Form>
 

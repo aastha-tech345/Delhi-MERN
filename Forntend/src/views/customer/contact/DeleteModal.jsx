@@ -97,8 +97,7 @@ const DeleteModal = ({ setHide, contactId, getDetails }) => {
             </Modal.Title>
             <Modal.Body>
               <p style={{ textAlign: 'center' }}>
-                Möchten Sie diesen Datensatz wirklich löschen? dieser Vorgang kann nicht rückgängig
-                gemacht werden
+                Dieser Vorgang kann nicht  rückgängig gemacht werden.
               </p>
             </Modal.Body>
             <Modal.Footer>

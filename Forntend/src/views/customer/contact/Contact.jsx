@@ -47,23 +47,44 @@ const Contact = () => {
       dataIndex: 'phone',
       width: '20%',
     },
+    // {
+    //   title: 'STATUS',
+    //   dataIndex: 'statu',
+    //   width: '20%',
+    //   render: (text, record) => (
+    //     <div
+    //       style={{
+    //         color: 'white',
+    //         background:
+    //           text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
+    //         borderRadius: '20px',
+    //         padding: '3px',
+    //         width: '70px',
+    //         textAlign: 'center',
+    //       }}
+    //     >
+    //       <b style={{ fontSize: '12px' }}>{text}</b>
+    //     </div>
+    //   ),
+    // },
     {
       title: 'STATUS',
       dataIndex: 'statu',
-      width: '20%',
+      // width: '20%',
       render: (text, record) => (
         <div
+          className="dm-badge"
           style={{
-            color: 'white',
-            background:
-              text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
-            borderRadius: '20px',
-            padding: '3px',
-            width: '70px',
-            textAlign: 'center',
+            background: text === '' ? '#C20F0F' : text === 'HVD-PV' ? '#4EB772' : 'transparent',
+            border:
+              text === ''
+                ? '1px solid transparent'
+                : text === 'HVD-PV'
+                ? '1px solid rgba(78, 183, 114, 0.50)'
+                : '',
           }}
         >
-          <b style={{ fontSize: '12px' }}>{text}</b>
+          {text === '' ? <span>PV-ALT</span> : <b>{text}</b>}
         </div>
       ),
     },
@@ -207,6 +228,7 @@ const Contact = () => {
 
       let result = await response.json()
       toast.success('Kontaktdaten erfolgreich erstellt')
+      console.log('result', result)
       setData('')
       setEmail('')
       handleClose()
@@ -329,8 +351,13 @@ const Contact = () => {
               <MdAdd />
               &nbsp;Neue Kontakte anlegen
             </button>
-            <Modal show={show} onHide={handleClose} centered className="modal-form">
-              <Modal.Header closeButton>
+            <Modal
+              show={show}
+              // onHide={handleClose}
+              centered
+              className="modal-form"
+            >
+              <Modal.Header>
                 <Modal.Title>Kontakt hinzufügen</Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -456,7 +483,7 @@ const Contact = () => {
                       </div>
                     </div>
 
-                    <div className="row">
+                    {/* <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Status
                       </label>
@@ -472,7 +499,7 @@ const Contact = () => {
                           <option value="PV-ALT">PV-ALT</option>
                         </select>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </Form>
               </Modal.Body>

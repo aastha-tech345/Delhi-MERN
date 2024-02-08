@@ -192,7 +192,31 @@ const GetActivityData = ({ updateData, search }) => {
             </div>
           </div>
         </div>
+        {/* <div className="bottomBtnBg">
+          <div className="row">
+            <div className="col-sm-12">
+              <div style={{ float: 'right' }}>
+                <button
+                  className="btn"
+                  style={{ background: '#d04545', color: 'white' }}
+                  // onClick={handleClose}
+                >
+                  Abbrechen
+                </button>
+                &nbsp;&nbsp;
+                <button
+                  className="btn mx-2"
+                  style={{ background: '#0b5995', color: 'white' }}
+                  // onClick={handleSubmit}
+                >
+                  Aktivität hinzufügen
+                </button>
+              </div>
+            </div>
+          </div>
+        </div> */}
       </div>
+
       {/* <div className="mx-3">
         <Stack spacing={2}>
           <Pagination

@@ -11,7 +11,6 @@ import Customer from '../Customer'
 import { MdAdd } from 'react-icons/md'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-// import axios from 'axios'
 
 const Activity = () => {
   const apiUrl = process.env.REACT_APP_API_URL
@@ -32,24 +31,12 @@ const Activity = () => {
   const [icon, setIcon] = useState('')
   const [search, setSearch] = useState('')
   const [openMessage, setOpenMessage] = useState(false)
+  const [buttonHide, setButtonHide] = useState(true)
   const [data, setData] = useState({
     message: '',
     customer_id: result?._id,
   })
 
-  // const [activityData, setActivityData] = useState([])
-
-  // const getData = async () => {
-  //   try {
-  //     const res = await axios.get(`${apiUrl}/activity/get_activity`)
-  //     // console.log(res?.data?.data)
-  //     setActivityData(res?.data?.data)
-  //     // setGetActivity(res.data.data)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-  // let countData = activityData?.length / 10
   const selectIcon = (iconName, selectedColor, color) => {
     setIcon(iconName)
     switch (iconName) {
@@ -136,90 +123,19 @@ const Activity = () => {
     }
   }
 
-  // useEffect(() => {
-  //   getData()
-  // }, [updateData])
-
   const openText = () => {
     setOpenMessage(true)
+    setButtonHide(false)
+  }
+  const handleClose = () => {
+    setOpenMessage(false)
+    setButtonHide(true)
   }
 
   return (
     <div className="inner-page-wrap" style={{ background: 'white' }}>
       <Customer />
-      {/* <h4 className="mx-3">Beschreibung</h4>
-      <hr /> */}
-      {/* <div className="row p-3">
-       
-      <h4>Beschreibung</h4>
-      <hr />
-      <div className="row p-3">
-        <div className="col-sm-4">
-          <input
-            type="search"
-            className="form-control"
-            placeholder="Search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
->>>>>>> 2972b39290c010dbdb3bf46d837c7fbab5b146ff
-        <div className="col-sm-8">
-          <PhoneOutlined
-            className="p-2"
-            style={{
-              border: '1px solid #0b5995',
-              borderRadius: '5px',
-              marginRight: '10px',
-              background: color,
-              color: 'white',
-              // eslint-disable-next-line no-dupe-keys
-              border: '1px solid #0b5995',
-            }}
-            onClick={() => selectIcon('PhoneOutlined', '#0b5995')}
-          />
-          <CheckCircleOutlined
-            className="p-2"
-            style={{
-              border: '1px solid #0b5995',
-              borderRadius: '5px',
-              marginRight: '10px',
-              background: color1,
-            }}
-            onClick={() => selectIcon('CheckCircleOutlined', 'red')}
-          />
-          <RedEnvelopeOutlined
-            className="p-2"
-            style={{
-              border: '1px solid #0b5995',
-              borderRadius: '5px',
-              marginRight: '10px',
-              background: color2,
-            }}
-            onClick={() => selectIcon('RedEnvelopeOutlined', 'red')}
-          />
-          <PrinterOutlined
-            className="p-2"
-            style={{
-              border: '1px solid #0b5995',
-              borderRadius: '5px',
-              marginRight: '10px',
-              background: color3,
-            }}
-            onClick={() => selectIcon('PrinterOutlined', 'red')}
-          />
-        </div>
-      </div> */}
-      {/* <div className="row p-3">
-        <br />
-        <textarea
-          className="form-control"
-          rows={6}
-          name="message"
-          value={data?.message}
-          onChange={handleChange}
-        ></textarea>
-      </div> */}
+
       <div className="row  mt-2 mx-3">
         <div className="col-md-2 tab-title-activity d-flex">
           <h4>Beschreibung</h4>
@@ -270,36 +186,22 @@ const Activity = () => {
             onClick={() => selectIcon('PrinterOutlined', '#015290')}
           />
         </div>
-        <div className="col-md-3 text-end">
-          <button
-            className="btn btn"
-            style={{ background: '#015291', color: 'white' }}
-            onClick={openText}
-          >
-            <MdAdd />
-            Aktivität hinzufügen
-          </button>
-        </div>
+        {buttonHide ? (
+          <div className="col-md-3 text-end">
+            <button
+              className="btn btn"
+              style={{ background: '#015291', color: 'white' }}
+              onClick={openText}
+            >
+              <MdAdd />
+              Aktivität hinzufügen
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       <hr />
-      {/* <div className="row">
-        <div className="col-sm-8"></div>
-        <div className="col-sm-4">
-          <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-            {' '}
-            Abbrechen
-          </button>
-          &nbsp; &nbsp;
-          <button
-            className="btn btn"
-            style={{ background: '#0b5995', color: 'white', marginLeft: '100px' }}
-            onClick={handleSumit}
-          >
-            Aktivität hinzufügen
-            
-          </button>
-        </div>
-      </div> */}
 
       <div className="tab-content">
         <div className="container-fluid">
@@ -307,19 +209,7 @@ const Activity = () => {
             <div className="col">
               <div className="block-wrap">
                 <div className="container-fluid">
-                  {/* button with search */}
                   {openMessage ? (
-                    // <div className="row p-3 m-3">
-                    //   <br />
-                    //   <textarea
-                    //     className="form-control mx-2"
-                    //     rows={6}
-                    //     name="message"
-                    //     value={data?.message}
-                    //     onChange={handleChange}
-                    //   ></textarea>
-                    // </div>
-
                     <div className="mt-2">
                       <div className="row">
                         <textarea
@@ -338,7 +228,7 @@ const Activity = () => {
                               <button
                                 className="btn"
                                 style={{ background: '#d04545', color: 'white' }}
-                                onClick={() => setOpenMessage(false)}
+                                onClick={handleClose}
                               >
                                 Abbrechen
                               </button>
@@ -369,17 +259,7 @@ const Activity = () => {
                           />
                         </div>
                       </div>
-                      {/* <div className="col-sm-2"></div> */}
-                      <div className="col-sm-8 text-right">
-                        {/* <button
-                          className="btn btn"
-                          style={{ background: '#015291', color: 'white' }}
-                          onClick={openText}
-                        >
-                          <MdAdd />
-                          Aktivität hinzufügen
-                        </button> */}
-                      </div>
+                      <div className="col-sm-8 text-right"></div>
                     </div>
                   )}
                 </div>
@@ -387,8 +267,6 @@ const Activity = () => {
             </div>
           </div>
         </div>
-
-        {/* button with search end */}
 
         <GetDescriptionData updateData={updateData} search={search} />
         <ToastContainer />
