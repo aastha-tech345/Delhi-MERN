@@ -106,17 +106,16 @@ const CustomerList = () => {
         <div
           className="dm-badge"
           style={{
-            background:
-              text === 'PV-ALT' ? '#C20F0F' : text === 'HVD-PV' ? '#4EB772' : 'transparent',
+            background: text === '' ? '#C20F0F' : text === 'HVD-PV' ? '#4EB772' : 'transparent',
             border:
-              text === 'PV-ALT'
+              text === ''
                 ? '1px solid transparent'
                 : text === 'HVD-PV'
                 ? '1px solid rgba(78, 183, 114, 0.50)'
                 : '',
           }}
         >
-          <b>{text}</b>
+          {text === '' ? <span>PV-ALT</span> : <b>{text}</b>}
         </div>
       ),
     },
@@ -314,7 +313,7 @@ const CustomerList = () => {
         },
         body: JSON.stringify(data),
       })
-
+      console.log('sajdsd', response.body)
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
         // console.log("rerror found")
@@ -332,6 +331,8 @@ const CustomerList = () => {
       setPhone('')
       setCity('')
       setDob('')
+      setValidated(false)
+      // window.location.reload()
       handleClose()
       getDetails()
     } catch (error) {
