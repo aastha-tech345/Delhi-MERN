@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import PaginationItem from '@mui/material/PaginationItem'
 import { MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import EditModal from './EditModal'
@@ -37,6 +37,7 @@ const CustomerList = () => {
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState('')
+  const navigate = useNavigate()
   // console.log('countPage 39', countPage)
   // const navigate = useNavigate()
   const generateRandomId = () => {
@@ -68,9 +69,13 @@ const CustomerList = () => {
 
   let a = localStorage.getItem('tabId') || 'customer_info'
   // console.log('aastha', a)
+
+  const editRecord = () => {
+    navigate('/customer/customer_info')
+  }
   const columns = [
     {
-      title: 'KLIENTNNEN',
+      title: 'KLIENTINNEN',
       dataIndex: 'fname',
       width: '20%',
       render: (text, record) => (
@@ -84,7 +89,7 @@ const CustomerList = () => {
       ),
     },
     {
-      title: 'KLIENTNNEN-ID',
+      title: 'KLIENTINNEN-ID',
       dataIndex: 'id',
       // width: '20%',
     },
@@ -131,7 +136,8 @@ const CustomerList = () => {
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
-                onClick={() => handleEdit(record)}
+                // onClick={() => handleEdit(record)}
+                onClick={editRecord}
               >
                 {/* <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} /> */}
                 <svg

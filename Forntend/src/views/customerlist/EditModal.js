@@ -289,14 +289,14 @@ const EditModal = ({ setHide, getDetails }) => {
           </div>
 
           <div className="modal-footer">
-            <button
+            {/* <button
               type="button"
               className="btn btn-modal-close"
               data-bs-dismiss="modal"
               onClick={close}
             >
               Bearbeiten
-            </button>
+            </button> */}
 
             <div className="btn-wrap">
               <button

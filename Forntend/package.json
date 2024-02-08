@@ -30,6 +30,7 @@
     "@coreui/icons-react": "^2.1.0",
     "@coreui/react": "^4.11.0",
     "@coreui/react-chartjs": "^2.1.3",
+    "@coreui/react-pro": "^4.15.2",
     "@coreui/utils": "^2.0.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
