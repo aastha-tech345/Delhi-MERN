@@ -89,7 +89,12 @@ const CustomerList = () => {
           to={`/customer/${a}`}
           onClick={() => handleStore(text, record)}
         >
-          {text && text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}
+          {text &&
+            text.slice(0, 1).toUpperCase() +
+              text.slice(1).toLowerCase() +
+              ' ' +
+              record?.lname?.slice(0, 1)?.toUpperCase() +
+              record?.lname?.slice(1)?.toLowerCase()}
         </Link>
       ),
     },
@@ -261,14 +266,14 @@ const CustomerList = () => {
             ''
           )}
 
-          {/* <button
+          <button
             style={{ background: 'none', border: 'none' }}
             onClick={() => handlePrint(record)}
           >
             {' '}
             <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
             &nbsp;Drucke
-          </button> */}
+          </button>
         </>
       ),
       // hidden: 'true',
