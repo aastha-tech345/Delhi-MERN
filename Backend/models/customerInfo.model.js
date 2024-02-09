@@ -1,71 +1,72 @@
 const mongoose = require("mongoose");
 
-const orderingMaterialsSchema = new mongoose.Schema({
-  orderNumber: { type: String },
-  newsletterDate: { type: String },
-  extras: { type: String },
-  newsletterSubscription: { type: String },
-});
+const orderingMaterialsSchema = {
+  orderNumber: { type: String, default: "" },
+  newsletterDate: { type: String, default: "" },
+  extras: { type: String, default: "" },
+  newsletterSubscription: { type: String, default: "" },
+};
 
-const customerInfoStatuSchema = new mongoose.Schema({
-  clientStatus: [],
-  dataProtection: { type: String },
-  employee: { type: String },
-  lname: { type: String },
-  dataCollection: { type: String },
-});
+const customerInfoStatuSchema = {
+  clientStatus: { type: Array, default: [] },
+  dataProtection: { type: String, default: "" },
+  employee: { type: String, default: "" },
+  lname: { type: String, default: "" },
+  dataCollection: { type: String, default: "" },
+};
 
-const customerContactSchema = new mongoose.Schema({
-  title: { type: String },
-  salution: { type: String },
-  gender: { type: String },
-  fname: { type: String },
-  lname: { type: String },
-  dob: { type: String },
-  name: { type: String },
-});
+const customerContactSchema = {
+  title: { type: String, default: "" },
+  salution: { type: String, default: "" },
+  gender: { type: String, default: "" },
+  fname: { type: String, default: "" },
+  lname: { type: String, default: "" },
+  dob: { type: String, default: "" },
+  name: { type: String, default: "" },
+};
 
-const customerBillSchema = new mongoose.Schema({
-  billAddress: { type: String },
-  billPlz: { type: String },
-  billLand: { type: String },
-  billOrt: { type: String },
-});
+const customerBillSchema = {
+  billAddress: { type: String, default: "" },
+  billPlz: { type: String, default: "" },
+  billLand: { type: String, default: "" },
+  billOrt: { type: String, default: "" },
+};
 
-const customerDeliverySchema = new mongoose.Schema({
-  fname: { type: String },
-  lname: { type: String },
-  plz: { type: String },
-  address: { type: String },
-  land: { type: String },
-  ort: { type: String },
-  phone: { type: String },
-  mobile: { type: String },
-  alreadyPaid: { type: String },
-});
+const customerDeliverySchema = {
+  fname: { type: String, default: "" },
+  lname: { type: String, default: "" },
+  plz: { type: String, default: "" },
+  address: { type: String, default: "" },
+  land: { type: String, default: "" },
+  ort: { type: String, default: "" },
+  phone: { type: String, default: "" },
+  mobile: { type: String, default: "" },
+  alreadyPaid: { type: String, default: "" },
+};
 
-const customerDepositSchema = new mongoose.Schema({
-  deposit: { type: String },
-  emergencyPass: { type: String },
-  reminderStamp: { type: String },
-  updateStamp: { type: String },
-  nextBrand: { type: String },
-  lastStamp: { type: String },
-  startDeposit: { type: String },
-});
+const customerDepositSchema = {
+  deposit: { type: String, default: "" },
+  emergencyPass: { type: String, default: "" },
+  reminderStamp: { type: String, default: "" },
+  updateStamp: { type: String, default: "" },
+  nextBrand: { type: String, default: "" },
+  lastStamp: { type: String, default: "" },
+  startDeposit: { type: String, default: "" },
+};
 
-const customerBurialSchema = new mongoose.Schema({
-  termination: { type: String },
-  terminationDeath: { type: String },
-  notTermination: { type: String },
-  financialReasons: { type: String },
-});
+const customerBurialSchema = {
+  termination: { type: String, default: "" },
+  terminationDeath: { type: String, default: "" },
+  notTermination: { type: String, default: "" },
+  financialReasons: { type: String, default: "" },
+};
+
 const customerInfoSchema = new mongoose.Schema(
   {
     orderingMaterials: orderingMaterialsSchema,
     customerInfoStatu: customerInfoStatuSchema,
     those: { type: String },
-    email: { type: String },
+    // email: { type: String },
     customerContact: customerContactSchema,
     customerBills: customerBillSchema,
     customerDelivery: customerDeliverySchema,

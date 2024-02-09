@@ -74,8 +74,9 @@ const CustomerList = () => {
   let a = localStorage.getItem('tabId') || 'customer_info'
   // console.log('aastha', a)
 
-  const editRecord = () => {
-    navigate('/customer/customer_info')
+  const editRecord = (record) => {
+    console.log('ashish', record)
+    navigate('/customer/customer_info', { state: record })
   }
   const columns = [
     {
@@ -88,7 +89,7 @@ const CustomerList = () => {
           to={`/customer/${a}`}
           onClick={() => handleStore(text, record)}
         >
-          {text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}
+          {text && text.slice(0, 1).toUpperCase() + text.slice(1).toLowerCase()}
         </Link>
       ),
     },
@@ -109,7 +110,7 @@ const CustomerList = () => {
     },
     {
       title: 'STATUS',
-      dataIndex: 'group',
+      dataIndex: 'status',
       // width: '20%',
       render: (text, record) => (
         <div
@@ -141,7 +142,7 @@ const CustomerList = () => {
               <button
                 style={{ background: 'none', border: 'none' }}
                 // onClick={() => handleEdit(record)}
-                onClick={editRecord}
+                onClick={() => editRecord(record)}
               >
                 {/* <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} /> */}
                 <svg
@@ -308,20 +309,24 @@ const CustomerList = () => {
     }
 
     setValidated(true)
+
     let data = {
-      fname,
-      lname,
-      street,
-      city,
-      phone,
-      startDate,
-      plz,
-      email,
-      land,
-      group,
-      id,
-      created_by,
+      customer: {
+        fname,
+        lname,
+        street,
+        city,
+        phone,
+        startDate,
+        plz,
+        email,
+        land,
+        group,
+        id,
+        created_by,
+      },
     }
+
     if (!email) {
       return notify('Invalid Email')
     }
@@ -382,7 +387,7 @@ const CustomerList = () => {
   const getDetails = async () => {
     try {
       const result = await fetch(
-        `${apiUrl}/customer/get_record?page=${page}&resultPerPage=${itemsPerPage}`,
+        `${apiUrl}/customer/get_records?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
 
@@ -393,6 +398,16 @@ const CustomerList = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+  // let customerRecord = []
+  console.log('astha')
+  const customers = []
+
+  customer_record.forEach((item) => {
+    console.log('ashishh', item)
+    customers.push(item.customer)
+  })
+
+  console.log('Customers:', customers)
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(parseInt(e.target.value, 10))
@@ -416,6 +431,7 @@ const CustomerList = () => {
   const handleStore = (data, record) => {
     let res = JSON.stringify(record)
     localStorage.setItem('customerDatat', res)
+    navigate('/customer/customer_info', { state: record })
   }
 
   const [hide, setHide] = useState(false)
@@ -434,9 +450,9 @@ const CustomerList = () => {
       setSelectedRowKeys(selectedKeys)
     },
     getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User',
+      disabled: record?.name === 'Disabled User',
       // Column configuration not to be checked
-      name: record.name,
+      name: record?.name,
     }),
   }
   const [search, setSearch] = useState('')
@@ -784,7 +800,7 @@ const CustomerList = () => {
           rowSelection={rowSelection}
           responsive
           columns={columns}
-          dataSource={data}
+          dataSource={customers}
           pagination={false}
         />
         <div className="container-fluid pagination-row">
@@ -874,7 +890,7 @@ const CustomerList = () => {
           <p>
             {/* Dieser Vorgang kann nichtF r3ckgBngig gemacht werden */}
             {/* Dieser Vorgang kann nicht r3ckgBngig gemacht werden */}
-            Dieser Vorgang kann nicht  rückgängig gemacht werden.
+            Dieser Vorgang kann nicht rückgängig gemacht werden.
           </p>
           <div className="text-center">
             <button className="btn modal-btn delete-btn me-3" onClick={handleDeleteConfirm}>

@@ -4,61 +4,13 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createCustomer = async (req, res) => {
   try {
-    const {
-      fname,
-      lname,
-      phone,
-      email,
-      plz,
-      city,
-      street,
-      startDate,
-      land,
-      group,
-      id,
-      created_by,
-    } = req.body;
+    const result = await Customer.create(req.body);
 
-    const emailFind = await Customer.findOne({ email });
-
-    if (emailFind) {
-      return res.status(407).json({
-        success: false,
-        message: "Email Id Already Exists",
-      });
-    }
-
-    // const user = await UserModel.User.findOne({ user_type: "user" });
-    // if (!user) {
-    //   return res
-    //     .status(400)
-    //     .send({ message: "No employee found to link as parent" });
-    // }
-
-    const userData = {
-      fname,
-      lname,
-      phone,
-      email,
-      plz,
-      city,
-      street,
-      startDate,
-      land,
-      group,
-      id,
-      created_by,
-    };
-
-    // Create a new customer instance
-    const userInstance = new Customer(userData);
-
-    // Save the customer instance
-    const result = await userInstance.save();
-
-    return res
-      .status(200)
-      .json({ message: "Customer created successfully", data: result });
+    return res.status(200).json({
+      success: true,
+      message: "Customer created successfully",
+      data: result,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server Error" });
@@ -67,9 +19,16 @@ exports.createCustomer = async (req, res) => {
 
 exports.editCustomer = async (req, res) => {
   try {
-    const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+    const findCustomer = await Customer.findOne({
+      "customer.email": req.query.email,
+    });
+    console.log(findCustomer);
+    const data = await Customer.findByIdAndUpdate(findCustomer?._id, req.body, {
       new: true,
     });
+    // const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+    //   new: true,
+    // });
 
     return res.status(200).json({
       success: true,
@@ -133,10 +92,11 @@ exports.getCustomer = async (req, res) => {
 exports.getCustomerData = async (req, res) => {
   try {
     const result = await Customer.findOne({
-      _id: req.params.id,
+      "customer.email": req.query.email,
+      // _id:req.query.id
       status: { $ne: "deleted" },
     });
-
+    //
     if (result) {
       res.send(result);
     } else {

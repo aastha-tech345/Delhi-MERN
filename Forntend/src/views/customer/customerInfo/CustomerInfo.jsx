@@ -3,12 +3,17 @@ import Select from 'react-select'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const CustomerInfo = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
+  const [page, setPage] = useState(1)
+  const [countPage, setCountPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState('')
+  const [customer_record, setCustomerRecord] = useState([])
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: '',
     newsletterDate: '',
@@ -26,9 +31,9 @@ const CustomerInfo = () => {
     title: '',
     salution: '',
     gender: '',
-    fname: '',
-    lname: '',
-    dob: '',
+    fname: location?.state?.fname,
+    lname: location?.state?.lname,
+    dob: location?.state?.dob,
   })
 
   const [customerBills, setCustomerBills] = useState({
@@ -42,10 +47,10 @@ const CustomerInfo = () => {
     fname: '',
     lname: '',
     address: '',
-    plz: '',
-    land: '',
+    plz: location?.state?.plz,
+    land: location?.state?.land,
     ort: '',
-    phone: '',
+    phone: location?.state?.phone,
     mobile: '',
     alreadyPaid: false,
   })
@@ -64,20 +69,47 @@ const CustomerInfo = () => {
     notTermination: false,
     financialReasons: false,
   })
-  let res = localStorage.getItem('customerDatat')
+  const [getCustomerData, setGetCustomerData] = useState({})
+  // const [customer, setCustomer] = useState({
+  //   fname: customerContact.fname,
+  //   lname: customerContact.lname,
+  //   phone: customerDelivery.phone,
+  //   plz: customerDelivery.plz,
+  //   dob: customerContact.dob,
+  //   // street: '',
+  //   land: customerDelivery.land,
+  // })
+
+  let customer = {
+    fname: customerContact.fname,
+    lname: customerContact.lname,
+    email: location?.state?.email,
+    phone: customerDelivery.phone,
+    plz: customerDelivery.plz,
+    dob: customerContact.dob,
+    status: customerInfoStatu.clientStatus[0]?.label,
+    land: customerDelivery.land,
+    id: location?.state?.id,
+    street: location?.state?.street,
+  }
+
+  let res = localStorage.getItem('CustomerRecord')
   let result = JSON.parse(res)
   const data = {
+    customer: customer,
     orderingMaterials: orderingMaterials,
     customerInfoStatu: customerInfoStatu,
-    those: those,
+    // those: those,
     customerContact: customerContact,
     customerBills: customerBills,
     customerDelivery: customerDelivery,
     customerDeposit: customerDeposit,
     customerBurial: customerBurial,
-    customer_id: result._id,
+    created_by: '',
+    // customer_id: result._id,
   }
   const dataa = { ...data, email }
+
   //materialChange started
   const matarialChange = (e) => {
     const { name, value } = e.target
@@ -172,33 +204,58 @@ const CustomerInfo = () => {
     { value: '5', label: 'Newsletter Abonnent' },
     { value: '6', label: 'Offen' },
   ]
+  const getDetails = async () => {
+    try {
+      const results = await fetch(`${apiUrl}/customer/get_record?email=${location?.state?.email}`)
+      const data = await results.json()
+      setGetCustomerData(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+  // console.log('aastha', customer_record)
+  // console.log('customer', customer_record)
 
+  // const customers = []
+
+  // customer_record.forEach((item) => {
+  //   customers.push(item.customer)
+  // })
+  // customers.forEach((item) => {
+  //   customers.push(item.customer)
+  // })
+  // console.log(
+  //   'Customers:',
+  //   customers.map((item) => {
+  //     console.log('item', item)
+  //   }),
+  // )
   const saveData = async (e) => {
     e.preventDefault()
-
     // for (const key in data) {
     //   if (!data[key]) {
     //     notify(`Please fill in the ${key} field`)
     //     return
     //   }
     // }
-    if (!email) {
-      return toast.error('Ungültige E-Mail')
-    }
-
+    // if (!email) {
+    //   return toast.error('Ungültige E-Mail')
+    // }
     try {
-      let response = await fetch(`${apiUrl}/customerInfo/create_info`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      let response = await fetch(
+        `${apiUrl}/customer/get_record/edit?email=${location.state.email}`,
+        {
+          method: 'put',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(dataa),
-      })
+      )
 
       let result = await response.json()
-      console.log(result)
 
-      if (result?.message === 'CustomerInfo was created') {
+      if (result?.message === 'Customer updated successfully') {
         toast.success('Kundeninfo erfolgreich gespeichert')
         setOrderingMaterials({
           orderNumber: '',
@@ -250,6 +307,7 @@ const CustomerInfo = () => {
           reminderStamp: '',
         })
         setCustomerBurial('')
+        getDetails()
       }
 
       // Show success toast
@@ -261,27 +319,30 @@ const CustomerInfo = () => {
     }
   }
   useEffect(() => {
-    setOrderingMaterials((prev) => ({
-      ...prev,
-      newsletterDate: getCurrentDate(),
-    }))
-    setCustomerInfoStatu((prev) => ({
-      ...prev,
-      dataCollection: getCurrentDate(),
-    }))
-    setCustomerContact((prev) => ({
-      ...prev,
-      dob: getCurrentDate(),
-    }))
-    setCustomerDeposit((prev) => ({
-      ...prev,
-      updateStamp: getCurrentDate(),
-      nextBrand: getCurrentDate(),
-      startDeposit: getCurrentDate(),
-      reminderStamp: getCurrentDate(),
-      lastStamp: getCurrentDate(),
-    }))
-  }, [])
+    getDetails()
+  }, [page, itemsPerPage])
+  // useEffect(() => {
+  //   setOrderingMaterials((prev) => ({
+  //     ...prev,
+  //     newsletterDate: getCurrentDate(),
+  //   }))
+  //   setCustomerInfoStatu((prev) => ({
+  //     ...prev,
+  //     dataCollection: getCurrentDate(),
+  //   }))
+  //   setCustomerContact((prev) => ({
+  //     ...prev,
+  //     dob: getCurrentDate(),
+  //   }))
+  //   setCustomerDeposit((prev) => ({
+  //     ...prev,
+  //     updateStamp: getCurrentDate(),
+  //     nextBrand: getCurrentDate(),
+  //     startDeposit: getCurrentDate(),
+  //     reminderStamp: getCurrentDate(),
+  //     lastStamp: getCurrentDate(),
+  //   }))
+  // }, [])
   function getCurrentDate() {
     const currentDate = new Date()
     const year = currentDate.getFullYear().toString()
@@ -295,7 +356,7 @@ const CustomerInfo = () => {
   }
   return (
     <div className="inner-page-wrap">
-      <Customer />
+      <Customer getCustomerData={getCustomerData} />
       <div className="tab-content">
         <div className="tab-title">
           <h4>KlientInnen</h4>
@@ -759,7 +820,7 @@ const CustomerInfo = () => {
                             onChange={DeliveryChange}
                             name="fname"
                             placeholder="Vornamen"
-                            value={customerDelivery.fname}
+                            // value={customers.fname}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -806,12 +867,13 @@ const CustomerInfo = () => {
                           <input
                             type="email"
                             // onChange={handleEmailChange}
-                            onChange={(e) => {
-                              setEmail(e.target.value)
-                            }}
+                            // onChange={(e) => {
+                            //   setEmail(e.target.value)
+                            // }}
+                            disabled
                             name="email"
                             placeholder="E-Mail Adresse"
-                            value={email}
+                            // value={customers.email}
                             className="form-control"
                             id="inputPassword"
                           />

@@ -3,8 +3,12 @@ import { HiOutlineMail } from 'react-icons/hi'
 import { IoIosCall } from 'react-icons/io'
 import { ImLocation2 } from 'react-icons/im'
 import { useNavigate, useParams } from 'react-router-dom'
+import PropTypes from 'prop-types'
+const Customer = ({ getCustomerData }) => {
+  Customer.propTypes = {
+    getCustomerData: PropTypes.func.isRequired,
+  }
 
-const Customer = () => {
   const navigate = useNavigate()
 
   let activeTab = localStorage.getItem('tabId') || 'customer_info'
@@ -44,9 +48,15 @@ const Customer = () => {
   let res = JSON.parse(data)
   // console.log(res)
 
-  const firstName = res?.fname?.slice(0, 1).toUpperCase() + res?.fname?.slice(1).toLowerCase()
-  const lastName = res?.lname?.slice(0, 1).toUpperCase() + res?.lname?.slice(1).toLowerCase()
-  let street = res?.street?.slice(0, 1).toUpperCase() + res?.street?.slice(1).toLowerCase()
+  const firstName =
+    getCustomerData?.customer?.fname?.slice(0, 1).toUpperCase() +
+    getCustomerData?.customer?.fname?.slice(1).toLowerCase()
+  const lastName =
+    getCustomerData?.customer?.lname?.slice(0, 1).toUpperCase() +
+    getCustomerData?.customer?.lname?.slice(1).toLowerCase()
+  let street =
+    getCustomerData?.customer?.street?.slice(0, 1).toUpperCase() +
+    getCustomerData?.customer?.street?.slice(1).toLowerCase()
   // console.log('customerPage', res)
   return (
     <>
@@ -105,7 +115,7 @@ const Customer = () => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span> {res?.email}</span>
+                    <span> {getCustomerData?.customer?.email}</span>
                   </button>
                   <button className="btn btn-outline">
                     <svg
@@ -127,7 +137,7 @@ const Customer = () => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span>{res?.phone}</span>
+                    <span>{getCustomerData?.customer?.phone}</span>
                   </button>
                 </div>
               </div>
