@@ -116,7 +116,16 @@ const CustomerList = () => {
         <div
           className="dm-badge"
           style={{
-            background: text === '' ? '#C20F0F' : text === 'HVD-PV' ? '#4EB772' : 'transparent',
+            background:
+              text === ''
+                ? '#C20F0F'
+                : text === 'HVD-PV'
+                ? '#4EB772'
+                : text === 'SPV alt'
+                ? '#4EB772'
+                : text === 'OPV alt'
+                ? '#4EB772'
+                : 'transparent',
             border:
               text === ''
                 ? '1px solid transparent'
