@@ -135,7 +135,7 @@ exports.getCustomerData = async (req, res) => {
 exports.deleteCustomer = async (req, res) => {
   try {
     const result = await Customer.updateOne(
-      { _id: req.params.id, status: { $ne: "deleted" } },
+      { "customer.email": req.query.email, status: { $ne: "deleted" } },
       { $set: { status: "deleted" } }
     );
     res.send(result);

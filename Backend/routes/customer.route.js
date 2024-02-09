@@ -6,7 +6,7 @@ const customerController = require("../controller/customer.controller");
 router.post("/create", customerController.createCustomer);
 router.get("/get_records", customerController.getCustomer);
 router.get("/get_record", customerController.getCustomerData);
-router.delete("/get_record/:id", customerController.deleteCustomer);
+router.delete("/get_record/delete", customerController.deleteCustomer);
 router.put("/get_record/edit", customerController.editCustomer);
 
 router.get("/user/customer/:id", customerController.getUserCustomer);

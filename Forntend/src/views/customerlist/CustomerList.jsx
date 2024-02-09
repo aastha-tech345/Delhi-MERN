@@ -125,6 +125,14 @@ const CustomerList = () => {
                 ? '#4EB772'
                 : text === 'OPV alt'
                 ? '#4EB772'
+                : text === 'Dauerspenderlnner'
+                ? '#4EB772'
+                : text === 'Materialbestellung'
+                ? '#4EB772'
+                : text === 'Newsletter Abonnent'
+                ? '#4EB772'
+                : text === 'Offen'
+                ? '#4EB772'
                 : 'transparent',
             border:
               text === ''
@@ -194,7 +202,7 @@ const CustomerList = () => {
           loginData?.user?.isAdminFullRights === 'true' ? (
             <button
               style={{ background: 'none', border: 'none' }}
-              onClick={() => handleIconClick(record._id)}
+              onClick={() => handleIconClick(record)}
             >
               {/* <RiDeleteBinLine className="text-danger text-bold fs-5" /> */}
               <svg
@@ -253,22 +261,22 @@ const CustomerList = () => {
             ''
           )}
 
-          <button
+          {/* <button
             style={{ background: 'none', border: 'none' }}
             onClick={() => handlePrint(record)}
           >
             {' '}
             <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
             &nbsp;Drucke
-          </button>
+          </button> */}
         </>
       ),
       // hidden: 'true',
     },
   ]
 
-  const handleIconClick = (recordId) => {
-    setSelectedRecordId(recordId)
+  const handleIconClick = (record) => {
+    setSelectedRecordId(record.email)
     setIsModalVisible(true)
   }
 
@@ -278,12 +286,15 @@ const CustomerList = () => {
   const handleDeleteConfirm = async () => {
     if (selectedRecordId) {
       try {
-        const response = await fetch(`${apiUrl}/customer/get_record/${selectedRecordId}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          `${apiUrl}/customer/get_record/delete?email=${selectedRecordId}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
           },
-        })
+        )
 
         if (response.ok) {
           getDetails()

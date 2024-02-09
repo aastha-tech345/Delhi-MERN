@@ -476,6 +476,7 @@ const CustomerInfo = () => {
                               className="form-multi-select"
                               name="clientStatus"
                               onChange={customerInfoChangeMulti}
+                              placeholder="HVD-PV"
                               value={customerInfoStatu.clientStatus}
                               id="ms1"
                               isMulti
