@@ -77,6 +77,7 @@ const CustomerList = () => {
   const editRecord = (record) => {
     console.log('ashish', record)
     navigate('/customer/customer_info', { state: record })
+    localStorage.setItem('customerRecord', JSON.stringify(record))
   }
   const columns = [
     {
@@ -457,6 +458,7 @@ const CustomerList = () => {
     let res = JSON.stringify(record)
     localStorage.setItem('customerDatat', res)
     navigate('/customer/customer_info', { state: record })
+    localStorage.setItem('customerRecord', JSON.stringify(record))
   }
 
   const [hide, setHide] = useState(false)
@@ -767,7 +769,11 @@ const CustomerList = () => {
                         className="form-control"
                         id="inputTelephone"
                       /> */}
-                      <DatePiker selected={startDate} onChange={handleDateChange} />
+                      <DatePiker
+                        className="form-control"
+                        selected={startDate}
+                        onChange={handleDateChange}
+                      />
                     </div>
                     <div className="col-sm-6">
                       <input

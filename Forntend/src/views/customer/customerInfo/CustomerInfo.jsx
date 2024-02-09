@@ -79,7 +79,8 @@ const CustomerInfo = () => {
   //   // street: '',
   //   land: customerDelivery.land,
   // })
-
+  let ress = localStorage.getItem('customerRecord')
+  let resultt = JSON.parse(ress)
   let customer = {
     fname: customerContact.fname,
     lname: customerContact.lname,
@@ -91,6 +92,8 @@ const CustomerInfo = () => {
     land: customerDelivery.land,
     id: location?.state?.id,
     street: location?.state?.street,
+    city: resultt?.city,
+    created_by: location?.state?.created_by,
   }
 
   let res = localStorage.getItem('CustomerRecord')
@@ -105,7 +108,7 @@ const CustomerInfo = () => {
     customerDelivery: customerDelivery,
     customerDeposit: customerDeposit,
     customerBurial: customerBurial,
-    created_by: '',
+    // created_by: '',
     // customer_id: result._id,
   }
   const dataa = { ...data, email }

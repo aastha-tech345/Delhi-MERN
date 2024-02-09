@@ -74,6 +74,7 @@ const customerInfo = {
   dob: { type: String },
   status: { type: String },
   id: { type: String },
+  created_by: { type: Schema.Types.ObjectId, ref: "User" },
 };
 const customerSchema = new Schema(
   {

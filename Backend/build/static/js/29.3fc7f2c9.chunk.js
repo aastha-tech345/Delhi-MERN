@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_coreui_coreui_free_react_admin_template=self.webpackChunk_coreui_coreui_free_react_admin_template||[]).push([[29],{94029:(e,t,r)=>{r.r(t),r.d(t,{default:()=>l});var a=r(72791),c=r(59513),s=r.n(c),u=(r(68639),r(80184));const l=e=>{let{onChange:t,selected:r}=e;return(0,a.useEffect)((()=>{}),[]),(0,u.jsx)(s(),{className:"form-control",placeholderText:"Geburtsdatum",selected:r,onChange:t})}}}]);
-//# sourceMappingURL=29.3fc7f2c9.chunk.js.map

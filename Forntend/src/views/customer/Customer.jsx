@@ -44,19 +44,18 @@ const Customer = ({ getCustomerData }) => {
     handleTabClick()
   }, [activeTab])
 
-  let data = localStorage.getItem('customerDatat')
-  let res = JSON.parse(data)
+  let customer = localStorage.getItem('customerRecord')
+  let res = JSON.parse(customer)
   // console.log(res)
 
-  const firstName =
-    getCustomerData?.customer?.fname?.slice(0, 1).toUpperCase() +
-    getCustomerData?.customer?.fname?.slice(1).toLowerCase()
-  const lastName =
-    getCustomerData?.customer?.lname?.slice(0, 1).toUpperCase() +
-    getCustomerData?.customer?.lname?.slice(1).toLowerCase()
+  const firstName = res?.fname?.slice(0, 1).toUpperCase() + res?.fname?.slice(1).toLowerCase()
+  const lastName = res?.lname?.slice(0, 1).toUpperCase() + res?.lname?.slice(1).toLowerCase()
   let street =
-    getCustomerData?.customer?.street?.slice(0, 1).toUpperCase() +
-    getCustomerData?.customer?.street?.slice(1).toLowerCase()
+    res?.street?.slice(0, 1).toUpperCase() +
+    res?.street?.slice(1).toLowerCase() +
+    ',' +
+    res?.plz +
+    res?.city
   // console.log('customerPage', res)
   return (
     <>
@@ -115,7 +114,7 @@ const Customer = ({ getCustomerData }) => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span> {getCustomerData?.customer?.email}</span>
+                    <span> {res?.email}</span>
                   </button>
                   <button className="btn btn-outline">
                     <svg
@@ -137,7 +136,7 @@ const Customer = ({ getCustomerData }) => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span>{getCustomerData?.customer?.phone}</span>
+                    <span>{res?.phone}</span>
                   </button>
                 </div>
               </div>
