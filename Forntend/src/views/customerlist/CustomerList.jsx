@@ -144,7 +144,7 @@ const CustomerList = () => {
       // hidden: true,
       render: (_, record) => (
         <>
-          {(loginData?.user?._id === record.created_by && verifyEditPer().includes('owned')) ||
+          {(loginData?.user?._id === record?.created_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
           loginData?.user?.isAdminFullRights === 'true' ? (
             <>
@@ -189,7 +189,7 @@ const CustomerList = () => {
           ) : (
             ''
           )}
-          {(loginData?.user?._id === record.created_by && verifyDelPer().includes('owned')) ||
+          {(loginData?.user?._id === record?.created_by && verifyDelPer().includes('owned')) ||
           verifyDelPer().includes('yes') ||
           loginData?.user?.isAdminFullRights === 'true' ? (
             <button
