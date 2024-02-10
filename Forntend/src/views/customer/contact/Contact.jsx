@@ -243,7 +243,7 @@ const Contact = () => {
   const getDetails = async () => {
     try {
       const result = await fetch(
-        `${apiUrl}/contact/get_contact/${custData?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
+        `${apiUrl}/contact/get_contact?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
       console.log('data', data)
@@ -255,6 +255,7 @@ const Contact = () => {
     }
   }
 
+  console.log('contactRecord', contactRecord)
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(parseInt(e.target.value, 10))
     setPage(1)

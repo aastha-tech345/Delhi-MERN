@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
 import { useLocation, useNavigate } from 'react-router-dom'
+import 'react-datepicker/dist/react-datepicker.css'
+import DatePiker from '../Date'
 
 const CustomerInfo = () => {
   const navigate = useNavigate()
@@ -81,6 +83,7 @@ const CustomerInfo = () => {
   // })
   let ress = localStorage.getItem('customerRecord')
   let resultt = JSON.parse(ress)
+
   let customer = {
     fname: customerContact.fname,
     lname: customerContact.lname,
@@ -95,7 +98,8 @@ const CustomerInfo = () => {
     city: resultt?.city,
     created_by: location?.state?.created_by,
   }
-
+  // console.log('aaastha', customer.email)
+  // console.log('email', resultt?.customer)
   let res = localStorage.getItem('CustomerRecord')
   let result = JSON.parse(res)
   const data = {
@@ -113,34 +117,83 @@ const CustomerInfo = () => {
   }
   const dataa = { ...data, email }
 
-  //materialChange started
   const matarialChange = (e) => {
-    const { name, value } = e.target
-    setOrderingMaterials({ ...orderingMaterials, [name]: value })
+    if (e instanceof Date) {
+      setOrderingMaterials({ ...orderingMaterials, newsletterDate: e })
+    } else if (e.target) {
+      const { name, value } = e.target
+      if (name === 'newsletterDate') {
+        setOrderingMaterials({ ...orderingMaterials, newsletterDate: value })
+      } else {
+        setOrderingMaterials({ ...orderingMaterials, [name]: value })
+      }
+    } else {
+      console.error('Invalid event or data provided to matarialChange.')
+    }
   }
+
   //materialChange end
 
   //customerInfoChange started
+  // const customerInfoChange = (e) => {
+  //   if (e instanceof Date) {
+  //     setCustomerInfoStatu({ ...customerInfoStatu, newsletterDate: e })
+  //   } else if (e.target) {
+  //     const { name, value, checked, type } = e.target
+
+  //     if (name === 'dataCollection') {
+  //       setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: value })
+  //     } else {
+  //       setCustomerInfoStatu({
+  //         ...customerInfoStatu,
+  //         [name]: type === 'checkbox' ? checked : value,
+  //       })
+  //     }
+  //   } else {
+  //     console.error('Invalid event or data provided to customerInfoChange.')
+  //   }
+  // }
   const customerInfoChange = (e) => {
-    const { name, value, checked, type } = e.target
-    setCustomerInfoStatu({ ...customerInfoStatu, [name]: type === 'checkbox' ? checked : value })
+    if (e instanceof Date) {
+      setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: e })
+    } else if (e.target) {
+      const { name, value, checked, type } = e.target
+
+      if (name === 'dataCollection') {
+        setCustomerInfoStatu({ ...customerInfoStatu, [name]: value })
+      } else {
+        setCustomerInfoStatu({
+          ...customerInfoStatu,
+          [name]: type === 'checkbox' ? checked : value,
+        })
+      }
+    } else {
+      console.error('Invalid event or data provided to customerInfoChange.')
+    }
   }
 
-  //customerInfoChange end
-
-  // const customerChange = (e) => {
+  // const ContactChange = (e) => {
   //   const { name, value, type, checked } = e.target
   //   const newValue = type === 'radio' ? (checked ? value : '') : value
-  //   setCustomerInfoStatu({ ...customerInfoStatu, [name]: newValue })
+  //   setCustomerContact({ ...customerContact, [name]: newValue })
   // }
-  //customerInfoChange end
-
-  //customerContact started
   const ContactChange = (e) => {
-    const { name, value, type, checked } = e.target
-    const newValue = type === 'radio' ? (checked ? value : '') : value
-    setCustomerContact({ ...customerContact, [name]: newValue })
+    if (e instanceof Date) {
+      setCustomerContact({ ...customerContact, dob: e })
+    } else if (e.target) {
+      const { name, value, type, checked } = e.target
+
+      if (type === 'radio') {
+        const newValue = checked ? value : ''
+        setCustomerContact({ ...customerContact, [name]: newValue })
+      } else {
+        setCustomerContact({ ...customerContact, [name]: type === 'checkbox' ? checked : value })
+      }
+    } else {
+      console.error('Invalid event or data provided to ContactChange.')
+    }
   }
+
   //customerContact end
 
   //customerContact started
@@ -157,12 +210,36 @@ const CustomerInfo = () => {
   //customerContact end
 
   //customerDeposit started
-  const DepositChange = (e) => {
-    const { name, value, type, checked } = e.target
-    const inputValue = type === 'checkbox' ? checked : value
+  // const DepositChange = (e) => {
+  //   const { name, value, type, checked } = e.target
+  //   const inputValue = type === 'checkbox' ? checked : value
 
-    setCustomerDeposit({ ...customerDeposit, [name]: inputValue })
+  //   setCustomerDeposit({ ...customerDeposit, [name]: inputValue })
+  // }
+  const DepositChange = (e) => {
+    if (e instanceof Date) {
+      setCustomerDeposit({
+        ...customerDeposit,
+        updateStamp: e,
+        nextBrand: e,
+        lastStamp: e,
+        startDeposit: e,
+        reminderStamp: e,
+      })
+    } else if (e.target) {
+      const { name, value, type, checked } = e.target
+
+      if (name === 'reminderStamp') {
+        setCustomerDeposit({ ...customerDeposit, [name]: e })
+      } else {
+        const inputValue = type === 'checkbox' ? checked : value
+        setCustomerDeposit({ ...customerDeposit, [name]: inputValue })
+      }
+    } else {
+      console.error('Invalid event or data provided to DepositChange.')
+    }
   }
+
   //customerDeposit end
 
   //customerDeposit started
@@ -216,23 +293,9 @@ const CustomerInfo = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  // console.log('aastha', customer_record)
-  // console.log('customer', customer_record)
 
-  // const customers = []
+  console.log('aastha', customerContact.email)
 
-  // customer_record.forEach((item) => {
-  //   customers.push(item.customer)
-  // })
-  // customers.forEach((item) => {
-  //   customers.push(item.customer)
-  // })
-  // console.log(
-  //   'Customers:',
-  //   customers.map((item) => {
-  //     console.log('item', item)
-  //   }),
-  // )
   const saveData = async (e) => {
     e.preventDefault()
     // for (const key in data) {
@@ -260,56 +323,56 @@ const CustomerInfo = () => {
 
       if (result?.message === 'Customer updated successfully') {
         toast.success('Kundeninfo erfolgreich gespeichert')
-        setOrderingMaterials({
-          orderNumber: '',
-          newsletterDate: '',
-          extras: '',
-          newsletterSubscription: '',
-        })
-        setCustomerInfoStatu({
-          clientStatus: '',
-          employee: '',
-          dataCollection: '',
-          dataProtection: '',
-        })
-        setThose('')
-        setEmail('')
-        setCustomerContact({
-          title: '',
-          salution: '',
-          gender: '',
-          fname: '',
-          dob: '',
-          name: '',
-        })
-        setCustomerBills({
-          billAddress: '',
-          billPlz: '',
-          billLand: '',
-          billOrt: '',
-        })
+        // setOrderingMaterials({
+        //   orderNumber: '',
+        //   newsletterDate: '',
+        //   extras: '',
+        //   newsletterSubscription: '',
+        // })
+        // setCustomerInfoStatu({
+        //   clientStatus: '',
+        //   employee: '',
+        //   dataCollection: '',
+        //   dataProtection: '',
+        // })
+        // setThose('')
+        // setEmail('')
+        // setCustomerContact({
+        //   title: '',
+        //   salution: '',
+        //   gender: '',
+        //   fname: '',
+        //   dob: '',
+        //   name: '',
+        // })
+        // setCustomerBills({
+        //   billAddress: '',
+        //   billPlz: '',
+        //   billLand: '',
+        //   billOrt: '',
+        // })
 
-        setCustomerDelivery({
-          fname: '',
-          lname: '',
-          address: '',
-          plz: '',
-          land: '',
-          ort: '',
-          phone: '',
-          mobile: '',
-          alreadyPaid: '',
-        })
-        setCustomerDeposit({
-          deposit: '',
-          startDeposit: '',
-          nextBrand: '',
-          updateStamp: '',
-          lastStamp: '',
-          emergencyPass: '',
-          reminderStamp: '',
-        })
-        setCustomerBurial('')
+        // setCustomerDelivery({
+        //   fname: '',
+        //   lname: '',
+        //   address: '',
+        //   plz: '',
+        //   land: '',
+        //   ort: '',
+        //   phone: '',
+        //   mobile: '',
+        //   alreadyPaid: '',
+        // })
+        // setCustomerDeposit({
+        //   deposit: '',
+        //   startDeposit: '',
+        //   nextBrand: '',
+        //   updateStamp: '',
+        //   lastStamp: '',
+        //   emergencyPass: '',
+        //   reminderStamp: '',
+        // })
+        // setCustomerBurial('')
         getDetails()
       }
 
@@ -324,28 +387,28 @@ const CustomerInfo = () => {
   useEffect(() => {
     getDetails()
   }, [page, itemsPerPage])
-  // useEffect(() => {
-  //   setOrderingMaterials((prev) => ({
-  //     ...prev,
-  //     newsletterDate: getCurrentDate(),
-  //   }))
-  //   setCustomerInfoStatu((prev) => ({
-  //     ...prev,
-  //     dataCollection: getCurrentDate(),
-  //   }))
-  //   setCustomerContact((prev) => ({
-  //     ...prev,
-  //     dob: getCurrentDate(),
-  //   }))
-  //   setCustomerDeposit((prev) => ({
-  //     ...prev,
-  //     updateStamp: getCurrentDate(),
-  //     nextBrand: getCurrentDate(),
-  //     startDeposit: getCurrentDate(),
-  //     reminderStamp: getCurrentDate(),
-  //     lastStamp: getCurrentDate(),
-  //   }))
-  // }, [])
+  useEffect(() => {
+    setOrderingMaterials((prev) => ({
+      ...prev,
+      newsletterDate: getCurrentDate(),
+    }))
+    setCustomerInfoStatu((prev) => ({
+      ...prev,
+      dataCollection: getCurrentDate(),
+    }))
+    setCustomerContact((prev) => ({
+      ...prev,
+      dob: getCurrentDate(),
+    }))
+    setCustomerDeposit((prev) => ({
+      ...prev,
+      updateStamp: getCurrentDate(),
+      nextBrand: getCurrentDate(),
+      startDeposit: getCurrentDate(),
+      reminderStamp: getCurrentDate(),
+      lastStamp: getCurrentDate(),
+    }))
+  }, [])
   function getCurrentDate() {
     const currentDate = new Date()
     const year = currentDate.getFullYear().toString()
@@ -373,7 +436,7 @@ const CustomerInfo = () => {
                 <div className="row-wrap">
                   <div className="container-fluid">
                     <div className="row justify-content-between align-items-center">
-                      <div className="col ps-md-0">
+                      {/* <div className="col ps-md-0">
                         <label htmlFor="inputPassword" className="col-form-label">
                           Bestellte Anzahl Fragebögen
                         </label>
@@ -385,85 +448,83 @@ const CustomerInfo = () => {
                           onChange={matarialChange}
                           className="form-control"
                         />
-                      </div>
-
-                      <div className="col-md-2">
-                        <label htmlFor="inputPassword" className="col-form-label">
-                          Extras
-                        </label>
-
-                        <input
-                          type="text"
-                          name="extras"
-                          value={orderingMaterials.extras}
-                          onChange={matarialChange}
-                          className="form-control"
-                          placeholder="Extras"
-                        />
-                      </div>
-
-                      {/* <div className="col">
-                        <label htmlFor="inputPassword" className="col-form-label">
-                          Newsletter-Datum
-                        </label>
-                        <input
-                          type="date"
-                          name="newsletterDate"
-                          value={orderingMaterials.newsletterDate}
-                          onChange={matarialChange}
-                          className="form-control"
-                          placeholder="01/09/2000"
-                        />
                       </div> */}
-                      <div className="col">
-                        <label htmlFor="inputPassword" className="col-form-label">
-                          Newsletter-Datum
-                        </label>
-                        <input
-                          type="date"
-                          name="newsletterDate"
-                          value={orderingMaterials.newsletterDate}
-                          onChange={matarialChange}
-                          className="form-control"
-                          pattern="d{4}.d{2}.d{2}"
-                        />
-                        {/* <span>
-                          {orderingMaterials.newsletterDate &&
-                            formatDate(orderingMaterials.newsletterDate)}
-                        </span> */}
+                      <div className="col-md-3">
+                        <div className="row">
+                          <label htmlFor="inputPassword" className="col-sm-8 col-form-label">
+                            Bestellte Anzahl Fragebögen
+                          </label>
+                          <div className="col-sm-4">
+                            <input
+                              type="number"
+                              value={orderingMaterials.orderNumber}
+                              name="orderNumber"
+                              onChange={matarialChange}
+                              className="form-control w-100"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-3">
+                        <div className="mb-6 row">
+                          <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                            Extras
+                          </label>
+                          <div className="col-sm-9">
+                            <input
+                              type="text"
+                              name="extras"
+                              value={orderingMaterials.extras}
+                              onChange={matarialChange}
+                              className="form-control w-100"
+                              placeholder="Extras"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-3">
+                        <div className="row">
+                          <div className="col-sm-5 col-form-label">Newsletter-Datum</div>
+                          <div className="col-sm-7">
+                            <DatePiker
+                              className="form-control w-100"
+                              selected={orderingMaterials.newsletterDate}
+                              onChange={matarialChange}
+                            />
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="col">
-                        <label htmlFor="inputPassword" className="col-form-label">
-                          Newsletter-Abonnement
-                        </label>
-                        <div className="radio-check-wrap">
-                          <input
-                            type="radio"
-                            name="newsletterSubscription"
-                            value="active"
-                            checked={orderingMaterials.newsletterSubscription === 'active'}
-                            onChange={matarialChange}
-                          />
-                          <span>Aktiv</span>
-                        </div>
-                        <div className="radio-check-wrap">
-                          <input
-                            type="radio"
-                            name="newsletterSubscription"
-                            value="inactive"
-                            checked={orderingMaterials.newsletterSubscription === 'inactive'}
-                            onChange={matarialChange}
-                          />
-                          <span>Inaktiv</span>
+                      <div className="col-md-3">
+                        <div className="row">
+                          <div className="col-sm-6  col-form-label">Newsletter-Abonnement</div>
+                          <div className="col-sm-6">
+                            <div className="radio-check-wrap">
+                              <input
+                                type="radio"
+                                name="newsletterSubscription"
+                                value="active"
+                                checked={orderingMaterials.newsletterSubscription === 'active'}
+                                onChange={matarialChange}
+                              />
+                              <span>Aktiv</span>
+                            </div>
+                            <div className="radio-check-wrap">
+                              <input
+                                type="radio"
+                                name="newsletterSubscription"
+                                value="inactive"
+                                checked={orderingMaterials.newsletterSubscription === 'inactive'}
+                                onChange={matarialChange}
+                              />
+                              <span>Inaktiv</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                {/* orderingMaterials end */}
-
-                {/* customerInfoStatu start */}
 
                 <h3>Status</h3>
                 <div className="border-bottom mb-3">
@@ -471,9 +532,7 @@ const CustomerInfo = () => {
                     <div className="row">
                       <div className="col-sm-6">
                         <div className="row mb-3">
-                          <label htmlFor="inputPassword" className="col-sm-6 col-form-label">
-                            Status
-                          </label>
+                          <label className="col-sm-3 col-form-label">Status</label>
                           <div className="col-sm-6">
                             <Select
                               className="form-multi-select"
@@ -489,9 +548,7 @@ const CustomerInfo = () => {
                         </div>
 
                         <div className="row mb-3">
-                          <label htmlFor="inputPassword" className="col-sm-6 col-form-label">
-                            MitarbeiterInnen
-                          </label>
+                          <label className="col-sm-3 col-form-label">MitarbeiterInnen</label>
                           <div className="col-sm-6">
                             <select
                               onChange={customerInfoChange}
@@ -515,10 +572,10 @@ const CustomerInfo = () => {
 
                       <div className="col-sm-6">
                         <div className="row mb-3">
-                          <label htmlFor="inputPassword" className="col-sm-6 col-form-label">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                             Zustimmung Datenschutz
                           </label>
-                          <div className="col-sm-6">
+                          <div className="col-sm-4 mt-2">
                             <div className="radio-check-wrap w-100 h-100">
                               <input
                                 type="checkbox"
@@ -534,11 +591,11 @@ const CustomerInfo = () => {
                         </div>
 
                         <div className="row mb-3">
-                          <label htmlFor="inputDate" className="col-sm-6 col-form-label">
+                          <label htmlFor="inputDate" className="col-sm-4 col-form-label">
                             Datum Datenerfassung
                           </label>
-                          <div className="col-sm-6">
-                            <input
+                          <div className="col-sm-8">
+                            {/* <input
                               placeholder="10.10.23"
                               id="inputDate"
                               type="date"
@@ -546,6 +603,11 @@ const CustomerInfo = () => {
                               name="dataCollection"
                               onChange={customerInfoChange}
                               value={customerInfoStatu.dataCollection}
+                            /> */}
+                            <DatePiker
+                              className="form-control"
+                              selected={customerInfoStatu.dataCollection}
+                              onChange={customerInfoChange}
                             />
                           </div>
                         </div>
@@ -559,7 +621,7 @@ const CustomerInfo = () => {
                 <div className="row-wrap border-0 mb-0 pb-0">
                   <div className="container-fluid">
                     <div className="row">
-                      <div className="col-sm-4 ps-0">
+                      <div className="col-sm-3 ps-0">
                         <div className="input-group">
                           <select
                             className="form-control form-select"
@@ -656,7 +718,7 @@ const CustomerInfo = () => {
                           Geburtsdatum
                         </label>
                         <div className="col-sm-6">
-                          <input
+                          {/* <input
                             type="date"
                             value={customerContact.dob}
                             name="dob"
@@ -664,6 +726,11 @@ const CustomerInfo = () => {
                             className="form-control"
                             placeholder="10.10.23"
                             id="inputDate"
+                          /> */}
+                          <DatePiker
+                            className="form-control"
+                            selected={customerContact.dob}
+                            onChange={ContactChange}
                           />
                         </div>
                       </div>
@@ -878,6 +945,7 @@ const CustomerInfo = () => {
                             name="email"
                             placeholder="E-Mail Adresse"
                             // value={customers.email}
+                            value={customer.email}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -1028,14 +1096,10 @@ const CustomerInfo = () => {
                           Hinterlegungsbeginn
                         </label>
                         <div className="col-sm-6">
-                          <input
-                            type="date"
-                            onChange={DepositChange}
-                            value={customerDeposit.startDeposit}
-                            name="startDeposit"
+                          <DatePiker
                             className="form-control"
-                            placeholder="10.10.23"
-                            id="inputDate"
+                            selected={customerDeposit.startDeposit}
+                            onChange={DepositChange}
                           />
                         </div>
                       </div>
@@ -1045,14 +1109,10 @@ const CustomerInfo = () => {
                           Versand der nächsten Marke
                         </label>
                         <div className="col-sm-6">
-                          <input
-                            type="date"
-                            onChange={DepositChange}
-                            value={customerDeposit.nextBrand}
-                            name="nextBrand"
+                          <DatePiker
                             className="form-control"
-                            placeholder="10.10.23"
-                            id="inputDate"
+                            selected={customerDeposit.nextBrand}
+                            onChange={DepositChange}
                           />
                         </div>
                       </div>
@@ -1063,28 +1123,20 @@ const CustomerInfo = () => {
                           Aktualisierungsmarke Versand der letzten Marke - Monat + Jahr
                         </label>
                         <div className="col-sm-6">
-                          <input
-                            type="date"
-                            onChange={DepositChange}
-                            value={customerDeposit.updateStamp}
-                            name="updateStamp"
+                          <DatePiker
                             className="form-control"
-                            placeholder="10.10.23"
-                            id="inputDate"
+                            selected={customerDeposit.updateStamp}
+                            onChange={DepositChange}
                           />
                         </div>
                       </div>
                       <div className="row">
                         <label className="col-sm-6 col-form-label">Rücksendung letzte Marke</label>
                         <div className="col-sm-6">
-                          <input
-                            type="date"
-                            onChange={DepositChange}
-                            value={customerDeposit.lastStamp}
-                            name="lastStamp"
+                          <DatePiker
                             className="form-control"
-                            placeholder="10.10.23"
-                            id="inputDate"
+                            selected={customerDeposit.lastStamp}
+                            onChange={DepositChange}
                           />
                         </div>
                       </div>
@@ -1113,14 +1165,10 @@ const CustomerInfo = () => {
                           Erinnerung Marke
                         </label>
                         <div className="col-sm-6">
-                          <input
-                            type="date"
-                            onChange={DepositChange}
-                            value={customerDeposit.reminderStamp}
-                            name="reminderStamp"
+                          <DatePiker
                             className="form-control"
-                            placeholder="10.10.23"
-                            id="inputDate"
+                            selected={customerDeposit.reminderStamp}
+                            onChange={DepositChange}
                           />
                         </div>
                       </div>

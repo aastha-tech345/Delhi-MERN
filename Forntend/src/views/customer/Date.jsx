@@ -29,10 +29,11 @@ const DatePiker = ({ onChange, selected }) => {
 
   return (
     <DatePicker
-      className="form-control form-search-control"
+      className="form-control form-search-control w-100"
       placeholderText="Geburtsdatum"
       selected={selected}
       onChange={onChange}
+      dateFormat="dd.MM.yy"
     />
   )
 }

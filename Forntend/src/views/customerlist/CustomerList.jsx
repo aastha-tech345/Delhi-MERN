@@ -87,7 +87,7 @@ const CustomerList = () => {
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
-          to={`/customer/${a}`}
+          // to={`/customer/${a}`}
           onClick={() => handleStore(text, record)}
         >
           {text &&
