@@ -17,7 +17,9 @@ const CustomerInfo = () => {
   const [itemsPerPage, setItemsPerPage] = useState('')
   const [customer_record, setCustomerRecord] = useState([])
   let ress = localStorage.getItem('customerRecord')
+  // console.log(ress)d
   let resultt = JSON.parse(ress)
+  console.log('aast', resultt)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: resultt?.orderingMaterials?.orderNumber,
     newsletterDate: resultt?.orderingMaterials?.newsletterDate,
@@ -38,9 +40,9 @@ const CustomerInfo = () => {
     title: resultt?.customerContact?.title,
     salution: resultt?.customerContact?.salution,
     gender: resultt?.customerContact?.gender,
-    fname: location?.state?.fname,
-    lname: location?.state?.lname,
-    dob: location?.state?.dob,
+    fname: resultt?.fname,
+    lname: resultt?.lname,
+    dob: resultt?.dob,
   })
 
   const [customerBills, setCustomerBills] = useState({
@@ -54,10 +56,10 @@ const CustomerInfo = () => {
     fname: resultt?.customerDelivery?.fname,
     lname: resultt?.customerDelivery?.lname,
     address: resultt?.customerDelivery?.address,
-    plz: location?.state?.plz,
-    land: location?.state?.land,
+    plz: resultt?.plz,
+    land: resultt?.land,
     ort: resultt?.customerDelivery?.ort,
-    phone: location?.state?.phone,
+    phone: resultt?.phone,
     mobile: resultt?.customerDelivery?.mobile,
     alreadyPaid: resultt?.customerDelivery?.alreadyPaid,
   })
@@ -77,36 +79,26 @@ const CustomerInfo = () => {
     financialReasons: resultt?.customerBurial?.financialReasons,
   })
   const [getCustomerData, setGetCustomerData] = useState({})
-  // const [customer, setCustomer] = useState({
-  //   fname: customerContact.fname,
-  //   lname: customerContact.lname,
-  //   phone: customerDelivery.phone,
-  //   plz: customerDelivery.plz,
-  //   dob: customerContact.dob,
-  //   // street: '',
-  //   land: customerDelivery.land,
-  // })
 
   // console.log('customer_info', resultt.orderingMaterials.orderNumber)
   let customer = {
-    fname: customerContact.fname,
-    lname: customerContact.lname,
-    email: location?.state?.email,
-    phone: customerDelivery.phone,
-    plz: customerDelivery.plz,
-    dob: customerContact.dob,
+    fname: customerContact?.fname,
+    lname: customerContact?.lname,
+    email: resultt?.email,
+    phone: customerDelivery?.phone,
+    plz: customerDelivery?.plz,
+    dob: customerContact?.dob,
     status: customerInfoStatu.clientStatus[0]?.label,
-    land: customerDelivery.land,
-    id: location?.state?.id,
-    street: location?.state?.street,
+    land: customerDelivery?.land,
+    id: resultt?.id,
+    street: resultt?.street,
     city: resultt?.city,
     those: resultt?.those,
-    created_by: location?.state?.created_by,
+    created_by: resultt?.created_by,
   }
   // console.log('aaastha', customer.email)
   // console.log('email', resultt?.customer)
-  let res = localStorage.getItem('CustomerRecord')
-  let result = JSON.parse(res)
+
   const data = {
     customer: customer,
     orderingMaterials: orderingMaterials,
@@ -261,12 +253,12 @@ const CustomerInfo = () => {
     }
   }
 
-  console.log('aastha', resultt._id)
+  // console.log('aastha', resultt._id)
 
   const saveData = async (e) => {
     e.preventDefault()
     try {
-      let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt._id}`, {
+      let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
         method: 'put',
         headers: {
           'Content-Type': 'application/json',
@@ -307,7 +299,7 @@ const CustomerInfo = () => {
         //   billOrt: '',
         // })
 
-        // setCustomerDelivery({
+        // setCustomerDelivery?({
         //   fname: '',
         //   lname: '',
         //   address: '',
@@ -523,7 +515,8 @@ const CustomerInfo = () => {
                                 type="checkbox"
                                 name="dataProtection"
                                 onChange={customerInfoChange}
-                                checked={JSON.parse(customerInfoStatu.dataProtection)}
+                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
+                                checked={customerInfoStatu.dataProtection}
                                 id="inputPassword"
                                 onClick={(e) => e.stopPropagation()}
                               />
@@ -834,7 +827,7 @@ const CustomerInfo = () => {
                             name="fname"
                             placeholder="Vornamen"
                             // value={customers.fname}
-                            value={customerDelivery.fname}
+                            value={customerDelivery?.fname}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -851,7 +844,7 @@ const CustomerInfo = () => {
                             onChange={DeliveryChange}
                             name="address"
                             placeholder="Straße mit Hausnummer"
-                            value={customerDelivery.address}
+                            value={customerDelivery?.address}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -867,7 +860,7 @@ const CustomerInfo = () => {
                             onChange={DeliveryChange}
                             name="ort"
                             placeholder="Ort"
-                            value={customerDelivery.ort}
+                            value={customerDelivery?.ort}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -908,7 +901,7 @@ const CustomerInfo = () => {
                               }
                             }}
                             name="mobile"
-                            value={customerDelivery.mobile}
+                            value={customerDelivery?.mobile}
                             type="tel"
                             placeholder="Mobil"
                             className="form-control"
@@ -928,7 +921,7 @@ const CustomerInfo = () => {
                             placeholder="Name"
                             onChange={DeliveryChange}
                             name="lname"
-                            value={customerDelivery.lname}
+                            value={customerDelivery?.lname}
                             className="form-control"
                           />
                         </div>
@@ -965,7 +958,7 @@ const CustomerInfo = () => {
                             onChange={DeliveryChange}
                             name="land"
                             placeholder="Land"
-                            value={customerDelivery.land}
+                            value={customerDelivery?.land}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -986,7 +979,7 @@ const CustomerInfo = () => {
                               }
                             }}
                             name="phone"
-                            value={customerDelivery.phone}
+                            value={customerDelivery?.phone}
                             className="form-control"
                             type="tel"
                             placeholder="Telefon"
@@ -1003,7 +996,8 @@ const CustomerInfo = () => {
                             <input
                               onChange={DeliveryChange}
                               name="alreadyPaid"
-                              checked={JSON.parse(customerDelivery.alreadyPaid)}
+                              // checked={JSON.parse(customerDelivery?.alreadyPaid)}
+                              checked={customerDelivery?.alreadyPaid}
                               type="checkbox"
                               onClick={(e) => e.stopPropagation()}
                             />
@@ -1025,7 +1019,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={DepositChange}
-                          checked={JSON.parse(customerDeposit.deposit)}
+                          // checked={JSON.parse(customerDeposit.deposit)}
+                          checked={customerDeposit.deposit}
                           name="deposit"
                         />
                         <span> Hinterlegung [ja]</span>
@@ -1093,7 +1088,8 @@ const CustomerInfo = () => {
                             <input
                               type="checkbox"
                               onChange={DepositChange}
-                              checked={JSON.parse(customerDeposit.emergencyPass)}
+                              // checked={JSON.parse(customerDeposit.emergencyPass)}
+                              checked={customerDeposit.emergencyPass}
                               name="emergencyPass"
                             />{' '}
                             <span> Notfallpass</span>
@@ -1129,7 +1125,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={JSON.parse(customerBurial.termination)}
+                          // checked={JSON.parse(customerBurial.termination)}
+                          checked={customerBurial.termination}
                           name="termination"
                         />
                         <span>Beendigung auf eigenen Wunsch</span>
@@ -1140,7 +1137,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={JSON.parse(customerBurial.terminationDeath)}
+                          // checked={JSON.parse(customerBurial.terminationDeath)}
+                          checked={customerBurial.terminationDeath}
                           name="terminationDeath"
                         />
                         <span> Beendigung durch Tod</span>
@@ -1151,7 +1149,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={JSON.parse(customerBurial.notTermination)}
+                          // checked={JSON.parse(customerBurial.notTermination)}
+                          checked={customerBurial.notTermination}
                           name="notTermination"
                         />
                         <span>Beendigung weil nicht ermittelbar</span>
@@ -1162,7 +1161,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={JSON.parse(customerBurial.financialReasons)}
+                          // checked={JSON.parse(customerBurial.financialReasons)}
+                          checked={customerBurial.financialReasons}
                           name="financialReasons"
                         />
                         <span> Beendigung aus finanziellen Gründen</span>

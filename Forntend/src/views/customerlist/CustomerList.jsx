@@ -72,13 +72,6 @@ const CustomerList = () => {
   // }
   const [print, setPrint] = useState(false)
 
-  let a = localStorage.getItem('tabId') || 'customer_info'
-  // console.log('aastha', a)
-
-  const editRecord = (record) => {
-    navigate('/customer/customer_info', { state: record })
-    localStorage.setItem('customerRecord', JSON.stringify(record))
-  }
   const columns = [
     {
       title: 'KLIENTINNEN',
@@ -280,6 +273,20 @@ const CustomerList = () => {
       // hidden: 'true',
     },
   ]
+  let a = localStorage.getItem('tabId') || 'customer_info'
+  // console.log('aastha', a)
+
+  const editRecord = (record) => {
+    if (record) {
+      console.log('recoord', record)
+      navigate(`/customer/${a}`)
+      localStorage.setItem('customerRecord', JSON.stringify(record))
+    } else {
+      console.error('Record is undefined or null.')
+    }
+    // navigate(`/customer/${a}`)
+    // // localStorage.setItem('customerRecord', JSON.stringify(record))
+  }
 
   const handleIconClick = (record) => {
     setSelectedRecordId(record)
