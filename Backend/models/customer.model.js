@@ -11,7 +11,7 @@ const customerInfoStatuSchema = {
   clientStatus: { type: Array, default: [] },
   dataProtection: { type: String, default: "" },
   employee: { type: String, default: "" },
-  lname: { type: String, default: "" },
+  customerInfo_lname: { type: String, default: "" },
   dataCollection: { type: String, default: "" },
 };
 

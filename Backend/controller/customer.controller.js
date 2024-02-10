@@ -17,27 +17,60 @@ exports.createCustomer = async (req, res) => {
   }
 };
 
+// exports.editCustomer = async (req, res) => {
+//   // try {
+//   //   const findCustomer = await Customer.findOne({
+//   //     "customer.email": req.query.email,
+//   //   });
+//   //   console.log(findCustomer);
+//   //   const data = await Customer.findByIdAndUpdate(findCustomer?._id, req.body, {
+//   //     new: true,
+//   //   });
+//   //   // const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
+//   //   //   new: true,
+//   //   // });
+
+//   //   return res.status(200).json({
+//   //     success: true,
+//   //     message: "Customer updated successfully",
+//   //     data: data,
+//   //   });
+//   // } catch (error) {
+//   //   console.error("Error searching data:", error.message);
+//   //   res.status(500).json({ error: "Server Error" });
+//   // }
+//   try {
+//     const result = await Customer.updateOne(
+//       { _id: req.params.id },
+//       { $set: req.body }
+//     );
+//     res.send(result);
+//   } catch (error) {
+//     console.error("Error updating contact data:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// };
 exports.editCustomer = async (req, res) => {
   try {
-    const findCustomer = await Customer.findOne({
-      "customer.email": req.query.email,
-    });
-    console.log(findCustomer);
-    const data = await Customer.findByIdAndUpdate(findCustomer?._id, req.body, {
+    const { id } = req.params;
+    const updatedCustomer = await Customer.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    // const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {
-    //   new: true,
-    // });
+    console.log("SDHS", updatedCustomer);
+    if (!updatedCustomer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Customer not found" });
+    }
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       message: "Customer updated successfully",
-      data: data,
+      data: updatedCustomer,
     });
   } catch (error) {
-    console.error("Error searching data:", error.message);
-    res.status(500).json({ error: "Server Error" });
+    console.error("Error updating customer:", error.message);
+    res.status(500).json({ success: false, error: "Server Error" });
   }
 };
 
@@ -133,12 +166,25 @@ exports.getCustomerData = async (req, res) => {
 // };
 
 exports.deleteCustomer = async (req, res) => {
+  // try {
+  //   const result = await Customer.updateOne(
+  //     { "customer.email": req.query.email, status: { $ne: "deleted" } },
+  //     { $set: { status: "deleted" } }
+  //   );
+  //   res.send(result);
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).send("Internal Server Error");
+  // }
   try {
     const result = await Customer.updateOne(
-      { "customer.email": req.query.email, status: { $ne: "deleted" } },
+      { _id: req.params.id, status: { $ne: "deleted" } },
       { $set: { status: "deleted" } }
     );
-    res.send(result);
+    res.status(200).json({
+      success: true,
+      message: "Contact Deleted Successfully",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");

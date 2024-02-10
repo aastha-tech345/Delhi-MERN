@@ -16,6 +16,7 @@ import PrintModal from './PrintModal'
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../customer/Date'
 import warning from 'antd/es/_util/warning'
+import CustomerInfo from '../customer/customerInfo/CustomerInfo'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -75,7 +76,6 @@ const CustomerList = () => {
   // console.log('aastha', a)
 
   const editRecord = (record) => {
-    console.log('ashish', record)
     navigate('/customer/customer_info', { state: record })
     localStorage.setItem('customerRecord', JSON.stringify(record))
   }
@@ -208,7 +208,7 @@ const CustomerList = () => {
           loginData?.user?.isAdminFullRights === 'true' ? (
             <button
               style={{ background: 'none', border: 'none' }}
-              onClick={() => handleIconClick(record)}
+              onClick={() => handleIconClick(record._id)}
             >
               {/* <RiDeleteBinLine className="text-danger text-bold fs-5" /> */}
               <svg
@@ -282,9 +282,10 @@ const CustomerList = () => {
   ]
 
   const handleIconClick = (record) => {
-    setSelectedRecordId(record.email)
+    setSelectedRecordId(record)
     setIsModalVisible(true)
   }
+  console.log('first', selectedRecordId)
 
   const handleModalClose = () => {
     setIsModalVisible(false)
@@ -292,15 +293,12 @@ const CustomerList = () => {
   const handleDeleteConfirm = async () => {
     if (selectedRecordId) {
       try {
-        const response = await fetch(
-          `${apiUrl}/customer/get_record/delete?email=${selectedRecordId}`,
-          {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+        const response = await fetch(`${apiUrl}/customer/get_record/delete/${selectedRecordId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        )
+        })
 
         if (response.ok) {
           getDetails()
@@ -373,7 +371,7 @@ const CustomerList = () => {
       }
 
       let result = await response.json()
-      console.log('result', result)
+      console.log('result', result.data)
       toast.success('Kundendatensatz erfolgreich gespeichert')
       setFname('')
       setLand('')
@@ -395,21 +393,6 @@ const CustomerList = () => {
       toast.error('E-Mail-ID existiert bereits')
     }
   }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const getDetails = async () => {
-  //   try {
-  //     const result = await fetch(`${apiUrl}/customer/get_record?page=${page}`)
-  //     const data = await result?.json()
-  //     // console.log('data 258', data)
-  //     setCountPage(data?.pageCount)
-  //     const activeRecords = data?.result?.filter((record) => record.status === 'active')
-  //     setCustomerRecord(activeRecords)
-  //   } catch (error) {
-  //     console.error('Error fetching customer record:', error)
-  //   }
-  // }
-
   const getDetails = async () => {
     try {
       const result = await fetch(
@@ -424,16 +407,61 @@ const CustomerList = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  // let customerRecord = []
-  console.log('astha')
-  const customers = []
 
-  customer_record.forEach((item) => {
-    console.log('ashishh', item)
-    customers.push(item.customer)
+  const modifiedDataSource = customer_record.map((customerRecord) => {
+    const {
+      customer: { fname, lname, email, id, phone, startDate, plz, land, status, street, city },
+      _id,
+    } = customerRecord
+    const {
+      orderingMaterials,
+      customerInfoStatu,
+      customerBills,
+      customerContact,
+      customerDeposit,
+      customerDelivery,
+      customerBurial,
+      those,
+    } = customerRecord
+
+    const {} = orderingMaterials
+    const {} = customerInfoStatu
+    const {} = customerContact
+    const {} = customerBills
+    const {} = customerDeposit
+    const {} = customerDelivery
+    const {} = customerBurial
+
+    return {
+      _id,
+      id,
+      fname,
+      lname,
+      email,
+      phone,
+      startDate,
+      plz,
+      land,
+      status,
+      street,
+      city,
+      orderingMaterials,
+      customerInfoStatu,
+      customerDeposit,
+      customerContact,
+      customerBills,
+      customerDelivery,
+      customerBurial,
+      those,
+    }
   })
 
-  console.log('Customers:', customers)
+  // customer_record.forEach((item) => {
+  //   // console.log('ashishhitem', item)
+  //   customers.push(item.customer)
+  // })
+
+  // console.log('Customers:', customers)
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(parseInt(e.target.value, 10))
@@ -503,8 +531,6 @@ const CustomerList = () => {
       console.error('Error searching data:', error.message)
     }
   }
-
-  let customerRecord = localStorage.getItem('CustomerRecord')
   const customerItems = []
 
   printRecord?.map((item) => {
@@ -532,13 +558,13 @@ const CustomerList = () => {
     // setstartDate(getCurrentDate())
   }, [])
 
-  function getCurrentDate() {
-    const currentDate = new Date()
-    const year = currentDate.getFullYear().toString()
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
-    const day = currentDate.getDate().toString().padStart(2, '0')
-    return `${year}-${month}-${day}`
-  }
+  // function getCurrentDate() {
+  //   const currentDate = new Date()
+  //   const year = currentDate.getFullYear().toString()
+  //   const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
+  //   const day = currentDate.getDate().toString().padStart(2, '0')
+  //   return `${year}-${month}-${day}`
+  // }
   useEffect(() => {
     setStartDate(null)
   }, [])
@@ -548,7 +574,6 @@ const CustomerList = () => {
     if (e.getFullYear() > a) {
       toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
     }
-    // const { name, value } = e.target
     setStartDate(e)
   }
   return (
@@ -831,9 +856,10 @@ const CustomerList = () => {
           rowSelection={rowSelection}
           responsive
           columns={columns}
-          dataSource={customers}
+          dataSource={modifiedDataSource}
           pagination={false}
         />
+
         <div className="container-fluid pagination-row">
           <div className="row">
             <div className="col-md-10 ps-md-0 text-center text-md-start">

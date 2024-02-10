@@ -16,60 +16,65 @@ const CustomerInfo = () => {
   const [countPage, setCountPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState('')
   const [customer_record, setCustomerRecord] = useState([])
+  let ress = localStorage.getItem('customerRecord')
+  let resultt = JSON.parse(ress)
   const [orderingMaterials, setOrderingMaterials] = useState({
-    orderNumber: '',
-    newsletterDate: '',
-    extras: '',
-    newsletterSubscription: '',
+    orderNumber: resultt?.orderingMaterials?.orderNumber,
+    newsletterDate: resultt?.orderingMaterials?.newsletterDate,
+    extras: resultt?.orderingMaterials?.extras,
+    newsletterSubscription: resultt?.orderingMaterials?.newsletterSubscription,
   })
+  console.log('orderDate', resultt?.orderingMaterials?.newsletterDate)
+
   const [customerInfoStatu, setCustomerInfoStatu] = useState({
-    clientStatus: [],
-    dataProtection: false,
-    employee: '',
-    dataCollection: '',
+    clientStatus: resultt?.customerInfoStatu?.clientStatus,
+    dataProtection: resultt?.customerInfoStatu?.dataProtection,
+    employee: resultt?.customerInfoStatu?.employee,
+    dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
-  const [those, setThose] = useState()
+  const [those, setThose] = useState(resultt?.those)
+  console.log('those', resultt?.those)
   const [customerContact, setCustomerContact] = useState({
-    title: '',
-    salution: '',
-    gender: '',
+    title: resultt?.customerContact?.title,
+    salution: resultt?.customerContact?.salution,
+    gender: resultt?.customerContact?.gender,
     fname: location?.state?.fname,
     lname: location?.state?.lname,
     dob: location?.state?.dob,
   })
 
   const [customerBills, setCustomerBills] = useState({
-    billAddress: '',
-    billPlz: '',
-    billLand: '',
-    billOrt: '',
+    billAddress: resultt?.customerBills?.billAddress,
+    billPlz: resultt?.customerBills?.billPlz,
+    billLand: resultt?.customerBills?.billLand,
+    billOrt: resultt?.customerBills?.billOrt,
   })
   const [email, setEmail] = useState('')
   const [customerDelivery, setCustomerDelivery] = useState({
-    fname: '',
-    lname: '',
-    address: '',
+    fname: resultt?.customerDelivery?.fname,
+    lname: resultt?.customerDelivery?.lname,
+    address: resultt?.customerDelivery?.address,
     plz: location?.state?.plz,
     land: location?.state?.land,
-    ort: '',
+    ort: resultt?.customerDelivery?.ort,
     phone: location?.state?.phone,
-    mobile: '',
-    alreadyPaid: false,
+    mobile: resultt?.customerDelivery?.mobile,
+    alreadyPaid: resultt?.customerDelivery?.alreadyPaid,
   })
   const [customerDeposit, setCustomerDeposit] = useState({
-    deposit: '',
-    emergencyPass: '',
-    updateStamp: '',
-    nextBrand: '',
-    lastStamp: '',
-    startDeposit: '',
-    reminderStamp: '',
+    deposit: resultt?.customerDeposit?.deposit,
+    emergencyPass: resultt?.customerDeposit?.emergencyPass,
+    updateStamp: resultt?.customerDeposit?.updateStamp,
+    nextBrand: resultt?.customerDeposit?.nextBrand,
+    lastStamp: resultt?.customerDeposit?.lastStamp,
+    startDeposit: resultt?.customerDeposit?.startDeposit,
+    reminderStamp: resultt?.customerDeposit?.reminderStamp,
   })
   const [customerBurial, setCustomerBurial] = useState({
-    termination: false,
-    terminationDeath: false,
-    notTermination: false,
-    financialReasons: false,
+    termination: resultt?.customerBurial?.termination,
+    terminationDeath: resultt?.customerBurial?.terminationDeath,
+    notTermination: resultt?.customerBurial?.notTermination,
+    financialReasons: resultt?.customerBurial?.financialReasons,
   })
   const [getCustomerData, setGetCustomerData] = useState({})
   // const [customer, setCustomer] = useState({
@@ -81,9 +86,8 @@ const CustomerInfo = () => {
   //   // street: '',
   //   land: customerDelivery.land,
   // })
-  let ress = localStorage.getItem('customerRecord')
-  let resultt = JSON.parse(ress)
 
+  // console.log('customer_info', resultt.orderingMaterials.orderNumber)
   let customer = {
     fname: customerContact.fname,
     lname: customerContact.lname,
@@ -96,6 +100,7 @@ const CustomerInfo = () => {
     id: location?.state?.id,
     street: location?.state?.street,
     city: resultt?.city,
+    those: resultt?.those,
     created_by: location?.state?.created_by,
   }
   // console.log('aaastha', customer.email)
@@ -119,6 +124,9 @@ const CustomerInfo = () => {
 
   const matarialChange = (e) => {
     if (e instanceof Date) {
+      // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
+      //   -2,
+      // )}.${e.getFullYear().toString().slice(-2)}`
       setOrderingMaterials({ ...orderingMaterials, newsletterDate: e })
     } else if (e.target) {
       const { name, value } = e.target
@@ -132,29 +140,11 @@ const CustomerInfo = () => {
     }
   }
 
-  //materialChange end
-
-  //customerInfoChange started
-  // const customerInfoChange = (e) => {
-  //   if (e instanceof Date) {
-  //     setCustomerInfoStatu({ ...customerInfoStatu, newsletterDate: e })
-  //   } else if (e.target) {
-  //     const { name, value, checked, type } = e.target
-
-  //     if (name === 'dataCollection') {
-  //       setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: value })
-  //     } else {
-  //       setCustomerInfoStatu({
-  //         ...customerInfoStatu,
-  //         [name]: type === 'checkbox' ? checked : value,
-  //       })
-  //     }
-  //   } else {
-  //     console.error('Invalid event or data provided to customerInfoChange.')
-  //   }
-  // }
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
+      // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
+      //   -2,
+      // )}.${e.getFullYear().toString().slice(-2)}`
       setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: e })
     } else if (e.target) {
       const { name, value, checked, type } = e.target
@@ -172,13 +162,11 @@ const CustomerInfo = () => {
     }
   }
 
-  // const ContactChange = (e) => {
-  //   const { name, value, type, checked } = e.target
-  //   const newValue = type === 'radio' ? (checked ? value : '') : value
-  //   setCustomerContact({ ...customerContact, [name]: newValue })
-  // }
   const ContactChange = (e) => {
     if (e instanceof Date) {
+      // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
+      //   -2,
+      // )}.${e.getFullYear().toString().slice(-2)}`
       setCustomerContact({ ...customerContact, dob: e })
     } else if (e.target) {
       const { name, value, type, checked } = e.target
@@ -193,38 +181,24 @@ const CustomerInfo = () => {
       console.error('Invalid event or data provided to ContactChange.')
     }
   }
-
-  //customerContact end
-
-  //customerContact started
   const BillChange = (e) => {
     const { name, value } = e.target
     setCustomerBills({ ...customerBills, [name]: value })
   }
-  //customerContact end
-  //customerContact started
   const DeliveryChange = (e) => {
     const { name, value, type, checked } = e.target
     setCustomerDelivery({ ...customerDelivery, [name]: type === 'checkbox' ? checked : value })
   }
-  //customerContact end
 
-  //customerDeposit started
-  // const DepositChange = (e) => {
-  //   const { name, value, type, checked } = e.target
-  //   const inputValue = type === 'checkbox' ? checked : value
-
-  //   setCustomerDeposit({ ...customerDeposit, [name]: inputValue })
-  // }
   const DepositChange = (e) => {
     if (e instanceof Date) {
       setCustomerDeposit({
         ...customerDeposit,
         updateStamp: e,
-        nextBrand: e,
-        lastStamp: e,
-        startDeposit: e,
-        reminderStamp: e,
+        // nextBrand: e,
+        // lastStamp: e,
+        // startDeposit: e,
+        // reminderStamp: e,
       })
     } else if (e.target) {
       const { name, value, type, checked } = e.target
@@ -239,16 +213,10 @@ const CustomerInfo = () => {
       console.error('Invalid event or data provided to DepositChange.')
     }
   }
-
-  //customerDeposit end
-
-  //customerDeposit started
-
   const BurialChange = (e) => {
     const { name, checked } = e.target
     setCustomerBurial({ ...customerBurial, [name]: checked })
   }
-  //customerDeposit end
 
   const handleEmailChange = (e) => {
     const inputValue = e.target.value
@@ -263,7 +231,6 @@ const CustomerInfo = () => {
     const name = actionMeta && actionMeta.name
 
     if (name) {
-      // If the selectedOptions object has a 'value' property, use it directly
       const value =
         selectedOptions && selectedOptions.value !== undefined
           ? selectedOptions.value
@@ -294,30 +261,18 @@ const CustomerInfo = () => {
     }
   }
 
-  console.log('aastha', customerContact.email)
+  console.log('aastha', resultt._id)
 
   const saveData = async (e) => {
     e.preventDefault()
-    // for (const key in data) {
-    //   if (!data[key]) {
-    //     notify(`Please fill in the ${key} field`)
-    //     return
-    //   }
-    // }
-    // if (!email) {
-    //   return toast.error('Ungültige E-Mail')
-    // }
     try {
-      let response = await fetch(
-        `${apiUrl}/customer/get_record/edit?email=${location.state.email}`,
-        {
-          method: 'put',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
+      let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt._id}`, {
+        method: 'put',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      )
+        body: JSON.stringify(data),
+      })
 
       let result = await response.json()
 
@@ -390,23 +345,23 @@ const CustomerInfo = () => {
   useEffect(() => {
     setOrderingMaterials((prev) => ({
       ...prev,
-      newsletterDate: getCurrentDate(),
+      newsletterDate: resultt?.orderingMaterials?.newsletterDate,
     }))
     setCustomerInfoStatu((prev) => ({
       ...prev,
-      dataCollection: getCurrentDate(),
+      dataCollection: resultt?.customerInfoStatu?.dataCollection,
     }))
     setCustomerContact((prev) => ({
       ...prev,
-      dob: getCurrentDate(),
+      dob: resultt?.customerContact?.dob,
     }))
     setCustomerDeposit((prev) => ({
       ...prev,
-      updateStamp: getCurrentDate(),
-      nextBrand: getCurrentDate(),
-      startDeposit: getCurrentDate(),
-      reminderStamp: getCurrentDate(),
-      lastStamp: getCurrentDate(),
+      updateStamp: resultt?.customerDeposit?.updateStamp,
+      nextBrand: resultt?.customerDeposit?.nextBrand,
+      startDeposit: resultt?.customerDeposit?.startDeposit,
+      reminderStamp: resultt?.customerDeposit?.reminderStamp,
+      lastStamp: resultt?.customerDeposit?.lastStamp,
     }))
   }, [])
   function getCurrentDate() {
@@ -414,7 +369,7 @@ const CustomerInfo = () => {
     const year = currentDate.getFullYear().toString()
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
     const day = currentDate.getDate().toString().padStart(2, '0')
-    return `${year}-${month}-${day}`
+    return `${day}.${month}.${year}`
   }
 
   const cancelData = () => {
@@ -436,19 +391,6 @@ const CustomerInfo = () => {
                 <div className="row-wrap">
                   <div className="container-fluid">
                     <div className="row justify-content-between align-items-center">
-                      {/* <div className="col ps-md-0">
-                        <label htmlFor="inputPassword" className="col-form-label">
-                          Bestellte Anzahl Fragebögen
-                        </label>
-
-                        <input
-                          type="number"
-                          value={orderingMaterials.orderNumber}
-                          name="orderNumber"
-                          onChange={matarialChange}
-                          className="form-control"
-                        />
-                      </div> */}
                       <div className="col-md-3">
                         <div className="row">
                           <label htmlFor="inputPassword" className="col-sm-8 col-form-label">
@@ -466,7 +408,7 @@ const CustomerInfo = () => {
                         </div>
                       </div>
                       <div className="col-md-3">
-                        <div className="mb-6 row">
+                        <div className="row">
                           <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                             Extras
                           </label>
@@ -581,7 +523,7 @@ const CustomerInfo = () => {
                                 type="checkbox"
                                 name="dataProtection"
                                 onChange={customerInfoChange}
-                                checked={customerInfoStatu.dataProtection}
+                                checked={JSON.parse(customerInfoStatu.dataProtection)}
                                 id="inputPassword"
                                 onClick={(e) => e.stopPropagation()}
                               />
@@ -892,6 +834,7 @@ const CustomerInfo = () => {
                             name="fname"
                             placeholder="Vornamen"
                             // value={customers.fname}
+                            value={customerDelivery.fname}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -1060,7 +1003,7 @@ const CustomerInfo = () => {
                             <input
                               onChange={DeliveryChange}
                               name="alreadyPaid"
-                              checked={customerDelivery.alreadyPaid}
+                              checked={JSON.parse(customerDelivery.alreadyPaid)}
                               type="checkbox"
                               onClick={(e) => e.stopPropagation()}
                             />
@@ -1082,7 +1025,7 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={DepositChange}
-                          checked={customerDeposit.deposit}
+                          checked={JSON.parse(customerDeposit.deposit)}
                           name="deposit"
                         />
                         <span> Hinterlegung [ja]</span>
@@ -1150,7 +1093,7 @@ const CustomerInfo = () => {
                             <input
                               type="checkbox"
                               onChange={DepositChange}
-                              checked={customerDeposit.emergencyPass}
+                              checked={JSON.parse(customerDeposit.emergencyPass)}
                               name="emergencyPass"
                             />{' '}
                             <span> Notfallpass</span>
@@ -1186,7 +1129,7 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={customerBurial.termination}
+                          checked={JSON.parse(customerBurial.termination)}
                           name="termination"
                         />
                         <span>Beendigung auf eigenen Wunsch</span>
@@ -1197,7 +1140,7 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={customerBurial.terminationDeath}
+                          checked={JSON.parse(customerBurial.terminationDeath)}
                           name="terminationDeath"
                         />
                         <span> Beendigung durch Tod</span>
@@ -1208,7 +1151,7 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={customerBurial.notTermination}
+                          checked={JSON.parse(customerBurial.notTermination)}
                           name="notTermination"
                         />
                         <span>Beendigung weil nicht ermittelbar</span>
@@ -1219,7 +1162,7 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={customerBurial.financialReasons}
+                          checked={JSON.parse(customerBurial.financialReasons)}
                           name="financialReasons"
                         />
                         <span> Beendigung aus finanziellen Gründen</span>
