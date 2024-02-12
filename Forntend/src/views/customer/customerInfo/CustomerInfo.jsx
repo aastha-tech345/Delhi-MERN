@@ -6,16 +6,14 @@ import Customer from '../Customer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../Date'
+import { MultiSelect } from 'primereact/multiselect'
 
 const CustomerInfo = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const [page, setPage] = useState(1)
-  const [countPage, setCountPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState('')
-  const [customer_record, setCustomerRecord] = useState([])
   let ress = localStorage.getItem('customerRecord')
   // console.log(ress)d
   let resultt = JSON.parse(ress)
@@ -181,30 +179,55 @@ const CustomerInfo = () => {
     const { name, value, type, checked } = e.target
     setCustomerDelivery({ ...customerDelivery, [name]: type === 'checkbox' ? checked : value })
   }
-
-  const DepositChange = (e) => {
+  const DepositChange = (e, fieldName) => {
     if (e instanceof Date) {
       setCustomerDeposit({
         ...customerDeposit,
-        updateStamp: e,
-        // nextBrand: e,
-        // lastStamp: e,
-        // startDeposit: e,
-        // reminderStamp: e,
+        [fieldName]: e,
       })
     } else if (e.target) {
       const { name, value, type, checked } = e.target
 
-      if (name === 'reminderStamp') {
-        setCustomerDeposit({ ...customerDeposit, [name]: e })
+      if (
+        name === 'reminderStamp' ||
+        name === 'startDeposit' ||
+        name === 'lastStamp' ||
+        name === 'nextBrand' ||
+        name === 'updateStamp'
+      ) {
+        setCustomerDeposit({ ...customerDeposit, [fieldName]: e })
       } else {
         const inputValue = type === 'checkbox' ? checked : value
-        setCustomerDeposit({ ...customerDeposit, [name]: inputValue })
+        setCustomerDeposit({ ...customerDeposit, [fieldName]: inputValue })
       }
     } else {
       console.error('Invalid event or data provided to DepositChange.')
     }
   }
+
+  // const DepositChange = (e) => {
+  //   if (e instanceof Date) {
+  //     setCustomerDeposit({
+  //       ...customerDeposit,
+  //       updateStamp: e,
+  //       // nextBrand: e,
+  //       // lastStamp: e,
+  //       // startDeposit: e,
+  //       // reminderStamp: e,
+  //     })
+  //   } else if (e.target) {
+  //     const { name, value, type, checked } = e.target
+
+  //     if (name === 'reminderStamp') {
+  //       setCustomerDeposit({ ...customerDeposit, [name]: e })
+  //     } else {
+  //       const inputValue = type === 'checkbox' ? checked : value
+  //       setCustomerDeposit({ ...customerDeposit, [name]: inputValue })
+  //     }
+  //   } else {
+  //     console.error('Invalid event or data provided to DepositChange.')
+  //   }
+  // }
   const BurialChange = (e) => {
     const { name, checked } = e.target
     setCustomerBurial({ ...customerBurial, [name]: checked })
@@ -431,8 +454,8 @@ const CustomerInfo = () => {
 
                       <div className="col-md-3">
                         <div className="row">
-                          <div className="col-sm-6  col-form-label">Newsletter-Abonnement</div>
-                          <div className="col-sm-6">
+                          <div className="col-sm-8  col-form-label">Newsletter-Abonnement</div>
+                          <div className="col-sm-4 d-flex">
                             <div className="radio-check-wrap">
                               <input
                                 type="radio"
@@ -515,9 +538,8 @@ const CustomerInfo = () => {
                                 type="checkbox"
                                 name="dataProtection"
                                 onChange={customerInfoChange}
-                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
-                                checked={customerInfoStatu.dataProtection}
-                                id="inputPassword"
+                                checked={JSON.parse(customerInfoStatu.dataProtection)}
+                                // checked={customerInfoStatu.dataProtection}
                                 onClick={(e) => e.stopPropagation()}
                               />
                               <span></span>
@@ -996,10 +1018,10 @@ const CustomerInfo = () => {
                             <input
                               onChange={DeliveryChange}
                               name="alreadyPaid"
-                              // checked={JSON.parse(customerDelivery?.alreadyPaid)}
-                              checked={customerDelivery?.alreadyPaid}
+                              checked={JSON.parse(customerDelivery?.alreadyPaid)}
+                              // checked={customerDelivery?.alreadyPaid}
                               type="checkbox"
-                              onClick={(e) => e.stopPropagation()}
+                              // onClick={(e) => e.stopPropagation()}
                             />
                             <span>ja</span>
                           </div>
@@ -1019,8 +1041,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={DepositChange}
-                          // checked={JSON.parse(customerDeposit.deposit)}
-                          checked={customerDeposit.deposit}
+                          checked={JSON.parse(customerDeposit.deposit)}
+                          // checked={customerDeposit.deposit}
                           name="deposit"
                         />
                         <span> Hinterlegung [ja]</span>
@@ -1088,8 +1110,8 @@ const CustomerInfo = () => {
                             <input
                               type="checkbox"
                               onChange={DepositChange}
-                              // checked={JSON.parse(customerDeposit.emergencyPass)}
-                              checked={customerDeposit.emergencyPass}
+                              checked={JSON.parse(customerDeposit.emergencyPass)}
+                              // checked={customerDeposit.emergencyPass}
                               name="emergencyPass"
                             />{' '}
                             <span> Notfallpass</span>
@@ -1125,8 +1147,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          // checked={JSON.parse(customerBurial.termination)}
-                          checked={customerBurial.termination}
+                          checked={JSON.parse(customerBurial.termination)}
+                          // checked={customerBurial.termination}
                           name="termination"
                         />
                         <span>Beendigung auf eigenen Wunsch</span>
@@ -1137,8 +1159,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          // checked={JSON.parse(customerBurial.terminationDeath)}
-                          checked={customerBurial.terminationDeath}
+                          checked={JSON.parse(customerBurial.terminationDeath)}
+                          // checked={customerBurial.terminationDeath}
                           name="terminationDeath"
                         />
                         <span> Beendigung durch Tod</span>
@@ -1149,8 +1171,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          // checked={JSON.parse(customerBurial.notTermination)}
-                          checked={customerBurial.notTermination}
+                          checked={JSON.parse(customerBurial.notTermination)}
+                          // checked={customerBurial.notTermination}
                           name="notTermination"
                         />
                         <span>Beendigung weil nicht ermittelbar</span>
@@ -1161,8 +1183,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          // checked={JSON.parse(customerBurial.financialReasons)}
-                          checked={customerBurial.financialReasons}
+                          checked={JSON.parse(customerBurial.financialReasons)}
+                          // checked={customerBurial.financialReasons}
                           name="financialReasons"
                         />
                         <span> Beendigung aus finanziellen Gründen</span>

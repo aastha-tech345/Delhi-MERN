@@ -2,17 +2,17 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const orderingMaterialsSchema = {
   orderNumber: { type: String, default: "" },
-  newsletterDate: { type: String, default: "" },
+  newsletterDate: { type: String, default: "10.01.23" },
   extras: { type: String, default: "" },
   newsletterSubscription: { type: String, default: "" },
 };
 
 const customerInfoStatuSchema = {
   clientStatus: { type: Array, default: [] },
-  dataProtection: { type: String, default: "" },
+  dataProtection: { type: String, default: false },
   employee: { type: String, default: "" },
   customerInfo_lname: { type: String, default: "" },
-  dataCollection: { type: String, default: "" },
+  dataCollection: { type: String, default: "10.01.23" },
 };
 
 const customerContactSchema = {
@@ -21,7 +21,7 @@ const customerContactSchema = {
   gender: { type: String, default: "" },
   fname: { type: String, default: "" },
   lname: { type: String, default: "" },
-  dob: { type: String, default: "" },
+  dob: { type: String, default: "10.01.23" },
   name: { type: String, default: "" },
 };
 
@@ -41,24 +41,24 @@ const customerDeliverySchema = {
   ort: { type: String, default: "" },
   phone: { type: String, default: "" },
   mobile: { type: String, default: "" },
-  alreadyPaid: { type: String, default: "" },
+  alreadyPaid: { type: String, default: false },
 };
 
 const customerDepositSchema = {
-  deposit: { type: String, default: "" },
-  emergencyPass: { type: String, default: "" },
-  reminderStamp: { type: String, default: "" },
-  updateStamp: { type: String, default: "" },
-  nextBrand: { type: String, default: "" },
-  lastStamp: { type: String, default: "" },
-  startDeposit: { type: String, default: "" },
+  deposit: { type: String, default: false },
+  emergencyPass: { type: String, default: false },
+  reminderStamp: { type: String, default: "10.01.23" },
+  updateStamp: { type: String, default: "10.01.23" },
+  nextBrand: { type: String, default: "10.01.23" },
+  lastStamp: { type: String, default: "10.01.23" },
+  startDeposit: { type: String, default: "10.01.23" },
 };
 
 const customerBurialSchema = {
-  termination: { type: String, default: "" },
-  terminationDeath: { type: String, default: "" },
-  notTermination: { type: String, default: "" },
-  financialReasons: { type: String, default: "" },
+  termination: { type: String, default: false },
+  terminationDeath: { type: String, default: false },
+  notTermination: { type: String, default: false },
+  financialReasons: { type: String, default: false },
 };
 
 const customerInfo = {
@@ -70,8 +70,8 @@ const customerInfo = {
   city: { type: String },
   street: { type: String },
   land: { type: String },
-  startDate: { type: String },
-  dob: { type: String },
+  startDate: { type: String, default: "10.01.23" },
+  dob: { type: String, default: "10.01.23" },
   status: { type: String },
   id: { type: String },
   created_by: { type: Schema.Types.ObjectId, ref: "User" },
