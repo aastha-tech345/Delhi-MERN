@@ -53,7 +53,6 @@ const EditModal = ({ setEdit, getDetails }) => {
     setData({ ...data, [e.target.name]: newValue })
   }
 
-  const notify = (dataa) => toast(dataa)
   const close = () => {
     setEdit(false)
   }
@@ -206,7 +205,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                   Geschlecht
                 </label>
                 <div className="col-sm-9">
-                  {/* <div className="d-flex"> */}
                   <div className="radio-wrap">
                     <div className="radio-input">
                       <input
@@ -245,24 +243,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="row">
-                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                  Status
-                </label>
-                <div className="col-sm-9">
-                  <select
-                    className="form-control"
-                    name="statu"
-                    onChange={handleChange}
-                    value={data.statu}
-                  >
-                    <option value="">--select--</option>
-                    <option value="HVD-PV">HVD-PV</option>
-                    <option value="PV-ALT">PV-ALT</option>
-                  </select>
-                </div>
-              </div> */}
             </div>
           </Form>
 
@@ -295,7 +275,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                 Speichern
               </button>
             </div>
-            {/* )} */}
           </div>
         </div>
       </div>
