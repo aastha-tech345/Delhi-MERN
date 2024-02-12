@@ -276,7 +276,7 @@ const CustomerInfo = () => {
     }
   }
 
-  // console.log('aastha', resultt._id)
+  console.log('aastha type', customerDeposit.emergencyPass)
 
   const saveData = async (e) => {
     e.preventDefault()
@@ -1041,8 +1041,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={DepositChange}
-                          checked={JSON.parse(customerDeposit.deposit)}
-                          // checked={customerDeposit.deposit}
+                          // checked={JSON.parse(customerDeposit.deposit)}
+                          checked={customerDeposit.deposit}
                           name="deposit"
                         />
                         <span> Hinterlegung [ja]</span>
@@ -1110,7 +1110,7 @@ const CustomerInfo = () => {
                             <input
                               type="checkbox"
                               onChange={DepositChange}
-                              checked={JSON.parse(customerDeposit.emergencyPass)}
+                              checked={customerDeposit.emergencyPass}
                               // checked={customerDeposit.emergencyPass}
                               name="emergencyPass"
                             />{' '}
