@@ -9,7 +9,7 @@ const orderingMaterialsSchema = {
 
 const customerInfoStatuSchema = {
   clientStatus: { type: Array, default: [] },
-  dataProtection: { type: String, default: false },
+  dataProtection: { type: Boolean, default: false },
   employee: { type: String, default: "" },
   customerInfo_lname: { type: String, default: "" },
   dataCollection: { type: String, default: "10.01.23" },
@@ -41,12 +41,12 @@ const customerDeliverySchema = {
   ort: { type: String, default: "" },
   phone: { type: String, default: "" },
   mobile: { type: String, default: "" },
-  alreadyPaid: { type: String, default: false },
+  alreadyPaid: { type: Boolean, default: false },
 };
 
 const customerDepositSchema = {
-  deposit: { type: String, default: false },
-  emergencyPass: { type: String, default: false },
+  deposit: { type: Boolean, Boolean: false },
+  emergencyPass: { type: Boolean, Boolean: false },
   reminderStamp: { type: String, default: "10.01.23" },
   updateStamp: { type: String, default: "10.01.23" },
   nextBrand: { type: String, default: "10.01.23" },
@@ -55,10 +55,10 @@ const customerDepositSchema = {
 };
 
 const customerBurialSchema = {
-  termination: { type: String, default: false },
-  terminationDeath: { type: String, default: false },
-  notTermination: { type: String, default: false },
-  financialReasons: { type: String, default: false },
+  termination: { type: Boolean, default: false },
+  terminationDeath: { type: Boolean, default: false },
+  notTermination: { type: Boolean, default: false },
+  financialReasons: { type: Boolean, default: false },
 };
 
 const customerInfo = { 

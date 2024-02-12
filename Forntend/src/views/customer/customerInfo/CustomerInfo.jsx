@@ -88,10 +88,10 @@ const CustomerInfo = () => {
     resultt?.customerDeposit?.reminderStamp,
   )
   const [customerDepositeCheckbox, setCustomerDepositeCheckbox] = useState(
-    JSON.parse(resultt?.customerDeposit?.deposit),
+    resultt?.customerDeposit?.deposit,
   )
   const [customerEmergencyPass, setCustomerEmergencyPass] = useState(
-    JSON.parse(resultt?.customerDeposit?.emergencyPass),
+    resultt?.customerDeposit?.emergencyPass,
   )
   const [customerBurial, setCustomerBurial] = useState({
     termination: resultt?.customerBurial?.termination,
@@ -545,8 +545,8 @@ const CustomerInfo = () => {
                                 type="checkbox"
                                 name="dataProtection"
                                 onChange={customerInfoChange}
-                                checked={JSON.parse(customerInfoStatu.dataProtection)}
-                                // checked={customerInfoStatu.dataProtection}
+                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
+                                checked={customerInfoStatu.dataProtection}
                                 onClick={(e) => e.stopPropagation()}
                               />
                               <span></span>
@@ -1025,8 +1025,8 @@ const CustomerInfo = () => {
                             <input
                               onChange={DeliveryChange}
                               name="alreadyPaid"
-                              checked={JSON.parse(customerDelivery?.alreadyPaid)}
-                              // checked={customerDelivery?.alreadyPaid}
+                              // checked={JSON.parse(customerDelivery?.alreadyPaid)}
+                              checked={customerDelivery?.alreadyPaid}
                               type="checkbox"
                               // onClick={(e) => e.stopPropagation()}
                             />
@@ -1154,8 +1154,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={JSON.parse(customerBurial.termination)}
-                          // checked={customerBurial.termination}
+                          // checked={JSON.parse(customerBurial.termination)}
+                          checked={customerBurial.termination}
                           name="termination"
                         />
                         <span>Beendigung auf eigenen Wunsch</span>
@@ -1166,8 +1166,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={JSON.parse(customerBurial.terminationDeath)}
-                          // checked={customerBurial.terminationDeath}
+                          // checked={JSON.parse(customerBurial.terminationDeath)}
+                          checked={customerBurial.terminationDeath}
                           name="terminationDeath"
                         />
                         <span> Beendigung durch Tod</span>
@@ -1178,8 +1178,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={JSON.parse(customerBurial.notTermination)}
-                          // checked={customerBurial.notTermination}
+                          // checked={JSON.parse(customerBurial.notTermination)}
+                          checked={customerBurial.notTermination}
                           name="notTermination"
                         />
                         <span>Beendigung weil nicht ermittelbar</span>
@@ -1190,8 +1190,8 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          checked={JSON.parse(customerBurial.financialReasons)}
-                          // checked={customerBurial.financialReasons}
+                          // checked={JSON.parse(customerBurial.financialReasons)}
+                          checked={customerBurial.financialReasons}
                           name="financialReasons"
                         />
                         <span> Beendigung aus finanziellen Gründen</span>
