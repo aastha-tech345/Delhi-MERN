@@ -4,8 +4,16 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createCustomer = async (req, res) => {
   try {
+    const emailFind = await Customer.findOne({
+      "customer.email": req.body.customer.email,
+    });
+    if (emailFind) {
+      return res.status(406).json({
+        message: "Email Already Exists",
+        success: false,
+      });
+    }
     const result = await Customer.create(req.body);
-
     return res.status(200).json({
       success: true,
       message: "Customer created successfully",

@@ -80,7 +80,7 @@ const CustomerList = () => {
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
-          // to={`/customer/${a}`}
+          to={`/customer/${a}`}
           onClick={() => handleStore(text, record)}
         >
           {text &&
@@ -398,6 +398,7 @@ const CustomerList = () => {
       // console.error('Error during API call:', error)
 
       toast.error('E-Mail-ID existiert bereits')
+      console.log('error', error)
     }
   }
   const getDetails = async () => {
@@ -500,11 +501,11 @@ const CustomerList = () => {
   // if(hide===false){
   //   getDetails()
   // }
-  const handleEdit = (record) => {
-    let res = JSON.stringify(record)
-    localStorage.setItem('CustomerRecord', res)
-    setHide(true)
-  }
+  // const handleEdit = (record) => {
+  //   let res = JSON.stringify(record)
+  //   localStorage.setItem('CustomerRecord', res)
+  //   setHide(true)
+  // }
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const rowSelection = {
     // onChange: (selectedRowKeys, selectedRows) => {},

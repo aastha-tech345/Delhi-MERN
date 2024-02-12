@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import Select from 'react-select'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../Date'
-import { MultiSelect } from 'primereact/multiselect'
+import Select, { components } from 'react-select'
+import PropTypes from 'prop-types'
+
+const CheckboxOption = (
+  { isSelected, label, ...rest }, // Destructure props
+) => (
+  <components.Option isSelected={isSelected} {...rest}>
+    <input type="checkbox" checked={isSelected} onChange={() => null} />
+    {label}
+  </components.Option>
+)
+
+CheckboxOption.propTypes = {
+  // Define prop types
+  isSelected: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+}
 
 const CustomerInfo = () => {
   const navigate = useNavigate()
@@ -17,7 +32,7 @@ const CustomerInfo = () => {
   let ress = localStorage.getItem('customerRecord')
   // console.log(ress)d
   let resultt = JSON.parse(ress)
-  console.log('aast', resultt)
+  // console.log('aast', resultt)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: resultt?.orderingMaterials?.orderNumber,
     newsletterDate: resultt?.orderingMaterials?.newsletterDate,
@@ -40,7 +55,7 @@ const CustomerInfo = () => {
     gender: resultt?.customerContact?.gender,
     fname: resultt?.fname,
     lname: resultt?.lname,
-    dob: resultt?.dob,
+    dob: resultt?.customerContact?.dob,
   })
 
   const [customerBills, setCustomerBills] = useState({
@@ -61,15 +76,23 @@ const CustomerInfo = () => {
     mobile: resultt?.customerDelivery?.mobile,
     alreadyPaid: resultt?.customerDelivery?.alreadyPaid,
   })
-  const [customerDeposit, setCustomerDeposit] = useState({
-    deposit: resultt?.customerDeposit?.deposit,
-    emergencyPass: resultt?.customerDeposit?.emergencyPass,
-    updateStamp: resultt?.customerDeposit?.updateStamp,
-    nextBrand: resultt?.customerDeposit?.nextBrand,
-    lastStamp: resultt?.customerDeposit?.lastStamp,
-    startDeposit: resultt?.customerDeposit?.startDeposit,
-    reminderStamp: resultt?.customerDeposit?.reminderStamp,
-  })
+  const [customerStartDeposit, setCustomerStartDeposit] = useState(
+    resultt?.customerDeposit?.startDeposit,
+  )
+  const [customerNextBrand, setCustomerNextBrand] = useState(resultt?.customerDeposit?.nextBrand)
+  const [customerUpdateStamp, setCustomerUpdateStamp] = useState(
+    resultt?.customerDeposit?.updateStamp,
+  )
+  const [customerLastStamp, setCustomerLastStamp] = useState(resultt?.customerDeposit?.lastStamp)
+  const [customerReminderStamp, setCustomerReminderStamp] = useState(
+    resultt?.customerDeposit?.reminderStamp,
+  )
+  const [customerDepositeCheckbox, setCustomerDepositeCheckbox] = useState(
+    JSON.parse(resultt?.customerDeposit?.deposit),
+  )
+  const [customerEmergencyPass, setCustomerEmergencyPass] = useState(
+    JSON.parse(resultt?.customerDeposit?.emergencyPass),
+  )
   const [customerBurial, setCustomerBurial] = useState({
     termination: resultt?.customerBurial?.termination,
     terminationDeath: resultt?.customerBurial?.terminationDeath,
@@ -96,21 +119,6 @@ const CustomerInfo = () => {
   }
   // console.log('aaastha', customer.email)
   // console.log('email', resultt?.customer)
-
-  const data = {
-    customer: customer,
-    orderingMaterials: orderingMaterials,
-    customerInfoStatu: customerInfoStatu,
-    // those: those,
-    customerContact: customerContact,
-    customerBills: customerBills,
-    customerDelivery: customerDelivery,
-    customerDeposit: customerDeposit,
-    customerBurial: customerBurial,
-    // created_by: '',
-    // customer_id: result._id,
-  }
-  const dataa = { ...data, email }
 
   const matarialChange = (e) => {
     if (e instanceof Date) {
@@ -175,59 +183,47 @@ const CustomerInfo = () => {
     const { name, value } = e.target
     setCustomerBills({ ...customerBills, [name]: value })
   }
+  const DepositChange = (e, fieldName) => {
+    setCustomerStartDeposit(e)
+  }
+  const nextBrandChange = (e) => {
+    setCustomerNextBrand(e)
+  }
+
+  const updateStamp = (e) => {
+    setCustomerUpdateStamp(e)
+  }
+
+  const lastStamp = (e) => {
+    setCustomerLastStamp(e)
+  }
+
+  const reminderStamp = (e) => {
+    setCustomerReminderStamp(e)
+  }
+
+  const deposite = (e) => {
+    setCustomerDepositeCheckbox(e.target.checked)
+  }
+
+  const emergencyPass = (e) => {
+    setCustomerEmergencyPass(e.target.checked)
+  }
+
+  const customerDepositt = {
+    startDeposit: customerStartDeposit,
+    nextBrand: customerNextBrand,
+    updateStamp: customerUpdateStamp,
+    lastStamp: customerLastStamp,
+    reminderStamp: customerReminderStamp,
+    deposit: customerDepositeCheckbox,
+    emergencyPass: customerEmergencyPass,
+  }
   const DeliveryChange = (e) => {
     const { name, value, type, checked } = e.target
     setCustomerDelivery({ ...customerDelivery, [name]: type === 'checkbox' ? checked : value })
   }
-  const DepositChange = (e, fieldName) => {
-    if (e instanceof Date) {
-      setCustomerDeposit({
-        ...customerDeposit,
-        [fieldName]: e,
-      })
-    } else if (e.target) {
-      const { name, value, type, checked } = e.target
 
-      if (
-        name === 'reminderStamp' ||
-        name === 'startDeposit' ||
-        name === 'lastStamp' ||
-        name === 'nextBrand' ||
-        name === 'updateStamp'
-      ) {
-        setCustomerDeposit({ ...customerDeposit, [fieldName]: e })
-      } else {
-        const inputValue = type === 'checkbox' ? checked : value
-        setCustomerDeposit({ ...customerDeposit, [fieldName]: inputValue })
-      }
-    } else {
-      console.error('Invalid event or data provided to DepositChange.')
-    }
-  }
-
-  // const DepositChange = (e) => {
-  //   if (e instanceof Date) {
-  //     setCustomerDeposit({
-  //       ...customerDeposit,
-  //       updateStamp: e,
-  //       // nextBrand: e,
-  //       // lastStamp: e,
-  //       // startDeposit: e,
-  //       // reminderStamp: e,
-  //     })
-  //   } else if (e.target) {
-  //     const { name, value, type, checked } = e.target
-
-  //     if (name === 'reminderStamp') {
-  //       setCustomerDeposit({ ...customerDeposit, [name]: e })
-  //     } else {
-  //       const inputValue = type === 'checkbox' ? checked : value
-  //       setCustomerDeposit({ ...customerDeposit, [name]: inputValue })
-  //     }
-  //   } else {
-  //     console.error('Invalid event or data provided to DepositChange.')
-  //   }
-  // }
   const BurialChange = (e) => {
     const { name, checked } = e.target
     setCustomerBurial({ ...customerBurial, [name]: checked })
@@ -266,6 +262,11 @@ const CustomerInfo = () => {
     { value: '5', label: 'Newsletter Abonnent' },
     { value: '6', label: 'Offen' },
   ]
+  const [selectedOptions, setSelectedOptions] = useState([])
+
+  const handleChange = (selectedOptions) => {
+    setSelectedOptions(selectedOptions)
+  }
   const getDetails = async () => {
     try {
       const results = await fetch(`${apiUrl}/customer/get_record?email=${location?.state?.email}`)
@@ -276,8 +277,20 @@ const CustomerInfo = () => {
     }
   }
 
-  console.log('aastha type', customerDeposit.emergencyPass)
-
+  console.log('aastha type', customerDepositt.emergencyPass)
+  const data = {
+    customer: customer,
+    orderingMaterials: orderingMaterials,
+    customerInfoStatu: customerInfoStatu,
+    // those: those,
+    customerContact: customerContact,
+    customerBills: customerBills,
+    customerDelivery: customerDelivery,
+    customerDeposit: customerDepositt,
+    customerBurial: customerBurial,
+    // created_by: '',
+    // customer_id: result._id,
+  }
   const saveData = async (e) => {
     e.preventDefault()
     try {
@@ -357,35 +370,28 @@ const CustomerInfo = () => {
   useEffect(() => {
     getDetails()
   }, [page, itemsPerPage])
-  useEffect(() => {
-    setOrderingMaterials((prev) => ({
-      ...prev,
-      newsletterDate: resultt?.orderingMaterials?.newsletterDate,
-    }))
-    setCustomerInfoStatu((prev) => ({
-      ...prev,
-      dataCollection: resultt?.customerInfoStatu?.dataCollection,
-    }))
-    setCustomerContact((prev) => ({
-      ...prev,
-      dob: resultt?.customerContact?.dob,
-    }))
-    setCustomerDeposit((prev) => ({
-      ...prev,
-      updateStamp: resultt?.customerDeposit?.updateStamp,
-      nextBrand: resultt?.customerDeposit?.nextBrand,
-      startDeposit: resultt?.customerDeposit?.startDeposit,
-      reminderStamp: resultt?.customerDeposit?.reminderStamp,
-      lastStamp: resultt?.customerDeposit?.lastStamp,
-    }))
-  }, [])
-  function getCurrentDate() {
-    const currentDate = new Date()
-    const year = currentDate.getFullYear().toString()
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
-    const day = currentDate.getDate().toString().padStart(2, '0')
-    return `${day}.${month}.${year}`
-  }
+  // useEffect(() => {
+  //   setOrderingMaterials((prev) => ({
+  //     ...prev,
+  //     newsletterDate: resultt?.orderingMaterials?.newsletterDate,
+  //   }))
+  //   setCustomerInfoStatu((prev) => ({
+  //     ...prev,
+  //     dataCollection: resultt?.customerInfoStatu?.dataCollection,
+  //   }))
+  //   setCustomerContact((prev) => ({
+  //     ...prev,
+  //     dob: resultt?.customerContact?.dob,
+  //   }))
+  //   setCustomerDeposit((prev) => ({
+  //     ...prev,
+  //     updateStamp: resultt?.customerDeposit?.updateStamp,
+  //     nextBrand: resultt?.customerDeposit?.nextBrand,
+  //     startDeposit: resultt?.customerDeposit?.startDeposit,
+  //     reminderStamp: resultt?.customerDeposit?.reminderStamp,
+  //     lastStamp: resultt?.customerDeposit?.lastStamp,
+  //   }))
+  // }, [])
 
   const cancelData = () => {
     navigate('/customerlist')
@@ -500,6 +506,7 @@ const CustomerInfo = () => {
                               id="ms1"
                               isMulti
                               options={options}
+                              components={{ Option: CheckboxOption }}
                             />
                           </div>
                         </div>
@@ -1040,9 +1047,9 @@ const CustomerInfo = () => {
                       <div className="radio-check-wrap mb-3">
                         <input
                           type="checkbox"
-                          onChange={DepositChange}
+                          onChange={deposite}
                           // checked={JSON.parse(customerDeposit.deposit)}
-                          checked={customerDeposit.deposit}
+                          checked={customerDepositeCheckbox}
                           name="deposit"
                         />
                         <span> Hinterlegung [ja]</span>
@@ -1058,7 +1065,7 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
-                            selected={customerDeposit.startDeposit}
+                            selected={customerStartDeposit}
                             onChange={DepositChange}
                           />
                         </div>
@@ -1071,8 +1078,8 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
-                            selected={customerDeposit.nextBrand}
-                            onChange={DepositChange}
+                            selected={customerNextBrand}
+                            onChange={nextBrandChange}
                           />
                         </div>
                       </div>
@@ -1085,8 +1092,8 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
-                            selected={customerDeposit.updateStamp}
-                            onChange={DepositChange}
+                            selected={customerUpdateStamp}
+                            onChange={updateStamp}
                           />
                         </div>
                       </div>
@@ -1095,8 +1102,8 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
-                            selected={customerDeposit.lastStamp}
-                            onChange={DepositChange}
+                            selected={customerLastStamp}
+                            onChange={lastStamp}
                           />
                         </div>
                       </div>
@@ -1109,9 +1116,9 @@ const CustomerInfo = () => {
                           <div className="radio-check-wrap">
                             <input
                               type="checkbox"
-                              onChange={DepositChange}
-                              checked={customerDeposit.emergencyPass}
-                              // checked={customerDeposit.emergencyPass}
+                              onChange={emergencyPass}
+                              // checked={JSON.parse(customerDeposit.emergencyPass)}
+                              checked={customerEmergencyPass}
                               name="emergencyPass"
                             />{' '}
                             <span> Notfallpass</span>
@@ -1128,8 +1135,8 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
-                            selected={customerDeposit.reminderStamp}
-                            onChange={DepositChange}
+                            selected={customerReminderStamp}
+                            onChange={reminderStamp}
                           />
                         </div>
                       </div>

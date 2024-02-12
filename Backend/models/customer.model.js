@@ -61,11 +61,11 @@ const customerBurialSchema = {
   financialReasons: { type: String, default: false },
 };
 
-const customerInfo = {
+const customerInfo = { 
   fname: { type: String },
   lname: { type: String },
   phone: { type: String },
-  email: { type: String, unique: true },
+  email: { type: String },
   plz: { type: String },
   city: { type: String },
   street: { type: String },
