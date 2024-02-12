@@ -88,10 +88,10 @@ const CustomerInfo = () => {
     resultt?.customerDeposit?.reminderStamp,
   )
   const [customerDepositeCheckbox, setCustomerDepositeCheckbox] = useState(
-    resultt?.customerDeposit?.deposit,
+    Boolean(resultt?.customerDeposit?.deposit),
   )
   const [customerEmergencyPass, setCustomerEmergencyPass] = useState(
-    resultt?.customerDeposit?.emergencyPass,
+    Boolean(resultt?.customerDeposit?.emergencyPass),
   )
   const [customerBurial, setCustomerBurial] = useState({
     termination: resultt?.customerBurial?.termination,
