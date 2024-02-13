@@ -598,9 +598,9 @@ const CustomerList = () => {
               <div className="col-md-7 mb-md-0 mb-3">
                 <div className="d-flex align-items-center">
                   <input
-                    ref={searchInputRef}
+                    // ref={searchInputRef}
                     name="search"
-                    value={search}
+                    // value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     type="search"
                     id="form1"

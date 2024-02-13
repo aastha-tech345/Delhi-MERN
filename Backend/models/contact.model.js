@@ -8,7 +8,6 @@ const contactSchema = new Schema(
     phone: { type: String },
     email: { type: String },
     gender: { type: String },
-    statu: { type: String, default: "HVD-PV" },
     // customer_id: { type: String },
     added_by: { type: mongoose.Schema.Types.ObjectId },
     status: {

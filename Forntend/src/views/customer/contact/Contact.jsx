@@ -22,6 +22,10 @@ const Contact = () => {
   let lgCust = localStorage.getItem('customerDatat')
   let custData = JSON.parse(lgCust)
 
+  let customerRecord = localStorage.getItem('customerRecord')
+  let record = JSON.parse(customerRecord)
+  let statu = record.status
+
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
   const apiUrl = process.env.REACT_APP_API_URL
@@ -47,35 +51,32 @@ const Contact = () => {
       dataIndex: 'phone',
       width: '20%',
     },
-    // {
-    //   title: 'STATUS',
-    //   dataIndex: 'statu',
-    //   width: '20%',
-    //   render: (text, record) => (
-    //     <div
-    //       style={{
-    //         color: 'white',
-    //         background:
-    //           text === 'PV-ALT' ? '#F6011F' : text === 'HVD-PV' ? '#55BC6E' : 'transparent',
-    //         borderRadius: '20px',
-    //         padding: '3px',
-    //         width: '70px',
-    //         textAlign: 'center',
-    //       }}
-    //     >
-    //       <b style={{ fontSize: '12px' }}>{text}</b>
-    //     </div>
-    //   ),
-    // },
     {
       title: 'STATUS',
-      dataIndex: 'statu',
+      dataIndex: 'status',
       // width: '20%',
       render: (text, record) => (
         <div
           className="dm-badge"
           style={{
-            background: text === '' ? '#C20F0F' : text === 'HVD-PV' ? '#4EB772' : 'transparent',
+            background:
+              text === ''
+                ? '#C20F0F'
+                : text === 'HVD-PV'
+                ? '#4EB772'
+                : text === 'SPV alt'
+                ? '#4EB772'
+                : text === 'OPV alt'
+                ? '#4EB772'
+                : text === 'Dauerspenderlnner'
+                ? '#4EB772'
+                : text === 'Materialbestellung'
+                ? '#4EB772'
+                : text === 'Newsletter Abonnent'
+                ? '#4EB772'
+                : text === 'Offen'
+                ? '#4EB772'
+                : 'transparent',
             border:
               text === ''
                 ? '1px solid transparent'

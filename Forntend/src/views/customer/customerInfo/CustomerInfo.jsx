@@ -12,7 +12,9 @@ const CheckboxOption = (
   { isSelected, label, ...rest }, // Destructure props
 ) => (
   <components.Option isSelected={isSelected} {...rest}>
+    &nbsp;
     <input type="checkbox" checked={isSelected} onChange={() => null} />
+    &nbsp;
     {label}
   </components.Option>
 )
@@ -60,16 +62,16 @@ const CustomerInfo = () => {
   })
 
   const [customerBills, setCustomerBills] = useState({
-    billAddress: resultt?.customerBills?.billAddress,
-    billPlz: resultt?.customerBills?.billPlz,
-    billLand: resultt?.customerBills?.billLand,
+    billAddress: resultt?.customerBills?.billAddress || resultt?.street,
+    billPlz: resultt?.customerBills?.billPlz || resultt?.plz,
+    billLand: resultt?.customerBills?.billLand || resultt?.land,
     billOrt: resultt?.customerBills?.billOrt,
   })
   const [email, setEmail] = useState('')
   const [customerDelivery, setCustomerDelivery] = useState({
-    fname: resultt?.customerDelivery?.fname,
-    lname: resultt?.customerDelivery?.lname,
-    address: resultt?.customerDelivery?.address,
+    fname: resultt?.customerDelivery?.fname || resultt?.fname,
+    lname: resultt?.customerDelivery?.lname || resultt?.lname,
+    address: resultt?.customerDelivery?.address || resultt?.street,
     plz: resultt?.plz,
     land: resultt?.land,
     ort: resultt?.customerDelivery?.ort,
@@ -104,14 +106,14 @@ const CustomerInfo = () => {
   const [employeeData, setEmployeeData] = useState([])
   // console.log('customer_info', resultt.orderingMaterials.orderNumber)
   let customer = {
-    fname: customerContact?.fname,
-    lname: customerContact?.lname,
+    fname: customerContact?.fname || resultt?.fname,
+    lname: customerContact?.lname || resultt?.lname,
     email: resultt?.email,
-    phone: customerDelivery?.phone,
-    plz: customerDelivery?.plz,
+    phone: customerDelivery?.phone || resultt?.phone,
+    plz: customerDelivery?.plz || resultt?.plz,
     dob: customerContact?.dob,
     status: customerInfoStatu.clientStatus[0]?.label,
-    land: customerDelivery?.land,
+    land: customerDelivery?.land || resultt?.land,
     id: resultt?.id,
     street: resultt?.street,
     city: resultt?.city,
@@ -427,32 +429,33 @@ const CustomerInfo = () => {
                     <div className="row justify-content-between align-items-center">
                       <div className="col-md-3">
                         <div className="row">
-                          <label htmlFor="inputPassword" className="col-sm-8 col-form-label">
+                          <label htmlFor="inputPassword" className="col-sm-10 col-form-label">
                             Bestellte Anzahl Fragebögen
                           </label>
-                          <div className="col-sm-4">
+                          <div className="col-sm-2">
                             <input
                               type="number"
                               value={orderingMaterials.orderNumber}
                               name="orderNumber"
                               onChange={matarialChange}
-                              className="form-control w-100"
+                              className="form-control"
+                              style={{ width: '70px' }}
                             />
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-3">
-                        <div className="row">
-                          <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                      <div className="col-md-2">
+                        <div className="row text-end">
+                          <label htmlFor="inputPassword" className="col-sm-5 col-form-label">
                             Extras
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-7">
                             <input
                               type="text"
                               name="extras"
                               value={orderingMaterials.extras}
                               onChange={matarialChange}
-                              className="form-control w-100"
+                              className="form-control"
                               placeholder="Extras"
                             />
                           </div>
@@ -460,8 +463,8 @@ const CustomerInfo = () => {
                       </div>
                       <div className="col-md-3">
                         <div className="row">
-                          <div className="col-sm-5 col-form-label">Newsletter-Datum</div>
-                          <div className="col-sm-7">
+                          <div className="col-sm-7 col-form-label">Newsletter-Datum</div>
+                          <div className="col-sm-5">
                             <DatePiker
                               className="form-control w-100"
                               selected={orderingMaterials.newsletterDate}
@@ -471,7 +474,7 @@ const CustomerInfo = () => {
                         </div>
                       </div>
 
-                      <div className="col-md-3">
+                      <div className="col-md-4">
                         <div className="row">
                           <div className="col-sm-8  col-form-label">Newsletter-Abonnement</div>
                           <div className="col-sm-4 d-flex">
@@ -535,16 +538,13 @@ const CustomerInfo = () => {
                               defaultValue="MitarbeiterInnen"
                             >
                               <option value="MitarbeiterInnen">MitarbeiterInnen</option>
-                              {
-                                employeeData?.map((elem) => {
-                                  return (
-                                    <>
-                                      <option value={elem?.username}>{elem?.username}</option>
-                                    </>
-                                  )
-                                })
-                              }
-
+                              {employeeData?.map((elem) => {
+                                return (
+                                  <>
+                                    <option value={elem?.username}>{elem?.username}</option>
+                                  </>
+                                )
+                              })}
                             </select>
                           </div>
                         </div>
@@ -614,19 +614,20 @@ const CustomerInfo = () => {
                             <option value="order">Auftrag(Online-Maske)</option>
                             <option value="contact form">Kontaktformula</option>
                             <option value="order print">Auftrag(Print)</option>
-                            <option value="website">Websit</option>
+                            <option value="website">Website</option>
+                            <option value="e-mail">E-Mail</option>
                             <option value="call">Anruf</option>
                             <option value="letter">Zuschrift (Post)</option>
-                            <option value="HVD regional association">HVD-Landesverban</option>
-                            <option value="Regional association MOL">Regionalverban MOL</option>
+                            <option value="HVD regional association">HVD-Landesverband</option>
+                            <option value="Regional association MOL">Regionalverband MOL</option>
                             <option value="Northern Regional Association">
-                              Regionalverban Nord
+                              Regionalverband Nord
                             </option>
                             <option value="Potsda regional association">
-                              Regionalverban Potsda
+                              Regionalverband Potsda
                             </option>
-                            <option value="inter">inter</option>
-                            <option value="email">E-mail</option>
+                            <option value="inter">intern</option>
+                            <option value="anderes">anderes</option>
                           </select>
                         </div>
                       </div>
@@ -669,7 +670,7 @@ const CustomerInfo = () => {
                           >
                             <option>Anrede</option>
                             <option value="herr">Herr</option>
-                            <option value="fray">Fray</option>
+                            <option value="frau">Frau</option>
                             <option value="divers">Divers</option>
                           </select>
                         </div>
@@ -715,7 +716,7 @@ const CustomerInfo = () => {
                         </div>
                       </div>
 
-                      <div className="mb-6 row">
+                      <div className="mb-2 row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Geschlecht
                         </label>
@@ -759,7 +760,6 @@ const CustomerInfo = () => {
                           </div>
                         </div>
                       </div>
-
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Name
@@ -846,9 +846,12 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <input
                             type="text"
-                            onChange={BillChange}
                             name="billLand"
                             placeholder="Land"
+                            onChange={(e) => {
+                              const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '')
+                              BillChange({ target: { name: 'billLand', value: inputValue } })
+                            }}
                             value={customerBills.billLand}
                             className="form-control"
                             id="inputPassword"
@@ -1000,9 +1003,12 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <input
                             type="text"
-                            onChange={DeliveryChange}
                             name="land"
                             placeholder="Land"
+                            onChange={(e) => {
+                              const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '')
+                              DeliveryChange({ target: { name: 'land', value: inputValue } })
+                            }}
                             value={customerDelivery?.land}
                             className="form-control"
                             id="inputPassword"

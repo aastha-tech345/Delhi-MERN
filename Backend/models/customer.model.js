@@ -45,8 +45,8 @@ const customerDeliverySchema = {
 };
 
 const customerDepositSchema = {
-  deposit: { type: Boolean, Boolean: false },
-  emergencyPass: { type: Boolean, Boolean: false },
+  deposit: { type: Boolean, default: false },
+  emergencyPass: { type: Boolean, default: false },
   reminderStamp: { type: String, default: "10.01.23" },
   updateStamp: { type: String, default: "10.01.23" },
   nextBrand: { type: String, default: "10.01.23" },
@@ -66,10 +66,10 @@ const customerInfo = {
   lname: { type: String },
   phone: { type: String },
   email: { type: String },
-  plz: { type: String,default:"" },
-  city: { type: String,default:"" },
-  street: { type: String,default:"" },
-  land: { type: String,default:"" },
+  plz: { type: String,default:" " },
+  city: { type: String,default:" " },
+  street: { type: String,default:" " },
+  land: { type: String,default:" " },
   startDate: { type: String, default: "10.01.23" },
   dob: { type: String, default: "10.01.23" },
   status: { type: String },
