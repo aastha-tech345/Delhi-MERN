@@ -53,8 +53,10 @@ const Customer = ({ getCustomerData }) => {
   let street =
     res?.street?.slice(0, 1).toUpperCase() +
     res?.street?.slice(1).toLowerCase() +
-    ',' +
+    ',  ' +
+    '  ' +
     res?.plz +
+    '  ' +
     res?.city
   // console.log('customerPage', res)
   return (

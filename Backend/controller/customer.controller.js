@@ -198,16 +198,15 @@ exports.deleteCustomer = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
 exports.searchCustomer = async (req, res) => {
   try {
     const searchKey = req.params.searchKey;
     const result = await Customer.find({
       $or: [
-        { fname: { $regex: searchKey, $options: "i" } },
-        { group: { $regex: searchKey, $options: "i" } },
-        { email: { $regex: searchKey, $options: "i" } },
-        { phone: { $regex: searchKey, $options: "i" } },
+        { "customer.fname": { $regex: searchKey, $options: "i" } },
+        { "customer.id": { $regex: searchKey, $options: "i" } },
+        { "customer.email": { $regex: searchKey, $options: "i" } },
+        { "customer.phone": { $regex: searchKey, $options: "i" } },
       ],
     });
     res.send(result);
