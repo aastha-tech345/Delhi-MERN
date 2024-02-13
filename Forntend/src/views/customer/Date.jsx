@@ -28,13 +28,15 @@ const DatePiker = ({ onChange, selected }) => {
   }, []) // Empty dependency array ensures this effect runs only once
 
   return (
-    <DatePicker
-      className="form-control form-search-control w-100"
-      placeholderText="Geburtsdatum"
-      selected={selected}
-      onChange={onChange}
-      dateFormat="dd.MM.yy"
-    />
+    <div>
+      <DatePicker
+        className="form-control form-search-control w-100"
+        placeholderText="Geburtsdatum"
+        selected={selected}
+        onChange={onChange}
+        dateFormat="dd.MM.yy"
+      />
+    </div>
   )
 }
 
