@@ -26,14 +26,14 @@ exports.getDocument = async (req, res) => {
     const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await DocumentInfo.Document.countDocuments({
-      is_deleted: "active",
+      is_deleted: { $ne: "deleted" },
     });
     let pageCount = Math.ceil(countPage / resultPerPage);
 
     const apiFeatures = new ApiFeatures(
       DocumentInfo.Document.find({
-        customer_id: req.params.id,
-        is_deleted: "active",
+        // customer_id: req.params.id,
+        is_deleted: { $ne: "deleted" },
       }),
       req.query
     )
