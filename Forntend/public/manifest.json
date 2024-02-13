@@ -1,9 +1,10 @@
 {
-  "short_name": "CoreUI-React",
+  "short_name": "HVD-React",
   "name": "CoreUI-React sample",
   "icons": [
     {
       "src": "./assets/img/favicon.png",
+      "border-radius": "50%",
       "sizes": "100x100",
       "type": "image/png"
     }

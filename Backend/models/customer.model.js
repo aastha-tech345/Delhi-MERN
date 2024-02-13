@@ -1,48 +1,102 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const orderingMaterialsSchema = {
+  orderNumber: { type: String, default: "" },
+  newsletterDate: { type: String, default: "10.01.23" },
+  extras: { type: String, default: "" },
+  newsletterSubscription: { type: String, default: "" },
+};
 
-const contactSchema = new Schema({
-  fname: String,
-  lname: String,
-  gender: String,
-  email: String,
-  phone: String,
-  skype: String,
-  customer_id:{type:String}
-});
+const customerInfoStatuSchema = {
+  clientStatus: { type: Array, default: [] },
+  dataProtection: { type: Boolean, default: false },
+  employee: { type: String, default: "" },
+  customerInfo_lname: { type: String, default: "" },
+  dataCollection: { type: String, default: "10.01.23" },
+};
 
-const taskSchema = new Schema({
-  title: String,
-  start_date: Date,
-  deadline: Date,
-  assigned_to: String,
-  employees: [String],
-  task_status: String,
-  customer_id:{type:String}
-});
+const customerContactSchema = {
+  title: { type: String, default: "" },
+  salution: { type: String, default: "" },
+  gender: { type: String, default: "" },
+  fname: { type: String, default: "" },
+  lname: { type: String, default: "" },
+  dob: { type: String, default: "10.01.23" },
+  name: { type: String, default: "" },
+};
 
-const customerSchema = new Schema({
-  fname: {type:String},
-  lname: {type:String},
-  phone: {type:String},
-  email: {type:String},
-  title: {type:String},
-  gender: {type:String},
-  primary_contact: {type:String},
-  coustomerInfo: {
-    fname: {type:String},
-    lname: {type:String},
-    gender: {type:String},
-    email: {type:String},
-    phone: {type:String},
+const customerBillSchema = {
+  billAddress: { type: String, default: "" },
+  billPlz: { type: String, default: "" },
+  billLand: { type: String, default: "" },
+  billOrt: { type: String, default: "" },
+};
+
+const customerDeliverySchema = {
+  fname: { type: String, default: "" },
+  lname: { type: String, default: "" },
+  plz: { type: String, default: "" },
+  address: { type: String, default: "" },
+  land: { type: String, default: "" },
+  ort: { type: String, default: "" },
+  phone: { type: String, default: "" },
+  mobile: { type: String, default: "" },
+  alreadyPaid: { type: Boolean, default: false },
+};
+
+const customerDepositSchema = {
+  deposit: { type: Boolean, Boolean: false },
+  emergencyPass: { type: Boolean, Boolean: false },
+  reminderStamp: { type: String, default: "10.01.23" },
+  updateStamp: { type: String, default: "10.01.23" },
+  nextBrand: { type: String, default: "10.01.23" },
+  lastStamp: { type: String, default: "10.01.23" },
+  startDeposit: { type: String, default: "10.01.23" },
+};
+
+const customerBurialSchema = {
+  termination: { type: Boolean, default: false },
+  terminationDeath: { type: Boolean, default: false },
+  notTermination: { type: Boolean, default: false },
+  financialReasons: { type: Boolean, default: false },
+};
+
+const customerInfo = { 
+  fname: { type: String },
+  lname: { type: String },
+  phone: { type: String },
+  email: { type: String },
+  plz: { type: String },
+  city: { type: String },
+  street: { type: String },
+  land: { type: String },
+  startDate: { type: String, default: "10.01.23" },
+  dob: { type: String, default: "10.01.23" },
+  status: { type: String },
+  id: { type: String },
+  created_by: { type: Schema.Types.ObjectId, ref: "User" },
+};
+const customerSchema = new Schema(
+  {
+    customer: customerInfo,
+    orderingMaterials: orderingMaterialsSchema,
+    customerInfoStatu: customerInfoStatuSchema,
+    those: { type: String },
+    customerContact: customerContactSchema,
+    customerBills: customerBillSchema,
+    customerDelivery: customerDeliverySchema,
+    customerDeposit: customerDepositSchema,
+    customerBurial: customerBurialSchema,
+    // created_by: { type: Schema.Types.ObjectId, ref: "User" },
+    status: {
+      type: String,
+      enum: ["active", "deleted"],
+      default: "active",
+    },
   },
-  contacts: contactSchema,
-  tasks: taskSchema,
-  created_by: { type: Schema.Types.ObjectId, ref: 'Customer' },
-  customer_id: { type: Schema.Types.ObjectId, ref: 'Customer' },
-  parent_id: { type: Schema.Types.ObjectId, ref: 'User' },
-});
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
+);
 
-const Customer = mongoose.model('customer', customerSchema,'customer');
+const Customer = mongoose.model("customer", customerSchema);
 
 module.exports = { Customer };

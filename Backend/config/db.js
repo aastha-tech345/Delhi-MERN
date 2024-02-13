@@ -1,27 +1,17 @@
-const mongoose = require('mongoose');
-require('dotenv').config();
+const mongoose = require("mongoose");
 
-// MongoDB Connection
-const connectToMongoDB = async () => {
-    try {
-        const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Project';
-        await mongoose.connect(mongoURI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-        console.log('MongoDB connected successfully');
-    } catch (error) {
-        console.error('MongoDB connection error:', error.message);
-        // You can choose to exit the process here or handle the error as needed.
-    }
-};
-
-// Add an event listener to handle disconnects
-mongoose.connection.on('disconnected', () => {
-    console.log('MongoDB disconnected');
-    // Attempt to reconnect
-    connectToMongoDB();
+// mongoose.connect("mongodb://hvd_user:hvd_user@localhost:27017/HVD", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+mongoose.connect("mongodb://127.0.0.1:27017/HVD", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-// Connect to MongoDB
-connectToMongoDB();
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "Connection error:"));
+db.once("open", () => {
+  console.log("Connected to the database!");
+});
