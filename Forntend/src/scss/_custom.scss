@@ -1836,8 +1836,11 @@ span.anticon.anticon-phone svg {
   }
 }
 
-
 .custom-modal-size {
-  max-width: 500px; 
+  max-width: 500px;
   width: 100%;
+}
+
+.react-datepicker__input-container {
+  width: 101% !important;
 }

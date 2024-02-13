@@ -653,7 +653,7 @@ const CustomerInfo = () => {
                           >
                             <option>Anrede</option>
                             <option value="herr">Herr</option>
-                            <option value="fray">Fray</option>
+                            <option value="frau">Frau</option>
                             <option value="divers">Divers</option>
                           </select>
                         </div>

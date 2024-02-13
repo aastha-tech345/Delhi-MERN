@@ -6,7 +6,6 @@ exports.createContact = async (req, res) => {
   try {
     const {
       fname,
-      statu,
       lname,
       email,
       phone,
@@ -29,7 +28,6 @@ exports.createContact = async (req, res) => {
       email,
       phone,
       gender,
-      statu,
       customer_id,
       added_by,
       id,

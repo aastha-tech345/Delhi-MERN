@@ -45,8 +45,8 @@ const customerDeliverySchema = {
 };
 
 const customerDepositSchema = {
-  deposit: { type: Boolean, Boolean: false },
-  emergencyPass: { type: Boolean, Boolean: false },
+  deposit: { type: Boolean, default: false },
+  emergencyPass: { type: Boolean, default: false },
   reminderStamp: { type: String, default: "10.01.23" },
   updateStamp: { type: String, default: "10.01.23" },
   nextBrand: { type: String, default: "10.01.23" },
