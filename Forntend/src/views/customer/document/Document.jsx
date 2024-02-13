@@ -158,7 +158,7 @@ const Document = () => {
   const getDetails = async () => {
     try {
       const result = await fetch(
-        `${apiUrl}/document/get_document/${custData?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
+        `${apiUrl}/document/get_document?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
       setCountPage(data?.pageCount)

@@ -49,7 +49,7 @@ exports.getContact = async (req, res) => {
     const resultPerPage = req.query.resultPerPage || 10;
 
     const countPage = await ContactInfomation.Contact.countDocuments({
-      status: "active",
+      status: { $ne: "deleted" },
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
@@ -58,7 +58,7 @@ exports.getContact = async (req, res) => {
       ContactInfomation.Contact.find({
         // customer_id: req.params.first,
         // added_by: req.params.second,
-        status: "active",
+        status: { $ne: "deleted" },
       }),
       req.query
     )
