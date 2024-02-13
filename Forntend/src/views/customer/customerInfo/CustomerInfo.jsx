@@ -32,6 +32,7 @@ const CustomerInfo = () => {
   let ress = localStorage.getItem('customerRecord')
   // console.log(ress)d
   let resultt = JSON.parse(ress)
+  // console.log("ashish", resultt)
   // console.log('aast', resultt)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: resultt?.orderingMaterials?.orderNumber,
@@ -100,7 +101,7 @@ const CustomerInfo = () => {
     financialReasons: resultt?.customerBurial?.financialReasons,
   })
   const [getCustomerData, setGetCustomerData] = useState({})
-
+  const [employeeData, setEmployeeData] = useState([])
   // console.log('customer_info', resultt.orderingMaterials.orderNumber)
   let customer = {
     fname: customerContact?.fname,
@@ -276,6 +277,17 @@ const CustomerInfo = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+  const getEmployeeData = async () => {
+    try {
+      const results = await fetch(`${apiUrl}/user/get/employeeData`)
+      const data = await results.json()
+      setEmployeeData(data?.data)
+      // console.log("ashishemploye", data?.data)
+      // setGetCustomerData(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
 
   console.log('aastha type', customerDepositt.emergencyPass)
   const data = {
@@ -369,6 +381,7 @@ const CustomerInfo = () => {
   }
   useEffect(() => {
     getDetails()
+    getEmployeeData()
   }, [page, itemsPerPage])
   // useEffect(() => {
   //   setOrderingMaterials((prev) => ({
@@ -522,13 +535,16 @@ const CustomerInfo = () => {
                               defaultValue="MitarbeiterInnen"
                             >
                               <option value="MitarbeiterInnen">MitarbeiterInnen</option>
-                              <option value="SPV alt">SPV alt</option>
-                              <option value="OPV alt">OPV alt</option>
-                              <option value="Dauerspenderlnner">Dauerspenderlnner</option>
-                              <option value="Hinterlegende">Hinterlegende</option>
-                              <option value="Materialbestellung">Materialbestellung</option>
-                              <option value="Newsletter Abonnent">Newsletter Abonnent</option>
-                              <option value="offen">offen</option>
+                              {
+                                employeeData?.map((elem) => {
+                                  return (
+                                    <>
+                                      <option value={elem?.username}>{elem?.username}</option>
+                                    </>
+                                  )
+                                })
+                              }
+
                             </select>
                           </div>
                         </div>
@@ -1028,7 +1044,6 @@ const CustomerInfo = () => {
                               // checked={JSON.parse(customerDelivery?.alreadyPaid)}
                               checked={customerDelivery?.alreadyPaid}
                               type="checkbox"
-                              // onClick={(e) => e.stopPropagation()}
                             />
                             <span>ja</span>
                           </div>
