@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../Date'
 import Select, { components } from 'react-select'
 import PropTypes from 'prop-types'
+import CreatableSelect from 'react-select/creatable'
 
 const CheckboxOption = (
   { isSelected, label, ...rest }, // Destructure props
@@ -51,6 +52,11 @@ const CustomerInfo = () => {
     dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
   const [those, setThose] = useState(resultt?.those)
+
+  const handleSelectChange = (selectedOption) => {
+    setThose(selectedOption)
+    console.log(selectedOption)
+  }
   console.log('those', resultt?.those)
   const [customerContact, setCustomerContact] = useState({
     title: resultt?.customerContact?.title,
@@ -140,6 +146,23 @@ const CustomerInfo = () => {
       console.error('Invalid event or data provided to matarialChange.')
     }
   }
+
+  const Quelle = [
+    { value: 'alte db', label: 'Alte DB' },
+    { value: 'order', label: 'Auftrag(Online-Maske)' },
+    { value: 'contact form', label: 'Kontaktformula' },
+    { value: 'order print', label: 'Auftrag(Print)' },
+    { value: 'website', label: 'Website' },
+    { value: 'e-mail', label: 'E-Mail' },
+    { value: 'call', label: 'Anruf' },
+    { value: 'letter', label: 'Zuschrift (Post)' },
+    { value: 'HVD regional association', label: 'HVD-Landesverband' },
+    { value: 'Regional association MOL', label: 'Regionalverband MOL' },
+    { value: 'Northern Regional Association', label: 'Regionalverband Nord' },
+    { value: 'Potsda regional association', label: 'Regionalverband Potsda' },
+    { value: 'inter', label: 'intern' },
+    { value: 'anderes', label: 'anderes' },
+  ]
 
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
@@ -603,7 +626,7 @@ const CustomerInfo = () => {
                     <div className="row">
                       <div className="col-sm-3 ps-0">
                         <div className="input-group">
-                          <select
+                          {/* <select
                             className="form-control form-select"
                             value={those}
                             onChange={(e) => {
@@ -628,7 +651,14 @@ const CustomerInfo = () => {
                             </option>
                             <option value="inter">intern</option>
                             <option value="anderes">anderes</option>
-                          </select>
+                          </select> */}
+                          <Select
+                            className="w-100"
+                            options={Quelle}
+                            onChange={handleSelectChange}
+                            value={those}
+                            name="those"
+                          />
                         </div>
                       </div>
                     </div>
@@ -962,7 +992,7 @@ const CustomerInfo = () => {
                             placeholder="Mobil"
                             className="form-control"
                             id="inputTelephone"
-                            maxLength={10}
+                            maxLength={30}
                             minLength={3}
                           />
                         </div>
@@ -1043,7 +1073,7 @@ const CustomerInfo = () => {
                             type="tel"
                             placeholder="Telefon"
                             id="inputTelephone"
-                            maxLength={10}
+                            maxLength={30}
                             minLength={3}
                           />
                         </div>

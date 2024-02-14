@@ -65,7 +65,7 @@ const customerInfoSchema = new mongoose.Schema(
   {
     orderingMaterials: orderingMaterialsSchema,
     customerInfoStatu: customerInfoStatuSchema,
-    those: { type: String },
+    those: [],
     // email: { type: String },
     customerContact: customerContactSchema,
     customerBills: customerBillSchema,
