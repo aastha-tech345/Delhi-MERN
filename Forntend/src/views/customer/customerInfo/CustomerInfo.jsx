@@ -589,6 +589,17 @@ const CustomerInfo = () => {
                               optionLabel="name"
                               maxSelectedLabels={3}
                               className="w-100"
+                              // itemTemplate={(option) => (
+                              //   <div
+                              //     style={{
+                              //       padding: '15px',
+                              //       // paddingLeft: '0px !important',
+                              //     }}
+                              //   >
+                              //     {option.name}
+                              //   </div>
+                              // )}
+                              // style={{ padding: '10px !important' }}
                             />
                             {/* <label htmlFor="ms-cities">Select Cities</label> */}
                             {/* </span> */}
@@ -1222,23 +1233,23 @@ const CustomerInfo = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <div className="row">
-                        <div className="col-sm-6">
-                          <div className="radio-check-wrap">
-                            <input
-                              type="checkbox"
-                              onChange={emergencyPass}
-                              // checked={JSON.parse(customerDeposit.emergencyPass)}
-                              checked={customerEmergencyPass}
-                              name="emergencyPass"
-                            />{' '}
-                            <span> Notfallpass</span>
-                          </div>
-                        </div>
+                  {/* <div className="row ">
+                    <div className="col-sm-6"> */}
+                  <div className="row ">
+                    <div className="col-sm-6" style={{ padding: '0px' }}>
+                      <div className="radio-check-wrap">
+                        <input
+                          type="checkbox"
+                          onChange={emergencyPass}
+                          // checked={JSON.parse(customerDeposit.emergencyPass)}
+                          checked={customerEmergencyPass}
+                          name="emergencyPass"
+                        />{' '}
+                        <span> Notfallpass</span>
                       </div>
                     </div>
+                    {/* </div>
+                    </div> */}
 
                     <div className="col-sm-6">
                       <div className="row">
@@ -1262,7 +1273,7 @@ const CustomerInfo = () => {
                 <h3>Beedigung</h3>
                 <div className="container-fluid">
                   <div className="row">
-                    <div className="col-md-3 col-sm-6">
+                    <div className="col-md-3 col-sm-6" style={{ padding: '0px' }}>
                       <div className="radio-check-wrap w-100">
                         <input
                           type="checkbox"
@@ -1274,7 +1285,7 @@ const CustomerInfo = () => {
                         <span>Beendigung auf eigenen Wunsch</span>
                       </div>
                     </div>
-                    <div className="col-md-3 col-sm-6">
+                    <div className="col-md-3 col-sm-6" style={{ padding: '0px' }}>
                       <div className="radio-check-wrap w-100">
                         <input
                           type="checkbox"
@@ -1286,7 +1297,7 @@ const CustomerInfo = () => {
                         <span> Beendigung durch Tod</span>
                       </div>
                     </div>
-                    <div className="col-md-3 col-sm-6">
+                    <div className="col-md-3 col-sm-6" style={{ padding: '0px' }}>
                       <div className="radio-check-wrap w-100">
                         <input
                           type="checkbox"
@@ -1298,7 +1309,7 @@ const CustomerInfo = () => {
                         <span>Beendigung weil nicht ermittelbar</span>
                       </div>
                     </div>
-                    <div className="col-md-3 col-sm-6">
+                    <div className="col-md-3 col-sm-6" style={{ padding: '0px' }}>
                       <div className="radio-check-wrap w-100">
                         <input
                           type="checkbox"
