@@ -11,6 +11,7 @@ import { MultiSelect } from 'primereact/multiselect'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 // import 'primeicons/primeicons.css'
+import CreatableSelect from 'react-select/creatable'
 
 const CheckboxOption = (props) => (
   <div>
@@ -67,8 +68,16 @@ const CustomerInfo = () => {
     { name: 'Newsletter Abonnent', code: '5' },
     { name: 'Offen', code: '6' },
   ]
-  const [those, setThose] = useState(resultt?.those)
-  console.log('those', resultt?.those)
+  // const [those, setThose] = useState(resultt?.those)
+  // console.log('those', resultt?.those)
+  const [those, setThose] = useState(resultt?.those[0])
+  console.log('jhfjkd', resultt?.those)
+  const handleSelectChange = (selectedOption) => {
+    setThose(selectedOption)
+    console.log(selectedOption)
+  }
+  // console.log('those', those?.value)
+  // console.log('those', resultt?.those)
   const [customerContact, setCustomerContact] = useState({
     title: resultt?.customerContact?.title,
     salution: resultt?.customerContact?.salution,
@@ -158,6 +167,28 @@ const CustomerInfo = () => {
     }
   }
 
+  const Quelle = [
+    { value: 'alte db', label: 'Alte DB' },
+    { value: 'order', label: 'Auftrag(Online-Maske)' },
+    { value: 'contact form', label: 'Kontaktformula' },
+    { value: 'order print', label: 'Auftrag(Print)' },
+    { value: 'website', label: 'Website' },
+    { value: 'e-mail', label: 'E-Mail' },
+    { value: 'call', label: 'Anruf' },
+    { value: 'letter', label: 'Zuschrift (Post)' },
+    { value: 'HVD regional association', label: 'HVD-Landesverband' },
+    { value: 'Regional association MOL', label: 'Regionalverband MOL' },
+    { value: 'Northern Regional Association', label: 'Regionalverband Nord' },
+    { value: 'Potsda regional association', label: 'Regionalverband Potsda' },
+    { value: 'inter', label: 'intern' },
+    { value: 'anderes', label: 'anderes' },
+  ]
+  const Anrede = [
+    { value: '', label: 'Anrede' },
+    { value: 'herr', label: 'Herr' },
+    { value: 'frau', label: 'Frau' },
+    { value: 'divers', label: 'Divers' },
+  ]
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
       // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
@@ -175,6 +206,8 @@ const CustomerInfo = () => {
           [name]: type === 'checkbox' ? checked : value,
         })
       }
+    } else if (e.value !== undefined) {
+      setCustomerInfoStatu({ ...customerInfoStatu, employee: e.value })
     } else {
       console.error('Invalid event or data provided to customerInfoChange.')
     }
@@ -182,9 +215,6 @@ const CustomerInfo = () => {
 
   const ContactChange = (e) => {
     if (e instanceof Date) {
-      // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
-      //   -2,
-      // )}.${e.getFullYear().toString().slice(-2)}`
       setCustomerContact({ ...customerContact, dob: e })
     } else if (e.target) {
       const { name, value, type, checked } = e.target
@@ -195,10 +225,13 @@ const CustomerInfo = () => {
       } else {
         setCustomerContact({ ...customerContact, [name]: type === 'checkbox' ? checked : value })
       }
+    } else if (e.value !== undefined) {
+      setCustomerContact({ ...customerContact, salution: e.value })
     } else {
       console.error('Invalid event or data provided to ContactChange.')
     }
   }
+
   const BillChange = (e) => {
     const { name, value } = e.target
     setCustomerBills({ ...customerBills, [name]: value })
@@ -283,7 +316,7 @@ const CustomerInfo = () => {
     { value: '6', label: 'Offen' },
   ]
   const [selectedOptions, setSelectedOptions] = useState([])
-
+  // console.log('hkdfgdfg', selectedOptions)
   const handleChange = (selectedOptions) => {
     setSelectedOptions(selectedOptions)
   }
@@ -310,12 +343,14 @@ const CustomerInfo = () => {
 
   console.log('aastha type', customerDepositt.emergencyPass)
   let customerInfoStatuData = { ...customerInfoStatu, clientStatus }
-
+  console.log('ashishclient', customerInfoStatuData)
   const data = {
     customer: customer,
     orderingMaterials: orderingMaterials,
     customerInfoStatu: customerInfoStatuData,
     // those: those,
+    // customerInfoStatu: customerInfoStatu,
+    those: those,
     customerContact: customerContact,
     customerBills: customerBills,
     customerDelivery: customerDelivery,
@@ -563,7 +598,7 @@ const CustomerInfo = () => {
                         <div className="row mb-3">
                           <label className="col-sm-3 col-form-label">MitarbeiterInnen</label>
                           <div className="col-sm-6">
-                            <select
+                            {/* <select
                               onChange={customerInfoChange}
                               value={customerInfoStatu.employee}
                               className="form-control form-select"
@@ -578,7 +613,20 @@ const CustomerInfo = () => {
                                   </>
                                 )
                               })}
-                            </select>
+                            </select> */}
+                            <Select
+                              className="w-100"
+                              options={employeeData?.map((elem) => ({
+                                value: elem.username,
+                                label: elem.username,
+                              }))}
+                              onChange={customerInfoChange}
+                              value={{
+                                value: customerInfoStatu.employee || 'MitarbeiterInnen',
+                                label: customerInfoStatu.employee || 'MitarbeiterInnen',
+                              }}
+                              name="employee"
+                            />
                           </div>
                         </div>
                       </div>
@@ -636,7 +684,7 @@ const CustomerInfo = () => {
                     <div className="row">
                       <div className="col-sm-3 ps-0">
                         <div className="input-group">
-                          <select
+                          {/* <select
                             className="form-control form-select"
                             value={those}
                             onChange={(e) => {
@@ -661,7 +709,14 @@ const CustomerInfo = () => {
                             </option>
                             <option value="inter">intern</option>
                             <option value="anderes">anderes</option>
-                          </select>
+                          </select> */}
+                          <Select
+                            className="w-100"
+                            options={Quelle}
+                            onChange={handleSelectChange}
+                            value={those}
+                            name="those"
+                          />
                         </div>
                       </div>
                     </div>
@@ -714,24 +769,22 @@ const CustomerInfo = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
+                  <div className="row mb-3">
                     <div className="col-sm-6">
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Anrede
                         </label>
                         <div className="col-sm-6">
-                          <select
-                            className="form-control form-select"
-                            value={customerContact.salution}
-                            name="salution"
+                          <Select
+                            className="w-100"
+                            options={Anrede}
                             onChange={ContactChange}
-                          >
-                            <option>Anrede</option>
-                            <option value="herr">Herr</option>
-                            <option value="frau">Frau</option>
-                            <option value="divers">Divers</option>
-                          </select>
+                            value={Anrede.find(
+                              (option) => option.value === customerContact.salution,
+                            )} // Find the selected option
+                            name="salution"
+                          />
                         </div>
                       </div>
                     </div>
@@ -995,7 +1048,7 @@ const CustomerInfo = () => {
                             placeholder="Mobil"
                             className="form-control"
                             id="inputTelephone"
-                            maxLength={10}
+                            maxLength={30}
                             minLength={3}
                           />
                         </div>
@@ -1076,7 +1129,7 @@ const CustomerInfo = () => {
                             type="tel"
                             placeholder="Telefon"
                             id="inputTelephone"
-                            maxLength={10}
+                            maxLength={30}
                             minLength={3}
                           />
                         </div>

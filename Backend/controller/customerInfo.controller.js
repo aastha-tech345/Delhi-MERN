@@ -13,9 +13,10 @@ exports.createCustomerInfo = async (req, res) => {
       customerDelivery,
       customerDeposit,
       customerBurial,
-      customer_id
+      customer_id,
     } = req.body;
 
+    const thoseValue = those.value;
     const emailFind = await CustomerInfomation.CustomerInfo.findOne({ email });
 
     if (emailFind) {
@@ -27,14 +28,14 @@ exports.createCustomerInfo = async (req, res) => {
     const customerInfo = new CustomerInfomation.CustomerInfo({
       orderingMaterials,
       customerInfoStatu,
-      those,
+      those: thoseValue,
       email,
       customerContact,
       customerBills,
       customerDelivery,
       customerDeposit,
       customerBurial,
-      customer_id
+      customer_id,
     });
 
     const result = await customerInfo.save();
