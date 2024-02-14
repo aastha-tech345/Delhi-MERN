@@ -61,18 +61,18 @@ const customerBurialSchema = {
   financialReasons: { type: Boolean, default: false },
 };
 
-const customerInfo = { 
+const customerInfo = {
   fname: { type: String },
   lname: { type: String },
   phone: { type: String },
   email: { type: String },
-  plz: { type: String,default:" " },
-  city: { type: String,default:" " },
-  street: { type: String,default:" " },
-  land: { type: String,default:" " },
+  plz: { type: String, default: " " },
+  city: { type: String, default: " " },
+  street: { type: String, default: " " },
+  land: { type: String, default: " " },
   startDate: { type: String, default: "10.01.23" },
   dob: { type: String, default: "10.01.23" },
-  status: { type: String },
+  status: { type: Array, default: [] },
   id: { type: String },
   created_by: { type: Schema.Types.ObjectId, ref: "User" },
 };
