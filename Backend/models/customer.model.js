@@ -81,7 +81,7 @@ const customerSchema = new Schema(
     customer: customerInfo,
     orderingMaterials: orderingMaterialsSchema,
     customerInfoStatu: customerInfoStatuSchema,
-    those: { type: String },
+    those: [],
     customerContact: customerContactSchema,
     customerBills: customerBillSchema,
     customerDelivery: customerDeliverySchema,
