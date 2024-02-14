@@ -7,17 +7,24 @@ import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../Date'
 import Select, { components } from 'react-select'
 import PropTypes from 'prop-types'
+import { MultiSelect } from 'primereact/multiselect'
+import 'primereact/resources/themes/saga-blue/theme.css'
+import 'primereact/resources/primereact.min.css'
+// import 'primeicons/primeicons.css'
 import CreatableSelect from 'react-select/creatable'
 
-const CheckboxOption = (
-  { isSelected, label, ...rest }, // Destructure props
-) => (
-  <components.Option isSelected={isSelected} {...rest}>
-    &nbsp;
-    <input type="checkbox" checked={isSelected} onChange={() => null} />
-    &nbsp;
-    {label}
-  </components.Option>
+const CheckboxOption = (props) => (
+  <div>
+    <components.Option {...props}>
+      <input
+        type="checkbox"
+        checked={props.isSelected}
+        onChange={() => null} // Prevent onChange errors
+        style={{ marginRight: '10px' }}
+      />
+      {props.label}
+    </components.Option>
+  </div>
 )
 
 CheckboxOption.propTypes = {
@@ -46,11 +53,23 @@ const CustomerInfo = () => {
   console.log('orderDate', resultt?.orderingMaterials?.newsletterDate)
 
   const [customerInfoStatu, setCustomerInfoStatu] = useState({
-    clientStatus: resultt?.customerInfoStatu?.clientStatus,
+    // clientStatus: resultt?.customerInfoStatu?.clientStatus,
     dataProtection: resultt?.customerInfoStatu?.dataProtection,
     employee: resultt?.customerInfoStatu?.employee,
     dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
+  const [clientStatus, setClientStatus] = useState(resultt?.customerInfoStatu?.clientStatus)
+  const cities = [
+    { name: 'HVD-PV', code: '0' },
+    { name: 'SPV alt', code: '1' },
+    { name: 'OPV alt', code: '2' },
+    { name: 'Dauerspenderlnner', code: '3' },
+    { name: 'Materialbestellung', code: '4' },
+    { name: 'Newsletter Abonnent', code: '5' },
+    { name: 'Offen', code: '6' },
+  ]
+  // const [those, setThose] = useState(resultt?.those)
+  // console.log('those', resultt?.those)
   const [those, setThose] = useState(resultt?.those[0])
   console.log('jhfjkd', resultt?.those)
   const handleSelectChange = (selectedOption) => {
@@ -119,7 +138,7 @@ const CustomerInfo = () => {
     phone: customerDelivery?.phone || resultt?.phone,
     plz: customerDelivery?.plz || resultt?.plz,
     dob: customerContact?.dob,
-    status: customerInfoStatu.clientStatus[0]?.label,
+    status: clientStatus,
     land: customerDelivery?.land || resultt?.land,
     id: resultt?.id,
     street: resultt?.street,
@@ -323,10 +342,14 @@ const CustomerInfo = () => {
   }
 
   console.log('aastha type', customerDepositt.emergencyPass)
+  let customerInfoStatuData = { ...customerInfoStatu, clientStatus }
+  console.log('ashishclient', customerInfoStatuData)
   const data = {
     customer: customer,
     orderingMaterials: orderingMaterials,
-    customerInfoStatu: customerInfoStatu,
+    customerInfoStatu: customerInfoStatuData,
+    // those: those,
+    // customerInfoStatu: customerInfoStatu,
     those: those,
     customerContact: customerContact,
     customerBills: customerBills,
@@ -442,6 +465,7 @@ const CustomerInfo = () => {
   const cancelData = () => {
     navigate('/customerlist')
   }
+
   return (
     <div className="inner-page-wrap">
       <Customer getCustomerData={getCustomerData} />
@@ -544,7 +568,7 @@ const CustomerInfo = () => {
                         <div className="row mb-3">
                           <label className="col-sm-3 col-form-label">Status</label>
                           <div className="col-sm-6">
-                            <Select
+                            {/* <Select
                               className="form-multi-select"
                               name="clientStatus"
                               onChange={customerInfoChangeMulti}
@@ -554,7 +578,20 @@ const CustomerInfo = () => {
                               isMulti
                               options={options}
                               components={{ Option: CheckboxOption }}
+                              // checked={options}
+                            /> */}
+                            {/* <span className=" w-100"> */}
+                            <MultiSelect
+                              placeholder="HVD-PV"
+                              value={clientStatus}
+                              onChange={(e) => setClientStatus(e.value)}
+                              options={cities}
+                              optionLabel="name"
+                              maxSelectedLabels={3}
+                              className="w-100"
                             />
+                            {/* <label htmlFor="ms-cities">Select Cities</label> */}
+                            {/* </span> */}
                           </div>
                         </div>
 
@@ -585,8 +622,8 @@ const CustomerInfo = () => {
                               }))}
                               onChange={customerInfoChange}
                               value={{
-                                value: customerInfoStatu.employee,
-                                label: customerInfoStatu.employee,
+                                value: customerInfoStatu.employee || 'MitarbeiterInnen',
+                                label: customerInfoStatu.employee || 'MitarbeiterInnen',
                               }}
                               name="employee"
                             />
