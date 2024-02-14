@@ -65,7 +65,7 @@ const CustomerInfo = () => {
     billAddress: resultt?.customerBills?.billAddress || resultt?.street,
     billPlz: resultt?.customerBills?.billPlz || resultt?.plz,
     billLand: resultt?.customerBills?.billLand || resultt?.land,
-    billOrt: resultt?.customerBills?.billOrt,
+    billOrt: resultt?.customerBills?.billOrt || resultt?.city,
   })
   const [email, setEmail] = useState('')
   const [customerDelivery, setCustomerDelivery] = useState({
@@ -74,7 +74,7 @@ const CustomerInfo = () => {
     address: resultt?.customerDelivery?.address || resultt?.street,
     plz: resultt?.plz,
     land: resultt?.land,
-    ort: resultt?.customerDelivery?.ort,
+    ort: resultt?.customerDelivery?.ort || resultt?.city,
     phone: resultt?.phone,
     mobile: resultt?.customerDelivery?.mobile,
     alreadyPaid: resultt?.customerDelivery?.alreadyPaid,
@@ -641,7 +641,7 @@ const CustomerInfo = () => {
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-sm-6">
-                      <div className="mb-6 row">
+                      <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Titel
                         </label>
@@ -656,45 +656,9 @@ const CustomerInfo = () => {
                           />
                         </div>
                       </div>
-
-                      <div className="mb-6 row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Anrede
-                        </label>
-                        <div className="col-sm-6">
-                          <select
-                            className="form-control form-select"
-                            value={customerContact.salution}
-                            name="salution"
-                            onChange={ContactChange}
-                          >
-                            <option>Anrede</option>
-                            <option value="herr">Herr</option>
-                            <option value="frau">Frau</option>
-                            <option value="divers">Divers</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="mb-6 row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Vornamen
-                        </label>
-                        <div className="col-sm-6">
-                          <input
-                            type="text"
-                            placeholder="Vornamen"
-                            value={customerContact.fname}
-                            name="fname"
-                            onChange={ContactChange}
-                            className="form-control"
-                            id="inputPassword"
-                          />
-                        </div>
-                      </div>
                     </div>
                     <div className="col-sm-6">
-                      <div className="mb-6 row">
+                      <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Geburtsdatum
                         </label>
@@ -715,12 +679,35 @@ const CustomerInfo = () => {
                           />
                         </div>
                       </div>
-
-                      <div className="mb-2 row">
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          Anrede
+                        </label>
+                        <div className="col-sm-6">
+                          <select
+                            className="form-control form-select"
+                            value={customerContact.salution}
+                            name="salution"
+                            onChange={ContactChange}
+                          >
+                            <option>Anrede</option>
+                            <option value="herr">Herr</option>
+                            <option value="frau">Frau</option>
+                            <option value="divers">Divers</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Geschlecht
                         </label>
-                        <div className="col-sm-6">
+                        <div className="col-sm-6 mt-2">
                           {/* <div className="d-flex"> */}
                           <div className="radio-wrap">
                             <div className="radio-input">
@@ -760,6 +747,28 @@ const CustomerInfo = () => {
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          Vornamen
+                        </label>
+                        <div className="col-sm-6">
+                          <input
+                            type="text"
+                            placeholder="Vornamen"
+                            value={customerContact.fname}
+                            name="fname"
+                            onChange={ContactChange}
+                            className="form-control"
+                            id="inputPassword"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Name
@@ -778,7 +787,6 @@ const CustomerInfo = () => {
                       </div>
                     </div>
                   </div>
-
                   <h6>Rechnungsadresse</h6>
                   <div className="row">
                     <div className="col-sm-6">
@@ -1064,17 +1072,15 @@ const CustomerInfo = () => {
                 <h3>Hinterlegung</h3>
                 <div className="container-fluid">
                   <div className="row">
-                    <div className="col-sm-12">
-                      <div className="radio-check-wrap mb-3">
-                        <input
-                          type="checkbox"
-                          onChange={deposite}
-                          // checked={JSON.parse(customerDeposit.deposit)}
-                          checked={customerDepositeCheckbox}
-                          name="deposit"
-                        />
-                        <span> Hinterlegung [ja]</span>
-                      </div>
+                    <div className="radio-check-wrap mb-3">
+                      <input
+                        type="checkbox"
+                        onChange={deposite}
+                        // checked={JSON.parse(customerDeposit.deposit)}
+                        checked={customerDepositeCheckbox}
+                        name="deposit"
+                      />
+                      <span> Hinterlegung [ja]</span>
                     </div>
                   </div>
                   <div className="row">
