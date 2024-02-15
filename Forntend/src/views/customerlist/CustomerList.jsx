@@ -116,32 +116,33 @@ const CustomerList = () => {
           className="dm-badge"
           style={{
             background:
-              text === ''
+              text[0]?.name === ''
                 ? '#C20F0F'
-                : text === 'HVD-PV'
+                : text[0]?.name === 'HVD-PV'
                 ? '#4EB772'
-                : text === 'SPV alt'
+                : text[0]?.name === 'SPV alt'
                 ? '#4EB772'
-                : text === 'OPV alt'
+                : text[0]?.name === 'OPV alt'
                 ? '#4EB772'
-                : text === 'Dauerspenderlnner'
+                : text[0]?.name === 'Dauerspenderlnner'
                 ? '#4EB772'
-                : text === 'Materialbestellung'
+                : text[0]?.name === 'Materialbestellung'
                 ? '#4EB772'
-                : text === 'Newsletter Abonnent'
+                : text[0]?.name === 'Newsletter Abonnent'
                 ? '#4EB772'
-                : text === 'Offen'
+                : text[0]?.name === 'Offen'
                 ? '#4EB772'
                 : 'transparent',
             border:
-              text === ''
+              text[0]?.name === ''
                 ? '1px solid transparent'
-                : text === 'HVD-PV'
+                : text[0]?.name === 'HVD-PV'
                 ? '1px solid rgba(78, 183, 114, 0.50)'
                 : '',
           }}
         >
-          {text === '' ? <span>PV-ALT</span> : <b>{text}</b>}
+          {console.log('ashishtext[0].name', text[0]?.name)}
+          {text === '' ? <span>PV-ALT</span> : <b>{text[0]?.name}</b>}
         </div>
       ),
     },

@@ -8,6 +8,7 @@ import axios from 'axios'
 // import { postFetchUser } from 'src/Api'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import Select, { components } from 'react-select'
 
 import { postFetchUser, getFetch } from 'src/Api'
 import DeleteModal from './DeleteModal'
@@ -111,9 +112,14 @@ const Document = () => {
   }
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setData({ ...data, [name]: value })
+    if (e.target) {
+      const { name, value } = e.target
+      setData({ ...data, [name]: value })
+    } else {
+      setData({ ...data, document_type: e.label })
+    }
   }
+
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
@@ -168,6 +174,17 @@ const Document = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+  const options = [
+    { value: 'Living will', label: 'Patientenverfügung' },
+    { value: 'Health care power of attorney', label: 'Gesundheitsvollmacht' },
+    { value: 'Power of attorney', label: 'Vorsorgevollmacht' },
+    { value: 'care order', label: 'Betreuungsverfügung' },
+    { value: 'Feces pass', label: 'Notfallpass' },
+    { value: 'Power of attorney digital test', label: 'Vollmacht digitales Erbe' },
+    { value: 'Write to', label: 'Anschreiben' },
+    { value: 'Personal document', label: 'Persönliches Dokument' },
+    { value: 'Other', label: 'Anderes' },
+  ]
 
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(parseInt(e.target.value, 10))
@@ -234,31 +251,21 @@ const Document = () => {
                   </div>
                 </div>
 
-                <div className="row">
+                <div className="row mb-3">
                   <div className="col-md-3">
                     <label htmlFor="documentType">Documenttype</label>
                   </div>
                   <div className="col-md-9">
-                    <select
-                      id="document_type"
-                      name="document_type"
-                      value={data.document_type}
+                    <Select
+                      className="w-100"
+                      options={options}
                       onChange={handleChange}
-                      className="form-control form-select"
-                    >
-                      <option>Gesundheitsvollmacht</option>
-                      <option value="Living will">Patientenverfügung</option>
-                      <option value="Health care power of attorney">Gesundheitsvollmacht</option>
-                      <option value="Power of attorney">Vorsorgevollmacht</option>
-                      <option value="care order">Betreuungsverfügung</option>
-                      <option value="Feces pass">Kotfallpass</option>
-                      <option value="Power of attorney digital test">
-                        Vollmacht digitales Prbe
-                      </option>
-                      <option value="Write to">Anschreiben</option>
-                      <option value="Personal document">Persönliches Dokument</option>
-                      <option value="Other">Anderes</option>
-                    </select>
+                      value={{
+                        label: data.document_type || 'Patientenverfügung',
+                        value: data.document_type || 'Patientenverfügung',
+                      }}
+                      name="document_type"
+                    />
                   </div>
                 </div>
                 <div className="row">

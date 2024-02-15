@@ -1845,7 +1845,16 @@ span.anticon.anticon-phone svg {
   width: 100% !important;
 }
 
-ul {
+// .custom-multiselect .p-multiselect-trigger {
+//   vertical-align: middle;
+// }
+
+// .custom-multiselect .p-checkbox-box {
+//   margin-top: 0;
+// }
+.p-multiselect-items {
   padding: 0px;
-  margin-top: 0px;
+}
+.p-multiselect-header {
+  display: none;
 }
