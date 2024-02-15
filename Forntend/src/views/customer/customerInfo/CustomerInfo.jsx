@@ -579,6 +579,7 @@ const CustomerInfo = () => {
                             </select> */}
                             <Select
                               className="w-100"
+                              placeholder="MitarbeiterInnen"
                               options={employeeData?.map((elem) => ({
                                 value: elem.username,
                                 label: elem.username,
