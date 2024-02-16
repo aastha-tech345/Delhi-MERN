@@ -4,16 +4,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createContact = async (req, res) => {
   try {
-    const {
-      fname,
-      lname,
-      email,
-      phone,
-      gender,
-      customer_id,
-      added_by,
-      id,
-    } = req.body;
+    const { email } = req.body;
 
     const emailFind = await ContactInfomation.Contact.findOne({ email });
     if (emailFind) {
@@ -22,18 +13,21 @@ exports.createContact = async (req, res) => {
         success: false,
       });
     }
-    const contact = new ContactInfomation.Contact({
-      fname,
-      lname,
-      email,
-      phone,
-      gender,
-      customer_id,
-      added_by,
-      id,
-    });
+    // const contact = new ContactInfomation.Contact({
+    //   fname,
+    //   lname,
+    //   email,
+    //   phone,
+    //   gender,
+    //   customer_id,
+    //   added_by,
+    //   id,
 
-    const result = await contact.save();
+    // });
+    // const result = await contact.save();
+
+    const result = await ContactInfomation.Contact.create(req.body);
+
     return res.status(201).json({
       status: 201,
       message: "contact was created",
