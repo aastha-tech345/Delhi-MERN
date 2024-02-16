@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Loader from 'src/components/loader/Loader'
 import Form from 'react-bootstrap/Form'
 import PropTypes from 'prop-types'
+import Select, { components } from 'react-select'
 
 const EditModal = ({ setEdit, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
@@ -21,9 +22,12 @@ const EditModal = ({ setEdit, getDetails }) => {
   const [loadValue, setLoadValue] = useState(false)
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    // const newValue = type === 'radio' ? e.target.value : value
-    setData({ ...data, [name]: value })
+    if (e.target) {
+      const { name, value } = e.target
+      setData({ ...data, [name]: value })
+    } else {
+      setData({ ...data, document_type: e.label })
+    }
   }
 
   const notify = (dataa) => toast(dataa)
@@ -84,7 +88,17 @@ const EditModal = ({ setEdit, getDetails }) => {
   const cancelData = () => {
     setData('')
   }
-
+  const options = [
+    { value: 'Living will', label: 'Patientenverfügung' },
+    { value: 'Health care power of attorney', label: 'Gesundheitsvollmacht' },
+    { value: 'Power of attorney', label: 'Vorsorgevollmacht' },
+    { value: 'care order', label: 'Betreuungsverfügung' },
+    { value: 'Feces pass', label: 'Notfallpass' },
+    { value: 'Power of attorney digital test', label: 'Vollmacht digitales Erbe' },
+    { value: 'Write to', label: 'Anschreiben' },
+    { value: 'Personal document', label: 'Persönliches Dokument' },
+    { value: 'Other', label: 'Anderes' },
+  ]
   return (
     <div
       className="modal"
@@ -96,7 +110,7 @@ const EditModal = ({ setEdit, getDetails }) => {
         color: 'black',
       }}
     >
-      <div className="modal-dialog modal-form modal-dialog-centered edit-modal-form ">
+      <div className="modal-dialog modal-form modal-dialog-centered edit-modal-form">
         <div className="modal-content modal-form">
           <div className="modal-header">
             <h5 className="modal-title">Dokument aktualisieren</h5>
@@ -127,12 +141,12 @@ const EditModal = ({ setEdit, getDetails }) => {
                 </div>
               </div>
 
-              <div className="row">
+              <div className="row mb-3">
                 <label htmlFor="inputPassword" className="col-md-3 col-form-label">
                   Dokumenttyp
                 </label>
                 <div className="col-md-9">
-                  <select
+                  {/* <select
                     id="document_type"
                     name="document_type"
                     value={data.document_type}
@@ -150,8 +164,18 @@ const EditModal = ({ setEdit, getDetails }) => {
                     <option value="Personal document">Persönliches Dokument</option>
                     <option value="Other">Anderes</option>
                     <option value="Living will">Patientenverfügung</option>
-                    {/* Add other options as needed */}
-                  </select>
+                  </select> */}
+                  <Select
+                    className="w-100"
+                    id="document_type"
+                    options={options}
+                    onChange={handleChange}
+                    value={{
+                      label: data.document_type || 'Patientenverfügung',
+                      value: data.document_type || 'Patientenverfügung',
+                    }}
+                    name="document_type"
+                  />
                 </div>
               </div>
               <div className="row">
@@ -179,9 +203,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                     />
                     <div className="file-input-wrap">
                       <div className="filename-field">
-                        <span>
-                          {data.document_upload ? data.document_upload : 'sample.Fragebogen'}
-                        </span>
+                        <span>{data.document_upload ? data.document_upload : 'Datei-Upload'}</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"

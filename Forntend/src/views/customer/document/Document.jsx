@@ -211,13 +211,13 @@ const Document = () => {
       <div className="row p-3 mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
         <div className="col-sm-9">
           <h5>Dokumente verwalten</h5>
-          <p>
+          {/* <p>
             Senden Sie anpassbare Angebote, Vorschläge und Verträge, um Geschäfte schneller
             abzuschließen.
-          </p>
+          </p> */}
         </div>
         {/* <div className="col-sm-2"></div> */}
-        <div className="col-sm-3 mt-3 text-end">
+        <div className="col-sm-3 text-end">
           <button
             type="button"
             className="btn btn text-light"
@@ -253,7 +253,7 @@ const Document = () => {
 
                 <div className="row mb-3">
                   <div className="col-md-3">
-                    <label htmlFor="documentType">Documenttype</label>
+                    <label htmlFor="documentType">Dokumententyp</label>
                   </div>
                   <div className="col-md-9">
                     <Select
@@ -283,9 +283,7 @@ const Document = () => {
                       />
                       <div className="file-input-wrap">
                         <div className="filename-field">
-                          <span>
-                            {document_upload ? document_upload.name : 'sample.Fragebogen'}
-                          </span>
+                          <span>{document_upload ? document_upload.name : 'Datei-Upload'}</span>
 
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

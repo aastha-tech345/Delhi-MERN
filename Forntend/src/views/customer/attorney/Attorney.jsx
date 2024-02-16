@@ -245,13 +245,13 @@ const Attorney = () => {
             <div>
               <div className="row">
                 <div className="col-sm-12">
-                  <p style={{ color: '#244D92' }}>GESUNDHEITSVOLLMACHT</p>
+                  <h3 style={{ color: '#244D92' }}>GESUNDHEITSVOLLMACHT</h3>
 
                   <div className="row">
-                    <label htmlFor="healthCareMasterData" className="col-sm-2 col-form-label fs-6">
+                    <label htmlFor="healthCareMasterData" className="col-sm-3 col-form-label fs-6">
                       Eintrag der Stammdaten
                     </label>
-                    <div className="col-sm-10 radio-check-wrap mt-2">
+                    <div className="col-sm-9 radio-check-wrap mt-2">
                       <input
                         type="checkbox"
                         onChange={() =>
@@ -362,12 +362,12 @@ const Attorney = () => {
               </div>
               <div className="row p-3">
                 <div className="col-sm-12">
-                  <p style={{ color: '#244D92' }}>VORSORGEVOLLMACHT</p>
+                  <h3 style={{ color: '#244D92' }}>VORSORGEVOLLMACHT</h3>
                   <div className="row">
-                    <label htmlFor="AttorneyMasterData" className="col-sm-2 col-form-label fs-6">
+                    <label htmlFor="AttorneyMasterData" className="col-sm-3 col-form-label fs-6">
                       Eintrag der Stammdaten
                     </label>
-                    <div className="col-sm-10 radio-check-wrap mt-2">
+                    <div className="col-sm-9 radio-check-wrap mt-2">
                       <input
                         type="checkbox"
                         // onChange={powerOfAttorneyChange}
@@ -499,12 +499,12 @@ const Attorney = () => {
             </div>
             <div className="row p-3">
               <div className="col-sm-12">
-                <p style={{ color: '#244D92' }}>BETREUUNGSVERFÜGUNG</p>
+                <h3 style={{ color: '#244D92' }}>BETREUUNGSVERFÜGUNG</h3>
                 <div className="row">
-                  <label htmlFor="CareProvisionMasterData" className="col-sm-2 col-form-label fs-6">
+                  <label htmlFor="CareProvisionMasterData" className="col-sm-3 col-form-label fs-6">
                     Eintrag der Stammdaten
                   </label>
-                  <div className="col-sm-10 radio-check-wrap mt-2">
+                  <div className="col-sm-9 radio-check-wrap mt-2">
                     <input
                       type="checkbox"
                       onChange={careProvisionChange}
@@ -519,12 +519,12 @@ const Attorney = () => {
             <hr />
             <div className="row p-3">
               <div className="col-sm-12">
-                <p style={{ color: '#244D92' }}>VOLLMACHT ZUR ABSICHERUNG DES DIGITALEN ERBES</p>
+                <h3 style={{ color: '#244D92' }}>VOLLMACHT ZUR ABSICHERUNG DES DIGITALEN ERBES</h3>
                 <div className="row">
-                  <label htmlFor="SecuringMasterData" className="col-sm-2 col-form-label fs-6">
+                  <label htmlFor="SecuringMasterData" className="col-sm-3 col-form-label fs-6">
                     Eintrag der Stammdaten
                   </label>
-                  <div className="col-sm-10 radio-check-wrap mt-2">
+                  <div className="col-sm-9 radio-check-wrap mt-2">
                     <input
                       type="checkbox"
                       onChange={securingattorneyChange}
