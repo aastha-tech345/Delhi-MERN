@@ -244,7 +244,7 @@ const Document = () => {
                       name="document_title"
                       value={data.document_title}
                       onChange={handleChange}
-                      placeholder="Steuer"
+                      placeholder="Titel"
                       type="text"
                       className="form-control"
                     />

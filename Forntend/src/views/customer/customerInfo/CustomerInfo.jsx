@@ -56,16 +56,16 @@ const CustomerInfo = () => {
     // clientStatus: resultt?.customerInfoStatu?.clientStatus,
     dataProtection: resultt?.customerInfoStatu?.dataProtection,
     employee: resultt?.customerInfoStatu?.employee,
-    dataCollection: resultt?.customerInfoStatu?.dataCollection,
+    // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
   const [clientStatus, setClientStatus] = useState(resultt?.customerInfoStatu?.clientStatus)
   const cities = [
     { name: 'HVD-PV', code: '0' },
-    { name: 'SPV alt', code: '1' },
-    { name: 'OPV alt', code: '2' },
-    { name: 'Dauerspenderlnner', code: '3' },
+    { name: 'SPV-alt', code: '1' },
+    { name: 'OPV-alt', code: '2' },
+    { name: 'DauerspenderInnen', code: '3' },
     { name: 'Materialbestellung', code: '4' },
-    { name: 'Newsletter Abonnent', code: '5' },
+    { name: 'Newsletter-Abonnent', code: '5' },
     { name: 'Offen', code: '6' },
   ]
   // const [those, setThose] = useState(resultt?.those)
@@ -94,6 +94,8 @@ const CustomerInfo = () => {
     billOrt: resultt?.customerBills?.billOrt || resultt?.city,
   })
   const [email, setEmail] = useState('')
+  const [dataCollection, setDataCollection] = useState(resultt?.customerInfoStatu?.dataCollection)
+  // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   const [customerDelivery, setCustomerDelivery] = useState({
     fname: resultt?.customerDelivery?.fname || resultt?.fname,
     lname: resultt?.customerDelivery?.lname || resultt?.lname,
@@ -168,7 +170,7 @@ const CustomerInfo = () => {
   }
 
   const Quelle = [
-    { value: 'order', label: 'Auftrag(Online-Maske)' },
+    { value: 'order', label: 'Auftrag (Online-Maske) ' },
     { value: 'contact form', label: 'Kontaktformula' },
     { value: 'order print', label: 'Auftrag / Print' },
     { value: 'website', label: 'Webseite' },
@@ -191,9 +193,6 @@ const CustomerInfo = () => {
   ]
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
-      // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
-      //   -2,
-      // )}.${e.getFullYear().toString().slice(-2)}`
       setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: e })
     } else if (e.target) {
       const { name, value, checked, type } = e.target
@@ -306,15 +305,6 @@ const CustomerInfo = () => {
       }))
     }
   }
-  const options = [
-    { value: '0', label: 'HVD-PV' },
-    { value: '1', label: 'SPV alt' },
-    { value: '2', label: 'OPV alt' },
-    { value: '3', label: 'Dauerspenderlnner' },
-    { value: '4', label: 'Materialbestellung' },
-    { value: '5', label: 'Newsletter Abonnent' },
-    { value: '6', label: 'Offen' },
-  ]
   const [selectedOptions, setSelectedOptions] = useState([])
   // console.log('hkdfgdfg', selectedOptions)
   const handleChange = (selectedOptions) => {
@@ -342,7 +332,7 @@ const CustomerInfo = () => {
   }
 
   console.log('aastha type', customerDepositt.emergencyPass)
-  let customerInfoStatuData = { ...customerInfoStatu, clientStatus }
+  let customerInfoStatuData = { ...customerInfoStatu, clientStatus, dataCollection }
   console.log('ashishclient', customerInfoStatuData)
   const data = {
     customer: customer,
@@ -361,8 +351,13 @@ const CustomerInfo = () => {
   }
   const saveData = async (e) => {
     e.preventDefault()
+    // let a = new Date().getFullYear()
+    // if (e.getFullYear() > a) {
+    //   toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
+    // }
+    // setCustomerInfoStatu(e)
     if (clientStatus?.length === 0) {
-      return toast.warning('status field are isRequired')
+      return toast.warning('Das Statusfeld ist erforderlich')
     }
     try {
       let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
@@ -438,32 +433,22 @@ const CustomerInfo = () => {
       toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
     }
   }
+  const customerDateChange = (e) => {
+    let selectedDateObject = new Date(e)
+    let currentYear = new Date().getFullYear()
+
+    if (selectedDateObject.getFullYear() > currentYear) {
+      toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
+      return
+    }
+
+    setDataCollection(e)
+  }
+
   useEffect(() => {
     getDetails()
     getEmployeeData()
   }, [page, itemsPerPage])
-  // useEffect(() => {
-  //   setOrderingMaterials((prev) => ({
-  //     ...prev,
-  //     newsletterDate: resultt?.orderingMaterials?.newsletterDate,
-  //   }))
-  //   setCustomerInfoStatu((prev) => ({
-  //     ...prev,
-  //     dataCollection: resultt?.customerInfoStatu?.dataCollection,
-  //   }))
-  //   setCustomerContact((prev) => ({
-  //     ...prev,
-  //     dob: resultt?.customerContact?.dob,
-  //   }))
-  //   setCustomerDeposit((prev) => ({
-  //     ...prev,
-  //     updateStamp: resultt?.customerDeposit?.updateStamp,
-  //     nextBrand: resultt?.customerDeposit?.nextBrand,
-  //     startDeposit: resultt?.customerDeposit?.startDeposit,
-  //     reminderStamp: resultt?.customerDeposit?.reminderStamp,
-  //     lastStamp: resultt?.customerDeposit?.lastStamp,
-  //   }))
-  // }, [])
 
   const cancelData = () => {
     navigate('/customerlist')
@@ -486,56 +471,50 @@ const CustomerInfo = () => {
                   <div className="container-fluid">
                     <div className="row justify-content-between align-items-center">
                       <div className="col-md-3">
-                        <div className="row">
+                        <div className="d-flex">
                           <label htmlFor="inputPassword" className="col-sm-10 col-form-label">
                             Bestellte Anzahl Fragebögen
                           </label>
-                          <div className="col-sm-2">
-                            <input
-                              type="number"
-                              value={orderingMaterials.orderNumber}
-                              name="orderNumber"
-                              onChange={matarialChange}
-                              className="form-control"
-                              style={{ width: '70px' }}
-                            />
-                          </div>
+                          <input
+                            type="number"
+                            value={orderingMaterials.orderNumber}
+                            name="orderNumber"
+                            onChange={matarialChange}
+                            className="form-control"
+                            // style={{ width: '70px' }}
+                          />
                         </div>
                       </div>
                       <div className="col-md-2">
-                        <div className="row text-end">
-                          <label htmlFor="inputPassword" className="col-sm-5 col-form-label">
+                        <div className="d-flex">
+                          <label htmlFor="inputPassword" className="col-form-label">
                             Extras
                           </label>
-                          <div className="col-sm-7">
-                            <input
-                              type="text"
-                              name="extras"
-                              value={orderingMaterials.extras}
-                              onChange={matarialChange}
-                              className="form-control"
-                              placeholder="Extras"
-                            />
-                          </div>
+                          <input
+                            type="text"
+                            name="extras"
+                            value={orderingMaterials.extras}
+                            onChange={matarialChange}
+                            className="form-control"
+                            placeholder="Extras"
+                          />
                         </div>
                       </div>
                       <div className="col-md-3">
-                        <div className="row">
-                          <div className="col-sm-7 col-form-label">Newsletter-Datum</div>
-                          <div className="col-sm-5">
-                            <DatePiker
-                              className="form-control w-100"
-                              selected={orderingMaterials.newsletterDate}
-                              onChange={matarialChange}
-                            />
-                          </div>
+                        <div className="d-flex">
+                          <label className="col-form-label">Newsletter-Datum</label>
+                          <DatePiker
+                            className="form-control"
+                            selected={orderingMaterials.newsletterDate}
+                            onChange={matarialChange}
+                          />
                         </div>
                       </div>
 
                       <div className="col-md-4">
-                        <div className="row">
-                          <div className="col-sm-8  col-form-label">Newsletter-Abonnement</div>
-                          <div className="col-sm-4 d-flex">
+                        <div className="d-flex">
+                          <label className="col-form-label">Newsletter-Abonnement</label>
+                          <div className="d-flex">
                             <div className="radio-check-wrap">
                               <input
                                 type="radio"
@@ -571,19 +550,6 @@ const CustomerInfo = () => {
                         <div className="row mb-3">
                           <label className="col-sm-3 col-form-label">Status</label>
                           <div className="col-sm-6">
-                            {/* <Select
-                              className="form-multi-select"
-                              name="clientStatus"
-                              onChange={customerInfoChangeMulti}
-                              placeholder="HVD-PV"
-                              value={customerInfoStatu.clientStatus}
-                              id="ms1"
-                              isMulti
-                              options={options}
-                              components={{ Option: CheckboxOption }}
-                              // checked={options}
-                            /> */}
-                            {/* <span className=" w-100"> */}
                             <MultiSelect
                               placeholder="HVD-PV"
                               value={clientStatus}
@@ -593,42 +559,6 @@ const CustomerInfo = () => {
                               maxSelectedLabels={3}
                               className="w-100"
                               showSelectAll={false}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="row mb-3">
-                          <label className="col-sm-3 col-form-label">MitarbeiterInnen</label>
-                          <div className="col-sm-6">
-                            {/* <select
-                              onChange={customerInfoChange}
-                              value={customerInfoStatu.employee}
-                              className="form-control form-select"
-                              name="employee"
-                              defaultValue="MitarbeiterInnen"
-                            >
-                              <option value="MitarbeiterInnen">MitarbeiterInnen</option>
-                              {employeeData?.map((elem) => {
-                                return (
-                                  <>
-                                    <option value={elem?.username}>{elem?.username}</option>
-                                  </>
-                                )
-                              })}
-                            </select> */}
-                            <Select
-                              className="w-100"
-                              placeholder="MitarbeiterInnen"
-                              options={employeeData?.map((elem) => ({
-                                value: elem.username,
-                                label: elem.username,
-                              }))}
-                              onChange={customerInfoChange}
-                              value={{
-                                value: customerInfoStatu.employee || 'MitarbeiterInnen',
-                                label: customerInfoStatu.employee || 'MitarbeiterInnen',
-                              }}
-                              name="employee"
                             />
                           </div>
                         </div>
@@ -647,31 +577,46 @@ const CustomerInfo = () => {
                                 onChange={customerInfoChange}
                                 // checked={JSON.parse(customerInfoStatu.dataProtection)}
                                 checked={customerInfoStatu.dataProtection}
-                                onClick={(e) => e.stopPropagation()}
                               />
                               <span></span>
                             </div>
                           </div>
                         </div>
-
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <div className="row mb-3">
+                          <label className="col-sm-3 col-form-label">MitarbeiterInnen</label>
+                          <div className="col-sm-6">
+                            <Select
+                              className="w-100"
+                              placeholder="MitarbeiterInnen"
+                              options={employeeData?.map((elem) => ({
+                                value: elem.username,
+                                label: elem.username,
+                              }))}
+                              onChange={customerInfoChange}
+                              value={{
+                                value: customerInfoStatu.employee || 'MitarbeiterInnen',
+                                label: customerInfoStatu.employee || 'MitarbeiterInnen',
+                              }}
+                              name="employee"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
                         <div className="row mb-3">
                           <label htmlFor="inputDate" className="col-sm-4 col-form-label">
                             Datenerfassung
                           </label>
-                          <div className="col-sm-8">
-                            {/* <input
-                              placeholder="10.10.23"
-                              id="inputDate"
-                              type="date"
-                              className="form-control"
-                              name="dataCollection"
-                              onChange={customerInfoChange}
-                              value={customerInfoStatu.dataCollection}
-                            /> */}
+                          <div className="col-sm-6">
                             <DatePiker
                               className="form-control"
-                              selected={customerInfoStatu.dataCollection}
-                              onChange={customerInfoChange}
+                              selected={dataCollection}
+                              onChange={customerDateChange}
+                              // name="dataCollection"
                             />
                           </div>
                         </div>
