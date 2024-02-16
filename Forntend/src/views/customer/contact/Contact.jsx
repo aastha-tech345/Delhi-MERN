@@ -48,7 +48,7 @@ const Contact = () => {
     },
     {
       title: 'TELEFON',
-      dataIndex: 'phone',
+      dataIndex: 'telephone',
       width: '20%',
     },
     {
@@ -147,9 +147,15 @@ const Contact = () => {
   const [data, setData] = useState({
     fname: '',
     lname: '',
-    phone: '',
+    telephone: '',
     gender: '',
-    statu: '',
+    plz: '',
+    ort: '',
+    mobile: '',
+    street: '',
+    title: '',
+    address: '',
+    // statu: '',
   })
   let customer_id = custData?._id
   let added_by = loginData?.user?._id
@@ -207,6 +213,7 @@ const Contact = () => {
   let TotalData = { ...data, email, id, customer_id, added_by }
 
   const saveData = async () => {
+    console.log('ashish', TotalData)
     if (!email) {
       return toast.error('Ungültige E-Mail')
     }
@@ -367,6 +374,24 @@ const Contact = () => {
                   <div className="row inner-page-wrap">
                     <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Titel
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="text"
+                          name="title"
+                          value={data.title}
+                          onChange={handleChange}
+                          placeholder="Titel"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Vorname
                       </label>
                       <div className="col-sm-9">
@@ -399,6 +424,43 @@ const Contact = () => {
                         />
                       </div>
                     </div>
+
+                    <div className="row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Straße mit Hausnummer
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="text"
+                          name="street"
+                          value={data.street}
+                          onChange={handleChange}
+                          placeholder="Straße mit Hausnummer"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Adresszusatz
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="text"
+                          name="address"
+                          value={data.address}
+                          onChange={handleChange}
+                          placeholder="Adresszusatz"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+
                     <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Telefon
@@ -406,12 +468,12 @@ const Contact = () => {
                       <div className="col-sm-9">
                         <input
                           type="tel"
-                          name="phone"
-                          value={data.phone}
+                          name="telephone"
+                          value={data.telephone}
                           onChange={(e) => {
                             const inputValue = e.target.value.replace(/[^0-9+]/g, '')
                             if (/^\+?[0-9]*$/.test(inputValue)) {
-                              handleChange({ target: { name: 'phone', value: inputValue } })
+                              handleChange({ target: { name: 'telephone', value: inputValue } })
                             }
                           }}
                           placeholder="835-456-8464"
@@ -438,6 +500,66 @@ const Contact = () => {
                         />
                       </div>
                     </div>
+
+                    <div className="row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        PLZ
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="text"
+                          name="plz"
+                          value={data.plz}
+                          onChange={handleChange}
+                          placeholder="PLZ"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        ORT
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="text"
+                          name="ort"
+                          value={data.ort}
+                          onChange={handleChange}
+                          placeholder="ORT"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Mobil
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="tel"
+                          name="mobile"
+                          value={data.mobile}
+                          onChange={(e) => {
+                            const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                            if (/^\+?[0-9]*$/.test(inputValue)) {
+                              handleChange({ target: { name: 'mobile', value: inputValue } })
+                            }
+                          }}
+                          placeholder="835-456-8464"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+
                     <div>
                       <div className="mb-6 row">
                         <label htmlFor="inputPassword" className="col-sm-3 col-form-label">

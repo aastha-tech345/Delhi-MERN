@@ -5,9 +5,17 @@ const contactSchema = new Schema(
   {
     fname: { type: String },
     lname: { type: String },
-    phone: { type: String },
+    telephone: { type: String },
     email: { type: String },
     gender: { type: String },
+
+    plz: { type: String },
+    ort: { type: String },
+    mobile: { type: String },
+    street: { type: String },
+    title: { type: String },
+    address: { type: String },
+
     // customer_id: { type: String },
     added_by: { type: mongoose.Schema.Types.ObjectId },
     status: {
