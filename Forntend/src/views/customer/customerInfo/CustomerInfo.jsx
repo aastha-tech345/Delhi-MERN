@@ -168,19 +168,19 @@ const CustomerInfo = () => {
   }
 
   const Quelle = [
-    { value: 'alte db', label: 'Alte DB' },
     { value: 'order', label: 'Auftrag(Online-Maske)' },
     { value: 'contact form', label: 'Kontaktformula' },
-    { value: 'order print', label: 'Auftrag(Print)' },
-    { value: 'website', label: 'Website' },
+    { value: 'order print', label: 'Auftrag / Print' },
+    { value: 'website', label: 'Webseite' },
     { value: 'e-mail', label: 'E-Mail' },
     { value: 'call', label: 'Anruf' },
     { value: 'letter', label: 'Zuschrift (Post)' },
     { value: 'HVD regional association', label: 'HVD-Landesverband' },
     { value: 'Regional association MOL', label: 'Regionalverband MOL' },
-    { value: 'Northern Regional Association', label: 'Regionalverband Nord' },
-    { value: 'Potsda regional association', label: 'Regionalverband Potsda' },
+    { value: 'Northern Regional Association', label: 'Regionalverband NORD' },
+    { value: 'Regional association', label: 'Regionalverband' },
     { value: 'inter', label: 'intern' },
+    { value: 'potsda', label: 'Potsda' },
     { value: 'anderes', label: 'anderes' },
   ]
   const Anrede = [
@@ -589,20 +589,8 @@ const CustomerInfo = () => {
                               optionLabel="name"
                               maxSelectedLabels={3}
                               className="w-100"
-                              // itemTemplate={(option) => (
-                              //   <div
-                              //     style={{
-                              //       padding: '15px',
-                              //       // paddingLeft: '0px !important',
-                              //     }}
-                              //   >
-                              //     {option.name}
-                              //   </div>
-                              // )}
-                              // style={{ padding: '10px !important' }}
+                              showSelectAll={false}
                             />
-                            {/* <label htmlFor="ms-cities">Select Cities</label> */}
-                            {/* </span> */}
                           </div>
                         </div>
 
@@ -627,6 +615,7 @@ const CustomerInfo = () => {
                             </select> */}
                             <Select
                               className="w-100"
+                              placeholder="MitarbeiterInnen"
                               options={employeeData?.map((elem) => ({
                                 value: elem.username,
                                 label: elem.username,

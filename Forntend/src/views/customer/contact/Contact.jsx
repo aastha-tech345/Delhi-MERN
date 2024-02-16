@@ -24,7 +24,7 @@ const Contact = () => {
 
   let customerRecord = localStorage.getItem('customerRecord')
   let record = JSON.parse(customerRecord)
-  let statu = record.status
+  let status = record.status
 
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
@@ -53,7 +53,7 @@ const Contact = () => {
     },
     {
       title: 'STATUS',
-      dataIndex: 'status',
+      dataIndex: 'record.status',
       // width: '20%',
       render: (text, record) => (
         <div

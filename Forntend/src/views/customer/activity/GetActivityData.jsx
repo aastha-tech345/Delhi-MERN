@@ -128,9 +128,8 @@ const GetActivityData = ({ updateData, search }) => {
                     <tr>
                       <th className="col-1 "></th>
                       <th className="col-1 ">DATUM</th>
-                      <th className="col-2 ">TITEL</th>
-                      <th className="col-4 ">VERWALTUNG</th>
-                      <th className="col-4 ">BEARBEITER</th>
+                      <th className="col-4 ">NOTIZ</th>
+                      <th className="col-4 ">MITARBEITERINNEN</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -173,7 +172,7 @@ const GetActivityData = ({ updateData, search }) => {
                             </span>
                           </td>
                           <td>{outputDateString} </td>
-                          <td>Lorem Ipsum is simply dummy text </td>
+                          {/* <td>Lorem Ipsum is simply dummy text </td> */}
                           <td>{message}</td>
                           <td>
                             <p>

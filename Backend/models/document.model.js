@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const documentSchema = new Schema(
   {
     document_title: { type: String },
-    document_type: { type: String },
+    document_type: [],
     document_upload: { type: String },
     // customer_id: { type: String},
     added_by: { type: mongoose.Schema.Types.ObjectId },
