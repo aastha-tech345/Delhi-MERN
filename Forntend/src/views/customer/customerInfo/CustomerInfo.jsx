@@ -357,7 +357,7 @@ const CustomerInfo = () => {
     // }
     // setCustomerInfoStatu(e)
     if (clientStatus?.length === 0) {
-      return toast.warning('status field are isRequired')
+      return toast.warning('Das Statusfeld ist erforderlich')
     }
     try {
       let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
@@ -433,8 +433,8 @@ const CustomerInfo = () => {
       toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
     }
   }
-  const customerDateChange = (selectedDate) => {
-    let selectedDateObject = new Date(selectedDate)
+  const customerDateChange = (e) => {
+    let selectedDateObject = new Date(e)
     let currentYear = new Date().getFullYear()
 
     if (selectedDateObject.getFullYear() > currentYear) {
@@ -442,7 +442,7 @@ const CustomerInfo = () => {
       return
     }
 
-    setDataCollection(selectedDateObject)
+    setDataCollection(e)
   }
 
   useEffect(() => {
@@ -614,8 +614,9 @@ const CustomerInfo = () => {
                           <div className="col-sm-6">
                             <DatePiker
                               className="form-control"
-                              selected={customerInfoStatu.dataCollection}
+                              selected={dataCollection}
                               onChange={customerDateChange}
+                              // name="dataCollection"
                             />
                           </div>
                         </div>
