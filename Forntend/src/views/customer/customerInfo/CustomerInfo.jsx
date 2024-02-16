@@ -361,6 +361,9 @@ const CustomerInfo = () => {
   }
   const saveData = async (e) => {
     e.preventDefault()
+    if (clientStatus?.length === 0) {
+      return toast.warning('status field are isRequired')
+    }
     try {
       let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
         method: 'put',
@@ -653,7 +656,7 @@ const CustomerInfo = () => {
 
                         <div className="row mb-3">
                           <label htmlFor="inputDate" className="col-sm-4 col-form-label">
-                            Datum Datenerfassung
+                            Datenerfassung
                           </label>
                           <div className="col-sm-8">
                             {/* <input
@@ -873,7 +876,7 @@ const CustomerInfo = () => {
                       </div>
                     </div>
                   </div>
-                  <h6>Rechnungsadresse</h6>
+                  <h6>Adresse</h6>
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
@@ -1157,7 +1160,7 @@ const CustomerInfo = () => {
               <div className="block-wrap">
                 <h3>Hinterlegung</h3>
                 <div className="container-fluid">
-                  <div className="row">
+                  {/* <div className="row">
                     <div className="radio-check-wrap mb-3">
                       <input
                         type="checkbox"
@@ -1168,11 +1171,11 @@ const CustomerInfo = () => {
                       />
                       <span> Hinterlegung [ja]</span>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Hinterlegungsbeginn
                         </label>
                         <div className="col-sm-6">
@@ -1185,7 +1188,7 @@ const CustomerInfo = () => {
                       </div>
 
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Versand der nächsten Marke
                         </label>
                         <div className="col-sm-6">
@@ -1199,8 +1202,8 @@ const CustomerInfo = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label">
-                          Aktualisierungsmarke Versand der letzten Marke - Monat + Jahr
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          Versand der letzten Marke
                         </label>
                         <div className="col-sm-6">
                           <DatePiker
@@ -1211,7 +1214,7 @@ const CustomerInfo = () => {
                         </div>
                       </div>
                       <div className="row">
-                        <label className="col-sm-6 col-form-label">Rücksendung letzte Marke</label>
+                        <label className="col-sm-4 col-form-label">Rücksendung letzte Marke</label>
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
@@ -1225,7 +1228,7 @@ const CustomerInfo = () => {
                   {/* <div className="row ">
                     <div className="col-sm-6"> */}
                   <div className="row ">
-                    <div className="col-sm-6" style={{ padding: '0px' }}>
+                    <div className="col-sm-6 mt-2" style={{ padding: '0px' }}>
                       <div className="radio-check-wrap">
                         <input
                           type="checkbox"
@@ -1242,7 +1245,7 @@ const CustomerInfo = () => {
 
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-6 col-form-label">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Erinnerung Marke
                         </label>
                         <div className="col-sm-6">
@@ -1271,7 +1274,7 @@ const CustomerInfo = () => {
                           checked={customerBurial.termination}
                           name="termination"
                         />
-                        <span>Beendigung auf eigenen Wunsch</span>
+                        <span>Auf eigenen Wunsch</span>
                       </div>
                     </div>
                     <div className="col-md-3 col-sm-6" style={{ padding: '0px' }}>
@@ -1283,7 +1286,7 @@ const CustomerInfo = () => {
                           checked={customerBurial.terminationDeath}
                           name="terminationDeath"
                         />
-                        <span> Beendigung durch Tod</span>
+                        <span> Durch Tod</span>
                       </div>
                     </div>
                     <div className="col-md-3 col-sm-6" style={{ padding: '0px' }}>
@@ -1295,7 +1298,7 @@ const CustomerInfo = () => {
                           checked={customerBurial.notTermination}
                           name="notTermination"
                         />
-                        <span>Beendigung weil nicht ermittelbar</span>
+                        <span>Weil nicht ermittelbar</span>
                       </div>
                     </div>
                     <div className="col-md-3 col-sm-6" style={{ padding: '0px' }}>
@@ -1307,7 +1310,7 @@ const CustomerInfo = () => {
                           checked={customerBurial.financialReasons}
                           name="financialReasons"
                         />
-                        <span> Beendigung aus finanziellen Gründen</span>
+                        <span> Aus finanziellen Gründen</span>
                       </div>
                     </div>
                   </div>
