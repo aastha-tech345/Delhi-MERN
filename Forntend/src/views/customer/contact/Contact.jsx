@@ -427,7 +427,7 @@ const Contact = () => {
 
                     <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                        Straße mit Hausnummer
+                        Straße + Nr
                       </label>
                       <div className="col-sm-9">
                         <input
@@ -435,7 +435,7 @@ const Contact = () => {
                           name="street"
                           value={data.street}
                           onChange={handleChange}
-                          placeholder="Straße mit Hausnummer"
+                          placeholder="Straße + Nr"
                           className="form-control"
                           id="inputPassword"
                           required={true}
@@ -521,7 +521,7 @@ const Contact = () => {
 
                     <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                        ORT
+                        Ort
                       </label>
                       <div className="col-sm-9">
                         <input
@@ -529,7 +529,7 @@ const Contact = () => {
                           name="ort"
                           value={data.ort}
                           onChange={handleChange}
-                          placeholder="ORT"
+                          placeholder="Ort"
                           className="form-control"
                           id="inputPassword"
                           required={true}

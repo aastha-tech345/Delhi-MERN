@@ -15,9 +15,10 @@ const EditModal = ({ setEdit, getDetails }) => {
   const [data, setData] = useState({
     document_title: response?.document_title,
     document_type: response?.document_type,
-    document_upload: response?.document_upload,
+    // document_upload: response?.document_upload,
   })
-
+  const [document_upload, setDocumentUpload] = useState(response?.document_upload)
+  console.log('ashishdocs', document_upload)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadValue] = useState(false)
 
@@ -36,10 +37,10 @@ const EditModal = ({ setEdit, getDetails }) => {
     setEdit(false)
   }
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0]
-    setData({ ...data, document_upload: file })
-  }
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0]
+  //   setData({ ...data, document_upload: file })
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -50,7 +51,7 @@ const EditModal = ({ setEdit, getDetails }) => {
       return
     }
 
-    const { document_title, document_type, document_upload } = data
+    const { document_title, document_type } = data
     if (!document_title || !document_type) {
       return toast.error('Bitte füllen Sie alle Angaben aus.')
     }
@@ -73,7 +74,7 @@ const EditModal = ({ setEdit, getDetails }) => {
         setData({
           document_title: '',
           document_type: '',
-          document_upload: null,
+          // document_upload: null,
         })
         toast.success('Dokument erfolgreich aktualisiert')
         getDetails()
@@ -86,7 +87,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     }
   }
   const cancelData = () => {
-    setData('')
+    setDocumentUpload('')
   }
   const options = [
     { value: 'Living will', label: 'Patientenverfügung' },
@@ -199,11 +200,15 @@ const EditModal = ({ setEdit, getDetails }) => {
                       type="file"
                       className="form-control"
                       name="document_upload"
-                      onChange={handleFileChange}
+                      // value={document_upload}
+                      // onChange={handleFileChange}
+                      onChange={(e) => setDocumentUpload(e.target.files[0])}
                     />
                     <div className="file-input-wrap">
                       <div className="filename-field">
-                        <span>{data.document_upload ? data.document_upload : 'Datei-Upload'}</span>
+                        <span>
+                          {document_upload?.name ? document_upload?.name : 'Datei-Upload'}
+                        </span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
