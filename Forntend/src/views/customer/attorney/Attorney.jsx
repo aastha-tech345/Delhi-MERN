@@ -360,7 +360,7 @@ const Attorney = () => {
                   </div>
                 </div>
               </div>
-              <div className="row p-3">
+              <div className="row">
                 <div className="col-sm-12">
                   <h3 style={{ color: '#244D92' }}>VORSORGEVOLLMACHT</h3>
                   <div className="row">
@@ -497,7 +497,7 @@ const Attorney = () => {
                 </div>
               </div>
             </div>
-            <div className="row p-3">
+            <div className="row">
               <div className="col-sm-12">
                 <h3 style={{ color: '#244D92' }}>BETREUUNGSVERFÜGUNG</h3>
                 <div className="row">
@@ -517,7 +517,7 @@ const Attorney = () => {
               </div>
             </div>
             <hr />
-            <div className="row p-3">
+            <div className="row">
               <div className="col-sm-12">
                 <h3 style={{ color: '#244D92' }}>VOLLMACHT ZUR ABSICHERUNG DES DIGITALEN ERBES</h3>
                 <div className="row">

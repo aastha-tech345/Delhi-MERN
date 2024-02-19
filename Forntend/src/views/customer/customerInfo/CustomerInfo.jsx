@@ -457,18 +457,18 @@ const CustomerInfo = () => {
   return (
     <div className="inner-page-wrap">
       <Customer getCustomerData={getCustomerData} />
-      <div className="tab-content">
+      <div className="tab-content px-3">
         <div className="tab-title">
           <h4>KlientInnen</h4>
         </div>
-        <div className="container-fluid">
+        <div>
           <div className="row">
             <div className="col">
               <div className="block-wrap">
                 <h3>Materialbestellung</h3>
                 {/* orderingMaterials start */}
                 <div className="row-wrap">
-                  <div className="container-fluid">
+                  <div>
                     <div className="row justify-content-between align-items-center">
                       <div className="col-md-3">
                         <div className="d-flex">
@@ -544,7 +544,7 @@ const CustomerInfo = () => {
 
                 <h3>Status</h3>
                 <div className="border-bottom mb-3">
-                  <div className="container-fluid">
+                  <div>
                     <div className="row">
                       <div className="col-sm-6">
                         <div className="row mb-3">
@@ -628,36 +628,10 @@ const CustomerInfo = () => {
 
                 <h3>Quelle</h3>
                 <div className="row-wrap border-0 mb-0 pb-0">
-                  <div className="container-fluid">
+                  <div>
                     <div className="row">
                       <div className="col-sm-3 ps-0">
-                        <div className="input-group">
-                          {/* <select
-                            className="form-control form-select"
-                            value={those}
-                            onChange={(e) => {
-                              setThose(e.target.value)
-                            }}
-                          >
-                            <option value="alte db">Alte DB</option>
-                            <option value="order">Auftrag(Online-Maske)</option>
-                            <option value="contact form">Kontaktformula</option>
-                            <option value="order print">Auftrag(Print)</option>
-                            <option value="website">Website</option>
-                            <option value="e-mail">E-Mail</option>
-                            <option value="call">Anruf</option>
-                            <option value="letter">Zuschrift (Post)</option>
-                            <option value="HVD regional association">HVD-Landesverband</option>
-                            <option value="Regional association MOL">Regionalverband MOL</option>
-                            <option value="Northern Regional Association">
-                              Regionalverband Nord
-                            </option>
-                            <option value="Potsda regional association">
-                              Regionalverband Potsda
-                            </option>
-                            <option value="inter">intern</option>
-                            <option value="anderes">anderes</option>
-                          </select> */}
+                        <div className="input-group px-2">
                           <Select
                             className="w-100"
                             options={Quelle}
@@ -674,7 +648,7 @@ const CustomerInfo = () => {
 
               <div className="block-wrap">
                 <h3>Kontaktdaten</h3>
-                <div className="container-fluid">
+                <div>
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
@@ -1104,7 +1078,7 @@ const CustomerInfo = () => {
 
               <div className="block-wrap">
                 <h3>Hinterlegung</h3>
-                <div className="container-fluid">
+                <div>
                   {/* <div className="row">
                     <div className="radio-check-wrap mb-3">
                       <input
@@ -1134,7 +1108,7 @@ const CustomerInfo = () => {
 
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Versand der nächsten Marke
+                          Versand Dernächsten Marke
                         </label>
                         <div className="col-sm-6">
                           <DatePiker
@@ -1148,7 +1122,7 @@ const CustomerInfo = () => {
                     <div className="col-sm-6">
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Versand der letzten Marke
+                          Versand Derletzten Marke
                         </label>
                         <div className="col-sm-6">
                           <DatePiker
@@ -1207,8 +1181,8 @@ const CustomerInfo = () => {
               </div>
 
               <div className="block-wrap">
-                <h3>Beedigung</h3>
-                <div className="container-fluid">
+                <h3>Beendigung</h3>
+                <div>
                   <div className="row">
                     <div className="col-md-3 col-sm-6" style={{ padding: '0px' }}>
                       <div className="radio-check-wrap w-100">
