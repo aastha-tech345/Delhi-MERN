@@ -400,7 +400,7 @@ const Contact = () => {
                           name="fname"
                           value={data.fname}
                           onChange={handleChange}
-                          placeholder="John"
+                          placeholder="Vorname"
                           className="form-control"
                           id="inputPassword"
                           required={true}
@@ -417,7 +417,7 @@ const Contact = () => {
                           name="lname"
                           value={data.lname}
                           onChange={handleChange}
-                          placeholder="Doe"
+                          placeholder="Nachname"
                           className="form-control"
                           id="inputPassword"
                           required={true}
