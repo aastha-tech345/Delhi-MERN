@@ -12,6 +12,7 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import axios from 'axios'
 import { MdAdd } from 'react-icons/md'
+import Item from 'antd/es/list/Item'
 
 const GetActivityData = ({ updateData, search }) => {
   const notify = (dataa) => toast(dataa)
@@ -19,6 +20,7 @@ const GetActivityData = ({ updateData, search }) => {
   const [page, setPage] = useState(1)
   const [activityData, setActivityData] = useState([])
   const [coountPage, setCountPage] = useState(0)
+  const [employeeData, setEmployeeData] = useState([])
   const handleChange = (event, value) => {
     setPage(value)
   }
@@ -58,9 +60,21 @@ const GetActivityData = ({ updateData, search }) => {
       console.log(error)
     }
   }
-
+  const getEmployeeData = async () => {
+    try {
+      const results = await fetch(`${apiUrl}/user/get/employeeData`)
+      const data = await results.json()
+      setEmployeeData(data?.data)
+      // console.log("ashishemploye", data?.data)
+      // setGetCustomerData(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+  console.log('eemployeeData', employeeData)
   useEffect(() => {
     getData()
+    getEmployeeData()
   }, [updateData, page, search])
 
   return (
@@ -138,9 +152,9 @@ const GetActivityData = ({ updateData, search }) => {
                       const inputDate = new Date(createdAt)
                       const day = inputDate?.getUTCDate()
                       const month = inputDate?.getUTCMonth() + 1
-                      const year = inputDate?.getUTCFullYear() % 100
+                      const year = inputDate?.getUTCFullYear()
 
-                      const outputDateString = `${day}-${month < 10 ? '0' : ''}${month}-${
+                      const outputDateString = `${day}.${month < 10 ? '0' : ''}${month}.${
                         year < 10 ? '0' : ''
                       }${year}`
                       return (
@@ -175,12 +189,11 @@ const GetActivityData = ({ updateData, search }) => {
                           {/* <td>Lorem Ipsum is simply dummy text </td> */}
                           <td>{message}</td>
                           <td>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing and typesetting
-                              industry. Lorem Ipsum has been the industry standard dummy text ever
-                              since the 1500s, when an unknown printer took a galley of type and
-                              scrambled it to make a type specimen book.{' '}
-                            </p>
+                            <ol>
+                              {employeeData.map((item) => (
+                                <li key={item.id}>{item.username}</li>
+                              ))}
+                            </ol>
                           </td>
                         </tr>
                       )

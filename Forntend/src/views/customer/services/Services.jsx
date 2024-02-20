@@ -394,7 +394,7 @@ const Services = () => {
                           <h3>Motivation</h3>
                           <div className="col-md-3">Vorsorge</div>
 
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 className="check "
@@ -418,7 +418,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Krankheit</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -441,7 +441,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Selbstbestimmung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -464,7 +464,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Angehörigenentlastung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -487,7 +487,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Erfahrungen</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -527,7 +527,7 @@ const Services = () => {
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Intensivmedizin und Wiederbelebung</h6>
                           <div className="col-md-3">Intensivmedizin gewünscht</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -550,7 +550,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Keine Intensivmedizin</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -573,7 +573,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Wiederbelebung gewünscht</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -596,7 +596,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Keine Wiederbelebung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -637,7 +637,7 @@ const Services = () => {
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Situationen am Lebensende</h6>
                           <div className="col-md-3">Sterbeprozess</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -660,7 +660,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Gehirnschädigung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -683,7 +683,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Weitere Angaben</div>
-                          <div className="col-sm-2">
+                          <div className="col-md-2">
                             <input
                               type="text"
                               name="situationInformation"
@@ -695,8 +695,9 @@ const Services = () => {
                               required={true}
                             />
                           </div>
+                          <div className="col-md-1"></div>
                           <div className="col-md-3">Demenz</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -724,7 +725,7 @@ const Services = () => {
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Medizinische Festlegungen</h6>
                           <div className="col-md-3">Unverzichtbare Basisversorgung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -747,7 +748,7 @@ const Services = () => {
                             </div>
                           </div>
                           {/* <div className="col-md-3">Keine Intensivmedizin</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -770,7 +771,7 @@ const Services = () => {
                             </div>
                           </div> */}
                           <div className="col-md-3">Ermessensbereich Bevollmächtigte</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -793,7 +794,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Schwerstpflegebedürftigkeit</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -816,7 +817,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Künstliche Ernährung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -839,7 +840,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Künstliche Flüssigkeitszufuhr</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -862,7 +863,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Schmerz- und Beschwerdelinderung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -885,7 +886,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Medikamente zur Linderung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -908,7 +909,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Medikamentenverzicht</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -931,7 +932,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Organspende</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -954,7 +955,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Forschungszwecke</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -977,7 +978,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Ablehnung Organspende</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1000,7 +1001,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Herzschrittmacher</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1023,7 +1024,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Defibrillator</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1046,7 +1047,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Sterbehilfe</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1069,7 +1070,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Suizidoption</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1105,7 +1106,7 @@ const Services = () => {
                             />
                           </div>
                           <div className="col-md-3">Verbindlichkeit</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1133,7 +1134,7 @@ const Services = () => {
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Aufenthaltsort am Lebensende</h6>
                           <div className="col-md-3">Vertraute Umgebung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1156,7 +1157,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Hospiz</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1179,7 +1180,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Ins Krankenhaus</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1202,7 +1203,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Kein Krankenhaus</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1229,10 +1230,10 @@ const Services = () => {
                         <br />
                         {/* <h6 style={{ color: '#244D92' }}>Begleitung am Lebensende</h6> */}
                         <div className="row mt-md-2">
-                          <label htmlFor="inputtext" className="col-md-2 col-form-label">
+                          <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Ärztin
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-6">
                             <textarea
                               value={support.doctor}
                               onChange={(e) => onChange('doctor', e.target.value)}
@@ -1244,10 +1245,10 @@ const Services = () => {
                           </div>
                         </div>
                         <div className="row mt-md-2">
-                          <label htmlFor="inputtext" className="col-md-2 col-form-label">
+                          <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Seelischer Beistand
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-md-6">
                             <textarea
                               value={support.mentalSupport}
                               onChange={(e) => onChange('mentalSupport', e.target.value)}
@@ -1259,10 +1260,10 @@ const Services = () => {
                           </div>
                         </div>
                         <div className="row mt-md-2">
-                          <label htmlFor="inputtext" className="col-md-2 col-form-label">
+                          <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Keinesfalls
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-md-6">
                             <textarea
                               value={support.absolutelyNot}
                               onChange={(e) => onChange('absolutelyNot', e.target.value)}
@@ -1274,7 +1275,7 @@ const Services = () => {
                           </div>
                         </div>
                         <div className="row mt-md-2">
-                          <label htmlFor="inputtext" className="col-md-2 col-form-label">
+                          <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Weitere Angaben
                           </label>
                           <div className="col-sm-3">
@@ -1293,7 +1294,7 @@ const Services = () => {
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Bestattungswünsche</h6>
                           <div className="col-md-3">Feuerbestattung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1316,7 +1317,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Erdbestattung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1340,10 +1341,10 @@ const Services = () => {
                           </div>
                         </div>
                         <div className="row mt-md-2">
-                          <label htmlFor="inputtext" className="col-md-2 col-form-label modal-form">
+                          <label htmlFor="inputtext" className="col-md-3 col-form-label modal-form">
                             Bestattungsvorsorge
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-md-6">
                             <textarea
                               value={funeralwishes.arrangement}
                               onChange={(e) => funeralwishesChange(e)}
@@ -1355,10 +1356,10 @@ const Services = () => {
                           </div>
                         </div>
                         <div className="row mt-md-2">
-                          <label htmlFor="inputtext" className="col-md-2 col-form-label">
+                          <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Sonstiges
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-md-6">
                             <textarea
                               value={funeralwishes.miscellaneous}
                               onChange={(e) => funeralwishesChange(e)}
@@ -1370,7 +1371,7 @@ const Services = () => {
                           </div>
                         </div>
                         <div className="row mt-md-2">
-                          <label htmlFor="inputtext" className="col-md-2 col-form-label">
+                          <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Weitere Angaben
                           </label>
                           <div className="col-sm-3">
@@ -1389,7 +1390,7 @@ const Services = () => {
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Vollmachten</h6>
                           <div className="col-md-3">Blanko-formulare</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1412,7 +1413,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Betreuungsverfügung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1440,7 +1441,7 @@ const Services = () => {
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Gebühr</h6>
                           <div className="col-md-3">Regulär</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1464,7 +1465,7 @@ const Services = () => {
                           </div>
 
                           <div className="col-md-3">Ermäßigt</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1506,7 +1507,7 @@ const Services = () => {
                         <div className="row">
                           <h6 style={{ color: '#244D92' }}>Weitere Angaben</h6>
                           <div className="col-md-3">Dringlichkeit</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1529,7 +1530,7 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="col-md-3">Abweichende Lieferanschrift</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1574,7 +1575,7 @@ const Services = () => {
                                 disabled={information.urgency !== 'yes'}
                               />
                             </div>
-                            {/* <div className="col-md-2"></div> */}
+                            {/* <div className="col-md-3"></div> */}
                             <div className="col-md-7 col-sm-12 px-md-2 p-0 mt-md-0  mt-2">
                               <div
                                 className="container-fluid"
@@ -1776,7 +1777,7 @@ const Services = () => {
                         </div>
                         <div className="row mt-3 mb-5 ">
                           <div className="col-md-3">Datenschutz</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
@@ -1800,7 +1801,7 @@ const Services = () => {
                           </div>
 
                           <div className="col-md-3">Hinterlegung</div>
-                          <div className="col-md-2 d-flex">
+                          <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
                                 type="checkbox"
