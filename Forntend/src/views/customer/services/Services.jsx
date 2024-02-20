@@ -659,7 +659,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Gehirnshädigung</div>
+                          <div className="col-md-3">Gehirnschädigung</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
@@ -769,7 +769,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div> */}
-                          <div className="col-md-3">Ermessensbereich Bevollmachtigte</div>
+                          <div className="col-md-3">Ermessensbereich Bevollmächtigte</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
@@ -792,7 +792,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Schwerstpflegebedurftigkeit</div>
+                          <div className="col-md-3">Schwerstpflegebedürftigkeit</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
@@ -815,7 +815,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Kunstliche Enahrung</div>
+                          <div className="col-md-3">Künstliche Ernährung</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
@@ -838,7 +838,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Kunstliche Flussigkeitszufuhr</div>
+                          <div className="col-md-3">Künstliche Flüssigkeitszufuhr</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
@@ -1045,7 +1045,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Sterbeheife</div>
+                          <div className="col-md-3">Sterbehilfe</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
@@ -1230,7 +1230,7 @@ const Services = () => {
                         {/* <h6 style={{ color: '#244D92' }}>Begleitung am Lebensende</h6> */}
                         <div className="row mt-md-2">
                           <label htmlFor="inputtext" className="col-md-2 col-form-label">
-                            Arztin
+                            Ärztin
                           </label>
                           <div className="col-sm-9">
                             <textarea
@@ -1239,7 +1239,7 @@ const Services = () => {
                               name="lname"
                               type="text"
                               className="form-control"
-                              placeholder="Arztin"
+                              placeholder="Ärztin"
                             />
                           </div>
                         </div>
@@ -1291,7 +1291,7 @@ const Services = () => {
                           </div>
                         </div>
                         <div className="row">
-                          <h6 style={{ color: '#244D92' }}>Bestattungswunsche</h6>
+                          <h6 style={{ color: '#244D92' }}>Bestattungswünsche</h6>
                           <div className="col-md-3">Feuerbestattung</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
@@ -1411,7 +1411,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Betreuungsverfugung</div>
+                          <div className="col-md-3">Betreuungsverfügung</div>
                           <div className="col-md-2 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                               <input
@@ -1606,7 +1606,7 @@ const Services = () => {
                                         htmlFor="inputtext"
                                         className="col-sm-4 col-form-label"
                                       >
-                                        Straße mit Hausnummer
+                                        Straße + Nr
                                       </label>
                                       <div className="col-sm-8">
                                         <input
@@ -1615,7 +1615,7 @@ const Services = () => {
                                           onChange={(e) => informationChange(e)}
                                           name="street"
                                           disabled={information.alternateAddress !== 'yes'}
-                                          placeholder=" Straße mit Hausnummer"
+                                          placeholder="Straße + Nr"
                                           className="form-control"
                                         />
                                       </div>

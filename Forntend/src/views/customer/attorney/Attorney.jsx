@@ -245,7 +245,7 @@ const Attorney = () => {
             <div>
               <div className="row">
                 <div className="col-sm-12">
-                  <h3 style={{ color: '#244D92' }}>GESUNDHEITSVOLLMACHT</h3>
+                  <h3 style={{ color: '#244D92' }}>Gesundheitsvollmacht</h3>
 
                   <div className="row">
                     <label htmlFor="healthCareMasterData" className="col-sm-3 col-form-label fs-6">
@@ -362,7 +362,7 @@ const Attorney = () => {
               </div>
               <div className="row">
                 <div className="col-sm-12">
-                  <h3 style={{ color: '#244D92' }}>VORSORGEVOLLMACHT</h3>
+                  <h3 style={{ color: '#244D92' }}>Vorsorgevollmacht</h3>
                   <div className="row">
                     <label htmlFor="AttorneyMasterData" className="col-sm-3 col-form-label fs-6">
                       Eintrag der Stammdaten
@@ -499,7 +499,7 @@ const Attorney = () => {
             </div>
             <div className="row">
               <div className="col-sm-12">
-                <h3 style={{ color: '#244D92' }}>BETREUUNGSVERFÜGUNG</h3>
+                <h3 style={{ color: '#244D92' }}>Betreuungsverfügung</h3>
                 <div className="row">
                   <label htmlFor="CareProvisionMasterData" className="col-sm-3 col-form-label fs-6">
                     Eintrag der Stammdaten
@@ -519,7 +519,7 @@ const Attorney = () => {
             <hr />
             <div className="row">
               <div className="col-sm-12">
-                <h3 style={{ color: '#244D92' }}>VOLLMACHT ZUR ABSICHERUNG DES DIGITALEN ERBES</h3>
+                <h3 style={{ color: '#244D92' }}>Vollmacht zur Absicherung des digitalen Erbes</h3>
                 <div className="row">
                   <label htmlFor="SecuringMasterData" className="col-sm-3 col-form-label fs-6">
                     Eintrag der Stammdaten

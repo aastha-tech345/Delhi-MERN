@@ -171,7 +171,7 @@ const CustomerInfo = () => {
 
   const Quelle = [
     { value: 'order', label: 'Auftrag (Online-Maske) ' },
-    { value: 'contact form', label: 'Kontaktformula' },
+    { value: 'contact form', label: 'Kontaktformular' },
     { value: 'order print', label: 'Auftrag / Print' },
     { value: 'website', label: 'Webseite' },
     { value: 'e-mail', label: 'E-Mail' },
@@ -180,9 +180,8 @@ const CustomerInfo = () => {
     { value: 'HVD regional association', label: 'HVD-Landesverband' },
     { value: 'Regional association MOL', label: 'Regionalverband MOL' },
     { value: 'Northern Regional Association', label: 'Regionalverband NORD' },
-    { value: 'Regional association', label: 'Regionalverband' },
+    { value: 'Regional association', label: 'Regionalverband Potsdam' },
     { value: 'inter', label: 'intern' },
-    { value: 'potsda', label: 'Potsda' },
     { value: 'anderes', label: 'anderes' },
   ]
   const Anrede = [
@@ -932,7 +931,7 @@ const CustomerInfo = () => {
                       </div>
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          E-Mail Adresse
+                          E-Mail-Adresse
                         </label>
                         <div className="col-sm-6">
                           <input
@@ -943,7 +942,7 @@ const CustomerInfo = () => {
                             // }}
                             disabled
                             name="email"
-                            placeholder="E-Mail Adresse"
+                            placeholder="E-Mail-Adresse"
                             // value={customers.email}
                             value={customer.email}
                             className="form-control"
@@ -1108,7 +1107,7 @@ const CustomerInfo = () => {
 
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Versand Dernächsten Marke
+                          Versand Nächsten Marke
                         </label>
                         <div className="col-sm-6">
                           <DatePiker
@@ -1122,7 +1121,7 @@ const CustomerInfo = () => {
                     <div className="col-sm-6">
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Versand Derletzten Marke
+                          Versand Letzten Marke
                         </label>
                         <div className="col-sm-6">
                           <DatePiker
@@ -1133,7 +1132,7 @@ const CustomerInfo = () => {
                         </div>
                       </div>
                       <div className="row">
-                        <label className="col-sm-4 col-form-label">Rücksendung letzte Marke</label>
+                        <label className="col-sm-4 col-form-label">Rücksendung Letzte Marke</label>
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"

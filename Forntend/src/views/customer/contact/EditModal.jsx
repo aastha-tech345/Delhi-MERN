@@ -158,7 +158,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                     name="fname"
                     value={data.fname}
                     onChange={handleChange}
-                    placeholder="jo"
+                    placeholder="Vorname"
                     className="form-control"
                     id="inputPassword"
                   />
@@ -174,7 +174,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                     name="lname"
                     value={data.lname}
                     onChange={handleChange}
-                    placeholder="verma"
+                    placeholder="Nachname"
                     className="form-control"
                     id="inputPassword"
                   />
@@ -325,7 +325,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Geschlecht
                 </label>
-                <div className="col-sm-9">
+                <div className="col-sm-9 mt-1">
                   <div className="radio-wrap">
                     <div className="radio-input">
                       <input

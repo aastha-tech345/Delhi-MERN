@@ -30,7 +30,7 @@ const Document = () => {
   const [edit, setEdit] = useState(false)
   const columns = [
     {
-      title: 'TITLE',
+      title: 'TITEL',
       dataIndex: 'document_title',
       render: (text) => <a>{text}</a>,
       width: '20%',
@@ -38,7 +38,7 @@ const Document = () => {
     {
       title: 'DOKUMENTENTYP',
       dataIndex: 'document_type',
-      width: '80%',
+      width: '50%',
     },
     {
       title: 'AKTION',
@@ -210,7 +210,7 @@ const Document = () => {
       <hr className="mx-3" />
       <div className="row p-3 mx-3" style={{ border: '1px solid lightgray', borderRadius: '5px' }}>
         <div className="col-sm-9">
-          <h5>Dokumente verwalten</h5>
+          <h5 style={{ color: '#005291' }}>Dokumente verwalten</h5>
           {/* <p>
             Senden Sie anpassbare Angebote, Vorschläge und Verträge, um Geschäfte schneller
             abzuschließen.
