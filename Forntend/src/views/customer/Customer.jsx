@@ -94,9 +94,12 @@ const Customer = ({ getCustomerData }) => {
                   <span>{street}</span>
                 </address>
               </div>
-              <div className="col-md-8 text-md-end">
+              <div
+                className="col-md-8 text-md-end"
+                // style={{ color: 'white', border: '1px solid white' }}
+              >
                 <div className="d-flex justify-content-md-end justify-content-between">
-                  <button className="btn btn-outline me-4">
+                  <button className="btn btn me-4 header-button">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -118,7 +121,7 @@ const Customer = ({ getCustomerData }) => {
                     </svg> */}
                     <span> {res?.startDate}</span>
                   </button>
-                  <button className="btn btn-outline me-4">
+                  <button className="btn btn me-4 header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -140,7 +143,7 @@ const Customer = ({ getCustomerData }) => {
                     </svg>
                     <span> {res?.email}</span>
                   </button>
-                  <button className="btn btn-outline">
+                  <button className="btn btn header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="22"

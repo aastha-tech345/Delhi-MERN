@@ -62,7 +62,7 @@ const Attorney = () => {
     let formattedNumber = ''
 
     for (let i = 0; i < numericValue.length; i++) {
-      if (i > 0 && i % 10 === 0) {
+      if (i > 0 && i % 30 === 0) {
         formattedNumber += ' / '
       }
       formattedNumber += numericValue[i]
@@ -110,7 +110,7 @@ const Attorney = () => {
         let formattedNumber = ''
 
         for (let i = 0; i < numericValue.length; i++) {
-          if (i > 0 && i % 10 === 0) {
+          if (i > 0 && i % 30 === 0) {
             formattedNumber += ' / '
           }
           formattedNumber += numericValue[i]
@@ -348,7 +348,7 @@ const Attorney = () => {
                                     placeholder="0121456789 / 0123456789"
                                     className="form-control"
                                     id={`phone_${index}`}
-                                    maxLength={23}
+                                    maxLength={60}
                                     minLength={10}
                                   />
                                 </div>
@@ -393,9 +393,9 @@ const Attorney = () => {
                       htmlFor="adoptDataFromHealthcare"
                       className="col-sm-4 col-form-label fs-6"
                     >
-                      Datensatz aus Gesundheitsvollmacht übernehmen
+                      Daten aus Gesundheitsvollmacht übernehmen
                     </label>
-                    <div className="col-sm-8 radio-check-wrap mt-2">
+                    <div className="col-sm-4 radio-check-wrap mt-2">
                       <input
                         type="checkbox"
                         // onChange={powerOfAttorneyChange}
@@ -486,7 +486,7 @@ const Attorney = () => {
                                 placeholder="0121456789 / 0123456789"
                                 className="form-control"
                                 id="inputPassword"
-                                maxLength={23}
+                                maxLength={60}
                                 minLength={10}
                               />
                             </div>

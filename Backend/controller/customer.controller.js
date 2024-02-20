@@ -91,10 +91,8 @@ exports.getCustomer = async (req, res) => {
     });
 
     let pageCount = Math.ceil(countPage / resultPerPage);
-    //  console.log("pageCount",pageCount)
-    //console.log("pageCount",pageCount)
     const apiFeatures = new ApiFeatures(
-      Customer.find({ status: "active" }),
+      Customer.find({ status: "active" }).populate("created_by"),
       req.query
     )
       .reverse()

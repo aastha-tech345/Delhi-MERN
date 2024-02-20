@@ -3,15 +3,19 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
 import { useNavigate } from 'react-router-dom'
+import Select, { components } from 'react-select'
+import DatePiker from '../Date'
 
 const Bills = () => {
   const navigate = useNavigate()
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
+  const [employeeData, setEmployeeData] = useState([])
   const [productData, setProductData] = useState({
     product: '',
     paymentMethod: '',
+    invoiceDate: '',
     alreadyPaid: false,
     invoiceAmount: '',
     deliveryDate: '',
@@ -19,6 +23,13 @@ const Bills = () => {
   })
   const [colleague, setColleague] = useState('')
   const [invoiceDate, setInvoiceDate] = useState('')
+  const [deliveryDate, setDeliveryDate] = useState('')
+  const invoiceChange = (e) => {
+    setInvoiceDate(e)
+  }
+  const DeliveryDateChange = (e) => {
+    setDeliveryDate(e)
+  }
 
   // const handleInputChange = (e) => {
   //   const { name, value, type, checked } = e.target
@@ -29,13 +40,31 @@ const Bills = () => {
   //   }))
   // }
 
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target
+  // const handleInputChange = (e) => {
+  //   const { name, value, type, checked } = e.target
 
-    setProductData((prevProductData) => ({
-      ...prevProductData,
-      [name]: type === 'checkbox' ? checked : value,
-    }))
+  //   setProductData((prevProductData) => ({
+  //     ...prevProductData,
+  //     [name]: type === 'checkbox' ? checked : value,
+  //   }))
+  // }
+  const handleInputChange = (e) => {
+    if (e instanceof Date) {
+      setProductData({ ...productData, invoiceDate: e, deliveryDate: e })
+    } else if (e.target) {
+      const { name, value, type, checked } = e.target
+
+      if (type === 'radio') {
+        const newValue = checked ? value : ''
+        setProductData({ ...productData, [name]: newValue })
+      } else {
+        setProductData({ ...productData, [name]: type === 'checkbox' ? checked : value })
+      }
+    } else if (e && e.value !== undefined) {
+      setProductData({ ...productData, colleague: e.value })
+    } else {
+      console.error('Invalid event or data provided to handleInputChange.')
+    }
   }
 
   const cancelData = () => {
@@ -98,14 +127,36 @@ const Bills = () => {
   //     deliveryDate: getCurrentDate(),
   //   }))
   // }, [])
-
-  function getCurrentDate() {
-    const currentDate = new Date()
-    const year = currentDate.getFullYear().toString()
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
-    const day = currentDate.getDate().toString().padStart(2, '0')
-    return `${year}-${month}-${day}`
+  const option = [
+    { value: 'barzahlung', label: 'Barzahlung' },
+    { value: 'rechnung', label: 'Rechnung' },
+    { value: 'payPal', label: 'payPal' },
+    { value: 'klarna', label: 'Klarna' },
+    { value: 'kreditkarte', label: 'Kreditkarte (für die Zukunft)' },
+    { value: 'andere', label: 'Andere' },
+  ]
+  const optionData = [
+    { value: 'HVD-PV', label: 'HVD-PV' },
+    { value: 'Vortrag', label: 'Vortrag' },
+    { value: 'SPV', label: 'SPV' },
+    { value: 'OPV', label: 'OPV' },
+  ]
+  const getEmployeeData = async () => {
+    try {
+      const results = await fetch(`${apiUrl}/user/get/employeeData`)
+      const data = await results.json()
+      setEmployeeData(data?.data)
+      // console.log("ashishemploye", data?.data)
+      // setGetCustomerData(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
   }
+
+  useEffect(() => {
+    getEmployeeData()
+  }, [])
+
   return (
     <div className="inner-page-wrap">
       <div style={{ background: '#fff' }}>
@@ -122,67 +173,58 @@ const Bills = () => {
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col-sm-6">
-                        <div className="row">
+                        <div className="row mb-3">
                           <label htmlFor="product" className="col-sm-4 col-form-label">
                             Produkt
                           </label>
                           <div className="col-sm-6">
-                            <select
-                              className="form-control form-select"
-                              name="product"
-                              value={productData.product}
+                            <Select
+                              className="w-100"
+                              options={optionData}
                               onChange={handleInputChange}
-                            >
-                              <option value="hvd">HVD-PV</option>
-                              <option value="speech">Vortrag</option>
-                              <option value="spv">SPV</option>
-                              <option value="opv">OPV</option>
-                            </select>
+                              value={optionData.find(
+                                (option) => option.value === productData.product,
+                              )}
+                              name="product"
+                              placeholder="HVD-PV"
+                            />
                           </div>
                         </div>
-                        <div className="row">
+                        <div className="row mb-3">
                           <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                             Zahlungsart
                           </label>
                           <div className="col-sm-6">
-                            <select
-                              className="form-control form-select"
-                              name="paymentMethod"
-                              value={productData.paymentMethod}
+                            <Select
+                              className="w-100"
+                              options={option}
                               onChange={handleInputChange}
-                            >
-                              <option value="cash payment">Barzahlung</option>
-                              <option value="the invoice">Rechnung</option>
-                              <option value="paypal">PayPal</option>
-                              <option value="klarna">Klarna</option>
-                              <option value="credit card">Kreditkarte (für die Zukunft)</option>
-                              <option value="other">Andere</option>
-                            </select>
+                              value={option.find(
+                                (option) => option.value === productData.paymentMethod,
+                              )}
+                              name="paymentMethod"
+                              placeholder="Barzahlung"
+                            />
                           </div>
                         </div>
                         <div className="mb-6 row">
                           <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                             Rechnungsdatum
                           </label>
+
                           <div className="col-sm-6">
-                            <input
-                              type="text"
-                              name="invoiceDate"
-                              value={invoiceDate}
-                              placeholder="10.10.13"
-                              // checked={productData.invoiceDate}
-                              onChange={(e) => {
-                                setInvoiceDate(e.target.value)
-                              }}
+                            <DatePiker
                               className="form-control"
+                              selected={invoiceDate || '02.03.23'}
+                              onChange={invoiceChange}
                             />
                           </div>
                         </div>
                         <div className="mb-6 row">
                           <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                            MitarbeiterIn
+                            MitarbeiterInnen
                           </label>
-                          <div className="col-sm-6">
+                          {/* <div className="col-sm-6">
                             <input
                               type="text"
                               name="colleague"
@@ -193,6 +235,22 @@ const Bills = () => {
                               }}
                               placeholder="MitarbeiterIn"
                               className="form-control"
+                            />
+                          </div> */}
+                          <div className="col-sm-6">
+                            <Select
+                              className="w-100"
+                              placeholder="MitarbeiterInnen"
+                              options={employeeData?.map((elem) => ({
+                                value: elem.username,
+                                label: elem.username,
+                              }))}
+                              onChange={handleInputChange}
+                              value={{
+                                value: productData.colleague || 'MitarbeiterInnen',
+                                label: productData.colleague || 'MitarbeiterInnen',
+                              }}
+                              name="colleague"
                             />
                           </div>
                         </div>
@@ -233,13 +291,10 @@ const Bills = () => {
                             Lieferdatum
                           </label>
                           <div className="col-sm-6">
-                            <input
-                              type="text"
-                              placeholder="10.10.13"
-                              name="deliveryDate"
-                              value={productData.deliveryDate}
-                              onChange={handleInputChange}
+                            <DatePiker
                               className="form-control"
+                              selected={deliveryDate || '02.03.23'}
+                              onChange={DeliveryDateChange}
                             />
                           </div>
                         </div>

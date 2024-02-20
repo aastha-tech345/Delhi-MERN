@@ -190,8 +190,9 @@ const Services = () => {
     }))
   }
 
-  let res = localStorage.getItem('customerDatat')
+  let res = localStorage.getItem('customerRecord')
   let result = JSON.parse(res)
+  console.log('result', result)
   const data = {
     motivation,
     resuscitation,
@@ -618,7 +619,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Weitere Angaben</div>
+                          {/* <div className="col-md-3">Weitere Angaben</div>
                           <div className="col-sm-2">
                             <input
                               type="text"
@@ -630,7 +631,7 @@ const Services = () => {
                               id="inputPassword"
                               required={true}
                             />
-                          </div>
+                          </div> */}
                         </div>
                         <br />
 
@@ -682,7 +683,7 @@ const Services = () => {
                               <span>nein</span>
                             </div>
                           </div>
-                          <div className="col-md-3">Weitere Angaben</div>
+                          {/* <div className="col-md-3">Weitere Angaben</div>
                           <div className="col-md-2">
                             <input
                               type="text"
@@ -694,8 +695,8 @@ const Services = () => {
                               id="inputPassword"
                               required={true}
                             />
-                          </div>
-                          <div className="col-md-1"></div>
+                          </div> */}
+                          {/* <div className="col-md-1"></div> */}
                           <div className="col-md-3">Demenz</div>
                           <div className="col-md-3 d-flex">
                             <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
@@ -1278,7 +1279,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Weitere Angaben
                           </label>
-                          <div className="col-sm-3">
+                          <div className="col-sm-6">
                             <input
                               type="text"
                               name="mentalInformation"
@@ -1374,7 +1375,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Weitere Angaben
                           </label>
-                          <div className="col-sm-3">
+                          <div className="col-sm-6">
                             <input
                               type="text"
                               name="funeralInformation"

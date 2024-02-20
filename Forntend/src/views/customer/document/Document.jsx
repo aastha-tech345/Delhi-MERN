@@ -38,6 +38,10 @@ const Document = () => {
     {
       title: 'DOKUMENTENTYP',
       dataIndex: 'document_type',
+    },
+    {
+      title: 'DOKUMENTEN',
+      dataIndex: 'document_upload',
       width: '50%',
     },
     {
@@ -92,6 +96,7 @@ const Document = () => {
   const [data, setData] = useState({
     document_title: '',
     document_type: '',
+    document_upload: '',
     customer_id: customerRecord?._id,
     added_by: loginData?.user?._id,
   })

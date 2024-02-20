@@ -40,9 +40,8 @@ const CustomerInfo = () => {
   const [page, setPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState('')
   let ress = localStorage.getItem('customerRecord')
-  // console.log(ress)d
+  // console.log(ress)
   let resultt = JSON.parse(ress)
-  // console.log("ashish", resultt)
   // console.log('aast', resultt)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: resultt?.orderingMaterials?.orderNumber,
@@ -83,7 +82,7 @@ const CustomerInfo = () => {
     gender: resultt?.customerContact?.gender,
     fname: resultt?.fname,
     lname: resultt?.lname,
-    dob: resultt?.customerContact?.dob,
+    startDate: resultt?.startDate,
   })
 
   const [customerBills, setCustomerBills] = useState({
@@ -138,7 +137,7 @@ const CustomerInfo = () => {
     email: resultt?.email,
     phone: customerDelivery?.phone || resultt?.phone,
     plz: customerDelivery?.plz || resultt?.plz,
-    dob: customerContact?.dob,
+    startDate: customerContact?.startDate || resultt?.startDate,
     status: clientStatus,
     land: customerDelivery?.land || resultt?.land,
     id: resultt?.id,
@@ -211,7 +210,7 @@ const CustomerInfo = () => {
 
   const ContactChange = (e) => {
     if (e instanceof Date) {
-      setCustomerContact({ ...customerContact, dob: e })
+      setCustomerContact({ ...customerContact, startDate: e })
     } else if (e.target) {
       const { name, value, type, checked } = e.target
 
@@ -450,14 +449,14 @@ const CustomerInfo = () => {
   const cancelData = () => {
     navigate('/customerlist')
   }
-  const selectedItemTemplate = (option) => {
-    return (
-      <div className="p-multiselect-item">
-        <i className="pi pi-map-marker" style={{ marginRight: '0.5em' }}></i>
-        <span>{option.name}</span>
-      </div>
-    )
+  const getPlaceholder = () => {
+    if (clientStatus.length === 0) {
+      return 'HVD-PV'
+    } else {
+      return `${clientStatus.length} record${clientStatus.length > 1 ? 's' : ''} selected`
+    }
   }
+
   return (
     <div className="inner-page-wrap">
       <Customer getCustomerData={getCustomerData} />
@@ -555,15 +554,15 @@ const CustomerInfo = () => {
                           <label className="col-sm-3 col-form-label">Status</label>
                           <div className="col-sm-6">
                             <MultiSelect
-                              placeholder="HVD-PV"
+                              placeholder={getPlaceholder()}
                               value={clientStatus}
                               onChange={(e) => setClientStatus(e.value)}
                               options={cities}
+                              isMulti
+                              maxSelectedValues={3}
                               optionLabel="name"
-                              maxSelectedLabels={3}
                               className="w-100"
-                              showSelectAll={false}
-                              selectedItemTemplate={selectedItemTemplate}
+                              showCheckbox
                             />
                           </div>
                         </div>
@@ -690,7 +689,7 @@ const CustomerInfo = () => {
                           /> */}
                           <DatePiker
                             className="form-control"
-                            selected={customerContact.dob}
+                            selected={customerContact.startDate}
                             onChange={ContactChange}
                           />
                         </div>
@@ -1121,7 +1120,7 @@ const CustomerInfo = () => {
 
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Versand Nächsten Marke
+                          Versand nächste Marke
                         </label>
                         <div className="col-sm-6">
                           <DatePiker
@@ -1135,7 +1134,7 @@ const CustomerInfo = () => {
                     <div className="col-sm-6">
                       <div className="row">
                         <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Versand Letzten Marke
+                          Versand letzte Marke
                         </label>
                         <div className="col-sm-6">
                           <DatePiker
@@ -1146,7 +1145,7 @@ const CustomerInfo = () => {
                         </div>
                       </div>
                       <div className="row">
-                        <label className="col-sm-4 col-form-label">Rücksendung Letzte Marke</label>
+                        <label className="col-sm-4 col-form-label">Rücksendung letzte Marke</label>
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
