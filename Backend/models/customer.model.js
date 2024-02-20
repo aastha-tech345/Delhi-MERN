@@ -75,6 +75,7 @@ const customerInfo = {
   status: { type: Array, default: [] },
   id: { type: String },
   created_by: { type: Schema.Types.ObjectId, ref: "User" },
+  services: { type: Schema.Types.ObjectId, ref: "SpvInfo" }
 };
 const customerSchema = new Schema(
   {
@@ -88,6 +89,7 @@ const customerSchema = new Schema(
     customerDeposit: customerDepositSchema,
     customerBurial: customerBurialSchema,
     // created_by: { type: Schema.Types.ObjectId, ref: "User" },
+
     status: {
       type: String,
       enum: ["active", "deleted"],

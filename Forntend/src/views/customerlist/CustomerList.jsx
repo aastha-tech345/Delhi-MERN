@@ -93,7 +93,7 @@ const CustomerList = () => {
       ),
     },
     {
-      title: 'KLIENTINNEN-ID',
+      title: 'HINTERLEGUNG',
       dataIndex: 'id',
       // width: '20%',
     },
@@ -293,7 +293,6 @@ const CustomerList = () => {
     setSelectedRecordId(record)
     setIsModalVisible(true)
   }
-  console.log('first', selectedRecordId)
 
   const handleModalClose = () => {
     setIsModalVisible(false)
@@ -419,7 +418,20 @@ const CustomerList = () => {
 
   const modifiedDataSource = customer_record.map((customerRecord) => {
     const {
-      customer: { fname, lname, email, id, phone, startDate, plz, land, status, street, city },
+      customer: {
+        fname,
+        lname,
+        email,
+        id,
+        alreadyPaid,
+        phone,
+        startDate,
+        plz,
+        land,
+        status,
+        street,
+        city,
+      },
       _id,
     } = customerRecord
     const {
@@ -454,6 +466,7 @@ const CustomerList = () => {
       status,
       street,
       city,
+      alreadyPaid,
       orderingMaterials,
       customerInfoStatu,
       customerDeposit,
@@ -826,7 +839,6 @@ const CustomerList = () => {
                       />
                     </div>
                   </div>
-                  {/* 
                   <div className="row">
                     <div className="col-sm-6">
                       <select
@@ -835,14 +847,13 @@ const CustomerList = () => {
                         onChange={(e) => {
                           setGroup(e.target.value)
                         }}
-                        // required={true}
                       >
                         <option value="">--select group--</option>
                         <option value="HVD-PV">HVD</option>
                         <option value="PV-ALT">ALT</option>
                       </select>
                     </div>
-                  </div> */}
+                  </div>
                 </Form>
               </Modal.Body>
               <Modal.Footer>

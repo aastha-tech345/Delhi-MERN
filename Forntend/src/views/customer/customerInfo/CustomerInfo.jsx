@@ -185,7 +185,6 @@ const CustomerInfo = () => {
     { value: 'anderes', label: 'anderes' },
   ]
   const Anrede = [
-    { value: '', label: 'Anrede' },
     { value: 'herr', label: 'Herr' },
     { value: 'frau', label: 'Frau' },
     { value: 'divers', label: 'Divers' },
@@ -494,7 +493,7 @@ const CustomerInfo = () => {
                             name="extras"
                             value={orderingMaterials.extras}
                             onChange={matarialChange}
-                            className="form-control"
+                            className="form-control w-100"
                             placeholder="Extras"
                           />
                         </div>
@@ -637,6 +636,7 @@ const CustomerInfo = () => {
                             onChange={handleSelectChange}
                             value={those}
                             name="those"
+                            placeholder="Auswahl"
                           />
                         </div>
                       </div>
@@ -705,6 +705,7 @@ const CustomerInfo = () => {
                               (option) => option.value === customerContact.salution,
                             )} // Find the selected option
                             name="salution"
+                            placeholder="Anrede"
                           />
                         </div>
                       </div>
@@ -790,6 +791,97 @@ const CustomerInfo = () => {
                             onChange={ContactChange}
                             value={customerContact.lname}
                           />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          E-Mail-Adresse
+                        </label>
+                        <div className="col-sm-6">
+                          <input
+                            type="email"
+                            disabled
+                            name="email"
+                            placeholder="E-Mail-Adresse"
+                            value={customer.email}
+                            className="form-control"
+                            id="inputPassword"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          Telefon
+                        </label>
+                        <div className="col-sm-6">
+                          <input
+                            // onChange={DeliveryChange}
+                            onChange={(e) => {
+                              const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                              if (/^\+?[0-9]*$/.test(inputValue)) {
+                                DeliveryChange({ target: { name: 'phone', value: inputValue } })
+                              }
+                            }}
+                            name="phone"
+                            value={customerDelivery?.phone}
+                            className="form-control"
+                            type="tel"
+                            placeholder="Telefon"
+                            id="inputTelephone"
+                            maxLength={30}
+                            minLength={3}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          Mobil
+                        </label>
+                        <div className="col-sm-6">
+                          <input
+                            // onChange={DeliveryChange}
+                            onChange={(e) => {
+                              const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                              if (/^\+?[0-9]*$/.test(inputValue)) {
+                                DeliveryChange({ target: { name: 'mobile', value: inputValue } })
+                              }
+                            }}
+                            name="mobile"
+                            value={customerDelivery?.mobile}
+                            type="tel"
+                            placeholder="Mobil"
+                            className="form-control"
+                            id="inputTelephone"
+                            maxLength={30}
+                            minLength={3}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="row">
+                        <label className="col-sm-4 col-form-label">Bereits bezahlt</label>
+                        <div className="col-sm-6 mt-2">
+                          <div className="radio-check-wrap">
+                            <input
+                              onChange={DeliveryChange}
+                              name="alreadyPaid"
+                              // checked={JSON.parse(customerDelivery?.alreadyPaid)}
+                              checked={customerDelivery?.alreadyPaid}
+                              type="checkbox"
+                            />
+                            <span>ja</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -929,51 +1021,6 @@ const CustomerInfo = () => {
                           />
                         </div>
                       </div>
-                      <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          E-Mail-Adresse
-                        </label>
-                        <div className="col-sm-6">
-                          <input
-                            type="email"
-                            // onChange={handleEmailChange}
-                            // onChange={(e) => {
-                            //   setEmail(e.target.value)
-                            // }}
-                            disabled
-                            name="email"
-                            placeholder="E-Mail-Adresse"
-                            // value={customers.email}
-                            value={customer.email}
-                            className="form-control"
-                            id="inputPassword"
-                          />
-                        </div>
-                      </div>
-                      <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Mobil
-                        </label>
-                        <div className="col-sm-6">
-                          <input
-                            // onChange={DeliveryChange}
-                            onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                              if (/^\+?[0-9]*$/.test(inputValue)) {
-                                DeliveryChange({ target: { name: 'mobile', value: inputValue } })
-                              }
-                            }}
-                            name="mobile"
-                            value={customerDelivery?.mobile}
-                            type="tel"
-                            placeholder="Mobil"
-                            className="form-control"
-                            id="inputTelephone"
-                            maxLength={30}
-                            minLength={3}
-                          />
-                        </div>
-                      </div>
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
@@ -1028,46 +1075,6 @@ const CustomerInfo = () => {
                             className="form-control"
                             id="inputPassword"
                           />
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Telefon
-                        </label>
-                        <div className="col-sm-6">
-                          <input
-                            // onChange={DeliveryChange}
-                            onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                              if (/^\+?[0-9]*$/.test(inputValue)) {
-                                DeliveryChange({ target: { name: 'phone', value: inputValue } })
-                              }
-                            }}
-                            name="phone"
-                            value={customerDelivery?.phone}
-                            className="form-control"
-                            type="tel"
-                            placeholder="Telefon"
-                            id="inputTelephone"
-                            maxLength={30}
-                            minLength={3}
-                          />
-                        </div>
-                      </div>
-                      <div className="row">
-                        <label className="col-sm-4 col-form-label">Bereits bezahlt</label>
-                        <div className="col-sm-6">
-                          <div className="radio-check-wrap">
-                            <input
-                              onChange={DeliveryChange}
-                              name="alreadyPaid"
-                              // checked={JSON.parse(customerDelivery?.alreadyPaid)}
-                              checked={customerDelivery?.alreadyPaid}
-                              type="checkbox"
-                            />
-                            <span>ja</span>
-                          </div>
                         </div>
                       </div>
                     </div>
