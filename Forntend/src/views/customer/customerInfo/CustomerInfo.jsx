@@ -450,14 +450,14 @@ const CustomerInfo = () => {
   const cancelData = () => {
     navigate('/customerlist')
   }
-  const selectedItemTemplate = (option) => {
-    return (
-      <div className="p-multiselect-item">
-        <i className="pi pi-map-marker" style={{ marginRight: '0.5em' }}></i>
-        <span>{option.name}</span>
-      </div>
-    )
-  }
+  // const selectedItemTemplate = (option) => {
+  //   return (
+  //     <div className="p-multiselect-item">
+  //       <i className="pi pi-map-marker" style={{ marginRight: '0.5em' }}></i>
+  //       <span>{option.name}</span>
+  //     </div>
+  //   )
+  // }
   return (
     <div className="inner-page-wrap">
       <Customer getCustomerData={getCustomerData} />
@@ -563,7 +563,7 @@ const CustomerInfo = () => {
                               maxSelectedLabels={3}
                               className="w-100"
                               showSelectAll={false}
-                              selectedItemTemplate={selectedItemTemplate}
+                              // selectedItemTemplate={selectedItemTemplate}
                             />
                           </div>
                         </div>
