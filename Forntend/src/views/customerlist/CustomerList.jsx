@@ -267,7 +267,7 @@ const CustomerList = () => {
           >
             {' '}
             <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
-            &nbsp;Drucke
+            &nbsp;Drucken
           </button>
         </>
       ),
@@ -662,14 +662,14 @@ const CustomerList = () => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span> Neue KlientInnen anlegen</span>
+                    <span>Neue KlientIn anlegen</span>
                   </button>
                 </div>
               </div>
             </div>
             <Modal show={show} onHide={handleClose} centered className="modal-form">
               <Modal.Header closeButton>
-                <Modal.Title>Neue KlientInnen anlegen</Modal.Title>
+                <Modal.Title>Neue KlientIn anlegen</Modal.Title>
               </Modal.Header>
 
               <Modal.Body>
