@@ -71,7 +71,6 @@ const CustomerInfo = () => {
   // const [those, setThose] = useState(resultt?.those)
   // console.log('those', resultt?.those)
   const [those, setThose] = useState(resultt?.those[0])
-  console.log('jhfjkd', resultt?.those)
   const handleSelectChange = (selectedOption) => {
     setThose(selectedOption)
     console.log(selectedOption)
@@ -451,7 +450,14 @@ const CustomerInfo = () => {
   const cancelData = () => {
     navigate('/customerlist')
   }
-
+  const selectedItemTemplate = (option) => {
+    return (
+      <div className="p-multiselect-item">
+        <i className="pi pi-map-marker" style={{ marginRight: '0.5em' }}></i>
+        <span>{option.name}</span>
+      </div>
+    )
+  }
   return (
     <div className="inner-page-wrap">
       <Customer getCustomerData={getCustomerData} />
@@ -557,6 +563,7 @@ const CustomerInfo = () => {
                               maxSelectedLabels={3}
                               className="w-100"
                               showSelectAll={false}
+                              selectedItemTemplate={selectedItemTemplate}
                             />
                           </div>
                         </div>
