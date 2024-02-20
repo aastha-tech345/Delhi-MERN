@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { putFetch } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -11,14 +11,11 @@ const EditModal = ({ setEdit, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('DocumentEditDetails')
   let response = JSON.parse(res)
-
   const [data, setData] = useState({
     document_title: response?.document_title,
     document_type: response?.document_type,
-    // document_upload: response?.document_upload,
   })
-  const [document_upload, setDocumentUpload] = useState(response?.document_upload)
-  console.log('ashishdocs', document_upload)
+  const [document_upload, setDocumentUpload] = useState(null)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadValue] = useState(false)
 
@@ -36,11 +33,6 @@ const EditModal = ({ setEdit, getDetails }) => {
   const close = () => {
     setEdit(false)
   }
-
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0]
-  //   setData({ ...data, document_upload: file })
-  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -100,6 +92,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     { value: 'Personal document', label: 'Persönliches Dokument' },
     { value: 'Other', label: 'Anderes' },
   ]
+
   return (
     <div
       className="modal"
@@ -196,18 +189,21 @@ const EditModal = ({ setEdit, getDetails }) => {
                 <div className="col-md-9">
                   <div className="file-upload-wrap">
                     <input
+                      // ref={fileInputRef}
                       id="fileUpload"
                       type="file"
                       className="form-control"
                       name="document_upload"
-                      // value={document_upload}
-                      // onChange={handleFileChange}
                       onChange={(e) => setDocumentUpload(e.target.files[0])}
                     />
                     <div className="file-input-wrap">
                       <div className="filename-field">
                         <span>
-                          {document_upload?.name ? document_upload?.name : 'Datei-Upload'}
+                          {document_upload?.name
+                            ? document_upload?.name
+                            : 'Datei-Upload' || response.document_upload
+                            ? response.document_upload
+                            : 'Datei-Upload'}
                         </span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

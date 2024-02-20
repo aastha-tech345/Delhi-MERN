@@ -20,8 +20,8 @@ import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import { RiDeleteBinLine } from 'react-icons/ri'
 
 const Document = () => {
-  let lgCust = localStorage.getItem('customerDatat')
-  let custData = JSON.parse(lgCust)
+  // let lgCust = localStorage.getItem('customerDatat')
+  // let custData = JSON.parse(lgCust)
 
   let lgUser = localStorage.getItem('record')
   let loginData = JSON.parse(lgUser)
@@ -86,13 +86,13 @@ const Document = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   // const [document_type, setDocumentType] = useState()
   // const [document_title, setDocumentTitle] = useState()
-  let res = localStorage.getItem('customerDatat')
-  let result = JSON.parse(res)
+  let res = localStorage.getItem('customerRecord')
+  let customerRecord = JSON.parse(res)
 
   const [data, setData] = useState({
     document_title: '',
     document_type: '',
-    customer_id: result?._id,
+    customer_id: customerRecord?._id,
     added_by: loginData?.user?._id,
   })
 
@@ -139,7 +139,7 @@ const Document = () => {
       const myForm = new FormData()
       myForm.append('document_title', data?.document_title)
       myForm.append('document_type', data?.document_type)
-      myForm.append('customer_id', result?._id)
+      myForm.append('customer_id', customerRecord?._id)
       myForm.append('added_by', loginData?.user?._id)
       myForm.append('document_upload', document_upload)
 
@@ -148,6 +148,7 @@ const Document = () => {
       // const url = `${apiUrl}/document/create_document?page=${page}`
       // console.log(url)
       const response = await postFetchUser(url, myForm)
+      console.log('ashishdocu', response)
       notify('Dokumentdaten erfolgreich gespeichert')
       setData('')
       handleClose()
