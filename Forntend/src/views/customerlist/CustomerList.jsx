@@ -141,7 +141,7 @@ const CustomerList = () => {
                 : '',
           }}
         >
-          {console.log('ashishtext[0].name', text[0]?.name)}
+          {/* {console.log('ashishtext[0].name', text[0]?.name)} */}
           {text === '' ? <span>PV-ALT</span> : <b>{text[0]?.name}</b>}
         </div>
       ),
