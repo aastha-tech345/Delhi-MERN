@@ -1034,6 +1034,19 @@ span.anticon.anticon-phone svg {
       border-color: #005291;
     }
   }
+  .form-search-control-without {
+    max-width: 300px;
+    width: 100%;
+    padding: 8px 34px 8px 10px;
+    margin-right: 20px;
+    height: 40px;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      border-color: #005291;
+    }
+  }
 
   .filter-btn {
     display: flex;
@@ -1866,4 +1879,11 @@ span.anticon.anticon-phone svg {
 .header-button {
   color: white !important;
   border: 1px solid white !important;
+}
+
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  display: none;
 }

@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import PaginationItem from '@mui/material/PaginationItem'
-import { MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
+import { MdLocalPrintshop } from 'react-icons/md'
 import { Table } from 'antd'
-import { DatePicker } from 'react-datepicker'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -16,8 +15,10 @@ import PrintModal from './PrintModal'
 import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../customer/Date'
 import warning from 'antd/es/_util/warning'
-import CustomerInfo from '../customer/customerInfo/CustomerInfo'
-import Select, { components } from 'react-select'
+import Select from 'react-select'
+import 'primereact/resources/themes/saga-blue/theme.css'
+import 'primereact/resources/primereact.min.css'
+import { Dropdown } from 'primereact/dropdown'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -35,7 +36,7 @@ const CustomerList = () => {
   const [plz, setPlz] = useState()
   const [city, setCity] = useState()
   const [street, setStreet] = useState()
-  const [status, setStatus] = useState()
+  const [status, setStatus] = useState(null)
   const [created_by] = useState(loginData?.user?._id)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [show, setShow] = useState(false)
@@ -44,8 +45,7 @@ const CustomerList = () => {
   const [countPage, setCountPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState('')
   const navigate = useNavigate()
-  // console.log('countPage 39', countPage)
-  // const navigate = useNavigate()
+
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
   }
@@ -59,10 +59,8 @@ const CustomerList = () => {
   const handlePageChange = (event, value) => {
     setPage(value)
   }
-  const editor = useRef(null)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  const searchInputRef = useRef()
   const [selectedRecordId, setSelectedRecordId] = useState(null)
   // const handleChange = (value, name) => {
   //   if (name) {
@@ -124,11 +122,11 @@ const CustomerList = () => {
                 ? '#4EB772'
                 : text[0]?.name === 'OPV-alt'
                 ? '#4EB772'
-                : text[0]?.name === 'Dauerspenderlnner'
+                : text[0]?.name === 'DauerspenderInnen'
                 ? '#4EB772'
                 : text[0]?.name === 'Materialbestellung'
                 ? '#4EB772'
-                : text[0]?.name === 'Newsletter Abonnent'
+                : text[0]?.name === 'Newsletter-Abonnent'
                 ? '#4EB772'
                 : text[0]?.name === 'Offen'
                 ? '#4EB772'
@@ -285,8 +283,6 @@ const CustomerList = () => {
     } else {
       console.error('Record is undefined or null.')
     }
-    // navigate(`/customer/${a}`)
-    // // localStorage.setItem('customerRecord', JSON.stringify(record))
   }
 
   const handleIconClick = (record) => {
@@ -331,21 +327,20 @@ const CustomerList = () => {
       setEmail('')
     }
   }
-  const Quelle = [
-    { value: 'order', label: 'Auftrag (Online-Maske) ' },
-    { value: 'contact form', label: 'Kontaktformular' },
-    { value: 'order print', label: 'Auftrag / Print' },
-    { value: 'website', label: 'Webseite' },
-    { value: 'e-mail', label: 'E-Mail' },
-    { value: 'call', label: 'Anruf' },
-    { value: 'letter', label: 'Zuschrift (Post)' },
-    { value: 'HVD regional association', label: 'HVD-Landesverband' },
-    { value: 'Regional association MOL', label: 'Regionalverband MOL' },
-    { value: 'Northern Regional Association', label: 'Regionalverband NORD' },
-    { value: 'Regional association', label: 'Regionalverband Potsdam' },
-    { value: 'inter', label: 'intern' },
-    { value: 'anderes', label: 'anderes' },
+  const handleSelectChange = (selectedOption) => {
+    setStatus(selectedOption)
+    console.log(selectedOption)
+  }
+  const option = [
+    { name: 'HVD-PV', code: 'HVD-PV' },
+    { name: 'SPV-alt', code: 'SPV-alt' },
+    { name: 'OPV-alt', code: 'OPV-alt' },
+    { name: 'DauerspenderInnen', code: 'DauerspenderInnen' },
+    { name: 'Materialbestellung', code: 'Materialbestellung' },
+    { name: 'Newsletter-Abonnent', code: 'Newsletter-Abonnent' },
+    { name: 'Offen', code: 'Offen' },
   ]
+  console.log('option', option)
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -547,6 +542,11 @@ const CustomerList = () => {
     }),
   }
   const [search, setSearch] = useState('')
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+    setIsTyping(true)
+  }
+  const [isTyping, setIsTyping] = useState(false)
   const searchHandle = async () => {
     try {
       // let key = searchInputRef.current.value
@@ -594,13 +594,6 @@ const CustomerList = () => {
     // setstartDate(getCurrentDate())
   }, [])
 
-  // function getCurrentDate() {
-  //   const currentDate = new Date()
-  //   const year = currentDate.getFullYear().toString()
-  //   const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
-  //   const day = currentDate.getDate().toString().padStart(2, '0')
-  //   return `${year}-${month}-${day}`
-  // }
   useEffect(() => {
     setStartDate(null)
   }, [])
@@ -611,6 +604,9 @@ const CustomerList = () => {
       toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
     }
     setStartDate(e)
+  }
+  const handleBlur = () => {
+    setIsTyping(false)
   }
   return (
     <>
@@ -629,11 +625,15 @@ const CustomerList = () => {
                     // ref={searchInputRef}
                     name="search"
                     // value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={handleChange}
                     type="search"
                     id="form1"
+                    onBlur={handleBlur}
                     placeholder="Ihre Suche eingeben"
-                    className="form-control form-search-control"
+                    // className="form-control form-search-control"
+                    className={`form-control form-search-control-without ${
+                      isTyping ? '' : 'form-search-control'
+                    }`}
                   />
                   <button onClick={searchHandle} className="filter-btn">
                     <svg
@@ -855,26 +855,34 @@ const CustomerList = () => {
                   </div>
                   <div className="row">
                     <div className="col-sm-12">
-                      {/* <select
-                        className="form-control mb-0"
+                      {/* <Dropdown
                         value={status}
-                        onChange={(e) => {
-                          setStatus(e.target.value)
-                        }}
-                      >
-                        <option value="">--wähle die Gruppe--</option>
-                        <option value="HVD-PV">HVD</option>
-                        <option value="PV-ALT">ALT</option>
-                      </select> */}
-                      <Select
+                        onChange={(e) => setStatus(e.value)}
+                        options={option}
+                        optionLabel="name"
+                        name="status"
+                        showClear
+                        placeholder="Select a City"
+                        className="w-full md:w-14rem"
+                        style={{ zIndex: '0' }}
+                      /> */}
+                      {/* <Select
                         className="w-100"
-                        options={Quelle}
-                        onChange={(selectedOption) => {
-                          setStatus(selectedOption.value)
-                        }}
-                        value={Quelle.find((option) => option.value === status)}
+                        options={option}
+                        onChange={handleSelectChange}
+                        value={status}
                         name="status"
                         placeholder="HVD"
+                      /> */}
+                      <Dropdown
+                        value={status}
+                        onChange={handleSelectChange}
+                        options={option}
+                        optionLabel="name"
+                        name="status"
+                        showClear
+                        placeholder="Select a City"
+                        className="w-full md:w-14rem"
                       />
                     </div>
                   </div>

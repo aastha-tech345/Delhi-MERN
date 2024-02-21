@@ -327,9 +327,9 @@ const CustomerInfo = () => {
     }
   }
 
-  console.log('aastha type', customerDepositt.emergencyPass)
+  // console.log('aastha type', customerDepositt.emergencyPass)
   let customerInfoStatuData = { ...customerInfoStatu, clientStatus, dataCollection }
-  console.log('ashishclient', customerInfoStatuData)
+  // console.log('ashishclient', customerInfoStatuData)
   const data = {
     customer: customer,
     orderingMaterials: orderingMaterials,
@@ -365,7 +365,7 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
-
+      console.log('aastharesult', result)
       if (result?.message === 'Customer updated successfully') {
         toast.success('Kundeninfo erfolgreich gespeichert')
         // setOrderingMaterials({
@@ -563,6 +563,7 @@ const CustomerInfo = () => {
                               optionLabel="name"
                               className="w-100"
                               showCheckbox
+                              display="chip"
                             />
                           </div>
                         </div>
