@@ -17,7 +17,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../customer/Date'
 import warning from 'antd/es/_util/warning'
 import CustomerInfo from '../customer/customerInfo/CustomerInfo'
-import Select, { components } from 'react-select'
+import { MultiSelect } from 'primereact/multiselect'
+import 'primereact/resources/themes/saga-blue/theme.css'
+import 'primereact/resources/primereact.min.css'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -46,6 +48,14 @@ const CustomerList = () => {
   const navigate = useNavigate()
   // console.log('countPage 39', countPage)
   // const navigate = useNavigate()
+  const [selectedCities, setSelectedCities] = useState(null)
+  const cities = [
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' },
+  ]
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
   }
@@ -331,20 +341,14 @@ const CustomerList = () => {
       setEmail('')
     }
   }
-  const Quelle = [
-    { value: 'order', label: 'Auftrag (Online-Maske) ' },
-    { value: 'contact form', label: 'Kontaktformular' },
-    { value: 'order print', label: 'Auftrag / Print' },
-    { value: 'website', label: 'Webseite' },
-    { value: 'e-mail', label: 'E-Mail' },
-    { value: 'call', label: 'Anruf' },
-    { value: 'letter', label: 'Zuschrift (Post)' },
-    { value: 'HVD regional association', label: 'HVD-Landesverband' },
-    { value: 'Regional association MOL', label: 'Regionalverband MOL' },
-    { value: 'Northern Regional Association', label: 'Regionalverband NORD' },
-    { value: 'Regional association', label: 'Regionalverband Potsdam' },
-    { value: 'inter', label: 'intern' },
-    { value: 'anderes', label: 'anderes' },
+  const option = [
+    { name: 'HVD-PV', code: '0' },
+    { name: 'SPV-alt', code: '1' },
+    { name: 'OPV-alt', code: '2' },
+    { name: 'DauerspenderInnen', code: '3' },
+    { name: 'Materialbestellung', code: '4' },
+    { name: 'Newsletter-Abonnent', code: '5' },
+    { name: 'Offen', code: '6' },
   ]
   const saveData = async (event) => {
     const form = event.currentTarget
@@ -855,26 +859,24 @@ const CustomerList = () => {
                   </div>
                   <div className="row">
                     <div className="col-sm-12">
-                      {/* <select
-                        className="form-control mb-0"
-                        value={status}
-                        onChange={(e) => {
-                          setStatus(e.target.value)
-                        }}
-                      >
-                        <option value="">--wähle die Gruppe--</option>
-                        <option value="HVD-PV">HVD</option>
-                        <option value="PV-ALT">ALT</option>
-                      </select> */}
-                      <Select
+                      {/* <Select
                         className="w-100"
-                        options={Quelle}
+                        options={option}
                         onChange={(selectedOption) => {
                           setStatus(selectedOption.value)
                         }}
-                        value={Quelle.find((option) => option.value === status)}
+                        value={option.find((option) => option.value === status)}
                         name="status"
                         placeholder="HVD"
+                      /> */}
+                      <MultiSelect
+                        value={selectedCities}
+                        onChange={(e) => setSelectedCities(e.value)}
+                        options={cities}
+                        optionLabel="name"
+                        placeholder="Select Cities"
+                        maxSelectedLabels={3}
+                        className="w-full md:w-20rem"
                       />
                     </div>
                   </div>

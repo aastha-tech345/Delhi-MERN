@@ -563,6 +563,7 @@ const CustomerInfo = () => {
                               optionLabel="name"
                               className="w-100"
                               showCheckbox
+                              display="chip"
                             />
                           </div>
                         </div>
