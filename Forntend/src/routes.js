@@ -1,55 +1,9 @@
 import React from 'react'
+// import CustomerInfo from './views/customer/customerInfo/CustomerInfo'
+// import Contact from './views/customer/contact/Contact'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
-const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
-const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
-
-// Base
-const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
-const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
-const Cards = React.lazy(() => import('./views/base/cards/Cards'))
-const Carousels = React.lazy(() => import('./views/base/carousels/Carousels'))
-const Collapses = React.lazy(() => import('./views/base/collapses/Collapses'))
-const ListGroups = React.lazy(() => import('./views/base/list-groups/ListGroups'))
-const Navs = React.lazy(() => import('./views/base/navs/Navs'))
-const Paginations = React.lazy(() => import('./views/base/paginations/Paginations'))
-const Placeholders = React.lazy(() => import('./views/base/placeholders/Placeholders'))
-const Popovers = React.lazy(() => import('./views/base/popovers/Popovers'))
-const Progress = React.lazy(() => import('./views/base/progress/Progress'))
-const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
-const Tables = React.lazy(() => import('./views/base/tables/Tables'))
-const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
-
-// Buttons
-const Buttons = React.lazy(() => import('./views/button/button/Buttons'))
-const ButtonGroups = React.lazy(() => import('./views/button/button-groups/ButtonGroups'))
-const Dropdowns = React.lazy(() => import('./views/button/dropdowns/Dropdowns'))
-
-//Forms
-const ChecksRadios = React.lazy(() => import('./views/forms/checks-radios/ChecksRadios'))
-const FloatingLabels = React.lazy(() => import('./views/forms/floating-labels/FloatingLabels'))
-const FormControl = React.lazy(() => import('./views/forms/form-control/FormControl'))
-const InputGroup = React.lazy(() => import('./views/forms/input-group/InputGroup'))
-const Layout = React.lazy(() => import('./views/forms/layout/Layout'))
-const Range = React.lazy(() => import('./views/forms/range/Range'))
-const Select = React.lazy(() => import('./views/forms/select/Select'))
-const Validation = React.lazy(() => import('./views/forms/validation/Validation'))
-
-const Charts = React.lazy(() => import('./views/charts/Charts'))
-
-// Icons
-const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'))
-const Flags = React.lazy(() => import('./views/icons/flags/Flags'))
-const Brands = React.lazy(() => import('./views/icons/brands/Brands'))
-
-// Notifications
-const Alerts = React.lazy(() => import('./views/notifications/alerts/Alerts'))
-const Badges = React.lazy(() => import('./views/notifications/badges/Badges'))
-const Modals = React.lazy(() => import('./views/notifications/modals/Modals'))
-const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
-
-const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
-//coustomerInfo
+//customerInfo
 const CustomerList = React.lazy(() => import('./views/customerlist/CustomerList'))
 const CustomerInfo = React.lazy(() => import('./views/customer/customerInfo/CustomerInfo'))
 const Customer = React.lazy(() => import('./views/customer/Customer'))
@@ -58,7 +12,8 @@ const Bills = React.lazy(() => import('./views/customer/bills/Bills'))
 const Tasks = React.lazy(() => import('./views/customer/task/Tasks'))
 const Document = React.lazy(() => import('./views/customer/document/Document'))
 const Services = React.lazy(() => import('./views/customer/services/Services'))
-const Description = React.lazy(() => import('./views/customer/description/Description'))
+const Activity = React.lazy(() => import('./views/customer/activity/Activity'))
+const PrintTemplate = React.lazy(() => import('./views/settings/print/PrintTemplate'))
 
 //settings
 const User = React.lazy(() => import('./views/settings/User'))
@@ -66,68 +21,47 @@ const Roll = React.lazy(() => import('./views/settings/roll/Roll'))
 const CreateUser = React.lazy(() => import('./views/settings/user/CreateUser'))
 const Teams = React.lazy(() => import('./views/settings/team/Teams'))
 
-//email-tempalte
-const EmailTempalte = React.lazy(() => import('./views/email/EmailTemplate'))
+//email-template
+const EmailTemplate = React.lazy(() => import('./views/settings/email/EmailTemplate'))
+const EmailList = React.lazy(() => import('./views/settings/email/EmailList'))
+const Login = React.lazy(() => import('./views/pages/login/Login'))
+const Filter = React.lazy(() => import('./views/settings/filter/Filter'))
+const Attorney = React.lazy(() => import('./views/customer/attorney/Attorney'))
+const Setting = React.lazy(() => import('./views/settings/User'))
+const Date = React.lazy(() => import('./views/customer/Date.jsx'))
+// const DescriptionList = React.lazy(() => import('./views/customer/description/DescriptionList'))
 
-const routes = [
-  { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
-  { path: '/customer', name: 'Kunden', element: CustomerList },
-  { path: '/customerlist', name: 'Kunden-Listen ', element: Customer },
-  { path: '/customer/customer_info', name: 'KundenInfo', element: CustomerInfo },
-  { path: '/customer/contact', name: 'Kontakte', element: Contact },
-  { path: '/customer/bills', name: 'Rechnungen', element: Bills },
-  { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
-  { path: '/customer/description', name: 'Beschreibung', element: Description },
-  { path: '/customer/document', name: 'Dokumente', element: Document },
-  { path: '/customer/services', name: 'Leistungen', element: Services },
-  { path: '/users', name: 'User', element: User },
-  { path: '/roll', name: 'Roll', element: Roll },
-  { path: '/createuser', name: 'CreateUser', element: CreateUser },
-  { path: '/team', name: 'Teams', element: Teams },
-  { path: '/email', name: 'EmailTempalte', element: EmailTempalte },
-  { path: '/theme', name: 'Theme', element: Colors, exact: true },
-  { path: '/theme/colors', name: 'Colors', element: Colors },
-  { path: '/theme/typography', name: 'Typography', element: Typography },
-  { path: '/base', name: 'Base', element: Cards, exact: true },
-  { path: '/base/accordion', name: 'Accordion', element: Accordion },
-  { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
-  { path: '/base/cards', name: 'Cards', element: Cards },
-  { path: '/base/carousels', name: 'Carousel', element: Carousels },
-  { path: '/base/collapses', name: 'Collapse', element: Collapses },
-  { path: '/base/list-groups', name: 'List Groups', element: ListGroups },
-  { path: '/base/navs', name: 'Navs', element: Navs },
-  { path: '/base/paginations', name: 'Paginations', element: Paginations },
-  { path: '/base/placeholders', name: 'Placeholders', element: Placeholders },
-  { path: '/base/popovers', name: 'Popovers', element: Popovers },
-  { path: '/base/progress', name: 'Progress', element: Progress },
-  { path: '/base/spinners', name: 'Spinners', element: Spinners },
-  { path: '/base/tables', name: 'Tables', element: Tables },
-  { path: '/base/tooltips', name: 'Tooltips', element: Tooltips },
-  { path: '/buttons', name: 'Buttons', element: Buttons, exact: true },
-  { path: '/buttons/buttons', name: 'Buttons', element: Buttons },
-  { path: '/buttons/dropdowns', name: 'Dropdowns', element: Dropdowns },
-  { path: '/buttons/button-groups', name: 'Button Groups', element: ButtonGroups },
-  { path: '/charts', name: 'Charts', element: Charts },
-  { path: '/forms', name: 'Forms', element: FormControl, exact: true },
-  { path: '/forms/form-control', name: 'Form Control', element: FormControl },
-  { path: '/forms/select', name: 'Select', element: Select },
-  { path: '/forms/checks-radios', name: 'Checks & Radios', element: ChecksRadios },
-  { path: '/forms/range', name: 'Range', element: Range },
-  { path: '/forms/input-group', name: 'Input Group', element: InputGroup },
-  { path: '/forms/floating-labels', name: 'Floating Labels', element: FloatingLabels },
-  { path: '/forms/layout', name: 'Layout', element: Layout },
-  { path: '/forms/validation', name: 'Validation', element: Validation },
-  { path: '/icons', exact: true, name: 'Icons', element: CoreUIIcons },
-  { path: '/icons/coreui-icons', name: 'CoreUI Icons', element: CoreUIIcons },
-  { path: '/icons/flags', name: 'Flags', element: Flags },
-  { path: '/icons/brands', name: 'Brands', element: Brands },
-  { path: '/notifications', name: 'Notifications', element: Alerts, exact: true },
-  { path: '/notifications/alerts', name: 'Alerts', element: Alerts },
-  { path: '/notifications/badges', name: 'Badges', element: Badges },
-  { path: '/notifications/modals', name: 'Modals', element: Modals },
-  { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
-  { path: '/widgets', name: 'Widgets', element: Widgets },
-]
+const auth = localStorage.getItem('token')
+let routes
+
+if (auth) {
+  routes = [
+    { path: '/', exact: true, name: 'Home' },
+    // { path: '/descriptionlist', name: 'DescriptionList', element: DescriptionList },
+    { path: '/dashboard', name: 'Armaturenbrett', element: Dashboard },
+    { path: '/customerlist', name: 'Klientinnen', element: CustomerList },
+    { path: '/customer', name: 'Kunden', element: Customer },
+    { path: '/customer/customer_info', name: 'Klientinnen', element: CustomerInfo },
+    { path: '/customer/contact', name: 'Kontakte', element: Contact },
+    { path: '/date', name: 'Date', element: Date },
+    { path: '/customer/bills', name: 'Rechnungen', element: Bills },
+    { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
+    { path: '/customer/activity', name: 'Aktivitat', element: Activity },
+    { path: '/customer/document', name: 'Dokumente', element: Document },
+    { path: '/customer/services', name: 'SPV', element: Services },
+    { path: '/settings', name: 'Einstellungen', element: Setting },
+    { path: '/settings/users', name: 'MitarbeiterInnen', element: User },
+    { path: '/settings/role', name: 'Rollen', element: Roll },
+    { path: '/settings/createuser', name: 'MitarbeiterInnen', element: CreateUser },
+    { path: '/team', name: 'Teams', element: Teams },
+    { path: '/settings/email_info', name: 'E-Mail Vorlage', element: EmailTemplate },
+    { path: '/settings/email', name: 'E-Mail Vorlage', element: EmailList },
+    { path: '/settings/filter', name: 'Filter', element: Filter },
+    { path: '/settings/print', name: 'Druckvorlage', element: PrintTemplate }, // Updated name
+    { path: '/customer/attorney', name: 'Vollmachten', element: Attorney }, // Updated name
+  ]
+} else {
+  routes = [{ path: '/login', element: Login }]
+}
 
 export default routes

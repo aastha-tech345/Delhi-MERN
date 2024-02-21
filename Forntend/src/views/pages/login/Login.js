@@ -1,33 +1,38 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
+import { useNavigate } from 'react-router-dom'
+// import ReCAPTCHA from 'react-google-recaptcha'
+import logo from '../../../assets/images/hvd-logo.png'
+// import logo from '../../../assets/images/hvd-logo-fig.png'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
 
 const Login = () => {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const apiUrl = process.env.REACT_APP_API_URL
+  const navigate = useNavigate()
+  const [validated, setValidated] = useState(false)
+  const notify = (dataa) => toast(dataa)
+  const login = async (event) => {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
 
-  const login = async () => {
+    setValidated(true)
+
     try {
-      const data = { username, password }
-      if (!username || !password) {
+      if (!email || !password) {
         return
       }
 
+      const data = { email, password }
       const response = await fetch(`${apiUrl}/user/login`, {
         method: 'POST',
         headers: {
@@ -37,102 +42,102 @@ const Login = () => {
       })
 
       const result = await response.json()
-      console.log(result)
-      const token = result.student.tokens[0].token
-      const role = result.student.role
+      // console.log('aastha', result)
 
-      window.localStorage.setItem('token', token)
-      window.localStorage.setItem('role', role)
-      // window.localStorage.setItem('result', JSON.stringify(result))
-      // window.sessionStorage.setItem('image', image)
-      // window.localStorage.setItem('id', id)
-      // if (role === 'patient') {
-      //   navigate('/patient/dashboard')
-      //   window.location.reload()
-      // } else if (role === 'doctor') {
-      //   navigate('/doctor/dashboard')
-      //   window.location.reload()
-      // }
+      if (result.success === true) {
+        toast.success('Benutzeranmeldung erfolgreich')
+        const token = result?.user?.tokens[0]?.token
+        window.localStorage.setItem('token', token)
+        window.localStorage.setItem('record_id', result?.user?._id)
+        navigate('/dashboard')
+        window.location.reload()
+      } else {
+        notify('Ungültige Anmeldeinformationen')
+      }
     } catch (error) {
       console.error('Error:', error)
-      alert('An error occurred. Please try again later.')
+      toast.error('Ungültige Anmeldeinformationen')
     }
   }
+
+  const forgetPassword = () => {
+    navigate('/password-reset')
+  }
+
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
+    <div
+      className=" min-vh-100 d-flex flex-row align-items-center"
+      style={{ background: '#015291' }}
+    >
+      <CContainer className="form-container">
         <CRow className="justify-content-center">
-          <CCol md={8}>
-            <CCardGroup>
+          <CCol md={4}>
+            <img className="logo-login" src={logo} alt="..." />
+            <CCardGroup className="mt-3">
               <CCard className="p-4">
-                <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-medium-emphasis">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => {
-                          setUsername(e.target.value)
+                <CCardBody className="p-0">
+                  <Form noValidate validated={validated}>
+                    <h4 className="h4-heading">Anmeldung</h4>
+                    <Row className="mb-3">
+                      <Form.Group as={Col} md="12" controlId="validationCustom01">
+                        <Form.Label>E-Mail Adresse</Form.Label>
+                        <Form.Control
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                          type="email"
+                          placeholder="E-Mail Adresse"
+                        />
+                      </Form.Group>
+                    </Row>
+                    <Row className="mb-2">
+                      <Form.Group as={Col} md="12" controlId="validationCustom01">
+                        <Form.Label>Passwort</Form.Label>
+                        <Form.Control
+                          required
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          type="password"
+                          placeholder="password"
+                        />
+                      </Form.Group>
+                    </Row>
+                    <div>
+                      {/* <ReCAPTCHA sitekey="Your client site key" onChange={onChange} /> */}
+                      <br />
+                      <Button
+                        className="form-control form-btn"
+                        style={{ background: '#005291' }}
+                        onClick={login}
+                      >
+                        Senden
+                      </Button>
+                      <p
+                        style={{
+                          textAlign: 'center',
+                          color: '#005291',
+                          fontSize: '13px',
+                          margin: 0,
+                          cursor: 'pointer',
                         }}
-                        autoComplete="username"
-                      />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        value={password}
-                        onChange={(e) => {
-                          setPassword(e.target.value)
-                        }}
-                        placeholder="Password"
-                        autoComplete="current-password"
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" onClick={login} className="px-4">
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" onClick={login} className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
+                        color="primary"
+                        onClick={forgetPassword}
+                        className="mt-3 mx-3 mb-0"
+                        tabIndex={-1}
+                      >
+                        Passwort vergessen ?
+                      </p>
+                    </div>
+                  </Form>
                 </CCardBody>
               </CCard>
             </CCardGroup>
           </CCol>
         </CRow>
       </CContainer>
+      <ToastContainer />
     </div>
   )
 }
 
-export default Login
+export default React.memo(Login)

@@ -1,348 +1,342 @@
-import React, { useState } from 'react'
-import { Table } from 'antd'
-import Dropdown from 'react-bootstrap/Dropdown'
-import { MdAdd } from 'react-icons/md'
-import { DatePicker, Space } from 'antd'
-import Modal from 'react-bootstrap/Modal'
+import React, { useEffect, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Customer from '../Customer'
+import { useNavigate } from 'react-router-dom'
+import Select, { components } from 'react-select'
+import DatePiker from '../Date'
 
-const { RangePicker } = DatePicker
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'PROJECT',
-    dataIndex: 'project',
-    key: 'project',
-  },
-  {
-    title: 'DATUM DER RECHNUNG',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'FALLIGKEITS DATUM',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'RECHNUNG INSGESAMT',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'FALLIG',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'STATUS',
-    dataIndex: 'address',
-    key: 'address',
-  },
-]
-const data = [
-  {
-    project: 'HVD',
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    project: 'HVD',
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    project: 'HVD',
-    key: '123',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-]
 const Bills = () => {
-  const [show, setShow] = useState(false)
-  // eslint-disable-next-line no-undef
-  const handleClose = () => setShow(false)
-  // eslint-disable-next-line no-undef
-  const handleShow = () => setShow(true)
-  const [invoice, setInvoice] = useState()
-  const [due_date, setDueDate] = useState()
-  const [project, setProject] = useState()
-  const [tax, setTax] = useState()
-  const [second_tax, setSecondTax] = useState()
-  const [tds, setTds] = useState()
-  const [notic, setNotic] = useState()
-  const [label, setLabel] = useState()
-  const [recurring, setRecurring] = useState(false)
-
-  const saveData = () => {
-    let data = { invoice, due_date, project, tax, second_tax, tds, notic, label, recurring }
-    console.log(data)
+  const navigate = useNavigate()
+  const apiUrl = process.env.REACT_APP_API_URL
+  let res = localStorage.getItem('customerDatat')
+  let result = JSON.parse(res)
+  const [employeeData, setEmployeeData] = useState([])
+  const [productData, setProductData] = useState({
+    product: '',
+    paymentMethod: '',
+    invoiceDate: '',
+    alreadyPaid: false,
+    invoiceAmount: '',
+    deliveryDate: '',
+    customer_id: result?._id,
+  })
+  const [colleague, setColleague] = useState('')
+  const [invoiceDate, setInvoiceDate] = useState('')
+  const [deliveryDate, setDeliveryDate] = useState('')
+  const invoiceChange = (e) => {
+    setInvoiceDate(e)
   }
+  const DeliveryDateChange = (e) => {
+    setDeliveryDate(e)
+  }
+
+  // const handleInputChange = (e) => {
+  //   const { name, value, type, checked } = e.target
+
+  //   setProductData((prevProductData) => ({
+  //     ...prevProductData,
+  //     [name]: type === 'checkbox' ? checked : value,
+  //   }))
+  // }
+
+  // const handleInputChange = (e) => {
+  //   const { name, value, type, checked } = e.target
+
+  //   setProductData((prevProductData) => ({
+  //     ...prevProductData,
+  //     [name]: type === 'checkbox' ? checked : value,
+  //   }))
+  // }
+  const handleInputChange = (e) => {
+    if (e instanceof Date) {
+      setProductData({ ...productData, invoiceDate: e, deliveryDate: e })
+    } else if (e.target) {
+      const { name, value, type, checked } = e.target
+
+      if (type === 'radio') {
+        const newValue = checked ? value : ''
+        setProductData({ ...productData, [name]: newValue })
+      } else {
+        setProductData({ ...productData, [name]: type === 'checkbox' ? checked : value })
+      }
+    } else if (e && e.value !== undefined) {
+      setProductData({ ...productData, colleague: e.value })
+    } else {
+      console.error('Invalid event or data provided to handleInputChange.')
+    }
+  }
+
+  const cancelData = () => {
+    localStorage.removeItem('tabId')
+    navigate('/customer/customer_info')
+  }
+  let data = { ...productData, colleague, invoiceDate }
+  const saveData = async () => {
+    if (!productData?.product) {
+      return toast.warning('Bitte Produktname...')
+    }
+    try {
+      let response = await fetch(`${apiUrl}/invoice/create_invoice`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      let result = await response.json()
+      // console.log(result)
+      toast.success('Rechnungsdaten erfolgreich gespeichert')
+      setProductData({
+        product: '',
+        paymentMethod: '',
+        invoiceAmount: '',
+        deliveryDate: '',
+      })
+      setColleague('')
+      setInvoiceDate('')
+      // getDetails()
+    } catch (error) {
+      toast.error('Bitte füllen Sie alle Angaben aus')
+      // console.error('Error during API call:', error)
+    }
+  }
+
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(`${apiUrl}/invoice/get_invoice`)
+  //     const data = await result.json()
+  //     setActivityData(data)
+  //   } catch (error) {
+  //     console.error('Error fetching customer record:', error)
+  //   }
+  // }
+  // // console.log('aastha', activityData)
+  // useEffect(() => {
+  //   getDetails()
+  // }, [])
+  // useEffect(() => {
+  //   setInvoiceDate(getCurrentDate())
+  //   setProductData((prev) => ({
+  //     ...prev,
+  //     deliveryDate: getCurrentDate(),
+  //   }))
+  // }, [])
+  const option = [
+    { value: 'barzahlung', label: 'Barzahlung' },
+    { value: 'rechnung', label: 'Rechnung' },
+    { value: 'payPal', label: 'payPal' },
+    { value: 'klarna', label: 'Klarna' },
+    { value: 'kreditkarte', label: 'Kreditkarte (für die Zukunft)' },
+    { value: 'andere', label: 'Andere' },
+  ]
+  const optionData = [
+    { value: 'HVD-PV', label: 'HVD-PV' },
+    { value: 'Vortrag', label: 'Vortrag' },
+    { value: 'SPV', label: 'SPV' },
+    { value: 'OPV', label: 'OPV' },
+  ]
+  const getEmployeeData = async () => {
+    try {
+      const results = await fetch(`${apiUrl}/user/get/employeeData`)
+      const data = await results.json()
+      setEmployeeData(data?.data)
+      // console.log("ashishemploye", data?.data)
+      // setGetCustomerData(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+
+  useEffect(() => {
+    getEmployeeData()
+  }, [])
+
   return (
-    <div>
-      <div className="row m-4 p-4  shadow">
-        <div className="col-sm-2">
-          <input
-            type="search"
-            id="form1"
-            placeholder="Ihre Suche eingeben"
-            className="form-control"
-          />
-        </div>
-        <div className="col-sm-3">
-          <div className="d-flex">
-            <Dropdown>
-              <Dropdown.Toggle style={{ background: '#0b5995' }} id="dropdown-basic">
-                status
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">success</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">pending</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            &nbsp;
-            <Dropdown>
-              <Dropdown.Toggle style={{ background: '#0b5995' }} id="dropdown-basic">
-                type
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">success</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">pending</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            &nbsp;
-            <Space direction="vertical" size={12}>
-              <div className="d-flex mt-1">
-                <DatePicker renderExtraFooter={() => 'extra footer'} placeholder="" />
-                &nbsp;<span>-</span>&nbsp;
-                <DatePicker renderExtraFooter={() => 'extra footer'} placeholder="" />
-              </div>
-            </Space>
+    <div className="inner-page-wrap">
+      <div style={{ background: '#fff' }}>
+        <Customer />
+        <div className="tab-content">
+          <div className="tab-title">
+            <h4>Rechnung</h4>
           </div>
-        </div>
-        <div className="col-sm-2"></div>
-        <div className="col-sm-4">
-          <div className="d-flex">
-            {/* <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              <MdAdd /> &nbsp;Rechnung hinzufügen
-            </button>{' '} */}
-            <button
-              className="btn btn"
-              style={{ background: '#0b5995', color: 'white' }}
-              onClick={handleShow}
-            >
-              <MdAdd />
-              &nbsp;Rechnung hinzufügen
-              {/* Create new customer */}
-            </button>
-            <Modal show={show} onHide={handleClose} centered>
-              <Modal.Header closeButton>
-                <Modal.Title>Rechnung hinzufügen</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <div className="row p-3">
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Datum der Rechnung
-                      {/* first name */}
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="date"
-                        value={invoice}
-                        onChange={(e) => {
-                          setInvoice(e.target.value)
-                        }}
-                        placeholder="jo"
-                        className="form-control"
-                        id="inputPassword"
-                      />
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Fälligkeitsdatum
-                      {/* second name */}
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        name=""
-                        type="date"
-                        value={due_date}
-                        onChange={(e) => {
-                          setDueDate(e.target.value)
-                        }}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Projekt
-                      {/* phone */}
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        value={project}
-                        onChange={(e) => {
-                          setProject(e.target.value)
-                        }}
-                      >
-                        <option value="">--select--</option>
-                        <option value="Projekt">Projekt</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      STEUER
-                      {/* phone */}
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        value={tax}
-                        onChange={(e) => {
-                          setTax(e.target.value)
-                        }}
-                      >
-                        <option value="">--select--</option>
-                        <option value="STEUER">STEUER</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <div className="col-sm-9">
-                      Wiederkehrende &nbsp;
-                      <input
-                        type="checkbox"
-                        name="gender"
-                        value={recurring}
-                        onChange={(e) => {
-                          setRecurring(e.target.value)
-                        }}
-                      />{' '}
-                      {/* other */}
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Zweite TAX
-                      {/* first name */}
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        value={second_tax}
-                        onChange={(e) => {
-                          setSecondTax(e.target.value)
-                        }}
-                      >
-                        <option value="">--select--</option>
-                        <option value="Zweite TAX">Zweite TAX</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      TDS
-                      {/* first name */}
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control"
-                        value={tds}
-                        onChange={(e) => {
-                          setTds(e.target.value)
-                        }}
-                      >
-                        <option value="">--select--</option>
-                        <option value="TDS">TDS</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Hinweis
-                    </label>
-                    <div className="col-sm-9">
-                      <textarea
-                        className="form-control"
-                        value={notic}
-                        onChange={(e) => {
-                          setNotic(e.target.value)
-                        }}
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="mb-2 row">
-                    <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                      Priorität
-                      {/* phone */}
-                    </label>
-                    <div className="col-sm-9">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={label}
-                        onChange={(e) => {
-                          setLabel(e.target.value)
-                        }}
-                      />
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="block-wrap">
+                  <h3>Rechnungstellung</h3>
+                  <div className="container-fluid">
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <div className="row mb-3">
+                          <label htmlFor="product" className="col-sm-4 col-form-label">
+                            Produkt
+                          </label>
+                          <div className="col-sm-6">
+                            <Select
+                              className="w-100"
+                              options={optionData}
+                              onChange={handleInputChange}
+                              value={optionData.find(
+                                (option) => option.value === productData.product,
+                              )}
+                              name="product"
+                              placeholder="HVD-PV"
+                            />
+                          </div>
+                        </div>
+                        <div className="row mb-3">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            Zahlungsart
+                          </label>
+                          <div className="col-sm-6">
+                            <Select
+                              className="w-100"
+                              options={option}
+                              onChange={handleInputChange}
+                              value={option.find(
+                                (option) => option.value === productData.paymentMethod,
+                              )}
+                              name="paymentMethod"
+                              placeholder="Barzahlung"
+                            />
+                          </div>
+                        </div>
+                        <div className="mb-6 row">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            Rechnungsdatum
+                          </label>
+
+                          <div className="col-sm-6">
+                            <DatePiker
+                              className="form-control"
+                              selected={invoiceDate || '02.03.23'}
+                              onChange={invoiceChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="mb-6 row">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            MitarbeiterInnen
+                          </label>
+                          {/* <div className="col-sm-6">
+                            <input
+                              type="text"
+                              name="colleague"
+                              // checked={productData.colleague}
+                              value={colleague}
+                              onChange={(e) => {
+                                setColleague(e.target.value)
+                              }}
+                              placeholder="MitarbeiterIn"
+                              className="form-control"
+                            />
+                          </div> */}
+                          <div className="col-sm-6">
+                            <Select
+                              className="w-100"
+                              placeholder="MitarbeiterInnen"
+                              options={employeeData?.map((elem) => ({
+                                value: elem.username,
+                                label: elem.username,
+                              }))}
+                              onChange={handleInputChange}
+                              value={{
+                                value: productData.colleague || 'MitarbeiterInnen',
+                                label: productData.colleague || 'MitarbeiterInnen',
+                              }}
+                              name="colleague"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="mb-6 row">
+                          <label htmlFor="alreadyPaid" className="col-sm-4 col-form-label">
+                            Bereits bezahlt
+                          </label>
+                          <div className="col-sm-6 radio-check-wrap">
+                            <input
+                              type="checkbox"
+                              name="alreadyPaid"
+                              checked={productData.alreadyPaid}
+                              onChange={handleInputChange}
+                              onClick={(e) => e.stopPropagation()}
+                            />
+                            <span></span>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <label htmlFor="invoiceAmount" className="col-sm-4 col-form-label">
+                            Rechnungsbetrag eintragen
+                          </label>
+                          <div className="col-sm-6">
+                            <input
+                              type="text"
+                              placeholder="Rechnungsbetrag eintragen"
+                              className="form-control"
+                              name="invoiceAmount"
+                              value={productData.invoiceAmount}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="row">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            Lieferdatum
+                          </label>
+                          <div className="col-sm-6">
+                            <DatePiker
+                              className="form-control"
+                              selected={deliveryDate || '02.03.23'}
+                              onChange={DeliveryDateChange}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <button
-                  className="btn btn"
-                  onClick={handleClose}
-                  style={{ background: '#d04545', color: 'white' }}
-                >
-                  {' '}
-                  Abbrechen
-                </button>
-                &nbsp; &nbsp;
-                <button
-                  className="btn btn"
-                  onClick={saveData}
-                  style={{ background: '#0b5995', color: 'white' }}
-                >
-                  Aktivität hinzufügen
-                  {/* Add activity */}
-                </button>
-              </Modal.Footer>
-            </Modal>{' '}
-            &nbsp;
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              Excel
-            </button>
-            &nbsp;
-            <button className="btn btn" style={{ background: '#0b5995', color: 'white' }}>
-              Drucken
-            </button>
+              </div>
+            </div>
           </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '10px',
+            }}
+          ></div>
+          {/* <div className="text-end mx-3">
+            <button
+              type="button"
+              onClick={cancelData}
+              className="btn btn"
+              style={{ background: '#d04545', color: 'white' }}
+            >
+              Abbrechen
+            </button>
+            &nbsp; &nbsp;
+            <button
+              onClick={saveData}
+              type="button"
+              style={{ background: '#0b5995', color: 'white' }}
+              className="btn btn"
+            >
+              Speichern
+            </button>
+          </div> */}
+          <br />
+          <ToastContainer />
         </div>
-      </div>
-      <div>
-        <Table columns={columns} style={{ overflowX: 'auto' }} dataSource={data} />
       </div>
     </div>
   )
 }
-export default Bills
+export default React.memo(Bills)

@@ -369,4 +369,4 @@ const Tasks = () => {
     </div>
   )
 }
-export default Tasks
+export default React.memo(Tasks)
