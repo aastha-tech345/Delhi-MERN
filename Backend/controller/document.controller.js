@@ -2,10 +2,11 @@ const DocumentInfo = require("../models/document.model");
 const CustomerModel = require("../models/customer.model");
 const ApiFeatures = require("../utils/apiFeatures");
 exports.createDocument = async (req, res) => {
+  // console.log("ashish", req);/
   try {
     const result = await DocumentInfo.Document.create({
       ...req.body,
-      document_upload: req?.file?.filename,
+      document_upload: req?.files,
     });
 
     // const result = await document.save();
@@ -89,7 +90,7 @@ exports.getDocumentDataUpdate = async (req, res) => {
   try {
     const result = await DocumentInfo.Document.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, document_upload: req?.file?.filename },
+      { ...req.body,  document_upload: req?.files,},
       {
         new: true,
       }

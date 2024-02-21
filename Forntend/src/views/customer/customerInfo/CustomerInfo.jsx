@@ -57,7 +57,8 @@ const CustomerInfo = () => {
     employee: resultt?.customerInfoStatu?.employee,
     // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
-  const [clientStatus, setClientStatus] = useState(resultt?.customerInfoStatu?.clientStatus)
+  console.log('first', resultt?.customerInfoStatu)
+  const [clientStatus, setClientStatus] = useState(resultt?.customer?.status)
   const cities = [
     { name: 'HVD-PV', code: '0' },
     { name: 'SPV-alt', code: '1' },
@@ -449,13 +450,21 @@ const CustomerInfo = () => {
   const cancelData = () => {
     navigate('/customerlist')
   }
-  const getPlaceholder = () => {
-    if (clientStatus.length === 0) {
-      return 'HVD-PV'
-    } else {
-      return `${clientStatus.length} record${clientStatus.length > 1 ? 's' : ''} selected`
-    }
-  }
+  // const selectedItemTemplate = (option) => {
+  //   return (
+  //     <div className="p-multiselect-item">
+  //       <i className="pi pi-map-marker" style={{ marginRight: '0.5em' }}></i>
+  //       <span>{option.name}</span>
+  //     </div>
+  //   )
+  // }
+  // const getPlaceholder = () => {
+  //   if (clientStatus.length === 0) {
+  //     return 'HVD-PV'
+  //   } else {
+  //     return `${clientStatus.length} record${clientStatus.length > 1 ? 's' : ''} selected`
+  //   }
+  // }
 
   return (
     <div className="inner-page-wrap">
@@ -554,7 +563,7 @@ const CustomerInfo = () => {
                           <label className="col-sm-3 col-form-label">Status</label>
                           <div className="col-sm-6">
                             <MultiSelect
-                              placeholder={getPlaceholder()}
+                              placeholder="HVD-PV"
                               value={clientStatus}
                               onChange={(e) => setClientStatus(e.value)}
                               options={cities}
@@ -562,6 +571,8 @@ const CustomerInfo = () => {
                               maxSelectedValues={3}
                               optionLabel="name"
                               className="w-100"
+                              showSelectAll={false}
+                              // selectedItemTemplate={selectedItemTemplate}
                               showCheckbox
                               display="chip"
                             />

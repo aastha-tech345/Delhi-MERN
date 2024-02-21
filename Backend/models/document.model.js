@@ -5,7 +5,7 @@ const documentSchema = new Schema(
   {
     document_title: { type: String },
     document_type: [],
-    document_upload: { type: String },
+    document_upload: [],
     // customer_id: { type: String},
     added_by: { type: mongoose.Schema.Types.ObjectId },
     customer_id: { type: mongoose.Schema.Types.ObjectId },
