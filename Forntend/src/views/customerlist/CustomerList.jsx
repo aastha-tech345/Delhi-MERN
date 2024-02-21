@@ -19,6 +19,7 @@ import Select from 'react-select'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import { Dropdown } from 'primereact/dropdown'
+import { MultiSelect } from 'primereact/multiselect'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -37,6 +38,7 @@ const CustomerList = () => {
   const [city, setCity] = useState()
   const [street, setStreet] = useState()
   const [status, setStatus] = useState(null)
+  const [clientStatus, setClientStatus] = useState([])
   const [created_by] = useState(loginData?.user?._id)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [show, setShow] = useState(false)
@@ -331,16 +333,16 @@ const CustomerList = () => {
     setStatus(selectedOption)
     console.log(selectedOption)
   }
-  const option = [
-    { name: 'HVD-PV', code: 'HVD-PV' },
-    { name: 'SPV-alt', code: 'SPV-alt' },
-    { name: 'OPV-alt', code: 'OPV-alt' },
-    { name: 'DauerspenderInnen', code: 'DauerspenderInnen' },
-    { name: 'Materialbestellung', code: 'Materialbestellung' },
-    { name: 'Newsletter-Abonnent', code: 'Newsletter-Abonnent' },
-    { name: 'Offen', code: 'Offen' },
+  const cities = [
+    { name: 'HVD-PV', code: '0' },
+    { name: 'SPV-alt', code: '1' },
+    { name: 'OPV-alt', code: '2' },
+    { name: 'DauerspenderInnen', code: '3' },
+    { name: 'Materialbestellung', code: '4' },
+    { name: 'Newsletter-Abonnent', code: '5' },
+    { name: 'Offen', code: '6' },
   ]
-  console.log('option', option)
+  console.log('option', cities)
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -361,7 +363,7 @@ const CustomerList = () => {
         plz,
         email,
         land,
-        status,
+        status: clientStatus,
         id,
         created_by,
       },
@@ -874,15 +876,19 @@ const CustomerList = () => {
                         name="status"
                         placeholder="HVD"
                       /> */}
-                      <Dropdown
-                        value={status}
-                        onChange={handleSelectChange}
-                        options={option}
+                      <MultiSelect
+                        placeholder="HVD-PV"
+                        value={clientStatus}
+                        onChange={(e) => setClientStatus(e.value)}
+                        options={cities}
+                        isMulti
+                        maxSelectedValues={3}
                         optionLabel="name"
-                        name="status"
-                        showClear
-                        placeholder="Select a City"
-                        className="w-full md:w-14rem"
+                        className="w-100"
+                        showSelectAll={false}
+                        // selectedItemTemplate={selectedItemTemplate}
+                        showCheckbox
+                        display="chip"
                       />
                     </div>
                   </div>

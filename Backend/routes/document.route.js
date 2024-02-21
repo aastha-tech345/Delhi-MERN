@@ -21,10 +21,10 @@ const imageUplaod = multer({
   }),
 });
 
-router.post('/create_document',imageUplaod.single("document_upload") ,roleCtrl.createDocument);
+router.post('/create_document',imageUplaod.array("document_upload",10) ,roleCtrl.createDocument);
 router.get('/get_document', roleCtrl.getDocument);
 router.get('/get_document/:id', roleCtrl.getDocumentData);
-router.put('/get_document/update/:id', imageUplaod.single("document_upload") ,roleCtrl.getDocumentDataUpdate);
+router.put('/get_document/update/:id', imageUplaod.array("document_upload",10) ,roleCtrl.getDocumentDataUpdate);
 router.put('/get_document/delete/:id', roleCtrl.getDocumentDataDelete);
 router.delete('/get_document/:id', roleCtrl.getDocumentDataDelete);
 // router.put('/get_document/:id', roleCtrl.getDocumentDataDelete);`

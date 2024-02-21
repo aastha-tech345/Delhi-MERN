@@ -39,11 +39,14 @@ const Document = () => {
       title: 'DOKUMENTENTYP',
       dataIndex: 'document_type',
     },
-    {
-      title: 'DOKUMENTEN',
-      dataIndex: 'document_upload',
-      width: '50%',
-    },
+    // {
+    //   title: 'DOKUMENTEN',
+    //   dataIndex: 'document_upload',
+    //   width: '50%',
+    //   render: (_, record) => {
+    //     console.log(record.document_upload)
+    //   },
+    // },
     {
       title: 'AKTION',
       dataIndex: 'action',
@@ -96,19 +99,19 @@ const Document = () => {
   const [data, setData] = useState({
     document_title: '',
     document_type: '',
-    document_upload: '',
+    // document_upload: '',
     customer_id: customerRecord?._id,
     added_by: loginData?.user?._id,
   })
 
-  const [document_upload, setDocumentUpload] = useState('')
+  const [document_upload, setDocumentUpload] = useState([])
   const [documentRecord, setDocumentRecord] = useState([])
   const handleEdit = (record) => {
     let recordData = JSON.stringify(record)
     localStorage.setItem('DocumentEditDetails', recordData)
     setEdit(true)
   }
-  console.log('asjhjdgas', document_upload.name)
+  // console.log('asjhjdgas', document_upload.name)
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState('')
@@ -142,11 +145,14 @@ const Document = () => {
 
       e.preventDefault()
       const myForm = new FormData()
+      for (let i = 0; i < document_upload?.length; i++) {
+        myForm.append('document_upload', document_upload[i])
+      }
       myForm.append('document_title', data?.document_title)
       myForm.append('document_type', data?.document_type)
       myForm.append('customer_id', customerRecord?._id)
       myForm.append('added_by', loginData?.user?._id)
-      myForm.append('document_upload', document_upload)
+      // myForm.append('document_upload', document_upload)
 
       const url = `${apiUrl}/document/create_document`
       // console.log(myForm)
@@ -155,7 +161,11 @@ const Document = () => {
       const response = await postFetchUser(url, myForm)
       console.log('ashishdocu', response)
       notify('Dokumentdaten erfolgreich gespeichert')
-      setData('')
+      setData({
+        document_title: '',
+        document_type: '',
+      })
+      setDocumentUpload([])
       handleClose()
       getDetails()
     } catch (error) {
@@ -164,7 +174,7 @@ const Document = () => {
   }
 
   const cancelData = () => {
-    setDocumentUpload('')
+    setDocumentUpload([])
   }
 
   const getDetails = async () => {
@@ -284,17 +294,29 @@ const Document = () => {
                         id="fileUpload"
                         type="file"
                         className="form-control"
+                        multiple
                         name="document_upload"
-                        onChange={(e) => setDocumentUpload(e.target.files[0])}
+                        onChange={(e) => setDocumentUpload([...document_upload, ...e.target.files])}
                       />
                       <div className="file-input-wrap">
                         <div className="filename-field">
-                          <span>{document_upload ? document_upload.name : 'Datei-Upload'}</span>
-
+                          <span>
+                            {document_upload?.length
+                              ? document_upload.map((file, index) => (
+                                  <div key={index}>{file.name}</div>
+                                ))
+                              : 'Datei-Upload'}
+                          </span>
+                          {/* <span>
+                            {' '}
+                            {document_upload.map((file, index) => (
+                              <div key={index}>{file.name}</div>
+                            ))}
+                          </span> */}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
+                            width="75"
+                            height="75"
                             viewBox="0 0 16 16"
                             fill="none"
                             onClick={cancelData}

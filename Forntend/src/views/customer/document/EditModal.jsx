@@ -15,7 +15,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     document_title: response?.document_title,
     document_type: response?.document_type,
   })
-  const [document_upload, setDocumentUpload] = useState(null)
+  const [document_upload, setDocumentUpload] = useState([])
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadValue] = useState(false)
 
@@ -51,10 +51,12 @@ const EditModal = ({ setEdit, getDetails }) => {
     try {
       setLoadValue(true)
       const formData = new FormData()
+      for (let i = 0; i < document_upload?.length; i++) {
+        formData.append('document_upload', document_upload[i])
+      }
       formData.append('document_title', document_title)
       formData.append('document_type', document_type)
-      formData.append('document_upload', document_upload)
-
+      // formData.append('document_upload', document_upload)
       const res = await putFetch(
         `${apiUrl}/document/get_document/update/${response?._id}`,
         formData,
@@ -68,6 +70,7 @@ const EditModal = ({ setEdit, getDetails }) => {
           document_type: '',
           // document_upload: null,
         })
+        setDocumentUpload([])
         toast.success('Dokument erfolgreich aktualisiert')
         getDetails()
       } else {
@@ -79,7 +82,8 @@ const EditModal = ({ setEdit, getDetails }) => {
     }
   }
   const cancelData = () => {
-    setDocumentUpload('')
+    console.log('ash')
+    setDocumentUpload([])
   }
   const options = [
     { value: 'Living will', label: 'Patientenverfügung' },
@@ -92,7 +96,6 @@ const EditModal = ({ setEdit, getDetails }) => {
     { value: 'Personal document', label: 'Persönliches Dokument' },
     { value: 'Other', label: 'Anderes' },
   ]
-
   return (
     <div
       className="modal"
@@ -192,23 +195,36 @@ const EditModal = ({ setEdit, getDetails }) => {
                       // ref={fileInputRef}
                       id="fileUpload"
                       type="file"
+                      multiple
                       className="form-control"
                       name="document_upload"
-                      onChange={(e) => setDocumentUpload(e.target.files[0])}
+                      onChange={(e) => setDocumentUpload([...document_upload, ...e.target.files])}
                     />
                     <div className="file-input-wrap">
                       <div className="filename-field">
-                        <span>
+                        {/* <span>
                           {document_upload?.name
                             ? document_upload?.name
                             : 'Datei-Upload' || response.document_upload
                             ? response.document_upload
                             : 'Datei-Upload'}
+                        </span> */}
+
+                        <span>
+                          {document_upload?.length
+                            ? document_upload.map((file, index) => (
+                                <div key={index}>{file.name}</div>
+                              ))
+                            : 'Datei-Upload' || response.document_upload?.length
+                            ? response?.document_upload.map((file, index) => (
+                                <div key={index}>{file.filename}</div>
+                              ))
+                            : 'Datei-Upload'}
                         </span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
+                          width="75"
+                          height="75"
                           viewBox="0 0 16 16"
                           fill="none"
                           onClick={cancelData}
