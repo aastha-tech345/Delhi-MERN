@@ -73,9 +73,9 @@ const Bills = () => {
   }
   let data = { ...productData, colleague, invoiceDate }
   const saveData = async () => {
-    if (!productData?.product) {
-      return toast.warning('Bitte Produktname...')
-    }
+    // if (!productData?.product) {
+    //   return toast.warning('Bitte Produktname...')
+    // }
     try {
       let response = await fetch(`${apiUrl}/invoice/create_invoice`, {
         method: 'POST',
@@ -313,7 +313,7 @@ const Bills = () => {
               marginBottom: '10px',
             }}
           ></div>
-          {/* <div className="text-end mx-3">
+          <div className="text-end mx-3">
             <button
               type="button"
               onClick={cancelData}
@@ -331,7 +331,7 @@ const Bills = () => {
             >
               Speichern
             </button>
-          </div> */}
+          </div>
           <br />
           <ToastContainer />
         </div>

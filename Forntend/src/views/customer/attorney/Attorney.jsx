@@ -389,13 +389,10 @@ const Attorney = () => {
                     Bevollmächtigte Person(en):
                   </p>
                   <div className="row">
-                    <label
-                      htmlFor="adoptDataFromHealthcare"
-                      className="col-sm-4 col-form-label fs-6"
-                    >
+                    <label htmlFor="adoptDataFromHealthcare" className="col-sm-3 col-form-label">
                       Daten aus Gesundheitsvollmacht übernehmen
                     </label>
-                    <div className="col-sm-4 radio-check-wrap mt-2">
+                    <div className="col-sm-1 radio-check-wrap mt-2">
                       <input
                         type="checkbox"
                         // onChange={powerOfAttorneyChange}

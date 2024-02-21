@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Loader from 'src/components/loader/Loader'
 import Form from 'react-bootstrap/Form'
+
 import PropTypes from 'prop-types'
 const EditModal = ({ setHide, getDetails }) => {
   let modalStyle = {
@@ -270,6 +271,7 @@ const EditModal = ({ setHide, getDetails }) => {
                   />
                 </div>
               </div>
+
               {/* <div className="row">
                 <div className="col-sm-6">
                   <select

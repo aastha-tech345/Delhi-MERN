@@ -1822,7 +1822,7 @@ const Services = () => {
                             Abbrechen
                           </button>
                           <button onClick={saveData} type="button" className="btn btn-save ms-3">
-                            Speichern Sie
+                            Speichern
                           </button>
                         </div>
                       </div>
