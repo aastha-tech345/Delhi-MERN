@@ -46,7 +46,14 @@ const Customer = ({ getCustomerData }) => {
 
   let customer = localStorage.getItem('customerRecord')
   let res = JSON.parse(customer)
-  // console.log(res)
+  console.log(res?.startDate)
+  const dateString = res?.startDate
+  const date = new Date(dateString)
+
+  const options = { year: '2-digit', month: '2-digit', day: '2-digit' }
+  const formattedDate = date.toLocaleDateString('en-US', options).replace(/\//g, '.')
+
+  // console.log(formattedDate) // Output: 02.12.24
 
   const firstName = res?.fname?.slice(0, 1).toUpperCase() + res?.fname?.slice(1).toLowerCase()
   const lastName = res?.lname?.slice(0, 1).toUpperCase() + res?.lname?.slice(1).toLowerCase()
@@ -94,9 +101,12 @@ const Customer = ({ getCustomerData }) => {
                   <span>{street}</span>
                 </address>
               </div>
-              <div className="col-md-8 text-md-end">
+              <div
+                className="col-md-8 text-md-end"
+                // style={{ color: 'white', border: '1px solid white' }}
+              >
                 <div className="d-flex justify-content-md-end justify-content-between">
-                  <button className="btn btn-outline me-4">
+                  <button className="btn btn me-4 header-button">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -116,9 +126,9 @@ const Customer = ({ getCustomerData }) => {
                         </clipPath>
                       </defs>
                     </svg> */}
-                    <span> {res?.startDate}</span>
+                    <span> {formattedDate}</span>
                   </button>
-                  <button className="btn btn-outline me-4">
+                  <button className="btn btn me-4 header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -140,7 +150,7 @@ const Customer = ({ getCustomerData }) => {
                     </svg>
                     <span> {res?.email}</span>
                   </button>
-                  <button className="btn btn-outline">
+                  <button className="btn btn header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="22"

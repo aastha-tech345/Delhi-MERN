@@ -17,6 +17,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../customer/Date'
 import warning from 'antd/es/_util/warning'
 import CustomerInfo from '../customer/customerInfo/CustomerInfo'
+import Select, { components } from 'react-select'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -34,7 +35,7 @@ const CustomerList = () => {
   const [plz, setPlz] = useState()
   const [city, setCity] = useState()
   const [street, setStreet] = useState()
-  const [group, setGroup] = useState()
+  const [status, setStatus] = useState()
   const [created_by] = useState(loginData?.user?._id)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [show, setShow] = useState(false)
@@ -95,7 +96,6 @@ const CustomerList = () => {
     {
       title: 'HINTERLEGUNG',
       dataIndex: 'id',
-      // width: '20%',
     },
     {
       title: 'E-MAIL',
@@ -141,7 +141,7 @@ const CustomerList = () => {
                 : '',
           }}
         >
-          {console.log('ashishtext[0].name', text[0]?.name)}
+          {/* {console.log('ashishtext[0].name', text[0]?.name)} */}
           {text === '' ? <span>PV-ALT</span> : <b>{text[0]?.name}</b>}
         </div>
       ),
@@ -331,7 +331,21 @@ const CustomerList = () => {
       setEmail('')
     }
   }
-
+  const Quelle = [
+    { value: 'order', label: 'Auftrag (Online-Maske) ' },
+    { value: 'contact form', label: 'Kontaktformular' },
+    { value: 'order print', label: 'Auftrag / Print' },
+    { value: 'website', label: 'Webseite' },
+    { value: 'e-mail', label: 'E-Mail' },
+    { value: 'call', label: 'Anruf' },
+    { value: 'letter', label: 'Zuschrift (Post)' },
+    { value: 'HVD regional association', label: 'HVD-Landesverband' },
+    { value: 'Regional association MOL', label: 'Regionalverband MOL' },
+    { value: 'Northern Regional Association', label: 'Regionalverband NORD' },
+    { value: 'Regional association', label: 'Regionalverband Potsdam' },
+    { value: 'inter', label: 'intern' },
+    { value: 'anderes', label: 'anderes' },
+  ]
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -352,7 +366,7 @@ const CustomerList = () => {
         plz,
         email,
         land,
-        group,
+        status,
         id,
         created_by,
       },
@@ -386,7 +400,7 @@ const CustomerList = () => {
       setEmail('')
       setPlz('')
       setStreet('')
-      setGroup('')
+      setStatus('')
       setPhone('')
       setCity('')
       setStartDate('')
@@ -840,18 +854,28 @@ const CustomerList = () => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-sm-6">
-                      <select
+                    <div className="col-sm-12">
+                      {/* <select
                         className="form-control mb-0"
-                        value={group}
+                        value={status}
                         onChange={(e) => {
-                          setGroup(e.target.value)
+                          setStatus(e.target.value)
                         }}
                       >
-                        <option value="">--select group--</option>
+                        <option value="">--wähle die Gruppe--</option>
                         <option value="HVD-PV">HVD</option>
                         <option value="PV-ALT">ALT</option>
-                      </select>
+                      </select> */}
+                      <Select
+                        className="w-100"
+                        options={Quelle}
+                        onChange={(selectedOption) => {
+                          setStatus(selectedOption.value)
+                        }}
+                        value={Quelle.find((option) => option.value === status)}
+                        name="status"
+                        placeholder="HVD"
+                      />
                     </div>
                   </div>
                 </Form>

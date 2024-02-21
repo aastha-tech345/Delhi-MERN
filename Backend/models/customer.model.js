@@ -21,7 +21,7 @@ const customerContactSchema = {
   gender: { type: String, default: "" },
   fname: { type: String, default: "" },
   lname: { type: String, default: "" },
-  dob: { type: String, default: "10.01.23" },
+  startDate: { type: String, default: "10.01.23" },
   name: { type: String, default: "" },
 };
 
@@ -71,11 +71,10 @@ const customerInfo = {
   street: { type: String, default: " " },
   land: { type: String, default: " " },
   startDate: { type: String, default: "10.01.23" },
-  dob: { type: String, default: "10.01.23" },
+  // dob: { type: String, default: "10.01.23" },
   status: { type: Array, default: [] },
   id: { type: String },
-  created_by: { type: Schema.Types.ObjectId, ref: "User" },
-  services: { type: Schema.Types.ObjectId, ref: "SpvInfo" }
+  // created_by: { type: Schema.Types.ObjectId, ref: "user" },
 };
 const customerSchema = new Schema(
   {
@@ -88,7 +87,8 @@ const customerSchema = new Schema(
     customerDelivery: customerDeliverySchema,
     customerDeposit: customerDepositSchema,
     customerBurial: customerBurialSchema,
-    // created_by: { type: Schema.Types.ObjectId, ref: "User" },
+    services: { type: Schema.Types.ObjectId, ref: "spv" },
+    created_by: { type: Schema.Types.ObjectId, ref: "user" },
 
     status: {
       type: String,
