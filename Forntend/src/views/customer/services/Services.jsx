@@ -381,7 +381,7 @@ const Services = () => {
       <Customer />
       <div className="tab-content">
         <div className="tab-title">
-          <h4> SPV</h4>
+          <h4>HVD-PV</h4>
         </div>
         <div className="container-fluid">
           <div className="row">
@@ -1234,7 +1234,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Ärztin
                           </label>
-                          <div className="col-sm-6">
+                          <div className="col-sm-8">
                             <textarea
                               value={support.doctor}
                               onChange={(e) => onChange('doctor', e.target.value)}
@@ -1249,7 +1249,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Seelischer Beistand
                           </label>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <textarea
                               value={support.mentalSupport}
                               onChange={(e) => onChange('mentalSupport', e.target.value)}
@@ -1264,7 +1264,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Keinesfalls
                           </label>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <textarea
                               value={support.absolutelyNot}
                               onChange={(e) => onChange('absolutelyNot', e.target.value)}
@@ -1279,7 +1279,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Weitere Angaben
                           </label>
-                          <div className="col-sm-6">
+                          <div className="col-sm-8">
                             <input
                               type="text"
                               name="mentalInformation"
@@ -1345,7 +1345,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label modal-form">
                             Bestattungsvorsorge
                           </label>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <textarea
                               value={funeralwishes.arrangement}
                               onChange={(e) => funeralwishesChange(e)}
@@ -1360,7 +1360,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Sonstiges
                           </label>
-                          <div className="col-md-6">
+                          <div className="col-md-8">
                             <textarea
                               value={funeralwishes.miscellaneous}
                               onChange={(e) => funeralwishesChange(e)}
@@ -1375,7 +1375,7 @@ const Services = () => {
                           <label htmlFor="inputtext" className="col-md-3 col-form-label">
                             Weitere Angaben
                           </label>
-                          <div className="col-sm-6">
+                          <div className="col-sm-8">
                             <input
                               type="text"
                               name="funeralInformation"

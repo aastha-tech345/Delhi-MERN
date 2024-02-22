@@ -32,7 +32,7 @@ const Customer = ({ getCustomerData }) => {
     } else if (name === 'Vollmachten') {
       localStorage.setItem('tabId', 'attorney')
       return navigate('/customer/attorney')
-    } else if (name === 'SPV') {
+    } else if (name === 'HVD-PV') {
       localStorage.setItem('tabId', 'services')
       return navigate('/customer/services')
     } else if (name === 'Rechnung') {
@@ -319,11 +319,11 @@ const Customer = ({ getCustomerData }) => {
                       role="tab"
                       aria-controls="services"
                       aria-selected={activeTab === 'services'}
-                      onClick={(e) => handleTabClick('services', 'SPV', e)}
+                      onClick={(e) => handleTabClick('services', 'HVD-PV', e)}
                     >
                       {' '}
                       <i className="fa-regular fa-lightbulb fa-fw"></i>
-                      SPV
+                      HVD-PV
                     </button>
                     <button
                       className={`nav-link ${activeTab === 'bills' ? 'active' : ''}`}
