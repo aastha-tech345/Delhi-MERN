@@ -48,14 +48,29 @@ const CustomerList = () => {
   const [itemsPerPage, setItemsPerPage] = useState('')
   const navigate = useNavigate()
 
-  const generateRandomId = () => {
-    return 'yymmdd-' + Math.floor(1000 + Math.random() * 9000)
-  }
+  // const generateSequentialId = (() => {
+  //   let counter = 0
 
-  const [id] = useState(generateRandomId())
+  //   return () => {
+  // const today = new Date()
+  // const year = today.getFullYear().toString().slice(-2)
+  // const month = (today.getMonth() + 1).toString().padStart(2, '0')
+  // const day = today.getDate().toString().padStart(2, '0')
+  // const formattedDate = `${year}${month}${day}`
+  //     return `${formattedDate}-${counter}`
+  //   }
+  // })()
+  const today = new Date()
+  const year = today.getFullYear().toString().slice(-2)
+  const month = (today.getMonth() + 1).toString().padStart(2, '0')
+  const day = today.getDate().toString().padStart(2, '0')
+  const formattedDate = `${year}${month}${day}`
+  const generateSequentialId = () => {
+    return formattedDate + '00'
+  }
+  const [id] = useState(generateSequentialId())
 
   const notify = (data) => toast(data)
-
   const [email, setEmail] = useState('')
 
   const handlePageChange = (event, value) => {
@@ -96,6 +111,7 @@ const CustomerList = () => {
     {
       title: 'HINTERLEGUNG',
       dataIndex: 'id',
+      render: (text, record, index) => text + (index + 1),
     },
     {
       title: 'E-MAIL',
@@ -321,14 +337,15 @@ const CustomerList = () => {
 
   const handleEmailChange = (e) => {
     const inputValue = e.target.value
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-    if (emailRegex.test(inputValue.toLowerCase())) {
+    if (emailRegex.test(inputValue)) {
       setEmail(inputValue)
     } else {
       setEmail('')
     }
   }
+
   const handleSelectChange = (selectedOption) => {
     setStatus(selectedOption)
     // console.log(selectedOption)
@@ -401,6 +418,7 @@ const CustomerList = () => {
       setPhone('')
       setCity('')
       setStartDate('')
+      setClientStatus('')
       setValidated(false)
       // window.location.reload()
       handleClose()
@@ -766,12 +784,13 @@ const CustomerList = () => {
                         id="inputEmail"
                       /> */}
                       <input
-                        type="email"
+                        type="text"
                         name="email"
                         onChange={handleEmailChange}
                         placeholder="E-Mail"
                         className="form-control"
                         id="inputPassword"
+                        required={true}
                       />
                     </div>
                     <div className="col-sm-6">
@@ -811,7 +830,10 @@ const CustomerList = () => {
                         type="text"
                         value={city}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                          const inputValue = e.target.value.replace(
+                            /[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                            '',
+                          ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                           setCity(inputValue)
                         }}
                         placeholder="Stadt"

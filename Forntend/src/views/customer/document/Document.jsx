@@ -30,15 +30,16 @@ const Document = () => {
   const [edit, setEdit] = useState(false)
   const columns = [
     {
+      title: 'DOKUMENTENTYP',
+      dataIndex: 'document_type',
+    },
+    {
       title: 'TITEL',
       dataIndex: 'document_title',
       render: (text) => <a>{text}</a>,
       width: '20%',
     },
-    {
-      title: 'DOKUMENTENTYP',
-      dataIndex: 'document_type',
-    },
+
     // {
     //   title: 'DOKUMENTEN',
     //   dataIndex: 'document_upload',
@@ -361,7 +362,7 @@ const Document = () => {
                             </defs>
                           </svg>
                         </div>
-                        <div className="file-btn">Durchsuche</div>
+                        <div className="file-btn form-control">Durchsuche</div>
                       </div>
 
                       <div className="">
