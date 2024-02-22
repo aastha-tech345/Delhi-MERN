@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const Attorney = () => {
   const navigate = useNavigate()
   const maxFields = 10
-  const initialFields = 3
+  const initialFields = 0
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const cancelData = () => {
@@ -184,7 +184,7 @@ const Attorney = () => {
       let result = await response.json()
       console.log(result)
       if (result.status === 201) {
-        toast.success('Anwaltsdaten erfolgreich gespeichert!')
+        toast.success('Daten erfolgreich gespeichert')
         resetStateVariables()
       } else {
         toast.error(
@@ -345,10 +345,10 @@ const Attorney = () => {
                                     value={field.healthCare_phone}
                                     type="text"
                                     name="healthCare_phone"
-                                    placeholder="0121456789 / 0123456789"
+                                    placeholder="853-456-8464"
                                     className="form-control"
                                     id={`phone_${index}`}
-                                    maxLength={60}
+                                    maxLength={30}
                                     minLength={10}
                                   />
                                 </div>
@@ -363,6 +363,7 @@ const Attorney = () => {
               <div className="row">
                 <div className="col-sm-12">
                   <h3 style={{ color: '#244D92' }}>Vorsorgevollmacht</h3>
+                  <hr />
                   <div className="row">
                     <label htmlFor="AttorneyMasterData" className="col-sm-3 col-form-label fs-6">
                       Eintrag der Stammdaten
@@ -480,10 +481,10 @@ const Attorney = () => {
                                 value={field.powerOfAttorney_phone}
                                 name="powerOfAttorney_phone"
                                 type="text"
-                                placeholder="0121456789 / 0123456789"
+                                placeholder="853-456-8464"
                                 className="form-control"
                                 id="inputPassword"
-                                maxLength={60}
+                                maxLength={30}
                                 minLength={10}
                               />
                             </div>

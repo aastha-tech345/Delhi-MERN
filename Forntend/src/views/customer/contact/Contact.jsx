@@ -160,6 +160,7 @@ const Contact = () => {
   let customer_id = custData?._id
   let added_by = loginData?.user?._id
   const [email, setEmail] = useState('')
+  const [land, setLand] = useState('')
   const [show, setShow] = useState(false)
   const [contactRecord, setContactRecord] = useState([])
   const [search, setSearch] = useState('')
@@ -188,6 +189,11 @@ const Contact = () => {
     setData({ ...data, [name]: newValue })
   }
 
+  const handleChangeLand = (e) => {
+    const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+    setLand(inputValue)
+  }
+
   const handleDelete = (customerId) => {
     setContactId(customerId)
     setHide(true)
@@ -210,7 +216,7 @@ const Contact = () => {
     }
   }
 
-  let TotalData = { ...data, email, id, customer_id, added_by }
+  let TotalData = { ...data, land, email, id, customer_id, added_by }
 
   const saveData = async () => {
     console.log('ashish', TotalData)
@@ -424,25 +430,6 @@ const Contact = () => {
                         />
                       </div>
                     </div>
-
-                    <div className="row">
-                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                        Straße + Nr
-                      </label>
-                      <div className="col-sm-9">
-                        <input
-                          type="text"
-                          name="street"
-                          value={data.street}
-                          onChange={handleChange}
-                          placeholder="Straße + Nr"
-                          className="form-control"
-                          id="inputPassword"
-                          required={true}
-                        />
-                      </div>
-                    </div>
-
                     <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Adresszusatz
@@ -454,6 +441,23 @@ const Contact = () => {
                           value={data.address}
                           onChange={handleChange}
                           placeholder="Adresszusatz"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Straße + Nr
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="text"
+                          name="street"
+                          value={data.street}
+                          onChange={handleChange}
+                          placeholder="Straße + Nr"
                           className="form-control"
                           id="inputPassword"
                           required={true}
@@ -486,17 +490,24 @@ const Contact = () => {
                     </div>
                     <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                        Mail
+                        Mobil
                       </label>
                       <div className="col-sm-9">
                         <input
-                          type="email"
-                          name="email"
-                          // value={email}
-                          onChange={handleEmailChange}
-                          placeholder="info@gmail.com"
+                          type="tel"
+                          name="mobile"
+                          value={data.mobile}
+                          onChange={(e) => {
+                            const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                            if (/^\+?[0-9]*$/.test(inputValue)) {
+                              handleChange({ target: { name: 'mobile', value: inputValue } })
+                            }
+                          }}
+                          placeholder="835-456-8464"
                           className="form-control"
                           id="inputPassword"
+                          required={true}
+                          maxLength={30}
                         />
                       </div>
                     </div>
@@ -537,30 +548,40 @@ const Contact = () => {
                       </div>
                     </div>
 
-                    <div className="row">
-                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                        Mobil
-                      </label>
-                      <div className="col-sm-9">
-                        <input
-                          type="tel"
-                          name="mobile"
-                          value={data.mobile}
-                          onChange={(e) => {
-                            const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                            if (/^\+?[0-9]*$/.test(inputValue)) {
-                              handleChange({ target: { name: 'mobile', value: inputValue } })
-                            }
-                          }}
-                          placeholder="835-456-8464"
-                          className="form-control"
-                          id="inputPassword"
-                          required={true}
-                        />
-                      </div>
-                    </div>
-
                     <div>
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                          Land
+                        </label>
+                        <div className="col-sm-9">
+                          <input
+                            type="land"
+                            name="land"
+                            value={land}
+                            onChange={handleChangeLand}
+                            placeholder="Land"
+                            className="form-control"
+                            id="inputPassword"
+                          />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                          E-Mail
+                        </label>
+                        <div className="col-sm-9">
+                          <input
+                            type="email"
+                            name="email"
+                            // value={email}
+                            onChange={handleEmailChange}
+                            placeholder="info@gmail.com"
+                            className="form-control"
+                            id="inputPassword"
+                          />
+                        </div>
+                      </div>
+
                       <div className="mb-6 row">
                         <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                           Geschlecht

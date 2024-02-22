@@ -140,7 +140,7 @@ const GetActivityData = ({ updateData, search }) => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th className="col-1 ">EVENT</th>
+                      <th className="col-1 ">AKTION</th>
                       <th className="col-1 ">DATUM</th>
                       <th className="col-4 ">NOTIZ</th>
                       <th className="col-4 ">MITARBEITERINNEN</th>
