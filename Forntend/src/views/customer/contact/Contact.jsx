@@ -207,9 +207,9 @@ const Contact = () => {
 
   const handleEmailChange = (e) => {
     const inputValue = e.target.value
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-    if (emailRegex.test(inputValue.toLowerCase())) {
+    if (emailRegex.test(inputValue)) {
       setEmail(inputValue)
     } else {
       setEmail('')

@@ -45,9 +45,9 @@ const EditModal = ({ setEdit, getDetails }) => {
 
   const handleEmailChange = (e) => {
     const inputValue = e.target.value
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-    if (emailRegex.test(inputValue.toLowerCase())) {
+    if (emailRegex.test(inputValue)) {
       setEmail(inputValue)
     } else {
       setEmail('')
@@ -324,11 +324,12 @@ const EditModal = ({ setEdit, getDetails }) => {
                 </label>
                 <div className="col-sm-9">
                   <input
+                    disabled
                     type="email"
                     name="email"
                     value={email}
                     onChange={handleEmailChange}
-                    placeholder="jo@gmail.com"
+                    placeholder="E-Mail"
                     className="form-control"
                     id="inputPassword"
                   />
