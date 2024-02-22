@@ -14,6 +14,7 @@ const contactSchema = new Schema(
     mobile: { type: String },
     street: { type: String },
     title: { type: String },
+    land: { type: String },
     address: { type: String },
 
     // customer_id: { type: String },

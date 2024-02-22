@@ -35,6 +35,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     street: response?.street,
     title: response?.title,
     address: response?.address,
+    land: response?.land,
     // customer_id: result?._id,
   })
 
@@ -188,24 +189,6 @@ const EditModal = ({ setEdit, getDetails }) => {
 
               <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                  Straße + Nr
-                </label>
-                <div className="col-sm-9">
-                  <input
-                    type="text"
-                    name="street"
-                    value={data.street}
-                    onChange={handleChange}
-                    placeholder="Straße + Nr"
-                    className="form-control"
-                    id="inputPassword"
-                    required={true}
-                  />
-                </div>
-              </div>
-
-              <div className="row">
-                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Adresszusatz
                 </label>
                 <div className="col-sm-9">
@@ -215,6 +198,23 @@ const EditModal = ({ setEdit, getDetails }) => {
                     value={data.address}
                     onChange={handleChange}
                     placeholder="Adresszusatz"
+                    className="form-control"
+                    id="inputPassword"
+                    required={true}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  Straße + Nr
+                </label>
+                <div className="col-sm-9">
+                  <input
+                    type="text"
+                    name="street"
+                    value={data.street}
+                    onChange={handleChange}
+                    placeholder="Straße + Nr"
                     className="form-control"
                     id="inputPassword"
                     required={true}
@@ -247,17 +247,23 @@ const EditModal = ({ setEdit, getDetails }) => {
               </div>
               <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                  Mail
+                  Mobil
                 </label>
                 <div className="col-sm-9">
                   <input
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="jo@gmail.com"
+                    type="tel"
+                    name="mobile"
+                    value={data.mobile}
+                    onChange={(e) => {
+                      const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                      if (/^\+?[0-9]*$/.test(inputValue)) {
+                        handleChange({ target: { name: 'mobile', value: inputValue } })
+                      }
+                    }}
+                    placeholder="835-456-8464"
                     className="form-control"
                     id="inputPassword"
+                    required={true}
                   />
                 </div>
               </div>
@@ -297,30 +303,37 @@ const EditModal = ({ setEdit, getDetails }) => {
                   />
                 </div>
               </div>
-
               <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                  Mobil
+                  Land
                 </label>
                 <div className="col-sm-9">
                   <input
-                    type="tel"
-                    name="mobile"
-                    value={data.mobile}
-                    onChange={(e) => {
-                      const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                      if (/^\+?[0-9]*$/.test(inputValue)) {
-                        handleChange({ target: { name: 'mobile', value: inputValue } })
-                      }
-                    }}
-                    placeholder="835-456-8464"
+                    type="land"
+                    name="land"
+                    value={data.land}
+                    onChange={handleChange}
+                    placeholder="Land"
                     className="form-control"
-                    id="inputPassword"
-                    required={true}
                   />
                 </div>
               </div>
-
+              <div className="row">
+                <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                  E-Mail
+                </label>
+                <div className="col-sm-9">
+                  <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    placeholder="jo@gmail.com"
+                    className="form-control"
+                    id="inputPassword"
+                  />
+                </div>
+              </div>
               <div className="mb-6 row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Geschlecht

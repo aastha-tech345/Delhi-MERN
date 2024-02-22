@@ -42,14 +42,14 @@ const CustomerInfo = () => {
   let ress = localStorage.getItem('customerRecord')
   // console.log(ress)
   let resultt = JSON.parse(ress)
-  // console.log('aast', resultt)
+  console.log('aast', resultt)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: resultt?.orderingMaterials?.orderNumber,
     newsletterDate: resultt?.orderingMaterials?.newsletterDate,
     extras: resultt?.orderingMaterials?.extras,
     newsletterSubscription: resultt?.orderingMaterials?.newsletterSubscription,
   })
-  console.log('orderDate', resultt?.orderingMaterials?.newsletterDate)
+  // console.log('orderDate', resultt?.orderingMaterials?.newsletterDate)
 
   const [customerInfoStatu, setCustomerInfoStatu] = useState({
     // clientStatus: resultt?.customerInfoStatu?.clientStatus,
@@ -57,8 +57,9 @@ const CustomerInfo = () => {
     employee: resultt?.customerInfoStatu?.employee,
     // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
-  console.log('first', resultt?.customerInfoStatu)
-  const [clientStatus, setClientStatus] = useState(resultt?.customer?.status)
+  // console.log('first', resultt?.customerInfoStatu)
+  const [clientStatus, setClientStatus] = useState(resultt?.status)
+  // console.log('status', resultt?.status)
   const cities = [
     { name: 'HVD-PV', code: '0' },
     { name: 'SPV-alt', code: '1' },
@@ -73,7 +74,7 @@ const CustomerInfo = () => {
   const [those, setThose] = useState(resultt?.those[0])
   const handleSelectChange = (selectedOption) => {
     setThose(selectedOption)
-    console.log(selectedOption)
+    // console.log(selectedOption)
   }
   // console.log('those', those?.value)
   // console.log('those', resultt?.those)
@@ -366,7 +367,7 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
-      console.log('aastharesult', result)
+      // console.log('aastharesult', result)
       if (result?.message === 'Customer updated successfully') {
         toast.success('Kundeninfo erfolgreich gespeichert')
         // setOrderingMaterials({

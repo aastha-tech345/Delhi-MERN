@@ -49,7 +49,7 @@ const CustomerList = () => {
   const navigate = useNavigate()
 
   const generateRandomId = () => {
-    return 'HVD' + Math.floor(1000 + Math.random() * 9000)
+    return 'yymmdd-' + Math.floor(1000 + Math.random() * 9000)
   }
 
   const [id] = useState(generateRandomId())
@@ -279,7 +279,7 @@ const CustomerList = () => {
 
   const editRecord = (record) => {
     if (record) {
-      console.log('recoord', record)
+      // console.log('recoord', record)
       navigate(`/customer/${a}`)
       localStorage.setItem('customerRecord', JSON.stringify(record))
     } else {
@@ -331,7 +331,7 @@ const CustomerList = () => {
   }
   const handleSelectChange = (selectedOption) => {
     setStatus(selectedOption)
-    console.log(selectedOption)
+    // console.log(selectedOption)
   }
   const cities = [
     { name: 'HVD-PV', code: '0' },
@@ -342,7 +342,7 @@ const CustomerList = () => {
     { name: 'Newsletter-Abonnent', code: '5' },
     { name: 'Offen', code: '6' },
   ]
-  console.log('option', cities)
+  // console.log('option', cities)
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -389,7 +389,7 @@ const CustomerList = () => {
       }
 
       let result = await response.json()
-      console.log('result', result.data)
+      // console.log('result', result.data)
       toast.success('Kundendatensatz erfolgreich gespeichert')
       setFname('')
       setLand('')
@@ -857,25 +857,6 @@ const CustomerList = () => {
                   </div>
                   <div className="row">
                     <div className="col-sm-12">
-                      {/* <Dropdown
-                        value={status}
-                        onChange={(e) => setStatus(e.value)}
-                        options={option}
-                        optionLabel="name"
-                        name="status"
-                        showClear
-                        placeholder="Select a City"
-                        className="w-full md:w-14rem"
-                        style={{ zIndex: '0' }}
-                      /> */}
-                      {/* <Select
-                        className="w-100"
-                        options={option}
-                        onChange={handleSelectChange}
-                        value={status}
-                        name="status"
-                        placeholder="HVD"
-                      /> */}
                       <MultiSelect
                         placeholder="HVD-PV"
                         value={clientStatus}
