@@ -3,81 +3,53 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
 import { useNavigate } from 'react-router-dom'
-import Select, { components } from 'react-select'
+import Select from 'react-select'
 import DatePiker from '../Date'
 
 const Bills = () => {
+  let res = localStorage.getItem('customerRecord')
+  let result = JSON.parse(res)
   const navigate = useNavigate()
   const apiUrl = process.env.REACT_APP_API_URL
-  let res = localStorage.getItem('customerDatat')
-  let result = JSON.parse(res)
   const [employeeData, setEmployeeData] = useState([])
-  const [productData, setProductData] = useState({
-    product: '',
-    paymentMethod: '',
-    invoiceDate: '',
-    alreadyPaid: false,
-    invoiceAmount: '',
-    deliveryDate: '',
-    customer_id: result?._id,
-  })
   const [colleague, setColleague] = useState('')
   const [invoiceDate, setInvoiceDate] = useState('')
   const [deliveryDate, setDeliveryDate] = useState('')
+  const [product, setProduct] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('')
+  const [invoiceAmount, setInvoiceAmount] = useState('')
+  const [alreadyPaid, setAlreadyPaid] = useState(Boolean(result?.customerDelivery?.alreadyPaid))
+
   const invoiceChange = (e) => {
     setInvoiceDate(e)
   }
-  const DeliveryDateChange = (e) => {
-    setDeliveryDate(e)
-  }
 
-  // const handleInputChange = (e) => {
-  //   const { name, value, type, checked } = e.target
-
-  //   setProductData((prevProductData) => ({
-  //     ...prevProductData,
-  //     [name]: type === 'checkbox' ? checked : value,
-  //   }))
-  // }
-
-  // const handleInputChange = (e) => {
-  //   const { name, value, type, checked } = e.target
-
-  //   setProductData((prevProductData) => ({
-  //     ...prevProductData,
-  //     [name]: type === 'checkbox' ? checked : value,
-  //   }))
-  // }
-  const handleInputChange = (e) => {
-    if (e instanceof Date) {
-      setProductData({ ...productData, invoiceDate: e, deliveryDate: e })
-    } else if (e.target) {
-      const { name, value, type, checked } = e.target
-
-      if (type === 'radio') {
-        const newValue = checked ? value : ''
-        setProductData({ ...productData, [name]: newValue })
-      } else {
-        setProductData({ ...productData, [name]: type === 'checkbox' ? checked : value })
-      }
-    } else if (e && e.value !== undefined) {
-      setProductData({ ...productData, colleague: e.value })
-    } else {
-      console.error('Invalid event or data provided to handleInputChange.')
-    }
+  const deliveryDateChange = (date) => {
+    setDeliveryDate(date)
   }
 
   const cancelData = () => {
-    localStorage.removeItem('tabId')
+    localStorage.removeItem('customerRecord')
     navigate('/customer/customer_info')
   }
-  let data = { ...productData, colleague, invoiceDate }
+  const alreadypaidChange = (e) => {
+    setAlreadyPaid(e.target.checked)
+  }
+
   const saveData = async () => {
-    // if (!productData?.product) {
-    //   return toast.warning('Bitte Produktname...')
-    // }
     try {
-      let response = await fetch(`${apiUrl}/invoice/create_invoice`, {
+      const data = {
+        product,
+        alreadyPaid,
+        paymentMethod,
+        invoiceAmount,
+        invoiceDate,
+        deliveryDate,
+        employeeData,
+        colleague,
+      }
+
+      const response = await fetch(`${apiUrl}/invoice/create_invoice`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,44 +61,20 @@ const Bills = () => {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
 
-      let result = await response.json()
-      // console.log(result)
       toast.success('Rechnungsdaten erfolgreich gespeichert')
-      setProductData({
-        product: '',
-        paymentMethod: '',
-        invoiceAmount: '',
-        deliveryDate: '',
-      })
       setColleague('')
       setInvoiceDate('')
-      // getDetails()
+      setProduct('')
+      setPaymentMethod('')
+      setInvoiceAmount('')
+      setDeliveryDate('')
+      setProduct('')
     } catch (error) {
       toast.error('Bitte füllen Sie alle Angaben aus')
-      // console.error('Error during API call:', error)
+      console.error('Error during API call:', error)
     }
   }
 
-  // const getDetails = async () => {
-  //   try {
-  //     const result = await fetch(`${apiUrl}/invoice/get_invoice`)
-  //     const data = await result.json()
-  //     setActivityData(data)
-  //   } catch (error) {
-  //     console.error('Error fetching customer record:', error)
-  //   }
-  // }
-  // // console.log('aastha', activityData)
-  // useEffect(() => {
-  //   getDetails()
-  // }, [])
-  // useEffect(() => {
-  //   setInvoiceDate(getCurrentDate())
-  //   setProductData((prev) => ({
-  //     ...prev,
-  //     deliveryDate: getCurrentDate(),
-  //   }))
-  // }, [])
   const option = [
     { value: 'barzahlung', label: 'Barzahlung' },
     { value: 'rechnung', label: 'Rechnung' },
@@ -135,21 +83,24 @@ const Bills = () => {
     { value: 'kreditkarte', label: 'Kreditkarte (für die Zukunft)' },
     { value: 'andere', label: 'Andere' },
   ]
+
   const optionData = [
     { value: 'HVD-PV', label: 'HVD-PV' },
     { value: 'Vortrag', label: 'Vortrag' },
     { value: 'SPV', label: 'SPV' },
     { value: 'OPV', label: 'OPV' },
   ]
+
   const getEmployeeData = async () => {
     try {
-      const results = await fetch(`${apiUrl}/user/get/employeeData`)
-      const data = await results.json()
-      setEmployeeData(data?.data)
-      // console.log("ashishemploye", data?.data)
-      // setGetCustomerData(data)
+      const response = await fetch(`${apiUrl}/user/get/employeeData`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+      const { data } = await response.json()
+      setEmployeeData(data)
     } catch (error) {
-      console.error('Error fetching customer record:', error)
+      console.error('Error fetching employee data:', error)
     }
   }
 
@@ -181,74 +132,62 @@ const Bills = () => {
                             <Select
                               className="w-100"
                               options={optionData}
-                              onChange={handleInputChange}
-                              value={optionData.find(
-                                (option) => option.value === productData.product,
-                              )}
+                              onChange={(selectedOption) => setProduct(selectedOption?.value || '')}
+                              value={optionData.find((opt) => opt.value === product)}
                               name="product"
                               placeholder="HVD-PV"
                             />
                           </div>
                         </div>
                         <div className="row mb-3">
-                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          <label htmlFor="paymentMethod" className="col-sm-4 col-form-label">
                             Zahlungsart
                           </label>
                           <div className="col-sm-6">
                             <Select
                               className="w-100"
                               options={option}
-                              onChange={handleInputChange}
-                              value={option.find(
-                                (option) => option.value === productData.paymentMethod,
-                              )}
+                              onChange={(selectedOption) =>
+                                setPaymentMethod(selectedOption?.value || '')
+                              }
+                              value={option.find((opt) => opt.value === paymentMethod)}
                               name="paymentMethod"
                               placeholder="Barzahlung"
                             />
                           </div>
                         </div>
                         <div className="mb-6 row">
-                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          <label htmlFor="invoiceDate" className="col-sm-4 col-form-label">
                             Rechnungsdatum
                           </label>
-
                           <div className="col-sm-6">
                             <DatePiker
                               className="form-control"
-                              selected={invoiceDate || '02.03.23'}
+                              selected={invoiceDate || '10.10.23'}
                               onChange={invoiceChange}
                             />
                           </div>
                         </div>
                         <div className="mb-6 row">
-                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          <label htmlFor="colleague" className="col-sm-4 col-form-label">
                             MitarbeiterInnen
                           </label>
-                          {/* <div className="col-sm-6">
-                            <input
-                              type="text"
-                              name="colleague"
-                              // checked={productData.colleague}
-                              value={colleague}
-                              onChange={(e) => {
-                                setColleague(e.target.value)
-                              }}
-                              placeholder="MitarbeiterIn"
-                              className="form-control"
-                            />
-                          </div> */}
                           <div className="col-sm-6">
                             <Select
                               className="w-100"
                               placeholder="MitarbeiterInnen"
-                              options={employeeData?.map((elem) => ({
-                                value: elem.username,
-                                label: elem.username,
-                              }))}
-                              onChange={handleInputChange}
+                              options={
+                                employeeData?.map((elem) => ({
+                                  value: elem.username,
+                                  label: elem.username,
+                                })) || []
+                              }
+                              onChange={(selectedOption) =>
+                                setColleague(selectedOption?.value || '')
+                              }
                               value={{
-                                value: productData.colleague || 'MitarbeiterInnen',
-                                label: productData.colleague || 'MitarbeiterInnen',
+                                value: colleague || 'MitarbeiterInnen',
+                                label: colleague || 'MitarbeiterInnen',
                               }}
                               name="colleague"
                             />
@@ -256,7 +195,7 @@ const Bills = () => {
                         </div>
                       </div>
                       <div className="col-sm-6">
-                        <div className="mb-6 row">
+                        {/* <div className="mb-6 row">
                           <label htmlFor="alreadyPaid" className="col-sm-4 col-form-label">
                             Bereits bezahlt
                           </label>
@@ -264,8 +203,22 @@ const Bills = () => {
                             <input
                               type="checkbox"
                               name="alreadyPaid"
-                              checked={productData.alreadyPaid}
-                              onChange={handleInputChange}
+                              checked={alreadyPaid}
+                              onChange={(e) => setAlreadyPaid(e.target.checked)}
+                            />
+                          </div>
+                        </div> */}
+                        <div className="mb-6 row">
+                          <label htmlFor="alreadyPaid" className="col-sm-4 mb-2 col-form-label">
+                            Bereits bezahlt
+                          </label>
+                          <div className="col-sm-6 radio-check-wrap">
+                            <input
+                              readOnly
+                              type="checkbox"
+                              name="alreadyPaid"
+                              checked={alreadyPaid}
+                              onChange={alreadypaidChange}
                               onClick={(e) => e.stopPropagation()}
                             />
                             <span></span>
@@ -281,20 +234,24 @@ const Bills = () => {
                               placeholder="Rechnungsbetrag eintragen"
                               className="form-control"
                               name="invoiceAmount"
-                              value={productData.invoiceAmount}
-                              onChange={handleInputChange}
+                              value={invoiceAmount}
+                              onChange={(e) => {
+                                const value = e.target.value
+                                const sanitizedValue = value.replace(/\D/g, '')
+                                setInvoiceAmount(sanitizedValue)
+                              }}
                             />
                           </div>
                         </div>
                         <div className="row">
-                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                          <label htmlFor="deliveryDate" className="col-sm-4 col-form-label">
                             Lieferdatum
                           </label>
                           <div className="col-sm-6">
                             <DatePiker
                               className="form-control"
-                              selected={deliveryDate || '02.03.23'}
-                              onChange={DeliveryDateChange}
+                              selected={deliveryDate || '10.10.23'}
+                              onChange={deliveryDateChange}
                             />
                           </div>
                         </div>
@@ -305,14 +262,6 @@ const Bills = () => {
               </div>
             </div>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '10px',
-            }}
-          ></div>
           <div className="text-end mx-3">
             <button
               type="button"
@@ -339,4 +288,5 @@ const Bills = () => {
     </div>
   )
 }
+
 export default React.memo(Bills)

@@ -48,7 +48,7 @@ if (auth) {
     { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
     { path: '/customer/activity', name: 'Aktivitat', element: Activity },
     { path: '/customer/document', name: 'Dokumente', element: Document },
-    { path: '/customer/services', name: 'SPV', element: Services },
+    { path: '/customer/services', name: 'HVD-PV', element: Services },
     { path: '/settings', name: 'Einstellungen', element: Setting },
     { path: '/settings/users', name: 'MitarbeiterInnen', element: User },
     { path: '/settings/role', name: 'Rollen', element: Roll },
