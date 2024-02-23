@@ -34,7 +34,7 @@ const DatePiker = ({ onChange, selected }) => {
         placeholderText="Geburtsdatum"
         selected={selected}
         onChange={onChange}
-        dateFormat="dd.MM.yy"
+        dateFormat="dd.MM.yyyy"
       />
     </div>
   )

@@ -24,7 +24,10 @@ const GetActivityData = ({ updateData, search }) => {
   const handleChange = (event, value) => {
     setPage(value)
   }
-
+  let ress = localStorage.getItem('record')
+  let resultt = JSON.parse(ress)
+  console.log('aast', resultt?.user?.username)
+  let user = resultt?.user?.username
   GetActivityData.propTypes = {
     search: PropTypes.array.isRequired,
     updateData: PropTypes.array.isRequired,
@@ -189,11 +192,12 @@ const GetActivityData = ({ updateData, search }) => {
                           {/* <td>Lorem Ipsum is simply dummy text </td> */}
                           <td>{message}</td>
                           <td>
-                            <ol>
+                            {user}
+                            {/* <ol>
                               {employeeData.map((item) => (
                                 <li key={item.id}>{item.username}</li>
                               ))}
-                            </ol>
+                            </ol> */}
                           </td>
                         </tr>
                       )
