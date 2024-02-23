@@ -272,7 +272,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                             : 'Datei-Upload'}
                         </span> */}
                         <span>Datei-Upload</span>
-                        <svg
+                        {/* <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="75"
                           height="75"
@@ -291,9 +291,40 @@ const EditModal = ({ setEdit, getDetails }) => {
                               <rect width="16" height="16" fill="white" />
                             </clipPath>
                           </defs>
+                        </svg> */}
+                      </div>
+                      <div className="file-btn">
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style={{ color: 'white' }}
+                        >
+                          <g clipPath="url(#clip0_384_3149)">
+                            <path
+                              d="M10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16Z"
+                              stroke="#005291"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M20 20L15 15"
+                              stroke="#005291"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_384_3149">
+                              <rect width="24" height="24" fill="white" />
+                            </clipPath>
+                          </defs>
                         </svg>
                       </div>
-                      <div className="file-btn">Durchsuche</div>
                     </div>
                   </div>
                 </div>
@@ -303,73 +334,71 @@ const EditModal = ({ setEdit, getDetails }) => {
           <div className="">
             <div className="filename-field">
               <span>
-                {document_upload?.length ? (
-                  document_upload.map((file, index) => (
-                    <>
-                      <ul className="d-flex flex-row justify-content-between">
-                        <div key={index}>{file.filename || file.name}</div>
-                        <button
-                          onClick={() => removeDocument(index)}
-                          style={{ background: 'white', border: 'none' }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
+                {document_upload?.length
+                  ? document_upload.map((file, index) => (
+                      <>
+                        <ul className="d-flex flex-row justify-content-between">
+                          <div key={index}>{file.filename || file.name}</div>
+                          <button
+                            onClick={() => removeDocument(index)}
+                            style={{ background: 'white', border: 'none' }}
                           >
-                            <g clipPath="url(#clip0_431_1048)">
-                              <path
-                                d="M5 8H19"
-                                stroke="#C20F0F"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M10 11V16"
-                                stroke="#C20F0F"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M14 11V16"
-                                stroke="#C20F0F"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
-                                stroke="#C20F0F"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
-                                stroke="#C20F0F"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_431_1048">
-                                <rect width="24" height="24" fill="white" />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                          <span> Löschen</span>
-                        </button>
-                      </ul>
-                    </>
-                  ))
-                ) : (
-                  <p className="text-center">No Image Selcted</p>
-                )}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                            >
+                              <g clipPath="url(#clip0_431_1048)">
+                                <path
+                                  d="M5 8H19"
+                                  stroke="#C20F0F"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M10 11V16"
+                                  stroke="#C20F0F"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M14 11V16"
+                                  stroke="#C20F0F"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
+                                  stroke="#C20F0F"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
+                                  stroke="#C20F0F"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_431_1048">
+                                  <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                            <span> Löschen</span>
+                          </button>
+                        </ul>
+                      </>
+                    ))
+                  : ''}
               </span>
             </div>
           </div>

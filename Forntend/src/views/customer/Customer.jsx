@@ -49,11 +49,12 @@ const Customer = ({ getCustomerData }) => {
   console.log(res?.startDate)
   const dateString = res?.startDate
   const date = new Date(dateString)
+  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
 
-  const options = { year: '2-digit', month: '2-digit', day: '2-digit' }
-  const formattedDate = date.toLocaleDateString('en-US', options).replace(/\//g, '.')
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
+  const formattedDate = utcDate.toLocaleDateString('en-IN', options).replace(/\//g, '.')
 
-  // console.log(formattedDate) // Output: 02.12.24
+  console.log(formattedDate)
 
   const firstName = res?.fname?.slice(0, 1).toUpperCase() + res?.fname?.slice(1).toLowerCase()
   const lastName = res?.lname?.slice(0, 1).toUpperCase() + res?.lname?.slice(1).toLowerCase()

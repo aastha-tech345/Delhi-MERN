@@ -212,6 +212,11 @@ const CustomerInfo = () => {
 
   const ContactChange = (e) => {
     if (e instanceof Date) {
+      let a = new Date().getFullYear()
+      if (e.getFullYear() > a) {
+        toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
+      }
+      // setStartDate(e)
       setCustomerContact({ ...customerContact, startDate: e })
     } else if (e.target) {
       const { name, value, type, checked } = e.target

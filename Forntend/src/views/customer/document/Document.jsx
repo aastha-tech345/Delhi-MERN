@@ -368,7 +368,38 @@ const Document = () => {
                               </defs>
                             </svg>
                           </div>
-                          <div className="file-btn">Durchsuche</div>
+                          <div className="file-btn">
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              style={{ color: 'white' }}
+                            >
+                              <g clipPath="url(#clip0_384_3149)">
+                                <path
+                                  d="M10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16Z"
+                                  stroke="#005291"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M20 20L15 15"
+                                  stroke="#005291"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_384_3149">
+                                  <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -440,7 +471,7 @@ const Document = () => {
                                 </ul>
                               </>
                             ))
-                          : 'No Image Selcted'}
+                          : ''}
                       </span>
                     </div>
                     {/* <div className="file-btn">Durchsuche</div> */}
