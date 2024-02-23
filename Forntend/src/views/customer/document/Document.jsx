@@ -143,7 +143,10 @@ const Document = () => {
     setDocumentUpload(newDocumentUpload)
   }
 
-  const handleClose = () => setShow(false)
+  const handleClose = () => {
+    setShow(false)
+    setDocumentUpload([])
+  }
   const handleShow = () => setShow(true)
 
   const handleDelete = (documentId) => {
@@ -263,181 +266,184 @@ const Document = () => {
             onHide={handleClose}
             centered
             className="modal-form modal-form-wrap"
-            size="lg"
+            // size="lg"
 
             // style={{ height: '800px !important' }}
           >
             <Modal.Header closeButton className="border-0 p-3 pb-0">
               <Modal.Title className="modal-title">Details zum Dokument</Modal.Title>
             </Modal.Header>
-            <Modal.Body className="p-3 pb-0" style={{ height: 'max' }}>
-              <div className="container-fluid">
-                <div className="row">
-                  <div className="col-md-3">
-                    <label htmlFor="title">Titel</label>
-                  </div>
-                  <div className="col-md-9">
-                    <input
-                      id="title"
-                      required
-                      name="document_title"
-                      value={data.document_title}
-                      onChange={handleChange}
-                      placeholder="Titel"
-                      type="text"
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-
-                <div className="row mb-3">
-                  <div className="col-md-3">
-                    <label htmlFor="documentType">Dokumententyp</label>
-                  </div>
-                  <div className="col-md-9">
-                    <Select
-                      className="w-100"
-                      options={options}
-                      onChange={handleChange}
-                      value={{
-                        label: data.document_type || 'Patientenverfügung',
-                        value: data.document_type || 'Patientenverfügung',
-                      }}
-                      name="document_type"
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-3">
-                    <label htmlFor="fileUpload">Datei-Upload</label>
-                  </div>
-                  <div className="col-md-9">
-                    <div className="file-upload-wrap">
+            <Modal.Body className="pb-0">
+              <div className="modal-body modal-form-wrap">
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-md-3">
+                      <label htmlFor="title">Titel</label>
+                    </div>
+                    <div className="col-md-9">
                       <input
-                        ref={fileInputRef}
-                        id="fileUpload"
-                        type="file"
+                        id="title"
+                        required
+                        name="document_title"
+                        value={data.document_title}
+                        onChange={handleChange}
+                        placeholder="Titel"
+                        type="text"
                         className="form-control"
-                        multiple
-                        name="document_upload"
-                        // onChange={(e) => setDocumentUpload([...document_upload, ...e.target.files])}
-                        onChange={handleFileInputChange}
                       />
-                      <div className="file-input-wrap">
-                        <div className="filename-field">
-                          {/* <span>
+                    </div>
+                  </div>
+
+                  <div className="row mb-3">
+                    <div className="col-md-3">
+                      <label htmlFor="documentType">Dokumententyp</label>
+                    </div>
+                    <div className="col-md-9">
+                      <Select
+                        className="w-100"
+                        options={options}
+                        onChange={handleChange}
+                        value={{
+                          label: data.document_type || 'Patientenverfügung',
+                          value: data.document_type || 'Patientenverfügung',
+                        }}
+                        name="document_type"
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-3">
+                    <div className="col-md-3">
+                      <label htmlFor="fileUpload">Datei-Upload</label>
+                    </div>
+                    <div className="col-md-9">
+                      <div className="file-upload-wrap">
+                        <input
+                          ref={fileInputRef}
+                          id="fileUpload"
+                          type="file"
+                          className="form-control"
+                          multiple
+                          name="document_upload"
+                          // onChange={(e) => setDocumentUpload([...document_upload, ...e.target.files])}
+                          onChange={handleFileInputChange}
+                        />
+                        <div className="file-input-wrap">
+                          <div className="filename-field">
+                            {/* <span>
                             {document_upload?.length
                               ? document_upload.map((file, index) => (
                                   <div key={index}>{file.name}</div>
-                                ))
+                                ))d F 
+
                               : 'Datei-Upload'}
                           </span> */}
 
-                          <span>Datei-Upload</span>
+                            <span>Datei-Upload</span>
 
-                          {/* <span>
+                            {/* <span>
                             {' '}
                             {document_upload.map((file, index) => (
                               <div key={index}>{file.name}</div>
                             ))}
                           </span> */}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="15"
-                            height="15"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            onClick={cancelData}
-                          >
-                            <g clipPath="url(#clip0_493_7693)">
-                              <path
-                                d="M5.89128 5.89128C6.13607 5.64909 6.5319 5.64909 6.75326 5.89128L7.97721 7.11784L9.22461 5.89128C9.4694 5.64909 9.86524 5.64909 10.0866 5.89128C10.3522 6.13607 10.3522 6.5319 10.0866 6.75326L8.88346 7.97721L10.0866 9.22461C10.3522 9.4694 10.3522 9.86524 10.0866 10.0866C9.86524 10.3522 9.4694 10.3522 9.22461 10.0866L7.97721 8.88346L6.75326 10.0866C6.5319 10.3522 6.13607 10.3522 5.89128 10.0866C5.64909 9.86524 5.64909 9.4694 5.89128 9.22461L7.11784 7.97721L5.89128 6.75326C5.64909 6.5319 5.64909 6.13607 5.89128 5.89128ZM14.6673 8.00065C14.6673 11.6829 11.6829 14.6673 8.00065 14.6673C4.31836 14.6673 1.33398 11.6829 1.33398 8.00065C1.33398 4.31836 4.31836 1.33398 8.00065 1.33398C11.6829 1.33398 14.6673 4.31836 14.6673 8.00065ZM8.00065 2.58398C5.00846 2.58398 2.58398 5.00846 2.58398 8.00065C2.58398 10.9928 5.00846 13.4173 8.00065 13.4173C10.9928 13.4173 13.4173 10.9928 13.4173 8.00065C13.4173 5.00846 10.9928 2.58398 8.00065 2.58398Z"
-                                fill="#005291"
-                              />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_493_7693">
-                                <rect width="16" height="16" fill="white" />
-                              </clipPath>
-                            </defs>
-                          </svg>
+                            <svg
+                              // style={{ marginLeft: '-20px', height: '30px' }}
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="15"
+                              height="15"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              onClick={cancelData}
+                            >
+                              <g clipPath="url(#clip0_493_7693)">
+                                <path
+                                  d="M5.89128 5.89128C6.13607 5.64909 6.5319 5.64909 6.75326 5.89128L7.97721 7.11784L9.22461 5.89128C9.4694 5.64909 9.86524 5.64909 10.0866 5.89128C10.3522 6.13607 10.3522 6.5319 10.0866 6.75326L8.88346 7.97721L10.0866 9.22461C10.3522 9.4694 10.3522 9.86524 10.0866 10.0866C9.86524 10.3522 9.4694 10.3522 9.22461 10.0866L7.97721 8.88346L6.75326 10.0866C6.5319 10.3522 6.13607 10.3522 5.89128 10.0866C5.64909 9.86524 5.64909 9.4694 5.89128 9.22461L7.11784 7.97721L5.89128 6.75326C5.64909 6.5319 5.64909 6.13607 5.89128 5.89128ZM14.6673 8.00065C14.6673 11.6829 11.6829 14.6673 8.00065 14.6673C4.31836 14.6673 1.33398 11.6829 1.33398 8.00065C1.33398 4.31836 4.31836 1.33398 8.00065 1.33398C11.6829 1.33398 14.6673 4.31836 14.6673 8.00065ZM8.00065 2.58398C5.00846 2.58398 2.58398 5.00846 2.58398 8.00065C2.58398 10.9928 5.00846 13.4173 8.00065 13.4173C10.9928 13.4173 13.4173 10.9928 13.4173 8.00065C13.4173 5.00846 10.9928 2.58398 8.00065 2.58398Z"
+                                  fill="#005291"
+                                />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_493_7693">
+                                  <rect width="16" height="16" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                          </div>
+                          <div className="file-btn">Durchsuche</div>
                         </div>
-                        <div className="file-btn form-control">Durchsuche</div>
-                      </div>
-
-                      <div className="">
-                        <div className="filename-field">
-                          <span>
-                            {document_upload?.length
-                              ? document_upload.map((file, index) => (
-                                  <>
-                                    <ul className="d-flex flex-row justify-content-between">
-                                      <div key={index}>{file.name}</div>
-                                      <button
-                                        onClick={() => removeDocument(index)}
-                                        style={{ background: 'white', border: 'none' }}
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="24"
-                                          height="24"
-                                          viewBox="0 0 24 24"
-                                          fill="none"
-                                        >
-                                          <g clipPath="url(#clip0_431_1048)">
-                                            <path
-                                              d="M5 8H19"
-                                              stroke="#C20F0F"
-                                              strokeWidth="2"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            />
-                                            <path
-                                              d="M10 11V16"
-                                              stroke="#C20F0F"
-                                              strokeWidth="2"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            />
-                                            <path
-                                              d="M14 11V16"
-                                              stroke="#C20F0F"
-                                              strokeWidth="2"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            />
-                                            <path
-                                              d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
-                                              stroke="#C20F0F"
-                                              strokeWidth="2"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            />
-                                            <path
-                                              d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
-                                              stroke="#C20F0F"
-                                              strokeWidth="2"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            />
-                                          </g>
-                                          <defs>
-                                            <clipPath id="clip0_431_1048">
-                                              <rect width="24" height="24" fill="white" />
-                                            </clipPath>
-                                          </defs>
-                                        </svg>
-                                        <span> Löschen</span>
-                                      </button>
-                                    </ul>
-                                  </>
-                                ))
-                              : 'No Image Selcted'}
-                          </span>
-                        </div>
-                        {/* <div className="file-btn">Durchsuche</div> */}
                       </div>
                     </div>
+                  </div>
+                  <div className="file-input-wrap">
+                    <div className="filename-field">
+                      <span>
+                        {document_upload?.length
+                          ? document_upload.map((file, index) => (
+                              <>
+                                <ul className="d-flex flex-row justify-content-between">
+                                  <div key={index}>{file.name}</div>
+                                  <button
+                                    onClick={() => removeDocument(index)}
+                                    style={{ background: 'white', border: 'none' }}
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                    >
+                                      <g clipPath="url(#clip0_431_1048)">
+                                        <path
+                                          d="M5 8H19"
+                                          stroke="#C20F0F"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                        <path
+                                          d="M10 11V16"
+                                          stroke="#C20F0F"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                        <path
+                                          d="M14 11V16"
+                                          stroke="#C20F0F"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                        <path
+                                          d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
+                                          stroke="#C20F0F"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                        <path
+                                          d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
+                                          stroke="#C20F0F"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                      </g>
+                                      <defs>
+                                        <clipPath id="clip0_431_1048">
+                                          <rect width="24" height="24" fill="white" />
+                                        </clipPath>
+                                      </defs>
+                                    </svg>
+                                    <span> Löschen</span>
+                                  </button>
+                                </ul>
+                              </>
+                            ))
+                          : 'No Image Selcted'}
+                      </span>
+                    </div>
+                    {/* <div className="file-btn">Durchsuche</div> */}
                   </div>
                 </div>
               </div>

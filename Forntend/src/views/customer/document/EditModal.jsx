@@ -11,11 +11,14 @@ const EditModal = ({ setEdit, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('DocumentEditDetails')
   let response = JSON.parse(res)
+
   const [data, setData] = useState({
     document_title: response?.document_title,
     document_type: response?.document_type,
   })
-  const [document_upload, setDocumentUpload] = useState([])
+  const [document_upload, setDocumentUpload] = useState(response?.document_upload || [])
+  const fileInputRef = useRef(null)
+  const [newDocuments, setNewDocuments] = useState(response?.document_upload)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadValue] = useState(false)
 
@@ -27,12 +30,40 @@ const EditModal = ({ setEdit, getDetails }) => {
       setData({ ...data, document_type: e.label })
     }
   }
+  // let datares = []
+  // document_upload.map((elem) => {
+  //   datares.push(elem)
+  // })
+
+  const handleFileInputChange = (e) => {
+    setDocumentUpload([...document_upload, ...e.target.files])
+    fileInputRef.current.value = ''
+  }
 
   const notify = (dataa) => toast(dataa)
 
   const close = () => {
     setEdit(false)
   }
+
+  const [removedFile, setRemovedFile] = useState([])
+  const removeDocument = (index) => {
+    // console.log('ashindex', document_upload)
+    const newDocumentUpload = [...document_upload]
+    let deletedFile = newDocumentUpload.splice(index, 1)
+    // console.log('This is deleted----', deletedFile[0])
+    setDocumentUpload(newDocumentUpload)
+    for (let i = 0; i < document_upload.length; i++) {
+      let name = deletedFile[0]?.name || deletedFile[0]?.filename
+      if (name == document_upload[i].filename) {
+        setRemovedFile((prev) => {
+          return [...prev, ...deletedFile]
+        })
+      }
+    }
+  }
+
+  // console.log('ashishdoc', document_upload)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -56,13 +87,15 @@ const EditModal = ({ setEdit, getDetails }) => {
       }
       formData.append('document_title', document_title)
       formData.append('document_type', document_type)
+
+      // console.log('file-------', removedFile, 'file-------')
+      formData.append('removedFile', JSON.stringify(removedFile))
       // formData.append('document_upload', document_upload)
       const res = await putFetch(
         `${apiUrl}/document/get_document/update/${response?._id}`,
         formData,
       )
-      // console.log('document page', res)
-
+      console.log('document page', res)
       if (res?.status === 200) {
         setLoadValue(false)
         setData({
@@ -96,6 +129,22 @@ const EditModal = ({ setEdit, getDetails }) => {
     { value: 'Personal document', label: 'Persönliches Dokument' },
     { value: 'Other', label: 'Anderes' },
   ]
+  // console.log('ashishdoc', { ...document_upload, newDocuments })
+  // newDocuments.map((elem) => {
+  //   const file = new File(
+  //     // Data: empty array
+  //     [],
+  //     // Filename
+  //     elem.filename,
+  //     // Additional options (optional)
+  //     {
+  //       type: elem.mimetype,
+  //       lastModified: new Date().getTime(),
+  //     },
+  //   )
+
+  //   console.log(file)
+  // })
   return (
     <div
       className="modal"
@@ -192,13 +241,14 @@ const EditModal = ({ setEdit, getDetails }) => {
                 <div className="col-md-9">
                   <div className="file-upload-wrap">
                     <input
-                      // ref={fileInputRef}
+                      ref={fileInputRef}
                       id="fileUpload"
                       type="file"
                       multiple
                       className="form-control"
                       name="document_upload"
-                      onChange={(e) => setDocumentUpload([...document_upload, ...e.target.files])}
+                      onChange={handleFileInputChange}
+                      // onChange={(e) => setDocumentUpload([...document_upload, ...e.target.files])}
                     />
                     <div className="file-input-wrap">
                       <div className="filename-field">
@@ -210,7 +260,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                             : 'Datei-Upload'}
                         </span> */}
 
-                        <span>
+                        {/* <span>
                           {document_upload?.length
                             ? document_upload.map((file, index) => (
                                 <div key={index}>{file.name}</div>
@@ -220,7 +270,8 @@ const EditModal = ({ setEdit, getDetails }) => {
                                 <div key={index}>{file.filename}</div>
                               ))
                             : 'Datei-Upload'}
-                        </span>
+                        </span> */}
+                        <span>Datei-Upload</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="75"
@@ -249,6 +300,79 @@ const EditModal = ({ setEdit, getDetails }) => {
               </div>
             </div>
           </Form>
+          <div className="">
+            <div className="filename-field">
+              <span>
+                {document_upload?.length ? (
+                  document_upload.map((file, index) => (
+                    <>
+                      <ul className="d-flex flex-row justify-content-between">
+                        <div key={index}>{file.filename || file.name}</div>
+                        <button
+                          onClick={() => removeDocument(index)}
+                          style={{ background: 'white', border: 'none' }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <g clipPath="url(#clip0_431_1048)">
+                              <path
+                                d="M5 8H19"
+                                stroke="#C20F0F"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M10 11V16"
+                                stroke="#C20F0F"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M14 11V16"
+                                stroke="#C20F0F"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
+                                stroke="#C20F0F"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
+                                stroke="#C20F0F"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_431_1048">
+                                <rect width="24" height="24" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                          <span> Löschen</span>
+                        </button>
+                      </ul>
+                    </>
+                  ))
+                ) : (
+                  <p className="text-center">No Image Selcted</p>
+                )}
+              </span>
+            </div>
+          </div>
           <div className="modal-footer">
             <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
               <button
