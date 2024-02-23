@@ -88,15 +88,30 @@ exports.getDocumentData = async (req, res) => {
 
 exports.getDocumentDataUpdate = async (req, res) => {
   try {
+    const x = await DocumentInfo.Document.findById(req.params.id);
+    let arr = x.document_upload;
+    arr.push(...req.files);
+    let removaArr = JSON.parse(req.body.removedFile);
+
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < removaArr?.length; j++) {
+        if (arr[i]?.filename == removaArr[j]?.filename) {
+          let x = arr.splice(i, 1);
+          // console.log(x, "deletig");
+        }
+      }
+    }
+    // console.log("ar-------", arr);
     const result = await DocumentInfo.Document.findByIdAndUpdate(
       req.params.id,
-      { ...req.body,  document_upload: req?.files,},
+      { ...req.body, document_upload: arr },
       {
         new: true,
       }
     );
     res.send(result);
   } catch (error) {
+    console.log("Error from here", error);
     res.status(500).send({ error: "Internal Server Error" });
   }
 };
