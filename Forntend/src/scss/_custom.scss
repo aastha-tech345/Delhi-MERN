@@ -1231,7 +1231,7 @@ span.anticon.anticon-phone svg {
   }
 
   .modal-body {
-    padding: 30px;
+    // padding: 30px;
 
     @media screen and (max-width: 585px) {
       padding: 15px;
@@ -1812,6 +1812,7 @@ span.anticon.anticon-phone svg {
       }
       svg {
         cursor: pointer;
+        height: 20px;
       }
     }
     .file-btn {
