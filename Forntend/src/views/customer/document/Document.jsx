@@ -346,7 +346,7 @@ const Document = () => {
                               <div key={index}>{file.name}</div>
                             ))}
                           </span> */}
-                            <svg
+                            {/* <svg
                               // style={{ marginLeft: '-20px', height: '30px' }}
                               xmlns="http://www.w3.org/2000/svg"
                               width="15"
@@ -366,7 +366,7 @@ const Document = () => {
                                   <rect width="16" height="16" fill="white" />
                                 </clipPath>
                               </defs>
-                            </svg>
+                            </svg> */}
                           </div>
                           <div className="file-btn">
                             <svg
@@ -375,7 +375,7 @@ const Document = () => {
                               viewBox="0 0 24 24"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
-                              style={{ color: 'white', marginRight: '-60px' }}
+                              // style={{ color: 'white', marginRight: '-60px' }}
                             >
                               <g clipPath="url(#clip0_384_3149)">
                                 <path
