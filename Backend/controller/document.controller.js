@@ -88,23 +88,28 @@ exports.getDocumentData = async (req, res) => {
 
 exports.getDocumentDataUpdate = async (req, res) => {
   try {
-    const x = await DocumentInfo.Document.findById(req.params.id);
-    let arr = x.document_upload;
-    arr.push(...req.files);
+    const getDocumentbyId = await DocumentInfo.Document.findById(req.params.id);
+    let arr = getDocumentbyId?.document_upload;
+    let datares = [];
     let removaArr = JSON.parse(req.body.removedFile);
 
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < removaArr?.length; j++) {
         if (arr[i]?.filename == removaArr[j]?.filename) {
-          let x = arr.splice(i, 1);
-          // console.log(x, "deletig");
+          arr.splice(i, 1);
         }
       }
     }
-    // console.log("ar-------", arr);
+
+    for (let i = 0; i < req?.files?.length; i++) {
+      datares.push(req.files[i]);
+    }
+
+    let totalResult = [...arr, ...datares];
+
     const result = await DocumentInfo.Document.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, document_upload: arr },
+      { ...req.body, document_upload: totalResult },
       {
         new: true,
       }
