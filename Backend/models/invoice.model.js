@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const invoiceSchema = new Schema(
   {
     product: { type: String },
-    alreadyPaid: { type: String },
+    alreadyPaid: { type: Boolean },
     paymentMethod: { type: String },
     invoiceAmount: { type: String },
     invoiceDate: { type: String },
