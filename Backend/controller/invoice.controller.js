@@ -2,28 +2,28 @@ const InvoiceInfomation = require("../models/invoice.model");
 
 exports.createInvoice = async (req, res) => {
   try {
-    const {
-      product,
-      alreadyPaid,
-      paymentMethod,
-      invoiceAmount,
-      invoiceDate,
-      deliveryDate,
-      colleague,
-      customer_id,
-    } = req.body;
-    const invoice = new InvoiceInfomation.Invoice({
-      product,
-      alreadyPaid,
-      paymentMethod,
-      invoiceAmount,
-      invoiceDate,
-      deliveryDate,
-      colleague,
-      customer_id,
-    });
+    // const {
+    //   product,
+    //   alreadyPaid,
+    //   paymentMethod,
+    //   invoiceAmount,
+    //   invoiceDate,
+    //   deliveryDate,
+    //   colleague,
+    //   customer_id,
+    // } = req.body;
+    // const invoice = new InvoiceInfomation.Invoice({
+      // product,
+      // alreadyPaid,
+      // paymentMethod,
+      // invoiceAmount,
+      // invoiceDate,
+      // deliveryDate,
+      // colleague,
+    //   customer_id,
+    // });
 
-    const result = await invoice.save();
+    const result = await InvoiceInfomation.Invoice.create(req.body);
     res.status(201).json({
       message: "invoice was created",
       result,

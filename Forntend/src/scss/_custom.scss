@@ -1231,7 +1231,7 @@ span.anticon.anticon-phone svg {
   }
 
   .modal-body {
-    padding: 30px;
+    // padding: 30px;
 
     @media screen and (max-width: 585px) {
       padding: 15px;
@@ -1812,11 +1812,12 @@ span.anticon.anticon-phone svg {
       }
       svg {
         cursor: pointer;
+        height: 20px;
       }
     }
     .file-btn {
-      background: $primary-color;
-      color: $white;
+      // background: $primary-color;
+      // color: $white;
       font-size: 14px;
       font-weight: 700;
       line-height: 1px;
@@ -1826,7 +1827,7 @@ span.anticon.anticon-phone svg {
       justify-content: center;
       align-items: center;
       border-radius: 0 6px 6px 0;
-      border: 1px solid $primary-color;
+      border: 1px solid #d9d9d9;
       width: 108px;
     }
   }
@@ -1891,3 +1892,49 @@ input[type='search']::-webkit-search-results-decoration {
 .p-multiselect-panel {
   z-index: 10001 !important;
 }
+
+.css-tj5bde-Svg {
+  color: #015291;
+}
+.css-t3ipsp-control {
+  border-color: #015291 !important;
+  box-shadow: none !important;
+}
+.css-t3ipsp-control:hover {
+  border-color: #015291 !important;
+}
+.p-multiselect:not(.p-disabled).p-focus {
+  box-shadow: none !important;
+  border-color: #005291 !important;
+}
+.p-multiselect:not(.p-disabled):hover {
+  border-color: #005291 !important;
+}
+svg.p-icon {
+  color: #005291 !important;
+}
+.p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #005291 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+.p-checkbox .p-checkbox-box.p-highlight:hover {
+  border-color: #005291 !important;
+  box-shadow: none !important;
+  // background: #005291 !important;
+}
+.p-checkbox .p-checkbox-box.p-highlight:not(.p-disabled):hover {
+  border-color: #005291 !important;
+  background: none !important;
+}
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+  border-color: #005291 !important;
+  background: none !important;
+}
+.p-checkbox .p-checkbox-box.p-highlight {
+  background: none !important;
+}
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+  border-color: #005291 !important;
+}
+

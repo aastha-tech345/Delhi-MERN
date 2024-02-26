@@ -5,6 +5,7 @@ const authPersonSchema = {
   healthCare_lname: { type: String },
   healthCare_address: { type: String },
   healthCare_phone: { type: String },
+  healthCare_mobile: { type: String },
 };
 
 const authPowerPersonSchema = {
@@ -12,6 +13,7 @@ const authPowerPersonSchema = {
   powerOfAttorney_lname: { type: String },
   powerOfAttorney_address: { type: String },
   powerOfAttorney_phone: { type: String },
+  powerOfAttorney_mobile: { type: String },
 };
 
 const healthCareSchema = {

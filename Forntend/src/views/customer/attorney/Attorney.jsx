@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const Attorney = () => {
   const navigate = useNavigate()
   const maxFields = 10
-  const initialFields = 0
+  const initialFields = 3
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const cancelData = () => {
@@ -105,7 +105,7 @@ const Attorney = () => {
         ...updatedPowerOfAttorneyData[index],
         [name]: type === 'checkbox' ? checked : value,
       }
-      if (name === 'powerOfAttorney_phone') {
+      if (name === 'powerOfAttorney_phone' && name === 'powerOfAttorney_mobile') {
         const numericValue = value.replace(/\D/g, '')
         let formattedNumber = ''
 
@@ -133,6 +133,7 @@ const Attorney = () => {
             powerOfAttorney_lname: '',
             powerOfAttorney_address: '',
             powerOfAttorney_phone: [],
+            powerOfAttorney_mobile: [],
           },
         ],
       }))
@@ -205,6 +206,7 @@ const Attorney = () => {
         healthCare_lname: '',
         healthCare_address: '',
         healthCare_phone: '',
+        healthCare_mobile: '',
       })),
     }))
 
@@ -216,6 +218,7 @@ const Attorney = () => {
         powerOfAttorney_lname: '',
         powerOfAttorney_address: '',
         powerOfAttorney_phone: '',
+        powerOfAttorney_mobile: '',
       })),
     }))
 
@@ -273,24 +276,27 @@ const Attorney = () => {
                   </p>
                   <div>
                     <div className="row mb-2">
-                      <div className="col-sm-3">
+                      <div className="col-sm-2">
                         <b>Vorname</b>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-2">
                         <b>Nachname</b>
                       </div>
                       <div className="col-sm-3">
                         <b>Adresse</b>
                       </div>
-                      <div className="col-sm-3">
-                        <b>Telefone</b>
+                      <div className="col-sm-2">
+                        <b>Telefon</b>
+                      </div>
+                      <div className="col-sm-2">
+                        <b>Mobil</b>
                       </div>
                     </div>
                     <div>
                       {healthCare.healthCareData &&
                         healthCare.healthCareData.map((field, index) => (
                           <div className="row" key={index}>
-                            <div className="col-sm-3">
+                            <div className="col-sm-2">
                               <div className="row">
                                 <div className="col-sm-12">
                                   <input
@@ -305,7 +311,7 @@ const Attorney = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-sm-3">
+                            <div className="col-sm-2">
                               <div className="row">
                                 <div className="col-sm-12">
                                   <input
@@ -337,7 +343,7 @@ const Attorney = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-sm-3">
+                            <div className="col-sm-2">
                               <div className=" row">
                                 <div className="col-sm-12">
                                   <input
@@ -354,16 +360,34 @@ const Attorney = () => {
                                 </div>
                               </div>
                             </div>
+                            <div className="col-sm-2">
+                              <div className=" row">
+                                <div className="col-sm-12">
+                                  <input
+                                    onChange={(e) => healthCareChange(e, index)}
+                                    value={field.healthCare_mobile}
+                                    type="text"
+                                    name="healthCare_mobile"
+                                    placeholder="853-456-8464"
+                                    className="form-control"
+                                    id={`phone_${index}`}
+                                    maxLength={30}
+                                    minLength={10}
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         ))}
                     </div>
                   </div>
                 </div>
               </div>
+              <hr />
               <div className="row">
                 <div className="col-sm-12">
                   <h3 style={{ color: '#244D92' }}>Vorsorgevollmacht</h3>
-                  <hr />
+
                   <div className="row">
                     <label htmlFor="AttorneyMasterData" className="col-sm-3 col-form-label fs-6">
                       Eintrag der Stammdaten
@@ -412,23 +436,26 @@ const Attorney = () => {
                   </div>
 
                   <div className="row mb-2 mt-3">
-                    <div className="col-sm-3">
+                    <div className="col-sm-2">
                       <b>Vorname</b>
                     </div>
-                    <div className="col-sm-3">
+                    <div className="col-sm-2">
                       <b>Nachname</b>
                     </div>
                     <div className="col-sm-3">
                       <b>Adresse</b>
                     </div>
-                    <div className="col-sm-3">
-                      <b>Telefone</b>
+                    <div className="col-sm-2">
+                      <b>Telefon</b>
+                    </div>
+                    <div className="col-sm-2">
+                      <b>Mobil</b>
                     </div>
                   </div>
                   {powerOfAttorney.powerOfAttorneyData &&
                     powerOfAttorney.powerOfAttorneyData.map((field, index) => (
                       <div className="row " key={index}>
-                        <div className="col-sm-3">
+                        <div className="col-sm-2">
                           <div className="row">
                             <div className="col-sm-12">
                               <input
@@ -443,7 +470,7 @@ const Attorney = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="col-sm-3">
+                        <div className="col-sm-2">
                           <div className="row">
                             <div className="col-sm-12">
                               <input
@@ -473,7 +500,7 @@ const Attorney = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="col-sm-3">
+                        <div className="col-sm-2">
                           <div className="row">
                             <div className="col-sm-12">
                               <input
@@ -490,11 +517,29 @@ const Attorney = () => {
                             </div>
                           </div>
                         </div>
+                        <div className="col-sm-2">
+                          <div className="row">
+                            <div className="col-sm-12">
+                              <input
+                                onChange={(e) => powerOfAttorneyChange(e, index)}
+                                value={field.powerOfAttorney_mobile}
+                                name="powerOfAttorney_mobile"
+                                type="text"
+                                placeholder="853-456-8464"
+                                className="form-control"
+                                id="inputPassword"
+                                maxLength={30}
+                                minLength={10}
+                              />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ))}
                 </div>
               </div>
             </div>
+            <hr />
             <div className="row">
               <div className="col-sm-12">
                 <h3 style={{ color: '#244D92' }}>Betreuungsverfügung</h3>
@@ -514,7 +559,7 @@ const Attorney = () => {
                 </div>
               </div>
             </div>
-            <hr />
+
             <div className="row">
               <div className="col-sm-12">
                 <h3 style={{ color: '#244D92' }}>Vollmacht zur Absicherung des digitalen Erbes</h3>
