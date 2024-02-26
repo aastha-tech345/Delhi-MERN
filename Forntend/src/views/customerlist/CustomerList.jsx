@@ -110,18 +110,8 @@ const CustomerList = () => {
     },
     {
       title: 'HINTERLEGUNG',
-      dataIndex: 'id',
-      render: (text, record, index) => {
-        const currentDate = new Date()
-        const year = String(currentDate.getFullYear()).slice(-2) // Get last two digits of the year
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0') // Month is zero-based, so add 1
-        const day = String(currentDate.getDate()).padStart(2, '0')
-
-        // Assuming data is an array of records for the current day
-        const sequentialNumber = String(index + 1).padStart(5, '0') // Ensure it's 5 digits with leading zeros
-
-        return `${year}${month}${day}-${sequentialNumber}`
-      },
+      dataIndex: 'countId',
+      render: (text, record, index) => text,
     },
     {
       title: 'E-MAIL',
@@ -472,6 +462,7 @@ const CustomerList = () => {
         city,
       },
       _id,
+      countId,
     } = customerRecord
     const {
       orderingMaterials,
@@ -493,6 +484,7 @@ const CustomerList = () => {
     const {} = customerBurial
 
     return {
+      countId,
       _id,
       id,
       fname,

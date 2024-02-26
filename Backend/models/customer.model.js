@@ -95,6 +95,7 @@ const customerSchema = new Schema(
       enum: ["active", "deleted"],
       default: "active",
     },
+    countId: { type: String },
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
