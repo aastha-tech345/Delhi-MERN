@@ -9,17 +9,20 @@ import DatePiker from '../Date'
 const Bills = () => {
   let res = localStorage.getItem('customerRecord')
   let result = JSON.parse(res)
+  console.log('aastha', result._id)
   const navigate = useNavigate()
   const apiUrl = process.env.REACT_APP_API_URL
   const [employeeData, setEmployeeData] = useState([])
+  const [customerInfo, setCustomerInfo] = useState([])
   const [colleague, setColleague] = useState('')
   const [invoiceDate, setInvoiceDate] = useState('')
   const [deliveryDate, setDeliveryDate] = useState('')
   const [product, setProduct] = useState('')
   const [paymentMethod, setPaymentMethod] = useState('')
   const [invoiceAmount, setInvoiceAmount] = useState('')
-  const [alreadyPaid, setAlreadyPaid] = useState(Boolean(result?.customerDelivery?.alreadyPaid))
-
+  let paidData = customerInfo?.customerDelivery?.alreadyPaid
+  // console.log('paidData', paidData)
+  const [alreadyPaid, setAlreadyPaid] = useState(paidData)
   const invoiceChange = (e) => {
     setInvoiceDate(e)
   }
@@ -103,10 +106,23 @@ const Bills = () => {
       console.error('Error fetching employee data:', error)
     }
   }
+  const getCustomerInfo = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/customer/get_record/${result._id}`)
 
+      const data = await response.json()
+      console.log('data', data)
+      setCustomerInfo(data)
+    } catch (error) {
+      console.error('Error fetching employee data:', error)
+    }
+  }
+  // console.log('first', customerInfo?.customerDelivery?.alreadyPaid)
   useEffect(() => {
+    getCustomerInfo()
     getEmployeeData()
-  }, [])
+    setAlreadyPaid(paidData)
+  }, [paidData])
 
   return (
     <div className="inner-page-wrap">
