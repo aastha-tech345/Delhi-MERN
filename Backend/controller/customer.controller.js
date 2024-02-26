@@ -4,6 +4,20 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createCustomer = async (req, res) => {
   try {
+    // console.log("ash", req.body);
+    const today = new Date();
+    const year = String(today.getFullYear()).slice(-2);
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    const count = await Customer.countDocuments({
+      status: "active",
+    });
+
+    const paddedCount = String(count).padStart(5, "0");
+
+    const countId = `${year}${month}${day}-${paddedCount}`;
+
     const emailFind = await Customer.findOne({
       "customer.email": req.body.customer.email,
     });
@@ -13,7 +27,8 @@ exports.createCustomer = async (req, res) => {
         success: false,
       });
     }
-    const result = await Customer.create(req.body);
+
+    const result = await Customer.create({ ...req.body, countId });
     return res.status(200).json({
       success: true,
       message: "Customer created successfully",
@@ -221,6 +236,7 @@ exports.searchCustomer = async (req, res) => {
         { "customer.id": { $regex: searchKey, $options: "i" } },
         { "customer.email": { $regex: searchKey, $options: "i" } },
         { "customer.phone": { $regex: searchKey, $options: "i" } },
+        { "countId": { $regex: searchKey, $options: "i" } },
       ],
     });
     res.send(result);

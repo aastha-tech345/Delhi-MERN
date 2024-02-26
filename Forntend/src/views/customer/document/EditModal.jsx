@@ -29,10 +29,6 @@ const EditModal = ({ setEdit, getDetails }) => {
       setData({ ...data, document_type: e.label })
     }
   }
-  // let datares = []
-  // document_upload.map((elem) => {
-  //   datares.push(elem)
-  // })
 
   const handleFileInputChange = (e) => {
     setDocumentUpload([...document_upload, ...e.target.files])
@@ -47,22 +43,13 @@ const EditModal = ({ setEdit, getDetails }) => {
 
   const [removedFile, setRemovedFile] = useState([])
   const removeDocument = (index) => {
-    // console.log('ashindex', document_upload)
     const newDocumentUpload = [...document_upload]
     let deletedFile = newDocumentUpload.splice(index, 1)
-    // console.log('This is deleted----', deletedFile[0])
     setDocumentUpload(newDocumentUpload)
-    for (let i = 0; i < document_upload.length; i++) {
-      let name = deletedFile[0]?.name || deletedFile[0]?.filename
-      if (name == document_upload[i].filename) {
-        setRemovedFile((prev) => {
-          return [...prev, ...deletedFile]
-        })
-      }
-    }
+    setRemovedFile((prev) => {
+      return [...prev, ...deletedFile]
+    })
   }
-
-  // console.log('ashishdoc', document_upload)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -86,10 +73,7 @@ const EditModal = ({ setEdit, getDetails }) => {
       }
       formData.append('document_title', document_title)
       formData.append('document_type', document_type)
-
-      // console.log('file-------', removedFile, 'file-------')
       formData.append('removedFile', JSON.stringify(removedFile))
-      // formData.append('document_upload', document_upload)
       const res = await putFetch(
         `${apiUrl}/document/get_document/update/${response?._id}`,
         formData,
@@ -116,6 +100,7 @@ const EditModal = ({ setEdit, getDetails }) => {
   const cancelData = () => {
     console.log('ash')
     setDocumentUpload([])
+    setRemovedFile(response?.document_upload)
   }
   const options = [
     { value: 'Living will', label: 'Patientenverfügung' },
@@ -128,22 +113,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     { value: 'Personal document', label: 'Persönliches Dokument' },
     { value: 'Other', label: 'Anderes' },
   ]
-  // console.log('ashishdoc', { ...document_upload, newDocuments })
-  // newDocuments.map((elem) => {
-  //   const file = new File(
-  //     // Data: empty array
-  //     [],
-  //     // Filename
-  //     elem.filename,
-  //     // Additional options (optional)
-  //     {
-  //       type: elem.mimetype,
-  //       lastModified: new Date().getTime(),
-  //     },
-  //   )
 
-  //   console.log(file)
-  // })
   return (
     <div
       className="modal"
