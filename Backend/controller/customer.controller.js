@@ -146,7 +146,23 @@ exports.getCustomerData = async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
-
+exports.getCustomerRecord = async (req, res) => {
+  try {
+    const result = await Customer.findOne({
+      _id: req.params.id,
+      status: { $ne: "deleted" },
+    });
+    //
+    if (result) {
+      res.send(result);
+    } else {
+      res.status(404).send({ message: "Customer not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching customer data:", error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
 // exports.editCustomer = async (req, res) => {
 //   try {
 //     const data = await Customer.findByIdAndUpdate(req.params.id, req.body, {

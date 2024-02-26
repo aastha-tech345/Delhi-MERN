@@ -71,7 +71,7 @@ const CustomerInfo = () => {
   ]
   // const [those, setThose] = useState(resultt?.those)
   // console.log('those', resultt?.those)
-  const [those, setThose] = useState(resultt?.those[0])
+  const [those, setThose] = useState(resultt?.those)
   const handleSelectChange = (selectedOption) => {
     setThose(selectedOption)
     // console.log(selectedOption)
@@ -352,13 +352,36 @@ const CustomerInfo = () => {
     // created_by: '',
     // customer_id: result._id,
   }
+  // const saveData = async (e) => {
+  //   e.preventDefault()
+  //   if (clientStatus?.length === 0) {
+  //     return toast.warning('Das Statusfeld ist erforderlich')
+  //   }
+  //   try {
+  //     let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
+  //       method: 'put',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
+
+  //     let result = await response.json()
+  //     if (result?.message === 'Customer updated successfully') {
+  //       toast.success('Kundeninfo erfolgreich gespeichert')
+  //       getDetails()
+  //     }
+
+  //     // Show success toast
+  //   } catch (error) {
+  //     console.log('Error saving data:', error)
+
+  //     // Show error toast
+  //     toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
+  //   }
+  // }
   const saveData = async (e) => {
     e.preventDefault()
-    // let a = new Date().getFullYear()
-    // if (e.getFullYear() > a) {
-    //   toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
-    // }
-    // setCustomerInfoStatu(e)
     if (clientStatus?.length === 0) {
       return toast.warning('Das Statusfeld ist erforderlich')
     }
@@ -372,70 +395,18 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
-      // console.log('aastharesult', result)
+      console.log('first', result)
       if (result?.message === 'Customer updated successfully') {
         toast.success('Kundeninfo erfolgreich gespeichert')
-        // setOrderingMaterials({
-        //   orderNumber: '',
-        //   newsletterDate: '',
-        //   extras: '',
-        //   newsletterSubscription: '',
-        // })
-        // setCustomerInfoStatu({
-        //   clientStatus: '',
-        //   employee: '',
-        //   dataCollection: '',
-        //   dataProtection: '',
-        // })
-        // setThose('')
-        // setEmail('')
-        // setCustomerContact({
-        //   title: '',
-        //   salution: '',
-        //   gender: '',
-        //   fname: '',
-        //   dob: '',
-        //   name: '',
-        // })
-        // setCustomerBills({
-        //   billAddress: '',
-        //   billPlz: '',
-        //   billLand: '',
-        //   billOrt: '',
-        // })
-
-        // setCustomerDelivery?({
-        //   fname: '',
-        //   lname: '',
-        //   address: '',
-        //   plz: '',
-        //   land: '',
-        //   ort: '',
-        //   phone: '',
-        //   mobile: '',
-        //   alreadyPaid: '',
-        // })
-        // setCustomerDeposit({
-        //   deposit: '',
-        //   startDeposit: '',
-        //   nextBrand: '',
-        //   updateStamp: '',
-        //   lastStamp: '',
-        //   emergencyPass: '',
-        //   reminderStamp: '',
-        // })
-        // setCustomerBurial('')
         getDetails()
+        navigate('/customerlist')
       }
-
-      // Show success toast
     } catch (error) {
       console.log('Error saving data:', error)
-
-      // Show error toast
       toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
     }
   }
+
   const customerDateChange = (e) => {
     let selectedDateObject = new Date(e)
     let currentYear = new Date().getFullYear()

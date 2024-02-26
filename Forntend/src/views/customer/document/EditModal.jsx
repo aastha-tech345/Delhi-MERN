@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Loader from 'src/components/loader/Loader'
 import Form from 'react-bootstrap/Form'
 import PropTypes from 'prop-types'
-import Select, { components } from 'react-select'
+import Select from 'react-select'
 
 const EditModal = ({ setEdit, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
@@ -18,7 +18,6 @@ const EditModal = ({ setEdit, getDetails }) => {
   })
   const [document_upload, setDocumentUpload] = useState(response?.document_upload || [])
   const fileInputRef = useRef(null)
-  const [newDocuments, setNewDocuments] = useState(response?.document_upload)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadValue] = useState(false)
 
@@ -300,7 +299,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
-                          style={{ color: 'white' }}
+                          style={{ color: 'white', marginRight: '-60px' }}
                         >
                           <g clipPath="url(#clip0_384_3149)">
                             <path
