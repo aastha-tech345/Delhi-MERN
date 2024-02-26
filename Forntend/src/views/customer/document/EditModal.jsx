@@ -264,12 +264,12 @@ const EditModal = ({ setEdit, getDetails }) => {
                       </div>
                       <div className="file-btn">
                         <svg
-                          width="24"
-                          height="24"
+                          width="15"
+                          height="15"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
-                          style={{ color: 'white', marginRight: '-60px' }}
+                          // style={{ color: 'white', marginRight: '-60px' }}
                         >
                           <g clipPath="url(#clip0_384_3149)">
                             <path
