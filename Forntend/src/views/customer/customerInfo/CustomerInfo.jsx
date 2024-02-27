@@ -132,19 +132,19 @@ const CustomerInfo = () => {
   const [employeeData, setEmployeeData] = useState([])
   // console.log('customer_info', resultt.orderingMaterials.orderNumber)
   let customer = {
-    fname: customerContact?.fname || resultt?.fname,
-    lname: customerContact?.lname || resultt?.lname,
-    email: resultt?.email,
-    phone: customerDelivery?.phone || resultt?.phone,
-    plz: customerDelivery?.plz || resultt?.plz,
-    startDate: customerContact?.startDate || resultt?.startDate,
+    fname: customerInfo?.customerContact?.fname || customerInfo?.customer?.fname,
+    lname: customerInfo?.customerContact?.lname || customerInfo?.customer?.lname,
+    email: customerInfo?.customer?.email,
+    phone: customerInfo?.customerDelivery?.phone || customerInfo?.customer?.phone,
+    plz: customerInfo?.customerDelivery?.plz || customerInfo?.customer?.plz,
+    startDate: customerContact?.startDate || customerInfo?.customer?.startDate,
     status: clientStatus,
-    land: customerDelivery?.land || resultt?.land,
-    id: resultt?.id,
-    street: resultt?.street,
-    city: resultt?.city,
-    those: resultt?.those,
-    created_by: resultt?.created_by,
+    land: customerInfo?.customerDelivery?.land || customerInfo?.customer?.land,
+    id: customerInfo?.id,
+    street: customerInfo?.customerInfo?.customer?.street,
+    city: customerInfo?.customerInfo?.customer?.city,
+    those: customerInfo?.those,
+    created_by: customerInfo?.created_by,
   }
   // console.log('aaastha', customer.email)
   // console.log('email', resultt?.customer)
