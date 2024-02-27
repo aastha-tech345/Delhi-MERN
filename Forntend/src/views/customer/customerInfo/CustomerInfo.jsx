@@ -128,9 +128,11 @@ const CustomerInfo = () => {
   })
   const [getCustomerData, setGetCustomerData] = useState({})
   const [employeeData, setEmployeeData] = useState([])
+  console.log('customerInfo?.customer?.fname', customerInfo?.customer?.fname)
+  console.log('customerInfo?.customerContact?.fname', customerInfo?.customerContact?.fname)
   let customer = {
-    fname: customerInfo?.customerContact?.fname || customerInfo?.customer?.fname,
-    lname: customerInfo?.customerContact?.lname || customerInfo?.customer?.lname,
+    fname: customerContact?.fname || resultt?.fname,
+    lname: customerContact?.lname || resultt?.lname,
     email: customerInfo?.customer?.email,
     phone: customerInfo?.customerDelivery?.phone || customerInfo?.customer?.phone,
     plz: customerInfo?.customerDelivery?.plz || customerInfo?.customer?.plz,
@@ -463,8 +465,8 @@ const CustomerInfo = () => {
       title: customerInfo?.customerContact?.title,
       salution: customerInfo?.customerContact?.salution,
       gender: customerInfo?.customerContact?.gender,
-      fname: customerInfo?.customerContact?.fname || customerInfo?.customer?.fname,
-      lname: customerInfo?.customerContact?.lname || customerInfo?.customer?.lname,
+      fname: customerInfo?.customerContact?.fname || resultt?.fname,
+      lname: customerInfo?.customerContact?.lname || resultt?.lname,
       startDate: customerInfo?.customer?.startDate,
     })
     setCustomerBills({
@@ -486,8 +488,9 @@ const CustomerInfo = () => {
       financialReasons: customerInfo?.customerBurial?.financialReasons,
     })
     setThose(customerInfo?.those)
+    setClientStatus(customerInfo?.customer?.status)
   }, [customerInfo])
-
+  // console.log('customerInfo?.customer?.status', customerInfo?.customer?.status)
   return (
     <div className="inner-page-wrap">
       <Customer getCustomerData={getCustomerData} updateData={updateData} />

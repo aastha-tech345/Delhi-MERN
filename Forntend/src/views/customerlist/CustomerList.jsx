@@ -406,7 +406,7 @@ const CustomerList = () => {
       }
 
       let result = await response.json()
-      // console.log('result', result.data)
+      console.log('result', result.data)
       toast.success('Kundendatensatz erfolgreich gespeichert')
       setFname('')
       setLand('')
