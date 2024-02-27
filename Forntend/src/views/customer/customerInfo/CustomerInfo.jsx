@@ -75,7 +75,7 @@ const CustomerInfo = () => {
   ]
   // const [those, setThose] = useState(resultt?.those)
   // console.log('those', resultt?.those)
-  const [those, setThose] = useState(resultt?.those)
+  const [those, setThose] = useState('')
   const handleSelectChange = (selectedOption) => {
     setThose(selectedOption)
     // console.log(selectedOption)
@@ -114,10 +114,8 @@ const CustomerInfo = () => {
   const [customerStartDeposit, setCustomerStartDeposit] = useState('')
   const [customerNextBrand, setCustomerNextBrand] = useState('')
   const [customerUpdateStamp, setCustomerUpdateStamp] = useState('')
-  const [customerLastStamp, setCustomerLastStamp] = useState(resultt?.customerDeposit?.lastStamp)
-  const [customerReminderStamp, setCustomerReminderStamp] = useState(
-    resultt?.customerDeposit?.reminderStamp,
-  )
+  const [customerLastStamp, setCustomerLastStamp] = useState('')
+  const [customerReminderStamp, setCustomerReminderStamp] = useState('')
   // const [customerDepositeCheckbox, setCustomerDepositeCheckbox] = useState(
   //   Boolean(resultt?.customerDeposit?.deposit),
   // )
@@ -130,7 +128,6 @@ const CustomerInfo = () => {
   })
   const [getCustomerData, setGetCustomerData] = useState({})
   const [employeeData, setEmployeeData] = useState([])
-  // console.log('customer_info', resultt.orderingMaterials.orderNumber)
   let customer = {
     fname: customerInfo?.customerContact?.fname || customerInfo?.customer?.fname,
     lname: customerInfo?.customerContact?.lname || customerInfo?.customer?.lname,
@@ -138,7 +135,7 @@ const CustomerInfo = () => {
     phone: customerInfo?.customerDelivery?.phone || customerInfo?.customer?.phone,
     plz: customerInfo?.customerDelivery?.plz || customerInfo?.customer?.plz,
     startDate: customerContact?.startDate || customerInfo?.customer?.startDate,
-    status: clientStatus,
+    status: clientStatus || customerInfo?.customer?.status,
     land: customerInfo?.customerDelivery?.land || customerInfo?.customer?.land,
     id: customerInfo?.id,
     street: customerInfo?.customerInfo?.customer?.street,
@@ -146,8 +143,6 @@ const CustomerInfo = () => {
     those: customerInfo?.those,
     created_by: customerInfo?.created_by,
   }
-  // console.log('aaastha', customer.email)
-  // console.log('email', resultt?.customer)
 
   const matarialChange = (e) => {
     if (e instanceof Date) {
@@ -490,6 +485,7 @@ const CustomerInfo = () => {
       notTermination: customerInfo?.customerBurial?.notTermination,
       financialReasons: customerInfo?.customerBurial?.financialReasons,
     })
+    setThose(customerInfo?.those)
   }, [customerInfo])
 
   return (
