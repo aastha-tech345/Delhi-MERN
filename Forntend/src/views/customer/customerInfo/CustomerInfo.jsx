@@ -12,6 +12,7 @@ import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 // import 'primeicons/primeicons.css'
 import CreatableSelect from 'react-select/creatable'
+import axios from 'axios'
 
 const CheckboxOption = (props) => (
   <div>
@@ -38,23 +39,26 @@ const CustomerInfo = () => {
   const location = useLocation()
   const apiUrl = process.env.REACT_APP_API_URL
   const [page, setPage] = useState(1)
+  const [updateData, setUpdateData] = useState(false)
   const [itemsPerPage, setItemsPerPage] = useState('')
+  const [customerInfo, setCustomerInfo] = useState({})
+  console.log('ashcustomer', customerInfo)
   let ress = localStorage.getItem('customerRecord')
   // console.log(ress)
   let resultt = JSON.parse(ress)
-  console.log('aast', resultt)
+  // console.log('aast', resultt)
   const [orderingMaterials, setOrderingMaterials] = useState({
-    orderNumber: resultt?.orderingMaterials?.orderNumber,
-    newsletterDate: resultt?.orderingMaterials?.newsletterDate,
-    extras: resultt?.orderingMaterials?.extras,
-    newsletterSubscription: resultt?.orderingMaterials?.newsletterSubscription,
+    orderNumber: '',
+    newsletterDate: '',
+    extras: '',
+    newsletterSubscription: '',
   })
   // console.log('orderDate', resultt?.orderingMaterials?.newsletterDate)
 
   const [customerInfoStatu, setCustomerInfoStatu] = useState({
     // clientStatus: resultt?.customerInfoStatu?.clientStatus,
-    dataProtection: resultt?.customerInfoStatu?.dataProtection,
-    employee: resultt?.customerInfoStatu?.employee,
+    dataProtection: '',
+    employee: '',
     // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
   // console.log('first', resultt?.customerInfoStatu)
@@ -79,56 +83,50 @@ const CustomerInfo = () => {
   // console.log('those', those?.value)
   // console.log('those', resultt?.those)
   const [customerContact, setCustomerContact] = useState({
-    title: resultt?.customerContact?.title,
-    salution: resultt?.customerContact?.salution,
-    gender: resultt?.customerContact?.gender,
-    fname: resultt?.fname,
-    lname: resultt?.lname,
-    startDate: resultt?.startDate,
+    title: '',
+    salution: '',
+    gender: '',
+    fname: '',
+    lname: '',
+    startDate: '',
   })
 
   const [customerBills, setCustomerBills] = useState({
-    billAddress: resultt?.customerBills?.billAddress || resultt?.street,
-    billPlz: resultt?.customerBills?.billPlz || resultt?.plz,
-    billLand: resultt?.customerBills?.billLand || resultt?.land,
-    billOrt: resultt?.customerBills?.billOrt || resultt?.city,
+    billAddress: '',
+    billPlz: '',
+    billLand: '',
+    billOrt: '',
   })
   const [email, setEmail] = useState('')
-  const [dataCollection, setDataCollection] = useState(resultt?.customerInfoStatu?.dataCollection)
+  const [dataCollection, setDataCollection] = useState('')
   // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   const [customerDelivery, setCustomerDelivery] = useState({
-    fname: resultt?.customerDelivery?.fname || resultt?.fname,
-    lname: resultt?.customerDelivery?.lname || resultt?.lname,
-    address: resultt?.customerDelivery?.address || resultt?.street,
-    plz: resultt?.plz,
-    land: resultt?.land,
-    ort: resultt?.customerDelivery?.ort || resultt?.city,
-    phone: resultt?.phone,
-    mobile: resultt?.customerDelivery?.mobile,
-    alreadyPaid: resultt?.customerDelivery?.alreadyPaid,
+    fname: '',
+    lname: '',
+    address: '',
+    plz: '',
+    land: '',
+    ort: '',
+    phone: '',
+    mobile: '',
+    alreadyPaid: '',
   })
-  const [customerStartDeposit, setCustomerStartDeposit] = useState(
-    resultt?.customerDeposit?.startDeposit,
-  )
-  const [customerNextBrand, setCustomerNextBrand] = useState(resultt?.customerDeposit?.nextBrand)
-  const [customerUpdateStamp, setCustomerUpdateStamp] = useState(
-    resultt?.customerDeposit?.updateStamp,
-  )
+  const [customerStartDeposit, setCustomerStartDeposit] = useState('')
+  const [customerNextBrand, setCustomerNextBrand] = useState('')
+  const [customerUpdateStamp, setCustomerUpdateStamp] = useState('')
   const [customerLastStamp, setCustomerLastStamp] = useState(resultt?.customerDeposit?.lastStamp)
   const [customerReminderStamp, setCustomerReminderStamp] = useState(
     resultt?.customerDeposit?.reminderStamp,
   )
-  const [customerDepositeCheckbox, setCustomerDepositeCheckbox] = useState(
-    Boolean(resultt?.customerDeposit?.deposit),
-  )
-  const [customerEmergencyPass, setCustomerEmergencyPass] = useState(
-    Boolean(resultt?.customerDeposit?.emergencyPass),
-  )
+  // const [customerDepositeCheckbox, setCustomerDepositeCheckbox] = useState(
+  //   Boolean(resultt?.customerDeposit?.deposit),
+  // )
+  const [customerEmergencyPass, setCustomerEmergencyPass] = useState('')
   const [customerBurial, setCustomerBurial] = useState({
-    termination: resultt?.customerBurial?.termination,
-    terminationDeath: resultt?.customerBurial?.terminationDeath,
-    notTermination: resultt?.customerBurial?.notTermination,
-    financialReasons: resultt?.customerBurial?.financialReasons,
+    termination: '',
+    terminationDeath: '',
+    notTermination: '',
+    financialReasons: '',
   })
   const [getCustomerData, setGetCustomerData] = useState({})
   const [employeeData, setEmployeeData] = useState([])
@@ -257,9 +255,9 @@ const CustomerInfo = () => {
     setCustomerReminderStamp(e)
   }
 
-  const deposite = (e) => {
-    setCustomerDepositeCheckbox(e.target.checked)
-  }
+  // const deposite = (e) => {
+  //   setCustomerDepositeCheckbox(e.target.checked)
+  // }
 
   const emergencyPass = (e) => {
     setCustomerEmergencyPass(e.target.checked)
@@ -271,7 +269,7 @@ const CustomerInfo = () => {
     updateStamp: customerUpdateStamp,
     lastStamp: customerLastStamp,
     reminderStamp: customerReminderStamp,
-    deposit: customerDepositeCheckbox,
+    // deposit: customerDepositeCheckbox,
     emergencyPass: customerEmergencyPass,
   }
   const DeliveryChange = (e) => {
@@ -331,6 +329,16 @@ const CustomerInfo = () => {
       // setGetCustomerData(data)
     } catch (error) {
       console.error('Error fetching customer record:', error)
+    }
+  }
+
+  const getRecordById = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/customer/get_record/${resultt?._id}`)
+      console.log('data', response)
+      setCustomerInfo(response?.data)
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -397,9 +405,11 @@ const CustomerInfo = () => {
       let result = await response.json()
       console.log('first', result)
       if (result?.message === 'Customer updated successfully') {
+        getRecordById()
         toast.success('Kundeninfo erfolgreich gespeichert')
         getDetails()
-        navigate('/customerlist')
+        setUpdateData(!updateData)
+        // navigate('/customerlist')
       }
     } catch (error) {
       console.log('Error saving data:', error)
@@ -420,6 +430,7 @@ const CustomerInfo = () => {
   }
 
   useEffect(() => {
+    getRecordById()
     getDetails()
     getEmployeeData()
   }, [page, itemsPerPage])
@@ -427,25 +438,63 @@ const CustomerInfo = () => {
   const cancelData = () => {
     navigate('/customerlist')
   }
-  // const selectedItemTemplate = (option) => {
-  //   return (
-  //     <div className="p-multiselect-item">
-  //       <i className="pi pi-map-marker" style={{ marginRight: '0.5em' }}></i>
-  //       <span>{option.name}</span>
-  //     </div>
-  //   )
-  // }
-  // const getPlaceholder = () => {
-  //   if (clientStatus.length === 0) {
-  //     return 'HVD-PV'
-  //   } else {
-  //     return `${clientStatus.length} record${clientStatus.length > 1 ? 's' : ''} selected`
-  //   }
-  // }
+
+  useEffect(() => {
+    setCustomerDelivery({
+      fname: customerInfo?.customerDelivery?.fname || customerInfo?.customer?.fname,
+      lname: customerInfo?.customerDelivery?.lname || customerInfo?.customer?.lname,
+      address: customerInfo?.customerDelivery?.address || customerInfo?.customer?.street,
+      plz: customerInfo?.plz || customerInfo?.customer?.plz,
+      land: customerInfo?.land || customerInfo?.customer?.land,
+      ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.street,
+      phone: customerInfo?.phone || customerInfo?.customer?.phone,
+      mobile: customerInfo?.customerDelivery?.mobile || customerInfo?.customer?.phone,
+      alreadyPaid: customerInfo?.customerDelivery?.alreadyPaid,
+    })
+    setOrderingMaterials({
+      orderNumber: customerInfo?.orderingMaterials?.orderNumber,
+      newsletterDate: customerInfo?.orderingMaterials?.newsletterDate,
+      extras: customerInfo?.orderingMaterials?.extras,
+      newsletterSubscription: customerInfo?.orderingMaterials?.newsletterSubscription,
+    })
+    setCustomerInfoStatu({
+      dataProtection: customerInfo?.customerInfoStatu?.dataProtection,
+      employee: customerInfo?.customerInfoStatu?.employee,
+    })
+    setDataCollection(customerInfo?.customerInfoStatu?.dataCollection)
+    // setClientStatus(customerInfo?.customer?.clientStatus)
+    setThose(customerInfo?.those)
+    setCustomerContact({
+      title: customerInfo?.customerContact?.title,
+      salution: customerInfo?.customerContact?.salution,
+      gender: customerInfo?.customerContact?.gender,
+      fname: customerInfo?.customerContact?.fname || customerInfo?.customer?.fname,
+      lname: customerInfo?.customerContact?.lname || customerInfo?.customer?.lname,
+      startDate: customerInfo?.customer?.startDate,
+    })
+    setCustomerBills({
+      billAddress: customerInfo?.customerBills?.billAddress || customerInfo?.customer?.street,
+      billPlz: customerInfo?.customerBills?.billPlz || customerInfo?.customer?.plz,
+      billLand: customerInfo?.customerBills?.billLand || customerInfo?.customer?.land,
+      billOrt: customerInfo?.customerBills?.billOrt || customerInfo?.customer?.city,
+    })
+    setCustomerEmergencyPass(customerInfo?.customerDeposit?.emergencyPass)
+    setCustomerStartDeposit(customerInfo?.customerDeposit?.startDeposit)
+    setCustomerNextBrand(customerInfo?.customerDeposit?.nextBrand)
+    setCustomerUpdateStamp(customerInfo?.customerDeposit?.updateStamp)
+    setCustomerReminderStamp(customerInfo?.customerDeposit?.reminderStamp)
+    setCustomerLastStamp(customerInfo?.customerDeposit?.lastStamp)
+    setCustomerBurial({
+      termination: customerInfo?.customerBurial?.termination,
+      terminationDeath: customerInfo?.customerBurial?.terminationDeath,
+      notTermination: customerInfo?.customerBurial?.notTermination,
+      financialReasons: customerInfo?.customerBurial?.financialReasons,
+    })
+  }, [customerInfo])
 
   return (
     <div className="inner-page-wrap">
-      <Customer getCustomerData={getCustomerData} />
+      <Customer getCustomerData={getCustomerData} updateData={updateData} />
       <div className="tab-content px-3">
         <div className="tab-title">
           <h4>KlientInnen</h4>

@@ -131,8 +131,19 @@ const Document = () => {
   }
 
   const handleFileInputChange = (e) => {
-    setDocumentUpload([...document_upload, ...e.target.files])
-    // Clear the file input value
+    // setDocumentUpload([...document_upload, ...e.target.files])
+    // fileInputRef.current.value = ''
+
+    const files = Array.from(e.target.files)
+
+    const pdfFiles = files.filter((file) => file.type === 'application/pdf')
+
+    if (pdfFiles.length !== files.length) {
+      toast.warning('Es sind nur PDF-Dateien erlaubt.')
+    }
+
+    setDocumentUpload([...document_upload, ...pdfFiles])
+
     fileInputRef.current.value = ''
   }
 
