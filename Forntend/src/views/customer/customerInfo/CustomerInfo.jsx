@@ -12,6 +12,7 @@ import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 // import 'primeicons/primeicons.css'
 import CreatableSelect from 'react-select/creatable'
+import axios from 'axios'
 
 const CheckboxOption = (props) => (
   <div>
@@ -39,6 +40,8 @@ const CustomerInfo = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const [page, setPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState('')
+  const [customerInfo, setCustomerInfo] = useState({})
+  console.log('ashcustomer', customerInfo)
   let ress = localStorage.getItem('customerRecord')
   // console.log(ress)
   let resultt = JSON.parse(ress)
@@ -97,7 +100,7 @@ const CustomerInfo = () => {
   const [dataCollection, setDataCollection] = useState(resultt?.customerInfoStatu?.dataCollection)
   // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   const [customerDelivery, setCustomerDelivery] = useState({
-    fname: resultt?.customerDelivery?.fname || resultt?.fname,
+    fname: customerInfo?.customerDelivery?.fname,
     lname: resultt?.customerDelivery?.lname || resultt?.lname,
     address: resultt?.customerDelivery?.address || resultt?.street,
     plz: resultt?.plz,
@@ -334,6 +337,16 @@ const CustomerInfo = () => {
     }
   }
 
+  const getRecordById = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/customer/get_record/${resultt?._id}`)
+      console.log('data', response)
+      setCustomerInfo(response?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   // console.log('aastha type', customerDepositt.emergencyPass)
   let customerInfoStatuData = { ...customerInfoStatu, clientStatus, dataCollection }
   // console.log('ashishclient', customerInfoStatuData)
@@ -397,9 +410,10 @@ const CustomerInfo = () => {
       let result = await response.json()
       console.log('first', result)
       if (result?.message === 'Customer updated successfully') {
+        getRecordById()
         toast.success('Kundeninfo erfolgreich gespeichert')
         getDetails()
-        navigate('/customerlist')
+        // navigate('/customerlist')
       }
     } catch (error) {
       console.log('Error saving data:', error)
@@ -420,6 +434,7 @@ const CustomerInfo = () => {
   }
 
   useEffect(() => {
+    getRecordById()
     getDetails()
     getEmployeeData()
   }, [page, itemsPerPage])
@@ -427,21 +442,20 @@ const CustomerInfo = () => {
   const cancelData = () => {
     navigate('/customerlist')
   }
-  // const selectedItemTemplate = (option) => {
-  //   return (
-  //     <div className="p-multiselect-item">
-  //       <i className="pi pi-map-marker" style={{ marginRight: '0.5em' }}></i>
-  //       <span>{option.name}</span>
-  //     </div>
-  //   )
-  // }
-  // const getPlaceholder = () => {
-  //   if (clientStatus.length === 0) {
-  //     return 'HVD-PV'
-  //   } else {
-  //     return `${clientStatus.length} record${clientStatus.length > 1 ? 's' : ''} selected`
-  //   }
-  // }
+
+  useEffect(() => {
+    setCustomerDelivery({
+      fname: customerInfo?.customerDelivery?.fname,
+      lname: customerInfo?.customerDelivery?.lname,
+      address: customerInfo?.customerDelivery?.address,
+      plz: customerInfo?.plz,
+      land: customerInfo?.land,
+      ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.street,
+      phone: customerInfo?.phone,
+      mobile: customerInfo?.customerDelivery?.mobile,
+      alreadyPaid: customerInfo?.customerDelivery?.alreadyPaid,
+    })
+  }, [customerInfo])
 
   return (
     <div className="inner-page-wrap">
