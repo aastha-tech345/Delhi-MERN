@@ -4,9 +4,14 @@ import { IoIosCall } from 'react-icons/io'
 import { ImLocation2 } from 'react-icons/im'
 import { useNavigate, useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
-const Customer = ({ getCustomerData }) => {
+const Customer = ({ getCustomerData, updateData }) => {
+  const [customerInfo, setCustomerInfo] = useState([])
+  let ress = localStorage.getItem('customerRecord')
+  let resultt = JSON.parse(ress)
+  const apiUrl = process.env.REACT_APP_API_URL
   Customer.propTypes = {
     getCustomerData: PropTypes.func.isRequired,
+    updateData: PropTypes.func.isRequired,
   }
 
   const navigate = useNavigate()
@@ -46,8 +51,7 @@ const Customer = ({ getCustomerData }) => {
 
   let customer = localStorage.getItem('customerRecord')
   let res = JSON.parse(customer)
-  console.log(res?.startDate)
-  const dateString = res?.startDate
+  const dateString = customerInfo?.customer?.startDate
   const date = new Date(dateString)
   const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
 
@@ -67,6 +71,16 @@ const Customer = ({ getCustomerData }) => {
     '  ' +
     res?.city
   // console.log('customerPage', res)
+  const getRecordById = async () => {
+    const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
+    const updatedData = await response.json()
+    console.log('data', updatedData)
+    setCustomerInfo(updatedData)
+  }
+  console.log('first', customerInfo)
+  useEffect(() => {
+    getRecordById()
+  }, [updateData])
   return (
     <>
       <div className="whiteBox">
