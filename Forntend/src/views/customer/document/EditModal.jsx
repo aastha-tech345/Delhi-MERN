@@ -31,7 +31,21 @@ const EditModal = ({ setEdit, getDetails }) => {
   }
 
   const handleFileInputChange = (e) => {
-    setDocumentUpload([...document_upload, ...e.target.files])
+    // without validation
+    // setDocumentUpload([...document_upload, ...e.target.files])
+    // fileInputRef.current.value = ''
+
+    // adding pdf validation
+    const files = Array.from(e.target.files)
+
+    const pdfFiles = files.filter((file) => file.type === 'application/pdf')
+
+    if (pdfFiles.length !== files.length) {
+      toast.warning('Es sind nur PDF-Dateien erlaubt.')
+    }
+
+    setDocumentUpload([...document_upload, ...pdfFiles])
+
     fileInputRef.current.value = ''
   }
 
