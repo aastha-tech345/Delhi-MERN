@@ -68,10 +68,12 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
     customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
     customerInfo?.customer?.lname?.slice(1).toLowerCase()
   let street =
-    customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
-    customerInfo?.customer?.street?.slice(1).toLowerCase() +
-    ',  ' +
-    '  ' +
+    (customerInfo?.customer?.street?.length
+      ? customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
+        customerInfo?.customer?.street?.slice(1).toLowerCase() +
+        ',  ' +
+        '  '
+      : ' ') +
     customerInfo?.customer?.plz +
     '  ' +
     customerInfo?.customer?.city
