@@ -9,9 +9,9 @@ function getCurrentDate() {
 }
 const orderingMaterialsSchema = {
   orderNumber: { type: String, default: "" },
-  newsletterDate: { type: String },
+  newsletterDate: { type: String, default: getCurrentDate },
   extras: { type: String, default: "" },
-  newsletterSubscription: { type: String, default: getCurrentDate },
+  newsletterSubscription: { type: String },
 };
 
 const customerInfoStatuSchema = {

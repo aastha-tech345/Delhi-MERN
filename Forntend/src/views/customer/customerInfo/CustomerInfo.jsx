@@ -440,9 +440,10 @@ const CustomerInfo = () => {
       orderNumber: customerInfo?.orderingMaterials?.orderNumber,
       newsletterDate: customerInfo?.orderingMaterials?.newsletterDate,
       extras: customerInfo?.orderingMaterials?.extras,
-      // newsletterSubscription: customerInfo?.orderingMaterials?.newsletterSubscription,
-      newsletterSubscription: new Date(),
+      newsletterSubscription: customerInfo?.orderingMaterials?.newsletterSubscription,
+      // newsletterSubscription: new Date(),
     })
+
     setCustomerInfoStatu({
       dataProtection: customerInfo?.customerInfoStatu?.dataProtection,
       employee: customerInfo?.customerInfoStatu?.employee,

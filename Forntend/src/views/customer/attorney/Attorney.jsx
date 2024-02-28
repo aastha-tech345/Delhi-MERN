@@ -22,6 +22,7 @@ const Attorney = () => {
       powerOfAttorney_lname: '',
       powerOfAttorney_address: '',
       powerOfAttorney_phone: [],
+      powerOfAttorney_mobile: [],
     })),
   })
 
@@ -46,7 +47,11 @@ const Attorney = () => {
         }
       } else {
         const newValue =
-          name === 'healthCare_phone' && 'healthCare_mobile' ? formatPhoneNumber(value) : value
+          name === 'healthCare_phone'
+            ? formatPhoneNumber(value)
+            : value && name === 'healthCare_mobile'
+            ? formatPhoneNumber(value)
+            : value
 
         updatedHealthCareData[index] = {
           ...updatedHealthCareData[index],
@@ -100,29 +105,32 @@ const Attorney = () => {
 
   const powerOfAttorneyChange = (e, index) => {
     const { name, value, type, checked } = e.target
+
     setPowerOfAttorney((prevPowerOfAttorney) => {
       const updatedPowerOfAttorneyData = [...prevPowerOfAttorney.powerOfAttorneyData]
-      updatedPowerOfAttorneyData[index] = {
-        ...updatedPowerOfAttorneyData[index],
-        [name]: type === 'checkbox' ? checked : value,
-      }
-      if (name === 'powerOfAttorney_phone' && name === 'powerOfAttorney_mobile') {
-        const numericValue = value.replace(/\D/g, '')
-        let formattedNumber = ''
 
-        for (let i = 0; i < numericValue.length; i++) {
-          if (i > 0 && i % 30 === 0) {
-            formattedNumber += ' / '
-          }
-          formattedNumber += numericValue[i]
+      if (type === 'checkbox') {
+        updatedPowerOfAttorneyData[index] = {
+          ...updatedPowerOfAttorneyData[index],
+          [name]: checked,
         }
+      } else {
+        const newValue =
+          name === 'powerOfAttorney_phone'
+            ? formatPhoneNumber(value)
+            : value && name === 'powerOfAttorney_mobile'
+            ? formatPhoneNumber(value)
+            : value
 
-        updatedPowerOfAttorneyData[index][name] = formattedNumber
+        updatedPowerOfAttorneyData[index] = {
+          ...updatedPowerOfAttorneyData[index],
+          [name]: newValue,
+        }
       }
+
       return { ...prevPowerOfAttorney, powerOfAttorneyData: updatedPowerOfAttorneyData }
     })
   }
-
   const addPowerOfAttorneyField = () => {
     if (powerOfAttorney.powerOfAttorneyData.length < maxFields) {
       setPowerOfAttorney((prev) => ({
@@ -523,7 +531,7 @@ const Attorney = () => {
                             <div className="col-sm-12">
                               <input
                                 onChange={(e) => powerOfAttorneyChange(e, index)}
-                                value={field.powerOfAttorney_fname}
+                                value={field.powerOfAttorney_mobile}
                                 name="powerOfAttorney_mobile"
                                 type="text"
                                 placeholder="853-456-8464"
