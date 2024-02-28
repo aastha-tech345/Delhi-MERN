@@ -369,6 +369,17 @@ const CustomerList = () => {
 
     setValidated(true)
 
+    if (!email) {
+      return notify('Invalid Email')
+    }
+    if (!fname || !lname || !email) {
+      return warning('Füllen Sie den Datensatz')
+    }
+    let currentDate = new Date()
+    if (startDate > currentDate) {
+      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
+    }
+
     let data = {
       customer: {
         fname,
@@ -386,12 +397,6 @@ const CustomerList = () => {
       },
     }
 
-    if (!email) {
-      return notify('Invalid Email')
-    }
-    if (!fname || !lname || !email) {
-      return warning('Füllen Sie den Datensatz')
-    }
     try {
       let response = await fetch(`${apiUrl}/customer/create`, {
         method: 'POST',
@@ -402,7 +407,6 @@ const CustomerList = () => {
       })
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
-        // console.log("rerror found")
       }
 
       let result = await response.json()
@@ -420,12 +424,9 @@ const CustomerList = () => {
       setStartDate('')
       setClientStatus('')
       setValidated(false)
-      // window.location.reload()
       handleClose()
       getDetails()
     } catch (error) {
-      // console.error('Error during API call:', error)
-
       toast.error('E-Mail-ID existiert bereits')
       console.log('error', error)
     }
@@ -619,9 +620,18 @@ const CustomerList = () => {
   }, [])
 
   const handleDateChange = (e) => {
-    let a = new Date().getFullYear()
-    if (e.getFullYear() > a) {
-      toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
+    let currentDate = new Date()
+    let currentYear = currentDate.getFullYear()
+    let currentMonth = currentDate.getMonth()
+    let currentDay = currentDate.getDate()
+    if (
+      e.getFullYear() > currentYear ||
+      (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
+      (e.getFullYear() === currentYear &&
+        e.getMonth() === currentMonth &&
+        e.getDate() > currentDay + 1)
+    ) {
+      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
     }
     setStartDate(e)
   }

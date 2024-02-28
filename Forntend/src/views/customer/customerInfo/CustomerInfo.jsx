@@ -131,17 +131,17 @@ const CustomerInfo = () => {
   console.log('customerInfo?.customer?.fname', customerInfo?.customer?.fname)
   console.log('customerInfo?.customerContact?.fname', customerInfo?.customerContact?.fname)
   let customer = {
-    fname: customerContact?.fname || resultt?.fname,
-    lname: customerContact?.lname || resultt?.lname,
+    fname: customerContact?.fname || customerInfo?.customer?.fname,
+    lname: customerContact?.lname || customerInfo?.customer?.lname,
     email: customerInfo?.customer?.email,
-    phone: customerInfo?.customerDelivery?.phone || customerInfo?.customer?.phone,
-    plz: customerInfo?.customerDelivery?.plz || customerInfo?.customer?.plz,
+    phone: customerDelivery?.phone || customerInfo?.customer?.phone,
+    plz: customerDelivery?.plz || customerInfo?.customer?.plz,
     startDate: customerContact?.startDate || customerInfo?.customer?.startDate,
     status: clientStatus || customerInfo?.customer?.status,
-    land: customerInfo?.customerDelivery?.land || customerInfo?.customer?.land,
+    land: customerDelivery?.land || customerInfo?.customer?.land,
     id: customerInfo?.id,
-    street: customerInfo?.customerInfo?.customer?.street,
-    city: customerInfo?.customerInfo?.customer?.city,
+    street: customerDelivery?.address || customerInfo?.customer?.street,
+    city: customerInfo?.customer?.city,
     those: customerInfo?.those,
     created_by: customerInfo?.created_by,
   }
@@ -151,6 +151,7 @@ const CustomerInfo = () => {
       // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
       //   -2,
       // )}.${e.getFullYear().toString().slice(-2)}`
+      console.log('newsletter', e)
       setOrderingMaterials({ ...orderingMaterials, newsletterDate: e })
     } else if (e.target) {
       const { name, value } = e.target
@@ -163,7 +164,7 @@ const CustomerInfo = () => {
       console.error('Invalid event or data provided to matarialChange.')
     }
   }
-
+  // console.log('customerinfo', customerInfo)
   const Quelle = [
     { value: 'order', label: 'Auftrag (Online-Maske) ' },
     { value: 'contact form', label: 'Kontaktformular' },
@@ -207,9 +208,18 @@ const CustomerInfo = () => {
 
   const ContactChange = (e) => {
     if (e instanceof Date) {
-      let a = new Date().getFullYear()
-      if (e.getFullYear() > a) {
-        toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
+      let currentDate = new Date()
+      let currentYear = currentDate.getFullYear()
+      let currentMonth = currentDate.getMonth()
+      let currentDay = currentDate.getDate()
+      if (
+        e.getFullYear() > currentYear ||
+        (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
+        (e.getFullYear() === currentYear &&
+          e.getMonth() === currentMonth &&
+          e.getDate() > currentDay + 1)
+      ) {
+        return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
       }
       // setStartDate(e)
       setCustomerContact({ ...customerContact, startDate: e })
@@ -252,10 +262,6 @@ const CustomerInfo = () => {
     setCustomerReminderStamp(e)
   }
 
-  // const deposite = (e) => {
-  //   setCustomerDepositeCheckbox(e.target.checked)
-  // }
-
   const emergencyPass = (e) => {
     setCustomerEmergencyPass(e.target.checked)
   }
@@ -266,7 +272,6 @@ const CustomerInfo = () => {
     updateStamp: customerUpdateStamp,
     lastStamp: customerLastStamp,
     reminderStamp: customerReminderStamp,
-    // deposit: customerDepositeCheckbox,
     emergencyPass: customerEmergencyPass,
   }
   const DeliveryChange = (e) => {
@@ -317,6 +322,7 @@ const CustomerInfo = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+
   const getEmployeeData = async () => {
     try {
       const results = await fetch(`${apiUrl}/user/get/employeeData`)
@@ -339,56 +345,30 @@ const CustomerInfo = () => {
     }
   }
 
-  // console.log('aastha type', customerDepositt.emergencyPass)
   let customerInfoStatuData = { ...customerInfoStatu, clientStatus, dataCollection }
-  // console.log('ashishclient', customerInfoStatuData)
   const data = {
     customer: customer,
     orderingMaterials: orderingMaterials,
     customerInfoStatu: customerInfoStatuData,
-    // those: those,
-    // customerInfoStatu: customerInfoStatu,
     those: those,
     customerContact: customerContact,
     customerBills: customerBills,
     customerDelivery: customerDelivery,
     customerDeposit: customerDepositt,
     customerBurial: customerBurial,
-    // created_by: '',
-    // customer_id: result._id,
   }
-  // const saveData = async (e) => {
-  //   e.preventDefault()
-  //   if (clientStatus?.length === 0) {
-  //     return toast.warning('Das Statusfeld ist erforderlich')
-  //   }
-  //   try {
-  //     let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
-  //       method: 'put',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
 
-  //     let result = await response.json()
-  //     if (result?.message === 'Customer updated successfully') {
-  //       toast.success('Kundeninfo erfolgreich gespeichert')
-  //       getDetails()
-  //     }
-
-  //     // Show success toast
-  //   } catch (error) {
-  //     console.log('Error saving data:', error)
-
-  //     // Show error toast
-  //     toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
-  //   }
-  // }
   const saveData = async (e) => {
     e.preventDefault()
     if (clientStatus?.length === 0) {
       return toast.warning('Das Statusfeld ist erforderlich')
+    }
+    let currentDate = new Date()
+    if (customerContact?.startDate > currentDate) {
+      return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+    }
+    if (dataCollection > currentDate) {
+      return toast.warning('Die Datenerfassung darf nicht in der Zukunft liegen.')
     }
     try {
       let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
@@ -415,12 +395,18 @@ const CustomerInfo = () => {
   }
 
   const customerDateChange = (e) => {
-    let selectedDateObject = new Date(e)
-    let currentYear = new Date().getFullYear()
-
-    if (selectedDateObject.getFullYear() > currentYear) {
-      toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
-      return
+    let currentDate = new Date()
+    let currentYear = currentDate.getFullYear()
+    let currentMonth = currentDate.getMonth()
+    let currentDay = currentDate.getDate()
+    if (
+      e.getFullYear() > currentYear ||
+      (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
+      (e.getFullYear() === currentYear &&
+        e.getMonth() === currentMonth &&
+        e.getDate() > currentDay + 1)
+    ) {
+      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
     }
 
     setDataCollection(e)
@@ -437,6 +423,8 @@ const CustomerInfo = () => {
   }
 
   useEffect(() => {
+    // let newLetterDate = new Date(customerInfo?.created_at).toString()
+
     setCustomerDelivery({
       fname: customerInfo?.customerDelivery?.fname || customerInfo?.customer?.fname,
       lname: customerInfo?.customerDelivery?.lname || customerInfo?.customer?.lname,
@@ -453,7 +441,9 @@ const CustomerInfo = () => {
       newsletterDate: customerInfo?.orderingMaterials?.newsletterDate,
       extras: customerInfo?.orderingMaterials?.extras,
       newsletterSubscription: customerInfo?.orderingMaterials?.newsletterSubscription,
+      // newsletterSubscription: new Date(),
     })
+
     setCustomerInfoStatu({
       dataProtection: customerInfo?.customerInfoStatu?.dataProtection,
       employee: customerInfo?.customerInfoStatu?.employee,

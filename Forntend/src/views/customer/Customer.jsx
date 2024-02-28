@@ -4,7 +4,7 @@ import { IoIosCall } from 'react-icons/io'
 import { ImLocation2 } from 'react-icons/im'
 import { useNavigate, useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
-const Customer = ({ getCustomerData, updateData }) => {
+const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => {
   const [customerInfo, setCustomerInfo] = useState([])
   let ress = localStorage.getItem('customerRecord')
   let resultt = JSON.parse(ress)
@@ -12,6 +12,8 @@ const Customer = ({ getCustomerData, updateData }) => {
   Customer.propTypes = {
     getCustomerData: PropTypes.func.isRequired,
     updateData: PropTypes.func.isRequired,
+    updateStreet: PropTypes.func.isRequired,
+    updateLand: PropTypes.func.isRequired,
   }
 
   const navigate = useNavigate()
@@ -53,34 +55,36 @@ const Customer = ({ getCustomerData, updateData }) => {
   let res = JSON.parse(customer)
   const dateString = customerInfo?.customer?.startDate
   const date = new Date(dateString)
-  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-  const formattedDate = utcDate.toLocaleDateString('en-IN', options).replace(/\//g, '.')
+  const formattedDate = date.toLocaleDateString('en-IN', options).replace(/\//g, '.')
 
   console.log(formattedDate)
 
-  const firstName = res?.fname?.slice(0, 1).toUpperCase() + res?.fname?.slice(1).toLowerCase()
-  const lastName = res?.lname?.slice(0, 1).toUpperCase() + res?.lname?.slice(1).toLowerCase()
+  const firstName =
+    customerInfo?.customer?.fname?.slice(0, 1).toUpperCase() +
+    customerInfo?.customer?.fname?.slice(1).toLowerCase()
+  const lastName =
+    customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
+    customerInfo?.customer?.lname?.slice(1).toLowerCase()
   let street =
-    res?.street?.slice(0, 1).toUpperCase() +
-    res?.street?.slice(1).toLowerCase() +
+    customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
+    customerInfo?.customer?.street?.slice(1).toLowerCase() +
     ',  ' +
     '  ' +
-    res?.plz +
+    customerInfo?.customer?.plz +
     '  ' +
-    res?.city
-  // console.log('customerPage', res)
+    customerInfo?.customer?.city
   const getRecordById = async () => {
     const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
     const updatedData = await response.json()
     console.log('data', updatedData)
     setCustomerInfo(updatedData)
   }
-  console.log('first', customerInfo)
+  console.log('firstcustomerInfo', customerInfo?.customer?.land)
   useEffect(() => {
     getRecordById()
-  }, [updateData])
+  }, [updateData, updateStreet, updateLand])
   return (
     <>
       <div className="whiteBox">
@@ -163,7 +167,7 @@ const Customer = ({ getCustomerData, updateData }) => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span> {res?.email}</span>
+                    <span> {customerInfo?.customer?.email}</span>
                   </button>
                   <button className="btn btn header-button">
                     <svg
@@ -185,7 +189,7 @@ const Customer = ({ getCustomerData, updateData }) => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span>{res?.phone}</span>
+                    <span>{customerInfo?.customer?.phone}</span>
                   </button>
                 </div>
               </div>
