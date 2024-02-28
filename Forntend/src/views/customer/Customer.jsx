@@ -60,17 +60,21 @@ const Customer = ({ getCustomerData, updateData }) => {
 
   console.log(formattedDate)
 
-  const firstName = res?.fname?.slice(0, 1).toUpperCase() + res?.fname?.slice(1).toLowerCase()
-  const lastName = res?.lname?.slice(0, 1).toUpperCase() + res?.lname?.slice(1).toLowerCase()
+  const firstName =
+    customerInfo?.customer?.fname?.slice(0, 1).toUpperCase() +
+    customerInfo?.customer?.fname?.slice(1).toLowerCase()
+  const lastName =
+    customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
+    customerInfo?.customer?.lname?.slice(1).toLowerCase()
   let street =
-    res?.street?.slice(0, 1).toUpperCase() +
-    res?.street?.slice(1).toLowerCase() +
+    customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
+    customerInfo?.customer?.street?.slice(1).toLowerCase() +
     ',  ' +
     '  ' +
-    res?.plz +
+    customerInfo?.customer?.plz +
     '  ' +
-    res?.city
-  // console.log('customerPage', res)
+    customerInfo?.customer?.city
+  // console.log('customerPage', customerInfo?.customer)
   const getRecordById = async () => {
     const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
     const updatedData = await response.json()
@@ -163,7 +167,7 @@ const Customer = ({ getCustomerData, updateData }) => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span> {res?.email}</span>
+                    <span> {customerInfo?.customer?.email}</span>
                   </button>
                   <button className="btn btn header-button">
                     <svg
@@ -185,7 +189,7 @@ const Customer = ({ getCustomerData, updateData }) => {
                         </clipPath>
                       </defs>
                     </svg>
-                    <span>{res?.phone}</span>
+                    <span>{customerInfo?.customer?.phone}</span>
                   </button>
                 </div>
               </div>
