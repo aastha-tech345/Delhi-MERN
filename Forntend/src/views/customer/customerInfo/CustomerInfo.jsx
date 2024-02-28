@@ -140,7 +140,7 @@ const CustomerInfo = () => {
     status: clientStatus || customerInfo?.customer?.status,
     land: customerInfo?.customerDelivery?.land || customerInfo?.customer?.land,
     id: customerInfo?.id,
-    street: customerInfo?.customerInfo?.customer?.street,
+    street: customerInfo?.customer?.street,
     city: customerInfo?.customerInfo?.customer?.city,
     those: customerInfo?.those,
     created_by: customerInfo?.created_by,
@@ -207,9 +207,18 @@ const CustomerInfo = () => {
 
   const ContactChange = (e) => {
     if (e instanceof Date) {
-      let a = new Date().getFullYear()
-      if (e.getFullYear() > a) {
-        toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
+      let currentDate = new Date()
+      let currentYear = currentDate.getFullYear()
+      let currentMonth = currentDate.getMonth()
+      let currentDay = currentDate.getDate()
+      if (
+        e.getFullYear() > currentYear ||
+        (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
+        (e.getFullYear() === currentYear &&
+          e.getMonth() === currentMonth &&
+          e.getDate() > currentDay + 1)
+      ) {
+        return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
       }
       // setStartDate(e)
       setCustomerContact({ ...customerContact, startDate: e })
@@ -390,6 +399,13 @@ const CustomerInfo = () => {
     if (clientStatus?.length === 0) {
       return toast.warning('Das Statusfeld ist erforderlich')
     }
+    let currentDate = new Date()
+    if (customerContact?.startDate > currentDate) {
+      return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+    }
+    if (dataCollection > currentDate) {
+      return toast.warning('Die Datenerfassung darf nicht in der Zukunft liegen.')
+    }
     try {
       let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
         method: 'put',
@@ -415,12 +431,18 @@ const CustomerInfo = () => {
   }
 
   const customerDateChange = (e) => {
-    let selectedDateObject = new Date(e)
-    let currentYear = new Date().getFullYear()
-
-    if (selectedDateObject.getFullYear() > currentYear) {
-      toast.warning('Das Datum sollte das aktuelle Jahr nicht überschreiten')
-      return
+    let currentDate = new Date()
+    let currentYear = currentDate.getFullYear()
+    let currentMonth = currentDate.getMonth()
+    let currentDay = currentDate.getDate()
+    if (
+      e.getFullYear() > currentYear ||
+      (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
+      (e.getFullYear() === currentYear &&
+        e.getMonth() === currentMonth &&
+        e.getDate() > currentDay + 1)
+    ) {
+      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
     }
 
     setDataCollection(e)

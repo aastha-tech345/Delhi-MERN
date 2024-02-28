@@ -1,10 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+function getCurrentDate() {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear().toString();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = currentDate.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 const orderingMaterialsSchema = {
   orderNumber: { type: String, default: "" },
-  newsletterDate: { type: String, default: "10.01.23" },
+  newsletterDate: { type: String },
   extras: { type: String, default: "" },
-  newsletterSubscription: { type: String, default: "" },
+  newsletterSubscription: { type: String, default: getCurrentDate },
 };
 
 const customerInfoStatuSchema = {
@@ -12,7 +19,7 @@ const customerInfoStatuSchema = {
   dataProtection: { type: Boolean, default: false },
   employee: { type: String, default: "" },
   customerInfo_lname: { type: String, default: "" },
-  dataCollection: { type: String, default: "10.01.23" },
+  dataCollection: { type: String, default: getCurrentDate },
 };
 
 const customerContactSchema = {
@@ -21,7 +28,7 @@ const customerContactSchema = {
   gender: { type: String, default: "" },
   fname: { type: String, default: "" },
   lname: { type: String, default: "" },
-  startDate: { type: String, default: "10.01.23" },
+  startDate: { type: String },
   name: { type: String, default: "" },
 };
 
@@ -47,11 +54,11 @@ const customerDeliverySchema = {
 const customerDepositSchema = {
   deposit: { type: Boolean, default: false },
   emergencyPass: { type: Boolean, default: false },
-  reminderStamp: { type: String, default: "10.01.23" },
-  updateStamp: { type: String, default: "10.01.23" },
-  nextBrand: { type: String, default: "10.01.23" },
-  lastStamp: { type: String, default: "10.01.23" },
-  startDeposit: { type: String, default: "10.01.23" },
+  reminderStamp: { type: String, default: getCurrentDate },
+  updateStamp: { type: String, default: getCurrentDate },
+  nextBrand: { type: String, default: getCurrentDate },
+  lastStamp: { type: String, default: getCurrentDate },
+  startDeposit: { type: String, default: getCurrentDate },
 };
 
 const customerBurialSchema = {
@@ -70,8 +77,8 @@ const customerInfo = {
   city: { type: String, default: " " },
   street: { type: String, default: " " },
   land: { type: String, default: " " },
-  startDate: { type: String, default: "10.01.23" },
-  // dob: { type: String, default: "10.01.23" },
+  startDate: { type: String },
+  // dob: { type: String },
   status: { type: Array, default: [] },
   id: { type: String },
   // created_by: { type: Schema.Types.ObjectId, ref: "user" },
