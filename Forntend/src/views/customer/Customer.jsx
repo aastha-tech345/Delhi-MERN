@@ -55,10 +55,9 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   let res = JSON.parse(customer)
   const dateString = customerInfo?.customer?.startDate
   const date = new Date(dateString)
-  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
-  const formattedDate = utcDate.toLocaleDateString('en-IN', options).replace(/\//g, '.')
+  const formattedDate = date.toLocaleDateString('en-IN', options).replace(/\//g, '.')
 
   console.log(formattedDate)
 
@@ -69,14 +68,13 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
     customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
     customerInfo?.customer?.lname?.slice(1).toLowerCase()
   let street =
-    res?.street?.slice(0, 1).toUpperCase() +
-    res?.street?.slice(1).toLowerCase() +
+    customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
+    customerInfo?.customer?.street?.slice(1).toLowerCase() +
     ',  ' +
     '  ' +
     customerInfo?.customer?.plz +
     '  ' +
     customerInfo?.customer?.city
-  // console.log('customerPage', res)
   const getRecordById = async () => {
     const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
     const updatedData = await response.json()
@@ -169,7 +167,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                         </clipPath>
                       </defs>
                     </svg>
-                    <span> {res?.email}</span>
+                    <span> {customerInfo?.customer?.email}</span>
                   </button>
                   <button className="btn btn header-button">
                     <svg
@@ -191,7 +189,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                         </clipPath>
                       </defs>
                     </svg>
-                    <span>{res?.phone}</span>
+                    <span>{customerInfo?.customer?.phone}</span>
                   </button>
                 </div>
               </div>

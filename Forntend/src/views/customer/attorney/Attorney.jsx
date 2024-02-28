@@ -45,7 +45,8 @@ const Attorney = () => {
           [name]: checked,
         }
       } else {
-        const newValue = name === 'healthCare_phone' ? formatPhoneNumber(value) : value
+        const newValue =
+          name === 'healthCare_phone' && 'healthCare_mobile' ? formatPhoneNumber(value) : value
 
         updatedHealthCareData[index] = {
           ...updatedHealthCareData[index],
@@ -522,7 +523,7 @@ const Attorney = () => {
                             <div className="col-sm-12">
                               <input
                                 onChange={(e) => powerOfAttorneyChange(e, index)}
-                                value={field.powerOfAttorney_mobile}
+                                value={field.powerOfAttorney_fname}
                                 name="powerOfAttorney_mobile"
                                 type="text"
                                 placeholder="853-456-8464"
