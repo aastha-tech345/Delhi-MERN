@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
+import DatePiker from '../Date'
 const Attorney = () => {
   const navigate = useNavigate()
   const maxFields = 10
@@ -27,11 +28,16 @@ const Attorney = () => {
   })
 
   const [careProvision, setCareProvision] = useState({
-    CareProvisionMasterData: false,
+    care_association: '',
   })
 
   const [securingattorney, setSecuringattorney] = useState({
-    SecuringMasterData: false,
+    fname: '',
+    lname: '',
+    address: '',
+    dob: '',
+    plz: '',
+    ort: '',
   })
 
   const healthCareChange = (e, index) => {
@@ -150,23 +156,51 @@ const Attorney = () => {
   }
 
   const careProvisionChange = (e) => {
-    const { name, checked } = e.target
+    const { name, value } = e.target
 
-    setCareProvision({ ...careProvision, [name]: checked })
+    setCareProvision({ ...careProvision, [name]: value })
   }
+  // const securingattorneyChange = (e) => {
+  //   const { name, value, type, checked } = e.target
+
+  //   setSecuringattorney({ ...securingattorney, [name]: value })
+  // }
   const securingattorneyChange = (e) => {
-    const { name, value, type, checked } = e.target
-    const inputValue = type === 'checkbox' ? checked : value
+    if (e instanceof Date) {
+      let currentDate = new Date()
+      let currentYear = currentDate.getFullYear()
+      let currentMonth = currentDate.getMonth()
+      let currentDay = currentDate.getDate()
 
-    setSecuringattorney({ ...securingattorney, [name]: inputValue })
+      if (
+        e.getFullYear() > currentYear ||
+        (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
+        (e.getFullYear() === currentYear &&
+          e.getMonth() === currentMonth &&
+          e.getDate() > currentDay + 1)
+      ) {
+        return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
+      }
+
+      setSecuringattorney({ ...securingattorney, dob: e })
+    } else if (e.target) {
+      const { name, value, type, checked } = e.target
+
+      if (name === 'plz' && type === 'text') {
+        const inputValue = value.replace(/[^0-9]/g, '')
+        setSecuringattorney({ ...securingattorney, plz: inputValue })
+      } else {
+        setSecuringattorney({ ...securingattorney, [name]: type === 'checkbox' ? checked : value })
+      }
+    } else if (e.value !== undefined) {
+      setSecuringattorney({ ...securingattorney, salution: e.value })
+    } else {
+      console.error('Invalid event or data provided to ContactChange.')
+    }
   }
+
   let res = localStorage.getItem('customerDatat')
   let result = JSON.parse(res)
-
-  // const formattedPhoneNumbers = healthCare.healthCareData.map((entry) =>
-  //   entry.healthCare_phone.join(', '),
-  // )
-  // console.log(formattedPhoneNumbers)
   const data = {
     healthCare,
     powerOfAttorney,
@@ -176,12 +210,6 @@ const Attorney = () => {
   }
 
   const saveData = async () => {
-    // Check if CareProvisionMasterData is false
-    if (healthCare && healthCare.healthCareMasterData === false) {
-      toast.error('Eintrag der Stammdaten')
-      return
-    }
-
     try {
       let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
         method: 'POST',
@@ -232,11 +260,16 @@ const Attorney = () => {
     }))
 
     setCareProvision(() => ({
-      CareProvisionMasterData: false,
+      care_association: '',
     }))
 
     setSecuringattorney({
-      prevSecuringMasterData: false,
+      fname: '',
+      lname: '',
+      address: '',
+      plz: '',
+      ort: '',
+      dob: '',
     })
   }
 
@@ -258,28 +291,6 @@ const Attorney = () => {
               <div className="row">
                 <div className="col-sm-12">
                   <h3 style={{ color: '#244D92' }}>Gesundheitsvollmacht</h3>
-
-                  <div className="row">
-                    <label htmlFor="healthCareMasterData" className="col-sm-3 col-form-label fs-6">
-                      Eintrag der Stammdaten
-                    </label>
-                    <div className="col-sm-9 radio-check-wrap mt-2">
-                      <input
-                        type="checkbox"
-                        onChange={() =>
-                          setHealthCare((prevHealthCare) => ({
-                            ...prevHealthCare,
-                            healthCareMasterData: !prevHealthCare.healthCareMasterData,
-                            healthCareData: [...prevHealthCare.healthCareData],
-                          }))
-                        }
-                        checked={healthCare.healthCareMasterData}
-                        name="healthCareMasterData"
-                        required={true}
-                      />
-                      <span></span>
-                    </div>
-                  </div>
                   <p className="" style={{ color: '#244D92' }}>
                     Bevollmächtigte Person(en):
                   </p>
@@ -291,7 +302,7 @@ const Attorney = () => {
                       <div className="col-sm-2">
                         <b>Nachname</b>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <b>Adresse</b>
                       </div>
                       <div className="col-sm-2">
@@ -336,7 +347,7 @@ const Attorney = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-sm-3">
+                            <div className="col-sm-4">
                               <div className=" row">
                                 <div className="col-sm-12">
                                   <input
@@ -396,32 +407,6 @@ const Attorney = () => {
               <div className="row">
                 <div className="col-sm-12">
                   <h3 style={{ color: '#244D92' }}>Vorsorgevollmacht</h3>
-
-                  <div className="row">
-                    <label htmlFor="AttorneyMasterData" className="col-sm-3 col-form-label fs-6">
-                      Eintrag der Stammdaten
-                    </label>
-                    <div className="col-sm-9 radio-check-wrap mt-2">
-                      <input
-                        type="checkbox"
-                        // onChange={powerOfAttorneyChange}
-                        onChange={() =>
-                          setPowerOfAttorney((prevPowerOfAttorney) => ({
-                            ...prevPowerOfAttorney,
-                            AttorneyMasterData: !prevPowerOfAttorney.AttorneyMasterData,
-                            powerOfAttorneyData: [...prevPowerOfAttorney.powerOfAttorneyData],
-                          }))
-                        }
-                        checked={powerOfAttorney.AttorneyMasterData}
-                        name="AttorneyMasterData"
-                      />
-                      <span></span>
-                    </div>
-                  </div>
-
-                  <p className="" style={{ color: '#244D92' }}>
-                    Bevollmächtigte Person(en):
-                  </p>
                   <div className="row">
                     <label htmlFor="adoptDataFromHealthcare" className="col-sm-3 col-form-label">
                       Daten aus Gesundheitsvollmacht übernehmen
@@ -443,6 +428,9 @@ const Attorney = () => {
                       <span></span>
                     </div>
                   </div>
+                  <p className="" style={{ color: '#244D92' }}>
+                    Bevollmächtigte Person(en):
+                  </p>
 
                   <div className="row mb-2 mt-3">
                     <div className="col-sm-2">
@@ -451,7 +439,7 @@ const Attorney = () => {
                     <div className="col-sm-2">
                       <b>Nachname</b>
                     </div>
-                    <div className="col-sm-3">
+                    <div className="col-sm-4">
                       <b>Adresse</b>
                     </div>
                     <div className="col-sm-2">
@@ -494,7 +482,7 @@ const Attorney = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="col-sm-3">
+                        <div className="col-sm-4">
                           <div className="row">
                             <div className="col-sm-12">
                               <input
@@ -552,7 +540,7 @@ const Attorney = () => {
             <div className="row">
               <div className="col-sm-12">
                 <h3 style={{ color: '#244D92' }}>Betreuungsverfügung</h3>
-                <div className="row">
+                {/* <div className="row">
                   <label htmlFor="CareProvisionMasterData" className="col-sm-3 col-form-label fs-6">
                     Eintrag der Stammdaten
                   </label>
@@ -565,6 +553,17 @@ const Attorney = () => {
                     />
                     <span></span>
                   </div>
+                </div> */}
+                <div className="row">
+                  <label className="col-sm-2 col-form-label">Bemerkungen</label>
+                  <div className="col-sm-10">
+                    <textarea
+                      value={careProvision.care_association}
+                      name="care_association"
+                      onChange={careProvisionChange}
+                      className="form-control"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -572,7 +571,7 @@ const Attorney = () => {
             <div className="row">
               <div className="col-sm-12">
                 <h3 style={{ color: '#244D92' }}>Vollmacht zur Absicherung des digitalen Erbes</h3>
-                <div className="row">
+                {/* <div className="row">
                   <label htmlFor="SecuringMasterData" className="col-sm-3 col-form-label fs-6">
                     Eintrag der Stammdaten
                   </label>
@@ -585,14 +584,116 @@ const Attorney = () => {
                     />
                     <span></span>
                   </div>
+                </div> */}
+                <div className="row mb-2 mt-3">
+                  <div className="col-sm-2">
+                    <b>Vorname</b>
+                  </div>
+                  <div className="col-sm-2">
+                    <b>Nachname</b>
+                  </div>
+                  <div className="col-sm-2">
+                    <b>Geburtsdatum</b>
+                  </div>
+                  <div className="col-sm-2">
+                    <b>Straße mit Hausnummer</b>
+                  </div>
+                  <div className="col-sm-2">
+                    <b>PLZ</b>
+                  </div>
+                  <div className="col-sm-2">
+                    <b>Ort</b>
+                  </div>
                 </div>
-                {/* &nbsp;Eintrag der Stammdaten&nbsp;&nbsp;&nbsp;
-                <input
-                  type="checkbox"
-                  onChange={securingattorneyChange}
-                  checked={securingattorney.SecuringMasterData}
-                  name="SecuringMasterData"
-                /> */}
+                <div className="row">
+                  <div className="col-sm-2">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <input
+                          onChange={securingattorneyChange}
+                          name="fname"
+                          value={securingattorney.fname}
+                          type="text"
+                          placeholder="Vorname"
+                          className="form-control"
+                          id="inputPassword"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-sm-2">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <input
+                          onChange={securingattorneyChange}
+                          name="lname"
+                          value={securingattorney.lname}
+                          type="text"
+                          placeholder="Nachname"
+                          className="form-control"
+                          id="inputPassword"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-sm-2">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <DatePiker
+                          className="form-control"
+                          selected={securingattorney.dob}
+                          onChange={securingattorneyChange}
+                          // name="dataCollection"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-sm-2">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <input
+                          onChange={securingattorneyChange}
+                          value={securingattorney.address}
+                          name="address"
+                          type="text"
+                          placeholder="Straße mit Hausnummer"
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-sm-2">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <input
+                          onChange={securingattorneyChange}
+                          name="plz"
+                          value={securingattorney.plz}
+                          type="text"
+                          className="form-control"
+                          placeholder="PLZ"
+                          maxLength={6}
+                          minLength={3}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-sm-2">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <input
+                          onChange={securingattorneyChange}
+                          name="ort"
+                          value={securingattorney.ort}
+                          type="text"
+                          className="form-control"
+                          placeholder="Ort"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <hr />

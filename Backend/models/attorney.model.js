@@ -27,11 +27,16 @@ const powerofattorneySchema = {
   powerOfAttorneyData: [],
 };
 const careProvisionSchema = {
-  CareProvisionMasterData: { type: String },
+  care_association: { type: String },
 };
 
 const securingattorneySchema = {
-  SecuringMasterData: { type: String },
+  fname: { type: String },
+  lname: { type: String },
+  dob: { type: String },
+  address: { type: String },
+  ort: { type: String },
+  plz: { type: String },
 };
 
 const attorneySchema = new mongoose.Schema(

@@ -902,6 +902,7 @@ const CustomerList = () => {
                         // selectedItemTemplate={selectedItemTemplate}
                         showCheckbox
                         display="chip"
+                        scrollHeight={500}
                       />
                     </div>
                   </div>
