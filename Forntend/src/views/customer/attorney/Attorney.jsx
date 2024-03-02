@@ -457,7 +457,11 @@ const Attorney = () => {
                             <div className="col-sm-12">
                               <input
                                 onChange={(e) => powerOfAttorneyChange(e, index)}
-                                value={field.powerOfAttorney_fname}
+                                value={
+                                  powerOfAttorney.adoptDataFromHealthcare
+                                    ? field.healthCare_fname
+                                    : field.powerOfAttorney_fname
+                                }
                                 name="powerOfAttorney_fname"
                                 type="text"
                                 placeholder="John"
@@ -562,6 +566,7 @@ const Attorney = () => {
                       name="care_association"
                       onChange={careProvisionChange}
                       className="form-control"
+                      placeholder="Bemerkungen"
                     />
                   </div>
                 </div>
