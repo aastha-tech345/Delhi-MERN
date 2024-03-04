@@ -19,6 +19,7 @@ const customerInfoStatuSchema = {
   dataProtection: { type: Boolean, default: false },
   employee: { type: String, default: "" },
   customerInfo_lname: { type: String, default: "" },
+  remarks: { type: String, default: "" },
   dataCollection: { type: String, default: getCurrentDate },
 };
 

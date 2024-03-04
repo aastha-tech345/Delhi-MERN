@@ -59,6 +59,7 @@ const CustomerInfo = () => {
     // clientStatus: resultt?.customerInfoStatu?.clientStatus,
     dataProtection: '',
     employee: '',
+    remarks: '',
     // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
   // console.log('first', resultt?.customerInfoStatu)
@@ -448,6 +449,7 @@ const CustomerInfo = () => {
     setCustomerInfoStatu({
       dataProtection: customerInfo?.customerInfoStatu?.dataProtection,
       employee: customerInfo?.customerInfoStatu?.employee,
+      remarks: customerInfo?.customerInfoStatu?.remarks,
     })
     setDataCollection(customerInfo?.customerInfoStatu?.dataCollection)
     // setClientStatus(customerInfo?.customer?.clientStatus)
@@ -591,27 +593,22 @@ const CustomerInfo = () => {
                               // selectedItemTemplate={selectedItemTemplate}
                               showCheckbox
                               display="chip"
+                              scrollHeight={500}
                             />
                           </div>
                         </div>
                       </div>
 
-                      <div className="col-sm-6">
-                        <div className="row mb-3">
-                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                            Zustimmung Datenschutz
-                          </label>
-                          <div className="col-sm-4 mt-2">
-                            <div className="radio-check-wrap w-100 h-100">
-                              <input
-                                type="checkbox"
-                                name="dataProtection"
-                                onChange={customerInfoChange}
-                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
-                                checked={customerInfoStatu.dataProtection}
-                              />
-                              <span></span>
-                            </div>
+                      <div className="col-sm-6 mb-3">
+                        <div className="row">
+                          <label className="col-sm-4 col-form-label">Bemerkungen</label>
+                          <div className="col-sm-6">
+                            <textarea
+                              value={customerInfoStatu.remarks}
+                              name="remarks"
+                              onChange={customerInfoChange}
+                              className="form-control"
+                            />
                           </div>
                         </div>
                       </div>
@@ -659,19 +656,43 @@ const CustomerInfo = () => {
                 {/* customerInfoStatu start */}
 
                 <h3>Quelle</h3>
-                <div className="row-wrap border-0 mb-0 pb-0">
+                <div className="border-0">
                   <div>
                     <div className="row">
-                      <div className="col-sm-3 ps-0">
-                        <div className="input-group px-2">
-                          <Select
-                            className="w-100"
-                            options={Quelle}
-                            onChange={handleSelectChange}
-                            value={those}
-                            name="those"
-                            placeholder="Auswahl"
-                          />
+                      <div className="col-sm-6">
+                        <div className="row">
+                          <label className="col-sm-3 col-form-label">Auswahl</label>
+                          <div className="col-sm-6">
+                            <div className="input-group px-2">
+                              <Select
+                                className="w-100"
+                                options={Quelle}
+                                onChange={handleSelectChange}
+                                value={those}
+                                name="those"
+                                placeholder="Auswahl"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="row mb-3">
+                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                            Zustimmung Datenschutz
+                          </label>
+                          <div className="col-sm-4 mt-2">
+                            <div className="radio-check-wrap w-100 h-100">
+                              <input
+                                type="checkbox"
+                                name="dataProtection"
+                                onChange={customerInfoChange}
+                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
+                                checked={customerInfoStatu.dataProtection}
+                              />
+                              <span></span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
