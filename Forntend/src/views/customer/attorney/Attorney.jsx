@@ -92,6 +92,8 @@ const Attorney = () => {
       healthCare_phone: [],
     })),
   })
+  // console.log('first', healthCare.healthCareData[0].healthCare_fname)
+
   const addHealthCareField = () => {
     if (healthCare.healthCareData.length < maxFields) {
       setHealthCare((prev) => ({
@@ -272,7 +274,27 @@ const Attorney = () => {
       dob: '',
     })
   }
-
+  const toggleAdoptDataFromHealthcare = () => {
+    setPowerOfAttorney((prevState) => ({
+      ...prevState,
+      adoptDataFromHealthcare: !prevState.adoptDataFromHealthcare,
+      powerOfAttorneyData: prevState.adoptDataFromHealthcare
+        ? powerOfAttorney.powerOfAttorneyData.map((data) => ({
+            powerOfAttorney_fname: '',
+            powerOfAttorney_lname: '',
+            powerOfAttorney_address: '',
+            powerOfAttorney_phone: '',
+            powerOfAttorney_mobile: '',
+          }))
+        : healthCare.healthCareData.map((data) => ({
+            powerOfAttorney_fname: data.healthCare_fname,
+            powerOfAttorney_lname: data.healthCare_lname,
+            powerOfAttorney_address: data.healthCare_address,
+            powerOfAttorney_phone: data.healthCare_phone,
+            powerOfAttorney_mobile: data.healthCare_mobile,
+          })),
+    }))
+  }
   useEffect(() => {
     // Add fields on component mount
     addHealthCareField()
@@ -415,13 +437,14 @@ const Attorney = () => {
                       <input
                         type="checkbox"
                         // onChange={powerOfAttorneyChange}
-                        onChange={() =>
-                          setPowerOfAttorney((prevPowerOfAttorney) => ({
-                            ...prevPowerOfAttorney,
-                            adoptDataFromHealthcare: !prevPowerOfAttorney.adoptDataFromHealthcare,
-                            powerOfAttorneyData: [...prevPowerOfAttorney.powerOfAttorneyData],
-                          }))
-                        }
+                        // onChange={() =>
+                        //   setPowerOfAttorney((prevPowerOfAttorney) => ({
+                        //     ...prevPowerOfAttorney,
+                        //     adoptDataFromHealthcare: !prevPowerOfAttorney.adoptDataFromHealthcare,
+                        //     powerOfAttorneyData: [...prevPowerOfAttorney.powerOfAttorneyData],
+                        //   }))
+                        // }
+                        onChange={toggleAdoptDataFromHealthcare}
                         checked={powerOfAttorney.adoptDataFromHealthcare}
                         name="adoptDataFromHealthcare"
                       />
@@ -457,11 +480,7 @@ const Attorney = () => {
                             <div className="col-sm-12">
                               <input
                                 onChange={(e) => powerOfAttorneyChange(e, index)}
-                                value={
-                                  powerOfAttorney.adoptDataFromHealthcare
-                                    ? field.healthCare_fname
-                                    : field.powerOfAttorney_fname
-                                }
+                                value={field.powerOfAttorney_fname}
                                 name="powerOfAttorney_fname"
                                 type="text"
                                 placeholder="John"

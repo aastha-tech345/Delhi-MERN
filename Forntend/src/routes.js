@@ -29,6 +29,7 @@ const Filter = React.lazy(() => import('./views/settings/filter/Filter'))
 const Attorney = React.lazy(() => import('./views/customer/attorney/Attorney'))
 const Setting = React.lazy(() => import('./views/settings/User'))
 const Date = React.lazy(() => import('./views/customer/Date.jsx'))
+const Text = React.lazy(() => import('./views/customer/Text'))
 // const DescriptionList = React.lazy(() => import('./views/customer/description/DescriptionList'))
 
 const auth = localStorage.getItem('token')
@@ -44,6 +45,7 @@ if (auth) {
     { path: '/customer/customer_info', name: 'Klientinnen', element: CustomerInfo },
     { path: '/customer/contact', name: 'Kontakte', element: Contact },
     { path: '/date', name: 'Date', element: Date },
+    { path: '/text', name: 'Date', element: Text },
     { path: '/customer/bills', name: 'Rechnungen', element: Bills },
     { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
     { path: '/customer/activity', name: 'Aktivitat', element: Activity },
