@@ -1816,7 +1816,7 @@ const Services = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="d-flex w-100 my-4 justify-content-end">
+                      {/* <div className="d-flex w-100 my-4 justify-content-end">
                         <div className="col-md-4 d-flex justify-content-end btn-wrapper">
                           <button onClick={cancelData} type="button" className="btn btn-cancel">
                             Abbrechen
@@ -1825,6 +1825,25 @@ const Services = () => {
                             Speichern
                           </button>
                         </div>
+                      </div> */}
+                      <div className="text-end">
+                        <button
+                          onClick={cancelData}
+                          type="button"
+                          className="btn btn"
+                          style={{ background: '#d04545', color: 'white' }}
+                        >
+                          Abbrechen
+                        </button>
+                        &nbsp; &nbsp;
+                        <button
+                          onClick={saveData}
+                          type="button"
+                          style={{ background: '#0b5995', color: 'white' }}
+                          className="btn btn"
+                        >
+                          Speichern
+                        </button>
                       </div>
                     </div>
                   </div>

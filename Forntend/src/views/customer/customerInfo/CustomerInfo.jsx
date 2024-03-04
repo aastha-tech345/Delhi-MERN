@@ -1300,7 +1300,7 @@ const CustomerInfo = () => {
           </div>
         </div>
 
-        <div className="container-fluid mb-3 pb-3">
+        {/* <div className="container-fluid mb-3 pb-3">
           <div className="row justify-content-md-end">
             <div className="col text-md-end btn-wrapper">
               <button type="button" className="btn btn-cancel me-3" onClick={cancelData}>
@@ -1312,6 +1312,25 @@ const CustomerInfo = () => {
               </button>
             </div>
           </div>
+        </div> */}
+        <div className="text-end mx-3 mb-3 pb-3">
+          <button
+            onClick={cancelData}
+            type="button"
+            className="btn btn"
+            style={{ background: '#d04545', color: 'white' }}
+          >
+            Abbrechen
+          </button>
+          &nbsp; &nbsp;
+          <button
+            onClick={saveData}
+            type="button"
+            style={{ background: '#0b5995', color: 'white' }}
+            className="btn btn"
+          >
+            Speichern
+          </button>
         </div>
       </div>
 
