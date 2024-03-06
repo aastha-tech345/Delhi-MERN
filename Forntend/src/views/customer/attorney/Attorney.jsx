@@ -5,39 +5,52 @@ import Customer from '../Customer'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import DatePiker from '../Date'
+import { Jodit } from 'jodit-react'
 const Attorney = () => {
+  const [recordData, setRecordData] = useState([])
   const navigate = useNavigate()
   const maxFields = 10
-  const initialFields = 3
+  const initialFields = 4
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const cancelData = () => {
     localStorage.removeItem('tabId')
     navigate('/customer/customer_info')
   }
+
   const [powerOfAttorney, setPowerOfAttorney] = useState({
     AttorneyMasterData: false,
-    adoptDataFromHealthcare: false,
+    adoptDataFromHealthcare: Boolean(recordData?.powerOfAttorney?.adoptDataFromHealthcare),
     powerOfAttorneyData: Array.from({ length: initialFields }, () => ({
-      powerOfAttorney_fname: '',
-      powerOfAttorney_lname: '',
-      powerOfAttorney_address: '',
-      powerOfAttorney_phone: [],
-      powerOfAttorney_mobile: [],
+      powerOfAttorney_fname: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_fname
+      }),
+      powerOfAttorney_lname: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_lname
+      }),
+      powerOfAttorney_address: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_address
+      }),
+      powerOfAttorney_mobile: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_mobile
+      }),
+      powerOfAttorney_phone: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_phone
+      }),
     })),
   })
 
   const [careProvision, setCareProvision] = useState({
-    care_association: '',
+    care_association: recordData?.careProvision?.care_association || '',
   })
 
   const [securingattorney, setSecuringattorney] = useState({
-    fname: '',
-    lname: '',
-    address: '',
-    dob: '',
-    plz: '',
-    ort: '',
+    fname: recordData?.securingattorney?.fname || '',
+    lname: recordData?.securingattorney?.lname || '',
+    address: recordData?.securingattorney?.address || '',
+    dob: recordData?.securingattorney?.dob || '',
+    plz: recordData?.securingattorney?.plz || '',
+    ort: recordData?.securingattorney?.ort || '',
   })
 
   const healthCareChange = (e, index) => {
@@ -84,12 +97,22 @@ const Attorney = () => {
   }
 
   const [healthCare, setHealthCare] = useState({
-    healthCareMasterData: false,
     healthCareData: Array.from({ length: initialFields }, () => ({
-      healthCare_fname: '',
-      healthCare_lname: '',
-      healthCare_address: '',
-      healthCare_phone: [],
+      healthCare_fname: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_fname
+      }),
+      healthCare_lname: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_lname
+      }),
+      healthCare_address: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_address
+      }),
+      healthCare_mobile: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_mobile
+      }),
+      healthCare_phone: recordData?.healthCare?.healthCareData?.map((item) => {
+        return item.healthCare_phone
+      }),
     })),
   })
   // console.log('first', healthCare.healthCareData[0].healthCare_fname)
@@ -201,20 +224,20 @@ const Attorney = () => {
     }
   }
 
-  let res = localStorage.getItem('customerDatat')
-  let result = JSON.parse(res)
+  let res = localStorage.getItem('customerRecord')
+  let resultt = JSON.parse(res)
   const data = {
     healthCare,
     powerOfAttorney,
     careProvision,
     securingattorney,
-    customer_id: result?._id,
+    customer_id: resultt?._id,
   }
 
   const saveData = async () => {
     try {
       let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
-        method: 'POST',
+        method: 'post',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -225,7 +248,7 @@ const Attorney = () => {
       console.log(result)
       if (result.status === 201) {
         toast.success('Daten erfolgreich gespeichert')
-        resetStateVariables()
+        // resetStateVariables()
       } else {
         toast.error(
           'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
@@ -236,44 +259,90 @@ const Attorney = () => {
       toast.error('Error saving data. Please try again.')
     }
   }
+  // const saveData = async () => {
+  //   try {
+  //     let url
+  //     let method
 
-  const resetStateVariables = () => {
-    setHealthCare(() => ({
-      healthCareData: Array.from({ length: initialFields + 1 }, () => ({
-        healthCareMasterData: false,
-        healthCare_fname: '',
-        healthCare_lname: '',
-        healthCare_address: '',
-        healthCare_phone: '',
-        healthCare_mobile: '',
-      })),
-    }))
+  //     if (resultt) {
+  //       url = `${apiUrl}/attorney/get_attorney/${resultt._id}`
+  //       method = 'PUT'
+  //     } else {
+  //       url = `${apiUrl}/attorney`
+  //       method = 'POST'
+  //     }
 
-    setPowerOfAttorney(() => ({
-      powerOfAttorneyData: Array.from({ length: initialFields + 1 }, () => ({
-        AttorneyMasterData: false,
-        adoptDataFromHealthcare: false,
-        powerOfAttorney_fname: '',
-        powerOfAttorney_lname: '',
-        powerOfAttorney_address: '',
-        powerOfAttorney_phone: '',
-        powerOfAttorney_mobile: '',
-      })),
-    }))
+  //     let response = await fetch(url, {
+  //       method: method,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
 
-    setCareProvision(() => ({
-      care_association: '',
-    }))
+  //     let result = await response.json()
+  //     console.log(result)
+  //     if (result.status === 201) {
+  //       toast.success('Daten erfolgreich gespeichert')
+  //       // resetStateVariables()
+  //     } else {
+  //       toast.error(
+  //         'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
+  //       )
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during API call:', error)
+  //     toast.error('Error saving data. Please try again.')
+  //   }
+  // }
 
-    setSecuringattorney({
-      fname: '',
-      lname: '',
-      address: '',
-      plz: '',
-      ort: '',
-      dob: '',
-    })
+  const getRecord = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/attorney/get_attorney/${resultt._id}`)
+      const data = await result.json()
+      setRecordData(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
   }
+  console.log('recorddata', recordData)
+  // const resetStateVariables = () => {
+  //   setHealthCare(() => ({
+  //     healthCareData: Array.from({ length: initialFields + 1 }, () => ({
+  //       healthCareMasterData: false,
+  //       healthCare_fname: '',
+  //       healthCare_lname: '',
+  //       healthCare_address: '',
+  //       healthCare_phone: '',
+  //       healthCare_mobile: '',
+  //     })),
+  //   }))
+
+  //   setPowerOfAttorney(() => ({
+  //     powerOfAttorneyData: Array.from({ length: initialFields + 1 }, () => ({
+  //       AttorneyMasterData: false,
+  //       adoptDataFromHealthcare: false,
+  //       powerOfAttorney_fname: '',
+  //       powerOfAttorney_lname: '',
+  //       powerOfAttorney_address: '',
+  //       powerOfAttorney_phone: '',
+  //       powerOfAttorney_mobile: '',
+  //     })),
+  //   }))
+
+  //   setCareProvision(() => ({
+  //     care_association: '',
+  //   }))
+
+  //   setSecuringattorney({
+  //     fname: '',
+  //     lname: '',
+  //     address: '',
+  //     plz: '',
+  //     ort: '',
+  //     dob: '',
+  //   })
+  // }
   const toggleAdoptDataFromHealthcare = () => {
     setPowerOfAttorney((prevState) => ({
       ...prevState,
@@ -295,9 +364,74 @@ const Attorney = () => {
           })),
     }))
   }
+
+  useEffect(() => {
+    setCareProvision({
+      care_association: recordData?.careProvision?.care_association,
+    })
+    setSecuringattorney({
+      fname: recordData?.securingattorney?.fname,
+      lname: recordData?.securingattorney?.lname,
+      address: recordData?.securingattorney?.address,
+      dob: recordData?.securingattorney?.dob,
+      plz: recordData?.securingattorney?.plz,
+      ort: recordData?.securingattorney?.ort,
+    })
+    setPowerOfAttorney((prevState) => ({
+      ...prevState,
+      // adoptDataFromHealthcare: Boolean(recordData?.powerOfAttorney?.adoptDataFromHealthcare),
+      powerOfAttorneyData: Array.from({ length: initialFields }, (_, index) => ({
+        powerOfAttorneyData: prevState.powerOfAttorneyData.map((item, index) => ({
+          ...item,
+          powerOfAttorney_fname:
+            recordData?.healthCare?.healthCareData?.[index]?.healthCare_fname ||
+            item.powerOfAttorney_fname,
+          powerOfAttorney_lname:
+            recordData?.healthCare?.healthCareData?.[index]?.healthCare_lname ||
+            item.powerOfAttorney_lname,
+          powerOfAttorney_address:
+            recordData?.healthCare?.healthCareData?.[index]?.healthCare_address ||
+            item.powerOfAttorney_address,
+          powerOfAttorney_mobile:
+            recordData?.healthCare?.healthCareData?.[index]?.healthCare_mobile ||
+            item.powerOfAttorney_mobile,
+          powerOfAttorney_phone:
+            recordData?.healthCare?.healthCareData?.[index]?.healthCare_phone ||
+            item.powerOfAttorney_phone,
+        })),
+      })),
+    }))
+    setHealthCare((prevHealthCare) => ({
+      ...prevHealthCare,
+      healthCareData: Array.from({ length: initialFields }, (_, index) => ({
+        healthCare_fname:
+          recordData?.healthCare?.healthCareData?.[index]?.healthCare_fname ||
+          prevHealthCare.healthCareData[index]?.healthCare_fname ||
+          '',
+        healthCare_lname:
+          recordData?.healthCare?.healthCareData?.[index]?.healthCare_lname ||
+          prevHealthCare.healthCareData[index]?.healthCare_lname ||
+          '',
+        healthCare_address:
+          recordData?.healthCare?.healthCareData?.[index]?.healthCare_address ||
+          prevHealthCare.healthCareData[index]?.healthCare_address ||
+          '',
+        healthCare_mobile:
+          recordData?.healthCare?.healthCareData?.[index]?.healthCare_mobile ||
+          prevHealthCare.healthCareData[index]?.healthCare_mobile ||
+          '',
+        healthCare_phone:
+          recordData?.healthCare?.healthCareData?.[index]?.healthCare_phone ||
+          prevHealthCare.healthCareData[index]?.healthCare_phone ||
+          '',
+      })),
+    }))
+  }, [recordData, initialFields])
+
   useEffect(() => {
     // Add fields on component mount
     addHealthCareField()
+    getRecord()
     addPowerOfAttorneyField()
   }, [])
   return (
