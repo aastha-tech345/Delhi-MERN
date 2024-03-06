@@ -234,46 +234,10 @@ const Attorney = () => {
     customer_id: resultt?._id,
   }
 
-  const saveData = async () => {
-    try {
-      let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-
-      let result = await response.json()
-      console.log(result)
-      if (result.status === 201) {
-        toast.success('Daten erfolgreich gespeichert')
-        // resetStateVariables()
-      } else {
-        toast.error(
-          'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
-        )
-      }
-    } catch (error) {
-      console.error('Error during API call:', error)
-      toast.error('Error saving data. Please try again.')
-    }
-  }
   // const saveData = async () => {
   //   try {
-  //     let url
-  //     let method
-
-  //     if (resultt) {
-  //       url = `${apiUrl}/attorney/get_attorney/${resultt._id}`
-  //       method = 'PUT'
-  //     } else {
-  //       url = `${apiUrl}/attorney`
-  //       method = 'POST'
-  //     }
-
-  //     let response = await fetch(url, {
-  //       method: method,
+  //     let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
+  //       method: 'post',
   //       headers: {
   //         'Content-Type': 'application/json',
   //       },
@@ -295,6 +259,42 @@ const Attorney = () => {
   //     toast.error('Error saving data. Please try again.')
   //   }
   // }
+  const saveData = async () => {
+    try {
+      let url
+      let method
+
+      if (resultt) {
+        url = `${apiUrl}/attorney/get_attorney/${resultt._id}`
+        method = 'PUT'
+      } else {
+        url = `${apiUrl}/attorney`
+        method = 'POST'
+      }
+
+      let response = await fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      let result = await response.json()
+      console.log(result)
+      if (result.status === 201) {
+        toast.success('Daten erfolgreich gespeichert')
+        // resetStateVariables()
+      } else {
+        toast.error(
+          'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
+        )
+      }
+    } catch (error) {
+      console.error('Error during API call:', error)
+      toast.error('Error saving data. Please try again.')
+    }
+  }
 
   const getRecord = async () => {
     try {

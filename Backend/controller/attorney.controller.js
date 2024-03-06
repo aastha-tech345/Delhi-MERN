@@ -60,17 +60,27 @@ exports.getAttorneyData = async (req, res) => {
 
 exports.getAttorneyDataUpdate = async (req, res) => {
   try {
-    const result = await AttorneyInfo.Attorney.updateOne(
-      { customer_id: req.params.id },
-      { $set: req.body }
-    );
+    const existingAttorney = await AttorneyInfo.Attorney.findOne({
+      customer_id: req.params.id,
+    });
+
+    let result;
+    if (existingAttorney) {
+      result = await AttorneyInfo.Attorney.updateOne(
+        { customer_id: req.params.id },
+        { $set: req.body }
+      );
+    } else {
+      result = await AttorneyInfo.Attorney.create(req.body);
+    }
+
     return res.status(201).json({
       status: 201,
-      message: "update successfully",
+      message: existingAttorney ? "Update successful" : "Created successfully",
       result,
     });
   } catch (error) {
-    console.error("Error updating attorney data:", error);
+    console.error("Error updating/creating attorney data:", error);
     res.status(500).send("Internal Server Error");
   }
 };
