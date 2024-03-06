@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import DatePiker from '../Date'
 import Select, { components } from 'react-select'
 import PropTypes from 'prop-types'
-import { MultiSelect } from 'primereact/multiselect'
+import { ListBox } from 'primereact/listbox'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 // import 'primeicons/primeicons.css'
@@ -483,6 +483,14 @@ const CustomerInfo = () => {
     setThose(customerInfo?.those)
     setClientStatus(customerInfo?.customer?.status)
   }, [customerInfo])
+
+  const handleCheckboxChange = (e, city) => {
+    if (e.target.checked) {
+      setClientStatus([...clientStatus, city])
+    } else {
+      setClientStatus(clientStatus.filter((selectedCity) => selectedCity.code !== city.code))
+    }
+  }
   // console.log('customerInfo?.customer?.status', customerInfo?.customer?.status)
   return (
     <div className="inner-page-wrap">
@@ -580,21 +588,58 @@ const CustomerInfo = () => {
                         <div className="row mb-3">
                           <label className="col-sm-3 col-form-label">Status</label>
                           <div className="col-sm-6">
-                            <MultiSelect
+                            {/* <ListBox
                               placeholder="HVD-PV"
                               value={clientStatus}
                               onChange={(e) => setClientStatus(e.value)}
+                              // options={cities.map((city) => ({
+                              //   ...city,
+                              //   checked: Array.isArray(clientStatus)
+                              //     ? clientStatus.includes(city.value)
+                              //     : false,
+                              // }))}
                               options={cities}
-                              isMulti
+                              multiple
                               maxSelectedValues={3}
                               optionLabel="name"
                               className="w-100"
-                              showSelectAll={false}
-                              // selectedItemTemplate={selectedItemTemplate}
-                              showCheckbox
-                              display="chip"
                               scrollHeight={500}
-                            />
+                              showCheckbox={true}
+                            /> */}
+                            {/* <div className="card flex justify-content-center">
+                              {cities.map((city) => (
+                                <div key={city.code} className="p-checkbox">
+                                  <input
+                                    type="checkbox"
+                                    checked={
+                                      clientStatus &&
+                                      clientStatus.some(
+                                        (selectedCity) => selectedCity.code === city.code,
+                                      )
+                                    }
+                                    onChange={(e) => handleCheckboxChange(e, city)}
+                                  />
+                                  <label>{city.name}</label>
+                                </div>
+                              ))}
+                            </div> */}
+                            <div className="card flex justify-content-center p-3">
+                              {cities.map((city) => (
+                                <div key={city.code} className="checkbox-container">
+                                  <input
+                                    type="checkbox"
+                                    checked={
+                                      clientStatus &&
+                                      clientStatus.some(
+                                        (selectedCity) => selectedCity.code === city.code,
+                                      )
+                                    }
+                                    onChange={(e) => handleCheckboxChange(e, city)}
+                                  />
+                                  <label>{city.name}</label>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -608,6 +653,7 @@ const CustomerInfo = () => {
                               name="remarks"
                               onChange={customerInfoChange}
                               className="form-control"
+                              rows={10}
                             />
                           </div>
                         </div>

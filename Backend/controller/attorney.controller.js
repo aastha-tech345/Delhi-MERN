@@ -47,7 +47,7 @@ exports.getAttorney = async (req, res) => {
 exports.getAttorneyData = async (req, res) => {
   try {
     const result = await AttorneyInfo.Attorney.findOne({
-      _id: req.params.id,
+      customer_id: req.params.id,
     });
     if (!result) {
       return res.status(404).send({ error: "Attorney not found" });
@@ -61,10 +61,14 @@ exports.getAttorneyData = async (req, res) => {
 exports.getAttorneyDataUpdate = async (req, res) => {
   try {
     const result = await AttorneyInfo.Attorney.updateOne(
-      { _id: req.params.id },
+      { customer_id: req.params.id },
       { $set: req.body }
     );
-    res.send(result);
+    return res.status(201).json({
+      status: 201,
+      message: "update successfully",
+      result,
+    });
   } catch (error) {
     console.error("Error updating attorney data:", error);
     res.status(500).send("Internal Server Error");
