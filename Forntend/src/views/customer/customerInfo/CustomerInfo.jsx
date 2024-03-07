@@ -709,7 +709,7 @@ const CustomerInfo = () => {
                         <div className="row">
                           <label className="col-sm-3 col-form-label">Auswahl</label>
                           <div className="col-sm-6">
-                            <div className="input-group px-2">
+                            <div className="input-group">
                               <Select
                                 className="w-100"
                                 options={Quelle}
