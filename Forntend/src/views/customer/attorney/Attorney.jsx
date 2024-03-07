@@ -480,7 +480,7 @@ const Attorney = () => {
                                     value={field.healthCare_fname}
                                     name="healthCare_fname"
                                     type="text"
-                                    placeholder="John"
+                                    placeholder="Vorname"
                                     className="form-control z"
                                     id={`fname_${index}`}
                                   />
@@ -495,7 +495,7 @@ const Attorney = () => {
                                     value={field.healthCare_lname}
                                     type="text"
                                     name="healthCare_lname"
-                                    placeholder="Doe"
+                                    placeholder="Nachname"
                                     className="form-control"
                                     id={`lname_${index}`}
                                     //required={true}
@@ -511,7 +511,7 @@ const Attorney = () => {
                                     value={field.healthCare_address}
                                     type="text"
                                     name="healthCare_address"
-                                    placeholder="Lorem Ipsum"
+                                    placeholder="Adresse"
                                     className="form-control"
                                     id={`address_${index}`}
                                     //required={true}
@@ -608,7 +608,7 @@ const Attorney = () => {
                   </div>
                   {powerOfAttorney.powerOfAttorneyData &&
                     powerOfAttorney.powerOfAttorneyData.map((field, index) => (
-                      <div className="row " key={index}>
+                      <div className="row" key={index}>
                         <div className="col-sm-2">
                           <div className="row">
                             <div className="col-sm-12">
@@ -617,7 +617,7 @@ const Attorney = () => {
                                 value={field.powerOfAttorney_fname}
                                 name="powerOfAttorney_fname"
                                 type="text"
-                                placeholder="John"
+                                placeholder="Vorname"
                                 className="form-control"
                                 id="inputPassword"
                               />
@@ -632,7 +632,7 @@ const Attorney = () => {
                                 value={field.powerOfAttorney_lname}
                                 name="powerOfAttorney_lname"
                                 type="text"
-                                placeholder="Doe"
+                                placeholder="Nachname"
                                 className="form-control"
                                 id="inputPassword"
                               />
@@ -647,7 +647,7 @@ const Attorney = () => {
                                 value={field.powerOfAttorney_address}
                                 name="powerOfAttorney_address"
                                 type="text"
-                                placeholder="Lorem Ipsum"
+                                placeholder="Adresse"
                                 className="form-control"
                                 id="inputPassword"
                               />
@@ -712,17 +712,18 @@ const Attorney = () => {
                   </div>
                 </div> */}
                 <div className="row">
-                  <label className="col-sm-2 col-form-label">Bemerkungen</label>
+                  <label className="col-sm-2 col-form-label">Betreuungsverein</label>
                   <div className="col-sm-10">
                     <textarea
                       value={careProvision.care_association}
                       name="care_association"
                       onChange={careProvisionChange}
                       className="form-control"
-                      placeholder="Bemerkungen"
+                      placeholder="Betreuungsverein"
                     />
                   </div>
                 </div>
+                <hr />
               </div>
             </div>
 
