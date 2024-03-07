@@ -10,7 +10,7 @@ const Attorney = () => {
   const [recordData, setRecordData] = useState([])
   const navigate = useNavigate()
   const maxFields = 10
-  const initialFields = 4
+  const initialFields = 3
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const cancelData = () => {
