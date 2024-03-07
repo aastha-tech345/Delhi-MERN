@@ -1938,15 +1938,16 @@ svg.p-icon {
   border-color: #005291 !important;
 }
 .file-upload-wrap .file-input-wrap .filename-field {
-  width: 14500px !important;
+  width: 100% !important;
 }
 .file-upload-wrap .file-input-wrap .file-btn {
   width: 50px !important;
-  border-left: 1px solid hsl(0, 0%, 80%) !important;
+  border-left: 0px !important;
 }
 .css-1u9des2-indicatorSeparator {
   margin-right: 8px !important;
   width: 1.5px !important;
+  background-color: hsl(0, 0%, 90%) !important;
 }
 .css-tj5bde-Svg {
   margin-right: 4px !important;
@@ -1999,4 +2000,7 @@ svg.p-icon {
 
 .checkbox-container input[type='checkbox'] {
   margin-right: 8px;
+}
+.file-upload-wrap .file-input-wrap .file-btn {
+  border-left: 0px !important;
 }
