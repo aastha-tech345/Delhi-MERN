@@ -13,13 +13,13 @@ exports.createInvoice = async (req, res) => {
     //   customer_id,
     // } = req.body;
     // const invoice = new InvoiceInfomation.Invoice({
-      // product,
-      // alreadyPaid,
-      // paymentMethod,
-      // invoiceAmount,
-      // invoiceDate,
-      // deliveryDate,
-      // colleague,
+    // product,
+    // alreadyPaid,
+    // paymentMethod,
+    // invoiceAmount,
+    // invoiceDate,
+    // deliveryDate,
+    // colleague,
     //   customer_id,
     // });
 
@@ -46,7 +46,7 @@ exports.getInvoice = async (req, res) => {
 exports.getInvoiceData = async (req, res) => {
   try {
     const result = await InvoiceInfomation.Invoice.findOne({
-      _id: req.params.id,
+      customer_id: req.params.id,
     });
     if (!result) {
       return res.status(404).send({ error: "Invoice not found" });
@@ -59,13 +59,28 @@ exports.getInvoiceData = async (req, res) => {
 
 exports.getInvoiceDataUpdate = async (req, res) => {
   try {
-    const result = await InvoiceInfomation.Invoice.updateOne(
-      { _id: req.params.id },
-      { $set: req.body }
-    );
-    res.send(result);
+    const existingAttorney = await InvoiceInfomation.Invoice.findOne({
+      customer_id: req.params.id,
+    });
+
+    let result;
+    if (existingAttorney) {
+      result = await InvoiceInfomation.Invoice.updateOne(
+        { customer_id: req.params.id },
+        { $set: req.body }
+      );
+    } else {
+      result = await InvoiceInfomation.Invoice.create(req.body);
+    }
+
+    return res.status(201).json({
+      status: 201,
+      message: existingAttorney ? "Update successful" : "Created successfully",
+      result,
+    });
   } catch (error) {
-    res.status(500).send({ error: "Internal Server Error" });
+    console.error("Error updating/creating attorney data:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 

@@ -7,19 +7,21 @@ import Select from 'react-select'
 import DatePiker from '../Date'
 
 const Bills = () => {
+  const [recordData, setRecordData] = useState([])
   let res = localStorage.getItem('customerRecord')
-  let result = JSON.parse(res)
-  console.log('aastha', result._id)
+  let resultt = JSON.parse(res)
+  console.log('first', resultt?._id)
+  console.log('invoice', recordData?.colleague)
   const navigate = useNavigate()
   const apiUrl = process.env.REACT_APP_API_URL
   const [employeeData, setEmployeeData] = useState([])
   const [customerInfo, setCustomerInfo] = useState([])
-  const [colleague, setColleague] = useState('')
-  const [invoiceDate, setInvoiceDate] = useState('')
-  const [deliveryDate, setDeliveryDate] = useState('')
-  const [product, setProduct] = useState('')
-  const [paymentMethod, setPaymentMethod] = useState('')
-  const [invoiceAmount, setInvoiceAmount] = useState('')
+  const [colleague, setColleague] = useState(recordData?.colleague)
+  const [invoiceDate, setInvoiceDate] = useState(recordData?.invoiceDate)
+  const [deliveryDate, setDeliveryDate] = useState(recordData?.deliveryDate)
+  const [product, setProduct] = useState(recordData?.product)
+  const [paymentMethod, setPaymentMethod] = useState(recordData?.paymentMethod)
+  const [invoiceAmount, setInvoiceAmount] = useState(recordData?.invoiceAmount)
   let paidData = customerInfo?.customerDelivery?.alreadyPaid
   // console.log('paidData', paidData)
   const [alreadyPaid, setAlreadyPaid] = useState(paidData)
@@ -50,10 +52,11 @@ const Bills = () => {
         deliveryDate,
         employeeData,
         colleague,
+        customer_id: resultt?._id,
       }
 
-      const response = await fetch(`${apiUrl}/invoice/create_invoice`, {
-        method: 'POST',
+      const response = await fetch(`${apiUrl}/invoice/get_invoice/${resultt?._id}`, {
+        method: 'put',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -65,13 +68,6 @@ const Bills = () => {
       }
 
       toast.success('Rechnungsdaten erfolgreich gespeichert')
-      setColleague('')
-      setInvoiceDate('')
-      setProduct('')
-      setPaymentMethod('')
-      setInvoiceAmount('')
-      setDeliveryDate('')
-      setProduct('')
     } catch (error) {
       toast.error('Bitte füllen Sie alle Angaben aus')
       console.error('Error during API call:', error)
@@ -108,7 +104,7 @@ const Bills = () => {
   }
   const getCustomerInfo = async () => {
     try {
-      const response = await fetch(`${apiUrl}/customer/get_record/${result._id}`)
+      const response = await fetch(`${apiUrl}/customer/get_record/${resultt._id}`)
 
       const data = await response.json()
       console.log('data', data)
@@ -117,12 +113,33 @@ const Bills = () => {
       console.error('Error fetching employee data:', error)
     }
   }
+
+  const getRecord = async () => {
+    try {
+      const result = await fetch(`${apiUrl}/invoice/get_invoice/${resultt._id}`)
+      const data = await result.json()
+      setRecordData(data)
+    } catch (error) {
+      console.error('Error fetching customer record:', error)
+    }
+  }
+  console.log('recorddata', recordData)
   // console.log('first', customerInfo?.customerDelivery?.alreadyPaid)
   useEffect(() => {
+    getRecord()
     getCustomerInfo()
     getEmployeeData()
     setAlreadyPaid(paidData)
   }, [paidData])
+
+  useEffect(() => {
+    setColleague(recordData?.colleague)
+    setInvoiceDate(recordData?.invoiceDate)
+    setDeliveryDate(recordData?.deliveryDate)
+    setProduct(recordData?.product)
+    setPaymentMethod(recordData?.paymentMethod)
+    setInvoiceAmount(recordData?.invoiceAmount)
+  }, [recordData])
 
   return (
     <div className="inner-page-wrap">

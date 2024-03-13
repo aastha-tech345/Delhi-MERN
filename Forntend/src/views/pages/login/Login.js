@@ -4,9 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import { useNavigate } from 'react-router-dom'
-// import ReCAPTCHA from 'react-google-recaptcha'
 import logo from '../../../assets/images/hvd-logo.png'
-// import logo from '../../../assets/images/hvd-logo-fig.png'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { CCard, CCardBody, CCardGroup, CCol, CContainer, CRow } from '@coreui/react'
@@ -17,16 +15,17 @@ const Login = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const navigate = useNavigate()
   const [validated, setValidated] = useState(false)
+
   const notify = (dataa) => toast(dataa)
-  const login = async (event) => {
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
       event.preventDefault()
-      event.stopPropagation()
+      login()
     }
+  }
 
-    setValidated(true)
-
+  const login = async () => {
     try {
       if (!email || !password) {
         return
@@ -42,7 +41,6 @@ const Login = () => {
       })
 
       const result = await response.json()
-      // console.log('aastha', result)
 
       if (result.success === true) {
         toast.success('Benutzeranmeldung erfolgreich')
@@ -66,7 +64,7 @@ const Login = () => {
 
   return (
     <div
-      className=" min-vh-100 d-flex flex-row align-items-center"
+      className="min-vh-100 d-flex flex-row align-items-center"
       style={{ background: '#015291' }}
     >
       <CContainer className="form-container">
@@ -76,7 +74,7 @@ const Login = () => {
             <CCardGroup className="mt-3">
               <CCard className="p-4">
                 <CCardBody className="p-0">
-                  <Form noValidate validated={validated}>
+                  <Form noValidate validated={validated} onKeyPress={handleKeyPress}>
                     <h4 className="h4-heading">Anmeldung</h4>
                     <Row className="mb-3">
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
@@ -103,7 +101,6 @@ const Login = () => {
                       </Form.Group>
                     </Row>
                     <div>
-                      {/* <ReCAPTCHA sitekey="Your client site key" onChange={onChange} /> */}
                       <br />
                       <Button
                         className="form-control form-btn"

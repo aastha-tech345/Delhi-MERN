@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd, MdOutlineEdit } from 'react-icons/md'
-import { Divider, Radio, Table } from 'antd'
-import { GrEdit } from 'react-icons/gr'
-import { MdDelete } from 'react-icons/md'
-import axios from 'axios'
-// import { postFetchUser } from 'src/Api'
+import { Table } from 'antd'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
-import Select, { components } from 'react-select'
+import Select from 'react-select'
 
-import { postFetchUser, getFetch } from 'src/Api'
+import { postFetchUser } from 'src/Api'
 import DeleteModal from './DeleteModal'
 import Customer from '../Customer'
 import EditModal from './EditModal'
@@ -20,9 +16,6 @@ import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import { RiDeleteBinLine } from 'react-icons/ri'
 
 const Document = () => {
-  // let lgCust = localStorage.getItem('customerDatat')
-  // let custData = JSON.parse(lgCust)
-
   let lgUser = localStorage.getItem('record')
   let loginData = JSON.parse(lgUser)
 
