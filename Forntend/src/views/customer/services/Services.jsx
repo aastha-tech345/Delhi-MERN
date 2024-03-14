@@ -21,6 +21,10 @@ const Services = () => {
     angst_textbox: '',
     motivation_text: '',
   })
+  const cancelData = () => {
+    localStorage.removeItem('tabId')
+    navigate('/customer/customer_info')
+  }
 
   const [scope, setScope] = useState({
     process_dementia: '',
@@ -152,6 +156,47 @@ const Services = () => {
     alone_anonymous: '',
     fearofdying_anonymous: '',
   })
+  const [phase, setPhase] = useState({
+    dignified_professional: '',
+    assistance_quiet: '',
+    extension_consciously: '',
+    environment_anonymous: '',
+    last_phase_of_life: '',
+  })
+  const [experiences, setExperiences] = useState({
+    dry_experiences: '',
+  })
+
+  const [additionalValue, setAdditionalValue] = useState({
+    sending: '',
+  })
+  const handlePhaseChange = (e) => {
+    const { name, checked, value } = e.target
+    const newValue = checked ? 'ja' : value || ''
+
+    setPhase({
+      ...phase,
+      [name]: newValue,
+    })
+  }
+  const handleExperiencesChange = (e) => {
+    const { name, checked, value } = e.target
+    const newValue = checked ? 'ja' : value || ''
+
+    setExperiences({
+      ...experiences,
+      [name]: newValue,
+    })
+  }
+  const handleAdditionalValueChange = (e) => {
+    const { name, checked, value } = e.target
+    const newValue = checked ? 'ja' : value || ''
+
+    setAdditionalValue({
+      ...additionalValue,
+      [name]: newValue,
+    })
+  }
   const handleNotworthliviingChange = (e) => {
     const { name, checked, value } = e.target
     const newValue = checked ? 'ja' : value || ''
@@ -413,6 +458,9 @@ const Services = () => {
     dyingwishes,
     tod,
     fearofdying,
+    experiences,
+    phase,
+    additionalValue,
     customer_id: resultt?._id,
   }
   const saveData = async () => {
@@ -615,6 +663,20 @@ const Services = () => {
       alone_anonymous: recordData?.fearofdying?.alone_anonymous,
       fearofdying_anonymous: recordData?.fearofdying?.fearofdying_anonymous,
     })
+    setPhase({
+      dignified_professional: recordData?.phase?.dignified_professional,
+      assistance_quiet: recordData?.phase?.assistance_quiet,
+      extension_consciously: recordData?.phase?.extension_consciously,
+      environment_anonymous: recordData?.phase?.environment_anonymous,
+      last_phase_of_life: recordData?.phase?.last_phase_of_life,
+    })
+    setExperiences({
+      dry_experiences: recordData?.experiences?.dry_experiences,
+    })
+
+    setAdditionalValue({
+      sending: recordData?.additionalValue?.sending,
+    })
   }, [recordData])
 
   const rowData = [
@@ -631,36 +693,51 @@ const Services = () => {
       field1: 'Selbstbestimmung',
       field2: 'Diagnose',
       field3: (
-        <input
-          type="checkbox"
-          checked={motivation.determination_diagonose === 'ja'}
-          name="determination_diagonose"
-          onChange={handleMotivationChange}
-        />
+        <>
+          <div className="radio-check-wrap">
+            <input
+              type="checkbox"
+              style={{ marginTop: '-5px !important' }}
+              checked={motivation.determination_diagonose === 'ja'}
+              name="determination_diagonose"
+              onChange={handleMotivationChange}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <span> </span>
+          </div>
+          <br />
+        </>
       ),
     },
     {
       field1: 'Angehörige',
       field2: 'Ablehnung',
       field3: (
-        <input
-          type="checkbox"
-          name="relative_rejection"
-          checked={motivation.relative_rejection === 'ja'}
-          onChange={handleMotivationChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            name="relative_rejection"
+            checked={motivation.relative_rejection === 'ja'}
+            onChange={handleMotivationChange}
+            className="checkbox-check"
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Angst',
       field2: 'Textfeld Motivation',
       field3: (
-        <input
-          type="checkbox"
-          checked={motivation.angst_textbox === 'ja'}
-          name="angst_textbox"
-          onChange={handleMotivationChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={motivation.angst_textbox === 'ja'}
+            name="angst_textbox"
+            onChange={handleMotivationChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -690,24 +767,32 @@ const Services = () => {
       field1: 'Sterbeprozess',
       field2: 'Demenz',
       field3: (
-        <input
-          type="checkbox"
-          checked={scope.process_dementia === 'ja'}
-          name="process_dementia"
-          onChange={handleScopeChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            className="mb-3"
+            checked={scope.process_dementia === 'ja'}
+            name="process_dementia"
+            onChange={handleScopeChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Gehirnschädigung',
       field2: 'Schwerstpflegebedürftigkeit',
       field3: (
-        <input
-          type="checkbox"
-          checked={scope.brain_servercare === 'ja'}
-          name="brain_servercare"
-          onChange={handleScopeChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            className="mb-3"
+            checked={scope.brain_servercare === 'ja'}
+            name="brain_servercare"
+            onChange={handleScopeChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -723,24 +808,30 @@ const Services = () => {
       field1: 'keine lebensverlängernden Maßnahmen',
       field2: 'keine Wiederbelebung',
       field3: (
-        <input
-          type="checkbox"
-          checked={hopeless.noartificial_palliative === 'ja'}
-          name="noartificial_palliative"
-          onChange={handleHopelessChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={hopeless.nolife_resuscitation === 'ja'}
+            name="nolife_resuscitation"
+            onChange={handleHopelessChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'keine künstliche Beatmung',
       field2: 'in jedem Fall Palliativmedizin',
       field3: (
-        <input
-          type="checkbox"
-          checked={hopeless.brain_servercare === 'ja'}
-          name="brain_servercare"
-          onChange={handleHopelessChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={hopeless.noartificial_palliative === 'ja'}
+            name="noartificial_palliative"
+            onChange={handleHopelessChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -756,24 +847,30 @@ const Services = () => {
       field1: 'natürliche Weise',
       field2: 'Ablehnung',
       field3: (
-        <input
-          type="checkbox"
-          checked={artificial.natual_rejection === 'ja'}
-          name="natual_rejection"
-          onChange={handleArtificialChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={artificial.natual_rejection === 'ja'}
+            name="natual_rejection"
+            onChange={handleArtificialChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Flüssigkeit',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={artificial.liquid === 'ja'}
-          name="liquid"
-          onChange={handleArtificialChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={artificial.liquid === 'ja'}
+            name="liquid"
+            onChange={handleArtificialChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -789,12 +886,15 @@ const Services = () => {
       field1: 'palliative Sedierung',
       field2: 'bewusstseinstrübende Nebenwirkung',
       field3: (
-        <input
-          type="checkbox"
-          checked={complanind.palliative_mind_clouding === 'ja'}
-          name="palliative_mind_clouding"
-          onChange={handleComplanindChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={complanind.palliative_mind_clouding === 'ja'}
+            name="palliative_mind_clouding"
+            onChange={handleComplanindChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -810,12 +910,15 @@ const Services = () => {
       field1: 'Medikamente',
       field2: 'Medikamente zur Linderung',
       field3: (
-        <input
-          type="checkbox"
-          checked={medication.medicate === 'ja'}
-          name="medicate"
-          onChange={handleMedicationChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={medication.medicate === 'ja'}
+            name="medicate"
+            onChange={handleMedicationChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -829,24 +932,30 @@ const Services = () => {
       field1: 'vertraute Umgebung',
       field2: 'Hospiz',
       field3: (
-        <input
-          type="checkbox"
-          checked={abode.familiar_hospice === 'ja'}
-          name="familiar_hospice"
-          onChange={handleAbodeChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={abode.familiar_hospice === 'ja'}
+            name="familiar_hospice"
+            onChange={handleAbodeChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Nahestehende',
       field2: 'Krankenhaus',
       field3: (
-        <input
-          type="checkbox"
-          checked={abode.close_hospice === 'ja'}
-          name="close_hospice"
-          onChange={handleAbodeChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={abode.close_hospice === 'ja'}
+            name="close_hospice"
+            onChange={handleAbodeChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -909,12 +1018,15 @@ const Services = () => {
       field1: 'Herzschrittmacher',
       field2: 'Defibrillator',
       field3: (
-        <input
-          type="checkbox"
-          checked={pacemaker.pacemaker === 'ja'}
-          name="pacemaker"
-          onChange={handlePacemakerChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={pacemaker.pacemaker === 'ja'}
+            name="pacemaker"
+            onChange={handlePacemakerChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -929,24 +1041,30 @@ const Services = () => {
       field1: 'Sterbehilfe [ja]',
       field2: 'Sterbehilfe [nein]',
       field3: (
-        <input
-          type="checkbox"
-          checked={euthanasia.euthanasia === 'ja'}
-          name="euthanasia"
-          onChange={handleEuthanasiaChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={euthanasia.euthanasia === 'ja'}
+            name="euthanasia"
+            onChange={handleEuthanasiaChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Forschungszwecke',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={euthanasia.research_purposes === 'ja'}
-          name="research_purposes"
-          onChange={handleEuthanasiaChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={euthanasia.research_purposes === 'ja'}
+            name="research_purposes"
+            onChange={handleEuthanasiaChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -961,36 +1079,45 @@ const Services = () => {
       field1: 'Feuerbestattung',
       field2: 'Erdbestattung',
       field3: (
-        <input
-          type="checkbox"
-          checked={funeral.cremation_burial === 'ja'}
-          name="cremation_burial"
-          onChange={handleFuneralChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={funeral.cremation_burial === 'ja'}
+            name="cremation_burial"
+            onChange={handleFuneralChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Bestattungsvorsorge',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={funeral.funeral_arrangements === 'ja'}
-          name="funeral_arrangements"
-          onChange={handleFuneralChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={funeral.funeral_arrangements === 'ja'}
+            name="funeral_arrangements"
+            onChange={handleFuneralChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Bestattungswünsche',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={funeral.funeral_wishes === 'ja'}
-          name="funeral_wishes"
-          onChange={handleFuneralChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={funeral.funeral_wishes === 'ja'}
+            name="funeral_wishes"
+            onChange={handleFuneralChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1004,12 +1131,15 @@ const Services = () => {
       field1: 'unmittelbar verbindlich',
       field2: 'Ermessensbereich',
       field3: (
-        <input
-          type="checkbox"
-          checked={commitment.immediately_discretionary === 'ja'}
-          name="immediately_discretionary"
-          onChange={handleCommitmentChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={commitment.immediately_discretionary === 'ja'}
+            name="immediately_discretionary"
+            onChange={handleCommitmentChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1023,12 +1153,15 @@ const Services = () => {
       field1: 'Intensivmedizin [ja]',
       field2: 'Intensivmedizin [nein]',
       field3: (
-        <input
-          type="checkbox"
-          checked={intensive.intensive_care_medicine}
-          onChange={handleIntensiveChange}
-          name="intensive_care_medicine"
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={intensive.intensive_care_medicine}
+            onChange={handleIntensiveChange}
+            name="intensive_care_medicine"
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1042,24 +1175,30 @@ const Services = () => {
       field1: 'Wiederbelebung schnell',
       field2: 'Wiederbelebung [nein]',
       field3: (
-        <input
-          type="checkbox"
-          checked={revival.resuscitate_revival === 'ja'}
-          name="resuscitate_revival"
-          onChange={handleRevivalChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={revival.resuscitate_revival === 'ja'}
+            name="resuscitate_revival"
+            onChange={handleRevivalChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Wiederbelebung bei OP',
       field2: 'Intensivmedizin [nein]',
       field3: (
-        <input
-          type="checkbox"
-          checked={revival.resuscitation_medicine === 'ja'}
-          name="resuscitation_medicine"
-          onChange={handleRevivalChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={revival.resuscitation_medicine === 'ja'}
+            name="resuscitation_medicine"
+            onChange={handleRevivalChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1080,48 +1219,60 @@ const Services = () => {
       field1: 'sehr hoch',
       field2: '	kaum eingeschränkt',
       field3: (
-        <input
-          type="checkbox"
-          checked={life.high_restricted === 'ja'}
-          name="high_restricted"
-          onChange={handleLifeChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={life.high_restricted === 'ja'}
+            name="high_restricted"
+            onChange={handleLifeChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'zufrieden',
       field2: '	genieße Leben',
       field3: (
-        <input
-          type="checkbox"
-          checked={life.satisfied_enjoy === 'ja'}
-          name="satisfied_enjoy"
-          onChange={handleLifeChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={life.satisfied_enjoy === 'ja'}
+            name="satisfied_enjoy"
+            onChange={handleLifeChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'zur Last geworden',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={life.burden === 'ja'}
-          name="burden"
-          onChange={handleLifeChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={life.burden === 'ja'}
+            name="burden"
+            onChange={handleLifeChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Lebensqualität',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={life.life_quality === 'ja'}
-          name="life_quality"
-          onChange={handleLifeChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={life.life_quality === 'ja'}
+            name="life_quality"
+            onChange={handleLifeChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1135,60 +1286,75 @@ const Services = () => {
       field1: 'Familie',
       field2: 'Freunde, Bekannte',
       field3: (
-        <input
-          type="checkbox"
-          checked={worth.family_friend === 'ja'}
-          name="family_friend"
-          onChange={handleWorthChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={worth.family_friend === 'ja'}
+            name="family_friend"
+            onChange={handleWorthChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Unabhängigkeit',
       field2: 'geistig aktiv',
       field3: (
-        <input
-          type="checkbox"
-          checked={worth.independence_mentally === 'ja'}
-          name="independence_mentally"
-          onChange={handleWorthChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={worth.independence_mentally === 'ja'}
+            name="independence_mentally"
+            onChange={handleWorthChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'für andere da sein',
       field2: 'Arbeit',
       field3: (
-        <input
-          type="checkbox"
-          checked={worth.others_work === 'ja'}
-          name="others_work"
-          onChange={handleWorthChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={worth.others_work === 'ja'}
+            name="others_work"
+            onChange={handleWorthChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Natur',
       field2: 'Sport',
       field3: (
-        <input
-          type="checkbox"
-          checked={worth.nature === 'ja'}
-          name="nature"
-          onChange={handleWorthChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={worth.nature === 'ja'}
+            name="nature"
+            onChange={handleWorthChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Kultur',
       field2: 'Reisen',
       field3: (
-        <input
-          type="checkbox"
-          checked={worth.cultural === 'ja'}
-          name="cultural"
-          onChange={handleWorthChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={worth.cultural === 'ja'}
+            name="cultural"
+            onChange={handleWorthChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1214,60 +1380,75 @@ const Services = () => {
       field1: 'Selbstständigkeit',
       field2: 'soziale Kontakte',
       field3: (
-        <input
-          type="checkbox"
-          checked={waiver.independence_contact === 'ja'}
-          name="independence_contact"
-          onChange={handleWaiverChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={waiver.independence_contact === 'ja'}
+            name="independence_contact"
+            onChange={handleWaiverChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'geistig gesund',
       field2: 'sportlich aktiv',
       field3: (
-        <input
-          type="checkbox"
-          checked={waiver.healthy_sports === 'ja'}
-          name="healthy_sports"
-          onChange={handleWaiverChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={waiver.healthy_sports === 'ja'}
+            name="healthy_sports"
+            onChange={handleWaiverChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Unabhängigkeit',
       field2: 'Mobilität',
       field3: (
-        <input
-          type="checkbox"
-          checked={waiver.independence_mobility === 'ja'}
-          name="independence_mobility"
-          onChange={handleWaiverChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={waiver.independence_mobility === 'ja'}
+            name="independence_mobility"
+            onChange={handleWaiverChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Essen & Trinken',
       field2: 'Kultur',
       field3: (
-        <input
-          type="checkbox"
-          checked={waiver.drink_cultural === 'ja'}
-          name="drink_cultural"
-          onChange={handleWaiverChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={waiver.drink_cultural === 'ja'}
+            name="drink_cultural"
+            onChange={handleWaiverChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'für andere da sein',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={waiver.others === 'ja'}
-          name="others"
-          onChange={handleWaiverChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={waiver.others === 'ja'}
+            name="others"
+            onChange={handleWaiverChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1293,48 +1474,60 @@ const Services = () => {
       field1: 'Mobilität',
       field2: 'Körperpflege',
       field3: (
-        <input
-          type="checkbox"
-          checked={restrictions.mobility_personal === 'ja'}
-          name="mobility_personal"
-          onChange={handleRestrictionsChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={restrictions.mobility_personal === 'ja'}
+            name="mobility_personal"
+            onChange={handleRestrictionsChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Kommunikation',
       field2: 'Nahrungsaufnahme',
       field3: (
-        <input
-          type="checkbox"
-          checked={restrictions.communication_ingestion === 'ja'}
-          name="communication_ingestion"
-          onChange={handleRestrictionsChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={restrictions.communication_ingestion === 'ja'}
+            name="communication_ingestion"
+            onChange={handleRestrictionsChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Denkvermögen',
       field2: 'Selbständigkeit',
       field3: (
-        <input
-          type="checkbox"
-          checked={restrictions.thinking_independence === 'ja'}
-          name="thinking_independence"
-          onChange={handleRestrictionsChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={restrictions.thinking_independence === 'ja'}
+            name="thinking_independence"
+            onChange={handleRestrictionsChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Einschränkungen',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={restrictions.restrictions === 'ja'}
-          name="restrictions"
-          onChange={handleRestrictionsChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={restrictions.restrictions === 'ja'}
+            name="restrictions"
+            onChange={handleRestrictionsChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1348,24 +1541,30 @@ const Services = () => {
       field1: 'gerne',
       field2: 'vorübergehend',
       field3: (
-        <input
-          type="checkbox"
-          checked={accept.gladly_tempary === 'ja'}
-          name="gladly_tempary"
-          onChange={handleAcceptChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={accept.gladly_tempary === 'ja'}
+            name="gladly_tempary"
+            onChange={handleAcceptChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'wenn nötig',
       field2: 'keine Last',
       field3: (
-        <input
-          type="checkbox"
-          checked={accept.necessary_load === 'ja'}
-          name="necessary_load"
-          onChange={handleAcceptChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={accept.necessary_load === 'ja'}
+            name="necessary_load"
+            onChange={handleAcceptChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1410,36 +1609,45 @@ const Services = () => {
       field1: 'Ende des Lebens',
       field2: 'Jenseits',
       field3: (
-        <input
-          type="checkbox"
-          checked={tod.end_beyond === 'ja'}
-          name="end_beyond"
-          onChange={handleTodChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={tod.end_beyond === 'ja'}
+            name="end_beyond"
+            onChange={handleTodChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Angst',
       field2: 'entfernt',
       field3: (
-        <input
-          type="checkbox"
-          checked={tod.angst_remove === 'ja'}
-          name="angst_remove"
-          onChange={handleTodChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={tod.angst_remove === 'ja'}
+            name="angst_remove"
+            onChange={handleTodChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Erlösung',
       field2: '',
       field3: (
-        <input
-          type="checkbox"
-          checked={tod.salvation === 'ja'}
-          name="salvation"
-          onChange={handleTodChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={tod.salvation === 'ja'}
+            name="salvation"
+            onChange={handleTodChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1460,36 +1668,45 @@ const Services = () => {
       field1: 'schnell',
       field2: 'bewusst',
       field3: (
-        <input
-          type="checkbox"
-          checked={fearofdying === 'ja'}
-          name="painful_tedious"
-          onChange={handleTodChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={dyingwishes.fast_consciously === 'ja'}
+            name="fast_consciously"
+            onChange={handleDyingwishesChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Abschied',
       field2: 'nicht allein',
       field3: (
-        <input
-          type="checkbox"
-          checked={fearofdying.helpless_maintained === 'ja'}
-          name="helpless_maintained"
-          onChange={handleTodChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={dyingwishes.farewell_notalong === 'ja'}
+            name="farewell_notalong"
+            onChange={handleDyingwishesChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
       field1: 'Sterben-Wünsche',
       field2: '',
       field3: (
-        <input
-          className="borderless-input"
-          value={fearofdying.alone_anonymous}
-          name="alone_anonymous"
-          onChange={handleTodChange}
-        />
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={dyingwishes.dying_wishes === 'ja'}
+            name="dying_wishes"
+            onChange={handleDyingwishesChange}
+          />
+          <span></span>
+        </div>
       ),
     },
     {
@@ -1502,22 +1719,59 @@ const Services = () => {
     {
       field1: 'schmerzvoll',
       field2: 'langwierig',
-      field3: <input type="checkbox" />,
+      field3: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={fearofdying.painful_tedious === 'ja'}
+            name="painful_tedious"
+            onChange={handleFearofdyingChange}
+          />
+          <span></span>
+        </div>
+      ),
     },
     {
       field1: 'hilflos',
       field2: 'schlecht gepflegt',
-      field3: <input type="checkbox" />,
+      field3: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={fearofdying.helpless_maintained === 'ja'}
+            name="helpless_maintained"
+            onChange={handleFearofdyingChange}
+          />
+          <span></span>
+        </div>
+      ),
     },
     {
       field1: 'alleine',
       field2: 'anonym',
-      field3: <input type="checkbox" />,
+      field3: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={fearofdying.alone_anonymous === 'ja'}
+            name="alone_anonymous"
+            onChange={handleFearofdyingChange}
+          />
+          <span></span>
+        </div>
+      ),
     },
     {
       field1: 'Sterben-Angst',
       field2: 'anonym',
-      field3: <input className="borderless-input" />,
+      field3: (
+        <input
+          className="borderless-input"
+          value={fearofdying.fearofdying_anonymous}
+          name="fearofdying_anonymous"
+          onChange={handleFearofdyingChange}
+        />
+      ),
     },
     {
       field1: (
@@ -1529,27 +1783,75 @@ const Services = () => {
     {
       field1: 'würdevoll',
       field2: 'professionell',
-      field3: <input type="checkbox" />,
+      field3: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={phase.dignified_professional === 'ja'}
+            name="dignified_professional"
+            onChange={handlePhaseChange}
+          />
+          <span></span>
+        </div>
+      ),
     },
     {
       field1: 'Beistand',
       field2: 'ruhig',
-      field3: <input type="checkbox" />,
+      field3: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={phase.assistance_quiet === 'ja'}
+            name="assistance_quiet"
+            onChange={handlePhaseChange}
+          />
+          <span></span>
+        </div>
+      ),
     },
     {
       field1: 'ohne Verlängerung',
       field2: 'bewusst',
-      field3: <input type="checkbox" />,
+      field3: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={phase.extension_consciously === 'ja'}
+            name="extension_consciously"
+            onChange={handlePhaseChange}
+          />
+          <span></span>
+        </div>
+      ),
     },
     {
       field1: 'eigene Umgebung',
       field2: 'anonym',
-      field3: <input type="checkbox" />,
+      field3: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={phase.environment_anonymous === 'ja'}
+            name="environment_anonymous"
+            onChange={handlePhaseChange}
+          />
+          <span></span>
+        </div>
+      ),
     },
     {
       field1: 'letzte Lebensphase',
       field2: '',
-      field3: <input className="borderless-input" />,
+      field3: (
+        <input
+          className="borderless-input"
+          type="text"
+          value={phase.last_phase_of_life}
+          name="last_phase_of_life"
+          onChange={handlePhaseChange}
+        />
+      ),
     },
     {
       field1: (
@@ -1561,7 +1863,15 @@ const Services = () => {
     {
       field1: 'Sterben-Erfahrungen',
       field2: '',
-      field3: <input className="borderless-input" />,
+      field3: (
+        <input
+          className="borderless-input"
+          type="text"
+          value={experiences.dry_experiences}
+          name="dry_experiences"
+          onChange={handleExperiencesChange}
+        />
+      ),
     },
     {
       field1: (
@@ -1571,9 +1881,19 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Zusendung',
+      field1: `Zusendung`,
       field2: '',
-      field3: <input type="checkbox" />,
+      field3: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={additionalValue.sending === 'ja'}
+            name="sending"
+            onChange={handleAdditionalValueChange}
+          />
+          <span></span>
+        </div>
+      ),
     },
   ]
 
@@ -1591,11 +1911,9 @@ const Services = () => {
                 <div
                   className=""
                   style={{
-                    borderLeft: '1px solid lightgray',
-                    borderRight: '1px solid lightgray',
-                    borderBottom: '1px solid lightgray',
-                    // borderTop: '1px solid lightgray',
+                    border: '1px solid lightgray',
                     borderRadius: '5px',
+                    margin: '0px',
                   }}
                 >
                   {rowData.length > 0 ? (
@@ -2011,7 +2329,7 @@ const Services = () => {
                 </div>
                 <div className="text-end mx-3 m-3">
                   <button
-                    // onClick={cancelData}
+                    onClick={cancelData}
                     type="button"
                     className="btn btn"
                     style={{ background: '#d04545', color: 'white' }}
@@ -2046,10 +2364,7 @@ const TableRow = ({ field1, field2, field3, name, value, onChange }) => {
       <div
         className="col-sm-4"
         style={{
-          borderTop: '1px solid lightgray',
-          height: '50px',
-          lineHeight: '50px',
-          textAlign: 'justify',
+          marginBottom: '12px',
         }}
       >
         {field1}
@@ -2057,27 +2372,12 @@ const TableRow = ({ field1, field2, field3, name, value, onChange }) => {
       <div
         className="col-sm-4"
         style={{
-          borderLeft: '1px solid lightgray',
-          borderTop: '1px solid lightgray',
-          height: '50px',
-          lineHeight: '50px',
-          textAlign: 'justify',
+          marginBottom: '12px',
         }}
       >
         {field2}
       </div>
-      <div
-        className="col-sm-4"
-        style={{
-          borderLeft: '1px solid lightgray',
-          borderTop: '1px solid lightgray',
-          height: '50px',
-          lineHeight: '50px',
-          textAlign: 'justify',
-        }}
-      >
-        {field3}
-      </div>
+      <div className="col-sm-4">{field3}</div>
     </div>
   )
 }

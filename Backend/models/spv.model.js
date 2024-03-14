@@ -204,6 +204,21 @@ const fearofdyingSchema = new mongoose.Schema({
   alone_anonymous: { type: String },
   fearofdying_anonymous: { type: String },
 });
+
+const phaseSchema = new mongoose.Schema({
+  dignified_professional: { type: String },
+  assistance_quiet: { type: String },
+  extension_consciously: { type: String },
+  environment_anonymous: { type: String },
+  last_phase_of_life: { type: String },
+});
+const experiencesSchema = new mongoose.Schema({
+  dry_experiences: { type: String },
+});
+
+const additionalValueSchema = new mongoose.Schema({
+  sending: { type: String },
+});
 const spvInfoSchema = new mongoose.Schema(
   {
     motivation: motivatedSchema,
@@ -229,6 +244,9 @@ const spvInfoSchema = new mongoose.Schema(
     tod: todSchema,
     dyingwishes: dyingwishesSchema,
     fearofdying: fearofdyingSchema,
+    phase: phaseSchema,
+    experiences: experiencesSchema,
+    additionalValue: additionalValueSchema,
     // situation: situationSchema,
     // determination: determinationSchema,
     // whereabout: whereaboutSchema,
