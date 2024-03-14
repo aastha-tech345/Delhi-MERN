@@ -92,15 +92,166 @@ const informationSchema = new mongoose.Schema({
   deposit: { type: String },
 });
 
+const motivatedSchema = new mongoose.Schema({
+  determination_diagonose: { type: String },
+  relative_rejection: { type: String },
+  angst_textbox: { type: String },
+  motivation_text: { type: String },
+});
+const scopeSchema = new mongoose.Schema({
+  process_dementia: { type: String },
+  brain_servercare: { type: String },
+});
+const hopelessSchema = new mongoose.Schema({
+  nolife_resuscitation: { type: String },
+  noartificial_palliative: { type: String },
+});
+const artificialSchema = new mongoose.Schema({
+  natual_rejection: { type: String },
+  liquid: { type: String },
+});
+const complanindSchema = new mongoose.Schema({
+  palliative_mind_clouding: { type: String },
+});
+
+const medicationSchema = new mongoose.Schema({
+  medicate: { type: String },
+});
+const abodeSchema = new mongoose.Schema({
+  familiar_hospice: { type: String },
+  close_hospice: { type: String },
+});
+
+const accompanimentSchema = new mongoose.Schema({
+  doctor: { type: String },
+  assistance: { type: String },
+  rejection_organejection: { type: String },
+});
+const pacemakerSchema = new mongoose.Schema({
+  pacemaker: { type: String },
+});
+const euthanasiaSchema = new mongoose.Schema({
+  euthanasia: { type: String },
+  research_purposes: { type: String },
+});
+const funeralSchema = new mongoose.Schema({
+  cremation_burial: { type: String },
+  funeral_arrangements: { type: String },
+  funeral_wishes: { type: String },
+});
+const commitmentSchema = new mongoose.Schema({
+  immediately_discretionary: { type: String },
+});
+const intensiveSchema = new mongoose.Schema({
+  intensive_care_medicine: { type: String },
+});
+
+const revivalSchema = new mongoose.Schema({
+  resuscitate_revival: { type: String },
+  resuscitation_medicine: { type: String },
+});
+const lifeSchema = new mongoose.Schema({
+  high_restricted: { type: String },
+  satisfied_enjoy: { type: String },
+  burden: { type: String },
+  life_quality: { type: String },
+});
+const worthSchema = new mongoose.Schema({
+  family_friend: { type: String },
+  independence_mentally: { type: String },
+  others_work: { type: String },
+  nature: { type: String },
+  cultural: { type: String },
+  worth_living: { type: String },
+});
+const waiverSchema = new mongoose.Schema({
+  independence_contact: { type: String },
+  healthy_sports: { type: String },
+  independence_mobility: { type: String },
+  drink_cultural: { type: String },
+  others: { type: String },
+  waiver: { type: String },
+});
+const restrictionsSchema = new mongoose.Schema({
+  mobility_personal: { type: String },
+  communication_ingestion: { type: String },
+  thinking_independence: { type: String },
+  restrictions: { type: String },
+});
+const acceptSchema = new mongoose.Schema({
+  gladly_tempary: { type: String },
+  necessary_load: { type: String },
+  accept_help: { type: String },
+});
+const notworthliviingSchema = new mongoose.Schema({
+  not_worth_living: { type: String },
+});
+
+const todSchema = new mongoose.Schema({
+  end_beyond: { type: String },
+  angst_remove: { type: String },
+  salvation: { type: String },
+  tod: { type: String },
+});
+const dyingwishesSchema = new mongoose.Schema({
+  fast_consciously: { type: String },
+  farewell_notalong: { type: String },
+  dying_wishes: { type: String },
+});
+const fearofdyingSchema = new mongoose.Schema({
+  painful_tedious: { type: String },
+  helpless_maintained: { type: String },
+  alone_anonymous: { type: String },
+  fearofdying_anonymous: { type: String },
+});
+
+const phaseSchema = new mongoose.Schema({
+  dignified_professional: { type: String },
+  assistance_quiet: { type: String },
+  extension_consciously: { type: String },
+  environment_anonymous: { type: String },
+  last_phase_of_life: { type: String },
+});
+const experiencesSchema = new mongoose.Schema({
+  dry_experiences: { type: String },
+});
+
+const additionalValueSchema = new mongoose.Schema({
+  sending: { type: String },
+});
 const spvInfoSchema = new mongoose.Schema(
   {
-    motivation: motivationSchema,
-    resuscitation: resuscitationSchema,
-    situation: situationSchema,
-    determination: determinationSchema,
-    whereabout: whereaboutSchema,
-    support: supportSchema,
-    funeralwishes: funeralwishesSchema,
+    motivation: motivatedSchema,
+    scope: scopeSchema,
+    hopeless: hopelessSchema,
+    artificial: artificialSchema,
+    complanind: complanindSchema,
+    medication: medicationSchema,
+    abode: abodeSchema,
+    accompaniment: accompanimentSchema,
+    pacemaker: pacemakerSchema,
+    euthanasia: euthanasiaSchema,
+    funeral: funeralSchema,
+    commitment: commitmentSchema,
+    intensive: intensiveSchema,
+    revival: revivalSchema,
+    life: lifeSchema,
+    worth: worthSchema,
+    waiver: waiverSchema,
+    restrictions: restrictionsSchema,
+    accept: acceptSchema,
+    notworthliviing: notworthliviingSchema,
+    tod: todSchema,
+    dyingwishes: dyingwishesSchema,
+    fearofdying: fearofdyingSchema,
+    phase: phaseSchema,
+    experiences: experiencesSchema,
+    additionalValue: additionalValueSchema,
+    // situation: situationSchema,
+    // determination: determinationSchema,
+    // whereabout: whereaboutSchema,
+    // support: supportSchema,
+    // funeralwishes: funeralwishesSchema,
     atorney: atorneySchema,
     fee: feeSchema,
     information: informationSchema,

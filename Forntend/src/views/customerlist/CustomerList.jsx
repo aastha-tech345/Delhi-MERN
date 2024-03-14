@@ -360,6 +360,12 @@ const CustomerList = () => {
     { name: 'Offen', code: '6' },
   ]
   // console.log('option', cities)
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      searchHandle()
+    }
+  }
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -656,6 +662,7 @@ const CustomerList = () => {
                     name="search"
                     // value={search}
                     onChange={handleChange}
+                    onKeyPress={handleKeyPress}
                     type="search"
                     id="form1"
                     onBlur={handleBlur}

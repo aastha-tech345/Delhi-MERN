@@ -275,7 +275,12 @@ const Contact = () => {
     setPage(1)
   }
   // console.log('astha', contactRecord)
-
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      searchHandle()
+    }
+  }
   const searchHandle = async () => {
     try {
       if (search === '') {
@@ -330,6 +335,7 @@ const Contact = () => {
             <div className="d-flex align-items-center">
               <input
                 ref={searchInputRef}
+                onKeyPress={handleKeyPress}
                 name="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}

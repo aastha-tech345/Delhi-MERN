@@ -10,7 +10,7 @@ const Attorney = () => {
   const [recordData, setRecordData] = useState([])
   const navigate = useNavigate()
   const maxFields = 10
-  const initialFields = 3
+  const initialFields = 4
   const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const cancelData = () => {
@@ -233,32 +233,6 @@ const Attorney = () => {
     securingattorney,
     customer_id: resultt?._id,
   }
-
-  // const saveData = async () => {
-  //   try {
-  //     let response = await fetch(`${apiUrl}/attorney/create_attorney`, {
-  //       method: 'post',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
-
-  //     let result = await response.json()
-  //     console.log(result)
-  //     if (result.status === 201) {
-  //       toast.success('Daten erfolgreich gespeichert')
-  //       // resetStateVariables()
-  //     } else {
-  //       toast.error(
-  //         'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
-  //       )
-  //     }
-  //   } catch (error) {
-  //     console.error('Error during API call:', error)
-  //     toast.error('Error saving data. Please try again.')
-  //   }
-  // }
   const saveData = async () => {
     try {
       let url
