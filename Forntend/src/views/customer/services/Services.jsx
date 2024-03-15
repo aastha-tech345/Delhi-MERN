@@ -2659,7 +2659,7 @@ const Services = () => {
                   <br />
                   <div className="row">
                     <h6 style={{ color: '#244D92' }}>Gebühr</h6>
-                    <div className="col-md-3">Regulär</div>
+                    <div className="col-md-3 ">Regulär</div>
                     <div className="col-md-3 d-flex">
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
@@ -2706,19 +2706,20 @@ const Services = () => {
                         <span>nein</span>
                       </div>
                     </div>
-                    <br />
-                    <div className="col-md-3">Weitere Angaben</div>
-                    <div className="col-sm-2">
-                      <input
-                        type="text"
-                        name="feeInformation"
-                        value={fee.feeInformation}
-                        onChange={feeChange}
-                        placeholder="Weitere Angaben"
-                        className="form-control"
-                        id="inputPassword"
-                        required={true}
-                      />
+                    <div className="mt-2 d-flex">
+                      <div className="col-md-3">Weitere Angaben</div>
+                      <div className="col-sm-2">
+                        <input
+                          type="text"
+                          name="feeInformation"
+                          value={fee.feeInformation}
+                          onChange={feeChange}
+                          placeholder="Weitere Angaben"
+                          className="form-control"
+                          id="inputPassword"
+                          required={true}
+                        />
+                      </div>
                     </div>
                   </div>
                   <br />
@@ -3038,14 +3039,14 @@ const TableRow = ({ field1, field2, field3, field4, field11, field22, name, valu
   return (
     <>
       <div className="row">
-        <div className="col-sm-3">{field1}</div>
-        <div className="col-sm-3">{field2}</div>
-        <div className="col-sm-3">{field3}</div>
-        <div className="col-sm-3">{field4}</div>
+        <div className="col-sm-3 mb-2">{field1}</div>
+        <div className="col-sm-3 mb-2">{field2}</div>
+        <div className="col-sm-3 mb-2">{field3}</div>
+        <div className="col-sm-3 mb-2">{field4}</div>
       </div>
       <div className="row">
-        <div className="col-sm-3">{field11}</div>
-        <div className="col-sm-9">{field22}</div>
+        <div className="col-sm-3 mb-2">{field11}</div>
+        <div className="col-sm-9 mb-2">{field22}</div>
       </div>
     </>
   )
