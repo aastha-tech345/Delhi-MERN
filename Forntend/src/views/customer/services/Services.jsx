@@ -1572,9 +1572,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
-          Ergänzende Wertvorstellungen
-        </h5>
+        <h4 className="mt-2" style={{ color: '#244D92', height: '20%' }}>
+          Ergänzende <br /> Wertvorstellungen
+        </h4>
       ),
     },
     {
