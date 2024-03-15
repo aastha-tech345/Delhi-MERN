@@ -2008,9 +2008,8 @@ svg.p-icon {
 
 .borderless-input {
   border: 1px solid lightgray;
-  width: 50%;
+  margin-bottom: 3px;
   border-radius: 5px;
-  margin: 1px;
   height: 36px;
   &:focus {
     outline: none !important;

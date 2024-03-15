@@ -1,69 +1,5 @@
 const mongoose = require("mongoose");
 
-const motivationSchema = new mongoose.Schema({
-  prevention: { type: String },
-  illness: { type: String },
-  selfDetermination: { type: String },
-  relatives: { type: String },
-  lessons: { type: String },
-  matarialInformation: { type: String },
-});
-
-const resuscitationSchema = new mongoose.Schema({
-  medicineDesired: { type: String },
-  noIntensive: { type: String },
-  revival: { type: String },
-  noRevival: { type: String },
-  resuscitationInformation: { type: String },
-});
-
-const situationSchema = new mongoose.Schema({
-  dyingProcess: { type: String },
-  brainInjury: { type: String },
-  dementia: { type: String },
-  situationInformation: { type: String },
-});
-
-const determinationSchema = new mongoose.Schema({
-  essential: { type: String },
-  noIntensive: { type: String },
-  servere: { type: String },
-  artificialHydration: { type: String },
-  discomfort: { type: String },
-  medication: { type: String },
-  medicines: { type: String },
-  organDonation: { type: String },
-  researchPurpose: { type: String },
-  defibrillator: { type: String },
-  dyingYeast: { type: String },
-  suicideOption: { type: String },
-  commitment: { type: String },
-  discretionaryArea: { type: String },
-  rejection_organ: { type: String },
-  pacemaker: { type: String },
-  determination_noIntensive: { type: String },
-  determinationInformation: { type: String },
-});
-
-const whereaboutSchema = new mongoose.Schema({
-  familiarEnvironment: { type: String },
-  hospice: { type: String },
-  toHospital: { type: String },
-  notHospital: { type: String },
-});
-const supportSchema = new mongoose.Schema({
-  doctor: { type: String },
-  mentalSupport: { type: String },
-  absolutelyNot: { type: String },
-  mentalInformation: { type: String },
-});
-const funeralwishesSchema = new mongoose.Schema({
-  cremation: { type: String },
-  burial: { type: String },
-  arrangement: { type: String },
-  miscellaneous: { type: String },
-  funeralInformation: { type: String },
-});
 const atorneySchema = new mongoose.Schema({
   forms: { type: String },
   careOrder: { type: String },
@@ -93,33 +29,44 @@ const informationSchema = new mongoose.Schema({
 });
 
 const motivatedSchema = new mongoose.Schema({
-  determination_diagonose: { type: String },
-  relative_rejection: { type: String },
-  angst_textbox: { type: String },
-  motivation_text: { type: String },
+  determination: { type: String },
+  diagonose: { type: String },
+  relative: { type: String },
+  rejection: { type: String },
+  angst: { type: String },
+  motivation: { type: String },
 });
 const scopeSchema = new mongoose.Schema({
-  process_dementia: { type: String },
-  brain_servercare: { type: String },
+  dry_process: { type: String },
+  dementia: { type: String },
+  brain: { type: String },
+  servercare: { type: String },
 });
 const hopelessSchema = new mongoose.Schema({
-  nolife_resuscitation: { type: String },
-  noartificial_palliative: { type: String },
+  nolife_measures: { type: String },
+  no_palliative: { type: String },
+  no_resuscitation: { type: String },
+  no_artificial: { type: String },
 });
 const artificialSchema = new mongoose.Schema({
-  natual_rejection: { type: String },
+  natual: { type: String },
+  rejection: { type: String },
   liquid: { type: String },
 });
 const complanindSchema = new mongoose.Schema({
-  palliative_mind_clouding: { type: String },
+  palliative: { type: String },
+  mind_clouding: { type: String },
 });
 
 const medicationSchema = new mongoose.Schema({
   medicate: { type: String },
+  medicate_relief: { type: String },
 });
 const abodeSchema = new mongoose.Schema({
-  familiar_hospice: { type: String },
-  close_hospice: { type: String },
+  familiar_environment: { type: String },
+  hospice: { type: String },
+  close_ones: { type: String },
+  hospital: { type: String },
 });
 
 const accompanimentSchema = new mongoose.Schema({
@@ -129,58 +76,83 @@ const accompanimentSchema = new mongoose.Schema({
 });
 const pacemakerSchema = new mongoose.Schema({
   pacemaker: { type: String },
+  defibrillator: { type: String },
 });
 const euthanasiaSchema = new mongoose.Schema({
-  euthanasia: { type: String },
+  euthanasia_yes: { type: String },
+  euthanasia_no: { type: String },
   research_purposes: { type: String },
 });
 const funeralSchema = new mongoose.Schema({
-  cremation_burial: { type: String },
+  cremation: { type: String },
+  burial: { type: String },
   funeral_arrangements: { type: String },
   funeral_wishes: { type: String },
 });
 const commitmentSchema = new mongoose.Schema({
-  immediately_discretionary: { type: String },
+  immediately: { type: String },
+  discretionary: { type: String },
 });
 const intensiveSchema = new mongoose.Schema({
-  intensive_care_medicine: { type: String },
+  intensive_care_medicine_yes: { type: String },
+  intensive_care_medicine_no: { type: String },
 });
 
 const revivalSchema = new mongoose.Schema({
-  resuscitate_revival: { type: String },
-  resuscitation_medicine: { type: String },
+  resuscitate_quickly: { type: String },
+  revival_no: { type: String },
+  resuscitation_op: { type: String },
+  resuscitation_medicine_no: { type: String },
 });
+
 const lifeSchema = new mongoose.Schema({
-  high_restricted: { type: String },
-  satisfied_enjoy: { type: String },
+  very_high: { type: String },
+  satisfied: { type: String },
+  restricted: { type: String },
+  enjoy_life: { type: String },
   burden: { type: String },
   life_quality: { type: String },
 });
+
 const worthSchema = new mongoose.Schema({
-  family_friend: { type: String },
-  independence_mentally: { type: String },
-  others_work: { type: String },
+  family: { type: String },
+  acquaintances: { type: String },
+  independence: { type: String },
+  mentally: { type: String },
+  others: { type: String },
+  work: { type: String },
   nature: { type: String },
+  sport: { type: String },
   cultural: { type: String },
   worth_living: { type: String },
+  travel: { type: String },
 });
 const waiverSchema = new mongoose.Schema({
-  independence_contact: { type: String },
-  healthy_sports: { type: String },
-  independence_mobility: { type: String },
-  drink_cultural: { type: String },
+  independence: { type: String },
+  social_contact: { type: String },
+  mentally_healthy: { type: String },
+  active_sports: { type: String },
+  independence_waive: { type: String },
+  mobility: { type: String },
+  eatdrink: { type: String },
+  cultural: { type: String },
   others: { type: String },
-  waiver: { type: String },
+  no_waiver: { type: String },
 });
 const restrictionsSchema = new mongoose.Schema({
-  mobility_personal: { type: String },
-  communication_ingestion: { type: String },
-  thinking_independence: { type: String },
+  mobility: { type: String },
+  personal_hygiene: { type: String },
+  ingestion: { type: String },
+  communication: { type: String },
+  thinking: { type: String },
+  independence: { type: String },
   restrictions: { type: String },
 });
 const acceptSchema = new mongoose.Schema({
-  gladly_tempary: { type: String },
-  necessary_load: { type: String },
+  gladly: { type: String },
+  temporary: { type: String },
+  necessary: { type: String },
+  no_load: { type: String },
   accept_help: { type: String },
 });
 const notworthliviingSchema = new mongoose.Schema({
@@ -188,28 +160,40 @@ const notworthliviingSchema = new mongoose.Schema({
 });
 
 const todSchema = new mongoose.Schema({
-  end_beyond: { type: String },
-  angst_remove: { type: String },
+  end_life: { type: String },
+  beyond: { type: String },
+  angst: { type: String },
+  remove: { type: String },
   salvation: { type: String },
   tod: { type: String },
 });
 const dyingwishesSchema = new mongoose.Schema({
-  fast_consciously: { type: String },
-  farewell_notalong: { type: String },
+  fast: { type: String },
+  consciously: { type: String },
+  farewell: { type: String },
+  no_along: { type: String },
   dying_wishes: { type: String },
 });
 const fearofdyingSchema = new mongoose.Schema({
-  painful_tedious: { type: String },
-  helpless_maintained: { type: String },
-  alone_anonymous: { type: String },
-  fearofdying_anonymous: { type: String },
+  painful: { type: String },
+  tedious: { type: String },
+  helpless: { type: String },
+  poorly_maintained: { type: String },
+  alone: { type: String },
+  anonymous: { type: String },
+  fearofdying: { type: String },
+  fear_anonymous: { type: String },
 });
 
 const phaseSchema = new mongoose.Schema({
-  dignified_professional: { type: String },
-  assistance_quiet: { type: String },
-  extension_consciously: { type: String },
-  environment_anonymous: { type: String },
+  dignified: { type: String },
+  professional: { type: String },
+  assistance: { type: String },
+  quiet: { type: String },
+  without_extension: { type: String },
+  consciously: { type: String },
+  own_environment: { type: String },
+  anonymous_phase: { type: String },
   last_phase_of_life: { type: String },
 });
 const experiencesSchema = new mongoose.Schema({
@@ -218,6 +202,12 @@ const experiencesSchema = new mongoose.Schema({
 
 const additionalValueSchema = new mongoose.Schema({
   sending: { type: String },
+});
+
+const organSchema = new mongoose.Schema({
+  organ_donation_yes: { type: String },
+  organ_donation_no: { type: String },
+  organ_research_purposes: { type: String },
 });
 const spvInfoSchema = new mongoose.Schema(
   {
@@ -247,6 +237,7 @@ const spvInfoSchema = new mongoose.Schema(
     phase: phaseSchema,
     experiences: experiencesSchema,
     additionalValue: additionalValueSchema,
+    organ: organSchema,
     // situation: situationSchema,
     // determination: determinationSchema,
     // whereabout: whereaboutSchema,
