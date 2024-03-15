@@ -1335,7 +1335,7 @@ span.anticon.anticon-phone svg {
       border-bottom: 1px solid #d9d9d9;
       padding: 10px 20px 16px;
       background: $white;
-      margin-bottom: 16px;
+      // margin-bottom: 16px;
 
       h4 {
         color: $text-color;
@@ -2031,4 +2031,12 @@ svg.p-icon {
   &:first-child {
     padding-left: 0;
   }
+}
+
+h4 {
+  margin: 30px auto;
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
 }

@@ -795,9 +795,9 @@ const Services = () => {
   const rowData = [
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Motivation
-        </h5>
+        </h6>
       ),
       field2: '',
       field3: '',
@@ -896,9 +896,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Geltungsbereich
-        </h5>
+        </h6>
       ),
       field2: '',
       field3: '',
@@ -963,9 +963,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Aussichtslose Situation
-        </h5>
+        </h6>
       ),
       field2: '',
       field3: '',
@@ -1024,9 +1024,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Künstliche Ernährung
-        </h5>
+        </h6>
       ),
       field2: '',
       field3: '',
@@ -1075,9 +1075,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Beschwerdelinderung
-        </h5>
+        </h6>
       ),
       field2: '',
       field3: '',
@@ -1110,9 +1110,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Medikamente
-        </h5>
+        </h6>
       ),
       field2: '',
       field3: '',
@@ -1145,9 +1145,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Aufenthaltsort
-        </h5>
+        </h6>
       ),
     },
     {
@@ -1204,9 +1204,9 @@ const Services = () => {
     },
     {
       field11: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Begleitung
-        </h5>
+        </h6>
       ),
       field22: '',
     },
@@ -1254,9 +1254,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Herzschrittmacher/Defibrillator
-        </h5>
+        </h6>
       ),
       field2: '',
     },
@@ -1288,9 +1288,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Sterbehilfe
-        </h5>
+        </h6>
       ),
       field2: '',
     },
@@ -1336,9 +1336,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Organspende
-        </h5>
+        </h6>
       ),
       field2: '',
     },
@@ -1384,9 +1384,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Bestattung
-        </h5>
+        </h6>
       ),
       field2: '',
     },
@@ -1447,9 +1447,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Verbindlichkeit
-        </h5>
+        </h6>
       ),
     },
     {
@@ -1480,9 +1480,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Intensivmedizin
-        </h5>
+        </h6>
       ),
     },
     {
@@ -1513,9 +1513,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Wiederbelebung
-        </h5>
+        </h6>
       ),
     },
     {
@@ -1572,16 +1572,16 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
-          Ergänzende Wertvorstellungen
-        </h5>
+        <h6 className="mt-2" style={{ color: '#244D92', height: '20%' }}>
+          Ergänzende <br /> Wertvorstellungen
+        </h6>
       ),
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Lebensqualität
-        </h5>
+        </h6>
       ),
     },
     {
@@ -1668,9 +1668,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Lebenswertes
-        </h5>
+        </h6>
       ),
     },
     {
@@ -1818,9 +1818,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           kein Verzicht
-        </h5>
+        </h6>
       ),
     },
     {
@@ -1957,9 +1957,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Einschränkungen
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2057,9 +2057,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Hilfe annehmen
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2129,9 +2129,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           nicht lebenswert
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2149,9 +2149,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Tod
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2235,9 +2235,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Sterben-Wünsche
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2308,9 +2308,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Sterben-Angst
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2414,9 +2414,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           letzte Lebensphase
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2539,9 +2539,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Sterben-Erfahrungen
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2559,9 +2559,9 @@ const Services = () => {
     },
     {
       field1: (
-        <h5 className="mt-2" style={{ color: '#244D92' }}>
+        <h6 className="mt-2" style={{ color: '#244D92' }}>
           Zusendung ergänzende Wertvorstellungen
-        </h5>
+        </h6>
       ),
     },
     {
@@ -2606,7 +2606,7 @@ const Services = () => {
                 ) : (
                   <p>No data found</p>
                 )}
-                <div className="">
+                <div>
                   <div className="row">
                     <h6 style={{ color: '#244D92' }}>Vollmachten</h6>
                     <div className="col-md-3">Blanko-formulare</div>
