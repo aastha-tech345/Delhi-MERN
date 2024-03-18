@@ -873,6 +873,7 @@ const Services = () => {
       ),
       field3: '',
     },
+    { field33: '' },
     {
       field11: 'Motivation',
       field22: (
@@ -887,6 +888,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -954,6 +956,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1015,6 +1018,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1066,6 +1070,7 @@ const Services = () => {
       field3: '',
       field4: '',
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1101,6 +1106,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1136,6 +1142,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1195,6 +1202,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field11: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1245,6 +1253,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1279,6 +1288,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1327,6 +1337,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1375,6 +1386,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1438,6 +1450,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1471,6 +1484,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1504,6 +1518,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1563,6 +1578,7 @@ const Services = () => {
       //   </div>
       // ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92', height: '20%' }}>
@@ -1660,6 +1676,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1811,6 +1828,7 @@ const Services = () => {
       ),
       field3: '',
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -1951,6 +1969,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2051,6 +2070,7 @@ const Services = () => {
       ),
       field3: '',
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2124,6 +2144,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2146,6 +2167,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2234,6 +2256,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2307,6 +2330,7 @@ const Services = () => {
         </div>
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2414,6 +2438,7 @@ const Services = () => {
       //   />
       // ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2540,6 +2565,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2561,6 +2587,7 @@ const Services = () => {
         />
       ),
     },
+    { hr: true },
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
@@ -2595,7 +2622,7 @@ const Services = () => {
           <div className="row">
             <div className="col">
               <div className="block-wrap">
-                {rowData.length > 0 ? (
+                {/* {rowData.length > 0 ? (
                   rowData.map((row, index) => (
                     <TableRow
                       key={index}
@@ -2606,6 +2633,31 @@ const Services = () => {
                       field11={row.field11}
                       field22={row.field22}
                     />
+                  ))
+                ) : (
+                  <p>No data found</p>
+                )} */}
+                {rowData.length > 0 ? (
+                  rowData.map((row, index) => (
+                    <React.Fragment key={index}>
+                      <div className="row mb-1">
+                        <div className="col-sm-3">{row.field1}</div>
+                        <div className="col-sm-3">{row.field2}</div>
+                        <div className="col-sm-3">{row.field3}</div>
+                        <div className="col-sm-3">{row.field4}</div>
+                      </div>
+                      <div className="row">
+                        <div className="col-sm-3">{row.field11}</div>
+                        <div className="col-sm-9">{row.field22}</div>
+                      </div>
+                      {row.hr && (
+                        <div className="row">
+                          <div className="col-sm-12">
+                            <hr />
+                          </div>
+                        </div>
+                      )}
+                    </React.Fragment>
                   ))
                 ) : (
                   <p>No data found</p>
@@ -3037,7 +3089,7 @@ const Services = () => {
 }
 
 export default React.memo(Services)
-const TableRow = ({ field1, field2, field3, field4, field11, field22, name, value, onChange }) => {
+const TableRow = ({ field1, field2, field3, field4, field11, field22 }) => {
   return (
     <>
       <div className="row">
