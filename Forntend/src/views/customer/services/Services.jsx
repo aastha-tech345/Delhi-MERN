@@ -2663,6 +2663,7 @@ const Services = () => {
                   <p>No data found</p>
                 )}
                 <div>
+                  <hr />
                   <div className="row">
                     <h3 style={{ color: '#244D92' }}>Vollmachten</h3>
                     <div className="col-md-3">Blanko-formulare</div>
@@ -2712,7 +2713,7 @@ const Services = () => {
                       </div>
                     </div>
                   </div>
-                  <br />
+                  <hr />
                   <div className="row">
                     <h3 style={{ color: '#244D92' }}>Gebühr</h3>
                     <div className="col-md-3 ">Regulär</div>
@@ -2776,7 +2777,7 @@ const Services = () => {
                       </div>
                     </div>
                   </div>
-                  <br />
+                  <hr />
                   <div className="row">
                     <h3 style={{ color: '#244D92' }}>Weitere Angaben</h3>
                     <div className="col-md-3">Dringlichkeit</div>
