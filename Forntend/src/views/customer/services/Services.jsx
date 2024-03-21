@@ -1422,7 +1422,7 @@ const Services = () => {
       ),
     },
     {
-      field12: 'Bestattungsvorsorge',
+      field11: 'Bestattungsvorsorge',
       field22: (
         <textarea
           type="text"
@@ -2716,8 +2716,8 @@ const Services = () => {
                   <hr />
                   <div className="row">
                     <h3 style={{ color: '#244D92' }}>Gebühr</h3>
-                    <div className="col-md-3 ">Regulär</div>
-                    <div className="col-md-3 d-flex">
+                    <div className="col-md-3 mb-1">Regulär</div>
+                    <div className="col-md-3 mb-1 d-flex">
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
@@ -2740,8 +2740,8 @@ const Services = () => {
                       </div>
                     </div>
 
-                    <div className="col-md-3">Ermäßigt</div>
-                    <div className="col-md-3 d-flex">
+                    <div className="col-md-3 mb-1">Ermäßigt</div>
+                    <div className="col-md-3 mb-1 d-flex">
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
