@@ -1422,7 +1422,7 @@ const Services = () => {
       ),
     },
     {
-      field12: 'Bestattungsvorsorge',
+      field11: 'Bestattungsvorsorge',
       field22: (
         <textarea
           type="text"
