@@ -465,6 +465,12 @@ const CustomerList = () => {
     if (startDate > currentDate) {
       return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
     }
+    if (phone.includes('000')) {
+      return toast.warning('Invalid phone number')
+    }
+    // if (email.includes('@') || email.includes('.')) {
+    //   return toast.warning('Invalid email')
+    // }
 
     let data = {
       customer: {
