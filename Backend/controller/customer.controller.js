@@ -19,18 +19,34 @@ exports.createCustomer = async (req, res) => {
 
     const countId = `${year}${month}${day}-${paddedCount}`;
 
-    const emailFind = await Customer.findOne({
-      "customer.email": req.body.customer.email,
-    });
-    if (emailFind) {
-      return res.status(406).json({
-        message: "Email Already Exists"
+    if (req.body.customer && req.body.customer.email) {
+      const emailFind = await Customer.findOne({
+        "customer.email": req.body.customer.email,
+      });
+      if (emailFind) {
+        return res.status(406).json({
+          status: 406,
+          message: "Email Already Exists",
+        });
+      }
+    }
+
+    // Extract email from request body
+    const email = req.body.customer.email;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email && !emailRegex.test(email)) {
+      return res.status(400).json({
+        status: 400,
+        message: "Enter Valid Email",
       });
     }
 
+    // Create customer with countId
     const result = await Customer.create({ ...req.body, countId });
-    return res.status(200).json({
-      success: true,
+    return res.status(201).json({
+      success: 201,
       message: "Customer created successfully",
       data: result,
     });
@@ -76,6 +92,17 @@ exports.createCustomer = async (req, res) => {
 exports.editCustomer = async (req, res) => {
   try {
     const { id } = req.params;
+    // Extract email from request body
+    const email = req.body.customer.email;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email && !emailRegex.test(email)) {
+      return res.status(400).json({
+        status: 400,
+        message: "Enter Valid Email",
+      });
+    }
     const updatedCustomer = await Customer.findByIdAndUpdate(id, req.body, {
       new: true,
     });
@@ -147,7 +174,7 @@ exports.getCustomerData = async (req, res) => {
   try {
     const result = await Customer.findOne({
       // "customer.email": req.query.email,
-      _id:req.query.id
+      _id: req.query.id,
       // status: { $ne: "deleted" },
     });
     //

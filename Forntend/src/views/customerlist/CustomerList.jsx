@@ -375,6 +375,79 @@ const CustomerList = () => {
       searchHandle()
     }
   }
+  // const saveData = async (event) => {
+  //   const form = event.currentTarget
+  //   if (form.checkValidity() === false) {
+  //     event.preventDefault()
+  //     event.stopPropagation()
+  //   }
+
+  //   setValidated(true)
+
+  //   if (!fname || !lname) {
+  //     return warning('Füllen Sie den Datensatz')
+  //   }
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  //   if (!email.includes(emailRegex)) {
+  //     return toast.warning('incorrect email')
+  //   }
+  //   let currentDate = new Date()
+  //   if (startDate > currentDate) {
+  //     return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
+  //   }
+
+  //   let data = {
+  //     customer: {
+  //       fname,
+  //       lname,
+  //       street,
+  //       city,
+  //       phone,
+  //       startDate,
+  //       plz,
+  //       email,
+  //       land,
+  //       status: clientStatus,
+  //       id,
+  //       salution: salutionData,
+  //       created_by,
+  //     },
+  //   }
+
+  //   try {
+  //     let response = await fetch(`${apiUrl}/customer/create`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`)
+  //     }
+
+  //     let result = await response.json()
+  //     console.log('result', result.data)
+  //     toast.success('Kundendatensatz erfolgreich gespeichert')
+  //     setFname('')
+  //     setLand('')
+  //     setLname('')
+  //     setEmail('')
+  //     setPlz('')
+  //     setStreet('')
+  //     setStatus('')
+  //     setPhone('')
+  //     setCity('')
+  //     setStartDate('')
+  //     setClientStatus('')
+  //     setValidated(false)
+  //     handleClose()
+  //     getDetails()
+  //   } catch (error) {
+  //     toast.error('E-Mail-ID existiert bereits')
+  //     console.log('error', error)
+  //   }
+  // }
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -385,12 +458,9 @@ const CustomerList = () => {
     setValidated(true)
 
     if (!fname || !lname) {
-      return warning('Füllen Sie den Datensatz')
+      return toast.warning('Füllen Sie den Datensatz')
     }
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    // if (!email.includes(emailRegex)) {
-    //   return toast.warning('incorrect email')
-    // }
+
     let currentDate = new Date()
     if (startDate > currentDate) {
       return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
@@ -427,27 +497,32 @@ const CustomerList = () => {
       }
 
       let result = await response.json()
-      console.log('result', result.data)
-      toast.success('Kundendatensatz erfolgreich gespeichert')
-      setFname('')
-      setLand('')
-      setLname('')
-      setEmail('')
-      setPlz('')
-      setStreet('')
-      setStatus('')
-      setPhone('')
-      setCity('')
-      setStartDate('')
-      setClientStatus('')
-      setValidated(false)
-      handleClose()
-      getDetails()
+      // console.log('result', result)
+      if (result.status === 400) {
+        toast.warning('Bitte eine gültige Email eingeben')
+      } else if (response.status === 201) {
+        toast.success('Kundendatensatz erfolgreich gespeichert')
+        setFname('')
+        setLand('')
+        setLname('')
+        setEmail('')
+        setPlz('')
+        setStreet('')
+        setStatus('')
+        setPhone('')
+        setCity('')
+        setStartDate('')
+        setClientStatus('')
+        setValidated(false)
+        handleClose()
+        getDetails()
+      }
     } catch (error) {
       toast.error('E-Mail-ID existiert bereits')
       console.log('error', error)
     }
   }
+
   const getDetails = async () => {
     try {
       const result = await fetch(
@@ -912,7 +987,10 @@ const CustomerList = () => {
                         //   setLand(e.target.value)
                         // }}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                          const inputValue = e.target.value.replace(
+                            /[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                            '',
+                          ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                           setLand(inputValue)
                         }}
                         placeholder="Land"

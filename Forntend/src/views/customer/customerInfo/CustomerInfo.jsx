@@ -377,6 +377,9 @@ const CustomerInfo = () => {
 
       let result = await response.json()
       //console.log('first', result)
+      if (result.status === 400) {
+        toast.warning('Bitte eine gültige Email eingeben')
+      }
       if (result?.message === 'Customer updated successfully') {
         getRecordById()
         toast.success('Kundeninfo erfolgreich gespeichert')
@@ -1059,7 +1062,10 @@ const CustomerInfo = () => {
                             name="land"
                             placeholder="Land"
                             onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '')
+                              const inputValue = e.target.value.replace(
+                                /[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                '',
+                              )
                               DeliveryChange({ target: { name: 'land', value: inputValue } })
                             }}
                             value={customerDelivery?.land}
