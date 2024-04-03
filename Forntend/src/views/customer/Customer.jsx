@@ -76,7 +76,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
       : ' ') +
     customerInfo?.customer?.plz +
     '  ' +
-    customerInfo?.customer?.city
+    customerInfo?.customer?.land
   const getRecordById = async () => {
     const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
     const updatedData = await response.json()
@@ -97,7 +97,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                 {/* <p style={{ color: 'white', marginTop: '5px' }}>KlientInnen: {res.fname}</p>
               <ImLocation2 style={{ color: 'white' }} />
               <span style={{ color: 'white' }}>{res.street}</span> */}
-                <h3>KlientInnen: {`${firstName} ${lastName}`}</h3>
+                <h3>KlientIn: {`${firstName} ${lastName}`}</h3>
 
                 <address>
                   <svg

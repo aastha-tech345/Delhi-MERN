@@ -13,6 +13,8 @@ import 'primereact/resources/primereact.min.css'
 // import 'primeicons/primeicons.css'
 import CreatableSelect from 'react-select/creatable'
 import axios from 'axios'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const CheckboxOption = (props) => (
   <div>
@@ -42,18 +44,18 @@ const CustomerInfo = () => {
   const [updateData, setUpdateData] = useState(false)
   const [itemsPerPage, setItemsPerPage] = useState('')
   const [customerInfo, setCustomerInfo] = useState({})
-  console.log('ashcustomer', customerInfo)
+  //console.log('ashcustomer', customerInfo)
   let ress = localStorage.getItem('customerRecord')
-  // console.log(ress)
+  // //console.log(ress)
   let resultt = JSON.parse(ress)
-  // console.log('aast', resultt)
+  // //console.log('aast', resultt)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: '',
     newsletterDate: '',
     extras: '',
     newsletterSubscription: '',
   })
-  // console.log('orderDate', resultt?.orderingMaterials?.newsletterDate)
+  // //console.log('orderDate', resultt?.orderingMaterials?.newsletterDate)
 
   const [customerInfoStatu, setCustomerInfoStatu] = useState({
     // clientStatus: resultt?.customerInfoStatu?.clientStatus,
@@ -62,9 +64,12 @@ const CustomerInfo = () => {
     remarks: '',
     // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
-  // console.log('first', resultt?.customerInfoStatu)
+  // //console.log('first', resultt?.customerInfoStatu)
   const [clientStatus, setClientStatus] = useState(resultt?.status)
-  // console.log('status', resultt?.status)
+  const [salutionData, setSalutionData] = useState('')
+  const [emailData, setEmailData] = useState('')
+
+  console.log('salution', customerInfo?.customer?.email)
   const cities = [
     { name: 'HVD-PV', code: '0' },
     { name: 'SPV-alt', code: '1' },
@@ -75,14 +80,14 @@ const CustomerInfo = () => {
     { name: 'Offen', code: '6' },
   ]
   // const [those, setThose] = useState(resultt?.those)
-  // console.log('those', resultt?.those)
+  // //console.log('those', resultt?.those)
   const [those, setThose] = useState('')
   const handleSelectChange = (selectedOption) => {
     setThose(selectedOption)
-    // console.log(selectedOption)
+    // //console.log(selectedOption)
   }
-  // console.log('those', those?.value)
-  // console.log('those', resultt?.those)
+  // //console.log('those', those?.value)
+  // //console.log('those', resultt?.those)
   const [customerContact, setCustomerContact] = useState({
     title: '',
     salution: '',
@@ -90,6 +95,7 @@ const CustomerInfo = () => {
     fname: '',
     lname: '',
     startDate: '',
+    email: '',
   })
 
   const [customerBills, setCustomerBills] = useState({
@@ -98,7 +104,6 @@ const CustomerInfo = () => {
     billLand: '',
     billOrt: '',
   })
-  const [email, setEmail] = useState('')
   const [dataCollection, setDataCollection] = useState('')
   // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   const [customerDelivery, setCustomerDelivery] = useState({
@@ -110,6 +115,7 @@ const CustomerInfo = () => {
     ort: '',
     phone: '',
     mobile: '',
+    email: '',
     alreadyPaid: '',
   })
   const [customerStartDeposit, setCustomerStartDeposit] = useState('')
@@ -129,16 +135,17 @@ const CustomerInfo = () => {
   })
   const [getCustomerData, setGetCustomerData] = useState({})
   const [employeeData, setEmployeeData] = useState([])
-  console.log('customerInfo?.customer?.fname', customerInfo?.customer?.fname)
-  console.log('customerInfo?.customerContact?.fname', customerInfo?.customerContact?.fname)
+  //console.log('customerInfo?.customer?.fname', customerInfo?.customer?.fname)
+  //console.log('customerInfo?.customerContact?.fname', customerInfo?.customerContact?.fname)
   let customer = {
     fname: customerContact?.fname || customerInfo?.customer?.fname,
     lname: customerContact?.lname || customerInfo?.customer?.lname,
-    email: customerInfo?.customer?.email,
+    email: emailData || customerInfo?.customer?.email,
     phone: customerDelivery?.phone || customerInfo?.customer?.phone,
     plz: customerDelivery?.plz,
     startDate: customerContact?.startDate || customerInfo?.customer?.startDate,
     status: clientStatus || customerInfo?.customer?.status,
+    salution: salutionData || customerInfo?.customer?.salution,
     land: customerDelivery?.land || customerInfo?.customer?.land,
     id: customerInfo?.id,
     street: customerDelivery?.address,
@@ -152,7 +159,7 @@ const CustomerInfo = () => {
       // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
       //   -2,
       // )}.${e.getFullYear().toString().slice(-2)}`
-      console.log('newsletter', e)
+      //console.log('newsletter', e)
       setOrderingMaterials({ ...orderingMaterials, newsletterDate: e })
     } else if (e.target) {
       const { name, value } = e.target
@@ -162,10 +169,10 @@ const CustomerInfo = () => {
         setOrderingMaterials({ ...orderingMaterials, [name]: value })
       }
     } else {
-      console.error('Invalid event or data provided to matarialChange.')
+      //console.error('Invalid event or data provided to matarialChange.')
     }
   }
-  // console.log('customerinfo', customerInfo)
+  // //console.log('customerinfo', customerInfo)
   const Quelle = [
     { value: 'order', label: 'Auftrag (Online-Maske) ' },
     { value: 'contact form', label: 'Kontaktformular' },
@@ -203,7 +210,7 @@ const CustomerInfo = () => {
     } else if (e.value !== undefined) {
       setCustomerInfoStatu({ ...customerInfoStatu, employee: e.value })
     } else {
-      console.error('Invalid event or data provided to customerInfoChange.')
+      //console.error('Invalid event or data provided to customerInfoChange.')
     }
   }
 
@@ -280,47 +287,35 @@ const CustomerInfo = () => {
     setCustomerDelivery({ ...customerDelivery, [name]: type === 'checkbox' ? checked : value })
   }
 
+  const DeliveryChangePhone = (e) => {
+    const phoneRegex = /^(0{0,2}[1-9][0-9]*)$/
+    if (phoneRegex.test(e) || e === '') {
+      setCustomerDelivery({ ...customerDelivery, phone: e })
+    } else {
+      console.error('Invalid phone number format. Please enter a valid phone number.')
+    }
+  }
+
+  const DeliveryChangeMobile = (e) => {
+    setCustomerDelivery({ ...customerDelivery, mobile: e })
+  }
   const BurialChange = (e) => {
     const { name, checked } = e.target
     setCustomerBurial({ ...customerBurial, [name]: checked })
   }
 
-  const handleEmailChange = (e) => {
-    const inputValue = e.target.value
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-
-    if (emailRegex.test(inputValue.toLowerCase())) {
-      setEmail(inputValue)
-    }
-  }
-
-  const customerInfoChangeMulti = (selectedOptions, actionMeta) => {
-    const name = actionMeta && actionMeta.name
-
-    if (name) {
-      const value =
-        selectedOptions && selectedOptions.value !== undefined
-          ? selectedOptions.value
-          : selectedOptions
-
-      setCustomerInfoStatu((prevCustomerInfoStatu) => ({
-        ...prevCustomerInfoStatu,
-        [name]: value,
-      }))
-    }
-  }
   const [selectedOptions, setSelectedOptions] = useState([])
-  // console.log('hkdfgdfg', selectedOptions)
+  // //console.log('hkdfgdfg', selectedOptions)
   const handleChange = (selectedOptions) => {
     setSelectedOptions(selectedOptions)
   }
   const getDetails = async () => {
     try {
-      const results = await fetch(`${apiUrl}/customer/get_record?email=${location?.state?.email}`)
+      const results = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
       const data = await results.json()
       setGetCustomerData(data)
     } catch (error) {
-      console.error('Error fetching customer record:', error)
+      //console.error('Error fetching customer record:', error)
     }
   }
 
@@ -329,20 +324,20 @@ const CustomerInfo = () => {
       const results = await fetch(`${apiUrl}/user/get/employeeData`)
       const data = await results.json()
       setEmployeeData(data?.data)
-      // console.log("ashishemploye", data?.data)
+      // //console.log("ashishemploye", data?.data)
       // setGetCustomerData(data)
     } catch (error) {
-      console.error('Error fetching customer record:', error)
+      //console.error('Error fetching customer record:', error)
     }
   }
 
   const getRecordById = async () => {
     try {
       const response = await axios.get(`${apiUrl}/customer/get_record/${resultt?._id}`)
-      console.log('data', response)
+      //console.log('data', response)
       setCustomerInfo(response?.data)
     } catch (error) {
-      console.log(error)
+      //console.log(error)
     }
   }
 
@@ -381,7 +376,7 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
-      console.log('first', result)
+      //console.log('first', result)
       if (result?.message === 'Customer updated successfully') {
         getRecordById()
         toast.success('Kundeninfo erfolgreich gespeichert')
@@ -390,7 +385,7 @@ const CustomerInfo = () => {
         // navigate('/customerlist')
       }
     } catch (error) {
-      console.log('Error saving data:', error)
+      //console.log('Error saving data:', error)
       toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
     }
   }
@@ -460,6 +455,7 @@ const CustomerInfo = () => {
       gender: customerInfo?.customerContact?.gender,
       fname: customerInfo?.customerContact?.fname || resultt?.fname,
       lname: customerInfo?.customerContact?.lname || resultt?.lname,
+      email: customerInfo?.customerContact?.email || customerInfo?.customer?.email,
       startDate: customerInfo?.customer?.startDate,
     })
     setCustomerBills({
@@ -482,6 +478,8 @@ const CustomerInfo = () => {
     })
     setThose(customerInfo?.those)
     setClientStatus(customerInfo?.customer?.status)
+    setSalutionData(customerInfo?.customer?.salution)
+    setEmailData(customerInfo?.customer?.email)
   }, [customerInfo])
 
   const handleCheckboxChange = (e, city) => {
@@ -491,7 +489,7 @@ const CustomerInfo = () => {
       setClientStatus(clientStatus.filter((selectedCity) => selectedCity.code !== city.code))
     }
   }
-  // console.log('customerInfo?.customer?.status', customerInfo?.customer?.status)
+  // //console.log('customerInfo?.customer?.status', customerInfo?.customer?.status)
   return (
     <div className="inner-page-wrap">
       <Customer getCustomerData={getCustomerData} updateData={updateData} />
@@ -773,19 +771,11 @@ const CustomerInfo = () => {
                           Geburtsdatum
                         </label>
                         <div className="col-sm-6">
-                          {/* <input
-                            type="date"
-                            value={customerContact.dob}
-                            name="dob"
-                            onChange={ContactChange}
-                            className="form-control"
-                            placeholder="10.10.23"
-                            id="inputDate"
-                          /> */}
                           <DatePiker
                             className="form-control"
-                            selected={customerContact.startDate}
+                            selected={customerContact?.startDate}
                             onChange={ContactChange}
+                            name="startDate"
                           />
                         </div>
                       </div>
@@ -800,13 +790,13 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <Select
                             className="w-100"
-                            options={Anrede}
-                            onChange={ContactChange}
-                            value={Anrede.find(
-                              (option) => option.value === customerContact.salution,
-                            )} // Find the selected option
+                            value={salutionData}
                             name="salution"
                             placeholder="Anrede"
+                            options={Anrede}
+                            onChange={(e) => {
+                              setSalutionData(e)
+                            }}
                           />
                         </div>
                       </div>
@@ -904,13 +894,21 @@ const CustomerInfo = () => {
                         </label>
                         <div className="col-sm-6">
                           <input
-                            type="email"
-                            disabled
+                            type="text"
                             name="email"
                             placeholder="E-Mail-Adresse"
-                            value={customer.email}
+                            // onChange={(e) => {
+                            //   const inputValue = e.target.value.trim()
+                            //   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputValue)) {
+                            //     ContactChange({ target: { name: 'email', value: inputValue } })
+                            //   }
+                            // }}
+                            onChange={(e) => {
+                              setEmailData(e.target.value)
+                            }}
+                            value={emailData}
                             className="form-control"
-                            id="inputPassword"
+                            id="inputEmail"
                           />
                         </div>
                       </div>
@@ -921,22 +919,21 @@ const CustomerInfo = () => {
                           Telefon
                         </label>
                         <div className="col-sm-6">
-                          <input
-                            // onChange={DeliveryChange}
-                            onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                              if (/^\+?[0-9]*$/.test(inputValue)) {
-                                DeliveryChange({ target: { name: 'phone', value: inputValue } })
+                          <PhoneInput
+                            isValid={(value, country) => {
+                              if (value.match(/000/)) {
+                                return 'Invalid value: ' + value + ', ' + country.name
+                              } else if (value.match(/000/)) {
+                                return false
+                              } else {
+                                return true
                               }
                             }}
+                            onChange={DeliveryChangePhone}
                             name="phone"
                             value={customerDelivery?.phone}
-                            className="form-control"
                             type="tel"
                             placeholder="Telefon"
-                            id="inputTelephone"
-                            maxLength={30}
-                            minLength={3}
                           />
                         </div>
                       </div>
@@ -949,22 +946,27 @@ const CustomerInfo = () => {
                           Mobil
                         </label>
                         <div className="col-sm-6">
-                          <input
-                            // onChange={DeliveryChange}
-                            onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                              if (/^\+?[0-9]*$/.test(inputValue)) {
-                                DeliveryChange({ target: { name: 'mobile', value: inputValue } })
+                          <PhoneInput
+                            onChange={DeliveryChangeMobile}
+                            // onChange={(e) => {
+                            //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                            //   if (/^\+?[0-9]*$/.test(inputValue)) {
+                            //     DeliveryChange({ target: { name: 'mobile', value: inputValue } })
+                            //   }
+                            // }}
+                            isValid={(value, country) => {
+                              if (value.match(/000/)) {
+                                return 'Invalid value: ' + value + ', ' + country.name
+                              } else if (value.match(/000/)) {
+                                return false
+                              } else {
+                                return true
                               }
                             }}
                             name="mobile"
                             value={customerDelivery?.mobile}
                             type="tel"
                             placeholder="Mobil"
-                            className="form-control"
-                            id="inputTelephone"
-                            maxLength={30}
-                            minLength={3}
                           />
                         </div>
                       </div>
@@ -997,10 +999,10 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <input
                             type="text"
-                            onChange={BillChange}
-                            name="billAddress"
+                            onChange={DeliveryChange}
+                            name="address"
                             placeholder="Straße mit Hausnummer"
-                            value={customerBills.billAddress}
+                            value={customerDelivery?.address}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -1014,15 +1016,15 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <input
                             type="tel"
-                            value={customerBills.billPlz}
+                            value={customerDelivery.plz}
                             onChange={(e) => {
                               const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
-                              setCustomerBills({ ...customerBills, billPlz: inputValue })
+                              setCustomerDelivery({ ...customerDelivery, plz: inputValue })
                             }}
                             placeholder="PLZ"
                             className="form-control"
                             id="inputPassword"
-                            maxLength={6}
+                            maxLength={10}
                             minLength={3}
                             required={true}
                           />
@@ -1031,18 +1033,18 @@ const CustomerInfo = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputText" className="col-sm-4 col-form-label">
+                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
                           Ort
                         </label>
                         <div className="col-sm-6">
                           <input
                             type="text"
-                            onChange={BillChange}
-                            name="billOrt"
+                            onChange={DeliveryChange}
+                            name="ort"
                             placeholder="Ort"
-                            value={customerBills.billOrt}
+                            value={customerDelivery?.ort}
                             className="form-control"
-                            id="inputText"
+                            id="inputPassword"
                           />
                         </div>
                       </div>
@@ -1054,13 +1056,13 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <input
                             type="text"
-                            name="billLand"
+                            name="land"
                             placeholder="Land"
                             onChange={(e) => {
                               const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '')
-                              BillChange({ target: { name: 'billLand', value: inputValue } })
+                              DeliveryChange({ target: { name: 'land', value: inputValue } })
                             }}
-                            value={customerBills.billLand}
+                            value={customerDelivery?.land}
                             className="form-control"
                             id="inputPassword"
                           />
@@ -1097,28 +1099,29 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <input
                             type="text"
-                            onChange={DeliveryChange}
-                            name="address"
+                            onChange={BillChange}
+                            name="billAddress"
                             placeholder="Straße mit Hausnummer"
-                            value={customerDelivery?.address}
+                            value={customerBills.billAddress}
                             className="form-control"
                             id="inputPassword"
                           />
                         </div>
                       </div>
+
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
+                        <label htmlFor="inputText" className="col-sm-4 col-form-label">
                           Ort
                         </label>
                         <div className="col-sm-6">
                           <input
                             type="text"
-                            onChange={DeliveryChange}
-                            name="ort"
+                            onChange={BillChange}
+                            name="billOrt"
                             placeholder="Ort"
-                            value={customerDelivery?.ort}
+                            value={customerBills.billOrt}
                             className="form-control"
-                            id="inputPassword"
+                            id="inputText"
                           />
                         </div>
                       </div>
@@ -1145,15 +1148,15 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <input
                             type="tel"
-                            value={customerDelivery.plz}
+                            value={customerBills.billPlz}
                             onChange={(e) => {
                               const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
-                              setCustomerDelivery({ ...customerDelivery, plz: inputValue })
+                              setCustomerBills({ ...customerBills, billPlz: inputValue })
                             }}
                             placeholder="PLZ"
                             className="form-control"
                             id="inputPassword"
-                            maxLength={6}
+                            maxLength={10}
                             minLength={3}
                             required={true}
                           />
@@ -1166,13 +1169,13 @@ const CustomerInfo = () => {
                         <div className="col-sm-6">
                           <input
                             type="text"
-                            name="land"
+                            name="billLand"
                             placeholder="Land"
                             onChange={(e) => {
                               const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '')
-                              DeliveryChange({ target: { name: 'land', value: inputValue } })
+                              BillChange({ target: { name: 'billLand', value: inputValue } })
                             }}
-                            value={customerDelivery?.land}
+                            value={customerBills.billLand}
                             className="form-control"
                             id="inputPassword"
                           />

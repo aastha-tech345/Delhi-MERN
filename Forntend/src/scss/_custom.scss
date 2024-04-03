@@ -2040,3 +2040,13 @@ h4 {
   font-weight: 700;
   line-height: 32px;
 }
+
+.react-tel-input .form-control {
+  width: 100% !important;
+}
+.react-datepicker {
+  display: none !important;
+}
+.react-datepicker-popper {
+  display: none !important;
+}
