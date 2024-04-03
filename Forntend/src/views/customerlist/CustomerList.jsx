@@ -20,6 +20,8 @@ import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import { Dropdown } from 'primereact/dropdown'
 import { MultiSelect } from 'primereact/multiselect'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -359,6 +361,13 @@ const CustomerList = () => {
     { name: 'Newsletter-Abonnent', code: '5' },
     { name: 'Offen', code: '6' },
   ]
+  const Anrede = [
+    { value: 'herr', label: 'Herr' },
+    { value: 'frau', label: 'Frau' },
+    { value: 'divers', label: 'Divers' },
+  ]
+  const [salutionData, setSalutionData] = useState('')
+
   // console.log('option', cities)
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -375,12 +384,13 @@ const CustomerList = () => {
 
     setValidated(true)
 
-    if (!email) {
-      return notify('Invalid Email')
-    }
-    if (!fname || !lname || !email) {
+    if (!fname || !lname) {
       return warning('Füllen Sie den Datensatz')
     }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    // if (!email.includes(emailRegex)) {
+    //   return toast.warning('incorrect email')
+    // }
     let currentDate = new Date()
     if (startDate > currentDate) {
       return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
@@ -399,6 +409,7 @@ const CustomerList = () => {
         land,
         status: clientStatus,
         id,
+        salution: salutionData,
         created_by,
       },
     }
@@ -466,6 +477,7 @@ const CustomerList = () => {
         land,
         status,
         street,
+        salution,
         city,
       },
       _id,
@@ -503,6 +515,7 @@ const CustomerList = () => {
       land,
       status,
       street,
+      salution,
       city,
       alreadyPaid,
       orderingMaterials,
@@ -738,6 +751,18 @@ const CustomerList = () => {
 
               <Modal.Body>
                 <Form noValidate validated={validated}>
+                  <div className="row mb-3">
+                    <Select
+                      className="w-100"
+                      options={Anrede}
+                      onChange={(selectedOption) => {
+                        setSalutionData(selectedOption)
+                      }}
+                      value={salutionData}
+                      name="salution"
+                      placeholder="Anrede"
+                    />
+                  </div>
                   <div className="row">
                     <div className="col-sm-6">
                       <input
@@ -806,23 +831,25 @@ const CustomerList = () => {
                         onChange={handleEmailChange}
                         placeholder="E-Mail"
                         className="form-control"
-                        id="inputPassword"
-                        required={true}
+                        // required={true}
                       />
                     </div>
                     <div className="col-sm-6">
-                      <input
+                      <PhoneInput
+                        isValid={(value, country) => {
+                          if (value.match(/000/)) {
+                            return 'Invalid value: ' + value + ', ' + country.name
+                          } else if (value.match(/000/)) {
+                            return false
+                          } else {
+                            return true
+                          }
+                        }}
+                        placeholder="Telefon"
                         value={phone}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9]/g, '')
-                          setPhone(inputValue)
+                          setPhone(e)
                         }}
-                        type="tel"
-                        placeholder="Telefon"
-                        className="form-control"
-                        id="inputTelephone"
-                        maxLength={30}
-                        minLength={3}
                       />
                     </div>
                   </div>
@@ -838,7 +865,7 @@ const CustomerList = () => {
                         placeholder="PLZ"
                         className="form-control"
                         id="inputPassword"
-                        maxLength={6}
+                        maxLength={10}
                         minLength={3}
                       />
                     </div>

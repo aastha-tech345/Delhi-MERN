@@ -5,7 +5,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 exports.createCustomer = async (req, res) => {
   try {
     // console.log("ash", req.body);
-    
+
     const today = new Date();
     const year = String(today.getFullYear()).slice(-2);
     const month = String(today.getMonth() + 1).padStart(2, "0");
@@ -24,8 +24,7 @@ exports.createCustomer = async (req, res) => {
     });
     if (emailFind) {
       return res.status(406).json({
-        message: "Email Already Exists",
-        success: false,
+        message: "Email Already Exists"
       });
     }
 
@@ -147,9 +146,9 @@ exports.getCustomer = async (req, res) => {
 exports.getCustomerData = async (req, res) => {
   try {
     const result = await Customer.findOne({
-      "customer.email": req.query.email,
-      // _id:req.query.id
-      status: { $ne: "deleted" },
+      // "customer.email": req.query.email,
+      _id:req.query.id
+      // status: { $ne: "deleted" },
     });
     //
     if (result) {
