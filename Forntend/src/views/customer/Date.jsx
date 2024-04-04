@@ -16,10 +16,11 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import PropTypes from 'prop-types'
 
-const DatePiker = ({ onChange, selected }) => {
+const DatePiker = ({ onChange, selected, placeholderText }) => {
   DatePiker.propTypes = {
     onChange: PropTypes.func.isRequired,
     selected: PropTypes.func.isRequired,
+    placeholderText: PropTypes.func.isRequired,
   }
   // const [startDate, setStartDate] = useState(null)
 
@@ -31,7 +32,7 @@ const DatePiker = ({ onChange, selected }) => {
     <div>
       <DatePicker
         className="form-control form-search-control w-101"
-        placeholderText="Geburtsdatum"
+        placeholderText={placeholderText}
         selected={selected}
         onChange={onChange}
         dateFormat="dd.MM.yyyy"
