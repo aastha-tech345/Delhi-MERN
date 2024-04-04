@@ -493,7 +493,7 @@ const CustomerList = () => {
       if (email) {
         console.log('regx1', emailRegex.test(email))
         if (emailRegex.test(email) === false) {
-          return toast.warning('Error')
+          return toast.warning('Bitte eine gültige Email eingeben')
         } else {
           const response = await fetch(`${apiUrl}/customer/create`, {
             method: 'POST',
