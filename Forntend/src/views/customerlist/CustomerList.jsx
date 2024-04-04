@@ -465,9 +465,13 @@ const CustomerList = () => {
     if (startDate > currentDate) {
       return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
     }
-    // if (phone.includes('000')) {
-    //   return toast.warning('Invalid phone number')
+    if (phone && phone.match(/000/)) {
+      return toast.warning('Ungültige Telefonnummer')
+    }
+    // if (!email.match(/@/)) {
+    //   return toast.warning('Invalid email')
     // }
+
     // if (email.includes('@') || email.includes('.')) {
     //   return toast.warning('Invalid email')
     // }
@@ -721,15 +725,15 @@ const CustomerList = () => {
 
   const handleDateChange = (e) => {
     let currentDate = new Date()
-    let currentYear = currentDate.getFullYear()
-    let currentMonth = currentDate.getMonth()
-    let currentDay = currentDate.getDate()
+    let currentYear = currentDate?.getFullYear()
+    let currentMonth = currentDate?.getMonth()
+    let currentDay = currentDate?.getDate()
     if (
-      e.getFullYear() > currentYear ||
-      (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
-      (e.getFullYear() === currentYear &&
-        e.getMonth() === currentMonth &&
-        e.getDate() > currentDay + 1)
+      e?.getFullYear() > currentYear ||
+      (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
+      (e?.getFullYear() === currentYear &&
+        e?.getMonth() === currentMonth &&
+        e?.getDate() > currentDay + 1)
     ) {
       return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
     }
