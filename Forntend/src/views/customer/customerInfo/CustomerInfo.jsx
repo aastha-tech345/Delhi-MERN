@@ -161,8 +161,8 @@ const CustomerInfo = () => {
       // )}.${e.getFullYear().toString().slice(-2)}`
       //console.log('newsletter', e)
       setOrderingMaterials({ ...orderingMaterials, newsletterDate: e })
-    } else if (e.target) {
-      const { name, value } = e.target
+    } else if (e?.target) {
+      const { name, value } = e?.target
       if (name === 'newsletterDate') {
         setOrderingMaterials({ ...orderingMaterials, newsletterDate: value })
       } else {
@@ -217,15 +217,15 @@ const CustomerInfo = () => {
   const ContactChange = (e) => {
     if (e instanceof Date) {
       let currentDate = new Date()
-      let currentYear = currentDate.getFullYear()
-      let currentMonth = currentDate.getMonth()
-      let currentDay = currentDate.getDate()
+      let currentYear = currentDate?.getFullYear()
+      let currentMonth = currentDate?.getMonth()
+      let currentDay = currentDate?.getDate()
       if (
-        e.getFullYear() > currentYear ||
-        (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
-        (e.getFullYear() === currentYear &&
-          e.getMonth() === currentMonth &&
-          e.getDate() > currentDay + 1)
+        e?.getFullYear() > currentYear ||
+        (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
+        (e?.getFullYear() === currentYear &&
+          e?.getMonth() === currentMonth &&
+          e?.getDate() > currentDay + 1)
       ) {
         return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
       }
@@ -366,12 +366,10 @@ const CustomerInfo = () => {
     if (dataCollection > currentDate) {
       return toast.warning('Die Datenerfassung darf nicht in der Zukunft liegen.')
     }
-    if (
-      customerDelivery?.phone &&
-      customerDelivery?.phone.match(/000/) &&
-      customerDelivery?.mobile &&
-      customerDelivery?.mobile.match(/000/)
-    ) {
+    if (customerDelivery?.phone && customerDelivery?.phone.match(/000/)) {
+      return toast.warning('Ungültige Telefonnummer')
+    }
+    if (customerDelivery?.mobile && customerDelivery?.mobile.match(/000/)) {
       return toast.warning('Ungültige Telefonnummer')
     }
     try {
@@ -403,15 +401,15 @@ const CustomerInfo = () => {
 
   const customerDateChange = (e) => {
     let currentDate = new Date()
-    let currentYear = currentDate.getFullYear()
-    let currentMonth = currentDate.getMonth()
-    let currentDay = currentDate.getDate()
+    let currentYear = currentDate?.getFullYear()
+    let currentMonth = currentDate?.getMonth()
+    let currentDay = currentDate?.getDate()
     if (
-      e.getFullYear() > currentYear ||
-      (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
-      (e.getFullYear() === currentYear &&
-        e.getMonth() === currentMonth &&
-        e.getDate() > currentDay + 1)
+      e?.getFullYear() > currentYear ||
+      (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
+      (e?.getFullYear() === currentYear &&
+        e?.getMonth() === currentMonth &&
+        e?.getDate() > currentDay + 1)
     ) {
       return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
     }
@@ -552,8 +550,9 @@ const CustomerInfo = () => {
                           <label className="col-form-label">Newsletter-Datum</label>
                           <DatePiker
                             className="form-control"
-                            selected={orderingMaterials.newsletterDate}
+                            selected={orderingMaterials?.newsletterDate}
                             onChange={matarialChange}
+                            placeholderText={'Newsletter-Datum'}
                           />
                         </div>
                       </div>
@@ -701,6 +700,7 @@ const CustomerInfo = () => {
                               selected={dataCollection}
                               onChange={customerDateChange}
                               // name="dataCollection"
+                              placeholderText={'Datenerfassung'}
                             />
                           </div>
                         </div>
@@ -787,6 +787,7 @@ const CustomerInfo = () => {
                             selected={customerContact?.startDate}
                             onChange={ContactChange}
                             name="startDate"
+                            placeholderText={'Geburtsdatum'}
                           />
                         </div>
                       </div>
@@ -915,7 +916,7 @@ const CustomerInfo = () => {
                             //   }
                             // }}
                             onChange={(e) => {
-                              setEmailData(e.target.value)
+                              setEmailData(e?.target?.value)
                             }}
                             value={emailData}
                             className="form-control"
@@ -931,15 +932,15 @@ const CustomerInfo = () => {
                         </label>
                         <div className="col-sm-6">
                           <PhoneInput
-                            isValid={(value, country) => {
-                              if (value.match(/000/)) {
-                                return 'Invalid value: ' + value + ', ' + country.name
-                              } else if (value.match(/000/)) {
-                                return false
-                              } else {
-                                return true
-                              }
-                            }}
+                            // isValid={(value, country) => {
+                            //   if (value.match(/000/)) {
+                            //     return 'Invalid value: ' + value + ', ' + country.name
+                            //   } else if (value.match(/000/)) {
+                            //     return false
+                            //   } else {
+                            //     return true
+                            //   }
+                            // }}
                             onChange={DeliveryChangePhone}
                             name="phone"
                             value={customerDelivery?.phone}
@@ -965,15 +966,15 @@ const CustomerInfo = () => {
                             //     DeliveryChange({ target: { name: 'mobile', value: inputValue } })
                             //   }
                             // }}
-                            isValid={(value, country) => {
-                              if (value.match(/000/)) {
-                                return 'Invalid value: ' + value + ', ' + country.name
-                              } else if (value.match(/000/)) {
-                                return false
-                              } else {
-                                return true
-                              }
-                            }}
+                            // isValid={(value, country) => {
+                            //   if (value.match(/000/)) {
+                            //     return 'Invalid value: ' + value + ', ' + country.name
+                            //   } else if (value.match(/000/)) {
+                            //     return false
+                            //   } else {
+                            //     return true
+                            //   }
+                            // }}
                             name="mobile"
                             value={customerDelivery?.mobile}
                             type="tel"
@@ -1029,7 +1030,7 @@ const CustomerInfo = () => {
                             type="tel"
                             value={customerDelivery.plz}
                             onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                              const inputValue = e?.target?.value?.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                               setCustomerDelivery({ ...customerDelivery, plz: inputValue })
                             }}
                             placeholder="PLZ"
@@ -1070,7 +1071,7 @@ const CustomerInfo = () => {
                             name="land"
                             placeholder="Land"
                             onChange={(e) => {
-                              const inputValue = e.target.value.replace(
+                              const inputValue = e?.target?.value?.replace(
                                 /[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
                                 '',
                               )
@@ -1164,7 +1165,7 @@ const CustomerInfo = () => {
                             type="tel"
                             value={customerBills.billPlz}
                             onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                              const inputValue = e?.target?.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                               setCustomerBills({ ...customerBills, billPlz: inputValue })
                             }}
                             placeholder="PLZ"
@@ -1186,7 +1187,7 @@ const CustomerInfo = () => {
                             name="billLand"
                             placeholder="Land"
                             onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '')
+                              const inputValue = e?.target?.value.replace(/[^a-zA-Z\s'-]/g, '')
                               BillChange({ target: { name: 'billLand', value: inputValue } })
                             }}
                             value={customerBills.billLand}

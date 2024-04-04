@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_coreui_coreui_free_react_admin_template=self.webpackChunk_coreui_coreui_free_react_admin_template||[]).push([[940],{26940:(e,r,t)=>{t.r(r),t.d(r,{default:()=>l});var a=t(65043),c=t(31899),o=t.n(c),s=(t(25015),t(70579));const l=e=>{let{onChange:r,selected:t}=e;return(0,a.useEffect)((()=>{}),[]),(0,s.jsx)("div",{children:(0,s.jsx)(o(),{className:"form-control form-search-control w-101",placeholderText:"Geburtsdatum",selected:t,onChange:r,dateFormat:"dd.MM.yyyy"})})}}}]);
-//# sourceMappingURL=940.fbe4776f.chunk.js.map

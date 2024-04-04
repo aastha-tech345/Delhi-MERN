@@ -921,15 +921,15 @@ const CustomerList = () => {
                     </div>
                     <div className="col-sm-6">
                       <PhoneInput
-                        isValid={(value, country) => {
-                          if (value.match(/000/)) {
-                            return 'Invalid value: ' + value + ', ' + country.name
-                          } else if (value.match(/000/)) {
-                            return false
-                          } else {
-                            return true
-                          }
-                        }}
+                        // isValid={(value, country) => {
+                        //   if (value.match(/000/)) {
+                        //     return 'Invalid value: ' + value + ', ' + country.name
+                        //   } else if (value.match(/000/)) {
+                        //     return false
+                        //   } else {
+                        //     return true
+                        //   }
+                        // }}
                         placeholder="Telefon"
                         value={phone}
                         onChange={(e) => {
@@ -987,6 +987,7 @@ const CustomerList = () => {
                         className="form-control"
                         selected={startDate}
                         onChange={handleDateChange}
+                        placeholderText={'Geburtsdatum'}
                       />
                     </div>
                     <div className="col-sm-6">
