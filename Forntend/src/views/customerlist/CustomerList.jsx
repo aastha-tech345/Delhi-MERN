@@ -338,14 +338,15 @@ const CustomerList = () => {
   }
 
   const handleEmailChange = (e) => {
-    const inputValue = e.target.value
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    // const inputValue = e.target.value
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-    if (emailRegex.test(inputValue)) {
-      setEmail(inputValue)
-    } else {
-      setEmail('')
-    }
+    // if (emailRegex.test(inputValue)) {
+    //   setEmail(inputValue)
+    // } else {
+    //   setEmail('')
+    // }
+    setEmail(e.target.value)
   }
 
   const handleSelectChange = (selectedOption) => {
@@ -468,13 +469,6 @@ const CustomerList = () => {
     if (phone && phone.match(/000/)) {
       return toast.warning('Ungültige Telefonnummer')
     }
-    // if (!email.match(/@/)) {
-    //   return toast.warning('Invalid email')
-    // }
-
-    // if (email.includes('@') || email.includes('.')) {
-    //   return toast.warning('Invalid email')
-    // }
 
     let data = {
       customer: {
@@ -493,43 +487,81 @@ const CustomerList = () => {
         created_by,
       },
     }
+    const emailRegex = /^[^\s@]+(\s[^\s@]+)*@[^\s@]+\.[^\s@]+$/
 
     try {
-      let response = await fetch(`${apiUrl}/customer/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
+      if (email) {
+        console.log('regx1', emailRegex.test(email))
+        if (emailRegex.test(email) === false) {
+          return toast.warning('Error')
+        } else {
+          const response = await fetch(`${apiUrl}/customer/create`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          })
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`)
+          }
+
+          const result = await response.json()
+          if (result.status === 400) {
+            toast.warning('Bitte eine gültige Email eingeben')
+          } else if (response.status === 201) {
+            toast.success('Kundendatensatz erfolgreich gespeichert')
+            resetForm()
+            handleClose()
+            getDetails()
+          }
+        }
+        return
       }
 
-      let result = await response.json()
-      // console.log('result', result)
-      if (result.status === 400) {
-        toast.warning('Bitte eine gültige Email eingeben')
-      } else if (response.status === 201) {
-        toast.success('Kundendatensatz erfolgreich gespeichert')
-        setFname('')
-        setLand('')
-        setLname('')
-        setEmail('')
-        setPlz('')
-        setStreet('')
-        setStatus('')
-        setPhone('')
-        setCity('')
-        setStartDate('')
-        setClientStatus('')
-        setValidated(false)
-        handleClose()
-        getDetails()
+      if (email?.length === 0) {
+        const response = await fetch(`${apiUrl}/customer/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+
+        const result = await response.json()
+        if (result.status === 400) {
+          toast.warning('Bitte eine gültige Email eingeben')
+        } else if (response.status === 201) {
+          toast.success('Kundendatensatz erfolgreich gespeichert')
+          resetForm()
+          handleClose()
+          getDetails()
+        }
       }
     } catch (error) {
       toast.error('E-Mail-ID existiert bereits')
-      console.log('error', error)
+      console.error('error', error)
+    }
+
+    function resetForm() {
+      setFname('')
+      setLand('')
+      setLname('')
+      setEmail('')
+      setPlz('')
+      setStreet('')
+      setStatus('')
+      setPhone('')
+      setCity('')
+      setStartDate('')
+      setClientStatus('')
+      setSalutionData('')
+      setValidated(false)
     }
   }
 
