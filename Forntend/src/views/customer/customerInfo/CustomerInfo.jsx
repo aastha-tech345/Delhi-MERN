@@ -366,6 +366,14 @@ const CustomerInfo = () => {
     if (dataCollection > currentDate) {
       return toast.warning('Die Datenerfassung darf nicht in der Zukunft liegen.')
     }
+    if (
+      customerDelivery?.phone &&
+      customerDelivery?.phone.match(/000/) &&
+      customerDelivery?.mobile &&
+      customerDelivery?.mobile.match(/000/)
+    ) {
+      return toast.warning('Ungültige Telefonnummer')
+    }
     try {
       let response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
         method: 'put',
