@@ -177,7 +177,7 @@ const Filter = () => {
               rowSelection={{
                 type: 'checkbox',
                 onChange: (selectedRowKeys, selectedRows) => {
-                  console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+                  // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
                 },
                 getCheckboxProps: (record) => ({
                   disabled: record.name === 'Disabled User',

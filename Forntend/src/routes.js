@@ -48,7 +48,7 @@ if (auth) {
     { path: '/text', name: 'Date', element: Text },
     { path: '/customer/bills', name: 'Rechnungen', element: Bills },
     { path: '/customer/tasks', name: 'Aufgaben', element: Tasks },
-    { path: '/customer/activity', name: 'Aktivitat', element: Activity },
+    { path: '/customer/activity', name: 'Aktivität', element: Activity },
     { path: '/customer/document', name: 'Dokumente', element: Document },
     { path: '/customer/services', name: 'HVD-PV', element: Services },
     { path: '/settings', name: 'Einstellungen', element: Setting },

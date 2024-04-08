@@ -6,6 +6,9 @@ import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import DatePiker from '../Date'
 import { Jodit } from 'jodit-react'
+import 'react-phone-input-2/lib/style.css'
+import PhoneInput from 'react-phone-input-2'
+
 const Attorney = () => {
   const [recordData, setRecordData] = useState([])
   const navigate = useNavigate()
@@ -53,34 +56,74 @@ const Attorney = () => {
     ort: recordData?.securingattorney?.ort || '',
   })
 
-  const healthCareChange = (e, index) => {
-    const { name, value, type, checked } = e.target
+  const healthCareChange = (e, index, fieldName) => {
+    let value
+
+    if (e && e.target) {
+      value = e.target.value
+    } else {
+      value = e
+    }
 
     setHealthCare((prevHealthCare) => {
       const updatedHealthCareData = [...prevHealthCare.healthCareData]
 
-      if (type === 'checkbox') {
-        updatedHealthCareData[index] = {
-          ...updatedHealthCareData[index],
-          [name]: checked,
-        }
-      } else {
-        const newValue =
-          name === 'healthCare_phone'
-            ? formatPhoneNumber(value)
-            : value && name === 'healthCare_mobile'
-            ? formatPhoneNumber(value)
-            : value
-
-        updatedHealthCareData[index] = {
-          ...updatedHealthCareData[index],
-          [name]: newValue,
-        }
+      updatedHealthCareData[index] = {
+        ...updatedHealthCareData[index],
+        [fieldName]: value,
       }
 
       return { ...prevHealthCare, healthCareData: updatedHealthCareData }
     })
   }
+
+  // const healthCareChange = (e, index) => {
+  //   let name, value, type, checked
+  //   if (e && e.target) {
+  //     ;({ name, value, type, checked } = e.target)
+  //   } else {
+  //     value = e
+  //     name = name
+  //     type = 'text'
+  //   }
+
+  //   setHealthCare((prevHealthCare) => {
+  //     const updatedHealthCareData = [...prevHealthCare.healthCareData]
+
+  //     if (type === 'checkbox') {
+  //       updatedHealthCareData[index] = {
+  //         ...updatedHealthCareData[index],
+  //         [name]: checked,
+  //       }
+  //     } else if (name === 'healthCare_phone' && name === 'healthCare_mobile') {
+  //       updatedHealthCareData[index] = {
+  //         ...updatedHealthCareData[index],
+  //         healthCare_phone: value,
+  //         healthCare_mobile: value,
+  //       }
+  //     } else {
+  //       updatedHealthCareData[index] = {
+  //         ...updatedHealthCareData[index],
+  //         [name]: value,
+  //       }
+  //     }
+
+  //     return { ...prevHealthCare, healthCareData: updatedHealthCareData }
+  //   })
+  // }
+
+  // const healthCareChange = (phoneNumber, index) => {
+  //   setHealthCare((prevHealthCare) => {
+  //     const updatedHealthCareData = [...prevHealthCare.healthCareData]
+  //     updatedHealthCareData[index] = {
+  //       ...updatedHealthCareData[index],
+  //       healthCare_phone: phoneNumber,
+  //       healthCare_mobile: phoneNumber,
+  //     }
+
+  //     return { ...prevHealthCare, healthCareData: updatedHealthCareData }
+  //   })
+  // }
 
   const formatPhoneNumber = (value) => {
     const numericValue = value.replace(/\D/g, '')
@@ -135,8 +178,7 @@ const Attorney = () => {
   }
 
   const powerOfAttorneyChange = (e, index) => {
-    const { name, value, type, checked } = e.target
-
+    const { name, value, type, checked } = e.target || {}
     setPowerOfAttorney((prevPowerOfAttorney) => {
       const updatedPowerOfAttorneyData = [...prevPowerOfAttorney.powerOfAttorneyData]
 
@@ -146,22 +188,17 @@ const Attorney = () => {
           [name]: checked,
         }
       } else {
-        const newValue =
-          name === 'powerOfAttorney_phone'
-            ? formatPhoneNumber(value)
-            : value && name === 'powerOfAttorney_mobile'
-            ? formatPhoneNumber(value)
-            : value
-
         updatedPowerOfAttorneyData[index] = {
           ...updatedPowerOfAttorneyData[index],
-          [name]: newValue,
+          powerOfAttorney_phone: value,
+          powerOfAttorney_mobile: value,
         }
       }
 
       return { ...prevPowerOfAttorney, powerOfAttorneyData: updatedPowerOfAttorneyData }
     })
   }
+
   const addPowerOfAttorneyField = () => {
     if (powerOfAttorney.powerOfAttorneyData.length < maxFields) {
       setPowerOfAttorney((prev) => ({
@@ -234,6 +271,12 @@ const Attorney = () => {
     customer_id: resultt?._id,
   }
   const saveData = async () => {
+    if (healthCare.healthCare_phone && healthCare.healthCare_phone.match(/000/)) {
+      return toast.warning('Ungültige Telefonnummer')
+    }
+    if (healthCare.healthCare_mobile && healthCare.healthCare_mobile.match(/000/)) {
+      return toast.warning('Ungültige Telefonnummer')
+    }
     try {
       let url
       let method
@@ -255,7 +298,7 @@ const Attorney = () => {
       })
 
       let result = await response.json()
-      console.log(result)
+      // console.log(result)
       if (result.status === 201) {
         toast.success('Daten erfolgreich gespeichert')
         // resetStateVariables()
@@ -265,7 +308,7 @@ const Attorney = () => {
         )
       }
     } catch (error) {
-      console.error('Error during API call:', error)
+      // console.error('Error during API call:', error)
       toast.error('Error saving data. Please try again.')
     }
   }
@@ -279,7 +322,7 @@ const Attorney = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  console.log('recorddata', recordData)
+  // console.log('recorddata', recordData)
   // const resetStateVariables = () => {
   //   setHealthCare(() => ({
   //     healthCareData: Array.from({ length: initialFields + 1 }, () => ({
@@ -450,7 +493,7 @@ const Attorney = () => {
                               <div className="row">
                                 <div className="col-sm-12">
                                   <input
-                                    onChange={(e) => healthCareChange(e, index)}
+                                    onChange={(e) => healthCareChange(e, index, 'healthCare_fname')}
                                     value={field.healthCare_fname}
                                     name="healthCare_fname"
                                     type="text"
@@ -465,7 +508,7 @@ const Attorney = () => {
                               <div className="row">
                                 <div className="col-sm-12">
                                   <input
-                                    onChange={(e) => healthCareChange(e, index)}
+                                    onChange={(e) => healthCareChange(e, index, 'healthCare_lname')}
                                     value={field.healthCare_lname}
                                     type="text"
                                     name="healthCare_lname"
@@ -481,7 +524,9 @@ const Attorney = () => {
                               <div className=" row">
                                 <div className="col-sm-12">
                                   <input
-                                    onChange={(e) => healthCareChange(e, index)}
+                                    onChange={(e) =>
+                                      healthCareChange(e, index, 'healthCare_address')
+                                    }
                                     value={field.healthCare_address}
                                     type="text"
                                     name="healthCare_address"
@@ -496,16 +541,26 @@ const Attorney = () => {
                             <div className="col-sm-2">
                               <div className=" row">
                                 <div className="col-sm-12">
-                                  <input
-                                    onChange={(e) => healthCareChange(e, index)}
-                                    value={field.healthCare_phone}
-                                    type="text"
+                                  <PhoneInput
+                                    isValid={(value, country) => {
+                                      if (value.match(/000/)) {
+                                        return 'Invalid phone'
+                                      } else if (value.match(/000/)) {
+                                        return false
+                                      } else {
+                                        return true
+                                      }
+                                    }}
+                                    onChange={(e) => healthCareChange(e, index, 'healthCare_phone')}
+                                    value={String(field.healthCare_phone)}
                                     name="healthCare_phone"
                                     placeholder="853-456-8464"
-                                    className="form-control"
-                                    id={`phone_${index}`}
-                                    maxLength={30}
-                                    minLength={10}
+                                    // className="form-control"
+                                    inputProps={{
+                                      id: `phone_${index}`,
+                                      maxLength: 20,
+                                      minLength: 3,
+                                    }}
                                   />
                                 </div>
                               </div>
@@ -513,16 +568,30 @@ const Attorney = () => {
                             <div className="col-sm-2">
                               <div className=" row">
                                 <div className="col-sm-12">
-                                  <input
-                                    onChange={(e) => healthCareChange(e, index)}
-                                    value={field.healthCare_mobile}
+                                  <PhoneInput
+                                    isValid={(value, country) => {
+                                      if (value.match(/000/)) {
+                                        return 'Invalid mobile'
+                                      } else if (value.match(/000/)) {
+                                        return false
+                                      } else {
+                                        return true
+                                      }
+                                    }}
+                                    onChange={(e) =>
+                                      healthCareChange(e, index, 'healthCare_mobile')
+                                    }
+                                    value={String(field.healthCare_mobile)}
                                     type="text"
                                     name="healthCare_mobile"
                                     placeholder="853-456-8464"
-                                    className="form-control"
-                                    id={`phone_${index}`}
-                                    maxLength={30}
-                                    minLength={10}
+                                    // className="form-control"
+                                    // id={`phone_${index}`}
+                                    inputProps={{
+                                      id: `phone_${index}`,
+                                      maxLength: 20,
+                                      minLength: 3,
+                                    }}
                                   />
                                 </div>
                               </div>
@@ -593,7 +662,6 @@ const Attorney = () => {
                                 type="text"
                                 placeholder="Vorname"
                                 className="form-control"
-                                id="inputPassword"
                               />
                             </div>
                           </div>
@@ -608,7 +676,6 @@ const Attorney = () => {
                                 type="text"
                                 placeholder="Nachname"
                                 className="form-control"
-                                id="inputPassword"
                               />
                             </div>
                           </div>
@@ -623,7 +690,6 @@ const Attorney = () => {
                                 type="text"
                                 placeholder="Adresse"
                                 className="form-control"
-                                id="inputPassword"
                               />
                             </div>
                           </div>
@@ -631,16 +697,15 @@ const Attorney = () => {
                         <div className="col-sm-2">
                           <div className="row">
                             <div className="col-sm-12">
-                              <input
+                              <PhoneInput
                                 onChange={(e) => powerOfAttorneyChange(e, index)}
-                                value={field.powerOfAttorney_phone}
+                                value={String(field.powerOfAttorney_phone)}
                                 name="powerOfAttorney_phone"
                                 type="text"
                                 placeholder="853-456-8464"
-                                className="form-control"
-                                id="inputPassword"
-                                maxLength={30}
-                                minLength={10}
+                                // className="form-control"
+                                maxLength={20}
+                                minLength={3}
                               />
                             </div>
                           </div>
@@ -648,16 +713,15 @@ const Attorney = () => {
                         <div className="col-sm-2">
                           <div className="row">
                             <div className="col-sm-12">
-                              <input
+                              <PhoneInput
                                 onChange={(e) => powerOfAttorneyChange(e, index)}
-                                value={field.powerOfAttorney_mobile}
+                                value={String(field.powerOfAttorney_mobile)}
                                 name="powerOfAttorney_mobile"
                                 type="text"
                                 placeholder="853-456-8464"
-                                className="form-control"
-                                id="inputPassword"
-                                maxLength={30}
-                                minLength={10}
+                                // className="form-control"
+                                maxLength={20}
+                                minLength={3}
                               />
                             </div>
                           </div>
@@ -749,7 +813,6 @@ const Attorney = () => {
                           type="text"
                           placeholder="Vorname"
                           className="form-control"
-                          id="inputPassword"
                         />
                       </div>
                     </div>
@@ -764,7 +827,6 @@ const Attorney = () => {
                           type="text"
                           placeholder="Nachname"
                           className="form-control"
-                          id="inputPassword"
                         />
                       </div>
                     </div>
@@ -777,6 +839,7 @@ const Attorney = () => {
                           selected={securingattorney.dob}
                           onChange={securingattorneyChange}
                           // name="dataCollection"
+                          placeholderText={'Geburtsdatum'}
                         />
                       </div>
                     </div>

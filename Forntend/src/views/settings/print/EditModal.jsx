@@ -46,7 +46,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     e.preventDefault()
     try {
       const res = await putFetchData(`${apiUrl}/print/get_print/edit/${response?._id}`, data)
-      console.log('document page', res)
+      // console.log('document page', res)
 
       if (res?.status === 200) {
         setLoadValue(false)

@@ -89,7 +89,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
     try {
       e.preventDefault()
       const res = await putFetchData(`${apiUrl}/role/get_role/${roleID}`, role)
-      console.log('updatedRole', res)
+      // console.log('updatedRole', res)
       if (res?.status === 200) {
         setEditEmployee(!editEmployee)
         notify('Rolle erfolgreich aktualisiert')

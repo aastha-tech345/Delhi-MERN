@@ -5,6 +5,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import Loader from 'src/components/loader/Loader'
 import Form from 'react-bootstrap/Form'
 import PropTypes from 'prop-types'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import Select from 'react-select'
 
 const EditModal = ({ setEdit, getDetails }) => {
   let modalStyle = {
@@ -17,7 +20,11 @@ const EditModal = ({ setEdit, getDetails }) => {
     setEdit: PropTypes.func.isRequired,
     getDetails: PropTypes.func.isRequired,
   }
-
+  const Anrede = [
+    { value: 'herr', label: 'Herr' },
+    { value: 'frau', label: 'Frau' },
+    { value: 'divers', label: 'Divers' },
+  ]
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('ContactEditDetails')
   let response = JSON.parse(res)
@@ -36,6 +43,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     title: response?.title,
     address: response?.address,
     land: response?.land,
+    salution: response?.salution,
     // customer_id: result?._id,
   })
 
@@ -58,6 +66,14 @@ const EditModal = ({ setEdit, getDetails }) => {
     const newValue = type === 'radio' ? e.target.value : e.target.value
 
     setData({ ...data, [e.target.name]: newValue })
+  }
+
+  const handleChangePhone = (e) => {
+    setData({ ...data, phone: e })
+  }
+
+  const handleChangeMobile = (e) => {
+    setData({ ...data, mobile: e })
   }
 
   const close = () => {
@@ -83,6 +99,12 @@ const EditModal = ({ setEdit, getDetails }) => {
       }
       if (!email) {
         return toast.error('Ungültige E-Mail')
+      }
+      if (data.phone && data.phone.match(/000/)) {
+        return toast.warning('Ungültige Telefonnummer')
+      }
+      if (data.mobile && data.mobile.match(/000/)) {
+        return toast.warning('Ungültige Telefonnummer')
       }
       const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, dataa)
       if (res.status === 200) {
@@ -131,6 +153,19 @@ const EditModal = ({ setEdit, getDetails }) => {
           </div> */}
           <Form noValidate validated={validated}>
             <div className="row p-3 modal-body modal-form">
+              {/* <div className="row mb-3">
+                <label className="col-sm-3 col-form-label">Anrede</label>
+                <div className="col-sm-9">
+                  <Select
+                    className="w-100"
+                    options={Anrede}
+                    onChange={handleChange}
+                    value={data.salution}
+                    name="salution"
+                    placeholder="Anrede"
+                  />
+                </div>
+              </div> */}
               <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Titel
@@ -143,7 +178,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     placeholder="Titel"
                     className="form-control"
-                    id="inputPassword"
                     required={true}
                   />
                 </div>
@@ -161,7 +195,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     placeholder="Vorname"
                     className="form-control"
-                    id="inputPassword"
                   />
                 </div>
               </div>
@@ -177,7 +210,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     placeholder="Nachname"
                     className="form-control"
-                    id="inputPassword"
                   />
                   {/* {error && data.lname.trim().length === 0 && (
                     <p style={{ color: 'red' }}>
@@ -199,7 +231,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     placeholder="Adresszusatz"
                     className="form-control"
-                    id="inputPassword"
                     required={true}
                   />
                 </div>
@@ -216,54 +247,42 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     placeholder="Straße + Nr"
                     className="form-control"
-                    id="inputPassword"
                     required={true}
                   />
                 </div>
               </div>
 
-              <div className="row">
+              <div className="row mb-3">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Telefon
                 </label>
                 <div className="col-sm-9">
-                  <input
+                  <PhoneInput
                     name="telephone"
                     value={data.telephone}
-                    onChange={(e) => {
-                      const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                      if (/^\+?[0-9]*$/.test(inputValue)) {
-                        handleChange({ target: { name: 'telephone', value: inputValue } })
-                      }
-                    }}
+                    onChange={handleChangePhone}
                     type="tel"
                     placeholder="Telefon"
-                    className="form-control"
                     id="inputTelephone"
-                    maxLength={10}
+                    maxLength={20}
                     minLength={3}
                   />
                 </div>
               </div>
-              <div className="row">
+              <div className="row mb-3">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Mobil
                 </label>
                 <div className="col-sm-9">
-                  <input
+                  <PhoneInput
                     type="tel"
                     name="mobile"
                     value={data.mobile}
-                    onChange={(e) => {
-                      const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                      if (/^\+?[0-9]*$/.test(inputValue)) {
-                        handleChange({ target: { name: 'mobile', value: inputValue } })
-                      }
-                    }}
+                    onChange={handleChangeMobile}
                     placeholder="835-456-8464"
-                    className="form-control"
-                    id="inputPassword"
                     required={true}
+                    maxLength={20}
+                    minLength={3}
                   />
                 </div>
               </div>
@@ -277,10 +296,17 @@ const EditModal = ({ setEdit, getDetails }) => {
                     type="text"
                     name="plz"
                     value={data.plz}
-                    onChange={handleChange}
+                    // onChange={handleChange}
+                    onChange={(e) => {
+                      const inputValue = e.target.value
+                      if (/[^0-9]/.test(inputValue)) {
+                        handleChange({ target: { name: 'plz', value: inputValue } })
+                      }
+                    }}
+                    maxLength={10}
+                    minLength={3}
                     placeholder="PLZ"
                     className="form-control"
-                    id="inputPassword"
                     required={true}
                   />
                 </div>
@@ -298,7 +324,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleChange}
                     placeholder="Ort"
                     className="form-control"
-                    id="inputPassword"
                     required={true}
                   />
                 </div>
@@ -312,7 +337,17 @@ const EditModal = ({ setEdit, getDetails }) => {
                     type="land"
                     name="land"
                     value={data.land}
-                    onChange={handleChange}
+                    // onChange={handleChange}
+                    // onChange={(e) => {
+                    //   const inputValue = e.target.value.trim()
+                    //   if (/[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/.test(inputValue)) {
+                    //     handleChange({ target: { name: 'land', value: inputValue } })
+                    //   }
+                    // }}
+                    onChange={(e) => {
+                      const inputValue = e.target.value.replace(/[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                      handleChange({ target: { name: 'land', value: inputValue } })
+                    }}
                     placeholder="Land"
                     className="form-control"
                   />
@@ -331,7 +366,6 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleEmailChange}
                     placeholder="E-Mail"
                     className="form-control"
-                    id="inputPassword"
                   />
                 </div>
               </div>

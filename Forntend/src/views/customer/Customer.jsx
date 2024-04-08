@@ -30,7 +30,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
     } else if (name === 'Kontakte') {
       localStorage.setItem('tabId', 'contact')
       return navigate('/customer/contact')
-    } else if (name === 'Aktivitat') {
+    } else if (name === 'Aktivität') {
       localStorage.setItem('tabId', 'activity')
       return navigate('/customer/activity')
     } else if (name === 'Dokumente') {
@@ -59,7 +59,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
   const formattedDate = date.toLocaleDateString('en-IN', options).replace(/\//g, '.')
 
-  console.log(formattedDate)
+  // console.log(formattedDate)
 
   const firstName =
     customerInfo?.customer?.fname?.slice(0, 1).toUpperCase() +
@@ -67,23 +67,25 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   const lastName =
     customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
     customerInfo?.customer?.lname?.slice(1).toLowerCase()
+
+  console.log(customerInfo?.customer?.street?.length)
   let street =
-    (customerInfo?.customer?.street?.length
+    (customerInfo?.customer?.street?.length > 1
       ? customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
         customerInfo?.customer?.street?.slice(1).toLowerCase() +
-        ',  ' +
-        '  '
-      : ' ') +
-    customerInfo?.customer?.plz +
-    '  ' +
-    customerInfo?.customer?.land
+        ',  '
+      : '') +
+    (customerInfo?.customer?.street
+      ? customerInfo?.customer?.plz + '  ' + customerInfo?.customer?.land
+      : '')
+
   const getRecordById = async () => {
     const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
     const updatedData = await response.json()
-    console.log('data', updatedData)
+    // console.log('data', updatedData)
     setCustomerInfo(updatedData)
   }
-  console.log('firstcustomerInfo', customerInfo?.customer?.land)
+  // console.log('firstcustomerInfo', customerInfo?.customer?.land)
   useEffect(() => {
     getRecordById()
   }, [updateData, updateStreet, updateLand])
@@ -271,7 +273,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       role="tab"
                       aria-controls="activity"
                       aria-selected={activeTab === 'activity'}
-                      onClick={(e) => handleTabClick('activity', 'Aktivitat', e)}
+                      onClick={(e) => handleTabClick('activity', 'Aktivität', e)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -289,7 +291,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                           </clipPath>
                         </defs>
                       </svg>
-                      <span> Aktivitat</span>
+                      <span> Aktivität</span>
                     </button>
                     <button
                       className={`nav-link ${activeTab === 'document' ? 'active' : ''}`}

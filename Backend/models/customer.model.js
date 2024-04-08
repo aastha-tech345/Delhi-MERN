@@ -9,7 +9,7 @@ function getCurrentDate() {
 }
 const orderingMaterialsSchema = {
   orderNumber: { type: String, default: "" },
-  newsletterDate: { type: String, default: getCurrentDate },
+  newsletterDate: { type: String },
   extras: { type: String, default: "" },
   newsletterSubscription: { type: String },
 };
@@ -55,11 +55,11 @@ const customerDeliverySchema = {
 const customerDepositSchema = {
   deposit: { type: Boolean, default: false },
   emergencyPass: { type: Boolean, default: false },
-  reminderStamp: { type: String, default: getCurrentDate },
-  updateStamp: { type: String, default: getCurrentDate },
-  nextBrand: { type: String, default: getCurrentDate },
-  lastStamp: { type: String, default: getCurrentDate },
-  startDeposit: { type: String, default: getCurrentDate },
+  reminderStamp: { type: String },
+  updateStamp: { type: String },
+  nextBrand: { type: String },
+  lastStamp: { type: String },
+  startDeposit: { type: String },
 };
 
 const customerBurialSchema = {
@@ -73,7 +73,7 @@ const customerInfo = {
   fname: { type: String },
   lname: { type: String },
   phone: { type: String },
-  email: { type: String},
+  email: { type: String },
   plz: { type: String, default: " " },
   city: { type: String, default: " " },
   street: { type: String, default: " " },
