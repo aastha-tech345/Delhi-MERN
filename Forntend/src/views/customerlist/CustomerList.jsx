@@ -294,6 +294,18 @@ const CustomerList = () => {
   ]
   let a = localStorage.getItem('tabId') || 'customer_info'
   // console.log('aastha', a)
+  const handleChangeStreet = (event) => {
+    setStreet(event.target.value)
+  }
+
+  const handleBlur = () => {
+    let formattedAddress = street
+    const endsWithNumber = /\d$/.test(street)
+    if (endsWithNumber) {
+      formattedAddress = street.replace(/(\D)(\d)/, '$1 $2')
+    }
+    setStreet(formattedAddress)
+  }
 
   const editRecord = (record) => {
     if (record) {
@@ -708,9 +720,7 @@ const CustomerList = () => {
     }
     setStartDate(e)
   }
-  const handleBlur = () => {
-    setIsTyping(false)
-  }
+
   return (
     <>
       <div>
@@ -856,16 +866,21 @@ const CustomerList = () => {
 
                         // required={true}
                       /> */}
+                      {/* <input
+                        value={street}
+                      
+                        onChange={(e) => {
+                          setStreet(e.target.value)
+                        }}
+                        onBlur={handleBlur}
+                        type="text"
+                        placeholder="Straße mit Hausnummer"
+                        className="form-control"
+                      /> */}
                       <input
                         value={street}
-                        onChange={(e) => {
-                          const value = e.target.value
-                          let newValue = value
-                          if (/^\d+$/.test(value.slice(-1))) {
-                            newValue = value.replace(/(\D)(\d+)$/, '$1 $2')
-                          }
-                          setStreet(newValue)
-                        }}
+                        onChange={handleChangeStreet}
+                        onBlur={handleBlur}
                         type="text"
                         placeholder="Straße mit Hausnummer"
                         className="form-control"

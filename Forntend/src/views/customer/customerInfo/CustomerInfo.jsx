@@ -193,6 +193,19 @@ const CustomerInfo = () => {
     { value: 'frau', label: 'Frau' },
     { value: 'divers', label: 'Divers' },
   ]
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+    let formattedAddress = value
+    const endsWithNumber = /\d$/.test(value)
+    if (endsWithNumber) {
+      formattedAddress = value.replace(/(\D)(\d)/, '$1 $2')
+    }
+
+    setCustomerDelivery({
+      ...customerDelivery,
+      [name]: formattedAddress,
+    })
+  }
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
       setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: e })
@@ -996,12 +1009,23 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Straße mit Hausnummer</label>
                         <div className="col-sm-6">
-                          <input
+                          {/* <input
                             type="text"
-                            onChange={DeliveryChange}
+                            onChange={DeliveryChangeAddress}
                             name="address"
                             placeholder="Straße mit Hausnummer"
                             value={customerDelivery?.address}
+                            className="form-control"
+                          /> */}
+                          <input
+                            type="text"
+                            onChange={(e) =>
+                              setCustomerDelivery({ ...customerDelivery, address: e.target.value })
+                            }
+                            onBlur={handleBlur}
+                            name="address"
+                            placeholder="Straße mit Hausnummer"
+                            value={customerDelivery.address}
                             className="form-control"
                           />
                         </div>
