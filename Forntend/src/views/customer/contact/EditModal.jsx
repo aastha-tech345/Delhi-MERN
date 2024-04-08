@@ -69,7 +69,7 @@ const EditModal = ({ setEdit, getDetails }) => {
   }
 
   const handleChangePhone = (e) => {
-    setData({ ...data, phone: e })
+    setData({ ...data, telephone: e })
   }
 
   const handleChangeMobile = (e) => {
@@ -100,7 +100,7 @@ const EditModal = ({ setEdit, getDetails }) => {
       if (!email) {
         return toast.error('Ungültige E-Mail')
       }
-      if (data.phone && data.phone.match(/000/)) {
+      if (data.telephone && data.telephone.match(/000/)) {
         return toast.warning('Ungültige Telefonnummer')
       }
       if (data.mobile && data.mobile.match(/000/)) {

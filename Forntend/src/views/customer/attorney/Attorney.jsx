@@ -271,11 +271,17 @@ const Attorney = () => {
     customer_id: resultt?._id,
   }
   const saveData = async () => {
-    if (healthCare.healthCare_phone && healthCare.healthCare_phone.match(/000/)) {
-      return toast.warning('Ungültige Telefonnummer')
-    }
-    if (healthCare.healthCare_mobile && healthCare.healthCare_mobile.match(/000/)) {
-      return toast.warning('Ungültige Telefonnummer')
+    const healthCareData = data.healthCare.healthCareData
+
+    // Phone and mobile number validation
+    const phoneRegex = /000/
+    for (const record of healthCareData) {
+      if (record.healthCare_phone && record.healthCare_phone.match(phoneRegex)) {
+        return toast.warning('Ungültige Telefonnummer')
+      }
+      if (record.healthCare_mobile && record.healthCare_mobile.match(phoneRegex)) {
+        return toast.warning('Ungültige Mobilnummer')
+      }
     }
     try {
       let url
@@ -542,15 +548,15 @@ const Attorney = () => {
                               <div className=" row">
                                 <div className="col-sm-12">
                                   <PhoneInput
-                                    isValid={(value, country) => {
-                                      if (value.match(/000/)) {
-                                        return 'Invalid phone'
-                                      } else if (value.match(/000/)) {
-                                        return false
-                                      } else {
-                                        return true
-                                      }
-                                    }}
+                                    // isValid={(value, country) => {
+                                    //   if (value.match(/000/)) {
+                                    //     return 'Invalid phone'
+                                    //   } else if (value.match(/000/)) {
+                                    //     return false
+                                    //   } else {
+                                    //     return true
+                                    //   }
+                                    // }}
                                     onChange={(e) => healthCareChange(e, index, 'healthCare_phone')}
                                     value={String(field.healthCare_phone)}
                                     name="healthCare_phone"
@@ -569,15 +575,15 @@ const Attorney = () => {
                               <div className=" row">
                                 <div className="col-sm-12">
                                   <PhoneInput
-                                    isValid={(value, country) => {
-                                      if (value.match(/000/)) {
-                                        return 'Invalid mobile'
-                                      } else if (value.match(/000/)) {
-                                        return false
-                                      } else {
-                                        return true
-                                      }
-                                    }}
+                                    // isValid={(value, country) => {
+                                    //   if (value.match(/000/)) {
+                                    //     return 'Invalid mobile'
+                                    //   } else if (value.match(/000/)) {
+                                    //     return false
+                                    //   } else {
+                                    //     return true
+                                    //   }
+                                    // }}
                                     onChange={(e) =>
                                       healthCareChange(e, index, 'healthCare_mobile')
                                     }
