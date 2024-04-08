@@ -127,6 +127,7 @@ const Contact = () => {
     street: '',
     title: '',
     address: '',
+    salution: '',
   })
   let customer_id = record?._id
   let added_by = loginData?.user?._id
@@ -210,9 +211,9 @@ const Contact = () => {
 
   const saveData = async () => {
     // console.log('ashish', TotalData)
-    if (!email) {
-      return toast.error('Ungültige E-Mail')
-    }
+    // if (!email) {
+    //   return toast.error('Ungültige E-Mail')
+    // }
     if (!data.fname || !data.lname) {
       return toast.warning('Bitte geben Sie Fname und Lname ein')
     }
@@ -285,7 +286,7 @@ const Contact = () => {
     if (contactRecord && contactRecord.length > 0) {
       const updatedData = contactRecord.map((item) => ({
         ...item,
-        remarks: customerInfo?.customerInfoStatu?.remarks || '',
+        remarks: customerInfo?.customerInfoStatu?.remarks,
         // remarks: 'hjhgshf',
       }))
       setCombinedData(updatedData)
@@ -420,7 +421,7 @@ const Contact = () => {
                           className="w-100"
                           options={Anrede}
                           onChange={handleChangeSalution}
-                          value={customerInfo?.customer?.salution}
+                          value={data.salution}
                           name="salution"
                           placeholder="Anrede"
                         />
