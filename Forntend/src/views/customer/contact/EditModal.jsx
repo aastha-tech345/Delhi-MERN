@@ -50,6 +50,9 @@ const EditModal = ({ setEdit, getDetails }) => {
   const [email, setEmail] = useState(response?.email)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadVale] = useState(false)
+  const handleChangeSalution = (e) => {
+    setData({ ...data, salution: e })
+  }
 
   const handleEmailChange = (e) => {
     const inputValue = e.target.value
@@ -153,19 +156,19 @@ const EditModal = ({ setEdit, getDetails }) => {
           </div> */}
           <Form noValidate validated={validated}>
             <div className="row p-3 modal-body modal-form">
-              {/* <div className="row mb-3">
+              <div className="row mb-3">
                 <label className="col-sm-3 col-form-label">Anrede</label>
                 <div className="col-sm-9">
                   <Select
                     className="w-100"
                     options={Anrede}
-                    onChange={handleChange}
+                    onChange={handleChangeSalution}
                     value={data.salution}
                     name="salution"
                     placeholder="Anrede"
                   />
                 </div>
-              </div> */}
+              </div>
               <div className="row">
                 <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                   Titel
