@@ -59,7 +59,7 @@ const DeleteModal = ({ setHide, contactId, getDetails }) => {
 
             <Modal.Title>
               <svg
-                style={{ marginLeft: '200px', marginTop: '25px' }}
+                style={{ marginLeft: '40%', marginTop: '25px' }}
                 width="44"
                 height="53"
                 viewBox="0 0 44 53"
@@ -93,11 +93,11 @@ const DeleteModal = ({ setHide, contactId, getDetails }) => {
               </svg>
               <br />
               <br />
-              <h4 style={{ marginLeft: '150px', color: 'black' }}>Sind Sie sicher?</h4>
+              <h4>Sind Sie sicher?</h4>
             </Modal.Title>
             <Modal.Body>
               <p style={{ textAlign: 'center' }}>
-                Dieser Vorgang kann nicht  rückgängig gemacht werden.
+                Dieser Vorgang kann nicht rückgängig gemacht werden.
               </p>
             </Modal.Body>
             <Modal.Footer>
