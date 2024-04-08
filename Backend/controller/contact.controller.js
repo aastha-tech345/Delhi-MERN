@@ -50,7 +50,7 @@ exports.getContact = async (req, res) => {
 
     const apiFeatures = new ApiFeatures(
       ContactInfomation.Contact.find({
-        // customer_id: req.params.first,
+        customer_id: req.params.first,
         // added_by: req.params.second,
         status: { $ne: "deleted" },
       }),

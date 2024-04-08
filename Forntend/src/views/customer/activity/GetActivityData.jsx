@@ -26,7 +26,7 @@ const GetActivityData = ({ updateData, search }) => {
   }
   let ress = localStorage.getItem('record')
   let resultt = JSON.parse(ress)
-  console.log('aast', resultt?.user?.username)
+  // console.log('aast', resultt?.user?.username)
   let user = resultt?.user?.username
   GetActivityData.propTypes = {
     search: PropTypes.array.isRequired,
@@ -60,7 +60,7 @@ const GetActivityData = ({ updateData, search }) => {
 
       // setGetActivity(res.data.data)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
   const getEmployeeData = async () => {
@@ -74,7 +74,7 @@ const GetActivityData = ({ updateData, search }) => {
       console.error('Error fetching customer record:', error)
     }
   }
-  console.log('eemployeeData', employeeData)
+  // console.log('eemployeeData', employeeData)
   useEffect(() => {
     getData()
     getEmployeeData()

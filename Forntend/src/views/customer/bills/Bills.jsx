@@ -10,8 +10,8 @@ const Bills = () => {
   const [recordData, setRecordData] = useState([])
   let res = localStorage.getItem('customerRecord')
   let resultt = JSON.parse(res)
-  console.log('first', resultt?._id)
-  console.log('invoice', recordData?.colleague)
+  // console.log('first', resultt?._id)
+  // console.log('invoice', recordData?.colleague)
   const navigate = useNavigate()
   const apiUrl = process.env.REACT_APP_API_URL
   const [employeeData, setEmployeeData] = useState([])
@@ -70,7 +70,7 @@ const Bills = () => {
       toast.success('Rechnungsdaten erfolgreich gespeichert')
     } catch (error) {
       toast.error('Bitte füllen Sie alle Angaben aus')
-      console.error('Error during API call:', error)
+      // console.error('Error during API call:', error)
     }
   }
 
@@ -107,7 +107,7 @@ const Bills = () => {
       const response = await fetch(`${apiUrl}/customer/get_record/${resultt._id}`)
 
       const data = await response.json()
-      console.log('data', data)
+      // console.log('data', data)
       setCustomerInfo(data)
     } catch (error) {
       console.error('Error fetching employee data:', error)
@@ -123,7 +123,7 @@ const Bills = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  console.log('recorddata', recordData)
+  // console.log('recorddata', recordData)
   // console.log('first', customerInfo?.customerDelivery?.alreadyPaid)
   useEffect(() => {
     getRecord()

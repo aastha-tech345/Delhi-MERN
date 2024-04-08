@@ -33,7 +33,7 @@ exports.getDocument = async (req, res) => {
 
     const apiFeatures = new ApiFeatures(
       DocumentInfo.Document.find({
-        // customer_id: req.params.id,
+        customer_id: req.params.id,
         is_deleted: { $ne: "deleted" },
       }),
       req.query

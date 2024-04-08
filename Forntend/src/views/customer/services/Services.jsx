@@ -525,7 +525,7 @@ const Services = () => {
     customer_id: resultt?._id,
   }
   const saveData = async () => {
-    console.log('data', data)
+    // console.log('data', data)
     try {
       // Check if at least one field is filled
       const sections = [motivation, scope]
@@ -563,8 +563,8 @@ const Services = () => {
       }
 
       let result = await response.json()
-      console.log('aastha', result)
-      toast.success('SPV-Daten erfolgreich gespeichert')
+      // console.log('aastha', result)
+      toast.success('Daten erfolgreich gespeichert')
 
       // Reset all state variables to initial values
       // resetStateVariables()
@@ -586,7 +586,7 @@ const Services = () => {
   useEffect(() => {
     getRecord()
   }, [])
-  console.log('0', recordData)
+  // console.log('0', recordData)
   useEffect(() => {
     setMotivation({
       determination: recordData?.motivation?.determination,
@@ -2056,17 +2056,17 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Einschränkungen',
-      field2: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={restrictions.restrictions === 'ja'}
-            name="restrictions"
-            onChange={handleRestrictionsChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
+      field11: 'Einschränkungen',
+      field22: (
+        <textarea
+          className="borderless-input w-100"
+          style={{ height: '50px' }}
+          type="text"
+          value={restrictions.restrictions}
+          name="restrictions"
+          onChange={handleRestrictionsChange}
+          placeholder="Einschränkungen"
+        />
       ),
       field3: '',
     },
@@ -2169,11 +2169,7 @@ const Services = () => {
     },
     { hr: true },
     {
-      field1: (
-        <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Tod
-        </h3>
-      ),
+      field1: <h3 style={{ color: '#244D92' }}>Tod</h3>,
     },
     {
       field1: 'Ende des Lebens',
@@ -2245,7 +2241,7 @@ const Services = () => {
     {
       field11: 'Tod',
       field22: (
-        <input
+        <textarea
           type="text"
           className="borderless-input w-100"
           style={{ height: '50px' }}
@@ -2317,17 +2313,26 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Sterben-Wünsche',
-      field2: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={dyingwishes.dying_wishes === 'ja'}
-            name="dying_wishes"
-            onChange={handleDyingwishesChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
+      field11: 'Sterben-Wünsche',
+      field22: (
+        // <div className="radio-check-wrap">
+        //   <input
+        //     type="checkbox"
+        //     checked={dyingwishes.dying_wishes === 'ja'}
+        //     name="dying_wishes"
+        //     onChange={handleDyingwishesChange}
+        //   />
+        //   <span style={{ color: '#FFFFFF' }}>ja</span>
+        // </div>
+        <input
+          type="text"
+          className="borderless-input w-100"
+          style={{ height: '50px' }}
+          value={dyingwishes.dying_wishes}
+          placeholder="Sterben-Wünsche"
+          name="dying_wishes"
+          onChange={handleDyingwishesChange}
+        />
       ),
     },
     { hr: true },
@@ -2678,7 +2683,7 @@ const Services = () => {
                         />{' '}
                         <span>ja</span>
                       </div>
-                      <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                      {/* <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
                           checked={atorney.forms === 'no'}
@@ -2687,7 +2692,7 @@ const Services = () => {
                           value="no"
                         />{' '}
                         <span>nein</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="col-md-3">Betreuungsverfügung</div>
                     <div className="col-md-3 d-flex">
@@ -2701,7 +2706,7 @@ const Services = () => {
                         />{' '}
                         <span>ja</span>
                       </div>
-                      <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                      {/* <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
                           checked={atorney.careOrder === 'no'}
@@ -2710,7 +2715,7 @@ const Services = () => {
                           value="no"
                         />{' '}
                         <span>nein</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   <hr />
@@ -2728,7 +2733,7 @@ const Services = () => {
                         />{' '}
                         <span>ja</span>
                       </div>
-                      <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                      {/* <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
                           checked={fee.regular === 'no'}
@@ -2737,7 +2742,7 @@ const Services = () => {
                           value="no"
                         />{' '}
                         <span>nein</span>
-                      </div>
+                      </div> */}
                     </div>
 
                     <div className="col-md-3 mb-1">Ermäßigt</div>
@@ -2752,7 +2757,7 @@ const Services = () => {
                         />{' '}
                         <span>ja</span>
                       </div>
-                      <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                      {/* <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
                           checked={fee.reduced === 'no'}
@@ -2761,7 +2766,7 @@ const Services = () => {
                           value="no"
                         />{' '}
                         <span>nein</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="row">
                       <div className="col-sm-3 mt-2">Weitere Angaben</div>
@@ -3018,7 +3023,7 @@ const Services = () => {
                       </div>
                     </div>
                   </div>
-                  <br />
+                  <hr />
                   <div className="row mx-1 mb-3">
                     <div className="col-md-3">Datenschutz</div>
                     <div className="col-md-3 d-flex">
@@ -3032,7 +3037,7 @@ const Services = () => {
                         />{' '}
                         <span>ja</span>
                       </div>
-                      <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                      {/* <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
                           checked={information.dataProtection === 'no'}
@@ -3041,10 +3046,10 @@ const Services = () => {
                           value="no"
                         />{' '}
                         <span>nein</span>
-                      </div>
+                      </div> */}
                     </div>
 
-                    <div className="col-md-3">Hinterlegung</div>
+                    <div className="col-md-3">Hinterlegung gewünscht</div>
                     <div className="col-md-3 d-flex">
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input

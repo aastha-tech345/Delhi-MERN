@@ -14,6 +14,9 @@ import { RiDeleteBinLine } from 'react-icons/ri'
 import { FiFilter } from 'react-icons/fi'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import PrintModal from './PrintModal'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import Select from 'react-select'
 
 const Contact = () => {
   let lgUser = localStorage.getItem('record')
@@ -24,26 +27,24 @@ const Contact = () => {
 
   let customerRecord = localStorage.getItem('customerRecord')
   let record = JSON.parse(customerRecord)
-  let status = record.status
-
+  // console.log('record', record)
+  let remarksData = record?.customerInfo?.remarks
+  const [combinedData, setCombinedData] = useState([])
+  const [customerInfo, setCustomerInfo] = useState([])
   const [validated, setValidated] = useState(false)
   const searchInputRef = useRef()
   const apiUrl = process.env.REACT_APP_API_URL
   const columns = [
     {
-      title: 'NAME DES KUNDEN',
+      title: 'VORNAME',
       dataIndex: 'fname',
       render: (text) => <a>{text?.slice(0, 1)?.toUpperCase() + text?.slice(1)?.toLowerCase()}</a>,
       width: '20%',
     },
     {
-      title: 'KUNDEN-ID',
-      dataIndex: 'id',
-      width: '20%',
-    },
-    {
-      title: 'E-MAIL',
-      dataIndex: 'email',
+      title: 'NAME',
+      dataIndex: 'lname',
+      render: (text) => <a>{text?.slice(0, 1)?.toUpperCase() + text?.slice(1)?.toLowerCase()}</a>,
       width: '20%',
     },
     {
@@ -52,42 +53,13 @@ const Contact = () => {
       width: '20%',
     },
     {
-      title: 'STATUS',
-      dataIndex: 'record.status',
-      // width: '20%',
-      render: (text, record) => (
-        <div
-          className="dm-badge"
-          style={{
-            background:
-              text === ''
-                ? '#C20F0F'
-                : text === 'HVD-PV'
-                ? '#4EB772'
-                : text === 'SPV alt'
-                ? '#4EB772'
-                : text === 'OPV alt'
-                ? '#4EB772'
-                : text === 'Dauerspenderlnner'
-                ? '#4EB772'
-                : text === 'Materialbestellung'
-                ? '#4EB772'
-                : text === 'Newsletter Abonnent'
-                ? '#4EB772'
-                : text === 'Offen'
-                ? '#4EB772'
-                : 'transparent',
-            border:
-              text === ''
-                ? '1px solid transparent'
-                : text === 'HVD-PV'
-                ? '1px solid rgba(78, 183, 114, 0.50)'
-                : '',
-          }}
-        >
-          {text === '' ? <span>PV-ALT</span> : <b>{text}</b>}
-        </div>
-      ),
+      title: 'MOBIL',
+      dataIndex: 'mobile',
+      width: '20%',
+    },
+    {
+      title: 'BEMERKUNGEN',
+      dataIndex: 'remarks',
     },
     {
       title: 'AKTION',
@@ -142,20 +114,20 @@ const Contact = () => {
 
   // const loginUser = localStorage.getItem('record')
   // const loginUserData = JSON.parse(loginUser)
-  console.log('customerId', custData?._id)
+  // console.log('customerId', custData?._id)
 
   const [data, setData] = useState({
     fname: '',
     lname: '',
     telephone: '',
     gender: '',
+    land: '',
     plz: '',
     ort: '',
     mobile: '',
     street: '',
     title: '',
     address: '',
-    // statu: '',
   })
   let customer_id = custData?._id
   let added_by = loginData?.user?._id
@@ -172,10 +144,15 @@ const Contact = () => {
   const [countPage, setCountPage] = useState(0)
   const [id, setId] = useState('')
   const [itemsPerPage, setItemsPerPage] = useState('')
+  const [salution, setSalution] = useState('')
   const generateRandomId = () => {
     return 'HVD' + Math.floor(1000 + Math.random() * 9000)
   }
-
+  const Anrede = [
+    { value: 'herr', label: 'Herr' },
+    { value: 'frau', label: 'Frau' },
+    { value: 'divers', label: 'Divers' },
+  ]
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
@@ -188,10 +165,21 @@ const Contact = () => {
     const newValue = type === 'radio' ? e.target.value : value
     setData({ ...data, [name]: newValue })
   }
+  const handleChangePhone = (e) => {
+    setData({ ...data, telephone: e })
+  }
 
+  const handleChangeMobile = (e) => {
+    setData({ ...data, mobile: e })
+  }
   const handleChangeLand = (e) => {
-    const inputValue = e.target.value.replace(/[^a-zA-Z\s'-]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
-    setLand(inputValue)
+    const inputValue = e.target.value.replace(/[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g, '')
+    setData({ ...data, land: inputValue })
+  }
+
+  const handleChangePlz = (e) => {
+    const inputValue = e.target.value.replace(/[^0-9]/g, '')
+    setData({ ...data, plz: inputValue })
   }
 
   const handleDelete = (customerId) => {
@@ -215,16 +203,25 @@ const Contact = () => {
       setEmail('')
     }
   }
+  const handleChangeSalution = (e) => {
+    setData({ ...data, salution: e })
+  }
 
-  let TotalData = { ...data, land, email, id, customer_id, added_by }
+  let TotalData = { ...data, email, id, customer_id, added_by }
 
   const saveData = async () => {
-    console.log('ashish', TotalData)
+    // console.log('ashish', TotalData)
     if (!email) {
       return toast.error('Ungültige E-Mail')
     }
     if (!data.fname || !data.lname) {
       return toast.warning('Bitte geben Sie Fname und Lname ein')
+    }
+    if (data.phone && data.phone.match(/000/)) {
+      return toast.warning('Ungültige Telefonnummer')
+    }
+    if (data.mobile && data.mobile.match(/000/)) {
+      return toast.warning('Ungültige Telefonnummer')
     }
     try {
       let response = await fetch(`${apiUrl}/contact/create_contact`, {
@@ -242,13 +239,13 @@ const Contact = () => {
 
       let result = await response.json()
       toast.success('Kontaktdaten erfolgreich erstellt')
-      console.log('result', result)
+      // console.log('result', result)
       setData('')
       setEmail('')
       handleClose()
       getDetails()
     } catch (error) {
-      // console.error('Error during API call:', error)
+      console.error('Error during API call:', error)
 
       toast.error('E-Mail-ID existiert bereits')
     }
@@ -257,10 +254,10 @@ const Contact = () => {
   const getDetails = async () => {
     try {
       const result = await fetch(
-        `${apiUrl}/contact/get_contact?page=${page}&resultPerPage=${itemsPerPage}`,
+        `${apiUrl}/contact/get_contact/${record?._id}/?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
-      console.log('data', data)
+      // console.log('data', data)
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setContactRecord(activeRecords)
@@ -268,8 +265,39 @@ const Contact = () => {
       console.error('Error fetching customer record:', error)
     }
   }
+  useEffect(() => {
+    const localStorageRemarks = JSON.parse(localStorage.getItem('customerRecord'))
 
-  console.log('contactRecord', contactRecord)
+    console.log('Contact Record:', contactRecord)
+    console.log('Local Storage Remarks:', localStorageRemarks?.customerInfoStatu?.remarks)
+
+    if (contactRecord && contactRecord.length > 0) {
+      const updatedData = contactRecord.map((item) => ({
+        ...item,
+        remarks: localStorageRemarks?.customerInfoStatu?.remarks || '',
+        // remarks: 'hjhgshf',
+      }))
+      setCombinedData(updatedData)
+    } else {
+      setCombinedData([])
+    }
+  }, [contactRecord])
+
+  console.log('Combined Data:', combinedData)
+
+  const getCustomerInfo = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/customer/get_record/${record?._id}`)
+
+      const data = await response.json()
+      // console.log('data', data)
+      setCustomerInfo(data)
+    } catch (error) {
+      console.error('Error fetching employee data:', error)
+    }
+  }
+
+  // console.log('contactRecord', contactRecord)
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(parseInt(e.target.value, 10))
     setPage(1)
@@ -309,8 +337,10 @@ const Contact = () => {
     localStorage.setItem('ContactEditDetails', recordData)
     setEdit(true)
   }
+  // console.log('aastha', customerInfo?.customer?.salution)
   useEffect(() => {
     setId(generateRandomId())
+    getCustomerInfo()
     getDetails()
   }, [page, itemsPerPage])
 
@@ -384,6 +414,19 @@ const Contact = () => {
               <Modal.Body>
                 <Form noValidate validated={validated}>
                   <div className="row inner-page-wrap">
+                    <div className="row mb-3">
+                      <label className="col-sm-3 col-form-label">Anrede</label>
+                      <div className="col-sm-9">
+                        <Select
+                          className="w-100"
+                          options={Anrede}
+                          onChange={handleChangeSalution}
+                          value={customerInfo?.customer?.salution}
+                          name="salution"
+                          placeholder="Anrede"
+                        />
+                      </div>
+                    </div>
                     <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Titel
@@ -396,7 +439,6 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="Titel"
                           className="form-control"
-                          id="inputPassword"
                           required={true}
                         />
                       </div>
@@ -414,7 +456,6 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="Vorname"
                           className="form-control"
-                          id="inputPassword"
                           required={true}
                         />
                       </div>
@@ -431,7 +472,6 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="Nachname"
                           className="form-control"
-                          id="inputPassword"
                           required={true}
                         />
                       </div>
@@ -448,7 +488,6 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="Adresszusatz"
                           className="form-control"
-                          id="inputPassword"
                           required={true}
                         />
                       </div>
@@ -465,55 +504,45 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="Straße + Nr"
                           className="form-control"
-                          id="inputPassword"
                           required={true}
                         />
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row mb-3">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Telefon
                       </label>
                       <div className="col-sm-9">
-                        <input
+                        <PhoneInput
                           type="tel"
                           name="telephone"
                           value={data.telephone}
-                          onChange={(e) => {
-                            const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                            if (/^\+?[0-9]*$/.test(inputValue)) {
-                              handleChange({ target: { name: 'telephone', value: inputValue } })
-                            }
-                          }}
+                          onChange={handleChangePhone}
                           placeholder="835-456-8464"
-                          className="form-control"
+                          // className="form-control"
                           id="inputPhone"
-                          maxLength={10}
+                          maxLength={20}
                           minLength={3}
                         />
                       </div>
                     </div>
-                    <div className="row">
+                    <div className="row mb-3">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Mobil
                       </label>
                       <div className="col-sm-9">
-                        <input
+                        <PhoneInput
                           type="tel"
                           name="mobile"
                           value={data.mobile}
-                          onChange={(e) => {
-                            const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                            if (/^\+?[0-9]*$/.test(inputValue)) {
-                              handleChange({ target: { name: 'mobile', value: inputValue } })
-                            }
-                          }}
+                          onChange={handleChangeMobile}
                           placeholder="835-456-8464"
-                          className="form-control"
-                          id="inputPassword"
+                          // className="form-control"
+
                           required={true}
-                          maxLength={30}
+                          maxLength={20}
+                          minLength={3}
                         />
                       </div>
                     </div>
@@ -527,11 +556,12 @@ const Contact = () => {
                           type="text"
                           name="plz"
                           value={data.plz}
-                          onChange={handleChange}
+                          onChange={handleChangePlz}
                           placeholder="PLZ"
                           className="form-control"
-                          id="inputPassword"
                           required={true}
+                          maxLength={10}
+                          minLength={3}
                         />
                       </div>
                     </div>
@@ -548,87 +578,83 @@ const Contact = () => {
                           onChange={handleChange}
                           placeholder="Ort"
                           className="form-control"
-                          id="inputPassword"
                           required={true}
                         />
                       </div>
                     </div>
 
-                    <div>
-                      <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                          Land
-                        </label>
-                        <div className="col-sm-9">
-                          <input
-                            type="land"
-                            name="land"
-                            value={land}
-                            onChange={handleChangeLand}
-                            placeholder="Land"
-                            className="form-control"
-                            id="inputPassword"
-                          />
-                        </div>
+                    <div className="row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Land
+                      </label>
+                      <div className="col-sm-9">
+                        <input
+                          type="land"
+                          name="land"
+                          // onChange={handleChangeLand}
+                          value={data.land}
+                          onChange={(e) => {
+                            const inputValue = e.target.value.replace(/[^a-zA-ZäöüÄÖÜß\s'-]/g, '') // removed 9 and special characters
+                            handleChange({ target: { name: 'land', value: inputValue } })
+                          }}
+                          placeholder="Land"
+                          className="form-control"
+                        />
                       </div>
-                      <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                          E-Mail
-                        </label>
-                        <div className="col-sm-9">
-                          <input
-                            type="email"
-                            name="email"
-                            // value={email}
-                            onChange={handleEmailChange}
-                            placeholder="info@gmail.com"
-                            className="form-control"
-                            id="inputPassword"
-                          />
-                        </div>
+                    </div>
+                    <div className="row">
+                      <label className="col-sm-3 col-form-label">E-Mail</label>
+                      <div className="col-sm-9">
+                        <input
+                          type="email"
+                          name="email"
+                          // value={email}
+                          onChange={handleEmailChange}
+                          placeholder="info@gmail.com"
+                          className="form-control"
+                        />
                       </div>
+                    </div>
+                    <div className="mb-6 row">
+                      <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                        Geschlecht
+                      </label>
+                      <div className="col-sm-9 mt-1">
+                        {/* <div className="d-flex"> */}
+                        <div className="radio-wrap">
+                          <div className="radio-input">
+                            <input
+                              type="radio"
+                              id="male"
+                              value="male"
+                              name="gender"
+                              onChange={handleChange}
+                              checked={data.gender === 'male'}
+                            />
+                            <span>Männlich</span>
+                          </div>
 
-                      <div className="mb-6 row">
-                        <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
-                          Geschlecht
-                        </label>
-                        <div className="col-sm-8 mt-1">
-                          {/* <div className="d-flex"> */}
-                          <div className="radio-wrap">
-                            <div className="radio-input">
-                              <input
-                                type="radio"
-                                id="male"
-                                value="male"
-                                name="gender"
-                                onChange={handleChange}
-                                checked={data.gender === 'male'}
-                              />
-                              <span>Männlich</span>
-                            </div>
-
-                            <div className="radio-input">
-                              <input
-                                type="radio"
-                                id="female"
-                                value="female"
-                                name="gender"
-                                onChange={handleChange}
-                                checked={data.gender === 'female'}
-                              />
-                              <span>Weiblich</span>
-                            </div>
-                            <div className="radio-input">
-                              <input
-                                type="radio"
-                                id="divers"
-                                value="other"
-                                name="gender"
-                                onChange={handleChange}
-                                checked={data.gender === 'other'}
-                              />
-                              <span>Divers</span>
-                            </div>
+                          <div className="radio-input">
+                            <input
+                              type="radio"
+                              id="female"
+                              value="female"
+                              name="gender"
+                              onChange={handleChange}
+                              checked={data.gender === 'female'}
+                            />
+                            <span>Weiblich</span>
+                          </div>
+                          <div className="radio-input">
+                            <input
+                              type="radio"
+                              id="divers"
+                              value="other"
+                              name="gender"
+                              onChange={handleChange}
+                              checked={data.gender === 'other'}
+                            />
+                            <span>Divers</span>
                           </div>
                         </div>
                       </div>
@@ -673,7 +699,7 @@ const Contact = () => {
         <Divider />
         <div className="responsive-table-container">
           <Table
-            dataSource={dataa}
+            dataSource={combinedData}
             columns={columns}
             pagination={false}
             responsive
@@ -681,7 +707,7 @@ const Contact = () => {
             rowSelection={{
               type: 'checkbox',
               onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
               },
               getCheckboxProps: (record) => ({
                 disabled: record.name === 'Disabled User',

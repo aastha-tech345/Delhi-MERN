@@ -5,7 +5,7 @@ import { Table } from 'antd'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import Select from 'react-select'
-
+import { FaEye } from 'react-icons/fa'
 import { postFetchUser } from 'src/Api'
 import DeleteModal from './DeleteModal'
 import Customer from '../Customer'
@@ -14,13 +14,19 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import { RiDeleteBinLine } from 'react-icons/ri'
+import ViewModel from './ViewModel'
 
 const Document = () => {
   let lgUser = localStorage.getItem('record')
   let loginData = JSON.parse(lgUser)
+  let ress = localStorage.getItem('customerRecord')
+  // //console.log(ress)
+  let resultt = JSON.parse(ress)
+  // console.log('lguser', resultt?._id)
 
   const notify = (dataa) => toast(dataa)
   const [edit, setEdit] = useState(false)
+  const [view, setView] = useState(false)
   const columns = [
     {
       title: 'DOKUMENTENTYP',
@@ -32,7 +38,18 @@ const Document = () => {
       render: (text) => <a>{text}</a>,
       width: '20%',
     },
-
+    {
+      title: 'DATUM',
+      dataIndex: 'created_at',
+      render: (text) => {
+        const date = new Date(text)
+        const day = date.getDate().toString().padStart(2, '0')
+        const month = (date.getMonth() + 1).toString().padStart(2, '0')
+        const year = date.getFullYear()
+        return <a>{`${day}.${month}.${year}`}</a>
+      },
+      width: '20%',
+    },
     // {
     //   title: 'DOKUMENTEN',
     //   dataIndex: 'document_upload',
@@ -46,6 +63,21 @@ const Document = () => {
       dataIndex: 'action',
       render: (_, record) => (
         <>
+          {/* {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
+          verifyEditPer().includes('yes') ||
+          loginData?.user?.isAdminFullRights === 'true' ? ( */}
+          <>
+            <button
+              style={{ background: 'none', border: 'none' }}
+              onClick={() => handleShowDoc(record)}
+            >
+              <FaEye className="fs-5" style={{ color: '#5C86B4' }} />
+              &nbsp;&nbsp;Anzeigen
+            </button>
+          </>
+          {/* ) : (
+            ''
+          )} */}
           {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
           verifyEditPer().includes('yes') ||
           loginData?.user?.isAdminFullRights === 'true' ? (
@@ -141,7 +173,7 @@ const Document = () => {
   }
 
   const removeDocument = (index) => {
-    console.log('ashindex', document_upload)
+    // console.log('ashindex', document_upload)
     const newDocumentUpload = [...document_upload]
     newDocumentUpload.splice(index, 1)
     setDocumentUpload(newDocumentUpload)
@@ -157,6 +189,11 @@ const Document = () => {
     // console.log(`Deleting customer with ID: ${documentId}`)
     setDocumentId(documentId)
     setHide(true)
+  }
+  const handleShowDoc = async (record) => {
+    let recordData = JSON.stringify(record)
+    localStorage.setItem('DocumentEditDetails', recordData)
+    setView(true)
   }
 
   const saveData = async (e) => {
@@ -181,7 +218,7 @@ const Document = () => {
       // const url = `${apiUrl}/document/create_document?page=${page}`
       // console.log(url)
       const response = await postFetchUser(url, myForm)
-      console.log('ashishdocu', response)
+      // console.log('ashishdocu', response)
       notify('Dokumentdaten erfolgreich gespeichert')
       setData({
         document_title: '',
@@ -195,14 +232,10 @@ const Document = () => {
     }
   }
 
-  const cancelData = () => {
-    setDocumentUpload([])
-  }
-
   const getDetails = async () => {
     try {
       const result = await fetch(
-        `${apiUrl}/document/get_document?page=${page}&resultPerPage=${itemsPerPage}`,
+        `${apiUrl}/document/get_document/${resultt?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
       setCountPage(data?.pageCount)
@@ -243,6 +276,7 @@ const Document = () => {
         ''
       )}
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
+      {view ? <ViewModel setView={setView} getDetails={getDetails} /> : ''}
       <Customer />
       <h5 className="mx-3">Dokumente</h5>
       <hr className="mx-3" />
@@ -274,11 +308,11 @@ const Document = () => {
 
             // style={{ height: '800px !important' }}
           >
-            <Modal.Header closeButton className="border-0 p-3 pb-0">
-              <Modal.Title className="modal-title">Details zum Dokument</Modal.Title>
+            <Modal.Header closeButton>
+              <Modal.Title>Details zum Dokument</Modal.Title>
             </Modal.Header>
-            <Modal.Body className="pb-0">
-              <div className="modal-body modal-form-wrap">
+            <Modal.Body>
+              <div className="modal-body modal-form-wrap" style={{ padding: '0px' }}>
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-md-3">
@@ -300,7 +334,7 @@ const Document = () => {
 
                   <div className="row mb-3">
                     <div className="col-md-3">
-                      <label htmlFor="documentType">Dokumententyp</label>
+                      <label>Dokumententyp</label>
                     </div>
                     <div className="col-md-9">
                       <Select
@@ -483,7 +517,18 @@ const Document = () => {
                 </div>
               </div>
             </Modal.Body>
-            <Modal.Footer className="border-top-0 p-3 pt-0 mt-3">
+            {/* <Modal.Footer className="border-top-0 p-3 pt-0 mt-3">
+              <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
+                <button className="btn btn-cancel" onClick={handleClose}>
+                  {' '}
+                  Abbrechen
+                </button>
+                <button className="btn btn-save ms-3" onClick={saveData}>
+                  Speichern
+                </button>
+              </div>
+            </Modal.Footer> */}
+            <Modal.Footer>
               <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
                 <button className="btn btn-cancel" onClick={handleClose}>
                   {' '}
@@ -505,17 +550,17 @@ const Document = () => {
             columns={columns}
             pagination={false}
             responsive="stack"
-            rowKey={(record) => record._id}
-            rowSelection={{
-              type: 'checkbox',
-              onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-              },
-              getCheckboxProps: (record) => ({
-                disabled: record.name === 'Disabled User',
-                name: record.name,
-              }),
-            }}
+            // rowKey={(record) => record._id}
+            // rowSelection={{
+            //   type: 'checkbox',
+            //   onChange: (selectedRowKeys, selectedRows) => {
+            //     // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+            //   },
+            //   getCheckboxProps: (record) => ({
+            //     disabled: record.name === 'Disabled User',
+            //     name: record.name,
+            //   }),
+            // }}
           />
         </div>
         <div className="row">

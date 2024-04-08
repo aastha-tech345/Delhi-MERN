@@ -53,9 +53,9 @@ const PrintModal = ({ setPrint, getDetails }) => {
     getPrintDetails()
   }, [page])
 
-  const customerItems = printRecord.filter((item) => item?.designation === 'customer')
+  const customerItems = printRecord?.filter((item) => item?.designation === 'customer')
 
-  const printTemplate = customerItems.length > 0 ? customerItems[0]?.content || '' : ''
+  const printTemplate = customerItems?.length > 0 ? customerItems[0]?.content || '' : ''
 
   console.log('template', customerItems)
   console.log('peirnt', printTemplate)

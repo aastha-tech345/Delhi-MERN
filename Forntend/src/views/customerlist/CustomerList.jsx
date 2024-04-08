@@ -98,7 +98,7 @@ const CustomerList = () => {
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
-          to={`/customer/${a}`}
+          to={`/customer/customer_info`}
           onClick={() => handleStore(text, record)}
         >
           {text &&
@@ -298,7 +298,8 @@ const CustomerList = () => {
   const editRecord = (record) => {
     if (record) {
       // console.log('recoord', record)
-      navigate(`/customer/${a}`)
+      let a = localStorage.setItem('tabId', 'customer_info')
+      navigate(`/customer/customer_info`)
       localStorage.setItem('customerRecord', JSON.stringify(record))
     } else {
       console.error('Record is undefined or null.')
@@ -328,7 +329,7 @@ const CustomerList = () => {
           toast.success('Der Datensatz wurde erfolgreich gelöscht')
         } else {
           const errorData = await response.json()
-          console.error('Failed to delete record:', response.status, response.statusText, errorData)
+          // console.error('Failed to delete record:', response.status, response.statusText, errorData)
         }
       } catch (error) {
         toast.error('Beim Löschen des Datensatzes ist ein Fehler aufgetreten')
@@ -376,79 +377,10 @@ const CustomerList = () => {
       searchHandle()
     }
   }
-  // const saveData = async (event) => {
-  //   const form = event.currentTarget
-  //   if (form.checkValidity() === false) {
-  //     event.preventDefault()
-  //     event.stopPropagation()
-  //   }
-
-  //   setValidated(true)
-
-  //   if (!fname || !lname) {
-  //     return warning('Füllen Sie den Datensatz')
-  //   }
-  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  //   if (!email.includes(emailRegex)) {
-  //     return toast.warning('incorrect email')
-  //   }
-  //   let currentDate = new Date()
-  //   if (startDate > currentDate) {
-  //     return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
-  //   }
-
-  //   let data = {
-  //     customer: {
-  //       fname,
-  //       lname,
-  //       street,
-  //       city,
-  //       phone,
-  //       startDate,
-  //       plz,
-  //       email,
-  //       land,
-  //       status: clientStatus,
-  //       id,
-  //       salution: salutionData,
-  //       created_by,
-  //     },
-  //   }
-
-  //   try {
-  //     let response = await fetch(`${apiUrl}/customer/create`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`)
-  //     }
-
-  //     let result = await response.json()
-  //     console.log('result', result.data)
-  //     toast.success('Kundendatensatz erfolgreich gespeichert')
-  //     setFname('')
-  //     setLand('')
-  //     setLname('')
-  //     setEmail('')
-  //     setPlz('')
-  //     setStreet('')
-  //     setStatus('')
-  //     setPhone('')
-  //     setCity('')
-  //     setStartDate('')
-  //     setClientStatus('')
-  //     setValidated(false)
-  //     handleClose()
-  //     getDetails()
-  //   } catch (error) {
-  //     toast.error('E-Mail-ID existiert bereits')
-  //     console.log('error', error)
-  //   }
-  // }
+  const handleChangeStatus = (e) => {
+    // const selectedCities = e.value.map((option) => option.code)
+    setClientStatus(e.value)
+  }
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -460,6 +392,10 @@ const CustomerList = () => {
 
     if (!fname || !lname) {
       return toast.warning('Füllen Sie den Datensatz')
+    }
+    if (clientStatus.length === 0) {
+      toast.warning('Es muss mindestens ein Statusfeld ausgewählt werden')
+      return
     }
 
     let currentDate = new Date()
@@ -491,7 +427,7 @@ const CustomerList = () => {
 
     try {
       if (email) {
-        console.log('regx1', emailRegex.test(email))
+        // console.log('regx1', emailRegex.test(email))
         if (emailRegex.test(email) === false) {
           return toast.warning('Bitte eine gültige Email eingeben')
         } else {
@@ -545,7 +481,7 @@ const CustomerList = () => {
       }
     } catch (error) {
       toast.error('E-Mail-ID existiert bereits')
-      console.error('error', error)
+      // console.error('error', error)
     }
 
     function resetForm() {
@@ -673,6 +609,7 @@ const CustomerList = () => {
 
   let data = customer_record
   const handleStore = (data, record) => {
+    localStorage.setItem('tabId', 'customer_info')
     navigate('/customer/customer_info', { state: record })
     localStorage.setItem('customerRecord', JSON.stringify(record))
   }
@@ -890,7 +827,6 @@ const CustomerList = () => {
                         type="text"
                         placeholder="Vornamen"
                         className="form-control"
-                        id="inputPassword"
                         required={true}
                       />
                     </div>
@@ -903,23 +839,36 @@ const CustomerList = () => {
                         }}
                         placeholder="Nachname"
                         className="form-control"
-                        id="inputPassword"
                         required={true}
                       />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-sm-12">
-                      <input
+                      {/* <input
                         value={street}
                         onChange={(e) => {
                           setStreet(e.target.value)
                         }}
                         type="text"
-                        placeholder="Straße + Hausnummer"
+                        placeholder="Straße mit Hausnummer"
                         className="form-control"
-                        id="inputPassword"
+
                         // required={true}
+                      /> */}
+                      <input
+                        value={street}
+                        onChange={(e) => {
+                          const value = e.target.value
+                          let newValue = value
+                          if (/^\d+$/.test(value.slice(-1))) {
+                            newValue = value.replace(/(\D)(\d+)$/, '$1 $2')
+                          }
+                          setStreet(newValue)
+                        }}
+                        type="text"
+                        placeholder="Straße mit Hausnummer"
+                        className="form-control"
                       />
                     </div>
                   </div>
@@ -981,7 +930,6 @@ const CustomerList = () => {
                         }}
                         placeholder="PLZ"
                         className="form-control"
-                        id="inputPassword"
                         maxLength={10}
                         minLength={3}
                       />
@@ -999,7 +947,6 @@ const CustomerList = () => {
                         }}
                         placeholder="Stadt"
                         className="form-control"
-                        id="inputPassword"
                       />
                     </div>
                   </div>
@@ -1038,7 +985,6 @@ const CustomerList = () => {
                         }}
                         placeholder="Land"
                         className="form-control"
-                        id="inputPassword"
                       />
                     </div>
                   </div>
@@ -1047,7 +993,7 @@ const CustomerList = () => {
                       <MultiSelect
                         placeholder="HVD-PV"
                         value={clientStatus}
-                        onChange={(e) => setClientStatus(e.value)}
+                        onChange={handleChangeStatus}
                         options={cities}
                         isMulti
                         maxSelectedValues={3}
@@ -1058,6 +1004,7 @@ const CustomerList = () => {
                         showCheckbox
                         display="chip"
                         scrollHeight={500}
+                        // required={true}
                       />
                     </div>
                   </div>

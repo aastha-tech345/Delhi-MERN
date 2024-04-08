@@ -69,7 +69,7 @@ const CustomerInfo = () => {
   const [salutionData, setSalutionData] = useState('')
   const [emailData, setEmailData] = useState('')
 
-  console.log('salution', customerInfo?.customer?.email)
+  // console.log('salution', customerInfo?.customer?.email)
   const cities = [
     { name: 'HVD-PV', code: '0' },
     { name: 'SPV-alt', code: '1' },
@@ -299,23 +299,34 @@ const CustomerInfo = () => {
   const DeliveryChangeMobile = (e) => {
     setCustomerDelivery({ ...customerDelivery, mobile: e })
   }
+  // const BurialChange = (e) => {
+  //   const { name, checked } = e.target
+  //   setCustomerBurial({ ...customerBurial, [name]: checked })
+  // }
   const BurialChange = (e) => {
     const { name, checked } = e.target
-    setCustomerBurial({ ...customerBurial, [name]: checked })
+    const updatedState = { ...customerBurial }
+
+    // If the clicked checkbox is already checked, uncheck it
+    if (updatedState[name] === true && checked) {
+      updatedState[name] = false
+    } else {
+      // Otherwise, update the state to only check the clicked checkbox
+      Object.keys(updatedState).forEach((key) => {
+        updatedState[key] = key === name ? checked : false
+      })
+    }
+
+    setCustomerBurial(updatedState)
   }
 
-  const [selectedOptions, setSelectedOptions] = useState([])
-  // //console.log('hkdfgdfg', selectedOptions)
-  const handleChange = (selectedOptions) => {
-    setSelectedOptions(selectedOptions)
-  }
   const getDetails = async () => {
     try {
       const results = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
       const data = await results.json()
       setGetCustomerData(data)
     } catch (error) {
-      //console.error('Error fetching customer record:', error)
+      console.error('Error fetching customer record:', error)
     }
   }
 
@@ -327,7 +338,7 @@ const CustomerInfo = () => {
       // //console.log("ashishemploye", data?.data)
       // setGetCustomerData(data)
     } catch (error) {
-      //console.error('Error fetching customer record:', error)
+      console.error('Error fetching customer record:', error)
     }
   }
 
@@ -337,7 +348,7 @@ const CustomerInfo = () => {
       //console.log('data', response)
       setCustomerInfo(response?.data)
     } catch (error) {
-      //console.log(error)
+      console.log(error)
     }
   }
 
@@ -388,7 +399,7 @@ const CustomerInfo = () => {
       }
       if (result?.message === 'Customer updated successfully') {
         getRecordById()
-        toast.success('Kundeninfo erfolgreich gespeichert')
+        toast.success('Daten erfolgreich gespeichert')
         getDetails()
         setUpdateData(!updateData)
         // navigate('/customerlist')
@@ -444,7 +455,7 @@ const CustomerInfo = () => {
     setOrderingMaterials({
       orderNumber: customerInfo?.orderingMaterials?.orderNumber,
       // newsletterDate: customerInfo?.orderingMaterials?.newsletterDate,
-      newsletterDate: customerInfo?.created_at,
+      newsletterDate: customerInfo?.orderingMaterials?.newsletterDate,
       extras: customerInfo?.orderingMaterials?.extras,
       newsletterSubscription: customerInfo?.orderingMaterials?.newsletterSubscription,
       // newsletterSubscription: new Date(),
@@ -517,7 +528,7 @@ const CustomerInfo = () => {
                     <div className="row justify-content-between align-items-center">
                       <div className="col-md-3">
                         <div className="d-flex">
-                          <label htmlFor="inputPassword" className="col-sm-10 col-form-label">
+                          <label className="col-sm-10 col-form-label">
                             Bestellte Anzahl Fragebögen
                           </label>
                           <input
@@ -532,9 +543,7 @@ const CustomerInfo = () => {
                       </div>
                       <div className="col-md-2">
                         <div className="d-flex">
-                          <label htmlFor="inputPassword" className="col-form-label">
-                            Extras
-                          </label>
+                          <label className="col-form-label">Extras</label>
                           <input
                             type="text"
                             name="extras"
@@ -733,9 +742,7 @@ const CustomerInfo = () => {
                       </div>
                       <div className="col-sm-6">
                         <div className="row mb-3">
-                          <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                            Zustimmung Datenschutz
-                          </label>
+                          <label className="col-sm-4 col-form-label">Zustimmung Datenschutz</label>
                           <div className="col-sm-4 mt-2">
                             <div className="radio-check-wrap w-100 h-100">
                               <input
@@ -761,9 +768,7 @@ const CustomerInfo = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Titel
-                        </label>
+                        <label className="col-sm-4 col-form-label">Titel</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -778,9 +783,7 @@ const CustomerInfo = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Geburtsdatum
-                        </label>
+                        <label className="col-sm-4 col-form-label">Geburtsdatum</label>
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
@@ -796,9 +799,7 @@ const CustomerInfo = () => {
                   <div className="row mb-3">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Anrede
-                        </label>
+                        <label className="col-sm-4 col-form-label">Anrede</label>
                         <div className="col-sm-6">
                           <Select
                             className="w-100"
@@ -815,9 +816,7 @@ const CustomerInfo = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Geschlecht
-                        </label>
+                        <label className="col-sm-4 col-form-label">Geschlecht</label>
                         <div className="col-sm-6 mt-2">
                           {/* <div className="d-flex"> */}
                           <div className="radio-wrap">
@@ -863,9 +862,7 @@ const CustomerInfo = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Vornamen
-                        </label>
+                        <label className="col-sm-4 col-form-label">Vornamen</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -874,21 +871,17 @@ const CustomerInfo = () => {
                             name="fname"
                             onChange={ContactChange}
                             className="form-control"
-                            id="inputPassword"
                           />
                         </div>
                       </div>
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Name
-                        </label>
+                        <label className="col-sm-4 col-form-label">Name</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
                             className="form-control"
-                            id="inputPassword"
                             placeholder="Name"
                             name="lname"
                             onChange={ContactChange}
@@ -901,9 +894,7 @@ const CustomerInfo = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          E-Mail-Adresse
-                        </label>
+                        <label className="col-sm-4 col-form-label">E-Mail-Adresse</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -927,9 +918,7 @@ const CustomerInfo = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Telefon
-                        </label>
+                        <label className="col-sm-4 col-form-label">Telefon</label>
                         <div className="col-sm-6">
                           <PhoneInput
                             // isValid={(value, country) => {
@@ -946,6 +935,8 @@ const CustomerInfo = () => {
                             value={customerDelivery?.phone}
                             type="tel"
                             placeholder="Telefon"
+                            maxLength={20}
+                            minLength={3}
                           />
                         </div>
                       </div>
@@ -954,9 +945,7 @@ const CustomerInfo = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Mobil
-                        </label>
+                        <label className="col-sm-4 col-form-label">Mobil</label>
                         <div className="col-sm-6">
                           <PhoneInput
                             onChange={DeliveryChangeMobile}
@@ -1005,9 +994,7 @@ const CustomerInfo = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Straße mit Hausnummer
-                        </label>
+                        <label className="col-sm-4 col-form-label">Straße mit Hausnummer</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -1016,15 +1003,12 @@ const CustomerInfo = () => {
                             placeholder="Straße mit Hausnummer"
                             value={customerDelivery?.address}
                             className="form-control"
-                            id="inputPassword"
                           />
                         </div>
                       </div>
 
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          PLZ
-                        </label>
+                        <label className="col-sm-4 col-form-label">PLZ</label>
                         <div className="col-sm-6">
                           <input
                             type="tel"
@@ -1035,7 +1019,6 @@ const CustomerInfo = () => {
                             }}
                             placeholder="PLZ"
                             className="form-control"
-                            id="inputPassword"
                             maxLength={10}
                             minLength={3}
                             required={true}
@@ -1045,9 +1028,7 @@ const CustomerInfo = () => {
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Ort
-                        </label>
+                        <label className="col-sm-4 col-form-label">Ort</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -1056,15 +1037,12 @@ const CustomerInfo = () => {
                             placeholder="Ort"
                             value={customerDelivery?.ort}
                             className="form-control"
-                            id="inputPassword"
                           />
                         </div>
                       </div>
 
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Land
-                        </label>
+                        <label className="col-sm-4 col-form-label">Land</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -1079,7 +1057,6 @@ const CustomerInfo = () => {
                             }}
                             value={customerDelivery?.land}
                             className="form-control"
-                            id="inputPassword"
                           />
                         </div>
                       </div>
@@ -1090,9 +1067,7 @@ const CustomerInfo = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Vornamen
-                        </label>
+                        <label className="col-sm-4 col-form-label">Vornamen</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -1102,15 +1077,12 @@ const CustomerInfo = () => {
                             // value={customers.fname}
                             value={customerDelivery?.fname}
                             className="form-control"
-                            id="inputPassword"
                           />
                         </div>
                       </div>
 
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Straße mit Hausnummer
-                        </label>
+                        <label className="col-sm-4 col-form-label">Straße mit Hausnummer</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -1119,7 +1091,6 @@ const CustomerInfo = () => {
                             placeholder="Straße mit Hausnummer"
                             value={customerBills.billAddress}
                             className="form-control"
-                            id="inputPassword"
                           />
                         </div>
                       </div>
@@ -1157,9 +1128,7 @@ const CustomerInfo = () => {
                       </div>
 
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          PLZ
-                        </label>
+                        <label className="col-sm-4 col-form-label">PLZ</label>
                         <div className="col-sm-6">
                           <input
                             type="tel"
@@ -1170,7 +1139,6 @@ const CustomerInfo = () => {
                             }}
                             placeholder="PLZ"
                             className="form-control"
-                            id="inputPassword"
                             maxLength={10}
                             minLength={3}
                             required={true}
@@ -1178,9 +1146,7 @@ const CustomerInfo = () => {
                         </div>
                       </div>
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Land
-                        </label>
+                        <label className="col-sm-4 col-form-label">Land</label>
                         <div className="col-sm-6">
                           <input
                             type="text"
@@ -1192,7 +1158,6 @@ const CustomerInfo = () => {
                             }}
                             value={customerBills.billLand}
                             className="form-control"
-                            id="inputPassword"
                           />
                         </div>
                       </div>
@@ -1219,41 +1184,38 @@ const CustomerInfo = () => {
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Hinterlegungsbeginn
-                        </label>
+                        <label className="col-sm-4 col-form-label">Hinterlegungsbeginn</label>
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
                             selected={customerStartDeposit}
                             onChange={DepositChange}
+                            placeholderText={'Hinterlegungsbeginn'}
                           />
                         </div>
                       </div>
 
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Versand nächste Marke
-                        </label>
+                        <label className="col-sm-4 col-form-label">Versand nächste Marke</label>
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
                             selected={customerNextBrand}
                             onChange={nextBrandChange}
+                            placeholderText={'Versand nächste Marke'}
                           />
                         </div>
                       </div>
                     </div>
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Versand letzte Marke
-                        </label>
+                        <label className="col-sm-4 col-form-label">Versand letzte Marke</label>
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
                             selected={customerUpdateStamp}
                             onChange={updateStamp}
+                            placeholderText={'Versand letzte Marke'}
                           />
                         </div>
                       </div>
@@ -1264,6 +1226,7 @@ const CustomerInfo = () => {
                             className="form-control"
                             selected={customerLastStamp}
                             onChange={lastStamp}
+                            placeholderText={'Rücksendung letzte Marke'}
                           />
                         </div>
                       </div>
@@ -1289,14 +1252,13 @@ const CustomerInfo = () => {
 
                     <div className="col-sm-6">
                       <div className="row">
-                        <label htmlFor="inputPassword" className="col-sm-4 col-form-label">
-                          Erinnerung Marke
-                        </label>
+                        <label className="col-sm-4 col-form-label">Erinnerung Marke</label>
                         <div className="col-sm-6">
                           <DatePiker
                             className="form-control"
                             selected={customerReminderStamp}
                             onChange={reminderStamp}
+                            placeholderText={'Erinnerung Marke'}
                           />
                         </div>
                       </div>

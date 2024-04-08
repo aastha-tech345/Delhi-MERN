@@ -4,7 +4,7 @@ import { verifyPer } from './components/verifyPermission'
 // console.log('verify', !verifyPer()[2 === 'null'])
 // console.log(verifyPer())
 let id = localStorage.getItem('tabIdd') || 'createuser'
-console.log('aastha', id)
+// console.log('aastha', id)
 const _nav = [
   {
     component: CNavItem,
