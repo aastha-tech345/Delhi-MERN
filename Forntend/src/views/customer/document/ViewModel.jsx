@@ -18,7 +18,7 @@ const ViewModel = ({ setView, getDetails }) => {
   }
 
   function viewFile(filename) {
-    const url = `http://localhost:4142/${encodeURIComponent(filename)}`
+    const url = `http://95.217.77.208/:4142/${encodeURIComponent(filename)}`
     window.open(url, '_blank')
   }
   return (

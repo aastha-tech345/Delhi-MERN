@@ -27,8 +27,7 @@ const Contact = () => {
 
   let customerRecord = localStorage.getItem('customerRecord')
   let record = JSON.parse(customerRecord)
-  // console.log('record', record)
-  let remarksData = record?.customerInfo?.remarks
+  console.log('record', record._id)
   const [combinedData, setCombinedData] = useState([])
   const [customerInfo, setCustomerInfo] = useState([])
   const [validated, setValidated] = useState(false)
@@ -129,7 +128,7 @@ const Contact = () => {
     title: '',
     address: '',
   })
-  let customer_id = custData?._id
+  let customer_id = record?._id
   let added_by = loginData?.user?._id
   const [email, setEmail] = useState('')
   const [land, setLand] = useState('')
@@ -254,7 +253,7 @@ const Contact = () => {
   const getDetails = async () => {
     try {
       const result = await fetch(
-        `${apiUrl}/contact/get_contact/${record?._id}/?page=${page}&resultPerPage=${itemsPerPage}`,
+        `${apiUrl}/contact/get_contact/${record?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
       // console.log('data', data)
@@ -265,16 +264,28 @@ const Contact = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  useEffect(() => {
-    const localStorageRemarks = JSON.parse(localStorage.getItem('customerRecord'))
+  const getCustomerInfo = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/customer/get_record/${record?._id}`)
 
-    console.log('Contact Record:', contactRecord)
-    console.log('Local Storage Remarks:', localStorageRemarks?.customerInfoStatu?.remarks)
+      const data = await response.json()
+      setCustomerInfo(data)
+    } catch (error) {
+      console.error('Error fetching employee data:', error)
+    }
+  }
+  console.log('getCustomerInfo', customerInfo?.customerInfoStatu?.remarks)
+
+  useEffect(() => {
+    // const localStorageRemarks = JSON.parse(localStorage.getItem('customerRecord'))
+
+    // console.log('Contact Record:', contactRecord)
+    // console.log('Local Storage Remarks:', customerInfo?.customerInfoStatu?.remarks)
 
     if (contactRecord && contactRecord.length > 0) {
       const updatedData = contactRecord.map((item) => ({
         ...item,
-        remarks: localStorageRemarks?.customerInfoStatu?.remarks || '',
+        remarks: customerInfo?.customerInfoStatu?.remarks || '',
         // remarks: 'hjhgshf',
       }))
       setCombinedData(updatedData)
@@ -284,18 +295,6 @@ const Contact = () => {
   }, [contactRecord])
 
   console.log('Combined Data:', combinedData)
-
-  const getCustomerInfo = async () => {
-    try {
-      const response = await fetch(`${apiUrl}/customer/get_record/${record?._id}`)
-
-      const data = await response.json()
-      // console.log('data', data)
-      setCustomerInfo(data)
-    } catch (error) {
-      console.error('Error fetching employee data:', error)
-    }
-  }
 
   // console.log('contactRecord', contactRecord)
   const handleItemsPerPageChange = (e) => {
