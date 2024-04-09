@@ -332,7 +332,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       onClick={(e) => handleTabClick('attorney', 'Vollmachten', e)}
                     >
                       <i className="fa-solid fa-paint-roller fa-fw"></i>
-                      Vollmachten
+                      &nbsp; Vollmachten
                     </button>
                     <button
                       className={`nav-link ${activeTab === 'services' ? 'active' : ''}`}
@@ -346,7 +346,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                     >
                       {' '}
                       <i className="fa-regular fa-lightbulb fa-fw"></i>
-                      HVD-PV
+                      &nbsp; HVD-PV
                     </button>
                     <button
                       className={`nav-link ${activeTab === 'bills' ? 'active' : ''}`}

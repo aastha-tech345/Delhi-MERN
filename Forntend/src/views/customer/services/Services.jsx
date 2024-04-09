@@ -349,11 +349,11 @@ const Services = () => {
     })
   }
   const informationChange = (e) => {
-    const { name, value, type } = e.target
-
+    const { name, value, type, checked } = e.target
+    const newValue = checked ? 'ja' : ''
     setInformation((prevInformation) => ({
       ...prevInformation,
-      [name]: type === 'radio' ? value : value,
+      [name]: newValue,
     }))
   }
 
@@ -476,19 +476,19 @@ const Services = () => {
     })
   }
   const atorneyChange = (e) => {
-    const { name, value } = e.target
-
+    const { name, checked } = e.target
+    const newValue = checked ? 'ja' : ''
     setAtorney((prevAtorney) => ({
       ...prevAtorney,
-      [name]: value,
+      [name]: newValue,
     }))
   }
   const feeChange = (e) => {
-    const { name, value } = e.target
-
+    const { name, checked } = e.target
+    let newValue = checked ? 'ja' : ''
     setFee((prevFee) => ({
       ...prevFee,
-      [name]: value,
+      [name]: newValue,
     }))
   }
   const data = {
@@ -2324,7 +2324,7 @@ const Services = () => {
         //   />
         //   <span style={{ color: '#FFFFFF' }}>ja</span>
         // </div>
-        <input
+        <textarea
           type="text"
           className="borderless-input w-100"
           style={{ height: '50px' }}
@@ -2676,10 +2676,10 @@ const Services = () => {
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
-                          checked={atorney.forms === 'yes'}
+                          checked={atorney.forms === 'ja'}
                           onChange={atorneyChange}
                           name="forms"
-                          value="yes"
+                          value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -2699,10 +2699,10 @@ const Services = () => {
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
-                          checked={atorney.careOrder === 'yes'}
+                          checked={atorney.careOrder === 'ja'}
                           onChange={atorneyChange}
                           name="careOrder"
-                          value="yes"
+                          value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -2726,10 +2726,10 @@ const Services = () => {
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
-                          checked={fee.regular === 'yes'}
+                          checked={fee.regular === 'ja'}
                           onChange={feeChange}
                           name="regular"
-                          value="yes"
+                          value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -2750,10 +2750,10 @@ const Services = () => {
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
-                          checked={fee.reduced === 'yes'}
+                          checked={fee.reduced === 'ja'}
                           onChange={feeChange}
                           name="reduced"
-                          value="yes"
+                          value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -3030,10 +3030,10 @@ const Services = () => {
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
-                          checked={information.dataProtection === 'yes'}
+                          checked={information.dataProtection === 'ja'}
                           onChange={informationChange}
                           name="dataProtection"
-                          value="yes"
+                          value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -3054,10 +3054,10 @@ const Services = () => {
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
-                          checked={information.deposit === 'yes'}
+                          checked={information.deposit === 'ja'}
                           onChange={informationChange}
                           name="deposit"
-                          value="yes"
+                          value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>

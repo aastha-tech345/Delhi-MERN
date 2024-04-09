@@ -299,16 +299,8 @@ const Document = () => {
             <MdAdd style={{ color: 'white' }} />
             &nbsp; Dokument hochladen
           </button>
-          <Modal
-            show={show}
-            onHide={handleClose}
-            centered
-            className="modal-form modal-form-wrap"
-            // size="lg"
-
-            // style={{ height: '800px !important' }}
-          >
-            <Modal.Header closeButton>
+          <Modal show={show} onHide={handleClose} centered className="modal-form modal-form-wrap">
+            <Modal.Header>
               <Modal.Title>Details zum Dokument</Modal.Title>
             </Modal.Header>
             <Modal.Body>
