@@ -59,7 +59,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
   const formattedDate = date.toLocaleDateString('en-IN', options).replace(/\//g, '.')
 
-  // console.log(formattedDate)
+  // //console.log(formattedDate)
 
   const firstName =
     customerInfo?.customer?.fname?.slice(0, 1).toUpperCase() +
@@ -68,7 +68,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
     customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
     customerInfo?.customer?.lname?.slice(1).toLowerCase()
 
-  console.log(customerInfo?.customer?.street?.length)
+  //console.log(customerInfo?.customer?.street?.length)
   let street =
     (customerInfo?.customer?.street?.length > 1
       ? customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
@@ -82,10 +82,10 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   const getRecordById = async () => {
     const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
     const updatedData = await response.json()
-    // console.log('data', updatedData)
+    // //console.log('data', updatedData)
     setCustomerInfo(updatedData)
   }
-  // console.log('firstcustomerInfo', customerInfo?.customer?.land)
+  // //console.log('firstcustomerInfo', customerInfo?.customer?.land)
   useEffect(() => {
     getRecordById()
   }, [updateData, updateStreet, updateLand])

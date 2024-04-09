@@ -16,6 +16,7 @@ const contactSchema = new Schema(
     title: { type: String },
     land: { type: String },
     address: { type: String },
+    remarks: { type: String },
 
     // customer_id: { type: String },
     added_by: { type: mongoose.Schema.Types.ObjectId },

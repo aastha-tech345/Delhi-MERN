@@ -27,7 +27,7 @@ const Contact = () => {
 
   let customerRecord = localStorage.getItem('customerRecord')
   let record = JSON.parse(customerRecord)
-  console.log('record', record._id)
+  //console.log('record', record._id)
   const [combinedData, setCombinedData] = useState([])
   const [customerInfo, setCustomerInfo] = useState([])
   const [validated, setValidated] = useState(false)
@@ -113,7 +113,7 @@ const Contact = () => {
 
   // const loginUser = localStorage.getItem('record')
   // const loginUserData = JSON.parse(loginUser)
-  // console.log('customerId', custData?._id)
+  // //console.log('customerId', custData?._id)
 
   const [data, setData] = useState({
     fname: '',
@@ -210,7 +210,7 @@ const Contact = () => {
   let TotalData = { ...data, email, id, customer_id, added_by }
 
   const saveData = async () => {
-    // console.log('ashish', TotalData)
+    // //console.log('ashish', TotalData)
     // if (!email) {
     //   return toast.error('Ungültige E-Mail')
     // }
@@ -234,12 +234,12 @@ const Contact = () => {
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
-        // console.log("rerror found")
+        // //console.log("rerror found")
       }
 
       let result = await response.json()
       toast.success('Kontaktdaten erfolgreich erstellt')
-      // console.log('result', result)
+      // //console.log('result', result)
       setData('')
       setEmail('')
       handleClose()
@@ -257,7 +257,7 @@ const Contact = () => {
         `${apiUrl}/contact/get_contact/${record?._id}?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
-      // console.log('data', data)
+      // //console.log('data', data)
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setContactRecord(activeRecords)
@@ -275,19 +275,18 @@ const Contact = () => {
       console.error('Error fetching employee data:', error)
     }
   }
-  console.log('getCustomerInfo', customerInfo?.customerInfoStatu?.remarks)
+  //console.log('getCustomerInfo', customerInfo?.customerInfoStatu?.remarks)
 
   useEffect(() => {
-    // const localStorageRemarks = JSON.parse(localStorage.getItem('customerRecord'))
-
-    // console.log('Contact Record:', contactRecord)
-    // console.log('Local Storage Remarks:', customerInfo?.customerInfoStatu?.remarks)
+    // //console.log('Contact Record:', contactRecord)
+    // //console.log('Local Storage Remarks:', customerInfo?.customerInfoStatu?.remarks)
+    let storedRemarks = localStorage.getItem('remarks')
+    let remarksData = JSON.parse(storedRemarks)
 
     if (contactRecord && contactRecord.length > 0) {
       const updatedData = contactRecord.map((item) => ({
         ...item,
-        remarks: customerInfo?.customerInfoStatu?.remarks,
-        // remarks: 'hjhgshf',
+        remarks: remarksData,
       }))
       setCombinedData(updatedData)
     } else {
@@ -295,14 +294,14 @@ const Contact = () => {
     }
   }, [contactRecord])
 
-  console.log('Combined Data:', combinedData)
+  //console.log('Combined Data:', combinedData)
 
-  // console.log('contactRecord', contactRecord)
+  // //console.log('contactRecord', contactRecord)
   const handleItemsPerPageChange = (e) => {
     setItemsPerPage(parseInt(e.target.value, 10))
     setPage(1)
   }
-  // console.log('astha', contactRecord)
+  // //console.log('astha', contactRecord)
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault()
@@ -337,7 +336,7 @@ const Contact = () => {
     localStorage.setItem('ContactEditDetails', recordData)
     setEdit(true)
   }
-  // console.log('aastha', customerInfo?.customer?.salution)
+  // //console.log('aastha', customerInfo?.customer?.salution)
   useEffect(() => {
     setId(generateRandomId())
     getCustomerInfo()
@@ -707,7 +706,7 @@ const Contact = () => {
             rowSelection={{
               type: 'checkbox',
               onChange: (selectedRowKeys, selectedRows) => {
-                // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+                // //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
               },
               getCheckboxProps: (record) => ({
                 disabled: record.name === 'Disabled User',

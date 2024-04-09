@@ -406,11 +406,13 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
-      //console.log('first', result)
       if (result.status === 400) {
         toast.warning('Bitte eine gültige Email eingeben')
       }
       if (result?.message === 'Customer updated successfully') {
+        let remarkData = result.data.customerInfoStatu.remarks
+        localStorage.setItem('remarks', JSON.stringify(remarkData))
+
         getRecordById()
         toast.success('Daten erfolgreich gespeichert')
         getDetails()
