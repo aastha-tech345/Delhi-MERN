@@ -808,11 +808,10 @@ const CustomerList = () => {
                 </div>
               </div>
             </div>
-            <Modal show={show} onHide={handleClose} centered className="modal-form">
-              <Modal.Header closeButton>
+            <Modal show={show} onHide={handleClose} className="modal-form">
+              <Modal.Header>
                 <Modal.Title>Neue KlientIn anlegen</Modal.Title>
               </Modal.Header>
-
               <Modal.Body>
                 <Form noValidate validated={validated}>
                   <div className="row mb-3">
@@ -855,28 +854,6 @@ const CustomerList = () => {
                   </div>
                   <div className="row">
                     <div className="col-sm-12">
-                      {/* <input
-                        value={street}
-                        onChange={(e) => {
-                          setStreet(e.target.value)
-                        }}
-                        type="text"
-                        placeholder="Straße mit Hausnummer"
-                        className="form-control"
-
-                        // required={true}
-                      /> */}
-                      {/* <input
-                        value={street}
-                      
-                        onChange={(e) => {
-                          setStreet(e.target.value)
-                        }}
-                        onBlur={handleBlur}
-                        type="text"
-                        placeholder="Straße mit Hausnummer"
-                        className="form-control"
-                      /> */}
                       <input
                         value={street}
                         onChange={handleChangeStreet}
@@ -889,23 +866,6 @@ const CustomerList = () => {
                   </div>
                   <div className="row">
                     <div className="col-sm-6">
-                      {/* <input
-                        type="email"
-                        // value={email}
-                        onChange={(e) => {
-                          const inputValue = e.target.value
-                          if (inputValue.toLowerCase().includes('@gmail.com')) {
-                            setEmail(inputValue)
-                          } else {
-                            setEmail('')
-                          }
-                        }}
-                        placeholder="E-Mail"
-                        className="form-control"
-                        // id="email"
-                        required={true}
-                        id="inputEmail"
-                      /> */}
                       <input
                         type="text"
                         name="email"
@@ -917,15 +877,6 @@ const CustomerList = () => {
                     </div>
                     <div className="col-sm-6">
                       <PhoneInput
-                        // isValid={(value, country) => {
-                        //   if (value.match(/000/)) {
-                        //     return 'Invalid value: ' + value + ', ' + country.name
-                        //   } else if (value.match(/000/)) {
-                        //     return false
-                        //   } else {
-                        //     return true
-                        //   }
-                        // }}
                         placeholder="Telefon"
                         value={phone}
                         onChange={(e) => {
@@ -967,16 +918,6 @@ const CustomerList = () => {
                   </div>
                   <div className="row">
                     <div className="col-sm-6">
-                      {/* <input
-                        value={startDate}
-                        onChange={(e) => {
-                          setstartDate(e.target.value)
-                        }}
-                        type="text"
-                        placeholder="Geburtsdatum"
-                        className="form-control"
-                        id="inputTelephone"
-                      /> */}
                       <DatePiker
                         className="form-control"
                         selected={startDate}
@@ -988,14 +929,11 @@ const CustomerList = () => {
                       <input
                         type="text"
                         value={land}
-                        // onChange={(e) => {
-                        //   setLand(e.target.value)
-                        // }}
                         onChange={(e) => {
                           const inputValue = e.target.value.replace(
                             /[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
                             '',
-                          ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                          )
                           setLand(inputValue)
                         }}
                         placeholder="Land"
@@ -1015,11 +953,9 @@ const CustomerList = () => {
                         optionLabel="name"
                         className="w-100"
                         showSelectAll={false}
-                        // selectedItemTemplate={selectedItemTemplate}
                         showCheckbox
                         display="chip"
                         scrollHeight={500}
-                        // required={true}
                       />
                     </div>
                   </div>

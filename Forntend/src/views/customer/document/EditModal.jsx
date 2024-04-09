@@ -142,14 +142,16 @@ const EditModal = ({ setEdit, getDetails }) => {
       <div className="modal-dialog modal-form modal-dialog-centered edit-modal-form">
         <div className="modal-content modal-form">
           <div className="modal-header">
-            <h5 className="modal-title">Dokument aktualisieren</h5>
-            <button
+            <h5 className="modal-title" style={{ textAlign: 'center' }}>
+              Dokument aktualisieren
+            </h5>
+            {/* <button
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              onClick={close}
-            />
+              // onClick={close}
+            /> */}
           </div>
           <Form noValidate validated={validated}>
             <div className="modal-body modal-form-wrap">
