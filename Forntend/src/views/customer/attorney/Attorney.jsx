@@ -261,6 +261,21 @@ const Attorney = () => {
     }
   }
 
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+    let formattedAddress = value.trim()
+    const endsWithNumber = /\d$/.test(value)
+
+    if (endsWithNumber) {
+      formattedAddress = value.replace(/(\D)(\d)/, '$1 $2')
+    }
+
+    setSecuringattorney({
+      ...securingattorney,
+      [name]: formattedAddress,
+    })
+  }
+
   let res = localStorage.getItem('customerRecord')
   let resultt = JSON.parse(res)
   const data = {
@@ -911,6 +926,7 @@ const Attorney = () => {
                     <div className="row">
                       <div className="col-sm-12">
                         <input
+                          onBlur={handleBlur}
                           onChange={securingattorneyChange}
                           value={securingattorney.address}
                           name="address"
