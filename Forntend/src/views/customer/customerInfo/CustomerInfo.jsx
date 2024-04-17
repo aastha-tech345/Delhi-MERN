@@ -208,6 +208,20 @@ const CustomerInfo = () => {
     })
   }
 
+  const handleBlurBill = (event) => {
+    const { name, value } = event.target
+    let formattedAddress = value.trim()
+    const endsWithNumber = /\d$/.test(value)
+
+    if (endsWithNumber) {
+      formattedAddress = value.replace(/(\D)(\d)/, '$1 $2')
+    }
+
+    setCustomerBills({
+      ...customerBills,
+      [name]: formattedAddress,
+    })
+  }
   const handleBlurDelivery = (event) => {
     const { name, value } = event.target
     let formattedAddress = value.trim()
@@ -1115,6 +1129,7 @@ const CustomerInfo = () => {
                           <input
                             type="text"
                             name="land"
+                            onBlur={handleBlur}
                             placeholder="Land"
                             onChange={(e) => {
                               const inputValue = e?.target?.value?.replace(
@@ -1224,6 +1239,7 @@ const CustomerInfo = () => {
                             type="text"
                             name="billLand"
                             placeholder="Land"
+                            onBlur={handleBlurBill}
                             onChange={(e) => {
                               const inputValue = e?.target?.value.replace(
                                 /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
