@@ -220,6 +220,7 @@ const Services = () => {
 
   const [additionalValue, setAdditionalValue] = useState({
     sending: '',
+    sendingValue: '',
   })
   const handlePhaseChange = (e) => {
     const { name, checked, value } = e.target
@@ -350,7 +351,7 @@ const Services = () => {
   }
   const informationChange = (e) => {
     const { name, value, type, checked } = e.target
-    const newValue = checked ? 'ja' : ''
+    const newValue = checked ? 'ja' : value || ''
     setInformation((prevInformation) => ({
       ...prevInformation,
       [name]: newValue,
@@ -476,16 +477,16 @@ const Services = () => {
     })
   }
   const atorneyChange = (e) => {
-    const { name, checked } = e.target
-    const newValue = checked ? 'ja' : ''
+    const { name, checked, value } = e.target
+    const newValue = checked ? 'ja' : value || ''
     setAtorney((prevAtorney) => ({
       ...prevAtorney,
       [name]: newValue,
     }))
   }
   const feeChange = (e) => {
-    const { name, checked } = e.target
-    let newValue = checked ? 'ja' : ''
+    const { name, checked, value } = e.target
+    let newValue = checked ? 'ja' : value || ''
     setFee((prevFee) => ({
       ...prevFee,
       [name]: newValue,
@@ -784,6 +785,7 @@ const Services = () => {
 
     setAdditionalValue({
       sending: recordData?.additionalValue?.sending,
+      sendingValue: recordData?.additionalValue?.sendingValue,
     })
     setOrgan({
       organ_donation_yes: recordData?.organ?.organ_donation_yes,
@@ -2601,17 +2603,30 @@ const Services = () => {
       ),
     },
     {
-      field1: `Zusendung`,
-      field2: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={additionalValue.sending === 'ja'}
-            name="sending"
+      field11: `Zusendung`,
+      field22: (
+        <>
+          {' '}
+          <div className="radio-check-wrap">
+            <input
+              type="checkbox"
+              checked={additionalValue.sending === 'ja'}
+              name="sending"
+              onChange={handleAdditionalValueChange}
+            />
+            <span style={{ color: '#FFFFFF' }}>ja</span>
+          </div>
+          <textarea
+            className="borderless-input w-100"
+            type="text"
+            value={additionalValue.sendingValue}
+            style={{ height: '50px ', marginTop: '5px' }}
+            name="sendingValue"
             onChange={handleAdditionalValueChange}
+            placeholder="Zusendung"
+            disabled={additionalValue.sending !== 'ja'}
           />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
+        </>
       ),
     },
   ]
@@ -2671,7 +2686,7 @@ const Services = () => {
                   <hr />
                   <div className="row">
                     <h3 style={{ color: '#244D92' }}>Vollmachten</h3>
-                    <div className="col-md-3">Blanko-formulare</div>
+                    <div className="col-md-3">Blanko-Formulare</div>
                     <div className="col-md-3 d-flex">
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
@@ -2679,7 +2694,7 @@ const Services = () => {
                           checked={atorney.forms === 'ja'}
                           onChange={atorneyChange}
                           name="forms"
-                          value="ja"
+                          // value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -2702,7 +2717,7 @@ const Services = () => {
                           checked={atorney.careOrder === 'ja'}
                           onChange={atorneyChange}
                           name="careOrder"
-                          value="ja"
+                          // value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -2729,7 +2744,7 @@ const Services = () => {
                           checked={fee.regular === 'ja'}
                           onChange={feeChange}
                           name="regular"
-                          value="ja"
+                          // value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -2753,7 +2768,7 @@ const Services = () => {
                           checked={fee.reduced === 'ja'}
                           onChange={feeChange}
                           name="reduced"
-                          value="ja"
+                          // value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -2790,14 +2805,14 @@ const Services = () => {
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
-                          checked={information.urgency === 'yes'}
+                          checked={information.urgency === 'ja'}
                           onChange={informationChange}
                           name="urgency"
-                          value="yes"
+                          // value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
-                      <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                      {/* <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
                           checked={information.urgency === 'no'}
@@ -2806,21 +2821,21 @@ const Services = () => {
                           value="no"
                         />{' '}
                         <span>nein</span>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="col-md-3">Abweichende Lieferanschrift</div>
                     <div className="col-md-3 d-flex">
                       <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
-                          checked={information.alternateAddress === 'yes'}
+                          checked={information.alternateAddress === 'ja'}
                           onChange={informationChange}
                           name="alternateAddress"
-                          value="yes"
+                          // value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
-                      <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
+                      {/* <div className="radio-check-wrap mt-md-0 mb-md-0 mt-2 mb-2">
                         <input
                           type="checkbox"
                           checked={information.alternateAddress === 'no'}
@@ -2829,7 +2844,7 @@ const Services = () => {
                           value="no"
                         />{' '}
                         <span>nein</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   <br />
@@ -2850,7 +2865,7 @@ const Services = () => {
                           onChange={(e) => informationChange(e)}
                           name="creation"
                           type="date"
-                          disabled={information.urgency !== 'yes'}
+                          disabled={information.urgency !== 'ja'}
                         />
                       </div>
                       {/* <div className="col-md-3"></div> */}
@@ -2873,7 +2888,7 @@ const Services = () => {
                                     name="fname"
                                     type="text"
                                     placeholder="Name"
-                                    disabled={information.alternateAddress !== 'yes'}
+                                    disabled={information.alternateAddress !== 'ja'}
                                   />
                                 </div>
                               </div>
@@ -2887,7 +2902,7 @@ const Services = () => {
                                     value={information.street}
                                     onChange={(e) => informationChange(e)}
                                     name="street"
-                                    disabled={information.alternateAddress !== 'yes'}
+                                    disabled={information.alternateAddress !== 'ja'}
                                     placeholder="Straße + Nr"
                                     className="form-control"
                                   />
@@ -2906,10 +2921,10 @@ const Services = () => {
                                       setInformation({ ...information, plz: inputValue })
                                     }}
                                     placeholder="PLZ"
-                                    disabled={information.alternateAddress !== 'yes'}
+                                    disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                     id="inputPassword"
-                                    maxLength={6}
+                                    maxLength={10}
                                     minLength={3}
                                     required={true}
                                   />
@@ -2933,10 +2948,10 @@ const Services = () => {
                                       }
                                     }}
                                     placeholder="e.g. 91+ 8354568464"
-                                    disabled={information.alternateAddress !== 'yes'}
+                                    disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                     id="inputPhone"
-                                    maxLength={10}
+                                    maxLength={20}
                                     minLength={3}
                                   />
                                 </div>
@@ -2954,7 +2969,7 @@ const Services = () => {
                                     name="lname"
                                     type="text"
                                     placeholder="Vorname"
-                                    disabled={information.alternateAddress !== 'yes'}
+                                    disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                   />
                                 </div>
@@ -2970,7 +2985,7 @@ const Services = () => {
                                     name="address"
                                     type="text"
                                     placeholder="Adresszusatz"
-                                    disabled={information.alternateAddress !== 'yes'}
+                                    disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                   />
                                 </div>
@@ -2986,7 +3001,7 @@ const Services = () => {
                                     name="ort"
                                     type="text"
                                     placeholder=" Ort"
-                                    disabled={information.alternateAddress !== 'yes'}
+                                    disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                   />
                                 </div>
@@ -3009,10 +3024,10 @@ const Services = () => {
                                       }
                                     }}
                                     placeholder="e.g., 91+ 8354568464"
-                                    disabled={information.alternateAddress !== 'yes'}
+                                    disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                     id="inputPhone"
-                                    maxLength={10}
+                                    maxLength={20}
                                     minLength={3}
                                   />
                                 </div>
@@ -3033,7 +3048,7 @@ const Services = () => {
                           checked={information.dataProtection === 'ja'}
                           onChange={informationChange}
                           name="dataProtection"
-                          value="ja"
+                          // value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>
@@ -3057,7 +3072,7 @@ const Services = () => {
                           checked={information.deposit === 'ja'}
                           onChange={informationChange}
                           name="deposit"
-                          value="ja"
+                          // value="ja"
                         />{' '}
                         <span>ja</span>
                       </div>

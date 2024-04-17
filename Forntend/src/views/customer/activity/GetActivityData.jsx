@@ -26,7 +26,9 @@ const GetActivityData = ({ updateData, search }) => {
   }
   let ress = localStorage.getItem('record')
   let resultt = JSON.parse(ress)
-  // console.log('aast', resultt?.user?.username)
+  let custoRecord = localStorage.getItem('customerRecord')
+  let getResult = JSON.parse(custoRecord)
+  // console.log("custoRecord",getResult)
   let user = resultt?.user?.username
   GetActivityData.propTypes = {
     search: PropTypes.array.isRequired,
@@ -47,7 +49,9 @@ const GetActivityData = ({ updateData, search }) => {
 
   const getData = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/activity/get_activity?keyword=${search}&page=${page}`)
+      const res = await axios.get(
+        `${apiUrl}/activity/get_activity/${getResult?._id}?keyword=${search}&page=${page}`,
+      )
 
       setActivityData(res?.data?.data)
       // console.log('ashish', res?.data?.pageCount)

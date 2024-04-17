@@ -72,11 +72,17 @@ const EditModal = ({ setEdit, getDetails }) => {
   }
 
   const handleChangePhone = (e) => {
-    setData({ ...data, telephone: e })
+    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+    if (/^\+?[0-9]*$/.test(inputValue)) {
+      setData({ ...data, telephone: e.target.value })
+    }
   }
 
   const handleChangeMobile = (e) => {
-    setData({ ...data, mobile: e })
+    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+    if (/^\+?[0-9]*$/.test(inputValue)) {
+      setData({ ...data, mobile: e.target.value })
+    }
   }
 
   const close = () => {
@@ -103,10 +109,10 @@ const EditModal = ({ setEdit, getDetails }) => {
       if (!email) {
         return toast.error('Ungültige E-Mail')
       }
-      if (data.telephone && data.telephone.match(/000/)) {
+      if (data.telephone && data.telephone.satrtsWith('000')) {
         return toast.warning('Ungültige Telefonnummer')
       }
-      if (data.mobile && data.mobile.match(/000/)) {
+      if (data.mobile && data.mobile.satrtsWith('000')) {
         return toast.warning('Ungültige Telefonnummer')
       }
       const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, dataa)
@@ -260,13 +266,14 @@ const EditModal = ({ setEdit, getDetails }) => {
                   Telefon
                 </label>
                 <div className="col-sm-9">
-                  <PhoneInput
+                  <input
                     name="telephone"
                     value={data.telephone}
                     onChange={handleChangePhone}
                     type="tel"
                     placeholder="Telefon"
                     id="inputTelephone"
+                    className="form-control"
                     maxLength={20}
                     minLength={3}
                   />
@@ -277,11 +284,12 @@ const EditModal = ({ setEdit, getDetails }) => {
                   Mobil
                 </label>
                 <div className="col-sm-9">
-                  <PhoneInput
+                  <input
                     type="tel"
                     name="mobile"
                     value={data.mobile}
                     onChange={handleChangeMobile}
+                    className="form-control"
                     placeholder="835-456-8464"
                     required={true}
                     maxLength={20}

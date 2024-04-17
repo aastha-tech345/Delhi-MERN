@@ -58,59 +58,59 @@ const Document = () => {
     //     console.log(record.document_upload)
     //   },
     // },
-    {
-      title: 'AKTION',
-      dataIndex: 'action',
-      render: (_, record) => (
-        <>
-          {/* {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
-          verifyEditPer().includes('yes') ||
-          loginData?.user?.isAdminFullRights === 'true' ? ( */}
-          <>
-            <button
-              style={{ background: 'none', border: 'none' }}
-              onClick={() => handleShowDoc(record)}
-            >
-              <FaEye className="fs-5" style={{ color: '#5C86B4' }} />
-              &nbsp;&nbsp;Anzeigen
-            </button>
-          </>
-          {/* ) : (
-            ''
-          )} */}
-          {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
-          verifyEditPer().includes('yes') ||
-          loginData?.user?.isAdminFullRights === 'true' ? (
-            <>
-              <button
-                style={{ background: 'none', border: 'none' }}
-                onClick={() => handleEdit(record)}
-              >
-                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
-                &nbsp;&nbsp;Bearbeiten
-              </button>
-            </>
-          ) : (
-            ''
-          )}
+    // {
+    //   title: 'AKTION',
+    //   dataIndex: 'action',
+    //   render: (_, record) => (
+    //     <>
+    //       {/* {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
+    //       verifyEditPer().includes('yes') ||
+    //       loginData?.user?.isAdminFullRights === 'true' ? ( */}
+    //       <>
+    //         <button
+    //           style={{ background: 'none', border: 'none' }}
+    //           onClick={() => handleShowDoc(record)}
+    //         >
+    //           <FaEye className="fs-5" style={{ color: '#5C86B4' }} />
+    //           &nbsp;&nbsp;Anzeigen
+    //         </button>
+    //       </>
+    //       {/* ) : (
+    //         ''
+    //       )} */}
+    //       {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
+    //       verifyEditPer().includes('yes') ||
+    //       loginData?.user?.isAdminFullRights === 'true' ? (
+    //         <>
+    //           <button
+    //             style={{ background: 'none', border: 'none' }}
+    //             onClick={() => handleEdit(record)}
+    //           >
+    //             <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+    //             &nbsp;&nbsp;Bearbeiten
+    //           </button>
+    //         </>
+    //       ) : (
+    //         ''
+    //       )}
 
-          {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
-          verifyDelPer().includes('yes') ||
-          loginData?.user?.isAdminFullRights === 'true' ? (
-            <>
-              <button
-                style={{ background: 'none', border: 'none' }}
-                onClick={() => handleDelete(record._id)}
-              >
-                <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
-              </button>
-            </>
-          ) : (
-            ''
-          )}
-        </>
-      ),
-    },
+    //       {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
+    //       verifyDelPer().includes('yes') ||
+    //       loginData?.user?.isAdminFullRights === 'true' ? (
+    //         <>
+    //           <button
+    //             style={{ background: 'none', border: 'none' }}
+    //             onClick={() => handleDelete(record._id)}
+    //           >
+    //             <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
+    //           </button>
+    //         </>
+    //       ) : (
+    //         ''
+    //       )}
+    //     </>
+    //   ),
+    // },
   ]
   const [hide, setHide] = useState(false)
   const [documentId, setDocumentId] = useState('')
@@ -130,7 +130,7 @@ const Document = () => {
     added_by: loginData?.user?._id,
   })
 
-  const [document_upload, setDocumentUpload] = useState([])
+  const [document_upload, setDocumentUpload] = useState(null)
   const fileInputRef = useRef(null)
   const [documentRecord, setDocumentRecord] = useState([])
   const handleEdit = (record) => {
@@ -159,17 +159,19 @@ const Document = () => {
     // setDocumentUpload([...document_upload, ...e.target.files])
     // fileInputRef.current.value = ''
 
-    const files = Array.from(e.target.files)
+    // const files = Array.from(e.target.files)
+    // console.log('files', files)
+    // const pdfFiles = files.filter((file) => file.type === 'application/pdf')
 
-    const pdfFiles = files.filter((file) => file.type === 'application/pdf')
+    // if (pdfFiles.length !== files.length) {
+    //   toast.warning('Es sind nur PDF-Dateien erlaubt.')
+    // }
 
-    if (pdfFiles.length !== files.length) {
-      toast.warning('Es sind nur PDF-Dateien erlaubt.')
-    }
+    // setDocumentUpload([...document_upload, ...pdfFiles])
 
-    setDocumentUpload([...document_upload, ...pdfFiles])
-
-    fileInputRef.current.value = ''
+    // fileInputRef.current.value = ''
+    console.log(e.target)
+    setDocumentUpload(e.target.file)
   }
 
   const removeDocument = (index) => {
@@ -195,7 +197,7 @@ const Document = () => {
     localStorage.setItem('DocumentEditDetails', recordData)
     setView(true)
   }
-
+  console.log('document', document_upload?.name)
   const saveData = async (e) => {
     try {
       if (!data.document_title || !data.document_type) {
@@ -204,9 +206,10 @@ const Document = () => {
 
       e.preventDefault()
       const myForm = new FormData()
-      for (let i = 0; i < document_upload?.length; i++) {
-        myForm.append('document_upload', document_upload[i])
-      }
+      // for (let i = 0; i < document_upload?.length; i++) {
+      //   myForm.append('document_upload', document_upload[i])
+      // }
+      myForm.append('document_upload', document_upload)
       myForm.append('document_title', data?.document_title)
       myForm.append('document_type', data?.document_type)
       myForm.append('customer_id', customerRecord?._id)
@@ -246,6 +249,7 @@ const Document = () => {
     }
   }
   const options = [
+    { label: 'Auswählen' },
     { value: 'Living will', label: 'Patientenverfügung' },
     { value: 'Health care power of attorney', label: 'Gesundheitsvollmacht' },
     { value: 'Power of attorney', label: 'Vorsorgevollmacht' },
@@ -334,8 +338,8 @@ const Document = () => {
                         options={options}
                         onChange={handleChange}
                         value={{
-                          label: data.document_type || 'Patientenverfügung',
-                          value: data.document_type || 'Patientenverfügung',
+                          label: data.document_type || 'Auswählen',
+                          value: data.document_type || 'Auswählen',
                         }}
                         name="document_type"
                       />
@@ -348,14 +352,15 @@ const Document = () => {
                     <div className="col-md-9">
                       <div className="file-upload-wrap">
                         <input
-                          ref={fileInputRef}
+                          // ref={fileInputRef}
                           id="fileUpload"
                           type="file"
                           className="form-control"
-                          multiple
+                          // multiple
                           name="document_upload"
                           // onChange={(e) => setDocumentUpload([...document_upload, ...e.target.files])}
-                          onChange={handleFileInputChange}
+                          // onChange={handleFileInputChange}
+                          onChange={(e) => setDocumentUpload(e.target.files[0])}
                         />
                         <div className="file-input-wrap">
                           <div className="filename-field">
@@ -437,8 +442,9 @@ const Document = () => {
                   <div className="file-input-wrap">
                     <div className="filename-field">
                       <span>
-                        {document_upload?.length
-                          ? document_upload.map((file, index) => (
+                        {/* {document_upload?.length
+                          ? document_upload.map((file, index) =>
+                           (
                               <>
                                 <ul className="d-flex flex-row justify-content-between">
                                   <div key={index}>{file.name}</div>
@@ -500,8 +506,10 @@ const Document = () => {
                                   </button>
                                 </ul>
                               </>
-                            ))
-                          : ''}
+                            )
+                          )
+                          : ''} */}
+                        {document_upload?.name}
                       </span>
                     </div>
                     {/* <div className="file-btn">Durchsuche</div> */}

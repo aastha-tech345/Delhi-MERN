@@ -23,7 +23,8 @@ const imageUplaod = multer({
 
 router.post(
   "/create_document",
-  imageUplaod.array("document_upload", 10),
+  // imageUplaod.array("document_upload", 10),
+  imageUplaod.single("document_upload"),
   roleCtrl.createDocument
 );
 router.get("/get_document/:id", roleCtrl.getDocument);

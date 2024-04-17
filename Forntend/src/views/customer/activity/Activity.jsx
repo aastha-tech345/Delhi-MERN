@@ -16,7 +16,7 @@ const Activity = () => {
   const apiUrl = process.env.REACT_APP_API_URL
   const notify = (dataa) => toast(dataa)
 
-  let res = localStorage.getItem('customerDatat')
+  let res = localStorage.getItem('customerRecord')
   let result = JSON.parse(res)
 
   const [color, setColor] = useState('white')

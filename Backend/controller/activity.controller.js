@@ -40,7 +40,10 @@ exports.getActivity = async (req, res) => {
     let pageCount = Math.ceil(Number(countPage) / 10);
 
     const apiFeatures = new ApiFeatures(
-      ActivityInfomation.Activity.find(),
+      ActivityInfomation.Activity.find({
+        customer_id: req.params.id,
+        is_deleted: { $ne: "deleted" },
+      }),
       req.query
     )
       .reverse()
