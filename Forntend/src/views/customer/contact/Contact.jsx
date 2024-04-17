@@ -173,6 +173,24 @@ const Contact = () => {
     }
   }
 
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+    let formattedAddress = value.trim()
+    const endsWithNumber = /\d$/.test(value)
+
+    if (endsWithNumber) {
+      formattedAddress = value.replace(/(\D)(\d)/, '$1 $2')
+    }
+
+    setData({
+      ...data,
+      [name]: formattedAddress,
+    })
+  }
+
+  const handleChangeStreet = (e) => {
+    setData({ ...data, address: e.target.value })
+  }
   const handleChangeMobile = (e) => {
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
     if (/^\+?[0-9]*$/.test(inputValue)) {
@@ -490,8 +508,9 @@ const Contact = () => {
                         <input
                           type="text"
                           name="address"
+                          onBlur={handleBlur}
                           value={data.address}
-                          onChange={handleChange}
+                          onChange={handleChangeStreet}
                           placeholder="Adresszusatz"
                           className="form-control"
                           required={true}
@@ -506,6 +525,7 @@ const Contact = () => {
                         <input
                           type="text"
                           name="street"
+                          onBlur={handleBlur}
                           value={data.street}
                           onChange={handleChange}
                           placeholder="Straße + Nr"

@@ -2631,6 +2631,21 @@ const Services = () => {
     },
   ]
 
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+    let formattedAddress = value.trim()
+    const endsWithNumber = /\d$/.test(value)
+
+    if (endsWithNumber) {
+      formattedAddress = value.replace(/(\D)(\d)/, '$1 $2')
+    }
+
+    setInformation({
+      ...information,
+      [name]: formattedAddress,
+    })
+  }
+
   return (
     <div className="inner-page-wrap">
       <Customer />
@@ -2899,6 +2914,7 @@ const Services = () => {
                                 <div className="col-sm-8">
                                   <input
                                     type="text"
+                                    onBlur={handleBlur}
                                     value={information.street}
                                     onChange={(e) => informationChange(e)}
                                     name="street"
@@ -2917,7 +2933,10 @@ const Services = () => {
                                     type="tel"
                                     value={information.plz}
                                     onChange={(e) => {
-                                      const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                                      const inputValue = e.target.value.replace(
+                                        /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                        '',
+                                      ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                                       setInformation({ ...information, plz: inputValue })
                                     }}
                                     placeholder="PLZ"
@@ -2982,6 +3001,7 @@ const Services = () => {
                                   <input
                                     value={information.address}
                                     onChange={(e) => informationChange(e)}
+                                    onBlur={handleBlur}
                                     name="address"
                                     type="text"
                                     placeholder="Adresszusatz"
