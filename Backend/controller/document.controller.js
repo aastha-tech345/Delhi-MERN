@@ -6,7 +6,7 @@ exports.createDocument = async (req, res) => {
   try {
     const result = await DocumentInfo.Document.create({
       ...req.body,
-      document_upload: req?.files,
+      document_upload: req?.file,
     });
 
     // const result = await document.save();

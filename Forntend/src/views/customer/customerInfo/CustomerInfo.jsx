@@ -195,8 +195,9 @@ const CustomerInfo = () => {
   ]
   const handleBlur = (event) => {
     const { name, value } = event.target
-    let formattedAddress = value
+    let formattedAddress = value.trim()
     const endsWithNumber = /\d$/.test(value)
+
     if (endsWithNumber) {
       formattedAddress = value.replace(/(\D)(\d)/, '$1 $2')
     }
@@ -206,6 +207,22 @@ const CustomerInfo = () => {
       [name]: formattedAddress,
     })
   }
+
+  const handleBlurDelivery = (event) => {
+    const { name, value } = event.target
+    let formattedAddress = value.trim()
+    const endsWithNumber = /\d$/.test(value)
+
+    if (endsWithNumber) {
+      formattedAddress = value.replace(/(\D)(\d)/, '$1 $2')
+    }
+
+    setCustomerBills({
+      ...customerBills,
+      [name]: formattedAddress,
+    })
+  }
+
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
       setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: e })
@@ -301,17 +318,19 @@ const CustomerInfo = () => {
   }
 
   const DeliveryChangePhone = (e) => {
-    const phoneRegex = /^(0{0,2}[1-9][0-9]*)$/
-    if (phoneRegex.test(e) || e === '') {
-      setCustomerDelivery({ ...customerDelivery, phone: e })
-    } else {
-      console.error('Invalid phone number format. Please enter a valid phone number.')
+    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+    if (/^\+?[0-9]*$/.test(inputValue)) {
+      setCustomerDelivery({ ...customerDelivery, phone: e.target.value })
     }
   }
 
   const DeliveryChangeMobile = (e) => {
-    setCustomerDelivery({ ...customerDelivery, mobile: e })
+    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+    if (/^\+?[0-9]*$/.test(inputValue)) {
+      setCustomerDelivery({ ...customerDelivery, mobile: e.target.value })
+    }
   }
+
   // const BurialChange = (e) => {
   //   const { name, checked } = e.target
   //   setCustomerBurial({ ...customerBurial, [name]: checked })
@@ -390,10 +409,10 @@ const CustomerInfo = () => {
     if (dataCollection > currentDate) {
       return toast.warning('Die Datenerfassung darf nicht in der Zukunft liegen.')
     }
-    if (customerDelivery?.phone && customerDelivery?.phone.match(/000/)) {
+    if (customerDelivery?.phone && customerDelivery?.phone.startsWith('000')) {
       return toast.warning('Ungültige Telefonnummer')
     }
-    if (customerDelivery?.mobile && customerDelivery?.mobile.match(/000/)) {
+    if (customerDelivery?.mobile && customerDelivery?.mobile.startsWith('000')) {
       return toast.warning('Ungültige Telefonnummer')
     }
     try {
@@ -935,7 +954,7 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Telefon</label>
                         <div className="col-sm-6">
-                          <PhoneInput
+                          {/* <PhoneInput
                             // isValid={(value, country) => {
                             //   if (value.match(/000/)) {
                             //     return 'Invalid value: ' + value + ', ' + country.name
@@ -952,6 +971,15 @@ const CustomerInfo = () => {
                             placeholder="Telefon"
                             maxLength={20}
                             minLength={3}
+                          /> */}
+                          <input
+                            placeholder="Telefon"
+                            className="form-control"
+                            name="phone"
+                            value={customerDelivery?.phone}
+                            onChange={DeliveryChangePhone}
+                            maxLength={20}
+                            minLength={3}
                           />
                         </div>
                       </div>
@@ -962,7 +990,7 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Mobil</label>
                         <div className="col-sm-6">
-                          <PhoneInput
+                          {/* <PhoneInput
                             onChange={DeliveryChangeMobile}
                             // onChange={(e) => {
                             //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
@@ -983,6 +1011,17 @@ const CustomerInfo = () => {
                             value={customerDelivery?.mobile}
                             type="tel"
                             placeholder="Mobil"
+                            maxLength={20}
+                            minLength={3}
+                          /> */}
+                          <input
+                            placeholder="Telefon"
+                            className="form-control"
+                            name="mobile"
+                            value={customerDelivery?.mobile}
+                            onChange={DeliveryChangeMobile}
+                            maxLength={20}
+                            minLength={3}
                           />
                         </div>
                       </div>
@@ -1040,7 +1079,10 @@ const CustomerInfo = () => {
                             type="tel"
                             value={customerDelivery.plz}
                             onChange={(e) => {
-                              const inputValue = e?.target?.value?.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                              const inputValue = e.target.value.replace(
+                                /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                '',
+                              )
                               setCustomerDelivery({ ...customerDelivery, plz: inputValue })
                             }}
                             placeholder="PLZ"
@@ -1076,7 +1118,7 @@ const CustomerInfo = () => {
                             placeholder="Land"
                             onChange={(e) => {
                               const inputValue = e?.target?.value?.replace(
-                                /[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
                                 '',
                               )
                               DeliveryChange({ target: { name: 'land', value: inputValue } })
@@ -1114,6 +1156,7 @@ const CustomerInfo = () => {
                             type="text"
                             onChange={BillChange}
                             name="billAddress"
+                            onBlur={handleBlurDelivery}
                             placeholder="Straße mit Hausnummer"
                             value={customerBills.billAddress}
                             className="form-control"
@@ -1160,7 +1203,10 @@ const CustomerInfo = () => {
                             type="tel"
                             value={customerBills.billPlz}
                             onChange={(e) => {
-                              const inputValue = e?.target?.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                              const inputValue = e.target.value.replace(
+                                /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                '',
+                              )
                               setCustomerBills({ ...customerBills, billPlz: inputValue })
                             }}
                             placeholder="PLZ"
@@ -1179,7 +1225,10 @@ const CustomerInfo = () => {
                             name="billLand"
                             placeholder="Land"
                             onChange={(e) => {
-                              const inputValue = e?.target?.value.replace(/[^a-zA-Z\s'-]/g, '')
+                              const inputValue = e?.target?.value.replace(
+                                /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                '',
+                              )
                               BillChange({ target: { name: 'billLand', value: inputValue } })
                             }}
                             value={customerBills.billLand}

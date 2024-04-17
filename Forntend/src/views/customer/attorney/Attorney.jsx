@@ -230,16 +230,16 @@ const Attorney = () => {
   const securingattorneyChange = (e) => {
     if (e instanceof Date) {
       let currentDate = new Date()
-      let currentYear = currentDate.getFullYear()
-      let currentMonth = currentDate.getMonth()
-      let currentDay = currentDate.getDate()
+      let currentYear = currentDate?.getFullYear()
+      let currentMonth = currentDate?.getMonth()
+      let currentDay = currentDate?.getDate()
 
       if (
-        e.getFullYear() > currentYear ||
-        (e.getFullYear() === currentYear && e.getMonth() > currentMonth) ||
-        (e.getFullYear() === currentYear &&
-          e.getMonth() === currentMonth &&
-          e.getDate() > currentDay + 1)
+        e?.getFullYear() > currentYear ||
+        (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
+        (e?.getFullYear() === currentYear &&
+          e?.getMonth() === currentMonth &&
+          e?.getDate() > currentDay + 1)
       ) {
         return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
       }
@@ -270,19 +270,82 @@ const Attorney = () => {
     securingattorney,
     customer_id: resultt?._id,
   }
+  // const saveData = async () => {
+  //   const healthCareData = data.healthCare.healthCareData
+
+  //   // Phone and mobile number validation
+  //   const phoneRegex = '000'
+  //   for (const record of healthCareData) {
+  //     if (record.healthCare_phone && record.healthCare_phone.startsWith(phoneRegex)) {
+  //       return toast.warning('Ungültige Telefonnummer')
+  //     }
+  //     if (record.healthCare_mobile && record.healthCare_mobile.startsWith(phoneRegex)) {
+  //       return toast.warning('Ungültige Mobilnummer')
+  //     }
+  //   }
+  //   let currentDate = new Date()
+  //   if (securingattorney?.dob > currentDate) {
+  //     return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
+  //   }
+  //   if (securingattorney && securingattorney?.dob && securingattorney?.dob?.getFullYear() < 1900) {
+  //     return toast.warning('Das Startdatum darf nicht vor 1900 liegen');
+  //   }
+
+  //   try {
+  //     let url
+  //     let method
+
+  //     if (resultt) {
+  //       url = `${apiUrl}/attorney/get_attorney/${resultt._id}`
+  //       method = 'PUT'
+  //     } else {
+  //       url = `${apiUrl}/attorney`
+  //       method = 'POST'
+  //     }
+
+  //     let response = await fetch(url, {
+  //       method: method,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
+
+  //     let result = await response.json()
+  //     // console.log(result)
+  //     if (result.status === 201) {
+  //       toast.success('Daten erfolgreich gespeichert')
+  //       // resetStateVariables()
+  //     } else {
+  //       toast.error(
+  //         'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
+  //       )
+  //     }
+  //   } catch (error) {
+  //     // console.error('Error during API call:', error)
+  //     toast.error('Error saving data. Please try again.')
+  //   }
+  // }
   const saveData = async () => {
     const healthCareData = data.healthCare.healthCareData
 
     // Phone and mobile number validation
-    const phoneRegex = /000/
+    const phoneRegex = '000'
     for (const record of healthCareData) {
-      if (record.healthCare_phone && record.healthCare_phone.match(phoneRegex)) {
+      if (record.healthCare_phone && record.healthCare_phone.startsWith(phoneRegex)) {
         return toast.warning('Ungültige Telefonnummer')
       }
-      if (record.healthCare_mobile && record.healthCare_mobile.match(phoneRegex)) {
+      if (record.healthCare_mobile && record.healthCare_mobile.startsWith(phoneRegex)) {
         return toast.warning('Ungültige Mobilnummer')
       }
     }
+    if (securingattorney?.dob) {
+      const birthYear = new Date(securingattorney?.dob)?.getFullYear()
+      if (birthYear < 1900) {
+        return toast.warning('Das Geburtsdatum darf nicht vor 1900 liegen')
+      }
+    }
+
     try {
       let url
       let method
@@ -294,7 +357,6 @@ const Attorney = () => {
         url = `${apiUrl}/attorney`
         method = 'POST'
       }
-
       let response = await fetch(url, {
         method: method,
         headers: {
@@ -302,19 +364,15 @@ const Attorney = () => {
         },
         body: JSON.stringify(data),
       })
-
       let result = await response.json()
-      // console.log(result)
       if (result.status === 201) {
         toast.success('Daten erfolgreich gespeichert')
-        // resetStateVariables()
       } else {
         toast.error(
           'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
         )
       }
     } catch (error) {
-      // console.error('Error during API call:', error)
       toast.error('Error saving data. Please try again.')
     }
   }
@@ -506,6 +564,8 @@ const Attorney = () => {
                                     placeholder="Vorname"
                                     className="form-control z"
                                     id={`fname_${index}`}
+                                    maxLength={20}
+                                    minLength={3}
                                   />
                                 </div>
                               </div>
@@ -522,6 +582,8 @@ const Attorney = () => {
                                     className="form-control"
                                     id={`lname_${index}`}
                                     //required={true}
+                                    maxLength={20}
+                                    minLength={3}
                                   />
                                 </div>
                               </div>
@@ -547,7 +609,7 @@ const Attorney = () => {
                             <div className="col-sm-2">
                               <div className=" row">
                                 <div className="col-sm-12">
-                                  <PhoneInput
+                                  <input
                                     // isValid={(value, country) => {
                                     //   if (value.match(/000/)) {
                                     //     return 'Invalid phone'
@@ -558,15 +620,13 @@ const Attorney = () => {
                                     //   }
                                     // }}
                                     onChange={(e) => healthCareChange(e, index, 'healthCare_phone')}
-                                    value={String(field.healthCare_phone)}
+                                    value={field.healthCare_phone}
                                     name="healthCare_phone"
                                     placeholder="853-456-8464"
-                                    // className="form-control"
-                                    inputProps={{
-                                      id: `phone_${index}`,
-                                      maxLength: 20,
-                                      minLength: 3,
-                                    }}
+                                    className="form-control"
+                                    id={`phone_${index}`}
+                                    maxLength={20}
+                                    minLength={3}
                                   />
                                 </div>
                               </div>
@@ -574,7 +634,7 @@ const Attorney = () => {
                             <div className="col-sm-2">
                               <div className=" row">
                                 <div className="col-sm-12">
-                                  <PhoneInput
+                                  <input
                                     // isValid={(value, country) => {
                                     //   if (value.match(/000/)) {
                                     //     return 'Invalid mobile'
@@ -587,17 +647,14 @@ const Attorney = () => {
                                     onChange={(e) =>
                                       healthCareChange(e, index, 'healthCare_mobile')
                                     }
-                                    value={String(field.healthCare_mobile)}
+                                    value={field.healthCare_mobile}
                                     type="text"
                                     name="healthCare_mobile"
                                     placeholder="853-456-8464"
-                                    // className="form-control"
-                                    // id={`phone_${index}`}
-                                    inputProps={{
-                                      id: `phone_${index}`,
-                                      maxLength: 20,
-                                      minLength: 3,
-                                    }}
+                                    className="form-control"
+                                    id={`phone_${index}`}
+                                    maxLength={20}
+                                    minLength={3}
                                   />
                                 </div>
                               </div>
@@ -703,13 +760,13 @@ const Attorney = () => {
                         <div className="col-sm-2">
                           <div className="row">
                             <div className="col-sm-12">
-                              <PhoneInput
+                              <input
                                 onChange={(e) => powerOfAttorneyChange(e, index)}
-                                value={String(field.powerOfAttorney_phone)}
+                                value={field.powerOfAttorney_phone}
                                 name="powerOfAttorney_phone"
                                 type="text"
                                 placeholder="853-456-8464"
-                                // className="form-control"
+                                className="form-control"
                                 maxLength={20}
                                 minLength={3}
                               />
@@ -719,13 +776,13 @@ const Attorney = () => {
                         <div className="col-sm-2">
                           <div className="row">
                             <div className="col-sm-12">
-                              <PhoneInput
+                              <input
                                 onChange={(e) => powerOfAttorneyChange(e, index)}
-                                value={String(field.powerOfAttorney_mobile)}
+                                value={field.powerOfAttorney_mobile}
                                 name="powerOfAttorney_mobile"
                                 type="text"
                                 placeholder="853-456-8464"
-                                // className="form-control"
+                                className="form-control"
                                 maxLength={20}
                                 minLength={3}
                               />
@@ -875,7 +932,7 @@ const Attorney = () => {
                           type="text"
                           className="form-control"
                           placeholder="PLZ"
-                          maxLength={6}
+                          maxLength={10}
                           minLength={3}
                         />
                       </div>

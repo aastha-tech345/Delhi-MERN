@@ -202,6 +202,7 @@ const experiencesSchema = new mongoose.Schema({
 
 const additionalValueSchema = new mongoose.Schema({
   sending: { type: String },
+  sendingValue: { type: String },
 });
 
 const organSchema = new mongoose.Schema({

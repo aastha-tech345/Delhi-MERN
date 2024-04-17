@@ -299,12 +299,15 @@ const CustomerList = () => {
   }
 
   const handleBlur = () => {
-    let formattedAddress = street
-    const endsWithNumber = /\d$/.test(street)
+    let formattedStreet = street.trim()
+    const endsWithNumber = /\d$/.test(formattedStreet)
+
     if (endsWithNumber) {
-      formattedAddress = street.replace(/(\D)(\d)/, '$1 $2')
+      const [streetName, houseNumber] = formattedStreet.split(/(\d+)$/)
+      formattedStreet = `${streetName.trim()} ${houseNumber.trim()}`
     }
-    setStreet(formattedAddress)
+
+    setStreet(formattedStreet)
   }
 
   const editRecord = (record) => {
@@ -414,7 +417,10 @@ const CustomerList = () => {
     if (startDate > currentDate) {
       return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
     }
-    if (phone && phone.match(/000/)) {
+    if (startDate?.getFullYear() < 1900) {
+      return toast.warning('Das Startdatum darf nicht vor 1900 liegen')
+    }
+    if (phone && phone.startsWith('000')) {
       return toast.warning('Ungültige Telefonnummer')
     }
 
@@ -876,12 +882,18 @@ const CustomerList = () => {
                       />
                     </div>
                     <div className="col-sm-6">
-                      <PhoneInput
+                      <input
                         placeholder="Telefon"
+                        className="form-control"
                         value={phone}
                         onChange={(e) => {
-                          setPhone(e)
+                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                            setPhone(inputValue)
+                          }
                         }}
+                        maxLength={20}
+                        minLength={3}
                       />
                     </div>
                   </div>
@@ -891,7 +903,10 @@ const CustomerList = () => {
                         type="text"
                         value={plz}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9]/g, '')
+                          const inputValue = e.target.value.replace(
+                            /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                            '',
+                          )
                           setPlz(inputValue)
                         }}
                         placeholder="PLZ"
@@ -931,7 +946,7 @@ const CustomerList = () => {
                         value={land}
                         onChange={(e) => {
                           const inputValue = e.target.value.replace(
-                            /[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                            /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
                             '',
                           )
                           setLand(inputValue)
