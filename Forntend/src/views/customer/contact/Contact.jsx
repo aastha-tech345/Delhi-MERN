@@ -535,7 +535,7 @@ const Contact = () => {
                       </div>
                     </div>
 
-                    <div className="row mb-3">
+                    <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Telefon
                       </label>
@@ -553,7 +553,7 @@ const Contact = () => {
                         />
                       </div>
                     </div>
-                    <div className="row mb-3">
+                    <div className="row">
                       <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
                         Mobil
                       </label>
@@ -616,6 +616,7 @@ const Contact = () => {
                         <input
                           type="land"
                           name="land"
+                          onBlur={handleBlur}
                           // onChange={handleChangeLand}
                           value={data.land}
                           onChange={(e) => {
