@@ -334,14 +334,14 @@ const CustomerInfo = () => {
   const DeliveryChangePhone = (e) => {
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
     if (/^\+?[0-9]*$/.test(inputValue)) {
-      setCustomerDelivery({ ...customerDelivery, phone: e.target.value })
+      setCustomerDelivery({ ...customerDelivery, phone: inputValue })
     }
   }
 
   const DeliveryChangeMobile = (e) => {
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
     if (/^\+?[0-9]*$/.test(inputValue)) {
-      setCustomerDelivery({ ...customerDelivery, mobile: e.target.value })
+      setCustomerDelivery({ ...customerDelivery, mobile: inputValue })
     }
   }
 

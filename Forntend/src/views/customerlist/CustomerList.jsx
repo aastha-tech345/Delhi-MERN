@@ -711,19 +711,19 @@ const CustomerList = () => {
   }, [])
 
   const handleDateChange = (e) => {
-    let currentDate = new Date()
-    let currentYear = currentDate?.getFullYear()
-    let currentMonth = currentDate?.getMonth()
-    let currentDay = currentDate?.getDate()
-    if (
-      e?.getFullYear() > currentYear ||
-      (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
-      (e?.getFullYear() === currentYear &&
-        e?.getMonth() === currentMonth &&
-        e?.getDate() > currentDay + 1)
-    ) {
-      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
-    }
+    // let currentDate = new Date()
+    // let currentYear = currentDate?.getFullYear()
+    // let currentMonth = currentDate?.getMonth()
+    // let currentDay = currentDate?.getDate()
+    // if (
+    //   e?.getFullYear() > currentYear ||
+    //   (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
+    //   (e?.getFullYear() === currentYear &&
+    //     e?.getMonth() === currentMonth &&
+    //     e?.getDate() > currentDay + 1)
+    // ) {
+    //   return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
+    // }
     setStartDate(e)
   }
 

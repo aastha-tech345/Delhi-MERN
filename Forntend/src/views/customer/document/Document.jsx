@@ -249,7 +249,6 @@ const Document = () => {
     }
   }
   const options = [
-    { label: 'Auswählen' },
     { value: 'Living will', label: 'Patientenverfügung' },
     { value: 'Health care power of attorney', label: 'Gesundheitsvollmacht' },
     { value: 'Power of attorney', label: 'Vorsorgevollmacht' },
@@ -329,7 +328,7 @@ const Document = () => {
                   </div>
 
                   <div className="row mb-3">
-                    <div className="col-md-3">
+                    <div className="col-md-3 mt-1">
                       <label>Dokumententyp</label>
                     </div>
                     <div className="col-md-9">
@@ -345,8 +344,9 @@ const Document = () => {
                       />
                     </div>
                   </div>
+                  <input type="file" className='form-control' />
                   <div className="row mb-3">
-                    <div className="col-md-3">
+                    <div className="col-md-3 mt-1">
                       <label htmlFor="fileUpload">Datei-Upload</label>
                     </div>
                     <div className="col-md-9">

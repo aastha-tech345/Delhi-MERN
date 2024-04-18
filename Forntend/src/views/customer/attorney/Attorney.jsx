@@ -56,61 +56,57 @@ const Attorney = () => {
     ort: recordData?.securingattorney?.ort || '',
   })
 
-  const healthCareChange = (e, index, fieldName) => {
-    let value
+  // const healthCareChange = (e, index, fieldName) => {
+  //   let value
 
-    if (e && e.target) {
-      value = e.target.value
-    } else {
-      value = e
-    }
-
-    setHealthCare((prevHealthCare) => {
-      const updatedHealthCareData = [...prevHealthCare.healthCareData]
-
-      updatedHealthCareData[index] = {
-        ...updatedHealthCareData[index],
-        [fieldName]: value,
-      }
-
-      return { ...prevHealthCare, healthCareData: updatedHealthCareData }
-    })
-  }
-
-  // const healthCareChange = (e, index) => {
-  //   let name, value, type, checked
   //   if (e && e.target) {
-  //     ;({ name, value, type, checked } = e.target)
+  //     value = e.target.value
   //   } else {
   //     value = e
-  //     name = name
-  //     type = 'text'
   //   }
 
   //   setHealthCare((prevHealthCare) => {
   //     const updatedHealthCareData = [...prevHealthCare.healthCareData]
 
-  //     if (type === 'checkbox') {
-  //       updatedHealthCareData[index] = {
-  //         ...updatedHealthCareData[index],
-  //         [name]: checked,
-  //       }
-  //     } else if (name === 'healthCare_phone' && name === 'healthCare_mobile') {
-  //       updatedHealthCareData[index] = {
-  //         ...updatedHealthCareData[index],
-  //         healthCare_phone: value,
-  //         healthCare_mobile: value,
-  //       }
-  //     } else {
-  //       updatedHealthCareData[index] = {
-  //         ...updatedHealthCareData[index],
-  //         [name]: value,
-  //       }
+  //     updatedHealthCareData[index] = {
+  //       ...updatedHealthCareData[index],
+  //       [fieldName]: value,
   //     }
 
   //     return { ...prevHealthCare, healthCareData: updatedHealthCareData }
   //   })
   // }
+
+  const healthCareChange = (e, index) => {
+    const { name, value, type, checked } = e.target || {}
+    setHealthCare((prevHealthCare) => {
+      const updatedHealthCareData = [...prevHealthCare.healthCareData]
+
+      if (type === 'checkbox') {
+        updatedHealthCareData[index] = {
+          ...updatedHealthCareData[index],
+          [name]: checked,
+        }
+      } else if (name === 'healthCare_phone') {
+        updatedHealthCareData[index] = {
+          ...updatedHealthCareData[index],
+          healthCare_phone: value.replace(/\D/g, ''),
+        }
+      } else if (name === 'healthCare_mobile') {
+        updatedHealthCareData[index] = {
+          ...updatedHealthCareData[index],
+          healthCare_mobile: value.replace(/\D/g, ''),
+        }
+      } else {
+        // For other fields, simply update the value
+        updatedHealthCareData[index] = {
+          ...updatedHealthCareData[index],
+          [name]: value,
+        }
+      }
+      return { ...prevHealthCare, healthCareData: updatedHealthCareData }
+    })
+  }
 
   // const healthCareChange = (phoneNumber, index) => {
   //   setHealthCare((prevHealthCare) => {
@@ -187,11 +183,15 @@ const Attorney = () => {
           ...updatedPowerOfAttorneyData[index],
           [name]: checked,
         }
-      } else {
+      } else if (name === 'powerOfAttorney_phone') {
         updatedPowerOfAttorneyData[index] = {
           ...updatedPowerOfAttorneyData[index],
-          powerOfAttorney_phone: value,
-          powerOfAttorney_mobile: value,
+          powerOfAttorney_phone: value.replace(/\D/g, ''),
+        }
+      } else if (name === 'powerOfAttorney_mobile') {
+        updatedPowerOfAttorneyData[index] = {
+          ...updatedPowerOfAttorneyData[index],
+          powerOfAttorney_mobile: value.replace(/\D/g, ''),
         }
       }
 
