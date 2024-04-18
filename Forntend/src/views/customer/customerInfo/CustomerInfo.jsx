@@ -420,6 +420,9 @@ const CustomerInfo = () => {
     if (customerContact?.startDate > currentDate) {
       return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
     }
+    if (customerContact?.startDate?.getFullYear() < 1900) {
+      return toast.warning('Das Startdatum darf nicht vor 1900 liegen')
+    }
     if (dataCollection > currentDate) {
       return toast.warning('Die Datenerfassung darf nicht in der Zukunft liegen.')
     }
