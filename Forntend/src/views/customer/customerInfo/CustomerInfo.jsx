@@ -656,55 +656,23 @@ const CustomerInfo = () => {
                         <div className="row mb-3">
                           <label className="col-sm-3 col-form-label">Status</label>
                           <div className="col-sm-6">
-                            {/* <ListBox
-                              placeholder="HVD-PV"
-                              value={clientStatus}
-                              onChange={(e) => setClientStatus(e.value)}
-                              // options={cities.map((city) => ({
-                              //   ...city,
-                              //   checked: Array.isArray(clientStatus)
-                              //     ? clientStatus.includes(city.value)
-                              //     : false,
-                              // }))}
-                              options={cities}
-                              multiple
-                              maxSelectedValues={3}
-                              optionLabel="name"
-                              className="w-100"
-                              scrollHeight={500}
-                              showCheckbox={true}
-                            /> */}
-                            {/* <div className="card flex justify-content-center">
-                              {cities.map((city) => (
-                                <div key={city.code} className="p-checkbox">
-                                  <input
-                                    type="checkbox"
-                                    checked={
-                                      clientStatus &&
-                                      clientStatus.some(
-                                        (selectedCity) => selectedCity.code === city.code,
-                                      )
-                                    }
-                                    onChange={(e) => handleCheckboxChange(e, city)}
-                                  />
-                                  <label>{city.name}</label>
-                                </div>
-                              ))}
-                            </div> */}
                             <div className="card flex justify-content-center p-3">
                               {cities.map((city) => (
                                 <div key={city.code} className="checkbox-container">
-                                  <input
-                                    type="checkbox"
-                                    checked={
-                                      clientStatus &&
-                                      clientStatus.some(
-                                        (selectedCity) => selectedCity.code === city.code,
-                                      )
-                                    }
-                                    onChange={(e) => handleCheckboxChange(e, city)}
-                                  />
-                                  <label>{city.name}</label>
+                                  <div className="radio-check-wrapp">
+                                    <input
+                                      type="checkbox"
+                                      checked={
+                                        clientStatus &&
+                                        clientStatus.some(
+                                          (selectedCity) => selectedCity.code === city.code,
+                                        )
+                                      }
+                                      onChange={(e) => handleCheckboxChange(e, city)}
+                                    />
+                                    {/* <span></span> */}
+                                    <label className="city-label">{city.name}</label>
+                                  </div>
                                 </div>
                               ))}
                             </div>
