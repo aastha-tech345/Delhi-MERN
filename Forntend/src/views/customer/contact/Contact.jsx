@@ -153,7 +153,23 @@ const Contact = () => {
     { value: 'frau', label: 'Frau' },
     { value: 'divers', label: 'Divers' },
   ]
-  const handleClose = () => setShow(false)
+  const handleClose = () => {
+    setShow(false)
+    setData({
+      fname: '',
+      lname: '',
+      telephone: '',
+      gender: '',
+      land: '',
+      plz: '',
+      ort: '',
+      mobile: '',
+      street: '',
+      title: '',
+      address: '',
+      salution: '',
+    })
+  }
   const handleShow = () => setShow(true)
 
   const handlePageChange = (event, value) => {
@@ -189,7 +205,7 @@ const Contact = () => {
   }
 
   const handleChangeStreet = (e) => {
-    setData({ ...data, address: e.target.value })
+    setData({ ...data, street: e.target.value })
   }
   const handleChangeMobile = (e) => {
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
@@ -508,9 +524,9 @@ const Contact = () => {
                         <input
                           type="text"
                           name="address"
-                          onBlur={handleBlur}
+                          // onBlur={handleBlur}
                           value={data.address}
-                          onChange={handleChangeStreet}
+                          onChange={handleChange}
                           placeholder="Adresszusatz"
                           className="form-control"
                           required={true}
@@ -527,7 +543,7 @@ const Contact = () => {
                           name="street"
                           onBlur={handleBlur}
                           value={data.street}
-                          onChange={handleChange}
+                          onChange={handleChangeStreet}
                           placeholder="Straße + Nr"
                           className="form-control"
                           required={true}
