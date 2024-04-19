@@ -334,14 +334,14 @@ const CustomerInfo = () => {
   const DeliveryChangePhone = (e) => {
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
     if (/^\+?[0-9]*$/.test(inputValue)) {
-      setCustomerDelivery({ ...customerDelivery, phone: e.target.value })
+      setCustomerDelivery({ ...customerDelivery, phone: inputValue })
     }
   }
 
   const DeliveryChangeMobile = (e) => {
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
     if (/^\+?[0-9]*$/.test(inputValue)) {
-      setCustomerDelivery({ ...customerDelivery, mobile: e.target.value })
+      setCustomerDelivery({ ...customerDelivery, mobile: inputValue })
     }
   }
 
@@ -419,6 +419,9 @@ const CustomerInfo = () => {
     let currentDate = new Date()
     if (customerContact?.startDate > currentDate) {
       return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+    }
+    if (customerContact?.startDate?.getFullYear() < 1900) {
+      return toast.warning('Das Startdatum darf nicht vor 1900 liegen')
     }
     if (dataCollection > currentDate) {
       return toast.warning('Die Datenerfassung darf nicht in der Zukunft liegen.')

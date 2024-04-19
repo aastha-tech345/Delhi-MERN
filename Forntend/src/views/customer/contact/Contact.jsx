@@ -169,7 +169,7 @@ const Contact = () => {
     // setData({ ...data, telephone: e })
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
     if (/^\+?[0-9]*$/.test(inputValue)) {
-      setData({ ...data, telephone: e.target.value })
+      setData({ ...data, telephone: inputValue })
     }
   }
 
@@ -194,7 +194,7 @@ const Contact = () => {
   const handleChangeMobile = (e) => {
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
     if (/^\+?[0-9]*$/.test(inputValue)) {
-      setData({ ...data, mobile: e.target.value })
+      setData({ ...data, mobile: inputValue })
     }
   }
   const handleChangeLand = (e) => {
