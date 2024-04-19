@@ -259,23 +259,7 @@ const CustomerInfo = () => {
   }
 
   const ContactChange = (e) => {
-    if (e instanceof Date) {
-      // let currentDate = new Date()
-      // let currentYear = currentDate?.getFullYear()
-      // let currentMonth = currentDate?.getMonth()
-      // let currentDay = currentDate?.getDate()
-      // if (
-      //   e?.getFullYear() > currentYear ||
-      //   (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
-      //   (e?.getFullYear() === currentYear &&
-      //     e?.getMonth() === currentMonth &&
-      //     e?.getDate() > currentDay + 1)
-      // ) {
-      //   return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
-      // }
-      // setStartDate(e)
-      setCustomerContact({ ...customerContact, startDate: e })
-    } else if (e.target) {
+    if (e.target) {
       const { name, value, type, checked } = e.target
 
       if (type === 'radio') {
@@ -291,6 +275,9 @@ const CustomerInfo = () => {
     }
   }
 
+  const ContactChangeDob = (e) => {
+    setCustomerContact({ ...customerContact, startDate: e })
+  }
   const BillChange = (e) => {
     const { name, value } = e.target
     setCustomerBills({ ...customerBills, [name]: value })
@@ -417,16 +404,14 @@ const CustomerInfo = () => {
       return toast.warning('Das Statusfeld ist erforderlich')
     }
     let currentDate = new Date()
-    if (customerContact && customerContact.startDate instanceof Date) {
-      if (customerContact?.startDate > currentDate) {
-        return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
-      }
 
-      if (customerContact?.startDate?.getFullYear() < 1900) {
-        return toast.warning('Das Startdatum darf nicht vor 1900 liegen.')
-      }
-    } else {
-      return toast.error('Ungültige Kundeninformationen.')
+    if (customerContact?.startDate > currentDate) {
+      return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+    }
+    const startDate = customerContact?.startDate
+
+    if (startDate instanceof Date && startDate.getFullYear() < 1900) {
+      return toast.warning('Das Startdatum darf nicht vor 1900 liegen.')
     }
 
     if (dataCollection > currentDate) {
@@ -767,7 +752,7 @@ const CustomerInfo = () => {
                       </div>
                       <div className="col-sm-6">
                         <div className="row mb-3">
-                          <label className="col-sm-4 col-form-label">Zustimmung Datenschutz</label>
+                          <label className="col-sm-6 col-form-label">Zustimmung Datenschutz</label>
                           <div className="col-sm-4 mt-2">
                             <div className="radio-check-wrap w-100 h-100">
                               <input
@@ -813,7 +798,7 @@ const CustomerInfo = () => {
                           <DatePiker
                             className="form-control"
                             selected={customerContact?.startDate}
-                            onChange={ContactChange}
+                            onChange={ContactChangeDob}
                             name="startDate"
                             placeholderText={'Geburtsdatum'}
                           />
@@ -1407,7 +1392,7 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div> */}
-        <div className="text-end mt-2 mx-3 mb-3 pb-3">
+        <div className="text-end mt-4 mx-3 mb-3 pb-3">
           <button
             onClick={cancelData}
             type="button"
