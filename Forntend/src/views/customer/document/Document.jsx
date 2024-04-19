@@ -176,14 +176,17 @@ const Document = () => {
   }
 
   const removeDocument = (index) => {
-    // console.log('ashindex', document_upload)
-    const newDocumentUpload = [...document_upload]
-    newDocumentUpload.splice(index, 1)
-    setDocumentUpload(newDocumentUpload)
+    // const newDocumentUpload = [...document_upload];
+    // newDocumentUpload.splice(index, 1);
+    setDocumentUpload([])
   }
 
   const handleClose = () => {
     setShow(false)
+    setData({
+      document_title: '',
+      document_type: '',
+    })
     setDocumentUpload([])
   }
   const handleShow = () => setShow(true)
@@ -587,74 +590,71 @@ const Document = () => {
                   <div className="file-input-wrap">
                     <div className="filename-field">
                       <span>
-                        {/* {document_upload?.length
-                          ? document_upload.map((file, index) =>
-                           (
-                              <>
-                                <ul className="d-flex flex-row justify-content-between">
-                                  <div key={index}>{file.name}</div>
-                                  <button
-                                    onClick={() => removeDocument(index)}
-                                    style={{ background: 'white', border: 'none' }}
-                                  >
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                    >
-                                      <g clipPath="url(#clip0_431_1048)">
-                                        <path
-                                          d="M5 8H19"
-                                          stroke="#C20F0F"
-                                          strokeWidth="2"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                        <path
-                                          d="M10 11V16"
-                                          stroke="#C20F0F"
-                                          strokeWidth="2"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                        <path
-                                          d="M14 11V16"
-                                          stroke="#C20F0F"
-                                          strokeWidth="2"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                        <path
-                                          d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
-                                          stroke="#C20F0F"
-                                          strokeWidth="2"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                        <path
-                                          d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
-                                          stroke="#C20F0F"
-                                          strokeWidth="2"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                      </g>
-                                      <defs>
-                                        <clipPath id="clip0_431_1048">
-                                          <rect width="24" height="24" fill="white" />
-                                        </clipPath>
-                                      </defs>
-                                    </svg>
-                                    <span> Löschen</span>
-                                  </button>
-                                </ul>
-                              </>
-                            )
-                          )
-                          : ''} */}
-                        {document_upload?.name}
+                        <>
+                          <ul className="d-flex flex-row justify-content-between">
+                            <div>{document_upload?.name}</div>
+                            {document_upload?.name?.length ? (
+                              <button
+                                onClick={(index) => removeDocument(index)}
+                                style={{ background: 'white', border: 'none' }}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                >
+                                  <g clipPath="url(#clip0_431_1048)">
+                                    <path
+                                      d="M5 8H19"
+                                      stroke="#C20F0F"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    <path
+                                      d="M10 11V16"
+                                      stroke="#C20F0F"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    <path
+                                      d="M14 11V16"
+                                      stroke="#C20F0F"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    <path
+                                      d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
+                                      stroke="#C20F0F"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                    <path
+                                      d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
+                                      stroke="#C20F0F"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_431_1048">
+                                      <rect width="24" height="24" fill="white" />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                                <span> Löschen</span>
+                              </button>
+                            ) : (
+                              ''
+                            )}
+                          </ul>
+                        </>
                       </span>
                     </div>
                     {/* <div className="file-btn">Durchsuche</div> */}

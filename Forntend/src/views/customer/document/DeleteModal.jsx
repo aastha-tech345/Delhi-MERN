@@ -24,6 +24,10 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
     }
   }
 
+  const handleClose = () => {
+    setHide(false)
+  }
+
   return (
     <>
       <Modal show={true} centered>
@@ -76,7 +80,7 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
             <button
               className="btn"
               style={{ background: '#015291', border: '#015291', color: 'white' }}
-              onClick={() => setHide(false)}
+              onClick={handleClose}
             >
               Abbrechen
             </button>
