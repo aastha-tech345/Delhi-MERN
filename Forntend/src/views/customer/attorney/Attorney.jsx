@@ -234,15 +234,15 @@ const Attorney = () => {
       let currentMonth = currentDate?.getMonth()
       let currentDay = currentDate?.getDate()
 
-      if (
-        e?.getFullYear() > currentYear ||
-        (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
-        (e?.getFullYear() === currentYear &&
-          e?.getMonth() === currentMonth &&
-          e?.getDate() > currentDay + 1)
-      ) {
-        return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
-      }
+      // if (
+      //   e?.getFullYear() > currentYear ||
+      //   (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
+      //   (e?.getFullYear() === currentYear &&
+      //     e?.getMonth() === currentMonth &&
+      //     e?.getDate() > currentDay + 1)
+      // ) {
+      //   return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
+      // }
 
       setSecuringattorney({ ...securingattorney, dob: e })
     } else if (e.target) {
@@ -358,6 +358,14 @@ const Attorney = () => {
       const birthYear = new Date(securingattorney?.dob)?.getFullYear()
       if (birthYear < 1900) {
         return toast.warning('Das Geburtsdatum darf nicht vor 1900 liegen')
+      }
+    }
+    if (securingattorney && securingattorney.dob) {
+      let currentDate = new Date()
+      let attorneyDOB = new Date(securingattorney.dob)
+
+      if (attorneyDOB > currentDate) {
+        return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
       }
     }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd, MdOutlineEdit } from 'react-icons/md'
-import { Table } from 'antd'
+import { Divider, Table } from 'antd'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import Select from 'react-select'
@@ -15,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import ViewModel from './ViewModel'
+import { styled } from '@mui/material/styles'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
 const Document = () => {
   let lgUser = localStorage.getItem('record')
@@ -121,7 +123,6 @@ const Document = () => {
   // const [document_title, setDocumentTitle] = useState()
   let res = localStorage.getItem('customerRecord')
   let customerRecord = JSON.parse(res)
-
   const [data, setData] = useState({
     document_title: '',
     document_type: '',
@@ -265,6 +266,36 @@ const Document = () => {
     setPage(1)
   }
 
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(100%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+    opacity: 0,
+    background: 'white',
+    width: '100%',
+  })
+
+  const Container = styled('div')({
+    position: 'relative',
+    display: 'inline-block',
+    border: '1px solid black',
+    borderRadius: '6px',
+    fontSize: '14px',
+    fontWeight: '400',
+    marginBottom: '16px',
+    height: '36px',
+    color: '#1c1d21',
+    width: '100%',
+    // textAlign: 'center',
+    borderColor: 'hsl(0, 0%, 80%)',
+  })
+
   // console.log('document page', documentRecord)
   useEffect(() => {
     // setId(generateRandomId())
@@ -326,7 +357,7 @@ const Document = () => {
                       />
                     </div>
                   </div>
-
+                  {/* 
                   <div className="row mb-3">
                     <div className="col-md-3 mt-1">
                       <label>Dokumententyp</label>
@@ -344,7 +375,7 @@ const Document = () => {
                       />
                     </div>
                   </div>
-                  <input type="file" className='form-control' />
+
                   <div className="row mb-3">
                     <div className="col-md-3 mt-1">
                       <label htmlFor="fileUpload">Datei-Upload</label>
@@ -352,56 +383,14 @@ const Document = () => {
                     <div className="col-md-9">
                       <div className="file-upload-wrap">
                         <input
-                          // ref={fileInputRef}
-                          id="fileUpload"
                           type="file"
                           className="form-control"
-                          // multiple
                           name="document_upload"
-                          // onChange={(e) => setDocumentUpload([...document_upload, ...e.target.files])}
-                          // onChange={handleFileInputChange}
                           onChange={(e) => setDocumentUpload(e.target.files[0])}
                         />
                         <div className="file-input-wrap">
                           <div className="filename-field">
-                            {/* <span>
-                            {document_upload?.length
-                              ? document_upload.map((file, index) => (
-                                  <div key={index}>{file.name}</div>
-                                ))d F 
-
-                              : 'Datei-Upload'}
-                          </span> */}
-
                             <span>Datei-Upload</span>
-
-                            {/* <span>
-                            {' '}
-                            {document_upload.map((file, index) => (
-                              <div key={index}>{file.name}</div>
-                            ))}
-                          </span> */}
-                            {/* <svg
-                              // style={{ marginLeft: '-20px', height: '30px' }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="15"
-                              height="15"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                              onClick={cancelData}
-                            >
-                              <g clipPath="url(#clip0_493_7693)">
-                                <path
-                                  d="M5.89128 5.89128C6.13607 5.64909 6.5319 5.64909 6.75326 5.89128L7.97721 7.11784L9.22461 5.89128C9.4694 5.64909 9.86524 5.64909 10.0866 5.89128C10.3522 6.13607 10.3522 6.5319 10.0866 6.75326L8.88346 7.97721L10.0866 9.22461C10.3522 9.4694 10.3522 9.86524 10.0866 10.0866C9.86524 10.3522 9.4694 10.3522 9.22461 10.0866L7.97721 8.88346L6.75326 10.0866C6.5319 10.3522 6.13607 10.3522 5.89128 10.0866C5.64909 9.86524 5.64909 9.4694 5.89128 9.22461L7.11784 7.97721L5.89128 6.75326C5.64909 6.5319 5.64909 6.13607 5.89128 5.89128ZM14.6673 8.00065C14.6673 11.6829 11.6829 14.6673 8.00065 14.6673C4.31836 14.6673 1.33398 11.6829 1.33398 8.00065C1.33398 4.31836 4.31836 1.33398 8.00065 1.33398C11.6829 1.33398 14.6673 4.31836 14.6673 8.00065ZM8.00065 2.58398C5.00846 2.58398 2.58398 5.00846 2.58398 8.00065C2.58398 10.9928 5.00846 13.4173 8.00065 13.4173C10.9928 13.4173 13.4173 10.9928 13.4173 8.00065C13.4173 5.00846 10.9928 2.58398 8.00065 2.58398Z"
-                                  fill="#005291"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_493_7693">
-                                  <rect width="16" height="16" fill="white" />
-                                </clipPath>
-                              </defs>
-                            </svg> */}
                           </div>
                           <div className="file-btn">
                             <svg
@@ -410,7 +399,6 @@ const Document = () => {
                               viewBox="0 0 24 24"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
-                              // style={{ color: 'white', marginRight: '-60px' }}
                             >
                               <g clipPath="url(#clip0_384_3149)">
                                 <path
@@ -438,7 +426,164 @@ const Document = () => {
                         </div>
                       </div>
                     </div>
+                  </div> */}
+                  <div className="row mb-3">
+                    <div className="col-md-3 mt-1">
+                      <label>Dokumententyp</label>
+                    </div>
+                    <div className="col-md-9">
+                      <Select
+                        className="w-100"
+                        options={options}
+                        onChange={handleChange}
+                        value={{
+                          label: data.document_type || 'Auswählen',
+                          value: data.document_type || 'Auswählen',
+                        }}
+                        name="document_type"
+                      />
+                    </div>
                   </div>
+
+                  <div className="row">
+                    <div className="col-md-3 mt-1">
+                      <label htmlFor="fileUpload">Datei-Upload</label>
+                    </div>
+                    {/* <div className="col-md-9">
+                      <div className="file-upload-wrap">
+                        <input
+                          type="file"
+                          className="form-control"
+                          name="document_upload"
+                          onChange={(e) => {
+                            if (data.document_type && data.document_type.length > 0) {
+                              setDocumentUpload(e.target.files[0])
+                            } else {
+                            }
+                          }}
+                          disabled={!data.document_type || data.document_type.length === 0}
+                        />
+                        <div className="file-input-wrap">
+                          <div className="filename-field">
+                            <span>Datei-Upload</span>
+                          </div>
+                          <div className="file-btn">
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <g clipPath="url(#clip0_384_3149)">
+                                <path
+                                  d="M10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16Z"
+                                  stroke="#005291"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M20 20L15 15"
+                                  stroke="#005291"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_384_3149">
+                                  <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div> */}
+                    <div className="col-sm-9">
+                      <div className="file-input-wrap">
+                        <div className="filename-field">
+                          <Container>
+                            {/* <CloudUploadIcon /> */}
+                            <label
+                              htmlFor="file-upload"
+                              style={{
+                                width: '85%',
+                              }}
+                            >
+                              <p
+                                style={{
+                                  paddingTop: '5px',
+                                  paddingLeft: '10px',
+                                  cursor: 'pointer',
+                                }}
+                              >
+                                Datei-Upload
+                              </p>
+                            </label>
+                            <VisuallyHiddenInput
+                              id="file-upload"
+                              type="file"
+                              name="document_upload"
+                              placeholder="Upload File"
+                              onChange={(e) => {
+                                setDocumentUpload(e.target.files[0])
+                              }}
+                              // disabled={!data.document_type || data.document_type.length === 0}
+                            />
+                            {/* <Divider /> */}
+                            <svg
+                              style={{
+                                // marginLeft: '57%',
+                                borderLeft: '1px solid hsl(0, 0%, 80%)',
+                                height: '100%',
+                                paddingLeft: '15px',
+                              }}
+                              width="34"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <g clipPath="url(#clip0_384_3149)">
+                                <path
+                                  d="M10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16Z"
+                                  stroke="#005291"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                                <path
+                                  d="M20 20L15 15"
+                                  stroke="#005291"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_384_3149">
+                                  <rect
+                                    width="24"
+                                    height="24"
+                                    fill="white"
+                                    style={{ marginLeft: '20px' }}
+                                  />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                            {/* <div className="file-input-wrap">
+                              <div className="filename-field">
+                                <span>Datei-Upload</span>
+                              </div>
+                            </div> */}
+                          </Container>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="file-input-wrap">
                     <div className="filename-field">
                       <span>
