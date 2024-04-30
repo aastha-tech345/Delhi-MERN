@@ -516,7 +516,7 @@ const Document = () => {
                             <label
                               htmlFor="file-upload"
                               style={{
-                                width: '85.1%',
+                                width: '85.2%',
                               }}
                             >
                               <p

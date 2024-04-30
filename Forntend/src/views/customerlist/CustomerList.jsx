@@ -79,7 +79,10 @@ const CustomerList = () => {
   const handlePageChange = (event, value) => {
     setPage(value)
   }
-  const handleClose = () => setShow(false)
+  const handleClose = () => {
+    resetForm()
+    setShow(false)
+  }
   const handleShow = () => setShow(true)
   const [selectedRecordId, setSelectedRecordId] = useState(null)
   // const handleChange = (value, name) => {
@@ -328,6 +331,7 @@ const CustomerList = () => {
   }
 
   const handleModalClose = () => {
+    resetForm()
     setIsModalVisible(false)
   }
   const handleDeleteConfirm = async () => {
@@ -502,22 +506,21 @@ const CustomerList = () => {
       toast.error('E-Mail-ID existiert bereits')
       // console.error('error', error)
     }
-
-    function resetForm() {
-      setFname('')
-      setLand('')
-      setLname('')
-      setEmail('')
-      setPlz('')
-      setStreet('')
-      setStatus('')
-      setPhone('')
-      setCity('')
-      setStartDate('')
-      setClientStatus('')
-      setSalutionData('')
-      setValidated(false)
-    }
+  }
+  function resetForm() {
+    setFname('')
+    setLand('')
+    setLname('')
+    setEmail('')
+    setPlz('')
+    setStreet('')
+    setStatus('')
+    setPhone('')
+    setCity('')
+    setStartDate('')
+    setClientStatus('')
+    setSalutionData('')
+    setValidated(false)
   }
 
   const getDetails = async () => {
