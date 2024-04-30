@@ -4,7 +4,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 
 exports.createActivity = async (req, res) => {
   try {
-    const { icon, message, customer_id} = req.body;
+    const { icon, message, customer_id } = req.body;
 
     // const user = await CustomerModel.Customer.findOne({
     //   created_by: "customer",
@@ -35,7 +35,7 @@ exports.createActivity = async (req, res) => {
 
 exports.getActivity = async (req, res) => {
   try {
-    const resultPerPage = 10;
+    const resultPerPage = 1;
     const countPage = await ActivityInfomation.Activity.countDocuments();
     let pageCount = Math.ceil(Number(countPage) / 10);
 
@@ -76,11 +76,14 @@ exports.getActivityData = async (req, res) => {
   try {
     const result = await ActivityInfomation.Activity.findOne({
       _id: req.params.id,
+      is_deleted: { $ne: "deleted" },
     });
-    if (!result) {
-      return res.status(404).send({ error: "Activity not found" });
-    }
-    res.send(result);
+    console.log("first", result);
+    res.status(200).json({
+      success: true,
+      message: "Activity Data",
+      data: result,
+    });
   } catch (error) {
     res.status(500).send({ error: "Internal Server Error" });
   }
@@ -89,13 +92,17 @@ exports.getActivityData = async (req, res) => {
 exports.getActivityDataUpdate = async (req, res) => {
   try {
     const result = await ActivityInfomation.Activity.updateOne(
-      { _id: req.params.id },
+      { _id: req.params.id, is_deleted: { $ne: "deleted" } },
       { $set: req.body }
     );
     if (result.n === 0) {
       return res.status(404).send({ error: "Activity not found" });
     }
-    res.send(result);
+    res.status(201).json({
+      status: 201,
+      message: "Activity update successfully",
+      data: result,
+    });
   } catch (error) {
     res.status(500).send({ error: "Internal Server Error" });
   }
@@ -103,9 +110,10 @@ exports.getActivityDataUpdate = async (req, res) => {
 
 exports.getActivityDataDelete = async (req, res) => {
   try {
-    const result = await ActivityInfomation.Activity.deleteOne({
-      _id: req.params.id,
-    });
+    const result = await ActivityInfomation.Activity.updateOne(
+      { _id: req.params.id, is_deleted: { $ne: "deleted" } },
+      { $set: { is_deleted: "deleted" } }
+    );
     res.send(result);
   } catch (error) {
     console.error("Error deleting activity data:", error);

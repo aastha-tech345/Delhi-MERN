@@ -26,6 +26,8 @@ const informationSchema = new mongoose.Schema({
   mobile: { type: String },
   dataProtection: { type: String },
   deposit: { type: String },
+  salution: { type: Array, default: [] },
+  country: { type: String },
 });
 
 const motivatedSchema = new mongoose.Schema({

@@ -1,24 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   PhoneOutlined,
   CheckCircleOutlined,
   PrinterOutlined,
   RedEnvelopeOutlined,
 } from '@ant-design/icons'
-import { postFetchData } from 'src/Api'
+import { postFetchData, putFetchData } from 'src/Api'
+import axios from 'axios'
 import GetDescriptionData from './GetActivityData'
 import Customer from '../Customer'
 import { MdAdd } from 'react-icons/md'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import PropTypes from 'prop-types'
+import { message } from 'antd'
 
 const Activity = () => {
+  const [employeeData, setEmployeeData] = useState([])
   const apiUrl = process.env.REACT_APP_API_URL
-  const notify = (dataa) => toast(dataa)
-
-  let res = localStorage.getItem('customerRecord')
-  let result = JSON.parse(res)
-
+  let customerRecord = localStorage.getItem('customerRecord')
+  let activityEditId = localStorage.getItem('activityEditId')
+  let result = JSON.parse(customerRecord)
+  // let result = JSON.parse(res)
+  // console.log('result', result._id)
   const [color, setColor] = useState('white')
   const [color1, setColor1] = useState('white')
   const [color2, setColor2] = useState('white')
@@ -34,9 +38,10 @@ const Activity = () => {
   const [buttonHide, setButtonHide] = useState(true)
   const [data, setData] = useState({
     message: '',
-    customer_id: result?._id,
   })
+  let customer_id = result?._id
 
+  // console.log('first', getEmployeRecord())
   const selectIcon = (iconName, selectedColor, color) => {
     setIcon(iconName)
     switch (iconName) {
@@ -89,7 +94,7 @@ const Activity = () => {
     const { name, value } = e.target
     setData({ ...data, [name]: value })
   }
-  let total = { ...data, icon }
+  let total = { ...data, icon, customer_id }
   const handleSubmit = async () => {
     for (const key in data) {
       if (!data[key]) {
@@ -97,10 +102,12 @@ const Activity = () => {
         return
       }
     }
+    // console.log('total', total)
     try {
       const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
       if (res?.message === 'activity was created') {
         toast.success('Aktivitätsdaten wurden erfolgreich erstellt')
+        // window.location.reload()
         setOpenMessage(false)
         setData({
           message: '',
@@ -124,14 +131,37 @@ const Activity = () => {
     }
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/activity/get_activitybyid/${activityEditId}`)
+        setEmployeeData(response?.data?.data || {})
+        setData((prevData) => ({
+          ...prevData,
+          message: response?.data?.data?.message || '',
+        }))
+      } catch (error) {
+        console.error('Error fetching records:', error)
+      }
+    }
+
+    if (activityEditId) {
+      fetchData()
+    }
+  }, [activityEditId])
+
+  // console.log('first', activityEditId)
   const openText = () => {
     setOpenMessage(true)
     setButtonHide(false)
   }
   const handleClose = () => {
+    localStorage.removeItem('activityEditId')
     setOpenMessage(false)
     setButtonHide(true)
   }
+
+  console.log('employeeData', employeeData.message)
 
   return (
     <div className="inner-page-wrap" style={{ background: 'white' }}>
@@ -218,9 +248,9 @@ const Activity = () => {
                           rows={6}
                           name="message"
                           placeholder="Notiz"
-                          value={data?.message}
+                          // value={employeeData?.message}
                           onChange={handleChange}
-                        ></textarea>
+                        />
                       </div>
                       <div className="bottomBtnBg">
                         <div className="row">
@@ -269,11 +299,14 @@ const Activity = () => {
           </div>
         </div>
 
-        <GetDescriptionData updateData={updateData} search={search} />
+        <GetDescriptionData updateData={updateData} search={search} openText={openText} />
         <ToastContainer />
       </div>
     </div>
   )
+}
+Activity.propTypes = {
+  activityEditId: PropTypes.string.isRequired,
 }
 
 export default React.memo(Activity)

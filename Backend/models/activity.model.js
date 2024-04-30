@@ -21,11 +21,16 @@ const activitySchema = new Schema(
     //   title:{type:String},
     //   administration:{type:String},
     // },
+    is_deleted: {
+      type: String,
+      enum: ["active", "deleted"],
+      default: "active",
+    },
     customer_id: { type: mongoose.Schema.Types.ObjectId },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 const Activity = mongoose.model("activity", activitySchema);

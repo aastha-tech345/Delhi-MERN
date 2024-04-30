@@ -31,7 +31,8 @@ router.get("/get_document/:id", roleCtrl.getDocument);
 router.get("/get_document/:id", roleCtrl.getDocumentData);
 router.put(
   "/get_document/update/:id",
-  imageUplaod.array("document_upload", 10),
+  // imageUplaod.array("document_upload", 10),
+  imageUplaod.single("document_upload"),
   roleCtrl.getDocumentDataUpdate
 );
 router.put("/get_document/delete/:id", roleCtrl.getDocumentDataDelete);

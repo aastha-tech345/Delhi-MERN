@@ -5,6 +5,7 @@ import Customer from '../Customer'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { HpvData } from './HpvData'
+import Select from 'react-select'
 
 const Services = () => {
   const navigate = useNavigate()
@@ -17,6 +18,20 @@ const Services = () => {
   const cancelData = () => {
     localStorage.removeItem('tabId')
     navigate('/customer/customer_info')
+  }
+  const Anrede = [
+    { value: 'herr', label: 'Herr' },
+    { value: 'frau', label: 'Frau' },
+    { value: 'divers', label: 'Divers' },
+  ]
+  const [salutionData, setSalutionData] = useState(recordData?.information?.salution)
+  console.log('recordData?.information?.salution', recordData?.information?.salution)
+  const handleSalutionChange = (selectedOptionArray) => {
+    setSalutionData(selectedOptionArray)
+    setInformation((prevInformation) => ({
+      ...prevInformation,
+      salution: selectedOptionArray || [],
+    }))
   }
 
   const [motivation, setMotivation] = useState({
@@ -57,7 +72,10 @@ const Services = () => {
     mobile: '',
     dataProtection: '',
     deposit: '',
+    salution: salutionData,
+    country: '',
   })
+
   const [hopeless, setHopeless] = useState({
     nolife_measures: '',
     no_palliative: '',
@@ -525,6 +543,7 @@ const Services = () => {
     organ,
     customer_id: resultt?._id,
   }
+  console.log('infoData', data?.information)
   const saveData = async () => {
     // console.log('data', data)
     try {
@@ -627,6 +646,8 @@ const Services = () => {
       mobile: recordData?.information?.mobile,
       dataProtection: recordData?.information?.dataProtection,
       deposit: recordData?.information?.deposit,
+      salution: recordData?.information?.salution,
+      country: recordData?.information?.country,
     })
 
     setHopeless({
@@ -792,6 +813,7 @@ const Services = () => {
       organ_donation_no: recordData?.organ?.organ_donation_no,
       organ_research_purposes: recordData?.organ?.organ_research_purposes,
     })
+    setSalutionData(recordData?.information?.salution)
   }, [recordData])
 
   const rowData = [
@@ -2926,6 +2948,22 @@ const Services = () => {
                               </div>
                               <div className="row mt-md-2">
                                 <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                                  Anrede
+                                </label>
+                                <div className="col-sm-8">
+                                  <Select
+                                    className="w-100"
+                                    name="salution"
+                                    placeholder="Anrede"
+                                    options={Anrede}
+                                    onChange={handleSalutionChange}
+                                    value={salutionData}
+                                    isDisabled={information.alternateAddress !== 'ja'}
+                                  />
+                                </div>
+                              </div>
+                              <div className="row mt-md-2">
+                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
                                   PLZ
                                 </label>
                                 <div className="col-sm-8">
@@ -2936,7 +2974,7 @@ const Services = () => {
                                       const inputValue = e.target.value.replace(
                                         /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
                                         '',
-                                      ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
+                                      )
                                       setInformation({ ...information, plz: inputValue })
                                     }}
                                     placeholder="PLZ"
@@ -3005,6 +3043,28 @@ const Services = () => {
                                     name="address"
                                     type="text"
                                     placeholder="Adresszusatz"
+                                    disabled={information.alternateAddress !== 'ja'}
+                                    className="form-control"
+                                  />
+                                </div>
+                              </div>
+                              <div className="row mt-md-2">
+                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
+                                  Land
+                                </label>
+                                <div className="col-sm-8">
+                                  <input
+                                    value={information.country}
+                                    onChange={(e) => {
+                                      const inputValue = e.target.value.replace(
+                                        /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                        '',
+                                      )
+                                      setInformation({ ...information, country: inputValue })
+                                    }}
+                                    name="country"
+                                    type="text"
+                                    placeholder="Land"
                                     disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                   />

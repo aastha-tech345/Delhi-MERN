@@ -229,27 +229,19 @@ const Attorney = () => {
   // }
   const securingattorneyChange = (e) => {
     if (e instanceof Date) {
-      let currentDate = new Date()
-      let currentYear = currentDate?.getFullYear()
-      let currentMonth = currentDate?.getMonth()
-      let currentDay = currentDate?.getDate()
+      let yearString = e.getFullYear().toString()
+      const year = parseInt(yearString.substring(0, 4), 10)
+      if (yearString.length > 4) {
+        yearString = yearString.substring(0, 4)
+      }
+      const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
 
-      // if (
-      //   e?.getFullYear() > currentYear ||
-      //   (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
-      //   (e?.getFullYear() === currentYear &&
-      //     e?.getMonth() === currentMonth &&
-      //     e?.getDate() > currentDay + 1)
-      // ) {
-      //   return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
-      // }
-
-      setSecuringattorney({ ...securingattorney, dob: e })
+      setSecuringattorney({ ...securingattorney, dob: newDate })
     } else if (e.target) {
       const { name, value, type, checked } = e.target
 
       if (name === 'plz' && type === 'text') {
-        const inputValue = value.replace(/[^0-9]/g, '')
+        const inputValue = value.replace(/[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g, '')
         setSecuringattorney({ ...securingattorney, plz: inputValue })
       } else {
         setSecuringattorney({ ...securingattorney, [name]: type === 'checkbox' ? checked : value })
@@ -365,7 +357,7 @@ const Attorney = () => {
       let attorneyDOB = new Date(securingattorney.dob)
 
       if (attorneyDOB > currentDate) {
-        return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
+        return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen')
       }
     }
 

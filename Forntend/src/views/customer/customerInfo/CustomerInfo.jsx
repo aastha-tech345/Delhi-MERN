@@ -74,9 +74,9 @@ const CustomerInfo = () => {
     { name: 'HVD-PV', code: '0' },
     { name: 'SPV-alt', code: '1' },
     { name: 'OPV-alt', code: '2' },
-    { name: 'DauerspenderInnen', code: '3' },
-    { name: 'Materialbestellung', code: '4' },
-    { name: 'Newsletter-Abonnent', code: '5' },
+    { name: 'SpenderIn', code: '3' },
+    { name: 'Material', code: '4' },
+    { name: 'Newsletter', code: '5' },
     { name: 'Offen', code: '6' },
   ]
   // const [those, setThose] = useState(resultt?.those)
@@ -156,11 +156,14 @@ const CustomerInfo = () => {
 
   const matarialChange = (e) => {
     if (e instanceof Date) {
-      // const formattedDate = `${('0' + e.getDate()).slice(-2)}.${('0' + (e.getMonth() + 1)).slice(
-      //   -2,
-      // )}.${e.getFullYear().toString().slice(-2)}`
-      //console.log('newsletter', e)
-      setOrderingMaterials({ ...orderingMaterials, newsletterDate: e })
+      let yearString = e.getFullYear().toString()
+      const year = parseInt(yearString.substring(0, 4), 10)
+      if (yearString.length > 4) {
+        yearString = yearString.substring(0, 4)
+      }
+      const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+
+      setOrderingMaterials({ ...orderingMaterials, newsletterDate: newDate })
     } else if (e?.target) {
       const { name, value } = e?.target
       if (name === 'newsletterDate') {
@@ -239,7 +242,13 @@ const CustomerInfo = () => {
 
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
-      setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: e })
+      let yearString = e.getFullYear().toString()
+      const year = parseInt(yearString.substring(0, 4), 10)
+      if (yearString.length > 4) {
+        yearString = yearString.substring(0, 4)
+      }
+      const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+      setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: newDate })
     } else if (e.target) {
       const { name, value, checked, type } = e.target
 
@@ -259,23 +268,7 @@ const CustomerInfo = () => {
   }
 
   const ContactChange = (e) => {
-    if (e instanceof Date) {
-      // let currentDate = new Date()
-      // let currentYear = currentDate?.getFullYear()
-      // let currentMonth = currentDate?.getMonth()
-      // let currentDay = currentDate?.getDate()
-      // if (
-      //   e?.getFullYear() > currentYear ||
-      //   (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
-      //   (e?.getFullYear() === currentYear &&
-      //     e?.getMonth() === currentMonth &&
-      //     e?.getDate() > currentDay + 1)
-      // ) {
-      //   return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
-      // }
-      // setStartDate(e)
-      setCustomerContact({ ...customerContact, startDate: e })
-    } else if (e.target) {
+    if (e.target) {
       const { name, value, type, checked } = e.target
 
       if (type === 'radio') {
@@ -291,6 +284,15 @@ const CustomerInfo = () => {
     }
   }
 
+  const ContactChangeDob = (e) => {
+    let yearString = e.getFullYear().toString()
+    const year = parseInt(yearString.substring(0, 4), 10)
+    if (yearString.length > 4) {
+      yearString = yearString.substring(0, 4)
+    }
+    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    setCustomerContact({ ...customerContact, startDate: newDate })
+  }
   const BillChange = (e) => {
     const { name, value } = e.target
     setCustomerBills({ ...customerBills, [name]: value })
@@ -417,16 +419,14 @@ const CustomerInfo = () => {
       return toast.warning('Das Statusfeld ist erforderlich')
     }
     let currentDate = new Date()
-    if (customerContact && customerContact.startDate instanceof Date) {
-      if (customerContact?.startDate > currentDate) {
-        return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
-      }
 
-      if (customerContact?.startDate?.getFullYear() < 1900) {
-        return toast.warning('Das Startdatum darf nicht vor 1900 liegen.')
-      }
-    } else {
-      return toast.error('Ungültige Kundeninformationen.')
+    if (customerContact?.startDate > currentDate) {
+      return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+    }
+    const startDate = customerContact?.startDate
+
+    if (startDate instanceof Date && startDate.getFullYear() < 1900) {
+      return toast.warning('Das Startdatum darf nicht vor 1900 liegen.')
     }
 
     if (dataCollection > currentDate) {
@@ -481,8 +481,13 @@ const CustomerInfo = () => {
     // ) {
     //   return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
     // }
-
-    setDataCollection(e)
+    let yearString = e.getFullYear().toString()
+    const year = parseInt(yearString.substring(0, 4), 10)
+    if (yearString.length > 4) {
+      yearString = yearString.substring(0, 4)
+    }
+    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    setDataCollection(newDate)
   }
 
   useEffect(() => {
@@ -504,7 +509,7 @@ const CustomerInfo = () => {
       address: customerInfo?.customerDelivery?.address || customerInfo?.customer?.street,
       plz: customerInfo?.plz || customerInfo?.customer?.plz,
       land: customerInfo?.land || customerInfo?.customer?.land,
-      ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.street,
+      ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.city,
       phone: customerInfo?.phone || customerInfo?.customer?.phone,
       mobile: customerInfo?.customerDelivery?.mobile || customerInfo?.customer?.phone,
       alreadyPaid: customerInfo?.customerDelivery?.alreadyPaid,
@@ -767,7 +772,7 @@ const CustomerInfo = () => {
                       </div>
                       <div className="col-sm-6">
                         <div className="row mb-3">
-                          <label className="col-sm-4 col-form-label">Zustimmung Datenschutz</label>
+                          <label className="col-sm-6 col-form-label">Zustimmung Datenschutz</label>
                           <div className="col-sm-4 mt-2">
                             <div className="radio-check-wrap w-100 h-100">
                               <input
@@ -813,7 +818,7 @@ const CustomerInfo = () => {
                           <DatePiker
                             className="form-control"
                             selected={customerContact?.startDate}
-                            onChange={ContactChange}
+                            onChange={ContactChangeDob}
                             name="startDate"
                             placeholderText={'Geburtsdatum'}
                           />
@@ -1407,7 +1412,7 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div> */}
-        <div className="text-end mt-2 mx-3 mb-3 pb-3">
+        <div className="text-end mt-4 mx-3 mb-3 pb-3">
           <button
             onClick={cancelData}
             type="button"

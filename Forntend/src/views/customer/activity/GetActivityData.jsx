@@ -8,27 +8,27 @@ import {
 } from '@ant-design/icons'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Pagination from '@mui/material/Pagination'
-import Stack from '@mui/material/Stack'
-import axios from 'axios'
-import { MdAdd } from 'react-icons/md'
-import Item from 'antd/es/list/Item'
+import { MdAdd, MdOutlineEdit } from 'react-icons/md'
+import { RiDeleteBinLine } from 'react-icons/ri'
+import DeleteModal from './DeleteModal'
+import Activity from './Activity'
+import EditModal from './EditModal'
 
-const GetActivityData = ({ updateData, search }) => {
-  const notify = (dataa) => toast(dataa)
+const GetActivityData = ({ updateData, search, openText }) => {
   const apiUrl = process.env.REACT_APP_API_URL
+  const [hide, setHide] = useState(false)
+  const [editHide, setEditHide] = useState(false)
+  const [activityId, setActivityId] = useState('')
+  const [activityEditId, setActivityEditId] = useState('')
   const [page, setPage] = useState(1)
   const [activityData, setActivityData] = useState([])
+
   const [coountPage, setCountPage] = useState(0)
-  const [employeeData, setEmployeeData] = useState([])
-  const handleChange = (event, value) => {
-    setPage(value)
-  }
   let ress = localStorage.getItem('record')
   let resultt = JSON.parse(ress)
   let custoRecord = localStorage.getItem('customerRecord')
   let getResult = JSON.parse(custoRecord)
-  // console.log("custoRecord",getResult)
+  // console.log('custoRecord', getResult._id)
   let user = resultt?.user?.username
   GetActivityData.propTypes = {
     search: PropTypes.array.isRequired,
@@ -49,96 +49,41 @@ const GetActivityData = ({ updateData, search }) => {
 
   const getData = async () => {
     try {
-      const res = await axios.get(
+      const res = await fetch(
         `${apiUrl}/activity/get_activity/${getResult?._id}?keyword=${search}&page=${page}`,
       )
-
-      setActivityData(res?.data?.data)
-      // console.log('ashish', res?.data?.pageCount)
-      setCountPage(res?.data?.pageCount)
-      // if (res?.data?.data?.length === 0) {
-      //   console.log('ashihsh')
-      //   notify(`Page ${page} There is no Data Left`)
-      //   setPage(page - 1)
-      // }
-
-      // setGetActivity(res.data.data)
+      const data = await res.json()
+      setCountPage(data?.pageCount)
+      const activeRecords = data?.data?.filter((record) => record.is_deleted === 'active')
+      setActivityData(activeRecords)
+      // console.log('activity data', activityData)
     } catch (error) {
-      // console.log(error)
+      console.log(error)
     }
   }
-  const getEmployeeData = async () => {
-    try {
-      const results = await fetch(`${apiUrl}/user/get/employeeData`)
-      const data = await results.json()
-      setEmployeeData(data?.data)
-      // console.log("ashishemploye", data?.data)
-      // setGetCustomerData(data)
-    } catch (error) {
-      console.error('Error fetching customer record:', error)
-    }
+
+  const handleDelete = (activityId) => {
+    setActivityId(activityId)
+    setHide(true)
   }
-  // console.log('eemployeeData', employeeData)
+
+  const handleEdit = (activityEditId) => {
+    setActivityEditId(activityEditId)
+    setEditHide(true)
+  }
+  // console.log('first', activityEditId)
   useEffect(() => {
     getData()
-    getEmployeeData()
   }, [updateData, page, search])
 
   return (
     <>
-      {/* <table className="table">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col" className="text-center">
-              DATUM
-            </th>
-            <th scope="col" className="text-center">
-              TITEL
-            </th>
-            <th scope="col" className="text-center">
-              VERWALTUNG
-            </th>
-            <th scope="col" className="text-center">
-              BEARBEITER
-            </th>
-          </tr>
-        </thead>
-        <tbody className="shadow p-3 mb-5 bg-body rounded m-3">
-          {activityData?.map((elem) => {
-            const { createdAt, icon, message, _id } = elem
-            const inputDate = new Date(createdAt)
-            const day = inputDate?.getUTCDate()
-            const month = inputDate?.getUTCMonth() + 1
-            const year = inputDate?.getUTCFullYear() % 100
-
-            const outputDateString = `${day}-${month < 10 ? '0' : ''}${month}-${
-              year < 10 ? '0' : ''
-            }${year}`
-
-            return (
-              <tr key={_id} style={{ margin: 'auto' }}>
-                <td className="text-center">{getIconData(icon)}</td>
-                <td className="text-center">{outputDateString}</td>
-                <td className="text-center">Title</td>
-                <td
-                  style={{
-                    maxWidth: '50px',
-                    important: 'true',
-                    wordWrap: 'break-word',
-                  }}
-                  className="text-center"
-                >
-                  {message}
-                </td>
-
-                <td className="text-center">Description</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table> */}
-
+      {hide ? <DeleteModal setHide={setHide} activityId={activityId} getData={getData} /> : ''}
+      {editHide ? (
+        <EditModal setEditHide={setEditHide} getData={getData} activityEditId={activityEditId} />
+      ) : (
+        ''
+      )}
       <div className="container-fluid">
         <div className="row">
           <div className="col">
@@ -149,8 +94,9 @@ const GetActivityData = ({ updateData, search }) => {
                     <tr>
                       <th className="col-1 ">AKTION</th>
                       <th className="col-1 ">DATUM</th>
-                      <th className="col-4 ">NOTIZ</th>
-                      <th className="col-4 ">MITARBEITERINNEN</th>
+                      <th className="col-3">NOTIZ</th>
+                      <th className="col-3 ">MITARBEITERINNEN</th>
+                      <th className="col-3 ">ACTION</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -193,15 +139,25 @@ const GetActivityData = ({ updateData, search }) => {
                             </span>
                           </td>
                           <td>{outputDateString} </td>
-                          {/* <td>Lorem Ipsum is simply dummy text </td> */}
                           <td>{message}</td>
+                          <td>{user}</td>
                           <td>
-                            {user}
-                            {/* <ol>
-                              {employeeData.map((item) => (
-                                <li key={item.id}>{item.username}</li>
-                              ))}
-                            </ol> */}
+                            <>
+                              <button
+                                style={{ background: 'none', border: 'none' }}
+                                onClick={() => handleEdit(_id)}
+                              >
+                                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+                                &nbsp;&nbsp;Bearbeiten
+                              </button>
+                              &nbsp;
+                              <button
+                                style={{ background: 'none', border: 'none' }}
+                                onClick={() => handleDelete(_id)}
+                              >
+                                <RiDeleteBinLine className="text-danger text-bold fs-5" /> Löschen
+                              </button>
+                            </>
                           </td>
                         </tr>
                       )
@@ -212,47 +168,16 @@ const GetActivityData = ({ updateData, search }) => {
             </div>
           </div>
         </div>
-        {/* <div className="bottomBtnBg">
-          <div className="row">
-            <div className="col-sm-12">
-              <div style={{ float: 'right' }}>
-                <button
-                  className="btn"
-                  style={{ background: '#d04545', color: 'white' }}
-                  // onClick={handleClose}
-                >
-                  Abbrechen
-                </button>
-                &nbsp;&nbsp;
-                <button
-                  className="btn mx-2"
-                  style={{ background: '#0b5995', color: 'white' }}
-                  // onClick={handleSubmit}
-                >
-                  Aktivität hinzufügen
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
-
-      {/* <div className="mx-3">
-        <Stack spacing={2}>
-          <Pagination
-            count={coountPage}
-            variant="outlined"
-            shape="rounded"
-            page={page}
-            onChange={handleChange}
-          />
-        </Stack>
-        <br />
-      </div> */}
 
       <ToastContainer />
     </>
   )
+}
+GetActivityData.propTypes = {
+  updateData: PropTypes.bool.isRequired,
+  search: PropTypes.string.isRequired,
+  openText: PropTypes.func.isRequired,
 }
 
 export default GetActivityData

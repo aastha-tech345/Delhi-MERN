@@ -58,7 +58,7 @@ const Contact = () => {
     },
     {
       title: 'BEMERKUNGEN',
-      dataIndex: 'remarks',
+      dataIndex: 'remark',
     },
     // {
     //   title: 'AKTION',
@@ -128,6 +128,7 @@ const Contact = () => {
     title: '',
     address: '',
     salution: '',
+    remark: '',
   })
   let customer_id = record?._id
   let added_by = loginData?.user?._id
@@ -219,7 +220,7 @@ const Contact = () => {
   }
 
   const handleChangePlz = (e) => {
-    const inputValue = e.target.value.replace(/[^0-9]/g, '')
+    const inputValue = e.target.value.replace(/[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g, '')
     setData({ ...data, plz: inputValue })
   }
 
@@ -657,6 +658,21 @@ const Contact = () => {
                           onChange={handleEmailChange}
                           placeholder="info@gmail.com"
                           className="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div className="row">
+                      <label className="col-sm-3 col-form-label">Bemerkungen</label>
+                      <div className="col-sm-9">
+                        <textarea
+                          type="remark"
+                          name="remark"
+                          value={data.remark}
+                          onChange={handleChange}
+                          placeholder="Bemerkungen"
+                          className="form-control"
+                          maxLength={200}
+                          rows={5}
                         />
                       </div>
                     </div>
