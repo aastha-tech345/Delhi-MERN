@@ -196,8 +196,9 @@ const Bills = () => {
                           <div className="col-sm-6">
                             <DatePiker
                               className="form-control"
-                              selected={invoiceDate || '10.10.23'}
+                              selected={invoiceDate}
                               onChange={invoiceChange}
+                              placeholderText={'Rechnungsdatum'}
                             />
                           </div>
                         </div>
@@ -283,8 +284,9 @@ const Bills = () => {
                           <div className="col-sm-6">
                             <DatePiker
                               className="form-control"
-                              selected={deliveryDate || '10.10.23'}
+                              selected={deliveryDate}
                               onChange={deliveryDateChange}
+                              placeholderText={'Lieferdatum'}
                             />
                           </div>
                         </div>

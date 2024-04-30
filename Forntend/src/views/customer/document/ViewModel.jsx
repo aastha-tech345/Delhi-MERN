@@ -19,8 +19,10 @@ const ViewModel = ({ setView, getDetails }) => {
 
   function viewFile(filename) {
     const url = `http://95.217.77.208:4142/${encodeURIComponent(filename)}`
+    // const url = `http://localhost:4142/${encodeURIComponent(filename)}`
     window.open(url, '_blank')
   }
+  // console.log('document', response?.document_upload?.filename)
   return (
     <div
       className="modal"
@@ -47,17 +49,17 @@ const ViewModel = ({ setView, getDetails }) => {
           <Form noValidate>
             <div className="modal-body modal-form-wrap">
               <ul>
-                {response?.document_upload.map((file, fileIndex) => (
-                  <li key={fileIndex}>
-                    {file.filename}{' '}
+                {response?.document_upload && (
+                  <li>
+                    {response?.document_upload.filename}{' '}
                     <button
                       style={{ background: 'none', border: 'none' }}
-                      onClick={() => viewFile(file.filename || file.name)}
+                      onClick={() => viewFile(response.document_upload.filename)}
                     >
                       <FaEye />
                     </button>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
           </Form>

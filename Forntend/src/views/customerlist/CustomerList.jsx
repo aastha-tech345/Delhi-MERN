@@ -22,6 +22,7 @@ import { Dropdown } from 'primereact/dropdown'
 import { MultiSelect } from 'primereact/multiselect'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { isValid, format } from 'date-fns'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -111,7 +112,7 @@ const CustomerList = () => {
       ),
     },
     {
-      title: 'HINTERLEGUNG',
+      title: 'KUNDEN-ID',
       dataIndex: 'countId',
       render: (text, record, index) => text,
     },
@@ -710,21 +711,26 @@ const CustomerList = () => {
     setStartDate(null)
   }, [])
 
-  const handleDateChange = (e) => {
-    // let currentDate = new Date()
-    // let currentYear = currentDate?.getFullYear()
-    // let currentMonth = currentDate?.getMonth()
-    // let currentDay = currentDate?.getDate()
-    // if (
-    //   e?.getFullYear() > currentYear ||
-    //   (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
-    //   (e?.getFullYear() === currentYear &&
-    //     e?.getMonth() === currentMonth &&
-    //     e?.getDate() > currentDay + 1)
-    // ) {
-    //   return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
-    // }
-    setStartDate(e)
+  const formatDate = (value) => {
+    if (!value) return ''
+    const day = value.slice(0, 2)
+    const month = value.slice(2, 4)
+    const year = value.slice(4, 8)
+    return `${day}.${month}.${year}`
+  }
+
+  const handleDateChange = (date) => {
+    let yearString = date.getFullYear().toString()
+    const year = parseInt(yearString.substring(0, 4), 10)
+    if (yearString.length > 4) {
+      yearString = yearString.substring(0, 4)
+    }
+    const newDate = new Date(`${year}.${date.getMonth() + 1}.${date.getDate()}`)
+    setStartDate(newDate)
+  }
+
+  const handleBlurDob = () => {
+    setStartDate(formatDate(startDate))
   }
 
   return (
@@ -937,6 +943,7 @@ const CustomerList = () => {
                         className="form-control"
                         selected={startDate}
                         onChange={handleDateChange}
+                        onBlur={handleBlurDob}
                         placeholderText={'Geburtsdatum'}
                       />
                     </div>

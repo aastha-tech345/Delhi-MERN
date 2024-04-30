@@ -77,6 +77,10 @@ const EditModal = ({ setEdit, getDetails }) => {
       setData({ ...data, telephone: e.target.value })
     }
   }
+  const handleChangePlz = (e) => {
+    const inputValue = e.target.value.replace(/[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g, '')
+    setData({ ...data, plz: inputValue })
+  }
 
   const handleChangeMobile = (e) => {
     const inputValue = e.target.value.replace(/[^0-9+]/g, '')
@@ -308,12 +312,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                     name="plz"
                     value={data.plz}
                     // onChange={handleChange}
-                    onChange={(e) => {
-                      const inputValue = e.target.value
-                      if (/[^0-9]/.test(inputValue)) {
-                        handleChange({ target: { name: 'plz', value: inputValue } })
-                      }
-                    }}
+                    onChange={handleChangePlz}
                     maxLength={10}
                     minLength={3}
                     placeholder="PLZ"

@@ -86,37 +86,79 @@ exports.getDocumentData = async (req, res) => {
   }
 };
 
+// exports.getDocumentDataUpdate = async (req, res) => {
+//   try {
+//     const getDocumentbyId = await DocumentInfo.Document.findById(req.params.id);
+//     let arr = getDocumentbyId?.document_upload;
+//     let datares = [];
+//     let removaArr = JSON.parse(req.body.removedFile);
+
+//     for (let i = 0; i < arr.length; i++) {
+//       for (let j = 0; j < removaArr?.length; j++) {
+//         if (arr[i]?.filename == removaArr[j]?.filename) {
+//           arr.splice(i, 1);
+//         }
+//       }
+//     }
+
+//     for (let i = 0; i < req?.files?.length; i++) {
+//       datares.push(req.files[i]);
+//     }
+
+//     let totalResult = [...arr, ...datares];
+
+//     const result = await DocumentInfo.Document.findByIdAndUpdate(
+//       req.params.id,
+//       { ...req.body, document_upload: totalResult },
+//       {
+//         new: true,
+//       }
+//     );
+//     res.send(result);
+//   } catch (error) {
+//     console.log("Error from here", error);
+//     res.status(500).send({ error: "Internal Server Error" });
+//   }
+// };
+
 exports.getDocumentDataUpdate = async (req, res) => {
   try {
-    const getDocumentbyId = await DocumentInfo.Document.findById(req.params.id);
-    let arr = getDocumentbyId?.document_upload;
-    let datares = [];
-    let removaArr = JSON.parse(req.body.removedFile);
+    // const document = await DocumentInfo.Document.findById(req.params.id);
 
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < removaArr?.length; j++) {
-        if (arr[i]?.filename == removaArr[j]?.filename) {
-          arr.splice(i, 1);
-        }
-      }
-    }
+    // if (!document) {
+    //   return res.status(404).send({ error: "Document not found" });
+    // }
 
-    for (let i = 0; i < req?.files?.length; i++) {
-      datares.push(req.files[i]);
-    }
+    // let existingFiles = document.document_upload || [];
+    // let removedFiles = JSON.parse(req.body.removedFile) || [];
 
-    let totalResult = [...arr, ...datares];
+    // existingFiles = existingFiles.filter(
+    //   (file) =>
+    //     !removedFiles.some(
+    //       (removedFile) => file.filename === removedFile.filename
+    //     )
+    // );
 
-    const result = await DocumentInfo.Document.findByIdAndUpdate(
+    // let newFiles = [];
+    // if (req.files && req.files.length > 0) {
+    //   newFiles = req.files;
+    // }
+
+    // const updatedFiles = [...existingFiles, ...newFiles];
+    // console.log("req", req);
+    const updatedDocument = await DocumentInfo.Document.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, document_upload: totalResult },
-      {
-        new: true,
-      }
+      { ...req.body, document_upload: req.file },
+      { new: true }
     );
-    res.send(result);
+
+    if (!updatedDocument) {
+      return res.status(500).send({ error: "Failed to update document" });
+    }
+
+    res.send(updatedDocument);
   } catch (error) {
-    console.log("Error from here", error);
+    console.error("Error:", error);
     res.status(500).send({ error: "Internal Server Error" });
   }
 };
