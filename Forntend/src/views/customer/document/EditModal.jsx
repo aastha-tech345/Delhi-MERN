@@ -244,7 +244,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                         <label
                           htmlFor="file-upload"
                           style={{
-                            width: '85%',
+                            width: '85.2%',
                           }}
                         >
                           <p
