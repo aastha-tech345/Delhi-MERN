@@ -156,7 +156,7 @@ const CustomerInfo = () => {
 
   const matarialChange = (e) => {
     if (e instanceof Date) {
-      let yearString = e.getFullYear().toString()
+      let yearString = e?.getFullYear().toString()
       const year = parseInt(yearString.substring(0, 4), 10)
       if (yearString.length > 4) {
         yearString = yearString.substring(0, 4)
@@ -242,7 +242,7 @@ const CustomerInfo = () => {
 
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
-      let yearString = e.getFullYear().toString()
+      let yearString = e?.getFullYear().toString()
       const year = parseInt(yearString.substring(0, 4), 10)
       if (yearString.length > 4) {
         yearString = yearString.substring(0, 4)
@@ -285,7 +285,7 @@ const CustomerInfo = () => {
   }
 
   const ContactChangeDob = (e) => {
-    let yearString = e.getFullYear().toString()
+    let yearString = e?.getFullYear().toString()
     const year = parseInt(yearString.substring(0, 4), 10)
     if (yearString.length > 4) {
       yearString = yearString.substring(0, 4)
@@ -297,23 +297,42 @@ const CustomerInfo = () => {
     const { name, value } = e.target
     setCustomerBills({ ...customerBills, [name]: value })
   }
-  const DepositChange = (e, fieldName) => {
-    setCustomerStartDeposit(e)
+  const DepositChange = (e) => {
+    let yearString = e?.getFullYear().toString()
+    const year = parseInt(yearString.substring(0, 4), 10)
+    if (yearString.length > 4) {
+      yearString = yearString.substring(0, 4)
+    }
+    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    setCustomerStartDeposit(newDate)
+  }
+  const dateChange = (e) => {
+    let yearString = e?.getFullYear().toString()
+    const year = parseInt(yearString.substring(0, 4), 10)
+    if (yearString.length > 4) {
+      yearString = yearString.substring(0, 4)
+    }
+    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    return newDate
   }
   const nextBrandChange = (e) => {
-    setCustomerNextBrand(e)
+    const newDate = dateChange(e)
+    setCustomerNextBrand(newDate)
   }
 
   const updateStamp = (e) => {
-    setCustomerUpdateStamp(e)
+    const newDate = dateChange(e)
+    setCustomerUpdateStamp(newDate)
   }
 
   const lastStamp = (e) => {
-    setCustomerLastStamp(e)
+    const newDate = dateChange(e)
+    setCustomerLastStamp(newDate)
   }
 
   const reminderStamp = (e) => {
-    setCustomerReminderStamp(e)
+    const newDate = dateChange(e)
+    setCustomerReminderStamp(newDate)
   }
 
   const emergencyPass = (e) => {
@@ -425,7 +444,7 @@ const CustomerInfo = () => {
     }
     const startDate = customerContact?.startDate
 
-    if (startDate instanceof Date && startDate.getFullYear() < 1900) {
+    if (startDate instanceof Date && startDate?.getFullYear() < 1900) {
       return toast.warning('Das Startdatum darf nicht vor 1900 liegen.')
     }
 
@@ -468,20 +487,7 @@ const CustomerInfo = () => {
   }
 
   const customerDateChange = (e) => {
-    // let currentDate = new Date()
-    // let currentYear = currentDate?.getFullYear()
-    // let currentMonth = currentDate?.getMonth()
-    // let currentDay = currentDate?.getDate()
-    // if (
-    //   e?.getFullYear() > currentYear ||
-    //   (e?.getFullYear() === currentYear && e?.getMonth() > currentMonth) ||
-    //   (e?.getFullYear() === currentYear &&
-    //     e?.getMonth() === currentMonth &&
-    //     e?.getDate() > currentDay + 1)
-    // ) {
-    //   return toast.warning('Das Startdatum darf nicht in der Zukunft liegen')
-    // }
-    let yearString = e.getFullYear().toString()
+    let yearString = e?.getFullYear().toString()
     const year = parseInt(yearString.substring(0, 4), 10)
     if (yearString.length > 4) {
       yearString = yearString.substring(0, 4)
