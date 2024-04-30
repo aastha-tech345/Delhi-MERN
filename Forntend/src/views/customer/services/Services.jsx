@@ -2911,12 +2911,10 @@ const Services = () => {
                           className="container-fluid"
                           style={{ border: '1px solid lightgray', borderRadius: '5px' }}
                         >
-                          <div className="row">
+                          <div className="row pt-2">
                             <div className="col-md-6 col-sm-12 mb-md-3">
-                              <div className="row mt-md-2">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Name
-                                </label>
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Name</label>
                                 <div className="col-sm-8">
                                   <input
                                     className="form-control"
@@ -2929,10 +2927,8 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row mt-md-2">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Straße + Nr
-                                </label>
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Straße + Nr</label>
                                 <div className="col-sm-8">
                                   <input
                                     type="text"
@@ -2946,10 +2942,8 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row mt-md-2">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Anrede
-                                </label>
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Anrede</label>
                                 <div className="col-sm-8">
                                   <Select
                                     className="w-100"
@@ -2962,10 +2956,8 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row mt-md-2">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  PLZ
-                                </label>
+                              <div className="row" style={{ marginTop: '12px' }}>
+                                <label className="col-sm-4 col-form-label">PLZ</label>
                                 <div className="col-sm-8">
                                   <input
                                     type="tel"
@@ -2988,9 +2980,7 @@ const Services = () => {
                                 </div>
                               </div>
                               <div className="row">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Telefon
-                                </label>
+                                <label className="col-sm-4 col-form-label">Telefon</label>
                                 <div className="col-sm-8">
                                   <input
                                     type="tel"
@@ -3015,10 +3005,8 @@ const Services = () => {
                               </div>
                             </div>
                             <div className="col-md-6 col-sm-12 mb-md-3">
-                              <div className="row mt-md-2">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Vorname
-                                </label>
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Vorname</label>
                                 <div className="col-sm-8">
                                   <input
                                     value={information.lname}
@@ -3031,10 +3019,8 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row mt-md-2">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Adresszusatz
-                                </label>
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Adresszusatz</label>
                                 <div className="col-sm-8">
                                   <input
                                     value={information.address}
@@ -3048,10 +3034,8 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row mt-md-2">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Land
-                                </label>
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Land</label>
                                 <div className="col-sm-8">
                                   <input
                                     value={information.country}
@@ -3070,10 +3054,8 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row mt-md-2">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Ort
-                                </label>
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Ort</label>
                                 <div className="col-sm-8">
                                   <input
                                     value={information.ort}
@@ -3087,9 +3069,7 @@ const Services = () => {
                                 </div>
                               </div>
                               <div className="row">
-                                <label htmlFor="inputtext" className="col-sm-4 col-form-label">
-                                  Mobil
-                                </label>
+                                <label className="col-sm-4 col-form-label">Mobil</label>
                                 <div className="col-sm-8">
                                   <input
                                     type="tel"
