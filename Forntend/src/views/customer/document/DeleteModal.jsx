@@ -33,7 +33,7 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
       <Modal show={true} centered>
         <Modal.Title>
           <svg
-            style={{ marginLeft: '200px', marginTop: '25px' }}
+            style={{ marginLeft: '70px', marginTop: '20px' }}
             width="44"
             height="53"
             viewBox="0 0 44 53"
@@ -65,14 +65,13 @@ const DeleteModal = ({ setHide, documentId, getDetails }) => {
               fill="#C20F0F"
             />
           </svg>
-          <br />
-          <br />
-          <h4 style={{ marginLeft: '150px', color: 'black' }}>Sind Sie sicher?</h4>
+          <h4 className="mt-3" style={{ color: 'black' }}>
+            Sind Sie sicher?
+          </h4>
         </Modal.Title>
         <Modal.Body>
           <p style={{ textAlign: 'center' }}>
-            Möchten Sie diesen Datensatz wirklich löschen? dieser Vorgang kann nicht rückgängig
-            gemacht werden
+            Dieser Vorgang kann nicht rückgängig gemacht werden.
           </p>
         </Modal.Body>
         <Modal.Footer>
