@@ -28,7 +28,7 @@ const EditModal = ({ setEdit, getDetails }) => {
   const apiUrl = process.env.REACT_APP_API_URL
   let res = localStorage.getItem('ContactEditDetails')
   let response = JSON.parse(res)
-  console.log('aastha', response.email)
+  console.log('aastha', response.salution)
   const [data, setData] = useState({
     fname: response?.fname,
     lname: response?.lname,
@@ -44,6 +44,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     address: response?.address,
     land: response?.land,
     salution: response?.salution,
+    remark: response?.remark,
     // customer_id: result?._id,
   })
 
@@ -72,9 +73,9 @@ const EditModal = ({ setEdit, getDetails }) => {
   }
 
   const handleChangePhone = (e) => {
-    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-    if (/^\+?[0-9]*$/.test(inputValue)) {
-      setData({ ...data, telephone: e.target.value })
+    const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
+    if (/^\+?[0-9 ]*$/.test(inputValue)) {
+      setData({ ...data, telephone: inputValue })
     }
   }
   const handleChangePlz = (e) => {
@@ -83,9 +84,9 @@ const EditModal = ({ setEdit, getDetails }) => {
   }
 
   const handleChangeMobile = (e) => {
-    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-    if (/^\+?[0-9]*$/.test(inputValue)) {
-      setData({ ...data, mobile: e.target.value })
+    const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
+    if (/^\+?[0-9 ]*$/.test(inputValue)) {
+      setData({ ...data, mobile: inputValue })
     }
   }
 
@@ -113,22 +114,16 @@ const EditModal = ({ setEdit, getDetails }) => {
       if (!email) {
         return toast.error('Ungültige E-Mail')
       }
-      if (data.telephone && data.telephone.satrtsWith('000')) {
+      if (data.telephone && data.telephone.startsWith('000')) {
         return toast.warning('Ungültige Telefonnummer')
       }
-      if (data.mobile && data.mobile.satrtsWith('000')) {
+      if (data.mobile && data.mobile.startsWith('000')) {
         return toast.warning('Ungültige Telefonnummer')
       }
+
       const res = await putFetchData(`${apiUrl}/contact/get_contact/${response?._id}`, dataa)
       if (res.status === 200) {
         setLoadVale(false)
-        setData({
-          fname: '',
-          lname: '',
-          telephone: '',
-          gender: '',
-        })
-        setEmail('')
         toast.success('Kontakt erfolgreich aktualisiert')
         close()
         getDetails()
@@ -376,6 +371,21 @@ const EditModal = ({ setEdit, getDetails }) => {
                     onChange={handleEmailChange}
                     placeholder="E-Mail"
                     className="form-control"
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <label className="col-sm-3 col-form-label">Bemerkungen</label>
+                <div className="col-sm-9">
+                  <textarea
+                    type="remark"
+                    name="remark"
+                    value={data.remark}
+                    onChange={handleChange}
+                    placeholder="Bemerkungen"
+                    className="form-control"
+                    maxLength={200}
+                    rows={5}
                   />
                 </div>
               </div>

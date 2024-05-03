@@ -98,7 +98,7 @@ const CustomerList = () => {
     {
       title: 'KLIENTINNEN',
       dataIndex: 'fname',
-      width: '20%',
+      width: '10%',
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
@@ -122,52 +122,70 @@ const CustomerList = () => {
     {
       title: 'E-MAIL',
       dataIndex: 'email',
-      width: '20%',
     },
     {
       title: 'TELEFON',
       dataIndex: 'phone',
       // width: '20%',
     },
+    // {
+    //   title: 'STATUS',
+    //   dataIndex: 'status',
+    //   // width: '20%',
+    //   render: (text, record) => (
+    //     <div
+    //       className="dm-badge"
+    //       style={{
+    //         background:
+    //           text[0]?.name === ''
+    //             ? '#C20F0F'
+    //             : text[0]?.name === 'HVD-PV'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'SPV-alt'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'OPV-alt'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'DauerspenderInnen'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'Materialbestellung'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'Newsletter-Abonnent'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'Offen'
+    //             ? '#4EB772'
+    //             : 'transparent',
+    //         border:
+    //           text[0]?.name === ''
+    //             ? '1px solid transparent'
+    //             : text[0]?.name === 'HVD-PV'
+    //             ? '1px solid rgba(78, 183, 114, 0.50)'
+    //             : '',
+    //       }}
+    //     >
+    //       {/* {console.log('ashishtext[0].name', text[0]?.name)} */}
+    //       {text === '' ? <span>PV-ALT</span> : <span>{text[0]?.name}</span>}
+    //     </div>
+    //   ),
+    // },
     {
       title: 'STATUS',
       dataIndex: 'status',
-      // width: '20%',
+      width: '20%',
       render: (text, record) => (
-        <div
-          className="dm-badge"
-          style={{
-            background:
-              text[0]?.name === ''
-                ? '#C20F0F'
-                : text[0]?.name === 'HVD-PV'
-                ? '#4EB772'
-                : text[0]?.name === 'SPV-alt'
-                ? '#4EB772'
-                : text[0]?.name === 'OPV-alt'
-                ? '#4EB772'
-                : text[0]?.name === 'DauerspenderInnen'
-                ? '#4EB772'
-                : text[0]?.name === 'Materialbestellung'
-                ? '#4EB772'
-                : text[0]?.name === 'Newsletter-Abonnent'
-                ? '#4EB772'
-                : text[0]?.name === 'Offen'
-                ? '#4EB772'
-                : 'transparent',
-            border:
-              text[0]?.name === ''
-                ? '1px solid transparent'
-                : text[0]?.name === 'HVD-PV'
-                ? '1px solid rgba(78, 183, 114, 0.50)'
-                : '',
-          }}
-        >
-          {/* {console.log('ashishtext[0].name', text[0]?.name)} */}
-          {text === '' ? <span>PV-ALT</span> : <b>{text[0]?.name}</b>}
+        <div className="dm-badge-container">
+          {text.slice(0, 4).map((tag, index) => (
+            <span
+              key={index}
+              className="dm-badge"
+              style={{ background: '#4EB772', border: 'white' }}
+            >
+              <span>{tag.name}</span>
+            </span>
+          ))}
         </div>
       ),
     },
+
     {
       title: 'AKTION',
       dataIndex: 'action',
@@ -213,7 +231,7 @@ const CustomerList = () => {
                     </clipPath>
                   </defs>
                 </svg>
-                <span>Bearbeiten</span>
+                {/* <span>Bearbeiten</span> */}
               </button>
             </>
           ) : (
@@ -277,7 +295,7 @@ const CustomerList = () => {
                   </clipPath>
                 </defs>
               </svg>
-              <span> Löschen</span>
+              {/* <span> Löschen</span> */}
             </button>
           ) : (
             ''
@@ -289,7 +307,7 @@ const CustomerList = () => {
           >
             {' '}
             <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
-            &nbsp;Drucken
+            {/* &nbsp;Drucken */}
           </button>
         </>
       ),
@@ -417,8 +435,22 @@ const CustomerList = () => {
       toast.warning('Es muss mindestens ein Statusfeld ausgewählt werden')
       return
     }
-
     let currentDate = new Date()
+    let birthDate = new Date(startDate)
+    let minimumAge = 18
+    let ageDifferenceMilliseconds = currentDate.getTime() - birthDate.getTime()
+    let ageDifferenceYears = ageDifferenceMilliseconds / (1000 * 3600 * 24 * 365.25)
+
+    if (ageDifferenceYears < minimumAge) {
+      return toast.warning(
+        'Du musst mindestens 18 Jahre alt sein, um einen Vertrag zu unterschreiben.',
+      )
+    }
+
+    if (startDate > currentDate) {
+      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
+    }
+
     if (startDate > currentDate) {
       return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
     }
@@ -895,9 +927,15 @@ const CustomerList = () => {
                         placeholder="Telefon"
                         className="form-control"
                         value={phone}
+                        // onChange={(e) => {
+                        //   const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                        //   if (/^\+?[0-9]*$/.test(inputValue)) {
+                        //     setPhone(inputValue)
+                        //   }
+                        // }}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                          const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
+                          if (/^\+?[0-9 ]*$/.test(inputValue)) {
                             setPhone(inputValue)
                           }
                         }}
@@ -935,7 +973,7 @@ const CustomerList = () => {
                           ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                           setCity(inputValue)
                         }}
-                        placeholder="Stadt"
+                        placeholder="Ort"
                         className="form-control"
                       />
                     </div>

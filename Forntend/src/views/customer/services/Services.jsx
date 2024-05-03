@@ -2986,9 +2986,17 @@ const Services = () => {
                                     type="tel"
                                     name="phone"
                                     value={information.phone}
+                                    // onChange={(e) => {
+                                    //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                                    //   if (/^\+?[0-9]*$/.test(inputValue)) {
+                                    //     informationChange({
+                                    //       target: { name: 'phone', value: inputValue },
+                                    //     })
+                                    //   }
+                                    // }}
                                     onChange={(e) => {
-                                      const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                                      if (/^\+?[0-9]*$/.test(inputValue)) {
+                                      const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
+                                      if (/^\+?[0-9\s]*$/.test(inputValue)) {
                                         informationChange({
                                           target: { name: 'phone', value: inputValue },
                                         })
@@ -3075,9 +3083,17 @@ const Services = () => {
                                     type="tel"
                                     name="mobile"
                                     value={information.mobile}
+                                    // onChange={(e) => {
+                                    //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                                    //   if (/^\+?[0-9]*$/.test(inputValue)) {
+                                    //     informationChange({
+                                    //       target: { name: 'mobile', value: inputValue },
+                                    //     })
+                                    //   }
+                                    // }}
                                     onChange={(e) => {
-                                      const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                                      if (/^\+?[0-9]*$/.test(inputValue)) {
+                                      const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
+                                      if (/^\+?[0-9\s]*$/.test(inputValue)) {
                                         informationChange({
                                           target: { name: 'mobile', value: inputValue },
                                         })

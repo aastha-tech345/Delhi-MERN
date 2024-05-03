@@ -50,6 +50,7 @@ const Activity = () => {
         setIconBack1(false)
         setIconBack2(false)
         setIconBack3(false)
+
         setColor(selectedColor)
         setColor1('white')
         setColor2('white')

@@ -60,53 +60,53 @@ const Contact = () => {
       title: 'BEMERKUNGEN',
       dataIndex: 'remark',
     },
-    // {
-    //   title: 'AKTION',
-    //   dataIndex: 'action',
-    //   render: (_, record) => (
-    //     <>
-    //       {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
-    //       verifyEditPer().includes('yes') ||
-    //       loginData?.user?.isAdminFullRights === 'true' ? (
-    //         <>
-    //           <button
-    //             style={{ background: 'none', border: 'none' }}
-    //             onClick={() => handleEdit(record)}
-    //           >
-    //             <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
-    //             &nbsp;&nbsp;Bearbeiten
-    //           </button>
-    //         </>
-    //       ) : (
-    //         ''
-    //       )}
-    //       {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
-    //       verifyDelPer().includes('yes') ||
-    //       loginData?.user?.isAdminFullRights == 'true' ? (
-    //         <>
-    //           <button
-    //             style={{ background: 'none', border: 'none' }}
-    //             onClick={() => handleDelete(record._id)}
-    //           >
-    //             <RiDeleteBinLine className="text-danger text-bold fs-5" />
-    //             &nbsp; Löschen
-    //           </button>
-    //         </>
-    //       ) : (
-    //         ''
-    //       )}
-    //       {/* &nbsp; */}
-    //       {/* <button
-    //         style={{ background: 'none', border: 'none' }}
-    //         onClick={() => handlePrint(record)}
-    //       >
-    //         {' '}
-    //         <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
-    //         &nbsp;Drucke
-    //       </button> */}
-    //     </>
-    //   ),
-    // },
+    {
+      title: 'AKTION',
+      dataIndex: 'action',
+      render: (_, record) => (
+        <>
+          {(loginData?.user?._id === record?.added_by && verifyEditPer().includes('owned')) ||
+          verifyEditPer().includes('yes') ||
+          loginData?.user?.isAdminFullRights === 'true' ? (
+            <>
+              <button
+                style={{ background: 'none', border: 'none' }}
+                onClick={() => handleEdit(record)}
+              >
+                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+                &nbsp;&nbsp;Bearbeiten
+              </button>
+            </>
+          ) : (
+            ''
+          )}
+          {(loginData?.user?._id === record?.added_by && verifyDelPer().includes('owned')) ||
+          verifyDelPer().includes('yes') ||
+          loginData?.user?.isAdminFullRights == 'true' ? (
+            <>
+              <button
+                style={{ background: 'none', border: 'none' }}
+                onClick={() => handleDelete(record._id)}
+              >
+                <RiDeleteBinLine className="text-danger text-bold fs-5" />
+                &nbsp; Löschen
+              </button>
+            </>
+          ) : (
+            ''
+          )}
+          {/* &nbsp; */}
+          {/* <button
+            style={{ background: 'none', border: 'none' }}
+            onClick={() => handlePrint(record)}
+          >
+            {' '}
+            <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
+            &nbsp;Drucke
+          </button> */}
+        </>
+      ),
+    },
   ]
   // let loginCust = localStorage.getItem('customerDatat')
   // let loginCustData = JSON.parse(loginCust)
@@ -184,8 +184,12 @@ const Contact = () => {
   }
   const handleChangePhone = (e) => {
     // setData({ ...data, telephone: e })
-    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-    if (/^\+?[0-9]*$/.test(inputValue)) {
+    // const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+    // if (/^\+?[0-9]*$/.test(inputValue)) {
+    //   setData({ ...data, telephone: inputValue })
+    // }
+    const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
+    if (/^\+?[0-9 ]*$/.test(inputValue)) {
       setData({ ...data, telephone: inputValue })
     }
   }
@@ -209,8 +213,8 @@ const Contact = () => {
     setData({ ...data, street: e.target.value })
   }
   const handleChangeMobile = (e) => {
-    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-    if (/^\+?[0-9]*$/.test(inputValue)) {
+    const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
+    if (/^\+?[0-9 ]*$/.test(inputValue)) {
       setData({ ...data, mobile: inputValue })
     }
   }
