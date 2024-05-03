@@ -73,11 +73,11 @@ const CustomerInfo = () => {
   const cities = [
     { name: 'Hinterlegung', code: '0' },
     { name: 'HVD-PV', code: '1' },
-    { name: 'SPV-alt', code: '2' },
-    { name: 'OPV-alt', code: '3' },
+    { name: 'OPV-alt', code: '2' },
+    { name: 'SPV-alt', code: '3' },
     { name: 'SpenderIn', code: '4' },
-    { name: 'Material', code: '5' },
-    { name: 'Newsletter', code: '6' },
+    { name: 'Newsletter', code: '5' },
+    { name: 'Material', code: '6' },
     { name: 'Offen', code: '7' },
   ]
   // const [those, setThose] = useState(resultt?.those)

@@ -393,13 +393,14 @@ const CustomerList = () => {
     // console.log(selectedOption)
   }
   const cities = [
-    { name: 'HVD-PV', code: '0' },
-    { name: 'SPV-alt', code: '1' },
+    { name: 'Hinterlegung', code: '0' },
+    { name: 'HVD-PV', code: '1' },
     { name: 'OPV-alt', code: '2' },
-    { name: 'DauerspenderInnen', code: '3' },
-    { name: 'Materialbestellung', code: '4' },
-    { name: 'Newsletter-Abonnent', code: '5' },
-    { name: 'Offen', code: '6' },
+    { name: 'SPV-alt', code: '3' },
+    { name: 'SpenderIn', code: '4' },
+    { name: 'Newsletter', code: '5' },
+    { name: 'Material', code: '6' },
+    { name: 'Offen', code: '7' },
   ]
   const Anrede = [
     { value: 'herr', label: 'Herr' },
