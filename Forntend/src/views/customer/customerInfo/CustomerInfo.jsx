@@ -497,6 +497,7 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
+      console.log('result', result)
       if (result.status === 400) {
         toast.warning('Bitte eine gültige Email eingeben')
       }
@@ -517,13 +518,7 @@ const CustomerInfo = () => {
   }
 
   const customerDateChange = (e) => {
-    let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
-    }
-    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
-    setDataCollection(newDate)
+    setDataCollection(e)
   }
 
   useEffect(() => {
@@ -547,7 +542,7 @@ const CustomerInfo = () => {
       land: customerInfo?.land || customerInfo?.customer?.land,
       ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.city,
       phone: customerInfo?.phone || customerInfo?.customer?.phone,
-      mobile: customerInfo?.customerDelivery?.mobile || customerInfo?.customer?.phone,
+      mobile: customerInfo?.customerDelivery?.mobile,
       alreadyPaid: customerInfo?.customerDelivery?.alreadyPaid,
     })
     setOrderingMaterials({

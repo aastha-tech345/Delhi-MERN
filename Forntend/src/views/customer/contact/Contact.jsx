@@ -38,27 +38,35 @@ const Contact = () => {
       title: 'VORNAME',
       dataIndex: 'fname',
       render: (text) => <a>{text?.slice(0, 1)?.toUpperCase() + text?.slice(1)?.toLowerCase()}</a>,
-      width: '20%',
     },
     {
       title: 'NAME',
       dataIndex: 'lname',
       render: (text) => <a>{text?.slice(0, 1)?.toUpperCase() + text?.slice(1)?.toLowerCase()}</a>,
-      width: '20%',
     },
     {
       title: 'TELEFON',
       dataIndex: 'telephone',
-      width: '20%',
     },
     {
       title: 'MOBIL',
       dataIndex: 'mobile',
-      width: '20%',
     },
     {
       title: 'BEMERKUNGEN',
       dataIndex: 'remark',
+      width: '15%',
+      render: (text) => {
+        const maxLength = 70 // Maximum characters per line
+        const remarksArray = []
+
+        for (let i = 0; i < text.length; i += maxLength) {
+          remarksArray.push(text.slice(i, i + maxLength))
+        }
+
+        return remarksArray.map((line, index) => <div key={index}>{line}</div>)
+      },
+      // render: (text) => <div style={{ height: '80px', lineBreak: 'anywhere' }}>{text}</div>,
     },
     {
       title: 'AKTION',

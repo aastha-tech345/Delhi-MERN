@@ -35,7 +35,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     telephone: response?.telephone,
     // statu: response?.statu,
     gender: response?.gender,
-    // email: response?.email,
+    email: response?.email,
     plz: response?.plz,
     ort: response?.ort,
     mobile: response?.mobile,
@@ -48,7 +48,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     // customer_id: result?._id,
   })
 
-  const [email, setEmail] = useState(response?.email)
+  // const [email, setEmail] = useState(response?.email)
   const [validated, setValidated] = useState(false)
   const [loadValue, setLoadVale] = useState(false)
   const handleChangeSalution = (e) => {
@@ -60,11 +60,12 @@ const EditModal = ({ setEdit, getDetails }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     if (emailRegex.test(inputValue)) {
-      setEmail(inputValue)
+      setData({ ...data, email: inputValue })
     } else {
-      setEmail('')
+      setData({ ...data, email: '' })
     }
   }
+
   const handleChange = (e) => {
     const { type } = e.target
     const newValue = type === 'radio' ? e.target.value : e.target.value
@@ -94,7 +95,7 @@ const EditModal = ({ setEdit, getDetails }) => {
     setEdit(false)
   }
 
-  const dataa = { ...data, email }
+  const dataa = { ...data }
 
   const handleSubmit = async () => {
     // const form = e.currentTarget
@@ -111,9 +112,9 @@ const EditModal = ({ setEdit, getDetails }) => {
       if (!data.fname || !data.lname) {
         return toast.warning('Bitte geben Sie Fname und Lname ein')
       }
-      if (!email) {
-        return toast.error('Ungültige E-Mail')
-      }
+      // if (!email) {
+      //   return toast.error('Ungültige E-Mail')
+      // }
       if (data.telephone && data.telephone.startsWith('000')) {
         return toast.warning('Ungültige Telefonnummer')
       }
@@ -364,10 +365,10 @@ const EditModal = ({ setEdit, getDetails }) => {
                 </label>
                 <div className="col-sm-9">
                   <input
-                    disabled
+                    // disabled
                     type="email"
                     name="email"
-                    value={email}
+                    value={data.email}
                     onChange={handleEmailChange}
                     placeholder="E-Mail"
                     className="form-control"

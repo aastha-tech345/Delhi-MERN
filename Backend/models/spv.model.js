@@ -28,6 +28,7 @@ const informationSchema = new mongoose.Schema({
   deposit: { type: String },
   salution: { type: Array, default: [] },
   country: { type: String },
+  title: { type: String },
 });
 
 const motivatedSchema = new mongoose.Schema({

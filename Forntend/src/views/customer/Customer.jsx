@@ -68,7 +68,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
     customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
     customerInfo?.customer?.lname?.slice(1).toLowerCase()
 
-  //console.log(customerInfo?.customer?.street?.length)
+  console.log(customerInfo)
   let street =
     (customerInfo?.customer?.street?.length > 1
       ? customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
@@ -76,7 +76,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
         ',  '
       : '') +
     (customerInfo?.customer?.street
-      ? customerInfo?.customer?.plz + '  ' + customerInfo?.customer?.land
+      ? customerInfo?.customerDelivery?.ort + '  ' + customerInfo?.customer?.land
       : '')
 
   const getRecordById = async () => {

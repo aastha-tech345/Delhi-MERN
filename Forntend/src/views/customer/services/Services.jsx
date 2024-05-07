@@ -74,6 +74,7 @@ const Services = () => {
     deposit: '',
     salution: salutionData,
     country: '',
+    title: '',
   })
 
   const [hopeless, setHopeless] = useState({
@@ -648,6 +649,7 @@ const Services = () => {
       deposit: recordData?.information?.deposit,
       salution: recordData?.information?.salution,
       country: recordData?.information?.country,
+      title: recordData?.information?.title,
     })
 
     setHopeless({
@@ -2914,6 +2916,20 @@ const Services = () => {
                           <div className="row pt-2">
                             <div className="col-md-6 col-sm-12 mb-md-3">
                               <div className="row">
+                                <label className="col-sm-4 col-form-label">Titel</label>
+                                <div className="col-sm-8">
+                                  <input
+                                    className="form-control"
+                                    value={information.title}
+                                    onChange={(e) => informationChange(e)}
+                                    name="title"
+                                    type="text"
+                                    placeholder="Titel"
+                                    disabled={information.alternateAddress !== 'ja'}
+                                  />
+                                </div>
+                              </div>
+                              <div className="row">
                                 <label className="col-sm-4 col-form-label">Name</label>
                                 <div className="col-sm-8">
                                   <input
@@ -2928,7 +2944,10 @@ const Services = () => {
                                 </div>
                               </div>
                               <div className="row">
-                                <label className="col-sm-4 col-form-label">Straße + Nr</label>
+                                <label className="col-sm-4 col-form-label">
+                                  <span>Straße &nbsp;+ Nr</span>
+                                </label>
+
                                 <div className="col-sm-8">
                                   <input
                                     type="text"
@@ -2942,20 +2961,7 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row">
-                                <label className="col-sm-4 col-form-label">Anrede</label>
-                                <div className="col-sm-8">
-                                  <Select
-                                    className="w-100"
-                                    name="salution"
-                                    placeholder="Anrede"
-                                    options={Anrede}
-                                    onChange={handleSalutionChange}
-                                    value={salutionData}
-                                    isDisabled={information.alternateAddress !== 'ja'}
-                                  />
-                                </div>
-                              </div>
+
                               <div className="row" style={{ marginTop: '12px' }}>
                                 <label className="col-sm-4 col-form-label">PLZ</label>
                                 <div className="col-sm-8">
@@ -3002,7 +3008,39 @@ const Services = () => {
                                         })
                                       }
                                     }}
-                                    placeholder="e.g. 91+ 8354568464"
+                                    placeholder="8354568464"
+                                    disabled={information.alternateAddress !== 'ja'}
+                                    className="form-control"
+                                    id="inputPhone"
+                                    maxLength={20}
+                                    minLength={3}
+                                  />
+                                </div>
+                              </div>
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Mobil</label>
+                                <div className="col-sm-8">
+                                  <input
+                                    type="tel"
+                                    name="mobile"
+                                    value={information.mobile}
+                                    // onChange={(e) => {
+                                    //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                                    //   if (/^\+?[0-9]*$/.test(inputValue)) {
+                                    //     informationChange({
+                                    //       target: { name: 'mobile', value: inputValue },
+                                    //     })
+                                    //   }
+                                    // }}
+                                    onChange={(e) => {
+                                      const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
+                                      if (/^\+?[0-9\s]*$/.test(inputValue)) {
+                                        informationChange({
+                                          target: { name: 'mobile', value: inputValue },
+                                        })
+                                      }
+                                    }}
+                                    placeholder="8354568464"
                                     disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                     id="inputPhone"
@@ -3013,6 +3051,20 @@ const Services = () => {
                               </div>
                             </div>
                             <div className="col-md-6 col-sm-12 mb-md-3">
+                              <div className="row" style={{ marginBottom: '13px' }}>
+                                <label className="col-sm-4 col-form-label">Anrede</label>
+                                <div className="col-sm-8">
+                                  <Select
+                                    className="w-100"
+                                    name="salution"
+                                    placeholder="Anrede"
+                                    options={Anrede}
+                                    onChange={handleSalutionChange}
+                                    value={salutionData}
+                                    isDisabled={information.alternateAddress !== 'ja'}
+                                  />
+                                </div>
+                              </div>
                               <div className="row">
                                 <label className="col-sm-4 col-form-label">Vorname</label>
                                 <div className="col-sm-8">
@@ -3073,38 +3125,6 @@ const Services = () => {
                                     placeholder=" Ort"
                                     disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
-                                  />
-                                </div>
-                              </div>
-                              <div className="row">
-                                <label className="col-sm-4 col-form-label">Mobil</label>
-                                <div className="col-sm-8">
-                                  <input
-                                    type="tel"
-                                    name="mobile"
-                                    value={information.mobile}
-                                    // onChange={(e) => {
-                                    //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                                    //   if (/^\+?[0-9]*$/.test(inputValue)) {
-                                    //     informationChange({
-                                    //       target: { name: 'mobile', value: inputValue },
-                                    //     })
-                                    //   }
-                                    // }}
-                                    onChange={(e) => {
-                                      const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
-                                      if (/^\+?[0-9\s]*$/.test(inputValue)) {
-                                        informationChange({
-                                          target: { name: 'mobile', value: inputValue },
-                                        })
-                                      }
-                                    }}
-                                    placeholder="e.g., 91+ 8354568464"
-                                    disabled={information.alternateAddress !== 'ja'}
-                                    className="form-control"
-                                    id="inputPhone"
-                                    maxLength={20}
-                                    minLength={3}
                                   />
                                 </div>
                               </div>
