@@ -819,6 +819,7 @@ const Services = () => {
   }, [recordData])
 
   const rowData = [
+    { hr: true },
     {
       field1: <h3 style={{ color: '#244D92', marginBottom: '0px !important' }}>Motivation</h3>,
     },
