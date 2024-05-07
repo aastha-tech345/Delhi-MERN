@@ -1040,7 +1040,7 @@ const CustomerInfo = () => {
                             minLength={3}
                           /> */}
                           <input
-                            placeholder="Telefon"
+                            placeholder="Mobil"
                             className="form-control"
                             name="mobile"
                             value={customerDelivery?.mobile}
