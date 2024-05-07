@@ -6,8 +6,11 @@
 # Node artifact files
 node_modules/
 dist/
+public/document/*
 
-# Compiled Java class files
+
+
+# Compiled Java class file
 *.class
 
 # Compiled Python bytecode

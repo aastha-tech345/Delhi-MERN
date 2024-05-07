@@ -95,12 +95,12 @@ const GetActivityData = ({ updateData, search, openText }) => {
                       <th className="col-1 ">AKTION</th>
                       <th className="col-1 ">DATUM</th>
                       <th className="col-3">NOTIZ</th>
-                      <th className="col-3 ">MITARBEITERINNEN</th>
-                      <th className="col-3 ">ACTION</th>
+                      <th className="col-3 ">MITARBEITERIN</th>
+                      <th className="col-3 ">AKTION</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {activityData?.map((elem) => {
+                    {activityData?.map((elem, index) => {
                       const { createdAt, icon, message, _id } = elem
                       const inputDate = new Date(createdAt)
                       const day = inputDate?.getUTCDate()

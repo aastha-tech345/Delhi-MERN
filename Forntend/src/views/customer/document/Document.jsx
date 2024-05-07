@@ -201,9 +201,11 @@ const Document = () => {
     setHide(true)
   }
   const handleShowDoc = async (record) => {
-    let recordData = JSON.stringify(record)
-    localStorage.setItem('DocumentEditDetails', recordData)
-    setView(true)
+    let file = record?.document_upload?.filename
+    const url = `http://95.217.77.208:4142/${encodeURIComponent(file)}`
+    // // const url = `http://localhost:4142/${encodeURIComponent(filename)}`
+    window.open(url, '_blank')
+    // setView(true)
   }
   console.log('document', document_upload?.name)
   const saveData = async (e) => {
@@ -317,7 +319,7 @@ const Document = () => {
         ''
       )}
       {edit ? <EditModal setEdit={setEdit} getDetails={getDetails} /> : ''}
-      {view ? <ViewModel setView={setView} getDetails={getDetails} /> : ''}
+      {/* {view ? <ViewModel setView={setView} getDetails={getDetails} /> : ''} */}
       <Customer />
       <h5 className="mx-3">Dokumente</h5>
       <hr className="mx-3" />

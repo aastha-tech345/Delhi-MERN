@@ -71,13 +71,14 @@ const CustomerInfo = () => {
 
   // console.log('salution', customerInfo?.customer?.email)
   const cities = [
-    { name: 'HVD-PV', code: '0' },
-    { name: 'SPV-alt', code: '1' },
+    { name: 'Hinterlegung', code: '0' },
+    { name: 'HVD-PV', code: '1' },
     { name: 'OPV-alt', code: '2' },
-    { name: 'SpenderIn', code: '3' },
-    { name: 'Material', code: '4' },
+    { name: 'SPV-alt', code: '3' },
+    { name: 'SpenderIn', code: '4' },
     { name: 'Newsletter', code: '5' },
-    { name: 'Offen', code: '6' },
+    { name: 'Material', code: '6' },
+    { name: 'Offen', code: '7' },
   ]
   // const [those, setThose] = useState(resultt?.those)
   // //console.log('those', resultt?.those)
@@ -284,15 +285,34 @@ const CustomerInfo = () => {
     }
   }
 
+  // const ContactChangeDob = (e) => {
+  //   let yearString = e?.getFullYear().toString()
+  //   const year = parseInt(yearString.substring(0, 4), 10)
+  //   if (yearString.length > 4) {
+  //     yearString = yearString.substring(0, 4)
+  //   }
+  //   const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+  //   setCustomerContact({ ...customerContact, startDate: newDate })
+  // }
   const ContactChangeDob = (e) => {
-    let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
+    const currentDate = new Date()
+    const year = e?.getFullYear()
+    const month = e?.getMonth()
+    const day = e?.getDate()
+    const age =
+      currentDate.getFullYear() -
+      year -
+      (currentDate.getMonth() < month ||
+      (currentDate.getMonth() === month && currentDate.getDate() < day)
+        ? 1
+        : 0)
+    if (age < 18) {
+      console.log('You must be at least 18 years old to sign a contract.')
+      return
     }
-    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
-    setCustomerContact({ ...customerContact, startDate: newDate })
+    setCustomerContact({ ...customerContact, startDate: e })
   }
+
   const BillChange = (e) => {
     const { name, value } = e.target
     setCustomerBills({ ...customerBills, [name]: value })
@@ -353,15 +373,15 @@ const CustomerInfo = () => {
   }
 
   const DeliveryChangePhone = (e) => {
-    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-    if (/^\+?[0-9]*$/.test(inputValue)) {
+    const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
+    if (/^\+?[0-9 ]*$/.test(inputValue)) {
       setCustomerDelivery({ ...customerDelivery, phone: inputValue })
     }
   }
 
   const DeliveryChangeMobile = (e) => {
-    const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-    if (/^\+?[0-9]*$/.test(inputValue)) {
+    const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
+    if (/^\+?[0-9 ]*$/.test(inputValue)) {
       setCustomerDelivery({ ...customerDelivery, mobile: inputValue })
     }
   }
@@ -443,6 +463,16 @@ const CustomerInfo = () => {
       return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
     }
     const startDate = customerContact?.startDate
+    let birthDate = new Date(startDate)
+    let minimumAge = 18
+    let ageDifferenceMilliseconds = currentDate.getTime() - birthDate.getTime()
+    let ageDifferenceYears = ageDifferenceMilliseconds / (1000 * 3600 * 24 * 365.25)
+
+    if (ageDifferenceYears < minimumAge) {
+      return toast.warning(
+        'Du musst mindestens 18 Jahre alt sein, um einen Vertrag zu unterschreiben.',
+      )
+    }
 
     if (startDate instanceof Date && startDate?.getFullYear() < 1900) {
       return toast.warning('Das Startdatum darf nicht vor 1900 liegen.')
@@ -467,6 +497,7 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
+      console.log('result', result)
       if (result.status === 400) {
         toast.warning('Bitte eine gültige Email eingeben')
       }
@@ -487,13 +518,7 @@ const CustomerInfo = () => {
   }
 
   const customerDateChange = (e) => {
-    let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
-    }
-    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
-    setDataCollection(newDate)
+    setDataCollection(e)
   }
 
   useEffect(() => {
@@ -517,7 +542,7 @@ const CustomerInfo = () => {
       land: customerInfo?.land || customerInfo?.customer?.land,
       ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.city,
       phone: customerInfo?.phone || customerInfo?.customer?.phone,
-      mobile: customerInfo?.customerDelivery?.mobile || customerInfo?.customer?.phone,
+      mobile: customerInfo?.customerDelivery?.mobile,
       alreadyPaid: customerInfo?.customerDelivery?.alreadyPaid,
     })
     setOrderingMaterials({
@@ -596,9 +621,7 @@ const CustomerInfo = () => {
                     <div className="row justify-content-between align-items-center">
                       <div className="col-md-3">
                         <div className="d-flex">
-                          <label className="col-sm-10 col-form-label">
-                            Bestellte Anzahl Fragebögen
-                          </label>
+                          <label className="col-sm-10 col-form-label">Anzahl Fragebögen</label>
                           <input
                             type="number"
                             value={orderingMaterials.orderNumber}
@@ -706,7 +729,7 @@ const CustomerInfo = () => {
                               name="remarks"
                               onChange={customerInfoChange}
                               className="form-control"
-                              rows={10}
+                              rows={11}
                             />
                           </div>
                         </div>

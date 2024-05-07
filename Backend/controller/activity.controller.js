@@ -35,7 +35,7 @@ exports.createActivity = async (req, res) => {
 
 exports.getActivity = async (req, res) => {
   try {
-    const resultPerPage = 1;
+    const resultPerPage = 10;
     const countPage = await ActivityInfomation.Activity.countDocuments();
     let pageCount = Math.ceil(Number(countPage) / 10);
 

@@ -90,12 +90,12 @@ const Attorney = () => {
       } else if (name === 'healthCare_phone') {
         updatedHealthCareData[index] = {
           ...updatedHealthCareData[index],
-          healthCare_phone: value.replace(/\D/g, ''),
+          healthCare_phone: value.replace(/[^\d\s]/g, ''),
         }
       } else if (name === 'healthCare_mobile') {
         updatedHealthCareData[index] = {
           ...updatedHealthCareData[index],
-          healthCare_mobile: value.replace(/\D/g, ''),
+          healthCare_mobile: value.replace(/[^\d\s]/g, ''),
         }
       } else {
         // For other fields, simply update the value
@@ -122,7 +122,7 @@ const Attorney = () => {
   // }
 
   const formatPhoneNumber = (value) => {
-    const numericValue = value.replace(/\D/g, '')
+    const numericValue = value.replace(/[^\d\s]/g, '')
     let formattedNumber = ''
 
     for (let i = 0; i < numericValue.length; i++) {
@@ -186,12 +186,12 @@ const Attorney = () => {
       } else if (name === 'powerOfAttorney_phone') {
         updatedPowerOfAttorneyData[index] = {
           ...updatedPowerOfAttorneyData[index],
-          powerOfAttorney_phone: value.replace(/\D/g, ''),
+          powerOfAttorney_phone: value.replace(/[^\d\s]/g, ''),
         }
       } else if (name === 'powerOfAttorney_mobile') {
         updatedPowerOfAttorneyData[index] = {
           ...updatedPowerOfAttorneyData[index],
-          powerOfAttorney_mobile: value.replace(/\D/g, ''),
+          powerOfAttorney_mobile: value.replace(/[^\d\s]/g, ''),
         }
       }
 
@@ -346,6 +346,8 @@ const Attorney = () => {
         return toast.warning('Ungültige Mobilnummer')
       }
     }
+    let currentDate = new Date()
+    let secureDate = securingattorney?.dob
     if (securingattorney?.dob) {
       const birthYear = new Date(securingattorney?.dob)?.getFullYear()
       if (birthYear < 1900) {
@@ -353,12 +355,21 @@ const Attorney = () => {
       }
     }
     if (securingattorney && securingattorney.dob) {
-      let currentDate = new Date()
       let attorneyDOB = new Date(securingattorney.dob)
 
       if (attorneyDOB > currentDate) {
         return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen')
       }
+    }
+    let birthDate = new Date(secureDate)
+    let minimumAge = 18
+    let ageDifferenceMilliseconds = currentDate.getTime() - birthDate.getTime()
+    let ageDifferenceYears = ageDifferenceMilliseconds / (1000 * 3600 * 24 * 365.25)
+
+    if (ageDifferenceYears < minimumAge) {
+      return toast.warning(
+        'Du musst mindestens 18 Jahre alt sein, um einen Vertrag zu unterschreiben.',
+      )
     }
 
     try {

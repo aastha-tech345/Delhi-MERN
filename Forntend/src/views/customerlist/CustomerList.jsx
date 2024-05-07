@@ -23,6 +23,8 @@ import { MultiSelect } from 'primereact/multiselect'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { isValid, format } from 'date-fns'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -35,7 +37,7 @@ const CustomerList = () => {
   const [fname, setFname] = useState()
   const [lname, setLname] = useState()
   const [phone, setPhone] = useState()
-  const [startDate, setStartDate] = useState(null)
+  const [startDate, setStartDate] = useState('')
   const [land, setLand] = useState()
   const [plz, setPlz] = useState()
   const [city, setCity] = useState()
@@ -98,7 +100,7 @@ const CustomerList = () => {
     {
       title: 'KLIENTINNEN',
       dataIndex: 'fname',
-      width: '20%',
+      width: '10%',
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
@@ -122,51 +124,73 @@ const CustomerList = () => {
     {
       title: 'E-MAIL',
       dataIndex: 'email',
-      width: '20%',
     },
     {
       title: 'TELEFON',
       dataIndex: 'phone',
       // width: '20%',
     },
+    // {
+    //   title: 'STATUS',
+    //   dataIndex: 'status',
+    //   // width: '20%',
+    //   render: (text, record) => (
+    //     <div
+    //       className="dm-badge"
+    //       style={{
+    //         background:
+    //           text[0]?.name === ''
+    //             ? '#C20F0F'
+    //             : text[0]?.name === 'HVD-PV'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'SPV-alt'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'OPV-alt'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'DauerspenderInnen'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'Materialbestellung'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'Newsletter-Abonnent'
+    //             ? '#4EB772'
+    //             : text[0]?.name === 'Offen'
+    //             ? '#4EB772'
+    //             : 'transparent',
+    //         border:
+    //           text[0]?.name === ''
+    //             ? '1px solid transparent'
+    //             : text[0]?.name === 'HVD-PV'
+    //             ? '1px solid rgba(78, 183, 114, 0.50)'
+    //             : '',
+    //       }}
+    //     >
+    //       {/* {console.log('ashishtext[0].name', text[0]?.name)} */}
+    //       {text === '' ? <span>PV-ALT</span> : <span>{text[0]?.name}</span>}
+    //     </div>
+    //   ),
+    // },
     {
       title: 'STATUS',
       dataIndex: 'status',
-      // width: '20%',
-      render: (text, record) => (
-        <div
-          className="dm-badge"
-          style={{
-            background:
-              text[0]?.name === ''
-                ? '#C20F0F'
-                : text[0]?.name === 'HVD-PV'
-                ? '#4EB772'
-                : text[0]?.name === 'SPV-alt'
-                ? '#4EB772'
-                : text[0]?.name === 'OPV-alt'
-                ? '#4EB772'
-                : text[0]?.name === 'DauerspenderInnen'
-                ? '#4EB772'
-                : text[0]?.name === 'Materialbestellung'
-                ? '#4EB772'
-                : text[0]?.name === 'Newsletter-Abonnent'
-                ? '#4EB772'
-                : text[0]?.name === 'Offen'
-                ? '#4EB772'
-                : 'transparent',
-            border:
-              text[0]?.name === ''
-                ? '1px solid transparent'
-                : text[0]?.name === 'HVD-PV'
-                ? '1px solid rgba(78, 183, 114, 0.50)'
-                : '',
-          }}
-        >
-          {/* {console.log('ashishtext[0].name', text[0]?.name)} */}
-          {text === '' ? <span>PV-ALT</span> : <b>{text[0]?.name}</b>}
-        </div>
-      ),
+      width: '20%',
+      render: (text, record) => {
+        // Sort tags by code value in ascending order
+        const sortedTags = text.sort((a, b) => parseInt(a.code) - parseInt(b.code))
+
+        return (
+          <div className="dm-badge-container">
+            {sortedTags.slice(0, 4).map((tag, index) => (
+              <span
+                key={index}
+                className="dm-badge"
+                style={{ background: '#4EB772', border: 'white' }}
+              >
+                <span>{tag.name}</span>
+              </span>
+            ))}
+          </div>
+        )
+      },
     },
     {
       title: 'AKTION',
@@ -213,7 +237,7 @@ const CustomerList = () => {
                     </clipPath>
                   </defs>
                 </svg>
-                <span>Bearbeiten</span>
+                {/* <span>Bearbeiten</span> */}
               </button>
             </>
           ) : (
@@ -277,7 +301,7 @@ const CustomerList = () => {
                   </clipPath>
                 </defs>
               </svg>
-              <span> Löschen</span>
+              {/* <span> Löschen</span> */}
             </button>
           ) : (
             ''
@@ -289,7 +313,7 @@ const CustomerList = () => {
           >
             {' '}
             <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
-            &nbsp;Drucken
+            {/* &nbsp;Drucken */}
           </button>
         </>
       ),
@@ -375,13 +399,14 @@ const CustomerList = () => {
     // console.log(selectedOption)
   }
   const cities = [
-    { name: 'HVD-PV', code: '0' },
-    { name: 'SPV-alt', code: '1' },
+    { name: 'Hinterlegung', code: '0' },
+    { name: 'HVD-PV', code: '1' },
     { name: 'OPV-alt', code: '2' },
-    { name: 'DauerspenderInnen', code: '3' },
-    { name: 'Materialbestellung', code: '4' },
-    { name: 'Newsletter-Abonnent', code: '5' },
-    { name: 'Offen', code: '6' },
+    { name: 'SPV-alt', code: '3' },
+    { name: 'SpenderIn', code: '4' },
+    { name: 'Newsletter', code: '5' },
+    { name: 'Material', code: '6' },
+    { name: 'Offen', code: '7' },
   ]
   const Anrede = [
     { value: 'herr', label: 'Herr' },
@@ -401,6 +426,15 @@ const CustomerList = () => {
     // const selectedCities = e.value.map((option) => option.code)
     setClientStatus(e.value)
   }
+  const handleDateChange = (e) => {
+    let yearString = e.getFullYear().toString()
+    const year = parseInt(yearString.substring(0, 4), 10)
+    if (yearString.length > 4) {
+      yearString = yearString.substring(0, 4)
+    }
+    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    setStartDate(newDate)
+  }
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -409,26 +443,6 @@ const CustomerList = () => {
     }
 
     setValidated(true)
-
-    if (!fname || !lname) {
-      return toast.warning('Füllen Sie den Datensatz')
-    }
-    if (clientStatus.length === 0) {
-      toast.warning('Es muss mindestens ein Statusfeld ausgewählt werden')
-      return
-    }
-
-    let currentDate = new Date()
-    if (startDate > currentDate) {
-      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
-    }
-    if (startDate?.getFullYear() < 1900) {
-      return toast.warning('Das Startdatum darf nicht vor 1900 liegen')
-    }
-    if (phone && phone.startsWith('000')) {
-      return toast.warning('Ungültige Telefonnummer')
-    }
-
     let data = {
       customer: {
         fname,
@@ -446,6 +460,38 @@ const CustomerList = () => {
         created_by,
       },
     }
+    // console.log('date', data.startDate)
+
+    if (!fname || !lname) {
+      return toast.warning('Füllen Sie den Datensatz')
+    }
+    if (clientStatus.length === 0) {
+      toast.warning('Es muss mindestens ein Statusfeld ausgewählt werden')
+      return
+    }
+    let currentDate = new Date()
+    let birthDate = new Date(startDate)
+    let minimumAge = 18
+    let ageDifferenceMilliseconds = currentDate?.getTime() - birthDate?.getTime()
+    let ageDifferenceYears = ageDifferenceMilliseconds / (1000 * 3600 * 24 * 365.25)
+
+    if (ageDifferenceYears < minimumAge) {
+      return toast.warning(
+        'Du musst mindestens 18 Jahre alt sein, um einen Vertrag zu unterschreiben.',
+      )
+    }
+
+    if (startDate > currentDate) {
+      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
+    }
+    if (startDate instanceof Date && startDate.getFullYear() < 1900) {
+      return toast.warning('Das Startdatum darf nicht vor 1900 liegen')
+    }
+
+    if (phone && phone.startsWith('000')) {
+      return toast.warning('Ungültige Telefonnummer')
+    }
+
     const emailRegex = /^[^\s@]+(\s[^\s@]+)*@[^\s@]+\.[^\s@]+$/
 
     try {
@@ -706,13 +752,6 @@ const CustomerList = () => {
     getDetails()
     getPrintDetails()
   }, [page, itemsPerPage])
-  useEffect(() => {
-    // setstartDate(getCurrentDate())
-  }, [])
-
-  useEffect(() => {
-    setStartDate(null)
-  }, [])
 
   const formatDate = (value) => {
     if (!value) return ''
@@ -720,20 +759,6 @@ const CustomerList = () => {
     const month = value.slice(2, 4)
     const year = value.slice(4, 8)
     return `${day}.${month}.${year}`
-  }
-
-  const handleDateChange = (date) => {
-    let yearString = date.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
-    }
-    const newDate = new Date(`${year}.${date.getMonth() + 1}.${date.getDate()}`)
-    setStartDate(newDate)
-  }
-
-  const handleBlurDob = () => {
-    setStartDate(formatDate(startDate))
   }
 
   return (
@@ -895,9 +920,15 @@ const CustomerList = () => {
                         placeholder="Telefon"
                         className="form-control"
                         value={phone}
+                        // onChange={(e) => {
+                        //   const inputValue = e.target.value.replace(/[^0-9+]/g, '')
+                        //   if (/^\+?[0-9]*$/.test(inputValue)) {
+                        //     setPhone(inputValue)
+                        //   }
+                        // }}
                         onChange={(e) => {
-                          const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                          if (/^\+?[0-9]*$/.test(inputValue)) {
+                          const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
+                          if (/^\+?[0-9 ]*$/.test(inputValue)) {
                             setPhone(inputValue)
                           }
                         }}
@@ -935,7 +966,7 @@ const CustomerList = () => {
                           ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                           setCity(inputValue)
                         }}
-                        placeholder="Stadt"
+                        placeholder="Ort"
                         className="form-control"
                       />
                     </div>
@@ -946,9 +977,17 @@ const CustomerList = () => {
                         className="form-control"
                         selected={startDate}
                         onChange={handleDateChange}
-                        onBlur={handleBlurDob}
+                        // onBlur={handleBlurDob}
                         placeholderText={'Geburtsdatum'}
                       />
+                      {/* <DatePicker
+                        closeOnScroll={(e) => e.target === document}
+                        dateFormat="dd.MM.YYYY"
+                        selected={startDate}
+                        className="form-control"
+                        onChange={(date) => setStartDate(date)}
+                        placeholderText="Geburtsdatum"
+                      /> */}
                     </div>
                     <div className="col-sm-6">
                       <input
