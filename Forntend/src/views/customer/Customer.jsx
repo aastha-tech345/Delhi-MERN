@@ -76,7 +76,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
         ',  '
       : '') +
     (customerInfo?.customer?.street
-      ? customerInfo?.customerDelivery?.ort + '  ' + customerInfo?.customer?.land
+      ? customerInfo?.customer?.plz + '  ' + customerInfo?.customerDelivery?.ort
       : '')
 
   const getRecordById = async () => {

@@ -71,7 +71,7 @@ const CustomerInfo = () => {
 
   // console.log('salution', customerInfo?.customer?.email)
   const cities = [
-    { name: 'Hinterlegung', code: '0' },
+    { name: 'HLG', code: '0' },
     { name: 'HVD-PV', code: '1' },
     { name: 'OPV-alt', code: '2' },
     { name: 'SPV-alt', code: '3' },
@@ -155,6 +155,15 @@ const CustomerInfo = () => {
     created_by: customerInfo?.created_by,
   }
 
+  // const changeDate =()=>{
+  //   let yearString = e.getFullYear().toString()
+  //   const year = parseInt(yearString.substring(0, 4), 10)
+  //   if (yearString.length > 4) {
+  //     yearString = yearString.substring(0, 4)
+  //   }
+  //   const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+  //   setOrderingMaterials(...orderingMaterials,)I
+  // }
   const matarialChange = (e) => {
     if (e instanceof Date) {
       let yearString = e?.getFullYear().toString()
@@ -285,33 +294,33 @@ const CustomerInfo = () => {
     }
   }
 
-  // const ContactChangeDob = (e) => {
-  //   let yearString = e?.getFullYear().toString()
-  //   const year = parseInt(yearString.substring(0, 4), 10)
-  //   if (yearString.length > 4) {
-  //     yearString = yearString.substring(0, 4)
-  //   }
-  //   const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
-  //   setCustomerContact({ ...customerContact, startDate: newDate })
-  // }
   const ContactChangeDob = (e) => {
-    const currentDate = new Date()
-    const year = e?.getFullYear()
-    const month = e?.getMonth()
-    const day = e?.getDate()
-    const age =
-      currentDate.getFullYear() -
-      year -
-      (currentDate.getMonth() < month ||
-      (currentDate.getMonth() === month && currentDate.getDate() < day)
-        ? 1
-        : 0)
-    if (age < 18) {
-      console.log('You must be at least 18 years old to sign a contract.')
-      return
+    let yearString = e?.getFullYear().toString()
+    const year = parseInt(yearString.substring(0, 4), 10)
+    if (yearString.length > 4) {
+      yearString = yearString.substring(0, 4)
     }
-    setCustomerContact({ ...customerContact, startDate: e })
+    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    setCustomerContact({ ...customerContact, startDate: newDate })
   }
+  // const ContactChangeDob = (e) => {
+  //   const currentDate = new Date()
+  //   const year = e?.getFullYear()
+  //   const month = e?.getMonth()
+  //   const day = e?.getDate()
+  //   const age =
+  //     currentDate.getFullYear() -
+  //     year -
+  //     (currentDate.getMonth() < month ||
+  //     (currentDate.getMonth() === month && currentDate.getDate() < day)
+  //       ? 1
+  //       : 0)
+  //   if (age < 18) {
+  //     console.log('You must be at least 18 years old to sign a contract.')
+  //     return
+  //   }
+  //   setCustomerContact({ ...customerContact, startDate: e })
+  // }
 
   const BillChange = (e) => {
     const { name, value } = e.target
