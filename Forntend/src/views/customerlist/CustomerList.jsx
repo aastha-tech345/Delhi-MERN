@@ -920,15 +920,9 @@ const CustomerList = () => {
                         placeholder="Telefon"
                         className="form-control"
                         value={phone}
-                        // onChange={(e) => {
-                        //   const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                        //   if (/^\+?[0-9]*$/.test(inputValue)) {
-                        //     setPhone(inputValue)
-                        //   }
-                        // }}
                         onChange={(e) => {
                           const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
-                          if (/^\+?[0-9 ]*$/.test(inputValue)) {
+                          if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
                             setPhone(inputValue)
                           }
                         }}

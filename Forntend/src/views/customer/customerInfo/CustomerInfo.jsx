@@ -380,17 +380,16 @@ const CustomerInfo = () => {
     const { name, value, type, checked } = e.target
     setCustomerDelivery({ ...customerDelivery, [name]: type === 'checkbox' ? checked : value })
   }
-
   const DeliveryChangePhone = (e) => {
     const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
-    if (/^\+?[0-9 ]*$/.test(inputValue)) {
+    if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
       setCustomerDelivery({ ...customerDelivery, phone: inputValue })
     }
   }
 
   const DeliveryChangeMobile = (e) => {
     const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
-    if (/^\+?[0-9 ]*$/.test(inputValue)) {
+    if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
       setCustomerDelivery({ ...customerDelivery, mobile: inputValue })
     }
   }

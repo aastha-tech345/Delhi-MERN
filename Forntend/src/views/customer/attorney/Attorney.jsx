@@ -88,14 +88,20 @@ const Attorney = () => {
           [name]: checked,
         }
       } else if (name === 'healthCare_phone') {
-        updatedHealthCareData[index] = {
-          ...updatedHealthCareData[index],
-          healthCare_phone: value.replace(/[^\d\s]/g, ''),
+        const inputValue = value.replace(/[^\d+ ]/g, '')
+        if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
+          updatedHealthCareData[index] = {
+            ...updatedHealthCareData[index],
+            healthCare_phone: inputValue,
+          }
         }
       } else if (name === 'healthCare_mobile') {
-        updatedHealthCareData[index] = {
-          ...updatedHealthCareData[index],
-          healthCare_mobile: value.replace(/[^\d\s]/g, ''),
+        const inputValue = value.replace(/[^\d+ ]/g, '')
+        if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
+          updatedHealthCareData[index] = {
+            ...updatedHealthCareData[index],
+            healthCare_mobile: inputValue,
+          }
         }
       } else {
         // For other fields, simply update the value
@@ -184,14 +190,20 @@ const Attorney = () => {
           [name]: checked,
         }
       } else if (name === 'powerOfAttorney_phone') {
-        updatedPowerOfAttorneyData[index] = {
-          ...updatedPowerOfAttorneyData[index],
-          powerOfAttorney_phone: value.replace(/[^\d\s]/g, ''),
+        const inputValue = value.replace(/[^\d+ ]/g, '')
+        if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
+          updatedPowerOfAttorneyData[index] = {
+            ...updatedPowerOfAttorneyData[index],
+            powerOfAttorney_phone: inputValue,
+          }
         }
       } else if (name === 'powerOfAttorney_mobile') {
-        updatedPowerOfAttorneyData[index] = {
-          ...updatedPowerOfAttorneyData[index],
-          powerOfAttorney_mobile: value.replace(/[^\d\s]/g, ''),
+        const inputValue = value.replace(/[^\d+ ]/g, '')
+        if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
+          updatedPowerOfAttorneyData[index] = {
+            ...updatedPowerOfAttorneyData[index],
+            powerOfAttorney_mobile: inputValue,
+          }
         }
       }
 

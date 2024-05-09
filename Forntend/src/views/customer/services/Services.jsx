@@ -3003,7 +3003,7 @@ const Services = () => {
                                     // }}
                                     onChange={(e) => {
                                       const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
-                                      if (/^\+?[0-9\s]*$/.test(inputValue)) {
+                                      if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
                                         informationChange({
                                           target: { name: 'phone', value: inputValue },
                                         })
@@ -3035,7 +3035,7 @@ const Services = () => {
                                     // }}
                                     onChange={(e) => {
                                       const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
-                                      if (/^\+?[0-9\s]*$/.test(inputValue)) {
+                                      if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
                                         informationChange({
                                           target: { name: 'mobile', value: inputValue },
                                         })
