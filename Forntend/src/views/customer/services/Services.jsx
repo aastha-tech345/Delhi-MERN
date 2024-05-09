@@ -2931,16 +2931,16 @@ const Services = () => {
                                 </div>
                               </div>
                               <div className="row">
-                                <label className="col-sm-4 col-form-label">Name</label>
+                                <label className="col-sm-4 col-form-label">Vorname</label>
                                 <div className="col-sm-8">
                                   <input
-                                    className="form-control"
-                                    value={information.fname}
+                                    value={information.lname}
                                     onChange={(e) => informationChange(e)}
-                                    name="fname"
+                                    name="lname"
                                     type="text"
-                                    placeholder="Name"
+                                    placeholder="Vorname"
                                     disabled={information.alternateAddress !== 'ja'}
+                                    className="form-control"
                                   />
                                 </div>
                               </div>
@@ -3066,17 +3066,18 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
+
                               <div className="row">
-                                <label className="col-sm-4 col-form-label">Vorname</label>
+                                <label className="col-sm-4 col-form-label">Name</label>
                                 <div className="col-sm-8">
                                   <input
-                                    value={information.lname}
-                                    onChange={(e) => informationChange(e)}
-                                    name="lname"
-                                    type="text"
-                                    placeholder="Vorname"
-                                    disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
+                                    value={information.fname}
+                                    onChange={(e) => informationChange(e)}
+                                    name="fname"
+                                    type="text"
+                                    placeholder="Name"
+                                    disabled={information.alternateAddress !== 'ja'}
                                   />
                                 </div>
                               </div>
