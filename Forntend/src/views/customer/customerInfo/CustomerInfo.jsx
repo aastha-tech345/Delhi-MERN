@@ -71,7 +71,7 @@ const CustomerInfo = () => {
 
   // console.log('salution', customerInfo?.customer?.email)
   const cities = [
-    { name: 'Hinterlegung', code: '0' },
+    { name: 'HLG', code: '0' },
     { name: 'HVD-PV', code: '1' },
     { name: 'OPV-alt', code: '2' },
     { name: 'SPV-alt', code: '3' },
