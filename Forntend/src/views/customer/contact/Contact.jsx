@@ -197,7 +197,7 @@ const Contact = () => {
     //   setData({ ...data, telephone: inputValue })
     // }
     const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
-    if (/^\+?[0-9 ]*$/.test(inputValue)) {
+    if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
       setData({ ...data, telephone: inputValue })
     }
   }
@@ -222,7 +222,7 @@ const Contact = () => {
   }
   const handleChangeMobile = (e) => {
     const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
-    if (/^\+?[0-9 ]*$/.test(inputValue)) {
+    if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
       setData({ ...data, mobile: inputValue })
     }
   }
