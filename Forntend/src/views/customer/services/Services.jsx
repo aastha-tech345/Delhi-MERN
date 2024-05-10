@@ -821,10 +821,10 @@ const Services = () => {
   const rowData = [
     { hr: true },
     {
-      field1: <h3 style={{ color: '#244D92', marginBottom: '0px !important' }}>Motivation</h3>,
+      field1: <h3 style={{ color: '#244D92', marginBottom: '0px !important' }}>2.0 Motivation</h3>,
     },
     {
-      field1: 'Selbstbestimmung',
+      field1: '2.1 Selbstbestimmung',
       field2: (
         <>
           <div className="radio-check-wrap">
@@ -840,7 +840,7 @@ const Services = () => {
           <br />
         </>
       ),
-      field3: 'Diagnose',
+      field3: '2.4 Diagnose',
       field4: (
         <>
           <div className="radio-check-wrap">
@@ -858,7 +858,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Angehörige',
+      field1: '2.2 Angehörige',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -871,7 +871,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Ablehnung',
+      field3: '2.5 Ablehnung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -886,7 +886,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Angst',
+      field1: '2.3 Angst',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -902,7 +902,7 @@ const Services = () => {
     },
     { field33: '' },
     {
-      field11: 'Motivation',
+      field11: '2.6 Motivation',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -919,14 +919,14 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Geltungsbereich
+          3.0 Geltungsbereich
         </h3>
       ),
       field2: '',
       field3: '',
     },
     {
-      field1: 'Sterbeprozess',
+      field1: '3.1 Sterbeprozess',
 
       field2: (
         <div className="radio-check-wrap">
@@ -940,7 +940,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Demenz',
+      field3: '3.3 Demenz',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -955,7 +955,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Gehirnschädigung',
+      field1: '3.2 Gehirnschädigung',
 
       field2: (
         <div className="radio-check-wrap">
@@ -969,7 +969,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Schwerstpflegebedürftigkeit',
+      field3: '3.4 Schwerstpflegebedürftigkeit',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -987,14 +987,14 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Aussichtslose Situation
+          4.0 Aussichtslose Situation
         </h3>
       ),
       field2: '',
       field3: '',
     },
     {
-      field1: 'keine lebensverlängernden Maßnahmen',
+      field1: '4.1 keine lebensverlängernden Maßnahmen',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1006,7 +1006,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'keine Wiederbelebung',
+      field3: '4.3 keine Wiederbelebung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1020,7 +1020,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'keine künstliche Beatmung',
+      field1: '4.2 keine künstliche Beatmung',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1032,7 +1032,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'in jedem Fall Palliativmedizin',
+      field3: '4.4 in jedem Fall Palliativmedizin',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1049,14 +1049,14 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Künstliche Ernährung
+          5.0 Künstliche Ernährung
         </h3>
       ),
       field2: '',
       field3: '',
     },
     {
-      field1: 'natürliche Weise',
+      field1: '5.1 natürliche Weise',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1068,7 +1068,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Ablehnung',
+      field3: '5.3 Ablehnung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1082,7 +1082,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Flüssigkeit',
+      field1: '5.2 Flüssigkeit',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1101,14 +1101,14 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Beschwerdelinderung
+          6.0 Beschwerdelinderung
         </h3>
       ),
       field2: '',
       field3: '',
     },
     {
-      field1: 'palliative Sedierung',
+      field1: '6.1 palliative Sedierung',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1120,7 +1120,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'bewusstseinstrübende Nebenwirkung',
+      field3: '6.2 bewusstseinstrübende Nebenwirkung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1137,14 +1137,15 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Medikamente
+          7.0 Medikamente
         </h3>
       ),
       field2: '',
       field3: '',
     },
+
     {
-      field1: 'Medikamente',
+      field1: '7.1 Medikamente',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1156,7 +1157,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Medikamente zur Linderung',
+      field3: '7.2 Medikamente zur Linderung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1173,124 +1174,13 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Aufenthaltsort
-        </h3>
-      ),
-    },
-    {
-      field1: 'vertraute Umgebung',
-      field2: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={abode.familiar_environment === 'ja'}
-            name="familiar_environment"
-            onChange={handleAbodeChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-      field3: 'Hospiz',
-      field4: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={abode.hospice === 'ja'}
-            name="hospice"
-            onChange={handleAbodeChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-    },
-    {
-      field1: 'Nahestehende',
-      field2: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={abode.close_ones === 'ja'}
-            name="close_ones"
-            onChange={handleAbodeChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-      field3: 'Krankenhaus',
-      field4: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={abode.hospital === 'ja'}
-            name="hospital"
-            onChange={handleAbodeChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-    },
-    { hr: true },
-    {
-      field11: (
-        <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Begleitung
-        </h3>
-      ),
-      field22: '',
-    },
-    {
-      field11: 'Ärztin',
-      field22: (
-        <textarea
-          className="borderless-input w-100"
-          type="text"
-          value={accompaniment.doctor}
-          style={{ height: '50px ' }}
-          onChange={handleAccompanimentChange}
-          name="doctor"
-          placeholder="Ärztin"
-        />
-      ),
-    },
-    {
-      field11: 'Beistand',
-      field22: (
-        <textarea
-          className="borderless-input w-100"
-          type="text"
-          value={accompaniment.assistance}
-          style={{ height: '50px ' }}
-          onChange={handleAccompanimentChange}
-          name="assistance"
-          placeholder="Beistand"
-        />
-      ),
-    },
-    {
-      field11: 'Ablehnung',
-      field22: (
-        <textarea
-          className="borderless-input w-100"
-          style={{ height: '50px ' }}
-          type="text"
-          value={accompaniment.rejection_organejection}
-          onChange={handleAccompanimentChange}
-          name="rejection_organejection"
-          placeholder="Ablehnung"
-        />
-      ),
-    },
-    { hr: true },
-    {
-      field1: (
-        <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Herzschrittmacher/Defibrillator
+          8.0 Herzschrittmacher/Defibrillator
         </h3>
       ),
       field2: '',
     },
     {
-      field1: 'Herzschrittmacher',
+      field1: '8.1 Herzschrittmacher',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1302,7 +1192,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Defibrillator',
+      field3: '8.2 Defibrillator',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1319,62 +1209,13 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Sterbehilfe
+          9.0 Organspende
         </h3>
       ),
       field2: '',
     },
     {
-      field1: 'Sterbehilfe [ja]',
-      field2: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={euthanasia.euthanasia_yes === 'ja'}
-            name="euthanasia_yes"
-            onChange={handleEuthanasiaChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-      field3: 'Sterbehilfe [nein]',
-      field4: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={euthanasia.euthanasia_no === 'ja'}
-            name="euthanasia_no"
-            onChange={handleEuthanasiaChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-    },
-    {
-      field1: 'Art und Zeitpunkt',
-      field2: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={euthanasia.research_purposes === 'ja'}
-            name="research_purposes"
-            onChange={handleEuthanasiaChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-    },
-    { hr: true },
-    {
-      field1: (
-        <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Organspende
-        </h3>
-      ),
-      field2: '',
-    },
-    {
-      field1: 'Organspende [ja]',
+      field1: '9.1 Organspende [ja]',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1386,7 +1227,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Organspende [nein]',
+      field3: '9.3 Organspende [nein]',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1400,7 +1241,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Forschungszwecke',
+      field1: '9.2 Forschungszwecke',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1417,76 +1258,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Bestattung
-        </h3>
-      ),
-      field2: '',
-    },
-    {
-      field1: 'Feuerbestattung',
-      field2: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={funeral.burial === 'ja'}
-            name="burial"
-            onChange={handleFuneralChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-      field3: 'Erdbestattung',
-      field4: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={funeral.cremation === 'ja'}
-            name="cremation"
-            onChange={handleFuneralChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-    },
-    {
-      field11: 'Bestattungsvorsorge',
-      field22: (
-        <textarea
-          type="text"
-          className="borderless-input w-100"
-          style={{ height: '50px ' }}
-          value={funeral.funeral_arrangements}
-          name="funeral_arrangements"
-          onChange={handleFuneralChange}
-          placeholder="Bestattungsvorsorge"
-        />
-      ),
-    },
-    {
-      field11: 'Bestattungswünsche',
-
-      field22: (
-        <textarea
-          type="text"
-          className="borderless-input w-100"
-          value={funeral.funeral_wishes}
-          style={{ height: '50px ' }}
-          name="funeral_wishes"
-          onChange={handleFuneralChange}
-          placeholder="Bestattungswünsche"
-        />
-      ),
-    },
-    { hr: true },
-    {
-      field1: (
-        <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Verbindlichkeit
+          10.0 Verbindlichkeit
         </h3>
       ),
     },
     {
-      field1: 'unmittelbar verbindlich',
+      field1: '10.1 unmittelbar verbindlich',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1498,7 +1275,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Ermessensbereich',
+      field3: '10.2 Ermessensbereich',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1515,12 +1292,239 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Intensivmedizin
+          11.0 Aufenthaltsort
         </h3>
       ),
     },
     {
-      field1: 'Intensivmedizin [ja]',
+      field1: '11.1 vertraute Umgebung',
+      field2: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={abode.familiar_environment === 'ja'}
+            name="familiar_environment"
+            onChange={handleAbodeChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+      field3: '11.3 Hospiz',
+      field4: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={abode.hospice === 'ja'}
+            name="hospice"
+            onChange={handleAbodeChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+    },
+    {
+      field1: '11.2 Nahestehende',
+      field2: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={abode.close_ones === 'ja'}
+            name="close_ones"
+            onChange={handleAbodeChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+      field3: '11.4 Krankenhaus',
+      field4: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={abode.hospital === 'ja'}
+            name="hospital"
+            onChange={handleAbodeChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+    },
+    { hr: true },
+    {
+      field11: (
+        <h3 className="mt-2" style={{ color: '#244D92' }}>
+          12.0 Begleitung
+        </h3>
+      ),
+      field22: '',
+    },
+    {
+      field11: '12.1 Ärztin',
+      field22: (
+        <textarea
+          className="borderless-input w-100"
+          type="text"
+          value={accompaniment.doctor}
+          style={{ height: '50px ' }}
+          onChange={handleAccompanimentChange}
+          name="doctor"
+          placeholder="Ärztin"
+        />
+      ),
+    },
+    {
+      field11: '12.3 Beistand',
+      field22: (
+        <textarea
+          className="borderless-input w-100"
+          type="text"
+          value={accompaniment.assistance}
+          style={{ height: '50px ' }}
+          onChange={handleAccompanimentChange}
+          name="assistance"
+          placeholder="Beistand"
+        />
+      ),
+    },
+    {
+      field11: '12.2 Ablehnung',
+      field22: (
+        <textarea
+          className="borderless-input w-100"
+          style={{ height: '50px ' }}
+          type="text"
+          value={accompaniment.rejection_organejection}
+          onChange={handleAccompanimentChange}
+          name="rejection_organejection"
+          placeholder="Ablehnung"
+        />
+      ),
+    },
+
+    { hr: true },
+    {
+      field1: (
+        <h3 className="mt-2" style={{ color: '#244D92' }}>
+          13.0 Sterbehilfe
+        </h3>
+      ),
+      field2: '',
+    },
+    {
+      field1: '13.1 Sterbehilfe [ja]',
+      field2: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={euthanasia.euthanasia_yes === 'ja'}
+            name="euthanasia_yes"
+            onChange={handleEuthanasiaChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+      field3: '13.3 Sterbehilfe [nein]',
+      field4: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={euthanasia.euthanasia_no === 'ja'}
+            name="euthanasia_no"
+            onChange={handleEuthanasiaChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+    },
+    {
+      field1: '13.2 Art und Zeitpunkt',
+      field2: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={euthanasia.research_purposes === 'ja'}
+            name="research_purposes"
+            onChange={handleEuthanasiaChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+    },
+
+    { hr: true },
+    {
+      field1: (
+        <h3 className="mt-2" style={{ color: '#244D92' }}>
+          14.0 Bestattung
+        </h3>
+      ),
+      field2: '',
+    },
+    {
+      field1: '14.1 Feuerbestattung',
+      field2: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={funeral.burial === 'ja'}
+            name="burial"
+            onChange={handleFuneralChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+      field3: '14.4 Erdbestattung',
+      field4: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={funeral.cremation === 'ja'}
+            name="cremation"
+            onChange={handleFuneralChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+    },
+    {
+      field11: '14.2 Bestattungsvorsorge',
+      field22: (
+        <textarea
+          type="text"
+          className="borderless-input w-100"
+          style={{ height: '50px ' }}
+          value={funeral.funeral_arrangements}
+          name="funeral_arrangements"
+          onChange={handleFuneralChange}
+          placeholder="Bestattungsvorsorge"
+        />
+      ),
+    },
+    {
+      field11: '14.3 Bestattungswünsche',
+
+      field22: (
+        <textarea
+          type="text"
+          className="borderless-input w-100"
+          value={funeral.funeral_wishes}
+          style={{ height: '50px ' }}
+          name="funeral_wishes"
+          onChange={handleFuneralChange}
+          placeholder="Bestattungswünsche"
+        />
+      ),
+    },
+    { hr: true },
+
+    {
+      field1: (
+        <h3 className="mt-2" style={{ color: '#244D92' }}>
+          15.0 Intensivmedizin
+        </h3>
+      ),
+    },
+    {
+      field1: '15.1 Intensivmedizin [ja]',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1532,7 +1536,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Intensivmedizin [nein]',
+      field3: '15.2 Intensivmedizin [nein]',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1549,12 +1553,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Wiederbelebung
+          16.0 Wiederbelebung
         </h3>
       ),
     },
     {
-      field1: 'Wiederbelebung schnell',
+      field1: '16.1 Wiederbelebung schnell',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1566,7 +1570,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Wiederbelebung [nein]',
+      field3: '16.3 Wiederbelebung [nein]',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1580,7 +1584,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Wiederbelebung bei OP',
+      field1: '16.2 Wiederbelebung bei OP',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1616,12 +1620,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Lebensqualität
+          17.0 Lebensqualität
         </h3>
       ),
     },
     {
-      field1: 'sehr hoch',
+      field1: '17.1 sehr hoch',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1633,7 +1637,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '	kaum eingeschränkt',
+      field3: '17.5	kaum eingeschränkt',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1647,7 +1651,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'zufrieden',
+      field1: '17.2 zufrieden',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1659,7 +1663,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '	genieße Leben',
+      field3: '17.6	genieße Leben',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1673,7 +1677,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'zur Last geworden',
+      field1: '17.3 zur Last geworden',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1689,7 +1693,7 @@ const Services = () => {
       field4: '',
     },
     {
-      field11: 'Lebensqualität',
+      field11: '17.4 Lebensqualität',
 
       field22: (
         <textarea
@@ -1707,12 +1711,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Lebenswertes
+          18.0 Lebenswertes
         </h3>
       ),
     },
     {
-      field1: 'Familie',
+      field1: '18.1 Familie',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1724,7 +1728,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Freunde, Bekannte',
+      field3: '18.7 Freunde, Bekannte',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1738,7 +1742,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Unabhängigkeit',
+      field1: '18.2 Unabhängigkeit',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1750,7 +1754,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'geistig aktiv',
+      field3: '18.8 geistig aktiv',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1764,7 +1768,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'für andere da sein',
+      field1: '18.3 für andere da sein',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1776,7 +1780,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Arbeit',
+      field3: '18.9 Arbeit',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1790,7 +1794,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Natur',
+      field1: '18.4 Natur',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1802,7 +1806,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Sport',
+      field3: '18.10 Sport',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1816,7 +1820,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Kultur',
+      field1: '18.5 Kultur',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1828,7 +1832,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Reisen',
+      field3: '18.11 Reisen',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1842,7 +1846,7 @@ const Services = () => {
       ),
     },
     {
-      field11: 'Lebenswertes',
+      field11: '18.6 Lebenswertes',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -1859,12 +1863,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          kein Verzicht
+          19.0 kein Verzicht
         </h3>
       ),
     },
     {
-      field1: 'Selbstständigkeit',
+      field1: '19.1 Selbstständigkeit',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1876,7 +1880,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'soziale Kontakte',
+      field3: '19.7 soziale Kontakte',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1890,7 +1894,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'geistig gesund',
+      field1: '19.2 geistig gesund',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1902,7 +1906,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'sportlich aktiv',
+      field3: '19.8 sportlich aktiv',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1916,7 +1920,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Unabhängigkeit',
+      field1: '19.3 Unabhängigkeit',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1928,7 +1932,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Mobilität',
+      field3: '19.9 Mobilität',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1942,7 +1946,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Essen & Trinken',
+      field1: '19.4 Essen & Trinken',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1954,7 +1958,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Kultur',
+      field3: '19.10 Kultur',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1968,7 +1972,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'für andere da sein',
+      field1: '19.5 für andere da sein',
 
       field2: (
         <div className="radio-check-wrap">
@@ -1983,7 +1987,7 @@ const Services = () => {
       ),
     },
     {
-      field11: 'kein Verzicht',
+      field11: '19.6 kein Verzicht',
 
       field22: (
         <textarea
@@ -2000,12 +2004,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Einschränkungen
+          20.0 Einschränkungen
         </h3>
       ),
     },
     {
-      field1: 'Mobilität',
+      field1: '20.1 Mobilität',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2017,7 +2021,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Körperpflege',
+      field3: '20.5 Körperpflege',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2031,7 +2035,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Kommunikation',
+      field1: '20.2 Kommunikation',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2043,7 +2047,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Nahrungsaufnahme',
+      field3: '20.6 Nahrungsaufnahme',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2057,7 +2061,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Denkvermögen',
+      field1: '20.3 Denkvermögen',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2069,7 +2073,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Selbständigkeit',
+      field3: '20.7 Selbständigkeit',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2083,7 +2087,7 @@ const Services = () => {
       ),
     },
     {
-      field11: 'Einschränkungen',
+      field11: '20.4 Einschränkungen',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -2101,12 +2105,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Hilfe annehmen
+          21.0 Hilfe annehmen
         </h3>
       ),
     },
     {
-      field1: 'gerne',
+      field1: '21.1 gerne',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2118,7 +2122,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'vorübergehend',
+      field3: '21.4 vorübergehend',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2132,7 +2136,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'wenn nötig',
+      field1: '21.2 wenn nötig',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2144,7 +2148,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'keine Last',
+      field3: '21.5 keine Last',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2158,7 +2162,7 @@ const Services = () => {
       ),
     },
     {
-      field11: 'Hilfe annehmen',
+      field11: '21.3 Hilfe annehmen',
 
       field22: (
         <textarea
@@ -2175,12 +2179,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          nicht lebenswert
+          22.0 nicht lebenswert
         </h3>
       ),
     },
     {
-      field11: 'nicht lebenswert',
+      field11: '22.1 nicht lebenswert',
 
       field22: (
         <textarea
@@ -2196,10 +2200,10 @@ const Services = () => {
     },
     { hr: true },
     {
-      field1: <h3 style={{ color: '#244D92' }}>Tod</h3>,
+      field1: <h3 style={{ color: '#244D92' }}>23.0 Tod</h3>,
     },
     {
-      field1: 'Ende des Lebens',
+      field1: '23.1 Ende des Lebens',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2211,7 +2215,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'Jenseits',
+      field3: '23.5 Jenseits',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2225,7 +2229,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Angst',
+      field1: '23.2 Angst',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2237,7 +2241,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'entfernt',
+      field3: '23.6 entfernt',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2251,7 +2255,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Erlösung',
+      field1: '23.3 Erlösung',
 
       field2: (
         <div className="radio-check-wrap">
@@ -2266,7 +2270,7 @@ const Services = () => {
       ),
     },
     {
-      field11: 'Tod',
+      field11: '23.4 Tod',
       field22: (
         <textarea
           type="text"
@@ -2283,12 +2287,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Sterben-Wünsche
+          24.0 Sterben-Wünsche
         </h3>
       ),
     },
     {
-      field1: 'schnell',
+      field1: '24.1 schnell',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2300,7 +2304,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'bewusst',
+      field3: '24.4 bewusst',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2314,7 +2318,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Abschied',
+      field1: '24.2 Abschied',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2326,7 +2330,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'nicht allein',
+      field3: '24.5 nicht allein',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2340,7 +2344,7 @@ const Services = () => {
       ),
     },
     {
-      field11: 'Sterben-Wünsche',
+      field11: '24.3 Sterben-Wünsche',
       field22: (
         // <div className="radio-check-wrap">
         //   <input
@@ -2366,12 +2370,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Sterben-Angst
+          25.0 Sterben-Angst
         </h3>
       ),
     },
     {
-      field1: 'schmerzvoll',
+      field1: '25.1 schmerzvoll',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2383,7 +2387,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'langwierig',
+      field3: '25.5 langwierig',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2397,7 +2401,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'hilflos',
+      field1: '25.2 hilflos',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2409,7 +2413,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'schlecht gepflegt',
+      field3: '25.6 schlecht gepflegt',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2423,7 +2427,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'alleine',
+      field1: '25.3 alleine',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2435,7 +2439,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'anonym',
+      field3: '25.7 anonym',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2449,7 +2453,7 @@ const Services = () => {
       ),
     },
     {
-      field11: 'Sterben-Angst',
+      field11: '25.4 Sterben-Angst',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -2474,12 +2478,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          letzte Lebensphase
+          26.0 letzte Lebensphase
         </h3>
       ),
     },
     {
-      field1: 'würdevoll',
+      field1: '26.1 würdevoll',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2491,7 +2495,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'professionell',
+      field3: '26.6 professionell',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2505,7 +2509,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'Beistand',
+      field1: '26.2 Beistand',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2517,7 +2521,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'ruhig',
+      field3: '26.7 ruhig',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2531,7 +2535,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'ohne Verlängerung',
+      field1: '26.3 ohne Verlängerung',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2543,7 +2547,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: 'bewusst',
+      field3: '26.8 bewusst',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2557,7 +2561,7 @@ const Services = () => {
       ),
     },
     {
-      field1: 'eigene Umgebung',
+      field1: '26.4 eigene Umgebung',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2583,7 +2587,7 @@ const Services = () => {
       // ),
     },
     {
-      field11: 'letzte Lebensphase',
+      field11: '26.5 letzte Lebensphase',
 
       field22: (
         <textarea
@@ -2601,12 +2605,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Sterben-Erfahrungen
+          27.0 Sterben-Erfahrungen
         </h3>
       ),
     },
     {
-      field11: 'Sterben-Erfahrungen',
+      field11: '27.1 Sterben-Erfahrungen',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -2623,12 +2627,12 @@ const Services = () => {
     {
       field1: (
         <h3 className="mt-2" style={{ color: '#244D92' }}>
-          Zusendung ergänzende Wertvorstellungen
+          28.0 Zusendung ergänzende Wertvorstellungen
         </h3>
       ),
     },
     {
-      field11: `Zusendung`,
+      field11: `28.1 Zusendung`,
       field22: (
         <>
           {' '}
@@ -2986,70 +2990,6 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row">
-                                <label className="col-sm-4 col-form-label">Telefon</label>
-                                <div className="col-sm-8">
-                                  <input
-                                    type="tel"
-                                    name="phone"
-                                    value={information.phone}
-                                    // onChange={(e) => {
-                                    //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                                    //   if (/^\+?[0-9]*$/.test(inputValue)) {
-                                    //     informationChange({
-                                    //       target: { name: 'phone', value: inputValue },
-                                    //     })
-                                    //   }
-                                    // }}
-                                    onChange={(e) => {
-                                      const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
-                                      if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
-                                        informationChange({
-                                          target: { name: 'phone', value: inputValue },
-                                        })
-                                      }
-                                    }}
-                                    placeholder="8354568464"
-                                    disabled={information.alternateAddress !== 'ja'}
-                                    className="form-control"
-                                    id="inputPhone"
-                                    maxLength={20}
-                                    minLength={3}
-                                  />
-                                </div>
-                              </div>
-                              <div className="row">
-                                <label className="col-sm-4 col-form-label">Mobil</label>
-                                <div className="col-sm-8">
-                                  <input
-                                    type="tel"
-                                    name="mobile"
-                                    value={information.mobile}
-                                    // onChange={(e) => {
-                                    //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                                    //   if (/^\+?[0-9]*$/.test(inputValue)) {
-                                    //     informationChange({
-                                    //       target: { name: 'mobile', value: inputValue },
-                                    //     })
-                                    //   }
-                                    // }}
-                                    onChange={(e) => {
-                                      const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
-                                      if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
-                                        informationChange({
-                                          target: { name: 'mobile', value: inputValue },
-                                        })
-                                      }
-                                    }}
-                                    placeholder="8354568464"
-                                    disabled={information.alternateAddress !== 'ja'}
-                                    className="form-control"
-                                    id="inputPhone"
-                                    maxLength={20}
-                                    minLength={3}
-                                  />
-                                </div>
-                              </div>
                             </div>
                             <div className="col-md-6 col-sm-12 mb-md-3">
                               <div className="row" style={{ marginBottom: '13px' }}>
@@ -3096,26 +3036,7 @@ const Services = () => {
                                   />
                                 </div>
                               </div>
-                              <div className="row">
-                                <label className="col-sm-4 col-form-label">Land</label>
-                                <div className="col-sm-8">
-                                  <input
-                                    value={information.country}
-                                    onChange={(e) => {
-                                      const inputValue = e.target.value.replace(
-                                        /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
-                                        '',
-                                      )
-                                      setInformation({ ...information, country: inputValue })
-                                    }}
-                                    name="country"
-                                    type="text"
-                                    placeholder="Land"
-                                    disabled={information.alternateAddress !== 'ja'}
-                                    className="form-control"
-                                  />
-                                </div>
-                              </div>
+
                               <div className="row">
                                 <label className="col-sm-4 col-form-label">Ort</label>
                                 <div className="col-sm-8">
@@ -3132,10 +3053,101 @@ const Services = () => {
                               </div>
                             </div>
                           </div>
+                          <div className="row">
+                            <label className="col-sm-2 col-form-label">Land</label>
+                            <div className="col-sm-10">
+                              <input
+                                value={information.country}
+                                onChange={(e) => {
+                                  const inputValue = e.target.value.replace(
+                                    /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                    '',
+                                  )
+                                  setInformation({ ...information, country: inputValue })
+                                }}
+                                name="country"
+                                type="text"
+                                placeholder="Land"
+                                disabled={information.alternateAddress !== 'ja'}
+                                className="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-sm-6">
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Telefon</label>
+                                <div className="col-sm-8">
+                                  <input
+                                    type="tel"
+                                    name="phone"
+                                    value={information.phone}
+                                    // onChange={(e) => {
+                                    //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                                    //   if (/^\+?[0-9]*$/.test(inputValue)) {
+                                    //     informationChange({
+                                    //       target: { name: 'phone', value: inputValue },
+                                    //     })
+                                    //   }
+                                    // }}
+                                    onChange={(e) => {
+                                      const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
+                                      if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
+                                        informationChange({
+                                          target: { name: 'phone', value: inputValue },
+                                        })
+                                      }
+                                    }}
+                                    placeholder="8354568464"
+                                    disabled={information.alternateAddress !== 'ja'}
+                                    className="form-control"
+                                    id="inputPhone"
+                                    maxLength={20}
+                                    minLength={3}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-sm-6">
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Mobil</label>
+                                <div className="col-sm-8">
+                                  <input
+                                    type="tel"
+                                    name="mobile"
+                                    value={information.mobile}
+                                    // onChange={(e) => {
+                                    //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
+                                    //   if (/^\+?[0-9]*$/.test(inputValue)) {
+                                    //     informationChange({
+                                    //       target: { name: 'mobile', value: inputValue },
+                                    //     })
+                                    //   }
+                                    // }}
+                                    onChange={(e) => {
+                                      const inputValue = e.target.value.replace(/[^\d+\s]/g, '')
+                                      if (/^\+?(?:[0-9] ?){0,}$/.test(inputValue)) {
+                                        informationChange({
+                                          target: { name: 'mobile', value: inputValue },
+                                        })
+                                      }
+                                    }}
+                                    placeholder="8354568464"
+                                    disabled={information.alternateAddress !== 'ja'}
+                                    className="form-control"
+                                    id="inputPhone"
+                                    maxLength={20}
+                                    minLength={3}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
+
                   <hr />
                   <div className="row mx-1 mb-3">
                     <div className="col-md-3">Datenschutz</div>

@@ -37,6 +37,7 @@ const CustomerList = () => {
   const [fname, setFname] = useState()
   const [lname, setLname] = useState()
   const [phone, setPhone] = useState()
+  const [title, setTitle] = useState('')
   const [startDate, setStartDate] = useState('')
   const [land, setLand] = useState()
   const [plz, setPlz] = useState()
@@ -119,16 +120,18 @@ const CustomerList = () => {
     {
       title: 'KUNDEN-ID',
       dataIndex: 'countId',
+      width: '10%',
       render: (text, record, index) => text,
     },
     {
       title: 'E-MAIL',
       dataIndex: 'email',
+      width: '20%',
     },
     {
       title: 'TELEFON',
       dataIndex: 'phone',
-      // width: '20%',
+      width: '20%',
     },
     // {
     //   title: 'STATUS',
@@ -179,7 +182,7 @@ const CustomerList = () => {
 
         return (
           <div className="dm-badge-container">
-            {sortedTags.slice(0, 4).map((tag, index) => (
+            {sortedTags.slice(0, 6).map((tag, index) => (
               <span
                 key={index}
                 className="dm-badge"
@@ -195,6 +198,7 @@ const CustomerList = () => {
     {
       title: 'AKTION',
       dataIndex: 'action',
+      width: '10%',
       // hidden: true,
       render: (_, record) => (
         <>
@@ -448,6 +452,7 @@ const CustomerList = () => {
         fname,
         lname,
         street,
+        title,
         city,
         phone,
         startDate,
@@ -513,6 +518,7 @@ const CustomerList = () => {
           }
 
           const result = await response.json()
+          console.log('result', result)
           if (result.status === 400) {
             toast.warning('Bitte eine gültige Email eingeben')
           } else if (response.status === 201) {
@@ -555,6 +561,7 @@ const CustomerList = () => {
   }
   function resetForm() {
     setFname('')
+    setTitle('')
     setLand('')
     setLname('')
     setEmail('')
@@ -588,6 +595,7 @@ const CustomerList = () => {
     const {
       customer: {
         fname,
+        title,
         lname,
         email,
         id,
@@ -628,6 +636,7 @@ const CustomerList = () => {
       _id,
       id,
       fname,
+      title,
       lname,
       email,
       phone,
@@ -854,17 +863,31 @@ const CustomerList = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form noValidate validated={validated}>
-                  <div className="row mb-3">
-                    <Select
-                      className="w-100"
-                      options={Anrede}
-                      onChange={(selectedOption) => {
-                        setSalutionData(selectedOption)
-                      }}
-                      value={salutionData}
-                      name="salution"
-                      placeholder="Anrede"
-                    />
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <input
+                        value={title}
+                        onChange={(e) => {
+                          setTitle(e.target.value)
+                        }}
+                        type="text"
+                        placeholder="Title"
+                        className="form-control"
+                        // required={true}
+                      />
+                    </div>
+                    <div className="col-sm-6">
+                      <Select
+                        className="w-100"
+                        options={Anrede}
+                        onChange={(selectedOption) => {
+                          setSalutionData(selectedOption)
+                        }}
+                        value={salutionData}
+                        name="salution"
+                        placeholder="Anrede"
+                      />
+                    </div>
                   </div>
                   <div className="row">
                     <div className="col-sm-6">

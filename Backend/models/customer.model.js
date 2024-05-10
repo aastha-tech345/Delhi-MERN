@@ -20,6 +20,8 @@ const customerInfoStatuSchema = {
   employee: { type: String, default: "" },
   customerInfo_lname: { type: String, default: "" },
   remarks: { type: String, default: "" },
+  war: { type: Boolean, default: false },
+  research: { type: Boolean, default: false },
   dataCollection: { type: String, default: getCurrentDate },
 };
 
@@ -71,6 +73,7 @@ const customerBurialSchema = {
 
 const customerInfo = {
   fname: { type: String },
+  title: { type: String },
   lname: { type: String },
   phone: { type: String },
   email: { type: String },

@@ -62,6 +62,8 @@ const CustomerInfo = () => {
     dataProtection: '',
     employee: '',
     remarks: '',
+    war: '',
+    research: '',
     // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
   // //console.log('first', resultt?.customerInfoStatu)
@@ -566,6 +568,8 @@ const CustomerInfo = () => {
       dataProtection: customerInfo?.customerInfoStatu?.dataProtection,
       employee: customerInfo?.customerInfoStatu?.employee,
       remarks: customerInfo?.customerInfoStatu?.remarks,
+      war: customerInfo?.customerInfoStatu?.war,
+      research: customerInfo?.customerInfoStatu?.research,
     })
     setDataCollection(customerInfo?.customerInfoStatu?.dataCollection)
     // setClientStatus(customerInfo?.customer?.clientStatus)
@@ -778,6 +782,42 @@ const CustomerInfo = () => {
                               // name="dataCollection"
                               placeholderText={'Datenerfassung'}
                             />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <div className="row mb-3">
+                          <label className="col-sm-6 col-form-label">WaR</label>
+                          <div className="col-sm-4 mt-2">
+                            <div className="radio-check-wrap w-100 h-100">
+                              <input
+                                type="checkbox"
+                                name="war"
+                                onChange={customerInfoChange}
+                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
+                                checked={customerInfoStatu.war}
+                              />
+                              <span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="row mb-3">
+                          <label className="col-sm-6 col-form-label">Recherche</label>
+                          <div className="col-sm-4 mt-2">
+                            <div className="radio-check-wrap w-100 h-100">
+                              <input
+                                type="checkbox"
+                                name="research"
+                                onChange={customerInfoChange}
+                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
+                                checked={customerInfoStatu.research}
+                              />
+                              <span></span>
+                            </div>
                           </div>
                         </div>
                       </div>
