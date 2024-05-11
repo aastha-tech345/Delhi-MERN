@@ -2154,3 +2154,21 @@ h4 {
 .city-label {
   white-space: nowrap;
 }
+
+:where(.css-dev-only-do-not-override-1okl62o).ant-picker-dropdown
+  .ant-picker-panel-container
+  .ant-picker-panel-layout {
+  display: none !important;
+}
+:where(.css-dev-only-do-not-override-1okl62o).ant-picker .ant-picker-suffix{
+display: none !important;
+}
+.css-i4bv87-MuiSvgIcon-root{
+  display: none !important;
+}
+.css-z3c6am-MuiFormControl-root-MuiTextField-root{
+  width: 100% !important;
+}
+.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root{
+  height: 55% !important;
+}

@@ -147,13 +147,13 @@ const Bills = () => {
         <Customer />
         <div className="tab-content">
           <div className="tab-title">
-            <h4>Rechnung</h4>
+            <h4 className="mx-3">Rechnung</h4>
           </div>
           <div className="container-fluid">
             <div className="row">
               <div className="col">
                 <div className="block-wrap">
-                  <h3>Rechnungstellung</h3>
+                  {/* <h3>Rechnungstellung</h3> */}
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col-sm-6">
@@ -172,20 +172,22 @@ const Bills = () => {
                             />
                           </div>
                         </div>
-                        <div className="row mb-3">
-                          <label htmlFor="paymentMethod" className="col-sm-4 col-form-label">
-                            Zahlungsart
+                        <div className="row">
+                          <label htmlFor="invoiceAmount" className="col-sm-4 col-form-label">
+                            Rechnungsbetrag eintragen
                           </label>
                           <div className="col-sm-6">
-                            <Select
-                              className="w-100"
-                              options={option}
-                              onChange={(selectedOption) =>
-                                setPaymentMethod(selectedOption?.value || '')
-                              }
-                              value={option.find((opt) => opt.value === paymentMethod)}
-                              name="paymentMethod"
-                              placeholder="Barzahlung"
+                            <input
+                              type="text"
+                              placeholder="Rechnungsbetrag eintragen"
+                              className="form-control"
+                              name="invoiceAmount"
+                              value={invoiceAmount}
+                              onChange={(e) => {
+                                const value = e.target.value
+                                const sanitizedValue = value.replace(/\D/g, '')
+                                setInvoiceAmount(sanitizedValue)
+                              }}
                             />
                           </div>
                         </div>
@@ -258,25 +260,24 @@ const Bills = () => {
                             <span></span>
                           </div>
                         </div>
-                        <div className="row">
-                          <label htmlFor="invoiceAmount" className="col-sm-4 col-form-label">
-                            Rechnungsbetrag eintragen
+                        <div className="row mb-3">
+                          <label htmlFor="paymentMethod" className="col-sm-4 col-form-label">
+                            Zahlungsart
                           </label>
                           <div className="col-sm-6">
-                            <input
-                              type="text"
-                              placeholder="Rechnungsbetrag eintragen"
-                              className="form-control"
-                              name="invoiceAmount"
-                              value={invoiceAmount}
-                              onChange={(e) => {
-                                const value = e.target.value
-                                const sanitizedValue = value.replace(/\D/g, '')
-                                setInvoiceAmount(sanitizedValue)
-                              }}
+                            <Select
+                              className="w-100"
+                              options={option}
+                              onChange={(selectedOption) =>
+                                setPaymentMethod(selectedOption?.value || '')
+                              }
+                              value={option.find((opt) => opt.value === paymentMethod)}
+                              name="paymentMethod"
+                              placeholder="Barzahlung"
                             />
                           </div>
                         </div>
+
                         <div className="row">
                           <label htmlFor="deliveryDate" className="col-sm-4 col-form-label">
                             Lieferdatum
