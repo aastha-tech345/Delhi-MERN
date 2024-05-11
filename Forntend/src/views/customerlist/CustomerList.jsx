@@ -431,7 +431,7 @@ const CustomerList = () => {
     setClientStatus(e.value)
   }
   const handleDateChange = (e) => {
-    let yearString = e.getFullYear().toString()
+    let yearString = e?.getFullYear().toString()
     const year = parseInt(yearString.substring(0, 4), 10)
     if (yearString.length > 4) {
       yearString = yearString.substring(0, 4)
@@ -439,6 +439,7 @@ const CustomerList = () => {
     const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
     setStartDate(newDate)
   }
+
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -465,7 +466,7 @@ const CustomerList = () => {
         created_by,
       },
     }
-    // console.log('date', data.startDate)
+    console.log('date', data)
 
     if (!fname || !lname) {
       return toast.warning('Füllen Sie den Datensatz')
@@ -871,7 +872,7 @@ const CustomerList = () => {
                           setTitle(e.target.value)
                         }}
                         type="text"
-                        placeholder="Title"
+                        placeholder="Titel"
                         className="form-control"
                         // required={true}
                       />
@@ -990,6 +991,21 @@ const CustomerList = () => {
                   </div>
                   <div className="row">
                     <div className="col-sm-6">
+                      <input
+                        type="text"
+                        value={land}
+                        onChange={(e) => {
+                          const inputValue = e.target.value.replace(
+                            /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                            '',
+                          )
+                          setLand(inputValue)
+                        }}
+                        placeholder="Land"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-sm-6">
                       <DatePiker
                         className="form-control"
                         selected={startDate}
@@ -1005,21 +1021,6 @@ const CustomerList = () => {
                         onChange={(date) => setStartDate(date)}
                         placeholderText="Geburtsdatum"
                       /> */}
-                    </div>
-                    <div className="col-sm-6">
-                      <input
-                        type="text"
-                        value={land}
-                        onChange={(e) => {
-                          const inputValue = e.target.value.replace(
-                            /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
-                            '',
-                          )
-                          setLand(inputValue)
-                        }}
-                        placeholder="Land"
-                        className="form-control"
-                      />
                     </div>
                   </div>
                   <div className="row">
