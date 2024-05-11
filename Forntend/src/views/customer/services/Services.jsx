@@ -840,7 +840,7 @@ const Services = () => {
           <br />
         </>
       ),
-      field3: '2.4 Diagnose',
+      field3: '2.2 Diagnose',
       field4: (
         <>
           <div className="radio-check-wrap">
@@ -858,7 +858,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '2.2 Angehörige',
+      field1: '2.3 Angehörige',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -871,7 +871,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '2.5 Ablehnung',
+      field3: '2.4 Ablehnung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -886,7 +886,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '2.3 Angst',
+      field1: '2.5 Angst',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -940,7 +940,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '3.3 Demenz',
+      field3: '3.2 Demenz',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -955,7 +955,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '3.2 Gehirnschädigung',
+      field1: '3.3 Gehirnschädigung',
 
       field2: (
         <div className="radio-check-wrap">
@@ -1006,7 +1006,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '4.3 keine Wiederbelebung',
+      field3: '4.2 keine Wiederbelebung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1020,7 +1020,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '4.2 keine künstliche Beatmung',
+      field1: '4.3 keine künstliche Beatmung',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1068,7 +1068,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '5.3 Ablehnung',
+      field3: '5.2 Ablehnung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1082,7 +1082,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '5.2 Flüssigkeit',
+      field1: '5.3 Flüssigkeit',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1227,7 +1227,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '9.3 Organspende [nein]',
+      field3: '9.2 Organspende [nein]',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1241,7 +1241,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '9.2 Forschungszwecke',
+      field1: '9.3 Forschungszwecke',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1309,7 +1309,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '11.3 Hospiz',
+      field3: '11.2 Hospiz',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1323,7 +1323,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '11.2 Nahestehende',
+      field1: '11.3 Nahestehende',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1372,7 +1372,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '12.3 Beistand',
+      field11: '12.2 Beistand',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -1386,7 +1386,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '12.2 Ablehnung',
+      field11: '12.3 Ablehnung',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -1422,7 +1422,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '13.3 Sterbehilfe [nein]',
+      field3: '13.2 Sterbehilfe [nein]',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1436,7 +1436,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '13.2 Art und Zeitpunkt',
+      field1: '13.3 Art und Zeitpunkt',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1472,7 +1472,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '14.4 Erdbestattung',
+      field3: '14.2 Erdbestattung',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1486,7 +1486,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '14.2 Bestattungsvorsorge',
+      field11: '14.3 Bestattungsvorsorge',
       field22: (
         <textarea
           type="text"
@@ -1500,7 +1500,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '14.3 Bestattungswünsche',
+      field11: '14.4 Bestattungswünsche',
 
       field22: (
         <textarea
@@ -1570,7 +1570,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '16.3 Wiederbelebung [nein]',
+      field3: '16.2 Wiederbelebung [nein]',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1584,7 +1584,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '16.2 Wiederbelebung bei OP',
+      field1: '16.3 Wiederbelebung bei OP',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1637,7 +1637,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '17.5	kaum eingeschränkt',
+      field3: '17.2	kaum eingeschränkt',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1651,7 +1651,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '17.2 zufrieden',
+      field1: '17.3 zufrieden',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1663,7 +1663,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '17.6	genieße Leben',
+      field3: '17.4	genieße Leben',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1677,7 +1677,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '17.3 zur Last geworden',
+      field1: '17.5 zur Last geworden',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1693,7 +1693,7 @@ const Services = () => {
       field4: '',
     },
     {
-      field11: '17.4 Lebensqualität',
+      field11: '17.6 Lebensqualität',
 
       field22: (
         <textarea
@@ -1728,7 +1728,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '18.7 Freunde, Bekannte',
+      field3: '18.2 Freunde, Bekannte',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1742,7 +1742,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '18.2 Unabhängigkeit',
+      field1: '18.3 Unabhängigkeit',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1754,7 +1754,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '18.8 geistig aktiv',
+      field3: '18.4 geistig aktiv',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1768,7 +1768,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '18.3 für andere da sein',
+      field1: '18.5 für andere da sein',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1780,7 +1780,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '18.9 Arbeit',
+      field3: '18.6 Arbeit',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1794,7 +1794,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '18.4 Natur',
+      field1: '18.7 Natur',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1806,7 +1806,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '18.10 Sport',
+      field3: '18.8 Sport',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1820,7 +1820,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '18.5 Kultur',
+      field1: '18.9 Kultur',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1832,7 +1832,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '18.11 Reisen',
+      field3: '18.10 Reisen',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1846,7 +1846,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '18.6 Lebenswertes',
+      field11: '18.11 Lebenswertes',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -1880,7 +1880,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '19.7 soziale Kontakte',
+      field3: '19.2 soziale Kontakte',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1894,7 +1894,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '19.2 geistig gesund',
+      field1: '19.3 geistig gesund',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1906,7 +1906,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '19.8 sportlich aktiv',
+      field3: '19.4 sportlich aktiv',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1920,7 +1920,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '19.3 Unabhängigkeit',
+      field1: '19.5 Unabhängigkeit',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1932,7 +1932,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '19.9 Mobilität',
+      field3: '19.6 Mobilität',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1946,7 +1946,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '19.4 Essen & Trinken',
+      field1: '19.7 Essen & Trinken',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -1958,7 +1958,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '19.10 Kultur',
+      field3: '19.8 Kultur',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -1972,7 +1972,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '19.5 für andere da sein',
+      field1: '19.9 für andere da sein',
 
       field2: (
         <div className="radio-check-wrap">
@@ -1987,7 +1987,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '19.6 kein Verzicht',
+      field11: '19.10 kein Verzicht',
 
       field22: (
         <textarea
@@ -2021,7 +2021,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '20.5 Körperpflege',
+      field3: '20.2 Körperpflege',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2035,7 +2035,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '20.2 Kommunikation',
+      field1: '20.3 Kommunikation',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2047,7 +2047,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '20.6 Nahrungsaufnahme',
+      field3: '20.4 Nahrungsaufnahme',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2061,7 +2061,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '20.3 Denkvermögen',
+      field1: '20.5 Denkvermögen',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2073,7 +2073,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '20.7 Selbständigkeit',
+      field3: '20.6 Selbständigkeit',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2087,7 +2087,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '20.4 Einschränkungen',
+      field11: '20.7 Einschränkungen',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -2122,7 +2122,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '21.4 vorübergehend',
+      field3: '21.2 vorübergehend',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2136,7 +2136,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '21.2 wenn nötig',
+      field1: '21.3 wenn nötig',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2148,7 +2148,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '21.5 keine Last',
+      field3: '21.4 keine Last',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2162,7 +2162,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '21.3 Hilfe annehmen',
+      field11: '21.5 Hilfe annehmen',
 
       field22: (
         <textarea
@@ -2215,7 +2215,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '23.5 Jenseits',
+      field3: '23.2 Jenseits',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2229,7 +2229,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '23.2 Angst',
+      field1: '23.3 Angst',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2241,7 +2241,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '23.6 entfernt',
+      field3: '23.4 entfernt',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2255,7 +2255,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '23.3 Erlösung',
+      field1: '23.5 Erlösung',
 
       field2: (
         <div className="radio-check-wrap">
@@ -2270,7 +2270,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '23.4 Tod',
+      field11: '23.6 Tod',
       field22: (
         <textarea
           type="text"
@@ -2304,7 +2304,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '24.4 bewusst',
+      field3: '24.2 bewusst',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2318,7 +2318,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '24.2 Abschied',
+      field1: '24.3 Abschied',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2330,7 +2330,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '24.5 nicht allein',
+      field3: '24.4 nicht allein',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2344,7 +2344,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '24.3 Sterben-Wünsche',
+      field11: '24.5 Sterben-Wünsche',
       field22: (
         // <div className="radio-check-wrap">
         //   <input
@@ -2387,7 +2387,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '25.5 langwierig',
+      field3: '25.2 langwierig',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2401,7 +2401,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '25.2 hilflos',
+      field1: '25.3 hilflos',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2413,7 +2413,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '25.6 schlecht gepflegt',
+      field3: '25.4 schlecht gepflegt',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2427,7 +2427,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '25.3 alleine',
+      field1: '25.5 alleine',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2439,7 +2439,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '25.7 anonym',
+      field3: '25.6 anonym',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2453,7 +2453,7 @@ const Services = () => {
       ),
     },
     {
-      field11: '25.4 Sterben-Angst',
+      field11: '25.7 Sterben-Angst',
       field22: (
         <textarea
           className="borderless-input w-100"
@@ -2495,7 +2495,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '26.6 professionell',
+      field3: '26.2 professionell',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2509,7 +2509,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '26.2 Beistand',
+      field1: '26.3 Beistand',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2521,7 +2521,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '26.7 ruhig',
+      field3: '26.4 ruhig',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2535,7 +2535,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '26.3 ohne Verlängerung',
+      field1: '26.5 ohne Verlängerung',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2547,7 +2547,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '26.8 bewusst',
+      field3: '26.6 bewusst',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -2561,7 +2561,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '26.4 eigene Umgebung',
+      field1: '26.7 eigene Umgebung',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -2587,7 +2587,7 @@ const Services = () => {
       // ),
     },
     {
-      field11: '26.5 letzte Lebensphase',
+      field11: '26.8 letzte Lebensphase',
 
       field22: (
         <textarea
@@ -2913,13 +2913,13 @@ const Services = () => {
                         />
                       </div>
                       {/* <div className="col-md-3"></div> */}
-                      <div className="col-md-7 col-sm-12 px-md-2 p-0 mt-md-0  mt-2">
+                      <div className="col-md-7 col-sm-12">
                         <div
                           className="container-fluid"
                           style={{ border: '1px solid lightgray', borderRadius: '5px' }}
                         >
-                          <div className="row pt-2">
-                            <div className="col-md-6 col-sm-12 mb-md-3">
+                          <div className="row mt-2">
+                            <div className="col-md-6 col-sm-12">
                               <div className="row">
                                 <label className="col-sm-4 col-form-label">Titel</label>
                                 <div className="col-sm-8">
@@ -2971,7 +2971,7 @@ const Services = () => {
                                 <label className="col-sm-4 col-form-label">PLZ</label>
                                 <div className="col-sm-8">
                                   <input
-                                    type="tel"
+                                    type="text"
                                     value={information.plz}
                                     onChange={(e) => {
                                       const inputValue = e.target.value.replace(
@@ -2991,7 +2991,7 @@ const Services = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-md-6 col-sm-12 mb-md-3">
+                            <div className="col-md-6 col-sm-12">
                               <div className="row" style={{ marginBottom: '13px' }}>
                                 <label className="col-sm-4 col-form-label">Anrede</label>
                                 <div className="col-sm-8">
@@ -3045,7 +3045,7 @@ const Services = () => {
                                     onChange={(e) => informationChange(e)}
                                     name="ort"
                                     type="text"
-                                    placeholder=" Ort"
+                                    placeholder="Ort"
                                     disabled={information.alternateAddress !== 'ja'}
                                     className="form-control"
                                   />

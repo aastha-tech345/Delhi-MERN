@@ -75,12 +75,12 @@ const Bills = () => {
   }
 
   const option = [
-    { value: 'barzahlung', label: 'Barzahlung' },
-    { value: 'rechnung', label: 'Rechnung' },
     { value: 'payPal', label: 'PayPal' },
+    // { value: 'barzahlung', label: 'Barzahlung' },
+    // { value: 'rechnung', label: 'Rechnung' },
     { value: 'klarna', label: 'Klarna' },
     { value: 'kreditkarte', label: 'Kreditkarte (für die Zukunft)' },
-    { value: 'andere', label: 'Andere' },
+    // { value: 'andere', label: 'Andere' },
   ]
 
   const optionData = [
@@ -149,12 +149,39 @@ const Bills = () => {
           <div className="tab-title">
             <h4 className="mx-3">Rechnung</h4>
           </div>
+          <hr className="mx-3" />
           <div className="container-fluid">
             <div className="row">
               <div className="col">
                 <div className="block-wrap">
                   {/* <h3>Rechnungstellung</h3> */}
                   <div className="container-fluid">
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <div className="row">
+                          <label htmlFor="product" className="col-sm-4 col-form-label">
+                            Transaktionsnr
+                          </label>
+                          <div className="col-sm-6">
+                            <input className="form-control" disabled placeholder="Transaktionsnr" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6">
+                        <div className="row">
+                          <label htmlFor="product" className="col-sm-4 col-form-label">
+                            Zahlungseingang
+                          </label>
+                          <div className="col-sm-6">
+                            <input
+                              className="form-control"
+                              disabled
+                              placeholder="Zahlungseingang"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div className="row">
                       <div className="col-sm-6">
                         <div className="row mb-3">
