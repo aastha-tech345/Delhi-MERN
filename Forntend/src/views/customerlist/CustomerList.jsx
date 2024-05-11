@@ -120,7 +120,7 @@ const CustomerList = () => {
     {
       title: 'KUNDEN-ID',
       dataIndex: 'countId',
-      width: '10%',
+      width: '20%',
       render: (text, record, index) => text,
     },
     {
@@ -411,6 +411,8 @@ const CustomerList = () => {
     { name: 'Newsletter', code: '5' },
     { name: 'Material', code: '6' },
     { name: 'Offen', code: '7' },
+    { name: 'WaR', code: '8' },
+    { name: 'Recherche', code: '9' },
   ]
   const Anrede = [
     { value: 'herr', label: 'Herr' },

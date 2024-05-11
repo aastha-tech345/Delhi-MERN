@@ -79,6 +79,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
       ? customerInfo?.customer?.plz + '  ' + customerInfo?.customerDelivery?.ort
       : '')
 
+  let status = customerInfo?.customer?.status
   const getRecordById = async () => {
     const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
     const updatedData = await response.json()
@@ -99,6 +100,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                 {/* <p style={{ color: 'white', marginTop: '5px' }}>KlientInnen: {res.fname}</p>
               <ImLocation2 style={{ color: 'white' }} />
               <span style={{ color: 'white' }}>{res.street}</span> */}
+
                 <h3>KlientIn: {`${firstName} ${lastName}`}</h3>
 
                 <address>
@@ -128,7 +130,19 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                 className="col-md-8 text-md-end"
                 // style={{ color: 'white', border: '1px solid white' }}
               >
-                <div className="d-flex justify-content-md-end justify-content-between">
+                <div>
+                  {status?.slice(0, 6)?.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="dm-badge mx-1"
+                      style={{ background: '#4EB772', border: 'white', padding: '5px' }}
+                    >
+                      <span>{tag.name}</span>
+                    </span>
+                  ))}
+                </div>
+
+                <div className="d-flex justify-content-md-end justify-content-between mt-1">
                   <button className="btn btn me-4 header-button">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -149,9 +163,10 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                         </clipPath>
                       </defs>
                     </svg> */}
+
                     <span> {formattedDate}</span>
                   </button>
-                  <button className="btn btn me-4 header-button">
+                  {/* <button className="btn btn me-4 header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -172,7 +187,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       </defs>
                     </svg>
                     <span> {customerInfo?.customer?.email}</span>
-                  </button>
+                  </button> */}
                   <button className="btn btn header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

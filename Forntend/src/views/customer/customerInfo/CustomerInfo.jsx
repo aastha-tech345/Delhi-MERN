@@ -81,6 +81,8 @@ const CustomerInfo = () => {
     { name: 'Newsletter', code: '5' },
     { name: 'Material', code: '6' },
     { name: 'Offen', code: '7' },
+    { name: 'WaR', code: '8' },
+    { name: 'Recherche', code: '9' },
   ]
   // const [those, setThose] = useState(resultt?.those)
   // //console.log('those', resultt?.those)
@@ -574,8 +576,6 @@ const CustomerInfo = () => {
       dataProtection: customerInfo?.customerInfoStatu?.dataProtection,
       employee: customerInfo?.customerInfoStatu?.employee,
       remarks: customerInfo?.customerInfoStatu?.remarks,
-      war: customerInfo?.customerInfoStatu?.war,
-      research: customerInfo?.customerInfoStatu?.research,
     })
     setDataCollection(customerInfo?.customerInfoStatu?.dataCollection)
     // setClientStatus(customerInfo?.customer?.clientStatus)
@@ -635,11 +635,13 @@ const CustomerInfo = () => {
                 <h3>Materialbestellung</h3>
                 {/* orderingMaterials start */}
                 <div className="row-wrap">
-                  <div>
-                    <div className="row justify-content-between align-items-center">
-                      <div className="col-md-3">
-                        <div className="d-flex">
-                          <label className="col-sm-10 col-form-label">Anzahl Fragebögen</label>
+                  <div className="row" style={{ marginLeft: '5px' }}>
+                    <div className="col-sm-3">
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-5 col-form-label">
+                          Anzahl Fragebögen
+                        </label>
+                        <div className="col-sm-7">
                           <input
                             type="number"
                             value={orderingMaterials.orderNumber}
@@ -650,9 +652,13 @@ const CustomerInfo = () => {
                           />
                         </div>
                       </div>
-                      <div className="col-md-2">
-                        <div className="d-flex">
-                          <label className="col-form-label">Extras</label>
+                    </div>
+                    <div className="col-sm-2">
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-3 col-form-label">
+                          Extras
+                        </label>
+                        <div className="col-sm-9">
                           <input
                             type="text"
                             name="extras"
@@ -663,9 +669,13 @@ const CustomerInfo = () => {
                           />
                         </div>
                       </div>
-                      <div className="col-md-3">
-                        <div className="d-flex">
-                          <label className="col-form-label">Newsletter-Datum</label>
+                    </div>
+                    <div className="col-sm-3">
+                      <div className="row">
+                        <label htmlFor="inputPassword" className="col-sm-5 col-form-label">
+                          Newsletter-Datum
+                        </label>
+                        <div className="col-sm-7">
                           <DatePiker
                             className="form-control"
                             selected={orderingMaterials?.newsletterDate}
@@ -674,36 +684,102 @@ const CustomerInfo = () => {
                           />
                         </div>
                       </div>
-
-                      <div className="col-md-4">
-                        <div className="d-flex">
-                          <label className="col-form-label">Newsletter-Abonnement</label>
-                          <div className="d-flex">
-                            <div className="radio-check-wrap">
-                              <input
-                                type="radio"
-                                name="newsletterSubscription"
-                                value="active"
-                                checked={orderingMaterials.newsletterSubscription === 'active'}
-                                onChange={matarialChange}
-                              />
-                              <span>Aktiv</span>
-                            </div>
-                            <div className="radio-check-wrap">
-                              <input
-                                type="radio"
-                                name="newsletterSubscription"
-                                value="inactive"
-                                checked={orderingMaterials.newsletterSubscription === 'inactive'}
-                                onChange={matarialChange}
-                              />
-                              <span>Inaktiv</span>
-                            </div>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="row">
+                        <label className="col-form-label col-sm-5">Newsletter-Abonnement</label>
+                        <div className="col-sm-7">
+                          <div className="radio-check-wrap">
+                            <input
+                              type="radio"
+                              name="newsletterSubscription"
+                              value="active"
+                              checked={orderingMaterials.newsletterSubscription === 'active'}
+                              onChange={matarialChange}
+                            />
+                            <span>Aktiv</span>
+                          </div>
+                          <div className="radio-check-wrap">
+                            <input
+                              type="radio"
+                              name="newsletterSubscription"
+                              value="inactive"
+                              checked={orderingMaterials.newsletterSubscription === 'inactive'}
+                              onChange={matarialChange}
+                            />
+                            <span>Inaktiv</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  {/* <div className="row">
+                    <div className="col-md-3">
+                      <div className="d-flex">
+                        <label className="col-sm-10 col-form-label">Anzahl Fragebögen</label>
+                        <input
+                          type="number"
+                          value={orderingMaterials.orderNumber}
+                          name="orderNumber"
+                          onChange={matarialChange}
+                          className="form-control"
+                          // style={{ width: '70px' }}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-2">
+                      <div className="d-flex">
+                        <label className="col-form-label">Extras</label>
+                        <input
+                          type="text"
+                          name="extras"
+                          value={orderingMaterials.extras}
+                          onChange={matarialChange}
+                          className="form-control w-100"
+                          placeholder="Extras"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="d-flex">
+                        <label className="col-form-label">Newsletter-Datum</label>
+                        <DatePiker
+                          className="form-control"
+                          selected={orderingMaterials?.newsletterDate}
+                          onChange={matarialChange}
+                          placeholderText={'Newsletter-Datum'}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-md-4">
+                      <div className="d-flex">
+                        <label className="col-form-label">Newsletter-Abonnement</label>
+                        <div className="d-flex">
+                          <div className="radio-check-wrap">
+                            <input
+                              type="radio"
+                              name="newsletterSubscription"
+                              value="active"
+                              checked={orderingMaterials.newsletterSubscription === 'active'}
+                              onChange={matarialChange}
+                            />
+                            <span>Aktiv</span>
+                          </div>
+                          <div className="radio-check-wrap">
+                            <input
+                              type="radio"
+                              name="newsletterSubscription"
+                              value="inactive"
+                              checked={orderingMaterials.newsletterSubscription === 'inactive'}
+                              onChange={matarialChange}
+                            />
+                            <span>Inaktiv</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
                 </div>
 
                 <h3>Status</h3>
@@ -747,7 +823,7 @@ const CustomerInfo = () => {
                               name="remarks"
                               onChange={customerInfoChange}
                               className="form-control"
-                              rows={11}
+                              rows={14}
                             />
                           </div>
                         </div>
@@ -788,42 +864,6 @@ const CustomerInfo = () => {
                               // name="dataCollection"
                               placeholderText={'Datenerfassung'}
                             />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-6">
-                        <div className="row mb-3">
-                          <label className="col-sm-6 col-form-label">WaR</label>
-                          <div className="col-sm-4 mt-2">
-                            <div className="radio-check-wrap w-100 h-100">
-                              <input
-                                type="checkbox"
-                                name="war"
-                                onChange={customerInfoChange}
-                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
-                                checked={customerInfoStatu.war}
-                              />
-                              <span></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-sm-6">
-                        <div className="row mb-3">
-                          <label className="col-sm-6 col-form-label">Recherche</label>
-                          <div className="col-sm-4 mt-2">
-                            <div className="radio-check-wrap w-100 h-100">
-                              <input
-                                type="checkbox"
-                                name="research"
-                                onChange={customerInfoChange}
-                                // checked={JSON.parse(customerInfoStatu.dataProtection)}
-                                checked={customerInfoStatu.research}
-                              />
-                              <span></span>
-                            </div>
                           </div>
                         </div>
                       </div>
