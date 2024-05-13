@@ -123,7 +123,18 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       </clipPath>
                     </defs>
                   </svg>
-                  <span>{street}</span>
+                  <div
+                    style={{
+                      border: '1px solid white',
+                      color: 'white',
+                      padding: '3px',
+                      borderRadius: '3px',
+                      marginLeft: '4px',
+                      fontSize: '16px',
+                    }}
+                  >
+                    {street}
+                  </div>
                 </address>
               </div>
               <div
