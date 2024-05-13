@@ -9,6 +9,8 @@ const invoiceSchema = new Schema(
     invoiceAmount: { type: String },
     invoiceDate: { type: String },
     deliveryDate: { type: String },
+    transaction_no: { type: String },
+    incoming_payment: { type: String },
     employeeData: [],
     customer_id: { type: mongoose.Schema.Types.ObjectId },
   },

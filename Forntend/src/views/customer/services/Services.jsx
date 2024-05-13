@@ -840,26 +840,8 @@ const Services = () => {
           <br />
         </>
       ),
-      field3: '2.2 Diagnose',
+      field3: '2.3 Angehörige',
       field4: (
-        <>
-          <div className="radio-check-wrap">
-            <input
-              type="checkbox"
-              checked={motivation.diagonose === 'ja'}
-              name="diagonose"
-              onChange={handleMotivationChange}
-              onClick={(e) => e.stopPropagation()}
-            />
-            <span style={{ color: '#FFFFFF' }}>ja</span>
-          </div>
-          <br />
-        </>
-      ),
-    },
-    {
-      field1: '2.3 Angehörige',
-      field2: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
@@ -871,22 +853,25 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '2.4 Ablehnung',
-      field4: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            name="rejection"
-            checked={motivation.rejection === 'ja'}
-            onChange={handleMotivationChange}
-            className="checkbox-check"
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
+      // field3: '2.2 Diagnose',
+      // field4: (
+      //   <>
+      // <div className="radio-check-wrap">
+      //   <input
+      //     type="checkbox"
+      //     checked={motivation.diagonose === 'ja'}
+      //     name="diagonose"
+      //     onChange={handleMotivationChange}
+      //     onClick={(e) => e.stopPropagation()}
+      //   />
+      //   <span style={{ color: '#FFFFFF' }}>ja</span>
+      // </div>
+      //     <br />
+      //   </>
+      // ),
     },
     {
-      field1: '2.5 Angst',
+      field1: '2.3 Angst',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -894,6 +879,35 @@ const Services = () => {
             checked={motivation.angst === 'ja'}
             name="angst"
             onChange={handleMotivationChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+
+      field3: '2.4 Diagnose',
+      field4: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={motivation.diagonose === 'ja'}
+            name="diagonose"
+            onChange={handleMotivationChange}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+    },
+    {
+      field1: '2.4 Ablehnung',
+      field2: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            name="rejection"
+            checked={motivation.rejection === 'ja'}
+            onChange={handleMotivationChange}
+            className="checkbox-check"
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
@@ -940,14 +954,28 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '3.2 Demenz',
+      // field3: '3.2 Demenz',
+      // field4: (
+      // <div className="radio-check-wrap">
+      //   <input
+      //     type="checkbox"
+      //     className="mb-3"
+      //     checked={scope.dementia === 'ja'}
+      //     name="dementia"
+      //     onChange={handleScopeChange}
+      //   />
+      //   <span style={{ color: '#FFFFFF' }}>ja</span>
+      // </div>
+      // ),
+      field3: '3.3 Gehirnschädigung',
+
       field4: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
             className="mb-3"
-            checked={scope.dementia === 'ja'}
-            name="dementia"
+            checked={scope.brain === 'ja'}
+            name="brain"
             onChange={handleScopeChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -955,15 +983,15 @@ const Services = () => {
       ),
     },
     {
-      field1: '3.3 Gehirnschädigung',
+      field1: '3.3 Demenz',
 
       field2: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
             className="mb-3"
-            checked={scope.brain === 'ja'}
-            name="brain"
+            checked={scope.dementia === 'ja'}
+            name="dementia"
             onChange={handleScopeChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -1006,13 +1034,14 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '4.2 keine Wiederbelebung',
+
+      field3: '4.2 keine künstliche Beatmung',
       field4: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
-            checked={hopeless.no_resuscitation === 'ja'}
-            name="no_resuscitation"
+            checked={hopeless.no_artificial === 'ja'}
+            name="no_artificial"
             onChange={handleHopelessChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -1020,13 +1049,13 @@ const Services = () => {
       ),
     },
     {
-      field1: '4.3 keine künstliche Beatmung',
+      field1: '4.3 keine Wiederbelebung',
       field2: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
-            checked={hopeless.no_artificial === 'ja'}
-            name="no_artificial"
+            checked={hopeless.no_resuscitation === 'ja'}
+            name="no_resuscitation"
             onChange={handleHopelessChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -1227,13 +1256,13 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '9.2 Organspende [nein]',
+      field3: '9.2 Forschungszwecke',
       field4: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
-            checked={organ.organ_donation_no === 'ja'}
-            name="organ_donation_no"
+            checked={organ.organ_research_purposes === 'ja'}
+            name="organ_research_purposes"
             onChange={handleOrganChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -1241,13 +1270,13 @@ const Services = () => {
       ),
     },
     {
-      field1: '9.3 Forschungszwecke',
+      field1: '9.3 Organspende [nein]',
       field2: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
-            checked={organ.organ_research_purposes === 'ja'}
-            name="organ_research_purposes"
+            checked={organ.organ_donation_no === 'ja'}
+            name="organ_donation_no"
             onChange={handleOrganChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -1309,13 +1338,13 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '11.2 Hospiz',
+      field3: '11.2 Nahestehende',
       field4: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
-            checked={abode.hospice === 'ja'}
-            name="hospice"
+            checked={abode.close_ones === 'ja'}
+            name="close_ones"
             onChange={handleAbodeChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -1323,13 +1352,13 @@ const Services = () => {
       ),
     },
     {
-      field1: '11.3 Nahestehende',
+      field1: '11.3 Hospiz',
       field2: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
-            checked={abode.close_ones === 'ja'}
-            name="close_ones"
+            checked={abode.hospice === 'ja'}
+            name="hospice"
             onChange={handleAbodeChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -1570,13 +1599,13 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '16.2 Wiederbelebung [nein]',
+      field3: '16.2 Wiederbelebung bei OP',
       field4: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
-            checked={revival.revival_no === 'ja'}
-            name="revival_no"
+            checked={revival.resuscitation_op === 'ja'}
+            name="resuscitation_op"
             onChange={handleRevivalChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
@@ -1584,13 +1613,13 @@ const Services = () => {
       ),
     },
     {
-      field1: '16.3 Wiederbelebung bei OP',
+      field1: '16.3 Wiederbelebung [nein]',
       field2: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
-            checked={revival.resuscitation_op === 'ja'}
-            name="resuscitation_op"
+            checked={revival.revival_no === 'ja'}
+            name="revival_no"
             onChange={handleRevivalChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
