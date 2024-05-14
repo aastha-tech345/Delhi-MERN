@@ -2157,3 +2157,22 @@ h4 {
 .css-16xfy0z-control {
   background-color: var(--cui-secondary-bg) !important;
 }
+
+// input[type='date']::-webkit-inner-spin-button,
+// input[type='date']::-webkit-calendar-picker-indicator {
+//   display: none;
+//   -webkit-appearance: none;
+// }
+:where(.css-dev-only-do-not-override-1okl62o).ant-picker-dropdown
+  .ant-picker-panel-container
+  .ant-picker-panel-layout {
+  display: none !important;
+}
+:where(.css-dev-only-do-not-override-1okl62o).ant-picker-outlined:focus, :where(.css-dev-only-do-not-override-1okl62o).ant-picker-outlined:focus-within{
+  border-color: #005291 !important;
+  outline: 0px !important;
+  box-shadow: 0 0 0 0px #015291 !important;
+}
+:where(.css-dev-only-do-not-override-1okl62o).ant-space-vertical{
+  width: 100% !important;
+}

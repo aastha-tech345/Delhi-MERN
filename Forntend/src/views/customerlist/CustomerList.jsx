@@ -433,13 +433,13 @@ const CustomerList = () => {
     setClientStatus(e.value)
   }
   const handleDateChange = (e) => {
-    let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
-    }
-    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
-    setStartDate(newDate)
+    // let yearString = e?.getFullYear().toString()
+    // const year = parseInt(yearString.substring(0, 4), 10)
+    // if (yearString.length > 4) {
+    //   yearString = yearString.substring(0, 4)
+    // }
+    // const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    setStartDate(e)
   }
 
   const saveData = async (event) => {

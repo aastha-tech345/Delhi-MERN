@@ -3083,23 +3083,27 @@ const Services = () => {
                             </div>
                           </div>
                           <div className="row">
-                            <label className="col-sm-2 col-form-label">Land</label>
-                            <div className="col-sm-10">
-                              <input
-                                value={information.country}
-                                onChange={(e) => {
-                                  const inputValue = e.target.value.replace(
-                                    /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
-                                    '',
-                                  )
-                                  setInformation({ ...information, country: inputValue })
-                                }}
-                                name="country"
-                                type="text"
-                                placeholder="Land"
-                                disabled={information.alternateAddress !== 'ja'}
-                                className="form-control"
-                              />
+                            <div className="col-sm-6">
+                              <div className="row">
+                                <label className="col-sm-4 col-form-label">Land</label>
+                                <div className="col-sm-8">
+                                  <input
+                                    value={information.country}
+                                    onChange={(e) => {
+                                      const inputValue = e.target.value.replace(
+                                        /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
+                                        '',
+                                      )
+                                      setInformation({ ...information, country: inputValue })
+                                    }}
+                                    name="country"
+                                    type="text"
+                                    placeholder="Land"
+                                    disabled={information.alternateAddress !== 'ja'}
+                                    className="form-control"
+                                  />
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div className="row">
