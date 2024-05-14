@@ -161,21 +161,21 @@ const CustomerInfo = () => {
 
   // const changeDate =()=>{
   //   let yearString = e.getFullYear().toString()
-  //   const year = parseInt(yearString.substring(0, 4), 10)
-  //   if (yearString.length > 4) {
-  //     yearString = yearString.substring(0, 4)
+  //   const year = parseInt(yearString?.substring(0, 4), 10)
+  //   if (yearString?.length > 4) {
+  //     yearString = yearString?.substring(0, 4)
   //   }
-  //   const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+  //   const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
   //   setOrderingMaterials(...orderingMaterials,)I
   // }
   const matarialChange = (e) => {
     if (e instanceof Date) {
       let yearString = e?.getFullYear().toString()
-      const year = parseInt(yearString.substring(0, 4), 10)
-      if (yearString.length > 4) {
-        yearString = yearString.substring(0, 4)
+      const year = parseInt(yearString?.substring(0, 4), 10)
+      if (yearString?.length > 4) {
+        yearString = yearString?.substring(0, 4)
       }
-      const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+      const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
 
       setOrderingMaterials({ ...orderingMaterials, newsletterDate: newDate })
     } else if (e?.target) {
@@ -257,11 +257,11 @@ const CustomerInfo = () => {
   const customerInfoChange = (e) => {
     if (e instanceof Date) {
       let yearString = e?.getFullYear().toString()
-      const year = parseInt(yearString.substring(0, 4), 10)
-      if (yearString.length > 4) {
-        yearString = yearString.substring(0, 4)
+      const year = parseInt(yearString?.substring(0, 4), 10)
+      if (yearString?.length > 4) {
+        yearString = yearString?.substring(0, 4)
       }
-      const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+      const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
       setCustomerInfoStatu({ ...customerInfoStatu, dataCollection: newDate })
     } else if (e.target) {
       const { name, value, checked, type } = e.target
@@ -300,23 +300,23 @@ const CustomerInfo = () => {
 
   const ContactChangeDob = (e) => {
     let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
+    const year = parseInt(yearString?.substring(0, 4), 10)
+    if (yearString?.length > 4) {
+      yearString = yearString?.substring(0, 4)
     }
-    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
     setCustomerContact({ ...customerContact, startDate: newDate })
   }
   // const ContactChangeDob = (e) => {
   //   const currentDate = new Date()
   //   const year = e?.getFullYear()
-  //   const month = e?.getMonth()
+  //   const month = e??.getMonth()
   //   const day = e?.getDate()
   //   const age =
   //     currentDate.getFullYear() -
   //     year -
-  //     (currentDate.getMonth() < month ||
-  //     (currentDate.getMonth() === month && currentDate.getDate() < day)
+  //     (currentDate?.getMonth() < month ||
+  //     (currentDate?.getMonth() === month && currentDate.getDate() < day)
   //       ? 1
   //       : 0)
   //   if (age < 18) {
@@ -332,20 +332,20 @@ const CustomerInfo = () => {
   }
   const DepositChange = (e) => {
     let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
+    const year = parseInt(yearString?.substring(0, 4), 10)
+    if (yearString?.length > 4) {
+      yearString = yearString?.substring(0, 4)
     }
-    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
     setCustomerStartDeposit(newDate)
   }
   const dateChange = (e) => {
     let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
+    const year = parseInt(yearString?.substring(0, 4), 10)
+    if (yearString?.length > 4) {
+      yearString = yearString?.substring(0, 4)
     }
-    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
+    const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
     return newDate
   }
   const nextBrandChange = (e) => {
@@ -530,13 +530,13 @@ const CustomerInfo = () => {
   }
 
   const customerDateChange = (e) => {
-    let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString.substring(0, 4), 10)
-    if (yearString.length > 4) {
-      yearString = yearString.substring(0, 4)
-    }
-    const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
-    setDataCollection(newDate)
+    // let yearString = e?.getFullYear().toString()
+    // const year = parseInt(yearString?.substring(0, 4), 10)
+    // if (yearString?.length > 4) {
+    //   yearString = yearString?.substring(0, 4)
+    // }
+    // const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
+    setDataCollection(e)
   }
 
   useEffect(() => {

@@ -123,18 +123,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       </clipPath>
                     </defs>
                   </svg>
-                  <div
-                    style={{
-                      border: '1px solid white',
-                      color: 'white',
-                      padding: '3px',
-                      borderRadius: '3px',
-                      marginLeft: '4px',
-                      fontSize: '16px',
-                    }}
-                  >
-                    {street}
-                  </div>
+                  <span>{street}</span>
                 </address>
               </div>
               <div
@@ -175,7 +164,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       </defs>
                     </svg> */}
 
-                    <span> {formattedDate}</span>
+                    <span style={{ fontSize: '14px' }}> {formattedDate}</span>
                   </button>
                   {/* <button className="btn btn me-4 header-button">
                     <svg
@@ -219,7 +208,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                         </clipPath>
                       </defs>
                     </svg>
-                    <span>{customerInfo?.customer?.phone}</span>
+                    <span style={{ fontSize: '14px' }}>{customerInfo?.customer?.phone}</span>
                   </button>
                 </div>
               </div>

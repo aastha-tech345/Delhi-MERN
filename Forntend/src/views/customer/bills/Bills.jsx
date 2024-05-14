@@ -76,11 +76,11 @@ const Bills = () => {
 
   const option = [
     { value: 'payPal', label: 'PayPal' },
-    // { value: 'barzahlung', label: 'Barzahlung' },
-    // { value: 'rechnung', label: 'Rechnung' },
+    { value: 'barzahlung', label: 'Barzahlung' },
+    { value: 'rechnung', label: 'Rechnung' },
     { value: 'klarna', label: 'Klarna' },
     { value: 'kreditkarte', label: 'Kreditkarte (für die Zukunft)' },
-    // { value: 'andere', label: 'Andere' },
+    { value: 'andere', label: 'Andere' },
   ]
 
   const optionData = [
