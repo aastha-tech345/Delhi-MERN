@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 const PrintModal = ({ setPrint, getDetails }) => {
   let modalStyle = {
     display: 'block',
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     // maxHeight: '100%',
     color: 'black',
   }

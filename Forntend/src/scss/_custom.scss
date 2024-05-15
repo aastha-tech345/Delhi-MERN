@@ -1883,7 +1883,9 @@ span.anticon.anticon-phone svg {
 .header-button {
   color: white !important;
   border: 1px solid white !important;
-  padding: 2px !important;
+  padding: 0.5px !important;
+  padding-left: 0.5px !important;
+  padding-right: 0.5px !important;
 }
 
 input[type='search']::-webkit-search-decoration,
