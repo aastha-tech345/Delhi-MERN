@@ -844,7 +844,7 @@ const Services = () => {
           <br />
         </>
       ),
-      field3: '2.3 Angehörige',
+      field3: '2.2 Angehörige',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -971,7 +971,7 @@ const Services = () => {
       //   <span style={{ color: '#FFFFFF' }}>ja</span>
       // </div>
       // ),
-      field3: '3.3 Gehirnschädigung',
+      field3: '3.2 Gehirnschädigung',
 
       field4: (
         <div className="radio-check-wrap">

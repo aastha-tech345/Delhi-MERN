@@ -182,7 +182,7 @@ const CustomerList = () => {
 
         return (
           <div className="dm-badge-container">
-            {sortedTags.slice(0, 6).map((tag, index) => (
+            {sortedTags.slice(0, 6)?.map((tag, index) => (
               <span
                 key={index}
                 className="dm-badge"
@@ -594,7 +594,7 @@ const CustomerList = () => {
     }
   }
 
-  const modifiedDataSource = customer_record.map((customerRecord) => {
+  const modifiedDataSource = customer_record?.map((customerRecord) => {
     const {
       customer: {
         fname,
