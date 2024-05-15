@@ -70,6 +70,7 @@ const abodeSchema = new mongoose.Schema({
   hospice: { type: String },
   close_ones: { type: String },
   hospital: { type: String },
+  hospital_no: { type: String },
 });
 
 const accompanimentSchema = new mongoose.Schema({
@@ -80,6 +81,7 @@ const accompanimentSchema = new mongoose.Schema({
 const pacemakerSchema = new mongoose.Schema({
   pacemaker: { type: String },
   defibrillator: { type: String },
+  neither_nor: { type: String },
 });
 const euthanasiaSchema = new mongoose.Schema({
   euthanasia_yes: { type: String },
