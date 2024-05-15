@@ -903,7 +903,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '2.4 Ablehnung',
+      field1: '2.5 Ablehnung',
       field2: (
         <div className="radio-check-wrap">
           <input
