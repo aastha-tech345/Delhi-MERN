@@ -1396,7 +1396,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '11.4 Krankenhaus nein',
+      field1: '11.5 Krankenhaus nein',
       field2: (
         <div className="radio-check-wrap">
           <input
