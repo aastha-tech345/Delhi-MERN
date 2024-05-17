@@ -5,7 +5,14 @@ export default function DatePicker({ onChange, value, placeholder }) {
   const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
-    if (value instanceof Date && !isNaN(value.getTime())) {
+    if (typeof value === 'string') {
+      const parsedDate = new Date(value)
+      if (!isNaN(parsedDate.getTime())) {
+        setInputValue(formatDate(parsedDate))
+      } else {
+        setInputValue('')
+      }
+    } else if (value instanceof Date && !isNaN(value.getTime())) {
       setInputValue(formatDate(value))
     } else {
       setInputValue('')
@@ -36,7 +43,7 @@ export default function DatePicker({ onChange, value, placeholder }) {
         year += 1900
       } else if (year >= 2000 && year <= new Date().getFullYear()) {
       } else {
-        year = new Date().getFullYear()
+        year = year
       }
 
       const newDate = new Date(year, month - 1, day)
