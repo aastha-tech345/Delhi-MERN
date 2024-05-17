@@ -85,7 +85,7 @@ const Tasks = () => {
     }, 1000)
   }
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys)
+    // console.log('selectedRowKeys changed: ', newSelectedRowKeys)
     setSelectedRowKeys(newSelectedRowKeys)
   }
   const rowSelection = {
@@ -107,7 +107,7 @@ const Tasks = () => {
       phone,
       employee,
     }
-    console.log(data)
+    // console.log(data)
   }
   return (
     <div>
@@ -369,4 +369,4 @@ const Tasks = () => {
     </div>
   )
 }
-export default Tasks
+export default React.memo(Tasks)

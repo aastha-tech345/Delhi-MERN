@@ -38,4 +38,4 @@ const Page500 = () => {
   )
 }
 
-export default Page500
+export default React.memo(Page500)
