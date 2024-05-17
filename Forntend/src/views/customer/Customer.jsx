@@ -130,12 +130,16 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                 className="col-md-8 text-md-end"
                 // style={{ color: 'white', border: '1px solid white' }}
               >
-                <div>
+                <div style={{ marginBottom: '8px' }}>
                   {status?.slice(0, 6)?.map((tag, index) => (
                     <span
                       key={index}
-                      className="dm-badge mx-1"
-                      style={{ background: '#4EB772', border: 'white', padding: '5px' }}
+                      className="dm-badge mx-2"
+                      style={{
+                        background: '#4EB772',
+                        border: 'white',
+                        padding: '5px',
+                      }}
                     >
                       <span>{tag.name}</span>
                     </span>
@@ -143,7 +147,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                 </div>
 
                 <div className="d-flex justify-content-md-end justify-content-between mt-1">
-                  <button className="btn btn me-4 header-button">
+                  <button className="btn btn me-3 header-button">
                     {/* <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -194,10 +198,11 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                   <button className="btn btn header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="22"
-                      height="22"
-                      viewBox="0 0 22 22"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
                       fill="none"
+                      style={{ marginRight: '5px', marginBottom: '4px' }}
                     >
                       <g clipPath="url(#clip0_207_8539)">
                         <path
@@ -207,11 +212,11 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       </g>
                       <defs>
                         <clipPath id="clip0_207_8539">
-                          <rect width="22" height="22" fill="white" />
+                          <rect width="18" height="18" fill="white" />
                         </clipPath>
                       </defs>
                     </svg>
-                    <span style={{ fontSize: '14px', marginRight: '3px', marginLeft: '3px' }}>
+                    <span style={{ fontSize: '14px', marginRight: '3px' }}>
                       {customerInfo?.customer?.phone}
                     </span>
                   </button>

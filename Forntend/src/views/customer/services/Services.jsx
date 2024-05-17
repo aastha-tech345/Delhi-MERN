@@ -102,6 +102,7 @@ const Services = () => {
     hospice: '',
     close_ones: '',
     hospital: '',
+    hospital_no: '',
   })
 
   const [accompaniment, setAccompainment] = useState({
@@ -112,6 +113,7 @@ const Services = () => {
   const [pacemaker, setPacemaker] = useState({
     pacemaker: '',
     defibrillator: '',
+    neither_nor: '',
   })
   const [euthanasia, setEuthanasia] = useState({
     euthanasia_yes: '',
@@ -677,6 +679,7 @@ const Services = () => {
       hospice: recordData?.abode?.hospice,
       close_ones: recordData?.abode?.close_ones,
       hospital: recordData?.abode?.hospital,
+      hospital_no: recordData?.abode?.hospital_no,
     })
 
     setAccompainment({
@@ -687,6 +690,7 @@ const Services = () => {
     setPacemaker({
       pacemaker: recordData?.pacemaker?.pacemaker,
       defibrillator: recordData?.pacemaker?.defibrillator,
+      neither_nor: recordData?.pacemaker?.neither_nor,
     })
     setEuthanasia({
       euthanasia_yes: recordData?.euthanasia?.euthanasia_yes,
@@ -840,7 +844,7 @@ const Services = () => {
           <br />
         </>
       ),
-      field3: '2.3 Angehörige',
+      field3: '2.2 Angehörige',
       field4: (
         <div className="radio-check-wrap">
           <input
@@ -899,7 +903,7 @@ const Services = () => {
       ),
     },
     {
-      field1: '2.4 Ablehnung',
+      field1: '2.5 Ablehnung',
       field2: (
         <div className="radio-check-wrap">
           <input
@@ -967,7 +971,7 @@ const Services = () => {
       //   <span style={{ color: '#FFFFFF' }}>ja</span>
       // </div>
       // ),
-      field3: '3.3 Gehirnschädigung',
+      field3: '3.2 Gehirnschädigung',
 
       field4: (
         <div className="radio-check-wrap">
@@ -1209,8 +1213,20 @@ const Services = () => {
       field2: '',
     },
     {
-      field1: '8.1 Herzschrittmacher',
+      field1: '8.1 Weder noch',
       field2: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={pacemaker.neither_nor === 'ja'}
+            name="neither_nor"
+            onChange={handlePacemakerChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+      field3: '8.2 Herzschrittmacher',
+      field4: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
@@ -1221,8 +1237,10 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '8.2 Defibrillator',
-      field4: (
+    },
+    {
+      field1: '8.3 Defibrillator',
+      field2: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
@@ -1364,13 +1382,27 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '11.4 Krankenhaus',
+      field3: '11.4 Krankenhaus ja',
       field4: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
             checked={abode.hospital === 'ja'}
             name="hospital"
+            onChange={handleAbodeChange}
+          />
+          <span style={{ color: '#FFFFFF' }}>ja</span>
+        </div>
+      ),
+    },
+    {
+      field1: '11.5 Krankenhaus nein',
+      field2: (
+        <div className="radio-check-wrap">
+          <input
+            type="checkbox"
+            checked={abode.hospital_no === 'ja'}
+            name="hospital_no"
             onChange={handleAbodeChange}
           />
           <span style={{ color: '#FFFFFF' }}>ja</span>
