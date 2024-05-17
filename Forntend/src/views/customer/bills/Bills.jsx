@@ -20,8 +20,11 @@ const Bills = () => {
   const [invoiceDate, setInvoiceDate] = useState(recordData?.invoiceDate)
   const [deliveryDate, setDeliveryDate] = useState(recordData?.deliveryDate)
   const [product, setProduct] = useState(recordData?.product)
+  const [incoming_payment, setIncomingPayment] = useState('')
+  const [paymentSelected, setPaymentSelected] = useState('')
   const [paymentMethod, setPaymentMethod] = useState(recordData?.paymentMethod)
   const [invoiceAmount, setInvoiceAmount] = useState(recordData?.invoiceAmount)
+  const [transaction_no, setTransactionNo] = useState()
   let paidData = customerInfo?.customerDelivery?.alreadyPaid
   // console.log('paidData', paidData)
   const [alreadyPaid, setAlreadyPaid] = useState(paidData)
@@ -41,6 +44,11 @@ const Bills = () => {
     setAlreadyPaid(e.target.checked)
   }
 
+  const handlePaymentChange = (selectedOption) => {
+    setPaymentMethod(selectedOption?.value || '')
+    // setPaymentSelected(true)
+  }
+
   const saveData = async () => {
     try {
       const data = {
@@ -52,6 +60,8 @@ const Bills = () => {
         deliveryDate,
         employeeData,
         colleague,
+        transaction_no,
+        incoming_payment,
         customer_id: resultt?._id,
       }
 
@@ -139,6 +149,8 @@ const Bills = () => {
     setProduct(recordData?.product)
     setPaymentMethod(recordData?.paymentMethod)
     setInvoiceAmount(recordData?.invoiceAmount)
+    setIncomingPayment(recordData?.incoming_payment)
+    setTransactionNo(recordData?.transaction_no)
   }, [recordData])
 
   return (
@@ -163,7 +175,15 @@ const Bills = () => {
                             Transaktionsnr
                           </label>
                           <div className="col-sm-6">
-                            <input className="form-control" disabled placeholder="Transaktionsnr" />
+                            <input
+                              className="form-control"
+                              value={transaction_no}
+                              onChange={(e) => {
+                                setTransactionNo(e.target.value)
+                              }}
+                              disabled
+                              placeholder="Transaktionsnr"
+                            />
                           </div>
                         </div>
                       </div>
@@ -175,8 +195,12 @@ const Bills = () => {
                           <div className="col-sm-6">
                             <input
                               className="form-control"
-                              disabled
                               placeholder="Zahlungseingang"
+                              value={incoming_payment}
+                              onChange={(e) => {
+                                setIncomingPayment(e.target.value)
+                              }}
+                              disabled={!paymentMethod}
                             />
                           </div>
                         </div>
@@ -224,10 +248,9 @@ const Bills = () => {
                           </label>
                           <div className="col-sm-6">
                             <DatePiker
-                              className="form-control"
-                              selected={invoiceDate}
+                              value={invoiceDate}
                               onChange={invoiceChange}
-                              placeholderText={'Rechnungsdatum'}
+                              placeholder="Rechnungsdatum"
                             />
                           </div>
                         </div>
@@ -295,9 +318,7 @@ const Bills = () => {
                             <Select
                               className="w-100"
                               options={option}
-                              onChange={(selectedOption) =>
-                                setPaymentMethod(selectedOption?.value || '')
-                              }
+                              onChange={handlePaymentChange}
                               value={option.find((opt) => opt.value === paymentMethod)}
                               name="paymentMethod"
                               placeholder="Barzahlung"
@@ -311,10 +332,9 @@ const Bills = () => {
                           </label>
                           <div className="col-sm-6">
                             <DatePiker
-                              className="form-control"
-                              selected={deliveryDate}
+                              value={deliveryDate}
                               onChange={deliveryDateChange}
-                              placeholderText={'Lieferdatum'}
+                              placeholder="Lieferdatum"
                             />
                           </div>
                         </div>

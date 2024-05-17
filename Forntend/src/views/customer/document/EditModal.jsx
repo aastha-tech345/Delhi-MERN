@@ -166,7 +166,7 @@ const EditModal = ({ setEdit, getDetails }) => {
       tabIndex={-1}
       style={{
         display: 'block',
-        backgroundColor: 'rgba(0,0,0,0.8)',
+        backgroundColor: 'rgba(0,0,0,0.5)',
         maxHeight: '100%',
         color: 'black',
       }}
