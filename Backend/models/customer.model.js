@@ -31,7 +31,7 @@ const customerContactSchema = {
   gender: { type: String, default: "" },
   fname: { type: String, default: "" },
   lname: { type: String, default: "" },
-  startDate: { type: String },
+  startDate: { type: String, default: "" },
   name: { type: String, default: "" },
 };
 

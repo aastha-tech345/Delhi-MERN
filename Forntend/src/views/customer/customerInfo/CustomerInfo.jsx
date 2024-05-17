@@ -3,18 +3,12 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
 import { useLocation, useNavigate } from 'react-router-dom'
-import 'react-datepicker/dist/react-datepicker.css'
-import DatePiker from '../Date'
+import DatePic from '../Date'
 import Select, { components } from 'react-select'
 import PropTypes from 'prop-types'
-import { ListBox } from 'primereact/listbox'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
-// import 'primeicons/primeicons.css'
-import CreatableSelect from 'react-select/creatable'
 import axios from 'axios'
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
 
 const CheckboxOption = (props) => (
   <div>
@@ -44,34 +38,28 @@ const CustomerInfo = () => {
   const [updateData, setUpdateData] = useState(false)
   const [itemsPerPage, setItemsPerPage] = useState('')
   const [customerInfo, setCustomerInfo] = useState({})
-  //console.log('ashcustomer', customerInfo)
   let ress = localStorage.getItem('customerRecord')
-  // //console.log(ress)
   let resultt = JSON.parse(ress)
-  // //console.log('aast', resultt)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: '',
     newsletterDate: '',
     extras: '',
     newsletterSubscription: '',
   })
-  // //console.log('orderDate', resultt?.orderingMaterials?.newsletterDate)
+
+  console.log('orderDate', customerInfo?.orderingMaterials?.newsletterDate)
 
   const [customerInfoStatu, setCustomerInfoStatu] = useState({
-    // clientStatus: resultt?.customerInfoStatu?.clientStatus,
     dataProtection: '',
     employee: '',
     remarks: '',
     war: '',
     research: '',
-    // dataCollection: resultt?.customerInfoStatu?.dataCollection,
   })
-  // //console.log('first', resultt?.customerInfoStatu)
   const [clientStatus, setClientStatus] = useState(resultt?.status)
   const [salutionData, setSalutionData] = useState('')
   const [emailData, setEmailData] = useState('')
 
-  // console.log('salution', customerInfo?.customer?.email)
   const cities = [
     { name: 'HLG', code: '0' },
     { name: 'HVD-PV', code: '1' },
@@ -93,16 +81,22 @@ const CustomerInfo = () => {
   }
   // //console.log('those', those?.value)
   // //console.log('those', resultt?.those)
+  // const prefillDate = new Date('2000-12-31T18:30:00.000Z')
+  const dateString = customerInfo?.customer?.startDate
+  const date = new Date(dateString)
+
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
+  const formattedDate = date.toLocaleDateString('en-IN', options).replace(/\//g, '.')
+  console.log('date', formattedDate)
   const [customerContact, setCustomerContact] = useState({
     title: '',
     salution: '',
     gender: '',
     fname: '',
     lname: '',
-    startDate: '',
+    startDate: formattedDate,
     email: '',
   })
-
   const [customerBills, setCustomerBills] = useState({
     billAddress: '',
     billPlz: '',
@@ -128,6 +122,7 @@ const CustomerInfo = () => {
   const [customerUpdateStamp, setCustomerUpdateStamp] = useState('')
   const [customerLastStamp, setCustomerLastStamp] = useState('')
   const [customerReminderStamp, setCustomerReminderStamp] = useState('')
+  console.log('')
   // const [customerDepositeCheckbox, setCustomerDepositeCheckbox] = useState(
   //   Boolean(resultt?.customerDeposit?.deposit),
   // )
@@ -298,33 +293,9 @@ const CustomerInfo = () => {
     }
   }
 
-  const ContactChangeDob = (e) => {
-    let yearString = e?.getFullYear().toString()
-    const year = parseInt(yearString?.substring(0, 4), 10)
-    if (yearString?.length > 4) {
-      yearString = yearString?.substring(0, 4)
-    }
-    const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
-    setCustomerContact({ ...customerContact, startDate: newDate })
+  const ContactChangeDob = (date) => {
+    setCustomerContact({ ...customerContact, startDate: date })
   }
-  // const ContactChangeDob = (e) => {
-  //   const currentDate = new Date()
-  //   const year = e?.getFullYear()
-  //   const month = e??.getMonth()
-  //   const day = e?.getDate()
-  //   const age =
-  //     currentDate.getFullYear() -
-  //     year -
-  //     (currentDate?.getMonth() < month ||
-  //     (currentDate?.getMonth() === month && currentDate.getDate() < day)
-  //       ? 1
-  //       : 0)
-  //   if (age < 18) {
-  //     console.log('You must be at least 18 years old to sign a contract.')
-  //     return
-  //   }
-  //   setCustomerContact({ ...customerContact, startDate: e })
-  // }
 
   const BillChange = (e) => {
     const { name, value } = e.target
@@ -530,12 +501,6 @@ const CustomerInfo = () => {
   }
 
   const customerDateChange = (e) => {
-    // let yearString = e?.getFullYear().toString()
-    // const year = parseInt(yearString?.substring(0, 4), 10)
-    // if (yearString?.length > 4) {
-    //   yearString = yearString?.substring(0, 4)
-    // }
-    // const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
     setDataCollection(e)
   }
 
@@ -578,6 +543,7 @@ const CustomerInfo = () => {
       remarks: customerInfo?.customerInfoStatu?.remarks,
     })
     setDataCollection(customerInfo?.customerInfoStatu?.dataCollection)
+
     // setClientStatus(customerInfo?.customer?.clientStatus)
     setThose(customerInfo?.those)
     setCustomerContact({
@@ -589,6 +555,7 @@ const CustomerInfo = () => {
       email: customerInfo?.customerContact?.email || customerInfo?.customer?.email,
       startDate: customerInfo?.customer?.startDate,
     })
+    console.log('customerInfo?.customer?.startDate', customerInfo?.customer?.startDate)
     setCustomerBills({
       billAddress: customerInfo?.customerBills?.billAddress || customerInfo?.customer?.street,
       billPlz: customerInfo?.customerBills?.billPlz || customerInfo?.customer?.plz,
@@ -676,11 +643,11 @@ const CustomerInfo = () => {
                           Newsletter-Datum
                         </label>
                         <div className="col-sm-7">
-                          <DatePiker
-                            className="form-control"
-                            selected={orderingMaterials?.newsletterDate}
+                          <DatePic
+                            name="newsletterDate"
+                            value={orderingMaterials?.newsletterDate}
                             onChange={matarialChange}
-                            placeholderText={'Newsletter-Datum'}
+                            placeholder="Newsletter-Datum"
                           />
                         </div>
                       </div>
@@ -713,73 +680,6 @@ const CustomerInfo = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="row">
-                    <div className="col-md-3">
-                      <div className="d-flex">
-                        <label className="col-sm-10 col-form-label">Anzahl Fragebögen</label>
-                        <input
-                          type="number"
-                          value={orderingMaterials.orderNumber}
-                          name="orderNumber"
-                          onChange={matarialChange}
-                          className="form-control"
-                          // style={{ width: '70px' }}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-2">
-                      <div className="d-flex">
-                        <label className="col-form-label">Extras</label>
-                        <input
-                          type="text"
-                          name="extras"
-                          value={orderingMaterials.extras}
-                          onChange={matarialChange}
-                          className="form-control w-100"
-                          placeholder="Extras"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-3">
-                      <div className="d-flex">
-                        <label className="col-form-label">Newsletter-Datum</label>
-                        <DatePiker
-                          className="form-control"
-                          selected={orderingMaterials?.newsletterDate}
-                          onChange={matarialChange}
-                          placeholderText={'Newsletter-Datum'}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="col-md-4">
-                      <div className="d-flex">
-                        <label className="col-form-label">Newsletter-Abonnement</label>
-                        <div className="d-flex">
-                          <div className="radio-check-wrap">
-                            <input
-                              type="radio"
-                              name="newsletterSubscription"
-                              value="active"
-                              checked={orderingMaterials.newsletterSubscription === 'active'}
-                              onChange={matarialChange}
-                            />
-                            <span>Aktiv</span>
-                          </div>
-                          <div className="radio-check-wrap">
-                            <input
-                              type="radio"
-                              name="newsletterSubscription"
-                              value="inactive"
-                              checked={orderingMaterials.newsletterSubscription === 'inactive'}
-                              onChange={matarialChange}
-                            />
-                            <span>Inaktiv</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
                 </div>
 
                 <h3>Status</h3>
@@ -857,12 +757,11 @@ const CustomerInfo = () => {
                             Datenerfassung
                           </label>
                           <div className="col-sm-6">
-                            <DatePiker
-                              className="form-control"
-                              selected={dataCollection}
+                            <DatePic
+                              value={dataCollection}
                               onChange={customerDateChange}
                               // name="dataCollection"
-                              placeholderText={'Datenerfassung'}
+                              placeholder="Datenerfassung"
                             />
                           </div>
                         </div>
@@ -938,12 +837,11 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Geburtsdatum</label>
                         <div className="col-sm-6">
-                          <DatePiker
-                            className="form-control"
-                            selected={customerContact?.startDate}
+                          <DatePic
+                            value={customerContact?.startDate}
                             onChange={ContactChangeDob}
                             name="startDate"
-                            placeholderText={'Geburtsdatum'}
+                            placeholder="Geburtsdatum"
                           />
                         </div>
                       </div>
@@ -1053,12 +951,6 @@ const CustomerInfo = () => {
                             type="text"
                             name="email"
                             placeholder="E-Mail-Adresse"
-                            // onChange={(e) => {
-                            //   const inputValue = e.target.value.trim()
-                            //   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputValue)) {
-                            //     ContactChange({ target: { name: 'email', value: inputValue } })
-                            //   }
-                            // }}
                             onChange={(e) => {
                               setEmailData(e?.target?.value)
                             }}
@@ -1073,24 +965,6 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Telefon</label>
                         <div className="col-sm-6">
-                          {/* <PhoneInput
-                            // isValid={(value, country) => {
-                            //   if (value.match(/000/)) {
-                            //     return 'Invalid value: ' + value + ', ' + country.name
-                            //   } else if (value.match(/000/)) {
-                            //     return false
-                            //   } else {
-                            //     return true
-                            //   }
-                            // }}
-                            onChange={DeliveryChangePhone}
-                            name="phone"
-                            value={customerDelivery?.phone}
-                            type="tel"
-                            placeholder="Telefon"
-                            maxLength={20}
-                            minLength={3}
-                          /> */}
                           <input
                             placeholder="Telefon"
                             className="form-control"
@@ -1109,30 +983,6 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Mobil</label>
                         <div className="col-sm-6">
-                          {/* <PhoneInput
-                            onChange={DeliveryChangeMobile}
-                            // onChange={(e) => {
-                            //   const inputValue = e.target.value.replace(/[^0-9+]/g, '') // Allow only digits and the plus sign
-                            //   if (/^\+?[0-9]*$/.test(inputValue)) {
-                            //     DeliveryChange({ target: { name: 'mobile', value: inputValue } })
-                            //   }
-                            // }}
-                            // isValid={(value, country) => {
-                            //   if (value.match(/000/)) {
-                            //     return 'Invalid value: ' + value + ', ' + country.name
-                            //   } else if (value.match(/000/)) {
-                            //     return false
-                            //   } else {
-                            //     return true
-                            //   }
-                            // }}
-                            name="mobile"
-                            value={customerDelivery?.mobile}
-                            type="tel"
-                            placeholder="Mobil"
-                            maxLength={20}
-                            minLength={3}
-                          /> */}
                           <input
                             placeholder="Mobil"
                             className="form-control"
@@ -1169,14 +1019,6 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Straße mit Hausnummer</label>
                         <div className="col-sm-6">
-                          {/* <input
-                            type="text"
-                            onChange={DeliveryChangeAddress}
-                            name="address"
-                            placeholder="Straße mit Hausnummer"
-                            value={customerDelivery?.address}
-                            className="form-control"
-                          /> */}
                           <input
                             type="text"
                             onChange={(e) =>
@@ -1365,28 +1207,15 @@ const CustomerInfo = () => {
               <div className="block-wrap">
                 <h3>Hinterlegung</h3>
                 <div>
-                  {/* <div className="row">
-                    <div className="radio-check-wrap mb-3">
-                      <input
-                        type="checkbox"
-                        onChange={deposite}
-                        // checked={JSON.parse(customerDeposit.deposit)}
-                        checked={customerDepositeCheckbox}
-                        name="deposit"
-                      />
-                      <span> Hinterlegung [ja]</span>
-                    </div>
-                  </div> */}
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Hinterlegungsbeginn</label>
                         <div className="col-sm-6">
-                          <DatePiker
-                            className="form-control"
-                            selected={customerStartDeposit}
+                          <DatePic
+                            value={customerStartDeposit}
                             onChange={DepositChange}
-                            placeholderText={'Hinterlegungsbeginn'}
+                            placeholder="Hinterlegungsbeginn"
                           />
                         </div>
                       </div>
@@ -1394,11 +1223,10 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Versand nächste Marke</label>
                         <div className="col-sm-6">
-                          <DatePiker
-                            className="form-control"
-                            selected={customerNextBrand}
+                          <DatePic
+                            value={customerNextBrand}
                             onChange={nextBrandChange}
-                            placeholderText={'Versand nächste Marke'}
+                            placeholder="Versand nächste Marke"
                           />
                         </div>
                       </div>
@@ -1407,54 +1235,46 @@ const CustomerInfo = () => {
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Versand letzte Marke</label>
                         <div className="col-sm-6">
-                          <DatePiker
-                            className="form-control"
-                            selected={customerUpdateStamp}
+                          <DatePic
+                            value={customerUpdateStamp}
                             onChange={updateStamp}
-                            placeholderText={'Versand letzte Marke'}
+                            placeholder="Versand letzte Marke"
                           />
                         </div>
                       </div>
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Rücksendung letzte Marke</label>
                         <div className="col-sm-6">
-                          <DatePiker
-                            className="form-control"
-                            selected={customerLastStamp}
+                          <DatePic
+                            value={customerLastStamp}
                             onChange={lastStamp}
-                            placeholderText={'Rücksendung letzte Marke'}
+                            placeholder="Rücksendung letzte Marke"
                           />
                         </div>
                       </div>
                     </div>
                   </div>
-                  {/* <div className="row ">
-                    <div className="col-sm-6"> */}
                   <div className="row ">
                     <div className="col-sm-6 mt-2" style={{ padding: '0px' }}>
                       <div className="radio-check-wrap">
                         <input
                           type="checkbox"
                           onChange={emergencyPass}
-                          // checked={JSON.parse(customerDeposit.emergencyPass)}
                           checked={customerEmergencyPass}
                           name="emergencyPass"
                         />{' '}
                         <span> Notfallpass</span>
                       </div>
                     </div>
-                    {/* </div>
-                    </div> */}
 
                     <div className="col-sm-6">
                       <div className="row">
                         <label className="col-sm-4 col-form-label">Erinnerung Marke</label>
                         <div className="col-sm-6">
-                          <DatePiker
-                            className="form-control"
-                            selected={customerReminderStamp}
+                          <DatePic
+                            value={customerReminderStamp}
                             onChange={reminderStamp}
-                            placeholderText={'Erinnerung Marke'}
+                            placeholder="Erinnerung Marke"
                           />
                         </div>
                       </div>
@@ -1472,7 +1292,6 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          // checked={JSON.parse(customerBurial.termination)}
                           checked={customerBurial.termination}
                           name="termination"
                         />
@@ -1484,7 +1303,6 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          // checked={JSON.parse(customerBurial.terminationDeath)}
                           checked={customerBurial.terminationDeath}
                           name="terminationDeath"
                         />
@@ -1496,7 +1314,6 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          // checked={JSON.parse(customerBurial.notTermination)}
                           checked={customerBurial.notTermination}
                           name="notTermination"
                         />
@@ -1508,7 +1325,6 @@ const CustomerInfo = () => {
                         <input
                           type="checkbox"
                           onChange={BurialChange}
-                          // checked={JSON.parse(customerBurial.financialReasons)}
                           checked={customerBurial.financialReasons}
                           name="financialReasons"
                         />
@@ -1521,20 +1337,6 @@ const CustomerInfo = () => {
             </div>
           </div>
         </div>
-
-        {/* <div className="container-fluid mb-3 pb-3">
-          <div className="row justify-content-md-end">
-            <div className="col text-md-end btn-wrapper">
-              <button type="button" className="btn btn-cancel me-3" onClick={cancelData}>
-                Abbrechen
-              </button>
-
-              <button type="button" className="btn btn-save" onClick={saveData}>
-                Speichern
-              </button>
-            </div>
-          </div>
-        </div> */}
         <div className="text-end mt-4 mx-3 mb-3 pb-3">
           <button
             onClick={cancelData}

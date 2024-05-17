@@ -13,17 +13,12 @@ import Stack from '@mui/material/Stack'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import PrintModal from './PrintModal'
 import 'react-datepicker/dist/react-datepicker.css'
-import DatePiker from '../customer/Date'
-import warning from 'antd/es/_util/warning'
+import DatePic from '../customer/Date'
 import Select from 'react-select'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
-import { Dropdown } from 'primereact/dropdown'
 import { MultiSelect } from 'primereact/multiselect'
-import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import { isValid, format } from 'date-fns'
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const CustomerList = () => {
@@ -38,7 +33,7 @@ const CustomerList = () => {
   const [lname, setLname] = useState()
   const [phone, setPhone] = useState()
   const [title, setTitle] = useState('')
-  const [startDate, setStartDate] = useState('')
+  const [startDate, setStartDate] = useState(null)
   const [land, setLand] = useState()
   const [plz, setPlz] = useState()
   const [city, setCity] = useState()
@@ -182,7 +177,7 @@ const CustomerList = () => {
 
         return (
           <div className="dm-badge-container">
-            {sortedTags.slice(0, 6).map((tag, index) => (
+            {sortedTags.slice(0, 6)?.map((tag, index) => (
               <span
                 key={index}
                 className="dm-badge"
@@ -432,15 +427,6 @@ const CustomerList = () => {
     // const selectedCities = e.value.map((option) => option.code)
     setClientStatus(e.value)
   }
-  const handleDateChange = (e) => {
-    // let yearString = e?.getFullYear().toString()
-    // const year = parseInt(yearString.substring(0, 4), 10)
-    // if (yearString.length > 4) {
-    //   yearString = yearString.substring(0, 4)
-    // }
-    // const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
-    setStartDate(e)
-  }
 
   const saveData = async (event) => {
     const form = event.currentTarget
@@ -473,7 +459,7 @@ const CustomerList = () => {
     if (!fname || !lname) {
       return toast.warning('Füllen Sie den Datensatz')
     }
-    if (clientStatus.length === 0) {
+    if (clientStatus?.length === 0) {
       toast.warning('Es muss mindestens ein Statusfeld ausgewählt werden')
       return
     }
@@ -594,7 +580,7 @@ const CustomerList = () => {
     }
   }
 
-  const modifiedDataSource = customer_record.map((customerRecord) => {
+  const modifiedDataSource = customer_record?.map((customerRecord) => {
     const {
       customer: {
         fname,
@@ -731,7 +717,7 @@ const CustomerList = () => {
       const data = await response.json()
       const activeRecords = data.filter((record) => record.status === 'active')
 
-      if (activeRecords.length > 0) {
+      if (activeRecords?.length > 0) {
         setCustomerRecord(activeRecords)
       } else {
         getDetails()
@@ -764,14 +750,6 @@ const CustomerList = () => {
     getDetails()
     getPrintDetails()
   }, [page, itemsPerPage])
-
-  const formatDate = (value) => {
-    if (!value) return ''
-    const day = value.slice(0, 2)
-    const month = value.slice(2, 4)
-    const year = value.slice(4, 8)
-    return `${day}.${month}.${year}`
-  }
 
   return (
     <>
@@ -823,7 +801,7 @@ const CustomerList = () => {
               <div className="col-md-5 text-end">
                 <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
                   <p className="mb-0 me-3">
-                    <strong>{selectedRowKeys.length}</strong> Ausgewählte
+                    <strong>{selectedRowKeys?.length}</strong> Ausgewählte
                   </p>
                   <button className="primary-btn" style={{ border: 'none' }} onClick={handleShow}>
                     <svg
@@ -1008,12 +986,13 @@ const CustomerList = () => {
                       />
                     </div>
                     <div className="col-sm-6">
-                      <DatePiker
-                        className="form-control"
-                        selected={startDate}
-                        onChange={handleDateChange}
+                      <DatePic
+                        value={startDate}
+                        onChange={(date) => {
+                          setStartDate(date)
+                        }}
                         // onBlur={handleBlurDob}
-                        placeholderText={'Geburtsdatum'}
+                        placeholder="Geburtsdatum"
                       />
                       {/* <DatePicker
                         closeOnScroll={(e) => e.target === document}
@@ -1021,7 +1000,7 @@ const CustomerList = () => {
                         selected={startDate}
                         className="form-control"
                         onChange={(date) => setStartDate(date)}
-                        placeholderText="Geburtsdatum"
+                        placeholder="Geburtsdatum"
                       /> */}
                     </div>
                   </div>
