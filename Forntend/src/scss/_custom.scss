@@ -1882,7 +1882,11 @@ span.anticon.anticon-phone svg {
 // }
 .header-button {
   color: white !important;
+  // border: 1px solid white !important;
   border: 1px solid white !important;
+  padding: 0.5px !important;
+  padding-left: 0.5px !important;
+  padding-right: 0.5px !important;
 }
 
 input[type='search']::-webkit-search-decoration,
@@ -2168,11 +2172,12 @@ h4 {
   .ant-picker-panel-layout {
   display: none !important;
 }
-:where(.css-dev-only-do-not-override-1okl62o).ant-picker-outlined:focus, :where(.css-dev-only-do-not-override-1okl62o).ant-picker-outlined:focus-within{
+:where(.css-dev-only-do-not-override-1okl62o).ant-picker-outlined:focus,
+:where(.css-dev-only-do-not-override-1okl62o).ant-picker-outlined:focus-within {
   border-color: #005291 !important;
   outline: 0px !important;
   box-shadow: 0 0 0 0px #015291 !important;
 }
-:where(.css-dev-only-do-not-override-1okl62o).ant-space-vertical{
+:where(.css-dev-only-do-not-override-1okl62o).ant-space-vertical {
   width: 100% !important;
 }
