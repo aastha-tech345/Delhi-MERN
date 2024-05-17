@@ -8,7 +8,7 @@ exports.roleCreation = async (req, res) => {
       added_by,
       role_name,
       permission,
-    }); // Use req.body here
+    });
     const result = await roleInstance.save();
     return res.status(201).json({
       status: 201,
@@ -16,8 +16,6 @@ exports.roleCreation = async (req, res) => {
       result,
     });
   } catch (error) {
-    // Handle the error
-    console.error(error); // Log the error for debugging purposes
     res
       .status(500)
       .json({ error: "An error occurred while creating the role" });
