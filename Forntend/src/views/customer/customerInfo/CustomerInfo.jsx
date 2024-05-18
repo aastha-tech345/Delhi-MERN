@@ -38,6 +38,7 @@ const CustomerInfo = () => {
   const [updateData, setUpdateData] = useState(false)
   const [itemsPerPage, setItemsPerPage] = useState('')
   const [customerInfo, setCustomerInfo] = useState({})
+  const [InvoicInfo, setInvoicInfo] = useState([])
   let ress = localStorage.getItem('customerRecord')
   let resultt = JSON.parse(ress)
   const [orderingMaterials, setOrderingMaterials] = useState({
@@ -46,8 +47,6 @@ const CustomerInfo = () => {
     extras: '',
     newsletterSubscription: '',
   })
-
-  console.log('orderDate', customerInfo?.orderingMaterials?.newsletterDate)
 
   const [customerInfoStatu, setCustomerInfoStatu] = useState({
     dataProtection: '',
@@ -105,6 +104,7 @@ const CustomerInfo = () => {
   })
   const [dataCollection, setDataCollection] = useState('')
   // dataCollection: resultt?.customerInfoStatu?.dataCollection,
+  let isPaid = InvoicInfo?.alreadyPaid
   const [customerDelivery, setCustomerDelivery] = useState({
     fname: '',
     lname: '',
@@ -117,12 +117,12 @@ const CustomerInfo = () => {
     email: '',
     alreadyPaid: '',
   })
+  console.log('ispaid', customerDelivery?.alreadyPaid)
   const [customerStartDeposit, setCustomerStartDeposit] = useState('')
   const [customerNextBrand, setCustomerNextBrand] = useState('')
   const [customerUpdateStamp, setCustomerUpdateStamp] = useState('')
   const [customerLastStamp, setCustomerLastStamp] = useState('')
   const [customerReminderStamp, setCustomerReminderStamp] = useState('')
-  console.log('')
   // const [customerDepositeCheckbox, setCustomerDepositeCheckbox] = useState(
   //   Boolean(resultt?.customerDeposit?.deposit),
   // )
@@ -153,7 +153,7 @@ const CustomerInfo = () => {
     those: customerInfo?.those,
     created_by: customerInfo?.created_by,
   }
-
+  console.log('aastha', customerInfo)
   // const changeDate =()=>{
   //   let yearString = e.getFullYear().toString()
   //   const year = parseInt(yearString?.substring(0, 4), 10)
@@ -352,8 +352,7 @@ const CustomerInfo = () => {
     emergencyPass: customerEmergencyPass,
   }
   const DeliveryChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setCustomerDelivery({ ...customerDelivery, [name]: type === 'checkbox' ? checked : value })
+    setCustomerDelivery({ ...customerDelivery, alreadyPaid: e.target.checked })
   }
   const DeliveryChangePhone = (e) => {
     const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
@@ -389,6 +388,18 @@ const CustomerInfo = () => {
 
     setCustomerBurial(updatedState)
   }
+  const getInvoicInfo = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/invoice/get_invoice/${resultt._id}`)
+
+      const data = await response.json()
+      console.log('getInvoicInfo', data)
+      setInvoicInfo(data)
+    } catch (error) {
+      console.error('Error fetching employee data:', error)
+    }
+  }
+  console.log('InvoicInfo', InvoicInfo)
 
   const getDetails = async () => {
     try {
@@ -508,11 +519,16 @@ const CustomerInfo = () => {
     getRecordById()
     getDetails()
     getEmployeeData()
+    getInvoicInfo()
   }, [page, itemsPerPage])
 
   const cancelData = () => {
     navigate('/customerlist')
   }
+
+  useEffect(() => {
+    setCustomerDelivery((prevState) => ({ ...prevState, alreadyPaid: isPaid }))
+  }, [isPaid])
 
   useEffect(() => {
     // let newLetterDate = new Date(customerInfo?.created_at).toString()
@@ -526,7 +542,7 @@ const CustomerInfo = () => {
       ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.city,
       phone: customerInfo?.phone || customerInfo?.customer?.phone,
       mobile: customerInfo?.customerDelivery?.mobile,
-      alreadyPaid: customerInfo?.customerDelivery?.alreadyPaid,
+      alreadyPaid: isPaid,
     })
     setOrderingMaterials({
       orderNumber: customerInfo?.orderingMaterials?.orderNumber,
@@ -1003,7 +1019,7 @@ const CustomerInfo = () => {
                             <input
                               onChange={DeliveryChange}
                               name="alreadyPaid"
-                              // checked={JSON.parse(customerDelivery?.alreadyPaid)}
+                              // checked={JSON.parse(customerDelivery?.alreadyPaid || 'false')}
                               checked={customerDelivery?.alreadyPaid}
                               type="checkbox"
                             />

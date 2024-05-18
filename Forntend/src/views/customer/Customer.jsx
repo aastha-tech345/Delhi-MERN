@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { HiOutlineMail } from 'react-icons/hi'
-import { IoIosCall } from 'react-icons/io'
-import { ImLocation2 } from 'react-icons/im'
 import { useNavigate, useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => {
@@ -134,11 +131,12 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                   {status?.slice(0, 6)?.map((tag, index) => (
                     <span
                       key={index}
-                      className="dm-badge mx-2"
+                      className="dm-badge"
                       style={{
                         background: '#4EB772',
                         border: 'white',
                         padding: '5px',
+                        marginRight: '2mm',
                       }}
                     >
                       <span>{tag.name}</span>
@@ -198,11 +196,11 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                   <button className="btn btn header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
+                      width="15"
+                      height="15"
                       viewBox="0 0 18 18"
                       fill="none"
-                      style={{ marginRight: '5px', marginBottom: '4px' }}
+                      style={{ marginRight: '2px', marginBottom: '2px' }}
                     >
                       <g clipPath="url(#clip0_207_8539)">
                         <path
