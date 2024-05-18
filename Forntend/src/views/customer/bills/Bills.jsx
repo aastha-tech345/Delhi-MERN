@@ -27,7 +27,7 @@ const Bills = () => {
   const [transaction_no, setTransactionNo] = useState()
   let paidData = customerInfo?.customerDelivery?.alreadyPaid
   // console.log('paidData', paidData)
-  const [alreadyPaid, setAlreadyPaid] = useState(paidData)
+  const [alreadyPaid, setAlreadyPaid] = useState(false)
   const invoiceChange = (e) => {
     setInvoiceDate(e)
   }
@@ -139,8 +139,8 @@ const Bills = () => {
     getRecord()
     getCustomerInfo()
     getEmployeeData()
-    setAlreadyPaid(paidData)
-  }, [paidData])
+    setAlreadyPaid()
+  }, [])
 
   useEffect(() => {
     setColleague(recordData?.colleague)
@@ -152,6 +152,13 @@ const Bills = () => {
     setIncomingPayment(recordData?.incoming_payment)
     setTransactionNo(recordData?.transaction_no)
   }, [recordData])
+  useEffect(() => {
+    if (incoming_payment && incoming_payment.length !== 0) {
+      setAlreadyPaid(true)
+    } else {
+      setAlreadyPaid(false)
+    }
+  }, [incoming_payment])
 
   return (
     <div className="inner-page-wrap">
@@ -200,7 +207,7 @@ const Bills = () => {
                               onChange={(e) => {
                                 setIncomingPayment(e.target.value)
                               }}
-                              disabled={!paymentMethod}
+                              disabled={paymentMethod !== 'barzahlung'}
                             />
                           </div>
                         </div>
