@@ -135,8 +135,9 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       style={{
                         background: '#4EB772',
                         border: 'white',
-                        padding: '5px',
+                        padding: '3px',
                         marginRight: '2mm',
+                        fontSize: '13px',
                       }}
                     >
                       <span>{tag.name}</span>
@@ -200,7 +201,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       height="15"
                       viewBox="0 0 18 18"
                       fill="none"
-                      style={{ marginRight: '2px', marginBottom: '2px' }}
+                      style={{ marginRight: '2px', marginRight: '1px', marginBottom: '2px' }}
                     >
                       <g clipPath="url(#clip0_207_8539)">
                         <path
