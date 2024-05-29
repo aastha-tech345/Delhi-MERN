@@ -56,8 +56,6 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
   const formattedDate = date.toLocaleDateString('en-IN', options).replace(/\//g, '.')
 
-  // //console.log(formattedDate)
-
   const firstName =
     customerInfo?.customer?.fname?.slice(0, 1).toUpperCase() +
     customerInfo?.customer?.fname?.slice(1).toLowerCase()
@@ -65,7 +63,6 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
     customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
     customerInfo?.customer?.lname?.slice(1).toLowerCase()
 
-  console.log(customerInfo)
   let street =
     (customerInfo?.customer?.street?.length > 1
       ? customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
@@ -80,10 +77,8 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   const getRecordById = async () => {
     const response = await fetch(`${apiUrl}/customer/get_record/${resultt?._id}`)
     const updatedData = await response.json()
-    // //console.log('data', updatedData)
     setCustomerInfo(updatedData)
   }
-  // //console.log('firstcustomerInfo', customerInfo?.customer?.land)
   useEffect(() => {
     getRecordById()
   }, [updateData, updateStreet, updateLand])
@@ -94,10 +89,6 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
           <div className="container-fluid">
             <div className="row d-flex align-items-center">
               <div className="col-md-4">
-                {/* <p style={{ color: 'white', marginTop: '5px' }}>KlientInnen: {res.fname}</p>
-              <ImLocation2 style={{ color: 'white' }} />
-              <span style={{ color: 'white' }}>{res.street}</span> */}
-
                 <h3>KlientIn: {`${firstName} ${lastName}`}</h3>
 
                 <address>
@@ -123,10 +114,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                   <span>{street}</span>
                 </address>
               </div>
-              <div
-                className="col-md-8 text-md-end"
-                // style={{ color: 'white', border: '1px solid white' }}
-              >
+              <div className="col-md-8 text-md-end">
                 <div style={{ marginBottom: '8px' }}>
                   {status?.slice(0, 6)?.map((tag, index) => (
                     <span
@@ -147,53 +135,11 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
 
                 <div className="d-flex justify-content-md-end justify-content-between mt-1">
                   <button className="btn btn me-3 header-button">
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="15"
-                      viewBox="0 0 20 15"
-                      fill="#fff"
-                    >
-                      <g clipPath="url(#clip0_60_2870)">
-                        <path
-                          d="M2.5 1.875C2.15625 1.875 1.875 2.15625 1.875 2.5V3.36328L8.61328 8.89453C9.42188 9.55859 10.582 9.55859 11.3906 8.89453L18.125 3.36328V2.5C18.125 2.15625 17.8438 1.875 17.5 1.875H2.5ZM1.875 5.78906V12.5C1.875 12.8438 2.15625 13.125 2.5 13.125H17.5C17.8438 13.125 18.125 12.8438 18.125 12.5V5.78906L12.5781 10.3438C11.0781 11.5742 8.91797 11.5742 7.42188 10.3438L1.875 5.78906ZM0 2.5C0 1.12109 1.12109 0 2.5 0H17.5C18.8789 0 20 1.12109 20 2.5V12.5C20 13.8789 18.8789 15 17.5 15H2.5C1.12109 15 0 13.8789 0 12.5V2.5Z"
-                          fill="#fff"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_60_2870">
-                          <rect width="20" height="15" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg> */}
-
                     <span style={{ fontSize: '14px', marginRight: '3px', marginLeft: '3px' }}>
                       {' '}
                       {formattedDate}
                     </span>
                   </button>
-                  {/* <button className="btn btn me-4 header-button">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="15"
-                      viewBox="0 0 20 15"
-                      fill="#fff"
-                    >
-                      <g clipPath="url(#clip0_60_2870)">
-                        <path
-                          d="M2.5 1.875C2.15625 1.875 1.875 2.15625 1.875 2.5V3.36328L8.61328 8.89453C9.42188 9.55859 10.582 9.55859 11.3906 8.89453L18.125 3.36328V2.5C18.125 2.15625 17.8438 1.875 17.5 1.875H2.5ZM1.875 5.78906V12.5C1.875 12.8438 2.15625 13.125 2.5 13.125H17.5C17.8438 13.125 18.125 12.8438 18.125 12.5V5.78906L12.5781 10.3438C11.0781 11.5742 8.91797 11.5742 7.42188 10.3438L1.875 5.78906ZM0 2.5C0 1.12109 1.12109 0 2.5 0H17.5C18.8789 0 20 1.12109 20 2.5V12.5C20 13.8789 18.8789 15 17.5 15H2.5C1.12109 15 0 13.8789 0 12.5V2.5Z"
-                          fill="#fff"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_60_2870">
-                          <rect width="20" height="15" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    <span> {customerInfo?.customer?.email}</span>
-                  </button> */}
                   <button className="btn btn header-button">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +147,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
                       height="15"
                       viewBox="0 0 18 18"
                       fill="none"
-                      style={{ marginRight: '2px', marginRight: '1px', marginBottom: '2px' }}
+                      style={{ marginRight: '2px', marginRight: '1px', marginBottom: '3px' }}
                     >
                       <g clipPath="url(#clip0_207_8539)">
                         <path

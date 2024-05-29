@@ -22,9 +22,7 @@ const Document = () => {
   let lgUser = localStorage.getItem('record')
   let loginData = JSON.parse(lgUser)
   let ress = localStorage.getItem('customerRecord')
-  // //console.log(ress)
   let resultt = JSON.parse(ress)
-  // console.log('lguser', resultt?._id)
 
   const notify = (dataa) => toast(dataa)
   const [edit, setEdit] = useState(false)
@@ -143,7 +141,6 @@ const Document = () => {
     localStorage.setItem('DocumentEditDetails', recordData)
     setEdit(true)
   }
-  // console.log('asjhjdgas', document_upload.name)
   const [page, setPage] = useState(1)
   const [countPage, setCountPage] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState('')
@@ -160,28 +157,7 @@ const Document = () => {
     }
   }
 
-  const handleFileInputChange = (e) => {
-    // setDocumentUpload([...document_upload, ...e.target.files])
-    // fileInputRef.current.value = ''
-
-    // const files = Array.from(e.target.files)
-    // console.log('files', files)
-    // const pdfFiles = files.filter((file) => file.type === 'application/pdf')
-
-    // if (pdfFiles.length !== files.length) {
-    //   toast.warning('Es sind nur PDF-Dateien erlaubt.')
-    // }
-
-    // setDocumentUpload([...document_upload, ...pdfFiles])
-
-    // fileInputRef.current.value = ''
-    console.log(e.target)
-    setDocumentUpload(e.target.file)
-  }
-
   const removeDocument = (index) => {
-    // const newDocumentUpload = [...document_upload];
-    // newDocumentUpload.splice(index, 1);
     setDocumentUpload([])
   }
 
@@ -196,7 +172,6 @@ const Document = () => {
   const handleShow = () => setShow(true)
 
   const handleDelete = (documentId) => {
-    // console.log(`Deleting customer with ID: ${documentId}`)
     setDocumentId(documentId)
     setHide(true)
   }
@@ -205,9 +180,7 @@ const Document = () => {
     const url = `http://95.217.77.208:4142/${encodeURIComponent(file)}`
     // // const url = `http://localhost:4142/${encodeURIComponent(filename)}`
     window.open(url, '_blank')
-    // setView(true)
   }
-  console.log('document', document_upload?.name)
   const saveData = async (e) => {
     try {
       if (!data.document_title || !data.document_type) {
@@ -216,22 +189,16 @@ const Document = () => {
 
       e.preventDefault()
       const myForm = new FormData()
-      // for (let i = 0; i < document_upload?.length; i++) {
-      //   myForm.append('document_upload', document_upload[i])
-      // }
+
       myForm.append('document_upload', document_upload)
       myForm.append('document_title', data?.document_title)
       myForm.append('document_type', data?.document_type)
       myForm.append('customer_id', customerRecord?._id)
       myForm.append('added_by', loginData?.user?._id)
-      // myForm.append('document_upload', document_upload)
 
       const url = `${apiUrl}/document/create_document`
-      // console.log(myForm)
-      // const url = `${apiUrl}/document/create_document?page=${page}`
-      // console.log(url)
+
       const response = await postFetchUser(url, myForm)
-      // console.log('ashishdocu', response)
       notify('Dokumentdaten erfolgreich gespeichert')
       setData({
         document_title: '',
@@ -305,9 +272,7 @@ const Document = () => {
     borderColor: 'hsl(0, 0%, 80%)',
   })
 
-  // console.log('document page', documentRecord)
   useEffect(() => {
-    // setId(generateRandomId())
     getDetails()
   }, [page, itemsPerPage])
 

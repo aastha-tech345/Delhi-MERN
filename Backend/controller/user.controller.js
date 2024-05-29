@@ -474,12 +474,10 @@ exports.forgotPassword = async (req, res) => {
     }
     const emailTemplate = await Email.EmailTemplate.findOne({
       findBy: "forgot",
-      // is_deleted: "active",
     });
     console.log("link", process.env.PRODUCTION_RESET_URL);
     if (emailTemplate) {
       let mailcontent = emailTemplate.content;
-      // let mailcontent = `Click on the following link to reset your password: <a href="${process.env.PRODUCTION_RESET_URL}/forgotpassword">Reset Password</a>`;
       mailcontent = mailcontent.replace(
         "{link}",
         process.env.PRODUCTION_RESET_URL
@@ -535,7 +533,6 @@ exports.forgotPassword = async (req, res) => {
         }
       );
     }
-
     return res
       .status(200)
       .json({ status: 200, message: "Email sent successfully" });

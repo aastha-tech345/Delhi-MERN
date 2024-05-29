@@ -71,22 +71,16 @@ const CustomerInfo = () => {
     { name: 'WaR', code: '8' },
     { name: 'Recherche', code: '9' },
   ]
-  // const [those, setThose] = useState(resultt?.those)
-  // //console.log('those', resultt?.those)
+
   const [those, setThose] = useState('')
   const handleSelectChange = (selectedOption) => {
     setThose(selectedOption)
-    // //console.log(selectedOption)
   }
-  // //console.log('those', those?.value)
-  // //console.log('those', resultt?.those)
-  // const prefillDate = new Date('2000-12-31T18:30:00.000Z')
   const dateString = customerInfo?.customer?.startDate
   const date = new Date(dateString)
 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
   const formattedDate = date.toLocaleDateString('en-IN', options).replace(/\//g, '.')
-  console.log('date', formattedDate)
   const [customerContact, setCustomerContact] = useState({
     title: '',
     salution: '',
@@ -117,7 +111,6 @@ const CustomerInfo = () => {
     email: '',
     alreadyPaid: '',
   })
-  console.log('ispaid', customerDelivery?.alreadyPaid)
   const [customerStartDeposit, setCustomerStartDeposit] = useState('')
   const [customerNextBrand, setCustomerNextBrand] = useState('')
   const [customerUpdateStamp, setCustomerUpdateStamp] = useState('')
@@ -135,8 +128,6 @@ const CustomerInfo = () => {
   })
   const [getCustomerData, setGetCustomerData] = useState({})
   const [employeeData, setEmployeeData] = useState([])
-  //console.log('customerInfo?.customer?.fname', customerInfo?.customer?.fname)
-  //console.log('customerInfo?.customerContact?.fname', customerInfo?.customerContact?.fname)
   let customer = {
     fname: customerContact?.fname || customerInfo?.customer?.fname,
     lname: customerContact?.lname || customerInfo?.customer?.lname,
@@ -153,16 +144,6 @@ const CustomerInfo = () => {
     those: customerInfo?.those,
     created_by: customerInfo?.created_by,
   }
-  console.log('aastha', customerInfo)
-  // const changeDate =()=>{
-  //   let yearString = e.getFullYear().toString()
-  //   const year = parseInt(yearString?.substring(0, 4), 10)
-  //   if (yearString?.length > 4) {
-  //     yearString = yearString?.substring(0, 4)
-  //   }
-  //   const newDate = new Date(`${year}.${e?.getMonth() + 1}.${e.getDate()}`)
-  //   setOrderingMaterials(...orderingMaterials,)I
-  // }
   const matarialChange = (e) => {
     if (e instanceof Date) {
       let yearString = e?.getFullYear().toString()
@@ -181,10 +162,8 @@ const CustomerInfo = () => {
         setOrderingMaterials({ ...orderingMaterials, [name]: value })
       }
     } else {
-      //console.error('Invalid event or data provided to matarialChange.')
     }
   }
-  // //console.log('customerinfo', customerInfo)
   const Quelle = [
     { value: 'order', label: 'Auftrag (Online-Maske) ' },
     { value: 'contact form', label: 'Kontaktformular' },
@@ -393,13 +372,11 @@ const CustomerInfo = () => {
       const response = await fetch(`${apiUrl}/invoice/get_invoice/${resultt._id}`)
 
       const data = await response.json()
-      console.log('getInvoicInfo', data)
       setInvoicInfo(data)
     } catch (error) {
       console.error('Error fetching employee data:', error)
     }
   }
-  console.log('InvoicInfo', InvoicInfo)
 
   const getDetails = async () => {
     try {
@@ -416,8 +393,6 @@ const CustomerInfo = () => {
       const results = await fetch(`${apiUrl}/user/get/employeeData`)
       const data = await results.json()
       setEmployeeData(data?.data)
-      // //console.log("ashishemploye", data?.data)
-      // setGetCustomerData(data)
     } catch (error) {
       console.error('Error fetching customer record:', error)
     }
@@ -426,7 +401,6 @@ const CustomerInfo = () => {
   const getRecordById = async () => {
     try {
       const response = await axios.get(`${apiUrl}/customer/get_record/${resultt?._id}`)
-      //console.log('data', response)
       setCustomerInfo(response?.data)
     } catch (error) {
       console.log(error)
@@ -491,7 +465,6 @@ const CustomerInfo = () => {
       })
 
       let result = await response.json()
-      console.log('result', result)
       if (result.status === 400) {
         toast.warning('Bitte eine gültige Email eingeben')
       }
@@ -503,10 +476,8 @@ const CustomerInfo = () => {
         toast.success('Daten erfolgreich gespeichert')
         getDetails()
         setUpdateData(!updateData)
-        // navigate('/customerlist')
       }
     } catch (error) {
-      //console.log('Error saving data:', error)
       toast.error('Fehler beim Speichern der Daten. Bitte versuche es erneut.')
     }
   }
@@ -571,7 +542,6 @@ const CustomerInfo = () => {
       email: customerInfo?.customerContact?.email || customerInfo?.customer?.email,
       startDate: customerInfo?.customer?.startDate,
     })
-    console.log('customerInfo?.customer?.startDate', customerInfo?.customer?.startDate)
     setCustomerBills({
       billAddress: customerInfo?.customerBills?.billAddress || customerInfo?.customer?.street,
       billPlz: customerInfo?.customerBills?.billPlz || customerInfo?.customer?.plz,
@@ -603,7 +573,6 @@ const CustomerInfo = () => {
       setClientStatus(clientStatus.filter((selectedCity) => selectedCity.code !== city.code))
     }
   }
-  // //console.log('customerInfo?.customer?.status', customerInfo?.customer?.status)
   return (
     <div className="inner-page-wrap">
       <Customer getCustomerData={getCustomerData} updateData={updateData} />
