@@ -10,7 +10,6 @@ import Select from 'react-select'
 const Services = () => {
   const navigate = useNavigate()
   const [recordData, setRecordData] = useState([])
-  const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
 
   let res = localStorage.getItem('customerRecord')
@@ -25,7 +24,6 @@ const Services = () => {
     { value: 'divers', label: 'Divers' },
   ]
   const [salutionData, setSalutionData] = useState(recordData?.information?.salution)
-  console.log('recordData?.information?.salution', recordData?.information?.salution)
   const handleSalutionChange = (selectedOptionArray) => {
     setSalutionData(selectedOptionArray)
     setInformation((prevInformation) => ({
@@ -546,11 +544,8 @@ const Services = () => {
     organ,
     customer_id: resultt?._id,
   }
-  console.log('infoData', data?.information)
   const saveData = async () => {
-    // console.log('data', data)
     try {
-      // Check if at least one field is filled
       const sections = [motivation, scope]
 
       let isAnyFieldFilled = false
@@ -586,14 +581,9 @@ const Services = () => {
       }
 
       let result = await response.json()
-      // console.log('aastha', result)
       toast.success('Daten erfolgreich gespeichert')
-
-      // Reset all state variables to initial values
-      // resetStateVariables()
     } catch (error) {
       toast.error('Please Fill in all details')
-      // console.error('Error during API call:', error)
     }
   }
   const getRecord = async () => {
@@ -609,7 +599,6 @@ const Services = () => {
   useEffect(() => {
     getRecord()
   }, [])
-  // console.log('0', recordData)
   useEffect(() => {
     setMotivation({
       determination: recordData?.motivation?.determination,

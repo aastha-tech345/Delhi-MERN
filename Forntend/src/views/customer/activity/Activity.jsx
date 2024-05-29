@@ -21,8 +21,7 @@ const Activity = () => {
   let customerRecord = localStorage.getItem('customerRecord')
   let activityEditId = localStorage.getItem('activityEditId')
   let result = JSON.parse(customerRecord)
-  // let result = JSON.parse(res)
-  // console.log('result', result._id)
+
   const [color, setColor] = useState('white')
   const [color1, setColor1] = useState('white')
   const [color2, setColor2] = useState('white')
@@ -41,7 +40,6 @@ const Activity = () => {
   })
   let customer_id = result?._id
 
-  // console.log('first', getEmployeRecord())
   const selectIcon = (iconName, selectedColor, color) => {
     setIcon(iconName)
     switch (iconName) {
@@ -103,7 +101,6 @@ const Activity = () => {
         return
       }
     }
-    // console.log('total', total)
     try {
       const res = await postFetchData(`${apiUrl}/activity/create_activity`, total)
       if (res?.message === 'activity was created') {
@@ -151,7 +148,6 @@ const Activity = () => {
     }
   }, [activityEditId])
 
-  // console.log('first', activityEditId)
   const openText = () => {
     setOpenMessage(true)
     setButtonHide(false)
@@ -161,8 +157,6 @@ const Activity = () => {
     setOpenMessage(false)
     setButtonHide(true)
   }
-
-  console.log('employeeData', employeeData.message)
 
   return (
     <div className="inner-page-wrap" style={{ background: 'white' }}>
