@@ -19,11 +19,30 @@ export default function DatePicker({ onChange, value, placeholder }) {
     }
   }, [value])
 
+  // const handleInputChange = (e) => {
+  //   let inputValue = e.target?.value
+  //   let formattedValue = ''
+
+  //   inputValue = inputValue?.replace(/\D/g, '')
+
+  //   for (let i = 0; i < inputValue?.length; i++) {
+  //     if (i === 2 || i === 4) {
+  //       formattedValue += '.'
+  //     }
+  //     formattedValue += inputValue[i]
+  //   }
+
+  //   setInputValue(formattedValue)
+  // }
   const handleInputChange = (e) => {
     let inputValue = e.target?.value
     let formattedValue = ''
 
     inputValue = inputValue?.replace(/\D/g, '')
+
+    if (inputValue?.length > 8) {
+      inputValue = inputValue.slice(0, 8)
+    }
 
     for (let i = 0; i < inputValue?.length; i++) {
       if (i === 2 || i === 4) {

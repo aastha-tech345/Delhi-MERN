@@ -97,6 +97,8 @@ const CustomerList = () => {
       title: 'KLIENTINNEN',
       dataIndex: 'fname',
       width: '10%',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.fname.localeCompare(b.fname),
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
@@ -117,16 +119,25 @@ const CustomerList = () => {
       dataIndex: 'countId',
       width: '20%',
       render: (text, record, index) => text,
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.countId.localeCompare(b.countId),
     },
     {
       title: 'E-MAIL',
       dataIndex: 'email',
       width: '20%',
+      sorter: (a, b) => a?.email?.localeCompare(b.email),
     },
     {
       title: 'TELEFON',
       dataIndex: 'phone',
       width: '20%',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => {
+        const phoneA = a.phone || ''
+        const phoneB = b.phone || ''
+        return phoneA.localeCompare(phoneB)
+      },
     },
     // {
     //   title: 'STATUS',
@@ -167,17 +178,47 @@ const CustomerList = () => {
     //     </div>
     //   ),
     // },
+    // {
+    //   title: 'STATUS',
+    //   dataIndex: 'status',
+    //   width: '20%',
+    //   defaultSortOrder: 'descend',
+    //   sorter: (a, b) => a.status.localeCompare(b.status),
+    //   render: (text, record) => {
+    //     // Sort tags by code value in ascending order
+    //     const sortedTags = text.sort((a, b) => parseInt(a.code) - parseInt(b.code))
+
+    //     return (
+    //       <div className="dm-badge-container">
+    //         {sortedTags.slice(0, 6)?.map((tag, index) => (
+    //           <span
+    //             key={index}
+    //             className="dm-badge"
+    //             style={{ background: '#4EB772', border: 'white' }}
+    //           >
+    //             <span>{tag.name}</span>
+    //           </span>
+    //         ))}
+    //       </div>
+    //     )
+    //   },
+    // },
     {
       title: 'STATUS',
       dataIndex: 'status',
       width: '20%',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => {
+        const aStatusString = a.status.map((tag) => tag.name).join(' ')
+        const bStatusString = b.status.map((tag) => tag.name).join(' ')
+        return aStatusString.localeCompare(bStatusString)
+      },
       render: (text, record) => {
-        // Sort tags by code value in ascending order
-        const sortedTags = text.sort((a, b) => parseInt(a.code) - parseInt(b.code))
+        const sortedTags = [...text].sort((a, b) => parseInt(a.code) - parseInt(b.code))
 
         return (
           <div className="dm-badge-container">
-            {sortedTags.slice(0, 6)?.map((tag, index) => (
+            {sortedTags.slice(0, 6).map((tag, index) => (
               <span
                 key={index}
                 className="dm-badge"
@@ -1046,6 +1087,9 @@ const CustomerList = () => {
           columns={columns}
           dataSource={modifiedDataSource}
           pagination={false}
+          showSorterTooltip={{
+            target: 'sorter-icon',
+          }}
         />
 
         <div className="container-fluid pagination-row">

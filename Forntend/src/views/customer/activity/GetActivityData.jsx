@@ -94,9 +94,9 @@ const GetActivityData = ({ updateData, search, openText }) => {
                     <tr>
                       <th className="col-1 ">AKTION</th>
                       <th className="col-1 ">DATUM</th>
+                      <th className="col-1 ">MITARBEITERIN</th>
                       <th className="col-3">NOTIZ</th>
-                      <th className="col-3 ">MITARBEITERIN</th>
-                      <th className="col-3 ">AKTION</th>
+                      <th className="col-3">AKTION</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -139,8 +139,8 @@ const GetActivityData = ({ updateData, search, openText }) => {
                             </span>
                           </td>
                           <td>{outputDateString} </td>
-                          <td>{message}</td>
                           <td>{user}</td>
+                          <td>{message}</td>
                           <td>
                             <>
                               <button

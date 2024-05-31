@@ -2597,22 +2597,8 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '26.6 bewusst',
+      field3: '26.6 eigene Umgebung',
       field4: (
-        <div className="radio-check-wrap">
-          <input
-            type="checkbox"
-            checked={phase.consciously === 'ja'}
-            name="consciously"
-            onChange={handlePhaseChange}
-          />
-          <span style={{ color: '#FFFFFF' }}>ja</span>
-        </div>
-      ),
-    },
-    {
-      field1: '26.7 eigene Umgebung',
-      field2: (
         <div className="radio-check-wrap">
           <input
             type="checkbox"
@@ -2623,6 +2609,32 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
+      // field3: '26.6 bewusst',
+      // field4: (
+      //   <div className="radio-check-wrap">
+      //     <input
+      //       type="checkbox"
+      //       checked={phase.consciously === 'ja'}
+      //       name="consciously"
+      //       onChange={handlePhaseChange}
+      //     />
+      //     <span style={{ color: '#FFFFFF' }}>ja</span>
+      //   </div>
+      // ),
+    },
+    {
+      // field1: '26.6 eigene Umgebung',
+      // field2: (
+      //   <div className="radio-check-wrap">
+      //     <input
+      //       type="checkbox"
+      //       checked={phase.own_environment === 'ja'}
+      //       name="own_environment"
+      //       onChange={handlePhaseChange}
+      //     />
+      //     <span style={{ color: '#FFFFFF' }}>ja</span>
+      //   </div>
+      // ),
       // field3: 'anonym',
       // field4: (
       //   <div className="radio-check-wrap">
@@ -2637,7 +2649,7 @@ const Services = () => {
       // ),
     },
     {
-      field11: '26.8 letzte Lebensphase',
+      field11: '26.7 letzte Lebensphase',
 
       field22: (
         <textarea

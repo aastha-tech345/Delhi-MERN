@@ -940,7 +940,7 @@ const Attorney = () => {
                           selected={securingattorney.dob}
                           onChange={securingattorneyChange}
                           // name="dataCollection"
-                          placeholderText={'Geburtsdatum'}
+                          placeholder="Geburtsdatum"
                         />
                       </div>
                     </div>
