@@ -8,6 +8,7 @@ const documentSchema = new Schema(
     // document_upload: [],
     document_upload: Object,
     // customer_id: { type: String},
+    employee: { type: String },
     added_by: { type: mongoose.Schema.Types.ObjectId },
     customer_id: { type: mongoose.Schema.Types.ObjectId },
     is_deleted: {

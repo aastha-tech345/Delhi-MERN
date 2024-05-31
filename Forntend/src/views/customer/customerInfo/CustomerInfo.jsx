@@ -534,7 +534,7 @@ const CustomerInfo = () => {
     // setClientStatus(customerInfo?.customer?.clientStatus)
     setThose(customerInfo?.those)
     setCustomerContact({
-      title: customerInfo?.customerContact?.title,
+      title: customerInfo?.customerContact?.title || resultt?.title,
       salution: customerInfo?.customerContact?.salution,
       gender: customerInfo?.customerContact?.gender,
       fname: customerInfo?.customerContact?.fname || resultt?.fname,

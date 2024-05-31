@@ -14,11 +14,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import { RiDeleteBinLine } from 'react-icons/ri'
-import ViewModel from './ViewModel'
 import { styled } from '@mui/material/styles'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
 const Document = () => {
+  const [combinedData, setCombinedData] = useState([])
   let lgUser = localStorage.getItem('record')
   let loginData = JSON.parse(lgUser)
   let ress = localStorage.getItem('customerRecord')
@@ -26,18 +25,7 @@ const Document = () => {
 
   const notify = (dataa) => toast(dataa)
   const [edit, setEdit] = useState(false)
-  const [view, setView] = useState(false)
   const columns = [
-    {
-      title: 'DOKUMENTENTYP',
-      dataIndex: 'document_type',
-    },
-    {
-      title: 'TITEL',
-      dataIndex: 'document_title',
-      render: (text) => <a>{text}</a>,
-      width: '20%',
-    },
     {
       title: 'DATUM',
       dataIndex: 'created_at',
@@ -51,6 +39,20 @@ const Document = () => {
       width: '20%',
     },
     {
+      title: 'MITARBEITERINN',
+      dataIndex: 'employee',
+    },
+    {
+      title: 'DOKUMENTENTYP',
+      dataIndex: 'document_type',
+    },
+    {
+      title: 'TITEL',
+      dataIndex: 'document_title',
+      render: (text) => <a>{text}</a>,
+      width: '20%',
+    },
+    {
       title: 'DOKUMENTEN',
       dataIndex: 'document_upload',
       width: '50%',
@@ -58,10 +60,20 @@ const Document = () => {
         if (record.document_upload && record.document_upload.filename) {
           return record.document_upload.filename
         }
-        return null // Or you can return a default value if filename is not available
+        return null
       },
     },
-
+    {
+      title: 'DATEINAME',
+      dataIndex: 'document_title',
+      render: (_, record) => {
+        if (record.document_upload && record.document_upload.fieldname) {
+          return record.document_upload.fieldname
+        }
+        return null
+      },
+      width: '20%',
+    },
     {
       title: 'AKTION',
       dataIndex: 'action',
@@ -118,23 +130,24 @@ const Document = () => {
   ]
   const [hide, setHide] = useState(false)
   const [documentId, setDocumentId] = useState('')
-  const [selectionType, setSelectionType] = useState('checkbox')
+  const [employeeData, setEmployeeData] = useState('')
   const [show, setShow] = useState(false)
   const apiUrl = process.env.REACT_APP_API_URL
   // const [document_type, setDocumentType] = useState()
   // const [document_title, setDocumentTitle] = useState()
   let res = localStorage.getItem('customerRecord')
   let customerRecord = JSON.parse(res)
+  let user = loginData?.user?.username
   const [data, setData] = useState({
     document_title: '',
     document_type: '',
     // document_upload: '',
     customer_id: customerRecord?._id,
     added_by: loginData?.user?._id,
+    employee: loginData?.user?.username,
   })
 
   const [document_upload, setDocumentUpload] = useState(null)
-  const fileInputRef = useRef(null)
   const [documentRecord, setDocumentRecord] = useState([])
   const handleEdit = (record) => {
     let recordData = JSON.stringify(record)
@@ -178,7 +191,7 @@ const Document = () => {
   const handleShowDoc = async (record) => {
     let file = record?.document_upload?.filename
     const url = `http://95.217.77.208:4142/${encodeURIComponent(file)}`
-    // // const url = `http://localhost:4142/${encodeURIComponent(filename)}`
+    // const url = `http://localhost:4142/${encodeURIComponent(filename)}`
     window.open(url, '_blank')
   }
   const saveData = async (e) => {
@@ -195,6 +208,7 @@ const Document = () => {
       myForm.append('document_type', data?.document_type)
       myForm.append('customer_id', customerRecord?._id)
       myForm.append('added_by', loginData?.user?._id)
+      myForm.append('employee', loginData?.user?.username)
 
       const url = `${apiUrl}/document/create_document`
 
@@ -271,6 +285,16 @@ const Document = () => {
     // textAlign: 'center',
     borderColor: 'hsl(0, 0%, 80%)',
   })
+
+  useEffect(() => {
+    if (documentRecord && documentRecord.length > 0) {
+      const updatedData = documentRecord.map((item) => ({
+        ...item,
+        employee: user,
+      }))
+      setCombinedData(updatedData)
+    }
+  }, [documentRecord])
 
   useEffect(() => {
     getDetails()
@@ -628,22 +652,10 @@ const Document = () => {
                         </>
                       </span>
                     </div>
-                    {/* <div className="file-btn">Durchsuche</div> */}
                   </div>
                 </div>
               </div>
             </Modal.Body>
-            {/* <Modal.Footer className="border-top-0 p-3 pt-0 mt-3">
-              <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
-                <button className="btn btn-cancel" onClick={handleClose}>
-                  {' '}
-                  Abbrechen
-                </button>
-                <button className="btn btn-save ms-3" onClick={saveData}>
-                  Speichern
-                </button>
-              </div>
-            </Modal.Footer> */}
             <Modal.Footer>
               <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
                 <button className="btn btn-cancel" onClick={handleClose}>
@@ -662,21 +674,10 @@ const Document = () => {
       <div className="row mx-2">
         <div className="col-sm-12">
           <Table
-            dataSource={documentRecord}
+            dataSource={combinedData}
             columns={columns}
             pagination={false}
             responsive="stack"
-            // rowKey={(record) => record._id}
-            // rowSelection={{
-            //   type: 'checkbox',
-            //   onChange: (selectedRowKeys, selectedRows) => {
-            //     // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-            //   },
-            //   getCheckboxProps: (record) => ({
-            //     disabled: record.name === 'Disabled User',
-            //     name: record.name,
-            //   }),
-            // }}
           />
         </div>
         <div className="row">
