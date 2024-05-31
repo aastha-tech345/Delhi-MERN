@@ -330,8 +330,15 @@ const CustomerInfo = () => {
     reminderStamp: customerReminderStamp,
     emergencyPass: customerEmergencyPass,
   }
+  // const DeliveryChange = (e) => {
+  //   setCustomerDelivery({ ...customerDelivery, alreadyPaid: e.target.checked })
+  // }
   const DeliveryChange = (e) => {
-    setCustomerDelivery({ ...customerDelivery, alreadyPaid: e.target.checked })
+    const { name, type, value, checked } = e.target
+    setCustomerDelivery((prevState) => ({
+      ...prevState,
+      [name]: type === 'checkbox' ? checked : value,
+    }))
   }
   const DeliveryChangePhone = (e) => {
     const inputValue = e.target.value.replace(/[^\d+ ]/g, '')
