@@ -60,6 +60,7 @@ const PrintModal = ({ setPrint, getDetails }) => {
   console.log('template', customerItems)
   console.log('peirnt', printTemplate)
   //   console.log('aastha', customerItems[0]?.content)
+
   const recordContent = printTemplate
     .replace('{fname}', response?.fname)
     .replace('{email}', response?.email)

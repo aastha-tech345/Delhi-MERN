@@ -97,7 +97,7 @@ const CustomerList = () => {
       title: 'KLIENTINNEN',
       dataIndex: 'fname',
       width: '10%',
-      defaultSortOrder: 'descend',
+      defaultSortOrder: 'desc',
       sorter: (a, b) => a.fname.localeCompare(b.fname),
       render: (text, record) => (
         <Link
@@ -119,20 +119,21 @@ const CustomerList = () => {
       dataIndex: 'countId',
       width: '20%',
       render: (text, record, index) => text,
-      defaultSortOrder: 'descend',
+      defaultSortOrder: 'desc',
       sorter: (a, b) => a.countId.localeCompare(b.countId),
     },
     {
       title: 'E-MAIL',
       dataIndex: 'email',
       width: '20%',
+      defaultSortOrder: 'desc',
       sorter: (a, b) => a?.email?.localeCompare(b.email),
     },
     {
       title: 'TELEFON',
       dataIndex: 'phone',
       width: '20%',
-      defaultSortOrder: 'descend',
+      defaultSortOrder: 'desc',
       sorter: (a, b) => {
         const phoneA = a.phone || ''
         const phoneB = b.phone || ''
@@ -207,7 +208,7 @@ const CustomerList = () => {
       title: 'STATUS',
       dataIndex: 'status',
       width: '20%',
-      defaultSortOrder: 'descend',
+      defaultSortOrder: 'desc',
       sorter: (a, b) => {
         const aStatusString = a.status.map((tag) => tag.name).join(' ')
         const bStatusString = b.status.map((tag) => tag.name).join(' ')
@@ -465,7 +466,6 @@ const CustomerList = () => {
     }
   }
   const handleChangeStatus = (e) => {
-    // const selectedCities = e.value.map((option) => option.code)
     setClientStatus(e.value)
   }
 
@@ -1091,7 +1091,6 @@ const CustomerList = () => {
             target: 'sorter-icon',
           }}
         />
-
         <div className="container-fluid pagination-row">
           <div className="row">
             <div className="col-md-10 ps-md-0 text-center text-md-start">
@@ -1173,14 +1172,9 @@ const CustomerList = () => {
                 fill="#C20F0F"
               />
             </svg>
-
             <h4>Sind Sie sicher?</h4>
           </Modal.Title>
-          <p>
-            {/* Dieser Vorgang kann nichtF r3ckgBngig gemacht werden */}
-            {/* Dieser Vorgang kann nicht r3ckgBngig gemacht werden */}
-            Dieser Vorgang kann nicht rückgängig gemacht werden.
-          </p>
+          <p>Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
           <div className="text-center">
             <button className="btn modal-btn delete-btn me-3" onClick={handleDeleteConfirm}>
               Löschen
