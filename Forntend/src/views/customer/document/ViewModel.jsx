@@ -1,17 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { putFetch } from 'src/Api'
-import { ToastContainer, toast } from 'react-toastify'
+import React from 'react'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Loader from 'src/components/loader/Loader'
 import Form from 'react-bootstrap/Form'
 import PropTypes from 'prop-types'
-import Select from 'react-select'
 import { FaEye } from 'react-icons/fa'
 
-const ViewModel = ({ setView, getDetails }) => {
+const ViewModel = ({ setView }) => {
   let res = localStorage.getItem('DocumentEditDetails')
   let response = JSON.parse(res)
-  console.log('res', response)
 
   const closeModel = () => {
     setView(false)
@@ -22,7 +18,6 @@ const ViewModel = ({ setView, getDetails }) => {
     // const url = `http://localhost:4142/${encodeURIComponent(filename)}`
     window.open(url, '_blank')
   }
-  // console.log('document', response?.document_upload?.filename)
   return (
     <div
       className="modal"

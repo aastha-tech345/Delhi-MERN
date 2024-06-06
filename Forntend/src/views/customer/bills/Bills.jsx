@@ -10,8 +10,6 @@ const Bills = () => {
   const [recordData, setRecordData] = useState([])
   let res = localStorage.getItem('customerRecord')
   let resultt = JSON.parse(res)
-  // console.log('first', resultt?._id)
-  // console.log('invoice', recordData?.colleague)
   const navigate = useNavigate()
   const apiUrl = process.env.REACT_APP_API_URL
   const [employeeData, setEmployeeData] = useState([])
@@ -21,13 +19,11 @@ const Bills = () => {
   const [deliveryDate, setDeliveryDate] = useState(recordData?.deliveryDate)
   const [product, setProduct] = useState(recordData?.product)
   const [incoming_payment, setIncomingPayment] = useState('')
-  const [paymentSelected, setPaymentSelected] = useState('')
   const [paymentMethod, setPaymentMethod] = useState(recordData?.paymentMethod)
   const [invoiceAmount, setInvoiceAmount] = useState(recordData?.invoiceAmount)
   const [transaction_no, setTransactionNo] = useState()
   let paidData = customerInfo?.customerDelivery?.alreadyPaid
-  // console.log('paidData', paidData)
-  const [alreadyPaid, setAlreadyPaid] = useState(false)
+  const [alreadyPaid, setAlreadyPaid] = useState(paidData)
   const invoiceChange = (e) => {
     setInvoiceDate(e)
   }
@@ -46,7 +42,6 @@ const Bills = () => {
 
   const handlePaymentChange = (selectedOption) => {
     setPaymentMethod(selectedOption?.value || '')
-    // setPaymentSelected(true)
   }
 
   const saveData = async () => {
@@ -72,15 +67,14 @@ const Bills = () => {
         },
         body: JSON.stringify(data),
       })
-
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
-
+      const responseData = await response.json()
+      window.localStorage.setItem('alradyPaid', responseData.data.alreadyPaid)
       toast.success('Rechnungsdaten erfolgreich gespeichert')
     } catch (error) {
       toast.error('Bitte füllen Sie alle Angaben aus')
-      // console.error('Error during API call:', error)
     }
   }
 
@@ -156,9 +150,9 @@ const Bills = () => {
     if (incoming_payment && incoming_payment.length !== 0) {
       setAlreadyPaid(true)
     } else {
-      setAlreadyPaid(false)
+      setAlreadyPaid(paidData === true)
     }
-  }, [incoming_payment])
+  }, [incoming_payment, paidData])
 
   return (
     <div className="inner-page-wrap">

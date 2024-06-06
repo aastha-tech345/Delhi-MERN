@@ -78,7 +78,7 @@ const customerInfo = {
   phone: { type: String },
   email: { type: String },
   plz: { type: String, default: " " },
-  city: { type: String, default: " " },
+  ort: { type: String, default: " " },
   street: { type: String, default: " " },
   land: { type: String, default: " " },
   startDate: { type: String },

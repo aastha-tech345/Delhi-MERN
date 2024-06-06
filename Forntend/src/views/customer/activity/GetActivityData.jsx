@@ -92,10 +92,10 @@ const GetActivityData = ({ updateData, search, openText }) => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th className="col-1 ">AKTION</th>
+                      <th className="col-1 "></th>
                       <th className="col-1 ">DATUM</th>
                       <th className="col-1 ">MITARBEITERIN</th>
-                      <th className="col-3">NOTIZ</th>
+                      <th className="col-5">NOTIZ</th>
                       <th className="col-3">AKTION</th>
                     </tr>
                   </thead>

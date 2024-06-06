@@ -65,18 +65,19 @@ exports.getInvoiceDataUpdate = async (req, res) => {
 
     let result;
     if (existingAttorney) {
-      result = await InvoiceInfomation.Invoice.updateOne(
+      // Use findOneAndUpdate to get the updated document
+      result = await InvoiceInfomation.Invoice.findOneAndUpdate(
         { customer_id: req.params.id },
-        { $set: req.body }
+        { $set: req.body },
+        { new: true } // This option returns the modified document
       );
     } else {
       result = await InvoiceInfomation.Invoice.create(req.body);
     }
-
     return res.status(201).json({
       status: 201,
       message: existingAttorney ? "Update successful" : "Created successfully",
-      result,
+      data: result,
     });
   } catch (error) {
     console.error("Error updating/creating attorney data:", error);
