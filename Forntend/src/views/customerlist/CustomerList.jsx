@@ -36,7 +36,7 @@ const CustomerList = () => {
   const [startDate, setStartDate] = useState(null)
   const [land, setLand] = useState()
   const [plz, setPlz] = useState()
-  const [city, setCity] = useState()
+  const [ort, setOrt] = useState()
   const [street, setStreet] = useState()
   const [status, setStatus] = useState(null)
   const [clientStatus, setClientStatus] = useState([])
@@ -358,25 +358,43 @@ const CustomerList = () => {
           </button>
         </>
       ),
-      // hidden: 'true',
     },
   ]
   let a = localStorage.getItem('tabId') || 'customer_info'
-  // console.log('aastha', a)
   const handleChangeStreet = (event) => {
     setStreet(event.target.value)
   }
 
+  // const handleBlur = () => {
+  //   let formattedStreet = street.trim()
+  //   const endsWithNumber = /\d$/.test(formattedStreet)
+
+  //   if (endsWithNumber) {
+  //     const [streetName, houseNumber] = formattedStreet.split(/(\d+)$/)
+  //     formattedStreet = `${streetName.trim()} ${houseNumber.trim()}`
+  //   }
+
+  //   setStreet(formattedStreet)
+  // }
   const handleBlur = () => {
     let formattedStreet = street.trim()
     const endsWithNumber = /\d$/.test(formattedStreet)
 
     if (endsWithNumber) {
       const [streetName, houseNumber] = formattedStreet.split(/(\d+)$/)
-      formattedStreet = `${streetName.trim()} ${houseNumber.trim()}`
+      formattedStreet = `${capitalizeStreetName(streetName.trim())} ${houseNumber.trim()}`
+    } else {
+      formattedStreet = capitalizeStreetName(formattedStreet)
     }
 
     setStreet(formattedStreet)
+  }
+
+  const capitalizeStreetName = (streetName) => {
+    return streetName
+      .split(/[\s-]+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
   }
 
   const editRecord = (record) => {
@@ -483,7 +501,7 @@ const CustomerList = () => {
         lname,
         street,
         title,
-        city,
+        ort,
         phone,
         startDate,
         plz,
@@ -599,7 +617,7 @@ const CustomerList = () => {
     setStreet('')
     setStatus('')
     setPhone('')
-    setCity('')
+    setOrt('')
     setStartDate('')
     setClientStatus('')
     setSalutionData('')
@@ -637,7 +655,7 @@ const CustomerList = () => {
         status,
         street,
         salution,
-        city,
+        ort,
       },
       _id,
       countId,
@@ -676,7 +694,7 @@ const CustomerList = () => {
       status,
       street,
       salution,
-      city,
+      ort,
       alreadyPaid,
       orderingMaterials,
       customerInfoStatu,
@@ -997,13 +1015,13 @@ const CustomerList = () => {
                     <div className="col-sm-6">
                       <input
                         type="text"
-                        value={city}
+                        value={ort}
                         onChange={(e) => {
                           const inputValue = e.target.value.replace(
                             /[^a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
                             '',
                           ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
-                          setCity(inputValue)
+                          setOrt(inputValue)
                         }}
                         placeholder="Ort"
                         className="form-control"

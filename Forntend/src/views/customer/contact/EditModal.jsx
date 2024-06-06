@@ -2,11 +2,8 @@ import React, { useState } from 'react'
 import { putFetchData } from 'src/Api'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Loader from 'src/components/loader/Loader'
 import Form from 'react-bootstrap/Form'
 import PropTypes from 'prop-types'
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
 import Select from 'react-select'
 
 const EditModal = ({ setEdit, getDetails }) => {

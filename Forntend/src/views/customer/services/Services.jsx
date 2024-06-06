@@ -1142,7 +1142,7 @@ const Services = () => {
           <span style={{ color: '#FFFFFF' }}>ja</span>
         </div>
       ),
-      field3: '6.2 bewusstseinstrübende Nebenwirkung',
+      field3: '6.2 lebensverkürzende Nebenwirkung',
       field4: (
         <div className="radio-check-wrap">
           <input

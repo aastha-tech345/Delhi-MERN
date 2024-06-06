@@ -79,8 +79,6 @@ const EditModal = ({ setEdit, getDetails }) => {
     // fileInputRef.current.value = ''
   }
 
-  const notify = (dataa) => toast(dataa)
-
   const close = () => {
     setEdit(false)
   }
@@ -142,11 +140,6 @@ const EditModal = ({ setEdit, getDetails }) => {
     } catch (error) {
       console.error(error)
     }
-  }
-  const cancelData = () => {
-    console.log('ash')
-    setDocumentUpload([])
-    setRemovedFile(response?.document_upload)
   }
   const options = [
     { value: 'Living will', label: 'Patientenverfügung' },
@@ -251,7 +244,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                             style={{
                               paddingTop: '5px',
                               paddingLeft: '10px',
-                              cursor: 'pointer',
+                              // cursor: 'pointer',
                             }}
                           >
                             Datei-Upload

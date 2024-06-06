@@ -40,6 +40,8 @@ const CustomerInfo = () => {
   const [customerInfo, setCustomerInfo] = useState({})
   const [InvoicInfo, setInvoicInfo] = useState([])
   let ress = localStorage.getItem('customerRecord')
+  let paid = localStorage.getItem('alradyPaid')
+  let alreadyPaid = JSON.parse(paid)
   let resultt = JSON.parse(ress)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: '',
@@ -184,19 +186,29 @@ const CustomerInfo = () => {
     { value: 'frau', label: 'Frau' },
     { value: 'divers', label: 'Divers' },
   ]
-  const handleBlur = (event) => {
-    const { name, value } = event.target
-    let formattedAddress = value.trim()
-    const endsWithNumber = /\d$/.test(value)
+  const handleBlur = () => {
+    let street = customerDelivery?.address
+    let formattedStreet = street.trim()
+    const endsWithNumber = /\d$/.test(formattedStreet)
 
     if (endsWithNumber) {
-      formattedAddress = value.replace(/(\D)(\d)/, '$1 $2')
+      const [streetName, houseNumber] = formattedStreet.split(/(\d+)$/)
+      formattedStreet = `${capitalizeStreetName(streetName.trim())} ${houseNumber.trim()}`
+    } else {
+      formattedStreet = capitalizeStreetName(formattedStreet)
     }
 
     setCustomerDelivery({
       ...customerDelivery,
-      [name]: formattedAddress,
+      address: formattedStreet,
     })
+  }
+
+  const capitalizeStreetName = (streetName) => {
+    return streetName
+      .split(/[\s-]+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
   }
 
   const handleBlurBill = (event) => {
@@ -504,9 +516,9 @@ const CustomerInfo = () => {
     navigate('/customerlist')
   }
 
-  useEffect(() => {
-    setCustomerDelivery((prevState) => ({ ...prevState, alreadyPaid: isPaid }))
-  }, [isPaid])
+  // useEffect(() => {
+  //   setCustomerDelivery((prevState) => ({ ...prevState, alreadyPaid: isPaid }))
+  // }, [isPaid])
 
   useEffect(() => {
     // let newLetterDate = new Date(customerInfo?.created_at).toString()
@@ -520,7 +532,8 @@ const CustomerInfo = () => {
       ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.city,
       phone: customerInfo?.phone || customerInfo?.customer?.phone,
       mobile: customerInfo?.customerDelivery?.mobile,
-      alreadyPaid: isPaid,
+      // alreadyPaid: isPaid,
+      alreadyPaid: customerInfo?.customerDelivery?.alreadyPaid,
     })
     setOrderingMaterials({
       orderNumber: customerInfo?.orderingMaterials?.orderNumber,
@@ -996,7 +1009,7 @@ const CustomerInfo = () => {
                               onChange={DeliveryChange}
                               name="alreadyPaid"
                               // checked={JSON.parse(customerDelivery?.alreadyPaid || 'false')}
-                              checked={customerDelivery?.alreadyPaid}
+                              checked={customerDelivery?.alreadyPaid || alreadyPaid}
                               type="checkbox"
                             />
                             <span>ja</span>

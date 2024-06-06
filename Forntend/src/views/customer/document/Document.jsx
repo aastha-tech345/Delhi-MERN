@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { MdAdd, MdOutlineEdit } from 'react-icons/md'
-import { Divider, Table } from 'antd'
+import { Table } from 'antd'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import Select from 'react-select'
@@ -15,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { verifyDelPer, verifyEditPer } from 'src/components/verifyPermission'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { styled } from '@mui/material/styles'
+import { IoSearchSharp } from 'react-icons/io5'
+import { RxDividerVertical } from 'react-icons/rx'
 
 const Document = () => {
   const [combinedData, setCombinedData] = useState([])
@@ -52,23 +54,23 @@ const Document = () => {
       render: (text) => <a>{text}</a>,
       width: '20%',
     },
-    {
-      title: 'DOKUMENTEN',
-      dataIndex: 'document_upload',
-      width: '50%',
-      render: (_, record) => {
-        if (record.document_upload && record.document_upload.filename) {
-          return record.document_upload.filename
-        }
-        return null
-      },
-    },
+    // {
+    //   title: 'DOKUMENTE',
+    //   dataIndex: 'document_upload',
+    //   width: '50%',
+    //   render: (_, record) => {
+    //     if (record.document_upload && record.document_upload.filename) {
+    //       return record.document_upload.filename
+    //     }
+    //     return null
+    //   },
+    // },
     {
       title: 'DATEINAME',
       dataIndex: 'document_title',
       render: (_, record) => {
-        if (record.document_upload && record.document_upload.fieldname) {
-          return record.document_upload.fieldname
+        if (record.document_upload && record.document_upload.originalname) {
+          return record.document_upload.originalname
         }
         return null
       },
@@ -504,17 +506,18 @@ const Document = () => {
                         <div className="filename-field">
                           <Container>
                             {/* <CloudUploadIcon /> */}
+
                             <label
                               htmlFor="file-upload"
                               style={{
-                                width: '85.99%',
+                                width: '100%',
                               }}
                             >
                               <p
                                 style={{
                                   paddingTop: '5px',
                                   paddingLeft: '10px',
-                                  cursor: 'pointer',
+                                  // cursor: 'pointer',
                                 }}
                               >
                                 Datei-Upload
@@ -530,52 +533,32 @@ const Document = () => {
                               }}
                               // disabled={!data.document_type || data.document_type.length === 0}
                             />
-                            {/* <Divider /> */}
-                            <svg
-                              style={{
-                                // marginLeft: '57%',
-                                borderLeft: '1px solid hsl(0, 0%, 80%)',
-                                height: '100%',
-                                paddingLeft: '15px',
-                              }}
-                              width="34"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <g clipPath="url(#clip0_384_3149)">
-                                <path
-                                  d="M10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16Z"
-                                  stroke="#005291"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                                <path
-                                  d="M20 20L15 15"
-                                  stroke="#005291"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_384_3149">
-                                  <rect
-                                    width="24"
-                                    height="24"
-                                    fill="white"
-                                    style={{ marginLeft: '20px' }}
-                                  />
-                                </clipPath>
-                              </defs>
-                            </svg>
+
                             {/* <div className="file-input-wrap">
                               <div className="filename-field">
                                 <span>Datei-Upload</span>
                               </div>
                             </div> */}
+                            {/* <RxDividerVertical
+                              style={{
+                                position: 'absolute',
+                                top: '-6px',
+                                left: '80%',
+                                fontSize: '47px',
+                                color: 'lightgray',
+                                width: '10px',
+                              }}
+                            /> */}
+
+                            <IoSearchSharp
+                              style={{
+                                position: 'absolute',
+                                top: '8px',
+                                left: '90%',
+                                color: '#005291',
+                                fontSize: '18px',
+                              }}
+                            />
                           </Container>
                         </div>
                       </div>

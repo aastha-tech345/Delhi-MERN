@@ -47,7 +47,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   useEffect(() => {
     handleTabClick()
   }, [activeTab])
-
+  console.log('customerInfo', customerInfo)
   let customer = localStorage.getItem('customerRecord')
   let res = JSON.parse(customer)
   const dateString = customerInfo?.customer?.startDate
@@ -64,13 +64,9 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
     customerInfo?.customer?.lname?.slice(1).toLowerCase()
 
   let street =
-    (customerInfo?.customer?.street?.length > 1
-      ? customerInfo?.customer?.street?.slice(0, 1).toUpperCase() +
-        customerInfo?.customer?.street?.slice(1).toLowerCase() +
-        ',  '
-      : '') +
+    (customerInfo?.customer?.street?.length > 1 ? customerInfo?.customer?.street + ',  ' : '') +
     (customerInfo?.customer?.street
-      ? customerInfo?.customer?.plz + '  ' + customerInfo?.customerDelivery?.ort
+      ? customerInfo?.customer?.plz + '  ' + customerInfo?.customer?.ort
       : '')
 
   let status = customerInfo?.customer?.status

@@ -30,7 +30,7 @@ exports.createCustomer = async (req, res) => {
         });
       }
     }
-
+         
     // Extract email from request body
     const email = req.body.customer.email;
 
