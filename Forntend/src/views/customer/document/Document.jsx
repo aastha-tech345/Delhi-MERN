@@ -36,7 +36,7 @@ const Document = () => {
         const day = date.getDate().toString().padStart(2, '0')
         const month = (date.getMonth() + 1).toString().padStart(2, '0')
         const year = date.getFullYear()
-        return <a>{`${day}.${month}.${year}`}</a>
+        return <a style={{ cursor: 'default' }}>{`${day}.${month}.${year}`}</a>
       },
       width: '20%',
     },
@@ -51,7 +51,7 @@ const Document = () => {
     {
       title: 'TITEL',
       dataIndex: 'document_title',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a style={{ cursor: 'default' }}>{text}</a>,
       width: '20%',
     },
     // {

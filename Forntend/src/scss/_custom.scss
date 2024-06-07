@@ -645,7 +645,7 @@ span.anticon.anticon-phone svg {
       color: $primary-color;
       top: 8px;
       right: 8px;
-      cursor: pointer;
+      // //cursor: pointer;
       font-size: 20px;
       stroke-width: 1px;
     }
@@ -758,7 +758,7 @@ span.anticon.anticon-phone svg {
   align-items: center;
 
   .customBadge {
-    cursor: pointer;
+    //cursor: pointer;
 
     .ant-badge-count {
       background-color: $primary-color;
@@ -767,7 +767,7 @@ span.anticon.anticon-phone svg {
       min-width: 16px;
       height: 16px;
       line-height: 18px;
-      cursor: pointer;
+      //cursor: pointer;
     }
   }
 
@@ -874,7 +874,7 @@ span.anticon.anticon-phone svg {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      cursor: pointer;
+      //cursor: pointer;
       z-index: 1;
     }
 
@@ -884,7 +884,7 @@ span.anticon.anticon-phone svg {
       position: relative;
       margin: 0 auto;
       border-radius: 100%;
-      cursor: pointer;
+      //cursor: pointer;
 
       img {
         width: 100%;
@@ -934,7 +934,7 @@ span.anticon.anticon-phone svg {
         z-index: 2;
         width: 100%;
         height: 100%;
-        cursor: pointer;
+        //cursor: pointer;
 
         &:checked {
           & + label {
@@ -1468,7 +1468,7 @@ span.anticon.anticon-phone svg {
         z-index: 2;
         width: 100%;
         height: 100%;
-        cursor: pointer;
+        //cursor: pointer;
 
         &:checked {
           & + span {
@@ -1814,7 +1814,7 @@ span.anticon.anticon-phone svg {
         text-overflow: ellipsis;
       }
       svg {
-        cursor: pointer;
+        //cursor: pointer;
         height: 20px;
       }
     }
