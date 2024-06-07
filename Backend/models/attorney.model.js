@@ -33,7 +33,7 @@ const careProvisionSchema = {
 const securingattorneySchema = {
   fname: { type: String },
   lname: { type: String },
-  dob: { type: String },
+  dob: { type: String, default: "" },
   address: { type: String },
   ort: { type: String },
   plz: { type: String },

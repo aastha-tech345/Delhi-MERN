@@ -2,19 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Customer from '../Customer'
-import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
-import DatePiker from '../Date'
-import { Jodit } from 'jodit-react'
+import DatePic from '../Date'
 import 'react-phone-input-2/lib/style.css'
-import PhoneInput from 'react-phone-input-2'
+import DatePicker from '../Date'
 
 const Attorney = () => {
+  const [date, setDate] = useState()
   const [recordData, setRecordData] = useState([])
   const navigate = useNavigate()
   const maxFields = 10
   const initialFields = 4
-  const notify = (dataa) => toast(dataa)
   const apiUrl = process.env.REACT_APP_API_URL
   const cancelData = () => {
     localStorage.removeItem('tabId')
@@ -48,12 +46,12 @@ const Attorney = () => {
   })
 
   const [securingattorney, setSecuringattorney] = useState({
-    fname: recordData?.securingattorney?.fname || '',
-    lname: recordData?.securingattorney?.lname || '',
-    address: recordData?.securingattorney?.address || '',
-    dob: recordData?.securingattorney?.dob || '',
-    plz: recordData?.securingattorney?.plz || '',
-    ort: recordData?.securingattorney?.ort || '',
+    fname: recordData?.securingattorney?.fname,
+    lname: recordData?.securingattorney?.lname,
+    address: recordData?.securingattorney?.address,
+    dob: recordData?.securingattorney?.dob ? new Date(recordData.securingattorney.dob) : null,
+    plz: recordData?.securingattorney?.plz,
+    ort: recordData?.securingattorney?.ort,
   })
 
   // const healthCareChange = (e, index, fieldName) => {
@@ -126,20 +124,6 @@ const Attorney = () => {
   //     return { ...prevHealthCare, healthCareData: updatedHealthCareData }
   //   })
   // }
-
-  const formatPhoneNumber = (value) => {
-    const numericValue = value.replace(/[^\d\s]/g, '')
-    let formattedNumber = ''
-
-    for (let i = 0; i < numericValue.length; i++) {
-      if (i > 0 && i % 30 === 0) {
-        formattedNumber += ' / '
-      }
-      formattedNumber += numericValue[i]
-    }
-
-    return formattedNumber
-  }
 
   const [healthCare, setHealthCare] = useState({
     healthCareData: Array.from({ length: initialFields }, () => ({
@@ -234,21 +218,9 @@ const Attorney = () => {
 
     setCareProvision({ ...careProvision, [name]: value })
   }
-  // const securingattorneyChange = (e) => {
-  //   const { name, value, type, checked } = e.target
-
-  //   setSecuringattorney({ ...securingattorney, [name]: value })
-  // }
   const securingattorneyChange = (e) => {
     if (e instanceof Date) {
-      let yearString = e.getFullYear().toString()
-      const year = parseInt(yearString.substring(0, 4), 10)
-      if (yearString.length > 4) {
-        yearString = yearString.substring(0, 4)
-      }
-      const newDate = new Date(`${year}.${e.getMonth() + 1}.${e.getDate()}`)
-
-      setSecuringattorney({ ...securingattorney, dob: newDate })
+      setSecuringattorney({ ...securingattorney, dob: e })
     } else if (e.target) {
       const { name, value, type, checked } = e.target
 
@@ -261,7 +233,7 @@ const Attorney = () => {
     } else if (e.value !== undefined) {
       setSecuringattorney({ ...securingattorney, salution: e.value })
     } else {
-      console.error('Invalid event or data provided to ContactChange.')
+      console.error('Invalid event or data provided to securingattorneyChange.')
     }
   }
 
@@ -289,62 +261,6 @@ const Attorney = () => {
     securingattorney,
     customer_id: resultt?._id,
   }
-  // const saveData = async () => {
-  //   const healthCareData = data.healthCare.healthCareData
-
-  //   // Phone and mobile number validation
-  //   const phoneRegex = '000'
-  //   for (const record of healthCareData) {
-  //     if (record.healthCare_phone && record.healthCare_phone.startsWith(phoneRegex)) {
-  //       return toast.warning('Ungültige Telefonnummer')
-  //     }
-  //     if (record.healthCare_mobile && record.healthCare_mobile.startsWith(phoneRegex)) {
-  //       return toast.warning('Ungültige Mobilnummer')
-  //     }
-  //   }
-  //   let currentDate = new Date()
-  //   if (securingattorney?.dob > currentDate) {
-  //     return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
-  //   }
-  //   if (securingattorney && securingattorney?.dob && securingattorney?.dob?.getFullYear() < 1900) {
-  //     return toast.warning('Das Startdatum darf nicht vor 1900 liegen');
-  //   }
-
-  //   try {
-  //     let url
-  //     let method
-
-  //     if (resultt) {
-  //       url = `${apiUrl}/attorney/get_attorney/${resultt._id}`
-  //       method = 'PUT'
-  //     } else {
-  //       url = `${apiUrl}/attorney`
-  //       method = 'POST'
-  //     }
-
-  //     let response = await fetch(url, {
-  //       method: method,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     })
-
-  //     let result = await response.json()
-  //     // console.log(result)
-  //     if (result.status === 201) {
-  //       toast.success('Daten erfolgreich gespeichert')
-  //       // resetStateVariables()
-  //     } else {
-  //       toast.error(
-  //         'Fehler beim Speichern der Daten. Weitere Informationen finden Sie auf der Konsole.',
-  //       )
-  //     }
-  //   } catch (error) {
-  //     // console.error('Error during API call:', error)
-  //     toast.error('Error saving data. Please try again.')
-  //   }
-  // }
   const saveData = async () => {
     const healthCareData = data.healthCare.healthCareData
 
@@ -424,44 +340,6 @@ const Attorney = () => {
       console.error('Error fetching customer record:', error)
     }
   }
-  // console.log('recorddata', recordData)
-  // const resetStateVariables = () => {
-  //   setHealthCare(() => ({
-  //     healthCareData: Array.from({ length: initialFields + 1 }, () => ({
-  //       healthCareMasterData: false,
-  //       healthCare_fname: '',
-  //       healthCare_lname: '',
-  //       healthCare_address: '',
-  //       healthCare_phone: '',
-  //       healthCare_mobile: '',
-  //     })),
-  //   }))
-
-  //   setPowerOfAttorney(() => ({
-  //     powerOfAttorneyData: Array.from({ length: initialFields + 1 }, () => ({
-  //       AttorneyMasterData: false,
-  //       adoptDataFromHealthcare: false,
-  //       powerOfAttorney_fname: '',
-  //       powerOfAttorney_lname: '',
-  //       powerOfAttorney_address: '',
-  //       powerOfAttorney_phone: '',
-  //       powerOfAttorney_mobile: '',
-  //     })),
-  //   }))
-
-  //   setCareProvision(() => ({
-  //     care_association: '',
-  //   }))
-
-  //   setSecuringattorney({
-  //     fname: '',
-  //     lname: '',
-  //     address: '',
-  //     plz: '',
-  //     ort: '',
-  //     dob: '',
-  //   })
-  // }
   const toggleAdoptDataFromHealthcare = () => {
     setPowerOfAttorney((prevState) => ({
       ...prevState,
@@ -548,7 +426,6 @@ const Attorney = () => {
   }, [recordData, initialFields])
 
   useEffect(() => {
-    // Add fields on component mount
     addHealthCareField()
     getRecord()
     addPowerOfAttorneyField()
@@ -648,15 +525,6 @@ const Attorney = () => {
                               <div className=" row">
                                 <div className="col-sm-12">
                                   <input
-                                    // isValid={(value, country) => {
-                                    //   if (value.match(/000/)) {
-                                    //     return 'Invalid phone'
-                                    //   } else if (value.match(/000/)) {
-                                    //     return false
-                                    //   } else {
-                                    //     return true
-                                    //   }
-                                    // }}
                                     onChange={(e) => healthCareChange(e, index, 'healthCare_phone')}
                                     value={field.healthCare_phone}
                                     name="healthCare_phone"
@@ -673,15 +541,6 @@ const Attorney = () => {
                               <div className=" row">
                                 <div className="col-sm-12">
                                   <input
-                                    // isValid={(value, country) => {
-                                    //   if (value.match(/000/)) {
-                                    //     return 'Invalid mobile'
-                                    //   } else if (value.match(/000/)) {
-                                    //     return false
-                                    //   } else {
-                                    //     return true
-                                    //   }
-                                    // }}
                                     onChange={(e) =>
                                       healthCareChange(e, index, 'healthCare_mobile')
                                     }
@@ -714,14 +573,6 @@ const Attorney = () => {
                     <div className="col-sm-1 radio-check-wrap mt-2">
                       <input
                         type="checkbox"
-                        // onChange={powerOfAttorneyChange}
-                        // onChange={() =>
-                        //   setPowerOfAttorney((prevPowerOfAttorney) => ({
-                        //     ...prevPowerOfAttorney,
-                        //     adoptDataFromHealthcare: !prevPowerOfAttorney.adoptDataFromHealthcare,
-                        //     powerOfAttorneyData: [...prevPowerOfAttorney.powerOfAttorneyData],
-                        //   }))
-                        // }
                         onChange={toggleAdoptDataFromHealthcare}
                         checked={powerOfAttorney.adoptDataFromHealthcare}
                         name="adoptDataFromHealthcare"
@@ -836,20 +687,7 @@ const Attorney = () => {
             <div className="row">
               <div className="col-sm-12">
                 <h3 style={{ color: '#244D92' }}>Betreuungsverfügung</h3>
-                {/* <div className="row">
-                  <label htmlFor="CareProvisionMasterData" className="col-sm-3 col-form-label fs-6">
-                    Eintrag der Stammdaten
-                  </label>
-                  <div className="col-sm-9 radio-check-wrap mt-2">
-                    <input
-                      type="checkbox"
-                      onChange={careProvisionChange}
-                      checked={careProvision.CareProvisionMasterData}
-                      name="CareProvisionMasterData"
-                    />
-                    <span></span>
-                  </div>
-                </div> */}
+
                 <div className="row">
                   <label className="col-sm-2 col-form-label">Betreuungsverein</label>
                   <div className="col-sm-10">
@@ -869,20 +707,7 @@ const Attorney = () => {
             <div className="row">
               <div className="col-sm-12">
                 <h3 style={{ color: '#244D92' }}>Vollmacht zur Absicherung des digitalen Erbes</h3>
-                {/* <div className="row">
-                  <label htmlFor="SecuringMasterData" className="col-sm-3 col-form-label fs-6">
-                    Eintrag der Stammdaten
-                  </label>
-                  <div className="col-sm-9 radio-check-wrap mt-2">
-                    <input
-                      type="checkbox"
-                      onChange={securingattorneyChange}
-                      checked={securingattorney.SecuringMasterData}
-                      name="SecuringMasterData"
-                    />
-                    <span></span>
-                  </div>
-                </div> */}
+
                 <div className="row mb-2 mt-3">
                   <div className="col-sm-2">
                     <b>Vorname</b>
@@ -935,11 +760,10 @@ const Attorney = () => {
                   <div className="col-sm-2">
                     <div className="row">
                       <div className="col-sm-12">
-                        <DatePiker
-                          className="form-control"
-                          selected={securingattorney.dob}
+                        <DatePic
+                          value={securingattorney.dob}
                           onChange={securingattorneyChange}
-                          // name="dataCollection"
+                          name="dob"
                           placeholder="Geburtsdatum"
                         />
                       </div>
