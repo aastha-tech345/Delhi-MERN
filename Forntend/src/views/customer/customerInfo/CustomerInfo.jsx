@@ -99,8 +99,7 @@ const CustomerInfo = () => {
     billOrt: '',
   })
   const [dataCollection, setDataCollection] = useState('')
-  // dataCollection: resultt?.customerInfoStatu?.dataCollection,
-  let isPaid = InvoicInfo?.alreadyPaid
+
   const [customerDelivery, setCustomerDelivery] = useState({
     fname: '',
     lname: '',
@@ -142,10 +141,11 @@ const CustomerInfo = () => {
     land: customerDelivery?.land || customerInfo?.customer?.land,
     id: customerInfo?.id,
     street: customerDelivery?.address,
-    city: customerInfo?.customer?.city,
+    ort: customerDelivery?.ort,
     those: customerInfo?.those,
     created_by: customerInfo?.created_by,
   }
+  console.log('first', customerDelivery?.ort)
   const matarialChange = (e) => {
     if (e instanceof Date) {
       let yearString = e?.getFullYear().toString()
@@ -529,7 +529,7 @@ const CustomerInfo = () => {
       address: customerInfo?.customerDelivery?.address || customerInfo?.customer?.street,
       plz: customerInfo?.plz || customerInfo?.customer?.plz,
       land: customerInfo?.land || customerInfo?.customer?.land,
-      ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.city,
+      ort: customerInfo?.customerDelivery?.ort || customerInfo?.customer?.ort,
       phone: customerInfo?.phone || customerInfo?.customer?.phone,
       mobile: customerInfo?.customerDelivery?.mobile,
       // alreadyPaid: isPaid,
@@ -566,7 +566,7 @@ const CustomerInfo = () => {
       billAddress: customerInfo?.customerBills?.billAddress || customerInfo?.customer?.street,
       billPlz: customerInfo?.customerBills?.billPlz || customerInfo?.customer?.plz,
       billLand: customerInfo?.customerBills?.billLand || customerInfo?.customer?.land,
-      billOrt: customerInfo?.customerBills?.billOrt || customerInfo?.customer?.city,
+      billOrt: customerInfo?.customerBills?.billOrt || customerInfo?.customer?.ort,
     })
     setCustomerEmergencyPass(customerInfo?.customerDeposit?.emergencyPass)
     setCustomerStartDeposit(customerInfo?.customerDeposit?.startDeposit)
