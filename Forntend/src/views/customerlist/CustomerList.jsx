@@ -98,7 +98,7 @@ const CustomerList = () => {
       dataIndex: 'fname',
       width: '10%',
       // defaultSortOrder: 'desc',
-      sorter: (a, b) => a.fname.localeCompare(b.fname),
+      sorter: (a, b) => a.lname.localeCompare(b.lname),
       render: (text, record) => (
         <Link
           style={{ textDecoration: 'none', color: 'black' }}
