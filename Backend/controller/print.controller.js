@@ -72,7 +72,7 @@ exports.getPrint = async (req, res) => {
     return res.status(500).send({ message: "Server Error" });
   }
 };
-
+                   
 exports.getPrintData = async (req, res) => {
   try {
     const result = await PrintInfomation.printTemplate.findOne({
