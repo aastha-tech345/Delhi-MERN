@@ -41,7 +41,7 @@ const Document = () => {
       width: '20%',
     },
     {
-      title: 'MITARBEITERINN',
+      title: 'MITARBEITERIN',
       dataIndex: 'employee',
     },
     {
@@ -66,7 +66,7 @@ const Document = () => {
     //   },
     // },
     {
-      title: 'DATEINAME',
+      title: 'DOKUMENTE',
       dataIndex: 'document_title',
       render: (_, record) => {
         if (record.document_upload && record.document_upload.originalname) {

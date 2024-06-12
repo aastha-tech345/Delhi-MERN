@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { HpvData } from './HpvData'
 import Select from 'react-select'
+import DatePicker from '../Date'
 
 const Services = () => {
   const navigate = useNavigate()
@@ -2965,13 +2966,22 @@ const Services = () => {
                         }}
                       >
                         <p className="mt-2">Erstellung</p>
-                        <input
+                        {/* <input
                           className="form-control w-50"
                           value={information.creation}
                           onChange={(e) => informationChange(e)}
                           name="creation"
                           type="date"
                           disabled={information.urgency !== 'ja'}
+                        /> */}
+                        <DatePicker
+                          value={information.creation}
+                          onChange={(date) =>
+                            informationChange({ target: { name: 'creation', value: date } })
+                          }
+                          name="creation"
+                          disabled={information.urgency !== 'ja'}
+                          placeholder="Erstellung"
                         />
                       </div>
                       {/* <div className="col-md-3"></div> */}
