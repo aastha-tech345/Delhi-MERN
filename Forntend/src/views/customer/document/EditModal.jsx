@@ -94,6 +94,10 @@ const EditModal = ({ setEdit, getDetails }) => {
     setDocumentUpload([])
   }
 
+  const handleSvgClick = () => {
+    fileInputRef.current.click()
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const form = e.currentTarget
@@ -237,14 +241,14 @@ const EditModal = ({ setEdit, getDetails }) => {
                         <label
                           htmlFor="file-upload"
                           style={{
-                            width: '85.99%',
+                            width: '100%',
                           }}
                         >
                           <p
                             style={{
                               paddingTop: '5px',
                               paddingLeft: '10px',
-                              // cursor: 'pointer',
+                              cursor: 'pointer',
                             }}
                           >
                             Datei-Upload
@@ -254,6 +258,7 @@ const EditModal = ({ setEdit, getDetails }) => {
                           id="file-upload"
                           type="file"
                           name="document_upload"
+                          ref={fileInputRef}
                           // value={document_upload?.name}
                           placeholder="Upload File"
                           onChange={(e) => {
@@ -268,12 +273,16 @@ const EditModal = ({ setEdit, getDetails }) => {
                             borderLeft: '1px solid hsl(0, 0%, 80%)',
                             height: '100%',
                             paddingLeft: '15px',
+                            position: 'absolute',
+                            left: '85.99%',
+                            cursor: 'pointer',
                           }}
                           width="34"
                           height="24"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
+                          onClick={handleSvgClick}
                         >
                           <g clipPath="url(#clip0_384_3149)">
                             <path

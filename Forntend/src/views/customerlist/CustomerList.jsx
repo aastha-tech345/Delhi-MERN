@@ -453,10 +453,14 @@ const CustomerList = () => {
     setEmail(e.target.value)
   }
 
-  const handleSelectChange = (selectedOption) => {
-    setStatus(selectedOption)
-    // console.log(selectedOption)
+  const handleCheckboxChange = (e, city) => {
+    if (e.target.checked) {
+      setClientStatus([...clientStatus, city])
+    } else {
+      setClientStatus(clientStatus.filter((selectedCity) => selectedCity.code !== city.code))
+    }
   }
+
   const cities = [
     { name: 'HLG', code: '0' },
     { name: 'HVD-PV', code: '1' },
@@ -469,6 +473,9 @@ const CustomerList = () => {
     { name: 'WaR', code: '8' },
     { name: 'Recherche', code: '9' },
   ]
+  const firstHalf = cities.slice(0, 5)
+  const secondHalf = cities.slice(5, 12)
+
   const Anrede = [
     { value: 'herr', label: 'Herr' },
     { value: 'frau', label: 'Frau' },
@@ -1051,6 +1058,7 @@ const CustomerList = () => {
                           setStartDate(date)
                         }}
                         // onBlur={handleBlurDob}
+                        className="form-control"
                         placeholder="Geburtsdatum"
                       />
                       {/* <DatePicker
@@ -1063,9 +1071,7 @@ const CustomerList = () => {
                       /> */}
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <MultiSelect
+                  {/* <MultiSelect
                         placeholder="HVD-PV"
                         value={clientStatus}
                         onChange={handleChangeStatus}
@@ -1078,7 +1084,43 @@ const CustomerList = () => {
                         showCheckbox
                         display="chip"
                         scrollHeight={500}
-                      />
+                      /> */}
+                  <div className="row border select_city">
+                    <div className="col-sm-6">
+                      {firstHalf.map((city) => (
+                        <div key={city.code}>
+                          <div className="radio-check-wrapp">
+                            <input
+                              type="checkbox"
+                              checked={
+                                clientStatus &&
+                                clientStatus.some((selectedCity) => selectedCity.code === city.code)
+                              }
+                              onChange={(e) => handleCheckboxChange(e, city)}
+                            />
+                            {/* <span></span> */}
+                            <label className="city-label">{city.name}</label>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="col-sm-6">
+                      {secondHalf.map((city) => (
+                        <div key={city.code}>
+                          <div className="radio-check-wrapp">
+                            <input
+                              type="checkbox"
+                              checked={
+                                clientStatus &&
+                                clientStatus.some((selectedCity) => selectedCity.code === city.code)
+                              }
+                              onChange={(e) => handleCheckboxChange(e, city)}
+                            />
+                            {/* <span></span> */}
+                            <label className="city-label">{city.name}</label>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </Form>

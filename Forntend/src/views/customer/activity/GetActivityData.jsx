@@ -107,9 +107,10 @@ const GetActivityData = ({ updateData, search, openText }) => {
                       const month = inputDate?.getUTCMonth() + 1
                       const year = inputDate?.getUTCFullYear()
 
-                      const outputDateString = `${day}.${month < 10 ? '0' : ''}${month}.${
-                        year < 10 ? '0' : ''
-                      }${year}`
+                      const outputDateString = `${day < 10 ? '0' : ''}${day}.${
+                        month < 10 ? '0' : ''
+                      }${month}.${year < 10 ? '0' : ''}${year}`
+                      console.log('aastha', outputDateString)
                       return (
                         <tr
                           key={_id}

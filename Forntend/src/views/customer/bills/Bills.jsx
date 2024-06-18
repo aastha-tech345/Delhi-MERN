@@ -22,8 +22,16 @@ const Bills = () => {
   const [paymentMethod, setPaymentMethod] = useState(recordData?.paymentMethod)
   const [invoiceAmount, setInvoiceAmount] = useState(recordData?.invoiceAmount)
   const [transaction_no, setTransactionNo] = useState()
-  let paidData = customerInfo?.customerDelivery?.alreadyPaid
-  const [alreadyPaid, setAlreadyPaid] = useState(paidData)
+  const [paidData, setPaidData] = useState(customerInfo?.customerDelivery?.alreadyPaid)
+  console.log('paidData', paidData)
+  useEffect(() => {
+    setPaidData(customerInfo?.customerDelivery?.alreadyPaid)
+  }, [customerInfo?.customerDelivery?.alreadyPaid])
+
+  const alreadypaidChange = (e) => {
+    setPaidData(e.target.checked)
+  }
+
   const invoiceChange = (e) => {
     setInvoiceDate(e)
   }
@@ -36,19 +44,66 @@ const Bills = () => {
     localStorage.removeItem('customerRecord')
     navigate('/customer/customer_info')
   }
-  const alreadypaidChange = (e) => {
-    setAlreadyPaid(e.target.checked)
-  }
 
   const handlePaymentChange = (selectedOption) => {
     setPaymentMethod(selectedOption?.value || '')
   }
 
+  // const saveData = async () => {
+  //   try {
+  //     const invoice_data = {
+  //       product,
+  //       paymentMethod,
+  //       invoiceAmount,
+  //       invoiceDate,
+  //       deliveryDate,
+  //       employeeData,
+  //       colleague,
+  //       transaction_no,
+  //       incoming_payment,
+  //       customer_id: resultt?._id,
+  //     }
+
+  //     let response
+
+  //     // Call the invoice API if invoice_data is present
+  //     if (invoice_data) {
+  //       response = await fetch(`${apiUrl}/invoice/get_invoice/${resultt?._id}`, {
+  //         method: 'PUT',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(invoice_data),
+  //       })
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`)
+  //       }
+  //     }
+
+  //     // if (paidData) {
+  //     //   response = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
+  //     //     method: 'PUT',
+  //     //     headers: {
+  //     //       'Content-Type': 'application/json',
+  //     //     },
+  //     //     body: JSON.stringify(paidData),
+  //     //   })
+  //     //   if (!response.ok) {
+  //     //     throw new Error(`HTTP error! Status: ${response.status}`)
+  //     //   }
+  //     // }
+
+  //     const responseData = await response.json()
+  //     console.log('first', responseData)
+  //     toast.success('Rechnungsdaten erfolgreich gespeichert')
+  //   } catch (error) {
+  //     toast.error('Bitte füllen Sie alle Angaben aus')
+  //   }
+  // }
   const saveData = async () => {
     try {
-      const data = {
+      const invoice_data = {
         product,
-        alreadyPaid,
         paymentMethod,
         invoiceAmount,
         invoiceDate,
@@ -60,21 +115,44 @@ const Bills = () => {
         customer_id: resultt?._id,
       }
 
-      const response = await fetch(`${apiUrl}/invoice/get_invoice/${resultt?._id}`, {
-        method: 'put',
+      if (invoice_data) {
+        const response = await fetch(`${apiUrl}/invoice/get_invoice/${resultt?._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(invoice_data),
+        })
+
+        if (!response.ok) {
+          throw new Error(`Failed to update invoice data. Status: ${response.status}`)
+        }
+      }
+
+      const customerDeliveryData = {
+        alreadyPaid: paidData,
+      }
+
+      console.log('customerDeliveryData:', customerDeliveryData)
+
+      const customerResponse = await fetch(`${apiUrl}/customer/get_record/edit/${resultt?._id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ customerDelivery: customerDeliveryData }),
       })
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
+
+      if (!customerResponse.ok) {
+        throw new Error(`Failed to update alreadyPaid data. Status: ${customerResponse.status}`)
       }
-      const responseData = await response.json()
-      window.localStorage.setItem('alradyPaid', responseData.data.alreadyPaid)
-      toast.success('Rechnungsdaten erfolgreich gespeichert')
+
+      const responseData = await customerResponse.json()
+      console.log('Response:', responseData)
+
+      toast.success('Data saved successfully')
     } catch (error) {
-      toast.error('Bitte füllen Sie alle Angaben aus')
+      toast.error(`Failed to save data: ${error.message}`)
     }
   }
 
@@ -133,7 +211,7 @@ const Bills = () => {
     getRecord()
     getCustomerInfo()
     getEmployeeData()
-    setAlreadyPaid()
+    // setAlreadyPaid()
   }, [])
 
   useEffect(() => {
@@ -146,13 +224,13 @@ const Bills = () => {
     setIncomingPayment(recordData?.incoming_payment)
     setTransactionNo(recordData?.transaction_no)
   }, [recordData])
-  useEffect(() => {
-    if (incoming_payment && incoming_payment.length !== 0) {
-      setAlreadyPaid(true)
-    } else {
-      setAlreadyPaid(paidData === true)
-    }
-  }, [incoming_payment, paidData])
+  // useEffect(() => {
+  //   if (incoming_payment && incoming_payment.length !== 0) {
+  //     setAlreadyPaid(true)
+  //   } else {
+  //     setAlreadyPaid(paidData === true)
+  //   }
+  // }, [incoming_payment, paidData])
 
   return (
     <div className="inner-page-wrap">
@@ -252,6 +330,7 @@ const Bills = () => {
                               value={invoiceDate}
                               onChange={invoiceChange}
                               placeholder="Rechnungsdatum"
+                              className="form-control"
                             />
                           </div>
                         </div>
@@ -304,7 +383,7 @@ const Bills = () => {
                               readOnly
                               type="checkbox"
                               name="alreadyPaid"
-                              checked={alreadyPaid}
+                              checked={paidData}
                               onChange={alreadypaidChange}
                               onClick={(e) => e.stopPropagation()}
                             />
@@ -336,6 +415,7 @@ const Bills = () => {
                               value={deliveryDate}
                               onChange={deliveryDateChange}
                               placeholder="Lieferdatum"
+                              className="form-control"
                             />
                           </div>
                         </div>
