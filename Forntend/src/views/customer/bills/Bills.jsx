@@ -101,20 +101,24 @@ const Bills = () => {
   //   }
   // }
   const saveData = async () => {
-    try {
-      const invoice_data = {
-        product,
-        paymentMethod,
-        invoiceAmount,
-        invoiceDate,
-        deliveryDate,
-        employeeData,
-        colleague,
-        transaction_no,
-        incoming_payment,
-        customer_id: resultt?._id,
-      }
+    let invoice_data = {
+      product,
+      paymentMethod,
+      invoiceAmount,
+      invoiceDate,
+      deliveryDate,
+      employeeData,
+      colleague,
+      transaction_no,
+      incoming_payment,
+      customer_id: resultt?._id,
+    }
+    let currentDate = new Date()
 
+    if (invoice_data.invoiceDate > currentDate || invoice_data?.deliveryDate > currentDate) {
+      return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+    }
+    try {
       if (invoice_data) {
         const response = await fetch(`${apiUrl}/invoice/get_invoice/${resultt?._id}`, {
           method: 'PUT',
@@ -150,7 +154,7 @@ const Bills = () => {
       const responseData = await customerResponse.json()
       console.log('Response:', responseData)
 
-      toast.success('Data saved successfully')
+      toast.success('Daten erfolgreich gespeichert')
     } catch (error) {
       toast.error(`Failed to save data: ${error.message}`)
     }
