@@ -567,8 +567,11 @@ const Services = () => {
         toast.warning('Bitte fülle mindestens ein Feld aus')
         return
       }
+      let currentDate = new Date()
 
-      // Continue with the API call if at least one field is filled
+      if (information.creation > currentDate) {
+        return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+      }
       let response = await fetch(`${apiUrl}/spv/get_spv/${resultt?._id}`, {
         method: 'put',
         headers: {
@@ -2985,7 +2988,6 @@ const Services = () => {
                           className="form-control w-50"
                         />
                       </div>
-                      {/* <div className="col-md-3"></div> */}
                       <div className="col-md-7 col-sm-12">
                         <div
                           className="container-fluid"

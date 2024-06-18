@@ -450,6 +450,20 @@ const CustomerInfo = () => {
     if (customerContact?.startDate > currentDate) {
       return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
     }
+    if (
+      customerDepositt?.startDeposit > currentDate ||
+      customerDepositt?.nextBrand > currentDate ||
+      customerDepositt?.updateStamp > currentDate ||
+      customerDepositt?.lastStamp > currentDate ||
+      customerDepositt?.reminderStamp > currentDate ||
+      customerDepositt?.emergencyPass > currentDate
+    ) {
+      return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+    }
+
+    if (orderingMaterials?.newsletterDate > currentDate) {
+      return toast.warning('Das Geburtsdatum darf nicht in der Zukunft liegen.')
+    }
     const startDate = customerContact?.startDate
     let birthDate = new Date(startDate)
     let minimumAge = 18
