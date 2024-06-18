@@ -56,9 +56,7 @@ const Customer = ({ getCustomerData, updateData, updateStreet, updateLand }) => 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' }
   const formattedDate = date.toLocaleDateString('en-IN', options).replace(/\//g, '.')
 
-  const firstName =
-    customerInfo?.customer?.fname?.slice(0, 1).toUpperCase() +
-    customerInfo?.customer?.fname?.slice(1).toLowerCase()
+  const firstName = customerInfo?.customer?.fname
   const lastName =
     customerInfo?.customer?.lname?.slice(0, 1).toUpperCase() +
     customerInfo?.customer?.lname?.slice(1).toLowerCase()
