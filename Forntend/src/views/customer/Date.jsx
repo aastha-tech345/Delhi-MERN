@@ -112,7 +112,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-export default function DatePicker({ onChange, value, placeholder }) {
+export default function DatePicker({ onChange, value, placeholder, className }) {
   const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
@@ -198,7 +198,7 @@ export default function DatePicker({ onChange, value, placeholder }) {
         onBlur={handleDateChange}
         value={inputValue}
         placeholder={placeholder}
-        className="form-control"
+        className={className}
       />
     </div>
   )
@@ -208,4 +208,5 @@ DatePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.instanceOf(Date).isRequired,
   placeholder: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
 }

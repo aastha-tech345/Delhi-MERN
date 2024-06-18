@@ -2982,6 +2982,7 @@ const Services = () => {
                           name="creation"
                           disabled={information.urgency !== 'ja'}
                           placeholder="Erstellung"
+                          className="form-control w-50"
                         />
                       </div>
                       {/* <div className="col-md-3"></div> */}

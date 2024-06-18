@@ -30,7 +30,7 @@ exports.createCustomer = async (req, res) => {
         });
       }
     }
-         
+
     // Extract email from request body
     const email = req.body.customer.email;
 
@@ -92,21 +92,49 @@ exports.createCustomer = async (req, res) => {
 exports.editCustomer = async (req, res) => {
   try {
     const { id } = req.params;
-    // Extract email from request body
-    const email = req.body.customer.email;
+    const {
+      customer,
+      orderingMaterials,
+      customerInfoStatu,
+      customerContact,
+      customerBills,
+      customerDelivery,
+      customerDeposit,
+      customerBurial,
+      those,
+    } = req.body;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (email && !emailRegex.test(email)) {
-      return res.status(400).json({
-        status: 400,
-        message: "Enter Valid Email",
-      });
+    // Validate email if present
+    if (customer && customer.email) {
+      const email = customer.email;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email && !emailRegex.test(email)) {
+        return res.status(400).json({
+          status: 400,
+          message: "Enter Valid Email",
+        });
+      }
     }
-    const updatedCustomer = await Customer.findByIdAndUpdate(id, req.body, {
+
+    // Construct update object
+    const updateFields = {
+      customer,
+      orderingMaterials,
+      customerInfoStatu,
+      customerContact,
+      customerBills,
+      customerDelivery,
+      customerDeposit,
+      customerBurial,
+      those,
+    };
+
+    // Update the customer record
+    const updatedCustomer = await Customer.findByIdAndUpdate(id, updateFields, {
       new: true,
+      runValidators: true, // Ensure validators are run on update
     });
-    console.log("SDHS", updatedCustomer);
+
     if (!updatedCustomer) {
       return res
         .status(404)

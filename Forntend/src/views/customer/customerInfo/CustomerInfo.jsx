@@ -40,8 +40,8 @@ const CustomerInfo = () => {
   const [customerInfo, setCustomerInfo] = useState({})
   const [InvoicInfo, setInvoicInfo] = useState([])
   let ress = localStorage.getItem('customerRecord')
-  let paid = localStorage.getItem('alradyPaid')
-  let alreadyPaid = JSON.parse(paid)
+  // let paid = localStorage.getItem('alradyPaid')
+  // let alreadyPaid = JSON.parse(paid)
   let resultt = JSON.parse(ress)
   const [orderingMaterials, setOrderingMaterials] = useState({
     orderNumber: '',
@@ -110,7 +110,7 @@ const CustomerInfo = () => {
     phone: '',
     mobile: '',
     email: '',
-    alreadyPaid: '',
+    alreadyPaid: InvoicInfo.alreadyPaid,
   })
   const [customerStartDeposit, setCustomerStartDeposit] = useState('')
   const [customerNextBrand, setCustomerNextBrand] = useState('')
@@ -396,6 +396,7 @@ const CustomerInfo = () => {
       console.error('Error fetching employee data:', error)
     }
   }
+  console.log('aastha_invoice', InvoicInfo)
 
   const getDetails = async () => {
     try {
@@ -652,6 +653,7 @@ const CustomerInfo = () => {
                             name="newsletterDate"
                             value={orderingMaterials?.newsletterDate}
                             onChange={matarialChange}
+                            className="form-control"
                             placeholder="Newsletter-Datum"
                           />
                         </div>
@@ -766,6 +768,7 @@ const CustomerInfo = () => {
                               value={dataCollection}
                               onChange={customerDateChange}
                               // name="dataCollection"
+                              className="form-control"
                               placeholder="Datenerfassung"
                             />
                           </div>
@@ -846,6 +849,7 @@ const CustomerInfo = () => {
                             value={customerContact?.startDate}
                             onChange={ContactChangeDob}
                             name="startDate"
+                            className="form-control"
                             placeholder="Geburtsdatum"
                           />
                         </div>
@@ -1009,7 +1013,7 @@ const CustomerInfo = () => {
                               onChange={DeliveryChange}
                               name="alreadyPaid"
                               // checked={JSON.parse(customerDelivery?.alreadyPaid || 'false')}
-                              checked={customerDelivery?.alreadyPaid || alreadyPaid}
+                              checked={customerDelivery?.alreadyPaid}
                               type="checkbox"
                             />
                             <span>ja</span>
@@ -1220,6 +1224,7 @@ const CustomerInfo = () => {
                           <DatePic
                             value={customerStartDeposit}
                             onChange={DepositChange}
+                            className="form-control"
                             placeholder="Hinterlegungsbeginn"
                           />
                         </div>
@@ -1231,6 +1236,7 @@ const CustomerInfo = () => {
                           <DatePic
                             value={customerNextBrand}
                             onChange={nextBrandChange}
+                            className="form-control"
                             placeholder="Versand nächste Marke"
                           />
                         </div>
@@ -1243,6 +1249,7 @@ const CustomerInfo = () => {
                           <DatePic
                             value={customerUpdateStamp}
                             onChange={updateStamp}
+                            className="form-control"
                             placeholder="Versand letzte Marke"
                           />
                         </div>
@@ -1253,6 +1260,7 @@ const CustomerInfo = () => {
                           <DatePic
                             value={customerLastStamp}
                             onChange={lastStamp}
+                            className="form-control"
                             placeholder="Rücksendung letzte Marke"
                           />
                         </div>
@@ -1279,6 +1287,7 @@ const CustomerInfo = () => {
                           <DatePic
                             value={customerReminderStamp}
                             onChange={reminderStamp}
+                            className="form-control"
                             placeholder="Erinnerung Marke"
                           />
                         </div>

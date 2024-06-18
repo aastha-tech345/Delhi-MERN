@@ -766,6 +766,7 @@ const Attorney = () => {
                           onChange={securingattorneyChange}
                           name="dob"
                           placeholder="Geburtsdatum"
+                          className="form-control"
                         />
                       </div>
                     </div>
