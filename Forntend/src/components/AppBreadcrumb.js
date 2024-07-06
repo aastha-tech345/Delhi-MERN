@@ -30,10 +30,12 @@ const AppBreadcrumb = () => {
   }
 
   const breadcrumbs = getBreadcrumbs(currentLocation)
+  let a = window.localStorage.getItem('record')
+  let data = JSON.parse(a)
 
   return (
     <CBreadcrumb className="m-0">
-      <CBreadcrumbItem>Startseite</CBreadcrumbItem>
+      <CBreadcrumbItem>{data?.user?.user_type}</CBreadcrumbItem>
       {breadcrumbs.map((breadcrumb, index) => {
         return (
           <CBreadcrumbItem

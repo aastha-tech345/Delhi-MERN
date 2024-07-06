@@ -19,19 +19,17 @@ const EditModal = ({ setHide, getDetails }) => {
   }
 
   const apiUrl = process.env.REACT_APP_API_URL
-  let res = localStorage.getItem('CustomerRecord')
+  let res = localStorage.getItem('customerRecord')
   let response = JSON.parse(res)
-
+  console.log('res', response)
   const [data, setData] = useState({
     fname: response?.fname,
     lname: response?.lname,
     street: response?.street,
-    dob: response?.dob,
     phone: response?.phone,
     plz: response?.plz,
-    city: response?.city,
+    city: response?.street,
     land: response?.land,
-    group: response.group,
   })
 
   // console.log('jhsd', response?.dob)
@@ -53,12 +51,10 @@ const EditModal = ({ setHide, getDetails }) => {
 
     if (emailRegex.test(inputValue.toLowerCase())) {
       setEmail(inputValue)
-    } else {
-      setEmail('')
     }
   }
 
-  const dataa = { ...data, email }
+  const dataa = { customer: { ...data, email } }
 
   const handleSubmit = async (e) => {
     // console.log('data', dataa)
@@ -70,10 +66,10 @@ const EditModal = ({ setHide, getDetails }) => {
 
     setValidated(true)
     if (!data.fname || !data.lname) {
-      return toast.warning('Bitte geben Sie Fname und Lname ein')
+      return toast.warning('Please fill first and last name')
     }
     if (!email) {
-      return toast.warning('Ungültige E-Mail')
+      return toast.warning('Invaild email...')
     }
     e.preventDefault()
     try {
@@ -89,15 +85,14 @@ const EditModal = ({ setHide, getDetails }) => {
           plz: '',
           city: '',
           land: '',
-          group: '',
-          dob: '',
         })
         setEmail('')
-        toast.success('Kundendatensatz erfolgreich aktualisiert')
+        console.log('first', res)
+        toast.success('User update successfully')
         close()
         getDetails()
       } else {
-        toast.error('Etwas ist schief gelaufen')
+        toast.error('Something error...')
       }
     } catch (error) {
       console.log(error)
@@ -112,7 +107,7 @@ const EditModal = ({ setHide, getDetails }) => {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h4 className="modal-title">Kunden Aktualisieren</h4>
+            <h4 className="modal-title">User Update</h4>
             <button
               type="button"
               className="btn-close"
@@ -127,7 +122,7 @@ const EditModal = ({ setHide, getDetails }) => {
                 <div className="col-sm-6">
                   <input
                     type="text"
-                    placeholder="Vornamen"
+                    placeholder="First Name"
                     className="form-control"
                     id="inputPassword"
                     name="fname"
@@ -139,7 +134,7 @@ const EditModal = ({ setHide, getDetails }) => {
                 <div className="col-sm-6">
                   <input
                     type="text"
-                    placeholder="Nachname"
+                    placeholder="Last Name"
                     className="form-control"
                     id="inputPassword"
                     name="lname"
@@ -153,7 +148,7 @@ const EditModal = ({ setHide, getDetails }) => {
                 <div className="col-sm-12">
                   <input
                     type="text"
-                    placeholder="Straβe + Hnr"
+                    placeholder="Address"
                     className="form-control"
                     id="inputPassword"
                     name="street"
@@ -165,25 +160,14 @@ const EditModal = ({ setHide, getDetails }) => {
               </div>
               <div className="row">
                 <div className="col-sm-6">
-                  {/* <input
-                  type="email"
-                  placeholder="E-Mail"
-                  className="form-control"
-                  id="inputPassword"
-                  name="email"
-                  value={data.email}
-                  onChange={handleChange}
-                  required={true}
-                /> */}
                   <input
                     type="email"
                     name="email"
                     value={email}
                     onChange={handleEmailChange}
-                    placeholder="jo@gmail.com"
+                    placeholder="Email-Id"
                     className="form-control"
-                    id="inputPassword"
-                    required={true}
+                    disabled
                   />
                 </div>
                 <div className="col-sm-6">
@@ -194,7 +178,7 @@ const EditModal = ({ setHide, getDetails }) => {
                       handleChange({ target: { name: 'phone', value: inputValue } })
                     }}
                     type="tel"
-                    placeholder="Telefon"
+                    placeholder="Phone"
                     className="form-control"
                     id="inputTelephone"
                     maxLength={10}
@@ -224,7 +208,7 @@ const EditModal = ({ setHide, getDetails }) => {
                       const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                       setData({ ...data, plz: inputValue })
                     }}
-                    placeholder="PLZ"
+                    placeholder="Pincode"
                     className="form-control"
                     id="inputPassword"
                     maxLength={6}
@@ -235,7 +219,7 @@ const EditModal = ({ setHide, getDetails }) => {
                 <div className="col-sm-6">
                   <input
                     type="text"
-                    placeholder="Stadt"
+                    placeholder="City"
                     className="form-control"
                     id="inputPassword"
                     name="city"
@@ -245,61 +229,10 @@ const EditModal = ({ setHide, getDetails }) => {
                   />
                 </div>
               </div>
-              <div className="row">
-                <div className="col-sm-6">
-                  <input
-                    value={data.dob}
-                    name="dob"
-                    onChange={handleChange}
-                    type="text"
-                    placeholder="Geburtsdatum"
-                    className="form-control"
-                    id="inputTelephone"
-                    // maxLength={10}
-                    // minLength={3}
-                  />
-                </div>
-                <div className="col-sm-6">
-                  <input
-                    type="text"
-                    name="land"
-                    value={data.land}
-                    onChange={handleChange}
-                    placeholder="Land"
-                    className="form-control"
-                    id="inputPassword"
-                  />
-                </div>
-              </div>
-
-              {/* <div className="row">
-                <div className="col-sm-6">
-                  <select
-                    className="form-control mb-0"
-                    value={data.group}
-                    name="group"
-                    onChange={handleChange}
-                    required={true}
-                  >
-                    <option value="">--select group--</option>
-                    <option value="HVD-PV">HVD</option>
-                    <option value="PV-ALT">ALT</option>
-                  </select>
-                </div>
-              </div> */}
             </Form>
           </div>
 
           <div className="modal-footer">
-            {/* <button
-              type="button"
-              className="btn btn-modal-close"
-              data-bs-dismiss="modal"
-              onClick={close}
-            >
-              Bearbeiten
-            </button> */}
-
             <div className="btn-wrap">
               <button
                 type="button"
@@ -307,11 +240,11 @@ const EditModal = ({ setHide, getDetails }) => {
                 data-bs-dismiss="modal"
                 onClick={close}
               >
-                Abbrechen
+                Cancel
               </button>
 
               <button type="button" className="btn  btn-save ms-3" onClick={handleSubmit}>
-                {loadValue ? <Loader /> : <div> Speichern</div>}
+                {loadValue ? <Loader /> : <div> Submit</div>}
               </button>
             </div>
           </div>

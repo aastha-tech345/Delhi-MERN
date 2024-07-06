@@ -53,131 +53,27 @@ const PrintModal = ({ setPrint, getDetails }) => {
     getPrintDetails()
   }, [page])
 
-  const customerItems = printRecord?.filter((item) => item?.designation === 'customer')
-
-  const printTemplate = customerItems?.length > 0 ? customerItems[0]?.content || '' : ''
-
-  console.log('template', customerItems)
-  console.log('peirnt', printTemplate)
-  //   console.log('aastha', customerItems[0]?.content)
-
-  const recordContent = printTemplate
-    .replace('{fname}', response?.fname)
-    .replace('{email}', response?.email)
-    .replace('{id}', response?.id)
-    .replace('{phone}', response?.phone)
-    .replace('{group}', response?.group)
-    .replace('{startDate}', response?.dob)
-    .replace('{street}', response?.street)
-  let dataa = `
-  <html>
-    <head>
-    </head>
-    <body>
-      ${recordContent}
-    </body>
-  </html>
-`
-
-  //   const handlePrint = () => {
-  //     var body = document.getElementById('body').innerHTML
-
-  //     var data = document.getElementById('data').innerHTML
-
-  //     document.getElementById('body').innerHTML = data
-
-  //     var printStyles = `
-  //       body {
-  //         margin: 0;
-  //         padding:0;
-  //         background:none;
-  //       }
-  //       @page {
-  //         size: A4;
-  //         margin:0;
-  //         padding:0;
-  //       }
-  //     `
-  //     var style = document.createElement('style')
-  //     style.innerHTML = printStyles
-  //     document.head.appendChild(style)
-  //     window.print()
-  //     document.getElementById('body').innerHTML = body
-
-  //     document.head.removeChild(style)
-  //   }
-  const handlePrint = () => {
-    var body = document.getElementById('body').innerHTML
-    var data = document.getElementById('data').innerHTML
-    var printFrame = document.createElement('iframe')
-    printFrame.style.display = 'none'
-    document.body.appendChild(printFrame)
-    var printStyles = `
-      @page {
-        size: A4;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        margin: 0;
-        padding: 0;
-        background: none;
-      }
-    `
-
-    var style = printFrame.contentDocument.createElement('style')
-    style.innerHTML = printStyles
-    printFrame.contentDocument.head.appendChild(style)
-    printFrame.contentDocument.body.innerHTML = data
-    printFrame.contentWindow.print()
-    document.body.removeChild(printFrame)
-    document.getElementById('body').innerHTML = body
-    window.location.reload()
-  }
-
   return (
-    <div id="body" className="modal modal-form edit-modal-form" tabIndex={-1} style={modalStyle}>
-      <div className="modal-dialog modal-lg modal-dialog-centered ">
+    <div id="body" className="modal" tabIndex={-1} style={modalStyle}>
+      <div className="modal-dialog modal-dialog-centered ">
         <div className="modal-content">
           <div className="modal-header">
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              onClick={close}
-            />
-          </div>
-
-          <div className="p-2">
-            <div
-              id="data"
-              style={{ overflowY: 'scroll', height: '680px' }}
-              dangerouslySetInnerHTML={{ __html: dataa }}
-            />
-          </div>
-
-          <div className="modal-footer" style={{ display: 'flex', justifyItems: 'end' }}>
-            <div className="mx-auto ">
+            <div className="text-end">
               <button
                 type="button"
-                className="btn btn mx-2"
+                className="btn-close"
                 data-bs-dismiss="modal"
+                aria-label="Close"
                 onClick={close}
-                style={{ background: '#d04545', border: '#d04545', color: 'white' }}
-              >
-                Abbrechen
-              </button>
-              <button
-                type="button"
-                className="btn"
-                onClick={handlePrint}
-                style={{ background: '#015291', color: 'white' }}
-              >
-                Spenchern
-              </button>
+              />
             </div>
-            {/* )} */}
+            <p>First Name : {data.fname}</p>
+            <br />
+            <p>Last Name : {data.fname}</p>
+            <br />
+            <p>Email Id : {data.fname}</p>
+            <br />
+            <p>Phone : {data.fname}</p>
           </div>
         </div>
       </div>

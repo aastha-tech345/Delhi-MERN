@@ -106,7 +106,6 @@ const Register = () => {
                       <option>--select--</option>
                       <option value="admin">Admin</option>
                       <option value="user">User</option>
-                      <option value="customer">Customer</option>
                     </select>
                   </CInputGroup>
                   <div className="d-grid">

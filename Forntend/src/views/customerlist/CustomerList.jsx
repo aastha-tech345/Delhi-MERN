@@ -20,6 +20,8 @@ import 'primereact/resources/primereact.min.css'
 import { MultiSelect } from 'primereact/multiselect'
 import 'react-phone-input-2/lib/style.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import { fetchCustomerRecords } from 'src/redux/reducers/customerSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
 const CustomerList = () => {
   // console.log('verifyEditPer', verifyEditPer())
@@ -33,7 +35,7 @@ const CustomerList = () => {
   const [lname, setLname] = useState()
   const [phone, setPhone] = useState()
   const [title, setTitle] = useState('')
-  const [startDate, setStartDate] = useState(null)
+  const [startDate, setStartDate] = useState('')
   const [land, setLand] = useState()
   const [plz, setPlz] = useState()
   const [ort, setOrt] = useState()
@@ -48,19 +50,6 @@ const CustomerList = () => {
   const [countPage, setCountPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState('')
   const navigate = useNavigate()
-
-  // const generateSequentialId = (() => {
-  //   let counter = 0
-
-  //   return () => {
-  // const today = new Date()
-  // const year = today.getFullYear().toString().slice(-2)
-  // const month = (today.getMonth() + 1).toString().padStart(2, '0')
-  // const day = today.getDate().toString().padStart(2, '0')
-  // const formattedDate = `${year}${month}${day}`
-  //     return `${formattedDate}-${counter}`
-  //   }
-  // })()
   const today = new Date()
   const year = today.getFullYear().toString().slice(-2)
   const month = (today.getMonth() + 1).toString().padStart(2, '0')
@@ -69,6 +58,9 @@ const CustomerList = () => {
   const generateSequentialId = () => {
     return formattedDate + '-0000'
   }
+  let adm = window.localStorage.getItem('record')
+  let is_admin_true = JSON.parse(adm)
+
   const [id] = useState(generateSequentialId())
 
   const notify = (data) => toast(data)
@@ -83,154 +75,29 @@ const CustomerList = () => {
   }
   const handleShow = () => setShow(true)
   const [selectedRecordId, setSelectedRecordId] = useState(null)
-  // const handleChange = (value, name) => {
-  //   if (name) {
-  //     setData({ ...data, [name]: value })
-  //   } else {
-  //     setContent(value)
-  //   }
-  // }
+
   const [print, setPrint] = useState(false)
 
   const columns = [
     {
-      title: 'KLIENTINNEN',
+      title: 'First Name',
       dataIndex: 'fname',
       width: '10%',
-      // defaultSortOrder: 'desc',
-      sorter: (a, b) => a.lname.localeCompare(b.lname),
-      render: (text, record) => (
-        <Link
-          style={{ textDecoration: 'none', color: 'black' }}
-          to={`/customer/customer_info`}
-          onClick={() => handleStore(text, record)}
-        >
-          {text &&
-            text.slice(0, 1).toUpperCase() +
-              text.slice(1).toLowerCase() +
-              ' ' +
-              record?.lname?.slice(0, 1)?.toUpperCase() +
-              record?.lname?.slice(1)?.toLowerCase()}
-        </Link>
-      ),
     },
     {
-      title: 'KUNDEN-ID',
-      dataIndex: 'countId',
+      title: 'Last Name',
+      dataIndex: 'lname',
       width: '20%',
-      render: (text, record, index) => text,
-      // defaultSortOrder: 'desc',
-      sorter: (a, b) => a.countId.localeCompare(b.countId),
     },
     {
       title: 'E-MAIL',
       dataIndex: 'email',
       width: '20%',
-      // defaultSortOrder: 'desc',
-      sorter: (a, b) => a?.email?.localeCompare(b.email),
     },
     {
       title: 'TELEFON',
       dataIndex: 'phone',
       width: '20%',
-      // defaultSortOrder: 'desc',
-      sorter: (a, b) => {
-        const phoneA = a.phone || ''
-        const phoneB = b.phone || ''
-        return phoneA.localeCompare(phoneB)
-      },
-    },
-    // {
-    //   title: 'STATUS',
-    //   dataIndex: 'status',
-    //   // width: '20%',
-    //   render: (text, record) => (
-    //     <div
-    //       className="dm-badge"
-    //       style={{
-    //         background:
-    //           text[0]?.name === ''
-    //             ? '#C20F0F'
-    //             : text[0]?.name === 'HVD-PV'
-    //             ? '#4EB772'
-    //             : text[0]?.name === 'SPV-alt'
-    //             ? '#4EB772'
-    //             : text[0]?.name === 'OPV-alt'
-    //             ? '#4EB772'
-    //             : text[0]?.name === 'DauerspenderInnen'
-    //             ? '#4EB772'
-    //             : text[0]?.name === 'Materialbestellung'
-    //             ? '#4EB772'
-    //             : text[0]?.name === 'Newsletter-Abonnent'
-    //             ? '#4EB772'
-    //             : text[0]?.name === 'Offen'
-    //             ? '#4EB772'
-    //             : 'transparent',
-    //         border:
-    //           text[0]?.name === ''
-    //             ? '1px solid transparent'
-    //             : text[0]?.name === 'HVD-PV'
-    //             ? '1px solid rgba(78, 183, 114, 0.50)'
-    //             : '',
-    //       }}
-    //     >
-    //       {/* {console.log('ashishtext[0].name', text[0]?.name)} */}
-    //       {text === '' ? <span>PV-ALT</span> : <span>{text[0]?.name}</span>}
-    //     </div>
-    //   ),
-    // },
-    // {
-    //   title: 'STATUS',
-    //   dataIndex: 'status',
-    //   width: '20%',
-    //   defaultSortOrder: 'descend',
-    //   sorter: (a, b) => a.status.localeCompare(b.status),
-    //   render: (text, record) => {
-    //     // Sort tags by code value in ascending order
-    //     const sortedTags = text.sort((a, b) => parseInt(a.code) - parseInt(b.code))
-
-    //     return (
-    //       <div className="dm-badge-container">
-    //         {sortedTags.slice(0, 6)?.map((tag, index) => (
-    //           <span
-    //             key={index}
-    //             className="dm-badge"
-    //             style={{ background: '#4EB772', border: 'white' }}
-    //           >
-    //             <span>{tag.name}</span>
-    //           </span>
-    //         ))}
-    //       </div>
-    //     )
-    //   },
-    // },
-    {
-      title: 'STATUS',
-      dataIndex: 'status',
-      width: '20%',
-      // defaultSortOrder: 'desc',
-      sorter: (a, b) => {
-        const aStatusString = a.status.map((tag) => tag.name).join(' ')
-        const bStatusString = b.status.map((tag) => tag.name).join(' ')
-        return aStatusString.localeCompare(bStatusString)
-      },
-      render: (text, record) => {
-        const sortedTags = [...text].sort((a, b) => parseInt(a.code) - parseInt(b.code))
-
-        return (
-          <div className="dm-badge-container">
-            {sortedTags.slice(0, 6).map((tag, index) => (
-              <span
-                key={index}
-                className="dm-badge"
-                style={{ background: '#4EB772', border: 'white' }}
-              >
-                <span>{tag.name}</span>
-              </span>
-            ))}
-          </div>
-        )
-      },
     },
     {
       title: 'AKTION',
@@ -245,7 +112,6 @@ const CustomerList = () => {
             <>
               <button
                 style={{ background: 'none', border: 'none' }}
-                // onClick={() => handleEdit(record)}
                 onClick={() => editRecord(record)}
               >
                 {/* <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} /> */}
@@ -278,7 +144,7 @@ const CustomerList = () => {
                     </clipPath>
                   </defs>
                 </svg>
-                {/* <span>Bearbeiten</span> */}
+                <span>Edit</span>
               </button>
             </>
           ) : (
@@ -291,7 +157,6 @@ const CustomerList = () => {
               style={{ background: 'none', border: 'none' }}
               onClick={() => handleIconClick(record._id)}
             >
-              {/* <RiDeleteBinLine className="text-danger text-bold fs-5" /> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -342,7 +207,7 @@ const CustomerList = () => {
                   </clipPath>
                 </defs>
               </svg>
-              {/* <span> Löschen</span> */}
+              <span> Delete</span>
             </button>
           ) : (
             ''
@@ -354,7 +219,7 @@ const CustomerList = () => {
           >
             {' '}
             <MdLocalPrintshop className="fs-5" style={{ color: '#615e55' }} />
-            {/* &nbsp;Drucken */}
+            &nbsp;View
           </button>
         </>
       ),
@@ -365,44 +230,10 @@ const CustomerList = () => {
     setStreet(event.target.value)
   }
 
-  // const handleBlur = () => {
-  //   let formattedStreet = street.trim()
-  //   const endsWithNumber = /\d$/.test(formattedStreet)
-
-  //   if (endsWithNumber) {
-  //     const [streetName, houseNumber] = formattedStreet.split(/(\d+)$/)
-  //     formattedStreet = `${streetName.trim()} ${houseNumber.trim()}`
-  //   }
-
-  //   setStreet(formattedStreet)
-  // }
-  const handleBlur = () => {
-    let formattedStreet = street.trim()
-    const endsWithNumber = /\d$/.test(formattedStreet)
-
-    if (endsWithNumber) {
-      const [streetName, houseNumber] = formattedStreet.split(/(\d+)$/)
-      formattedStreet = `${capitalizeStreetName(streetName.trim())} ${houseNumber.trim()}`
-    } else {
-      formattedStreet = capitalizeStreetName(formattedStreet)
-    }
-
-    setStreet(formattedStreet)
-  }
-
-  const capitalizeStreetName = (streetName) => {
-    return streetName
-      .split(/[\s-]+/)
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ')
-  }
-
   const editRecord = (record) => {
     if (record) {
-      // console.log('recoord', record)
-      let a = localStorage.setItem('tabId', 'customer_info')
-      navigate(`/customer/customer_info`)
       localStorage.setItem('customerRecord', JSON.stringify(record))
+      setHide(true)
     } else {
       console.error('Record is undefined or null.')
     }
@@ -429,7 +260,7 @@ const CustomerList = () => {
 
         if (response.ok) {
           getDetails()
-          toast.success('Der Datensatz wurde erfolgreich gelöscht')
+          toast.success('Record delete successfully')
         } else {
           const errorData = await response.json()
           // console.error('Failed to delete record:', response.status, response.statusText, errorData)
@@ -442,58 +273,17 @@ const CustomerList = () => {
   }
 
   const handleEmailChange = (e) => {
-    // const inputValue = e.target.value
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-    // if (emailRegex.test(inputValue)) {
-    //   setEmail(inputValue)
-    // } else {
-    //   setEmail('')
-    // }
     setEmail(e.target.value)
   }
 
-  const handleCheckboxChange = (e, city) => {
-    if (e.target.checked) {
-      setClientStatus([...clientStatus, city])
-    } else {
-      setClientStatus(clientStatus.filter((selectedCity) => selectedCity.code !== city.code))
-    }
-  }
-
-  const cities = [
-    { name: 'HLG', code: '0' },
-    { name: 'HVD-PV', code: '1' },
-    { name: 'OPV-alt', code: '2' },
-    { name: 'SPV-alt', code: '3' },
-    { name: 'SpenderIn', code: '4' },
-    { name: 'Newsletter', code: '5' },
-    { name: 'Material', code: '6' },
-    { name: 'Offen', code: '7' },
-    { name: 'WaR', code: '8' },
-    { name: 'Recherche', code: '9' },
-  ]
-  const firstHalf = cities.slice(0, 5)
-  const secondHalf = cities.slice(5, 12)
-
-  const Anrede = [
-    { value: 'herr', label: 'Herr' },
-    { value: 'frau', label: 'Frau' },
-    { value: 'divers', label: 'Divers' },
-  ]
-  const [salutionData, setSalutionData] = useState('')
-
-  // console.log('option', cities)
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault()
       searchHandle()
     }
   }
-  const handleChangeStatus = (e) => {
-    setClientStatus(e.value)
-  }
 
+  console.log('startDate', startDate)
   const saveData = async (event) => {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
@@ -516,40 +306,19 @@ const CustomerList = () => {
         land,
         status: clientStatus,
         id,
-        salution: salutionData,
         created_by,
       },
     }
-    console.log('date', data)
 
     if (!fname || !lname) {
-      return toast.warning('Füllen Sie den Datensatz')
+      return toast.warning('Please Fill First and Last Name')
     }
-    if (clientStatus?.length === 0) {
-      toast.warning('Es muss mindestens ein Statusfeld ausgewählt werden')
-      return
-    }
-    let currentDate = new Date()
-    let birthDate = new Date(startDate)
-    let minimumAge = 18
-    let ageDifferenceMilliseconds = currentDate?.getTime() - birthDate?.getTime()
-    let ageDifferenceYears = ageDifferenceMilliseconds / (1000 * 3600 * 24 * 365.25)
-
-    if (ageDifferenceYears < minimumAge) {
-      return toast.warning(
-        'Du musst mindestens 18 Jahre alt sein, um einen Vertrag zu unterschreiben.',
-      )
-    }
-
-    if (startDate > currentDate) {
-      return toast.warning('Das Startdatum darf nicht in der Zukunft liegen.')
-    }
-    if (startDate instanceof Date && startDate.getFullYear() < 1900) {
-      return toast.warning('Das Startdatum darf nicht vor 1900 liegen')
+    if (!email) {
+      return toast.warning('Please filled email filed')
     }
 
     if (phone && phone.startsWith('000')) {
-      return toast.warning('Ungültige Telefonnummer')
+      return toast.warning('Invalid Phone Number')
     }
 
     const emailRegex = /^[^\s@]+(\s[^\s@]+)*@[^\s@]+\.[^\s@]+$/
@@ -558,7 +327,7 @@ const CustomerList = () => {
       if (email) {
         // console.log('regx1', emailRegex.test(email))
         if (emailRegex.test(email) === false) {
-          return toast.warning('Bitte eine gültige Email eingeben')
+          return toast.warning('Please correct email format')
         } else {
           const response = await fetch(`${apiUrl}/customer/create`, {
             method: 'POST',
@@ -575,9 +344,9 @@ const CustomerList = () => {
           const result = await response.json()
           console.log('result', result)
           if (result.status === 400) {
-            toast.warning('Bitte eine gültige Email eingeben')
+            toast.warning('Please correct email format')
           } else if (response.status === 201) {
-            toast.success('Kundendatensatz erfolgreich gespeichert')
+            toast.success('User Create Successfully')
             resetForm()
             handleClose()
             getDetails()
@@ -601,9 +370,9 @@ const CustomerList = () => {
 
         const result = await response.json()
         if (result.status === 400) {
-          toast.warning('Bitte eine gültige Email eingeben')
+          toast.warning('Please correct email format')
         } else if (response.status === 201) {
-          toast.success('Kundendatensatz erfolgreich gespeichert')
+          toast.success('User Create Successfully')
           resetForm()
           handleClose()
           getDetails()
@@ -622,14 +391,16 @@ const CustomerList = () => {
     setEmail('')
     setPlz('')
     setStreet('')
-    setStatus('')
     setPhone('')
     setOrt('')
-    setStartDate('')
-    setClientStatus('')
-    setSalutionData('')
     setValidated(false)
   }
+  const dispatch = useDispatch()
+  const { customerRecords, pageCount, loading, error } = useSelector((state) => state.customers)
+
+  useEffect(() => {
+    dispatch(fetchCustomerRecords({ page: page, itemsPerPage: itemsPerPage }))
+  }, [dispatch, page, itemsPerPage])
 
   const getDetails = async () => {
     try {
@@ -637,7 +408,6 @@ const CustomerList = () => {
         `${apiUrl}/customer/get_records?page=${page}&resultPerPage=${itemsPerPage}`,
       )
       const data = await result.json()
-
       setCountPage(data?.pageCount)
       const activeRecords = data?.result?.filter((record) => record.status === 'active')
       setCustomerRecord(activeRecords)
@@ -648,113 +418,27 @@ const CustomerList = () => {
 
   const modifiedDataSource = customer_record?.map((customerRecord) => {
     const {
-      customer: {
-        fname,
-        title,
-        lname,
-        email,
-        id,
-        alreadyPaid,
-        phone,
-        startDate,
-        plz,
-        land,
-        status,
-        street,
-        salution,
-        ort,
-      },
+      customer: { fname, lname, email, id, phone, startDate, plz, land, street, ort },
       _id,
       countId,
     } = customerRecord
-    const {
-      orderingMaterials,
-      customerInfoStatu,
-      customerBills,
-      customerContact,
-      customerDeposit,
-      customerDelivery,
-      customerBurial,
-      those,
-    } = customerRecord
-
-    const {} = orderingMaterials
-    const {} = customerInfoStatu
-    const {} = customerContact
-    const {} = customerBills
-    const {} = customerDeposit
-    const {} = customerDelivery
-    const {} = customerBurial
 
     return {
       countId,
       _id,
       id,
       fname,
-      title,
       lname,
       email,
       phone,
       startDate,
       plz,
       land,
-      status,
       street,
-      salution,
       ort,
-      alreadyPaid,
-      orderingMaterials,
-      customerInfoStatu,
-      customerDeposit,
-      customerContact,
-      customerBills,
-      customerDelivery,
-      customerBurial,
-      those,
     }
   })
-
-  // customer_record.forEach((item) => {
-  //   // console.log('ashishhitem', item)
-  //   customers.push(item.customer)
-  // })
-
-  // console.log('Customers:', customers)
-
-  const handleItemsPerPageChange = (e) => {
-    setItemsPerPage(parseInt(e.target.value, 10))
-    setPage(1)
-  }
-  // console.log('itemperpage', itemsPerPage)
-
-  const getPrintDetails = async () => {
-    try {
-      const result = await fetch(`${apiUrl}/print/get_print?page=${page}`)
-      const data = await result.json()
-      // setCountPage(data?.pageCount)`
-      const activeRecords = data?.result?.filter((record) => record.is_deleted === 'active')
-      setPrintRecord(activeRecords)
-    } catch (error) {
-      toast.error('Fehler beim Abrufen des Kundendatensatzes:')
-    }
-  }
-
-  let data = customer_record
-  const handleStore = (data, record) => {
-    localStorage.setItem('tabId', 'customer_info')
-    navigate('/customer/customer_info', { state: record })
-    localStorage.setItem('customerRecord', JSON.stringify(record))
-  }
-
   const [hide, setHide] = useState(false)
-  // if(hide===false){
-  //   getDetails()
-  // }
-  // const handleEdit = (record) => {
-  //   let res = JSON.stringify(record)
-  //   localStorage.setItem('CustomerRecord', res)
-  //   setHide(true)
-  // }
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const rowSelection = {
     // onChange: (selectedRowKeys, selectedRows) => {},
@@ -796,15 +480,11 @@ const CustomerList = () => {
   const customerItems = []
 
   printRecord?.map((item) => {
-    // console.log('item record', item)
     if (item?.designation === 'customer') {
-      // console.log('customer')
       customerItems?.push(item)
     }
     return null
   })
-
-  // console.log('Customer items:', customerItems)
 
   const handlePrint = (record) => {
     let res = JSON.stringify(record)
@@ -814,16 +494,15 @@ const CustomerList = () => {
 
   useEffect(() => {
     getDetails()
-    getPrintDetails()
+    // getPrintDetails()
   }, [page, itemsPerPage])
-
   return (
     <>
       <div>
         {hide ? <EditModal setHide={setHide} getDetails={getDetails} /> : ''}
         {print ? <PrintModal setPrint={setPrint} getDetails={getDetails} /> : ''}
         <div className="page-title">
-          <h2>KlientInnen-Listen</h2>
+          <h2>UserList</h2>
         </div>
         <div className="search-filter-row" style={{ background: 'white', borderRadius: '5px' }}>
           <div className="container-fluid">
@@ -838,8 +517,7 @@ const CustomerList = () => {
                     onKeyPress={handleKeyPress}
                     type="search"
                     id="form1"
-                    onBlur={handleBlur}
-                    placeholder="Ihre Suche eingeben"
+                    placeholder="Search here..."
                     // className="form-control form-search-control"
                     className={`form-control form-search-control-without ${
                       isTyping ? '' : 'form-search-control'
@@ -864,78 +542,53 @@ const CustomerList = () => {
                 </div>
               </div>
 
-              <div className="col-md-5 text-end">
-                <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
-                  <p className="mb-0 me-3">
-                    <strong>{selectedRowKeys?.length}</strong> Ausgewählte
-                  </p>
-                  <button className="primary-btn" style={{ border: 'none' }} onClick={handleShow}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <g clipPath="url(#clip0_437_8819)">
-                        <path
-                          d="M12 5V19"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M5 12H19"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_437_8819">
-                          <rect width="24" height="24" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    <span>Neue KlientIn anlegen</span>
-                  </button>
+              {is_admin_true?.user?.user_type === 'admin' ? (
+                <div className="col-md-5 text-end">
+                  <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
+                    <button className="primary-btn" style={{ border: 'none' }} onClick={handleShow}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <g clipPath="url(#clip0_437_8819)">
+                          <path
+                            d="M12 5V19"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M5 12H19"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_437_8819">
+                            <rect width="24" height="24" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                      <span>New User Create</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                ''
+              )}
             </div>
             <Modal show={show} onHide={handleClose} className="modal-form">
               <Modal.Header>
-                <Modal.Title>Neue KlientIn anlegen</Modal.Title>
+                <Modal.Title>New User Create</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <Form noValidate validated={validated}>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <input
-                        value={title}
-                        onChange={(e) => {
-                          setTitle(e.target.value)
-                        }}
-                        type="text"
-                        placeholder="Titel"
-                        className="form-control"
-                        // required={true}
-                      />
-                    </div>
-                    <div className="col-sm-6">
-                      <Select
-                        className="w-100"
-                        options={Anrede}
-                        onChange={(selectedOption) => {
-                          setSalutionData(selectedOption)
-                        }}
-                        value={salutionData}
-                        name="salution"
-                        placeholder="Anrede"
-                      />
-                    </div>
-                  </div>
                   <div className="row">
                     <div className="col-sm-6">
                       <input
@@ -944,7 +597,7 @@ const CustomerList = () => {
                           setFname(e.target.value)
                         }}
                         type="text"
-                        placeholder="Vornamen"
+                        placeholder="First Name"
                         className="form-control"
                         required={true}
                       />
@@ -956,7 +609,7 @@ const CustomerList = () => {
                         onChange={(e) => {
                           setLname(e.target.value)
                         }}
-                        placeholder="Nachname"
+                        placeholder="Last Name"
                         className="form-control"
                         required={true}
                       />
@@ -967,9 +620,8 @@ const CustomerList = () => {
                       <input
                         value={street}
                         onChange={handleChangeStreet}
-                        onBlur={handleBlur}
                         type="text"
-                        placeholder="Straße mit Hausnummer"
+                        placeholder="Address"
                         className="form-control"
                       />
                     </div>
@@ -987,7 +639,7 @@ const CustomerList = () => {
                     </div>
                     <div className="col-sm-6">
                       <input
-                        placeholder="Telefon"
+                        placeholder="Phone"
                         className="form-control"
                         value={phone}
                         onChange={(e) => {
@@ -996,7 +648,7 @@ const CustomerList = () => {
                             setPhone(inputValue)
                           }
                         }}
-                        maxLength={20}
+                        maxLength={10}
                         minLength={3}
                       />
                     </div>
@@ -1013,7 +665,7 @@ const CustomerList = () => {
                           )
                           setPlz(inputValue)
                         }}
-                        placeholder="PLZ"
+                        placeholder="Pincode"
                         className="form-control"
                         maxLength={10}
                         minLength={3}
@@ -1030,97 +682,9 @@ const CustomerList = () => {
                           ) // Allow only alphabetic characters, spaces, hyphens, and apostrophes
                           setOrt(inputValue)
                         }}
-                        placeholder="Ort"
+                        placeholder="City"
                         className="form-control"
                       />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <input
-                        type="text"
-                        value={land}
-                        onChange={(e) => {
-                          const inputValue = e.target.value.replace(
-                            /[^0-9a-zA-Z9äöüÄÖÜßÄÖÜß\s'-]/g,
-                            '',
-                          )
-                          setLand(inputValue)
-                        }}
-                        placeholder="Land"
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="col-sm-6">
-                      <DatePic
-                        value={startDate}
-                        onChange={(date) => {
-                          setStartDate(date)
-                        }}
-                        // onBlur={handleBlurDob}
-                        className="form-control"
-                        placeholder="Geburtsdatum"
-                      />
-                      {/* <DatePicker
-                        closeOnScroll={(e) => e.target === document}
-                        dateFormat="dd.MM.YYYY"
-                        selected={startDate}
-                        className="form-control"
-                        onChange={(date) => setStartDate(date)}
-                        placeholder="Geburtsdatum"
-                      /> */}
-                    </div>
-                  </div>
-                  {/* <MultiSelect
-                        placeholder="HVD-PV"
-                        value={clientStatus}
-                        onChange={handleChangeStatus}
-                        options={cities}
-                        isMulti
-                        maxSelectedValues={3}
-                        optionLabel="name"
-                        className="w-100"
-                        showSelectAll={false}
-                        showCheckbox
-                        display="chip"
-                        scrollHeight={500}
-                      /> */}
-                  <div className="row border select_city">
-                    <div className="col-sm-6">
-                      {firstHalf.map((city) => (
-                        <div key={city.code}>
-                          <div className="radio-check-wrapp">
-                            <input
-                              type="checkbox"
-                              checked={
-                                clientStatus &&
-                                clientStatus.some((selectedCity) => selectedCity.code === city.code)
-                              }
-                              onChange={(e) => handleCheckboxChange(e, city)}
-                            />
-                            {/* <span></span> */}
-                            <label className="city-label">{city.name}</label>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="col-sm-6">
-                      {secondHalf.map((city) => (
-                        <div key={city.code}>
-                          <div className="radio-check-wrapp">
-                            <input
-                              type="checkbox"
-                              checked={
-                                clientStatus &&
-                                clientStatus.some((selectedCity) => selectedCity.code === city.code)
-                              }
-                              onChange={(e) => handleCheckboxChange(e, city)}
-                            />
-                            {/* <span></span> */}
-                            <label className="city-label">{city.name}</label>
-                          </div>
-                        </div>
-                      ))}
                     </div>
                   </div>
                 </Form>
@@ -1129,10 +693,10 @@ const CustomerList = () => {
                 <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
                   <button className="btn btn-cancel" onClick={handleClose}>
                     {' '}
-                    Abbrechen
+                    Cancel
                   </button>
                   <button className="btn btn-save ms-3" onClick={saveData}>
-                    Speichern
+                    Create
                   </button>
                 </div>
               </Modal.Footer>
@@ -1142,7 +706,7 @@ const CustomerList = () => {
 
         <Table
           rowKey="_id"
-          rowSelection={rowSelection}
+          // rowSelection={rowSelection}
           responsive
           columns={columns}
           dataSource={modifiedDataSource}
@@ -1176,24 +740,9 @@ const CustomerList = () => {
                 />
               </Stack>
             </div>
-            <div className="col-md-2 pe-md-0 mt-3 mt-md-0 text-md-end">
-              <select
-                className="form-control form-select"
-                value={itemsPerPage}
-                onChange={handleItemsPerPageChange}
-              >
-                <option value={10}>10 pro Seite</option>
-                <option value={20}>20 pro Seite</option>
-                <option value={50}>50 pro Seite</option>
-                <option value={100}>100 pro Seite</option>
-              </select>
-            </div>
           </div>
         </div>
-
         <Modal
-          // size="sm"
-          // style={{ width: '634px', height: '359px' }}
           show={isModalVisible}
           onHide={handleModalClose}
           centered
@@ -1232,15 +781,15 @@ const CustomerList = () => {
                 fill="#C20F0F"
               />
             </svg>
-            <h4>Sind Sie sicher?</h4>
+            <h4>user-record</h4>
           </Modal.Title>
-          <p>Dieser Vorgang kann nicht rückgängig gemacht werden.</p>
+          <p>Are you sure to delete record...</p>
           <div className="text-center">
             <button className="btn modal-btn delete-btn me-3" onClick={handleDeleteConfirm}>
-              Löschen
+              Delete
             </button>
             <button className="btn modal-btn close-btn" onClick={handleModalClose}>
-              Abbrechen
+              Cancel
             </button>
           </div>
         </Modal>

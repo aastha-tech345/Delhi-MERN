@@ -43,18 +43,19 @@ const Login = () => {
       const result = await response.json()
 
       if (result.success === true) {
-        toast.success('Benutzeranmeldung erfolgreich')
+        toast.success('Login Successfully')
         const token = result?.user?.tokens[0]?.token
         window.localStorage.setItem('token', token)
+        window.localStorage.setItem('record', JSON.stringify(result))
         window.localStorage.setItem('record_id', result?.user?._id)
-        navigate('/dashboard')
+        navigate('/customerlist')
         window.location.reload()
       } else {
-        notify('Ungültige Anmeldeinformationen')
+        notify('Something error')
       }
     } catch (error) {
       console.error('Error:', error)
-      toast.error('Ungültige Anmeldeinformationen')
+      toast.error('Something error')
     }
   }
 
@@ -70,12 +71,11 @@ const Login = () => {
       <CContainer className="form-container">
         <CRow className="justify-content-center">
           <CCol md={4}>
-            <img className="logo-login" src={logo} alt="..." />
             <CCardGroup className="mt-3">
               <CCard className="p-4">
                 <CCardBody className="p-0">
                   <Form noValidate validated={validated} onKeyPress={handleKeyPress}>
-                    <h4 className="h4-heading">Anmeldung</h4>
+                    <h4 className="h4-heading">Sign-In</h4>
                     <Row className="mb-3">
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
                         <Form.Label>E-Mail Adresse</Form.Label>
@@ -90,7 +90,7 @@ const Login = () => {
                     </Row>
                     <Row className="mb-2">
                       <Form.Group as={Col} md="12" controlId="validationCustom01">
-                        <Form.Label>Passwort</Form.Label>
+                        <Form.Label>Password</Form.Label>
                         <Form.Control
                           required
                           value={password}
@@ -107,23 +107,8 @@ const Login = () => {
                         style={{ background: '#005291' }}
                         onClick={login}
                       >
-                        Senden
+                        Login
                       </Button>
-                      <p
-                        style={{
-                          textAlign: 'center',
-                          color: '#005291',
-                          fontSize: '13px',
-                          margin: 0,
-                          cursor: 'pointer',
-                        }}
-                        color="primary"
-                        onClick={forgetPassword}
-                        className="mt-3 mx-3 mb-0"
-                        tabIndex={-1}
-                      >
-                        Passwort vergessen ?
-                      </p>
                     </div>
                   </Form>
                 </CCardBody>
