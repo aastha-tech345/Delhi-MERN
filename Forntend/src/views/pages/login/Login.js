@@ -25,6 +25,9 @@ const Login = () => {
     }
   }
 
+  const UserRegister = () => {
+    navigate('/register')
+  }
   const login = async () => {
     try {
       if (!email || !password) {
@@ -100,15 +103,26 @@ const Login = () => {
                         />
                       </Form.Group>
                     </Row>
-                    <div>
-                      <br />
-                      <Button
-                        className="form-control form-btn"
-                        style={{ background: '#005291' }}
-                        onClick={login}
-                      >
-                        Login
-                      </Button>
+                    <br />
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <Button
+                          className="form-control form-btn"
+                          style={{ background: '#005291' }}
+                          onClick={login}
+                        >
+                          Login
+                        </Button>
+                      </div>
+                      <div className="col-sm-6">
+                        <Button
+                          className="form-control form-btn"
+                          style={{ background: '#005291' }}
+                          onClick={UserRegister}
+                        >
+                          Register
+                        </Button>
+                      </div>
                     </div>
                   </Form>
                 </CCardBody>

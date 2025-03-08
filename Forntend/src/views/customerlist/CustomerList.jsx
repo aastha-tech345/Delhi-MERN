@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import PaginationItem from '@mui/material/PaginationItem'
-import { MdLocalPrintshop } from 'react-icons/md'
+import { MdDelete, MdLocalPrintshop, MdOutlineEdit } from 'react-icons/md'
 import { Table } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
@@ -40,7 +40,6 @@ const CustomerList = () => {
   const [plz, setPlz] = useState()
   const [ort, setOrt] = useState()
   const [street, setStreet] = useState()
-  const [status, setStatus] = useState(null)
   const [clientStatus, setClientStatus] = useState([])
   const [created_by] = useState(loginData?.user?._id)
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -114,36 +113,8 @@ const CustomerList = () => {
                 style={{ background: 'none', border: 'none' }}
                 onClick={() => editRecord(record)}
               >
-                {/* <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} /> */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <g clipPath="url(#clip0_476_24741)">
-                    <path
-                      d="M4 20.0003H8L18.5 9.5003C19.0304 8.96987 19.3284 8.25045 19.3284 7.5003C19.3284 6.75016 19.0304 6.03074 18.5 5.5003C17.9696 4.96987 17.2501 4.67188 16.5 4.67188C15.7499 4.67187 15.0304 4.96987 14.5 5.5003L4 16.0003V20.0003Z"
-                      stroke="#005291"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M13.5 6.5L17.5 10.5"
-                      stroke="#005291"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_476_24741">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
+                <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
+
                 <span>Edit</span>
               </button>
             </>
@@ -157,56 +128,7 @@ const CustomerList = () => {
               style={{ background: 'none', border: 'none' }}
               onClick={() => handleIconClick(record._id)}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <g clipPath="url(#clip0_431_1048)">
-                  <path
-                    d="M5 8H19"
-                    stroke="#C20F0F"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 11V16"
-                    stroke="#C20F0F"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14 11V16"
-                    stroke="#C20F0F"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M6 8L6.85714 18.2857C6.85714 18.7404 7.03775 19.1764 7.35925 19.4979C7.68074 19.8194 8.11677 20 8.57143 20H15.4286C15.8832 20 16.3193 19.8194 16.6408 19.4979C16.9622 19.1764 17.1429 18.7404 17.1429 18.2857L18 8"
-                    stroke="#C20F0F"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M9 8V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4H14C14.2652 4 14.5196 4.10536 14.7071 4.29289C14.8946 4.48043 15 4.73478 15 5V8"
-                    stroke="#C20F0F"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_431_1048">
-                    <rect width="24" height="24" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
+              <MdDelete className="fs-5" style={{ color: 'red' }} />
               <span> Delete</span>
             </button>
           ) : (
@@ -396,7 +318,6 @@ const CustomerList = () => {
     setValidated(false)
   }
   const dispatch = useDispatch()
-  const { customerRecords, pageCount, loading, error } = useSelector((state) => state.customers)
 
   useEffect(() => {
     dispatch(fetchCustomerRecords({ page: page, itemsPerPage: itemsPerPage }))
@@ -439,18 +360,7 @@ const CustomerList = () => {
     }
   })
   const [hide, setHide] = useState(false)
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
-  const rowSelection = {
-    // onChange: (selectedRowKeys, selectedRows) => {},
-    onChange: (selectedKeys) => {
-      setSelectedRowKeys(selectedKeys)
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record?.name === 'Disabled User',
-      // Column configuration not to be checked
-      name: record?.name,
-    }),
-  }
+
   const [search, setSearch] = useState('')
   const handleChange = (e) => {
     setSearch(e.target.value)
@@ -492,6 +402,10 @@ const CustomerList = () => {
     setPrint(true)
   }
 
+  const createRole = () => {
+    navigate('/settings/createuser')
+  }
+
   useEffect(() => {
     getDetails()
     // getPrintDetails()
@@ -504,85 +418,104 @@ const CustomerList = () => {
         <div className="page-title">
           <h2>UserList</h2>
         </div>
+
         <div className="search-filter-row" style={{ background: 'white', borderRadius: '5px' }}>
           <div className="container-fluid">
             <div className="row">
-              <div className="col-md-7 mb-md-0 mb-3">
-                <div className="d-flex align-items-center">
-                  <input
-                    // ref={searchInputRef}
-                    name="search"
-                    // value={search}
-                    onChange={handleChange}
-                    onKeyPress={handleKeyPress}
-                    type="search"
-                    id="form1"
-                    placeholder="Search here..."
-                    // className="form-control form-search-control"
-                    className={`form-control form-search-control-without ${
-                      isTyping ? '' : 'form-search-control'
-                    }`}
-                  />
-                  <button onClick={searchHandle} className="filter-btn">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                    >
-                      <path
-                        d="M17.2837 3.19758L17.2819 3.19982L11.4249 10.3893L11.3125 10.5272V10.7051V15.7395C11.3125 16.0891 11.0266 16.375 10.677 16.375C10.538 16.375 10.4145 16.3294 10.3142 16.2343L10.2972 16.2182L10.2788 16.2037L7.02898 13.6566C6.81324 13.4832 6.6875 13.2225 6.6875 12.948V10.7051V10.5272L6.57512 10.3892L0.717141 3.19979L0.716307 3.19877C0.5768 3.02847 0.5 2.81363 0.5 2.59102C0.5 2.05751 0.932509 1.625 1.46602 1.625H16.534C17.0667 1.625 17.5 2.05774 17.5 2.59102C17.5 2.81391 17.4234 3.02809 17.2837 3.19758ZM1.93219 2.3125H0.879712L1.54459 3.12837L7.29738 10.1875C7.29744 10.1876 7.2975 10.1877 7.29756 10.1877C7.34744 10.2491 7.375 10.3272 7.375 10.4062V12.8109V13.0524L7.56415 13.2026L9.81415 14.9885L10.625 15.6321V14.5969V10.4062C10.625 10.3272 10.6526 10.2491 10.7025 10.1877C10.7025 10.1876 10.7026 10.1876 10.7026 10.1875L16.454 3.12832L17.1187 2.3125H16.0664H1.93219Z"
-                        fill="#1C1D21"
-                        stroke="white"
-                      />
-                    </svg>
-                    <span>Filter</span>
-                  </button>
-                </div>
-              </div>
-
-              {is_admin_true?.user?.user_type === 'admin' ? (
-                <div className="col-md-5 text-end">
-                  <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
-                    <button className="primary-btn" style={{ border: 'none' }} onClick={handleShow}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
+              <div className="col-sm-6">
+                {is_admin_true?.user?.user_type === 'admin' ? (
+                  <div className="col-md-5 text-end">
+                    <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
+                      <button
+                        className="primary-btn"
+                        style={{ border: 'none' }}
+                        onClick={createRole}
                       >
-                        <g clipPath="url(#clip0_437_8819)">
-                          <path
-                            d="M12 5V19"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M5 12H19"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_437_8819">
-                            <rect width="24" height="24" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                      <span>New User Create</span>
-                    </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <g clipPath="url(#clip0_437_8819)">
+                            <path
+                              d="M12 5V19"
+                              stroke="white"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M5 12H19"
+                              stroke="white"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_437_8819">
+                              <rect width="24" height="24" fill="white" />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                        <span>Create Role</span>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                ''
-              )}
+                ) : (
+                  'This is User List'
+                )}
+              </div>
+              <div className="col-sm-6">
+                {is_admin_true?.user?.user_type === 'admin' ? (
+                  <div className="col-md-5 text-end">
+                    <div className="d-flex align-items-center justify-content-between justify-content-md-end text-md-end flex-md-row flex-column">
+                      <button
+                        className="primary-btn"
+                        style={{ border: 'none' }}
+                        onClick={handleShow}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <g clipPath="url(#clip0_437_8819)">
+                            <path
+                              d="M12 5V19"
+                              stroke="white"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M5 12H19"
+                              stroke="white"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_437_8819">
+                              <rect width="24" height="24" fill="white" />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                        <span>New User Create</span>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
             </div>
+
             <Modal show={show} onHide={handleClose} className="modal-form">
               <Modal.Header>
                 <Modal.Title>New User Create</Modal.Title>

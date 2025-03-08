@@ -23,7 +23,7 @@ const User = () => {
     if (name === 'Mitarbeiterlnnen') {
       localStorage.setItem('tabIdd', 'createuser')
       navigate('/settings/createuser')
-    } else if (name === 'Rollen') {
+    } else if (name === 'Role') {
       localStorage.setItem('tabIdd', 'role')
       navigate('/settings/role')
     }
@@ -62,10 +62,10 @@ const User = () => {
                     role="tab"
                     aria-controls="role"
                     aria-selected={activeTab === 'role'}
-                    onClick={(e) => handleTabClick('role', 'Rollen', e)}
+                    onClick={(e) => handleTabClick('role', 'Role', e)}
                   >
                     <ImInfo />
-                    Rollen
+                    Role
                   </button>
                 </div>
                 <div className="col-sm-6"></div>

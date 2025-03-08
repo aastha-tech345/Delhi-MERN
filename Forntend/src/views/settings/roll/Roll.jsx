@@ -26,7 +26,7 @@ const Roll = () => {
     p_show: 'no',
     p_delete: 'no',
     p_export: 'no',
-    section_name: 'Klientlnnen',
+    section_name: 'CustomerList',
     ownership_check: 'false',
   })
   const [permissionDashboard, setPermissionDashboard] = useState({
@@ -101,14 +101,14 @@ const Roll = () => {
       const isAnyFieldBlank = Object.values(role).some((value) => value === '' || value === null)
 
       if (isAnyFieldBlank) {
-        return toast.warning('Bitte füllen Sie alle Felder aus.')
+        return toast.warning('Fill At list one field.')
       }
 
       const res = await postFetchData(`${apiUrl}/role/create_role`, role)
 
       if (res?.status === 201) {
         setEditEmployee(!editEmployee)
-        toast.success('Rolle erfolgreich erstellt')
+        toast.success('Roll created')
         return setShow(false)
       }
     } catch (error) {
@@ -167,8 +167,7 @@ const Roll = () => {
           ) : (
             <>
               <LuFilePlus style={{ fontSize: '50px', marginTop: '100px' }} />
-              <p>Keine Rollen</p>
-              <p>Beginnen Sie mit der Erstellung einer neuen Rolle.</p>
+              <p>Create Role</p>
             </>
           )}
 
@@ -179,11 +178,11 @@ const Roll = () => {
               onClick={handleShow}
             >
               <MdAdd />
-              &nbsp; Rolle erstellen
+              &nbsp; Rolle Create
             </button>
             <Modal show={show} onHide={handleClose} centered size="large" className="modal-form">
               <Modal.Header closeButton className="modal-header">
-                <Modal.Title className="modal-title">Rolle erstellen</Modal.Title>
+                <Modal.Title className="modal-title">Roll Create</Modal.Title>
               </Modal.Header>
               <Modal.Body className="modal-body">
                 <input
@@ -196,26 +195,19 @@ const Roll = () => {
                     setRolePermission(e.target.value)
                   }}
                 />
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-12">
-                      <h4 className="heading-4">Berechtigungen</h4>
-                    </div>
-                  </div>
-                </div>
 
                 <div className="container-fluid mt-2">
                   <div className="row">
                     <div className="col-12">
-                      <h4 className="heading-4">Klientlnnen</h4>
+                      <h4 className="heading-4">CustomerList</h4>
                     </div>
                   </div>
                   <div
                     className="row d-flex justify-content-between align-items-center"
-                    onClick={() => handleSetName('Klientlnnen')}
+                    onClick={() => handleSetName('CustomerList')}
                   >
                     <div className="col-sm-3">
-                      <label> Anzeigen</label>
+                      <label> Show</label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -227,8 +219,8 @@ const Roll = () => {
                           value={permissionData.p_show}
                           onChange={handlePermissionDataChange}
                         >
-                          {/* <option value="owned">Nur im Besitz</option> */}
-                          {/* <option value="Withdraw">Widerrufen</option> */}
+                          {/*  */}
+
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -238,7 +230,7 @@ const Roll = () => {
 
                   <div className="row d-flex justify-content-between align-items-center">
                     <div className="col-sm-3">
-                      <label> Bearbeiten</label>
+                      <label> Edit</label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -250,8 +242,6 @@ const Roll = () => {
                           value={permissionData.p_edit}
                           onChange={handlePermissionDataChange}
                         >
-                          <option value="owned">Nur im Besitz</option>
-                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -261,7 +251,7 @@ const Roll = () => {
 
                   <div className="row d-flex justify-content-between align-items-center">
                     <div className="col-sm-3">
-                      <label> Löschen</label>
+                      <label> Delete</label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -273,31 +263,6 @@ const Roll = () => {
                           value={permissionData.p_delete}
                           onChange={handlePermissionDataChange}
                         >
-                          <option value="owned">Nur im Besitz</option>
-                          {/* <option value="Withdraw">Widerrufen</option> */}
-                          <option value="no">No</option>
-                          <option value="yes">Yes</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row d-flex justify-content-between align-items-center">
-                    <div className="col-sm-3">
-                      <label> Exportieren </label>
-                    </div>
-                    {/*dropdown*/}
-                    <div className="col-sm-4 text-end">
-                      <div className="input-group">
-                        <select
-                          style={{ border: 'none' }}
-                          className="form-control form-select text-primary m-0 p-0"
-                          name="p_export"
-                          value={permissionData.p_export}
-                          onChange={handlePermissionDataChange}
-                        >
-                          <option value="owned">Nur im Besitz</option>
-                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -318,7 +283,7 @@ const Roll = () => {
 
                   <div className="row d-flex justify-content-between align-items-center">
                     <div className="col-sm-3">
-                      <label> Anzeigen</label>
+                      <label> Show</label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -330,8 +295,8 @@ const Roll = () => {
                           value={permissionDashboard.p_show}
                           onChange={handlePermissionDashboardChange}
                         >
-                          {/* <option value="owned">Nur im Besitz</option> */}
-                          {/* <option value="Withdraw">Widerrufen</option> */}
+                          {/*  */}
+
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -341,7 +306,7 @@ const Roll = () => {
 
                   <div className="row d-flex justify-content-between align-items-center">
                     <div className="col-sm-3">
-                      <label>Bearbeiten </label>
+                      <label>Edit </label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -353,8 +318,6 @@ const Roll = () => {
                           className="form-control form-select text-primary m-0 p-0"
                           onChange={handlePermissionDashboardChange}
                         >
-                          <option value="owned">Nur im Besitz</option>
-                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -364,7 +327,7 @@ const Roll = () => {
 
                   <div className="row d-flex justify-content-between align-items-center">
                     <div className="col-sm-3">
-                      <label>Löschen </label>
+                      <label>Delete </label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -376,30 +339,6 @@ const Roll = () => {
                           value={permissionDashboard.p_delete}
                           onChange={handlePermissionDashboardChange}
                         >
-                          <option value="owned">Nur im Besitz</option>
-                          {/* <option value="Withdraw">Widerrufen</option> */}
-                          <option value="no">No</option>
-                          <option value="yes">Yes</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row d-flex justify-content-between align-items-center">
-                    <div className="col-sm-3">
-                      <label>Exportieren</label>
-                    </div>
-                    {/*dropdown*/}
-                    <div className="col-sm-4 text-end">
-                      <div className="input-group">
-                        <select
-                          name="p_export"
-                          value={permissionDashboard.p_export}
-                          style={{ border: 'none' }}
-                          className="form-control form-select text-primary m-0 p-0"
-                          onChange={handlePermissionDashboardChange}
-                        >
-                          <option value="owned">Nur im Besitz</option>
-                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -420,7 +359,7 @@ const Roll = () => {
 
                   <div className="row d-flex justify-content-between align-items-center">
                     <div className="col-sm-3">
-                      <label>Anzeigen </label>
+                      <label>Show </label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -432,8 +371,8 @@ const Roll = () => {
                           value={permissionSetting.p_show}
                           onChange={handlePermissionSettingChange}
                         >
-                          {/* <option value="owned">Nur im Besitz</option> */}
-                          {/* <option value="Withdraw">Widerrufen</option> */}
+                          {/*  */}
+
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -443,7 +382,7 @@ const Roll = () => {
 
                   <div className="row d-flex justify-content-between align-items-center">
                     <div className="col-sm-3">
-                      <label>Bearbeiten </label>
+                      <label>Edit </label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -455,9 +394,7 @@ const Roll = () => {
                           className="form-control form-select text-primary m-0 p-0"
                           onChange={handlePermissionSettingChange}
                         >
-                          <option value="owned">Nur im Besitz</option>s
-                          {/* <option value="Withdraw">Widerrufen</option> */}
-                          <option value="no">No</option>
+                          s<option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
                       </div>
@@ -466,7 +403,7 @@ const Roll = () => {
 
                   <div className="row d-flex justify-content-between align-items-center">
                     <div className="col-sm-3">
-                      <label>Löschen </label>
+                      <label>Delete </label>
                     </div>
                     {/*dropdown*/}
                     <div className="col-sm-4 text-end">
@@ -478,31 +415,6 @@ const Roll = () => {
                           value={permissionSetting.p_delete}
                           onChange={handlePermissionSettingChange}
                         >
-                          <option value="owned">Nur im Besitz</option>
-                          {/* <option value="Withdraw">Widerrufen</option> */}
-                          <option value="no">No</option>
-                          <option value="yes">Yes</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row d-flex justify-content-between align-items-center">
-                    <div className="col-sm-3">
-                      <label> Exportieren </label>
-                    </div>
-                    {/*dropdown*/}
-                    <div className="col-sm-4 text-end">
-                      <div className="input-group">
-                        <select
-                          name="p_export"
-                          value={permissionSetting.p_export}
-                          style={{ border: 'none' }}
-                          className="form-control form-select text-primary m-0 p-0"
-                          onChange={handlePermissionSettingChange}
-                        >
-                          <option value="owned">Nur im Besitz</option>
-                          {/* <option value="Withdraw">Widerrufen</option> */}
                           <option value="no">No</option>
                           <option value="yes">Yes</option>
                         </select>
@@ -514,10 +426,10 @@ const Roll = () => {
               <Modal.Footer>
                 <div className="btn-wrapper d-flex w-100 m-0 justify-content-end">
                   <button className="btn btn-cancel" onClick={handleClose}>
-                    Abbrechen
+                    Cancel
                   </button>
                   <button className="btn btn-save ms-3" onClick={handleSubmit}>
-                    Erstellen
+                    Save
                   </button>
                 </div>
               </Modal.Footer>

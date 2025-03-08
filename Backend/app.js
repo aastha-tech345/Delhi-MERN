@@ -12,6 +12,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 const userRoute = require("./routes/user.route.js");
 const customerRoute = require("./routes/customer.route.js");
+const roleRoute = require("./routes/role.route.js");
 var createError = require("http-errors");
 app.use(logger("dev"));
 app.use(function (req, res, next) {
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/user", userRoute);
 app.use("/customer", customerRoute);
+app.use("/role", roleRoute);
 
 app.use(function (req, res, next) {
   next(createError(404));

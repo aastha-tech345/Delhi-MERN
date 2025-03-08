@@ -16,7 +16,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
     p_show: 'no',
     p_delete: 'no',
     p_export: 'no',
-    section_name: 'Klientlnnen',
+    section_name: 'CustomerList',
     ownership_check: 'false',
   })
   const [permissionDashboard, setPermissionDashboard] = useState({
@@ -92,7 +92,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
       // console.log('updatedRole', res)
       if (res?.status === 200) {
         setEditEmployee(!editEmployee)
-        notify('Rolle erfolgreich aktualisiert')
+        notify('Roll updated')
         setTimeout(() => {
           setOpenModal(false)
         }, 2000)
@@ -117,7 +117,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
     setRolePermission(roleData?.role_name)
 
     clientPermission?.map((elem) => {
-      if (elem?.section_name === 'Klientlnnen') {
+      if (elem?.section_name === 'CustomerList') {
         setPermissionData({
           p_edit: elem?.p_edit || 'no',
           p_show: elem?.p_show || 'no',
@@ -177,7 +177,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
       <div className="modal-dialog modal-dialog-centered  ">
         <div className="modal-content">
           <div className="modal-header">
-            <h4 className="modal-title">Rolle erstellen</h4>
+            <h4 className="modal-title">Roll Update</h4>
             <button
               type="button"
               className="btn-close"
@@ -208,16 +208,16 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
             <div className="container-fluid mt-2">
               <div className="row">
                 <div className="col-12">
-                  <h4 className="heading-4">Klientlnnen</h4>
+                  <h4 className="heading-4">CustomerList</h4>
                 </div>
               </div>
 
               <div
                 className="row d-flex justify-content-between align-items-center"
-                onClick={() => handleSetName('Klientlnnen')}
+                onClick={() => handleSetName('CustomerList')}
               >
                 <div className="col-sm-3 text-start">
-                  <label> Anzeigen</label>
+                  <label> Show</label>
                 </div>
 
                 {/*dropdown*/}
@@ -230,8 +230,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionData.p_show}
                       onChange={handlePermissionDataChange}
                     >
-                      {/* <option value="owned">Nur im Besitz</option> */}
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -241,7 +239,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
 
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-sm-3 text-start">
-                  <label> Bearbeiten</label>
+                  <label> Edit</label>
                 </div>
 
                 {/*dropdown*/}
@@ -254,8 +252,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionData.p_edit}
                       onChange={handlePermissionDataChange}
                     >
-                      <option value="owned">Nur im Besitz</option>
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -265,7 +261,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
 
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-sm-3 text-start">
-                  <label> Löschen</label>
+                  <label> Delete</label>
                 </div>
 
                 {/*dropdown*/}
@@ -278,8 +274,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionData.p_delete}
                       onChange={handlePermissionDataChange}
                     >
-                      <option value="owned">Nur im Besitz</option>
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -302,8 +296,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionData.p_export}
                       onChange={handlePermissionDataChange}
                     >
-                      <option value="owned">Nur im Besitz</option>
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -324,7 +316,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
 
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-sm-3 text-start">
-                  <label> Anzeigen</label>
+                  <label> Show</label>
                 </div>
 
                 {/*dropdown*/}
@@ -337,8 +329,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionDashboard.p_show}
                       onChange={handlePermissionDashboardChange}
                     >
-                      {/* <option value="owned">Nur im Besitz</option> */}
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -348,7 +338,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
 
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-sm-3 text-start">
-                  <label>Bearbeiten </label>
+                  <label>Edit </label>
                 </div>
 
                 {/*dropdown*/}
@@ -361,8 +351,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       className="form-control form-select text-primary m-0 p-0"
                       onChange={handlePermissionDashboardChange}
                     >
-                      <option value="owned">Nur im Besitz</option>
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -372,7 +360,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
 
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-sm-3 text-start">
-                  <label>Löschen </label>
+                  <label>Delete </label>
                 </div>
 
                 {/*dropdown*/}
@@ -385,32 +373,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionDashboard.p_delete}
                       onChange={handlePermissionDashboardChange}
                     >
-                      <option value="owned">Nur im Besitz</option>
-                      {/* <option value="Withdraw">Widerrufen</option> */}
-                      <option value="no">No</option>
-                      <option value="yes">Yes</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row d-flex justify-content-between align-items-center">
-                <div className="col-sm-3 text-start">
-                  <label>Exportieren</label>
-                </div>
-
-                {/*dropdown*/}
-                <div className="col-sm-4 text-end">
-                  <div className="input-group">
-                    <select
-                      name="p_export"
-                      value={permissionDashboard.p_export}
-                      style={{ border: 'none' }}
-                      className="form-control form-select text-primary m-0 p-0"
-                      onChange={handlePermissionDashboardChange}
-                    >
-                      <option value="owned">Nur im Besitz</option>
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -431,7 +393,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
 
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-sm-3 text-start">
-                  <label>Anzeigen </label>
+                  <label>Show </label>
                 </div>
 
                 {/*dropdown*/}
@@ -444,8 +406,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionSetting.p_show}
                       onChange={handlePermissionSettingChange}
                     >
-                      {/* <option value="owned">Nur im Besitz</option> */}
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -455,7 +415,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
 
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-sm-3 text-start">
-                  <label>Bearbeiten </label>
+                  <label>Edit </label>
                 </div>
 
                 {/*dropdown*/}
@@ -468,8 +428,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       className="form-control form-select text-primary m-0 p-0"
                       onChange={handlePermissionSettingChange}
                     >
-                      <option value="owned">Nur im Besitz</option>s
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -479,7 +437,7 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
 
               <div className="row d-flex justify-content-between align-items-center">
                 <div className="col-sm-3 text-start">
-                  <label>Löschen </label>
+                  <label>Delete </label>
                 </div>
 
                 {/*dropdown*/}
@@ -492,31 +450,6 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                       value={permissionSetting.p_delete}
                       onChange={handlePermissionSettingChange}
                     >
-                      <option value="owned">Nur im Besitz</option>
-                      {/* <option value="Withdraw">Widerrufen</option> */}
-                      <option value="no">No</option>
-                      <option value="yes">Yes</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row d-flex justify-content-between align-items-center">
-                <div className="col-sm-3 text-start">
-                  <label> Exportieren </label>
-                </div>
-                {/*dropdown*/}
-                <div className="col-sm-4 text-end">
-                  <div className="input-group">
-                    <select
-                      name="p_export"
-                      value={permissionSetting.p_export}
-                      style={{ border: 'none' }}
-                      className="form-control form-select text-primary m-0 p-0"
-                      onChange={handlePermissionSettingChange}
-                    >
-                      <option value="owned">Nur im Besitz</option>
-                      {/* <option value="Withdraw">Widerrufen</option> */}
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </select>
@@ -534,10 +467,10 @@ const EditRoleModal = ({ setOpenModal, roleID }) => {
                 data-bs-dismiss="modal"
                 onClick={close}
               >
-                Abbrechen
+                Cancel
               </button>
               <button type="button" className="btn btn-save ms-3" onClick={handleSubmit}>
-                Aktualisieren
+                Update
               </button>
             </div>
           </div>

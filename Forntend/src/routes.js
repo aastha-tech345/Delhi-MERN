@@ -1,4 +1,7 @@
 import React from 'react'
+import User from './views/settings/User'
+import Roll from './views/settings/roll/Roll'
+import CreateUser from './views/settings/user/CreateUser'
 // import CustomerInfo from './views/customer/customerInfo/CustomerInfo'
 // import Contact from './views/customer/contact/Contact'
 
@@ -24,6 +27,9 @@ if (auth) {
     { path: '/customer', name: 'User', element: Customer },
     { path: '/date', name: 'Date', element: Date },
     { path: '/text', name: 'Date', element: Text },
+    { path: '/settings/users', name: 'User', element: User },
+    { path: '/settings/role', name: 'RoleCreateion', element: Roll },
+    { path: '/settings/createuser', name: 'User Create', element: CreateUser },
   ]
 } else {
   routes = [{ path: '/login', element: Login }]

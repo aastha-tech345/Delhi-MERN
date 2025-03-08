@@ -66,27 +66,8 @@ const CreateUser = () => {
   }
   const employeData = { ...employee, isAdminFullRights, email }
 
-  // const [employeData, setEmployeData] = useState({
-  //   users: {},
-  //   password: {
-  //     password: 'null',
-  //   },
-  //   localization: {
-  //     location: 'null',
-  //   },
-  //   advanced: {
-  //     advanced: 'null',
-  //   },
-  //   notification: {
-  //     notification: 'null',
-  //   },
-  // })
+  console.log('employee', employeData)
   const [itemsPerPage, setItemsPerPage] = useState('')
-  const handleTabClick = (tabId) => {
-    setActiveTab(tabId)
-  }
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
 
   const handleShowInviteUserModal = () => {
     setShowInviteUserModal(true)
@@ -205,7 +186,7 @@ const CreateUser = () => {
               style={{ background: 'none', border: 'none' }}
             >
               <MdOutlineEdit className="fs-5" style={{ color: '#5C86B4' }} />
-              &nbsp; Bearbeiten &nbsp;&nbsp;&nbsp;
+              &nbsp; Edit &nbsp;&nbsp;&nbsp;
             </button>
           ) : (
             ''
@@ -219,7 +200,7 @@ const CreateUser = () => {
               onClick={() => handleDelete(record._id)}
             >
               <RiDeleteBinLine className="text-danger text-bold fs-5" />
-              Löschen
+              Delete
             </button>
           ) : (
             ''
@@ -306,10 +287,6 @@ const CreateUser = () => {
       >
         <div className="container-fluid">
           <User />
-          <div className="tab-title">
-            <h4>Benutzer</h4>
-          </div>
-          <hr />
           <div className="topBtnBox">
             <div className="row p-2">
               <div className="col-md-3">
@@ -319,26 +296,10 @@ const CreateUser = () => {
                   style={{ background: '#0b5995', color: 'white' }}
                 >
                   <MdAdd />
-                  &nbsp; MitarbeiterInnen erstellen
+                  &nbsp; User Create
                 </button>
               </div>
-              <div className="col-md-6 mb-md-0 mb-3">
-                <div className="d-flex align-items-center">
-                  <input
-                    ref={searchInputRef}
-                    name="search"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    type="search"
-                    id="form1"
-                    placeholder="Ihre Suche eingeben"
-                    className="form-control form-search-control"
-                  />
-                  <button onClick={searchHandle} className="filter-setting">
-                    <AiFillSetting className="setting-icon" />
-                  </button>
-                </div>
-              </div>
+
               <Modal
                 size="lg"
                 show={showInviteUserModal}
@@ -348,13 +309,10 @@ const CreateUser = () => {
               >
                 <div className=" row pt-5 px-5">
                   <p className="fs-5">
-                    <b>Super Verwalter</b>
+                    <b>Super User</b>
                   </p>
                   <div className="col-sm-9">
-                    <p>
-                      Wenn Sie den Super-Admin-Zugang für den Benutzer aktivieren, erhalten Sie
-                      vollen Zugriff auf alle Funktionen ohne jegliche Einschränkungen.
-                    </p>
+                    <p>Create Super User</p>
                   </div>
                   <div className="col-sm-3">
                     <div className="form-check mx-5 form-switch">
@@ -371,79 +329,6 @@ const CreateUser = () => {
                 </div>
 
                 <Modal.Body>
-                  <div className="whiteBoxWithPdLR">
-                    <div className="container-fluid">
-                      <div className="row">
-                        <div className="col-sm-12">
-                          <nav>
-                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                              <button
-                                className={`nav-link ${activeTab === 'nav-home' ? 'active' : ''}`}
-                                id="nav-home-tab"
-                                data-bs-toggle="tab"
-                                role="tab"
-                                aria-selected={activeTab === 'nav-home'}
-                                onClick={() => handleTabClick('nav-home')}
-                              >
-                                Benutzer
-                              </button>
-                              <button
-                                className={`nav-link ${activeTab === 'nav-rollen' ? 'active' : ''}`}
-                                id="nav-rollen-tab"
-                                data-bs-toggle="tab"
-                                role="tab"
-                                aria-controls="nav-rollen"
-                                aria-selected={activeTab === 'nav-rollen'}
-                                onClick={() => handleTabClick('nav-rollen')}
-                              >
-                                Passwort
-                              </button>
-                              <button
-                                className={`nav-link ${
-                                  activeTab === 'nav-lokalisierung' ? 'active' : ''
-                                }`}
-                                id="nav-lokalisierung-tab"
-                                data-bs-toggle="tab"
-                                role="tab"
-                                aria-controls="nav-lokalisierung"
-                                aria-selected={activeTab === 'nav-lokalisierung'}
-                                onClick={() => handleTabClick('nav-lokalisierung')}
-                              >
-                                Lokalisierung
-                              </button>
-                              <button
-                                className={`nav-link ${
-                                  activeTab === 'nav-benachrichtigungen' ? 'active' : ''
-                                }`}
-                                id="nav-benachrichtigungen-tab"
-                                data-bs-toggle="tab"
-                                role="tab"
-                                aria-controls="nav-benachrichtigungen"
-                                aria-selected={activeTab === 'nav-benachrichtigungen'}
-                                onClick={() => handleTabClick('nav-benachrichtigungen')}
-                              >
-                                Benachrichtigungen
-                              </button>
-                              <button
-                                className={`nav-link ${
-                                  activeTab === 'nav-fortgeschrittene' ? 'active' : ''
-                                }`}
-                                id="nav-fortgeschrittene-tab"
-                                data-bs-toggle="tab"
-                                role="tab"
-                                aria-controls="nav-fortgeschrittene"
-                                aria-selected={activeTab === 'nav-fortgeschrittene'}
-                                onClick={() => handleTabClick('nav-fortgeschrittene')}
-                              >
-                                Fortgeschrittene
-                              </button>
-                            </div>
-                          </nav>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br />
                   <div className="tab-content" id="nav-tabContent">
                     <div
                       className={`tab-pane fade ${activeTab === 'nav-home' ? 'show active' : ''}`}
@@ -476,7 +361,7 @@ const CreateUser = () => {
 
                           <input
                             className="form-control"
-                            placeholder="Straße mit Hausnummer"
+                            placeholder="Address"
                             type="text"
                             name="street"
                             value={employee.street}
@@ -485,19 +370,10 @@ const CreateUser = () => {
 
                           <input
                             className="form-control"
-                            placeholder="Stadt"
+                            placeholder="City"
                             type="text"
                             name="city"
                             value={employee.city}
-                            onChange={handleChange}
-                          />
-
-                          <input
-                            className="form-control"
-                            placeholder="Standort"
-                            type="text"
-                            name="location"
-                            value={employee.location}
                             onChange={handleChange}
                           />
 
@@ -523,7 +399,7 @@ const CreateUser = () => {
                         <div className="col-sm-6">
                           <input
                             className="form-control"
-                            placeholder="Vorname"
+                            placeholder="Lname"
                             type="text"
                             name="lname"
                             value={employee.lname}
@@ -531,23 +407,8 @@ const CreateUser = () => {
                           />
 
                           <input
-                            type="tel"
-                            value={employee.plz}
-                            onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^0-9]/g, '') // Allow only alphabetic characters, spaces, hyphens, and apostrophes
-                              setEmployee({ ...employee, plz: inputValue })
-                            }}
-                            placeholder="PLZ"
                             className="form-control"
-                            id="inputPassword"
-                            maxLength={6}
-                            minLength={3}
-                            required={true}
-                          />
-
-                          <input
-                            className="form-control"
-                            placeholder="E-Mail Adresse"
+                            placeholder="E-Mail Address"
                             type="email"
                             name="email"
                             onChange={handleEmailChange}
@@ -555,7 +416,7 @@ const CreateUser = () => {
 
                           <input
                             className="form-control"
-                            placeholder="Telefon"
+                            placeholder="Telephone"
                             maxLength={10}
                             minLength={2}
                             type="tel"
@@ -568,49 +429,19 @@ const CreateUser = () => {
                               }
                             }}
                           />
-                          <input
-                            className="form-control"
-                            placeholder="Mobil"
-                            maxLength={10}
-                            minLength={2}
-                            type="tel"
-                            name="mobile"
-                            value={employee.mobile}
-                            // onChange={handleChange}
-                            onChange={(e) => {
-                              const inputValue = e.target.value.replace(/[^0-9+]/g, '')
-                              if (/^\+?[0-9]*$/.test(inputValue)) {
-                                handleChange({ target: { name: 'mobile', value: inputValue } })
-                              }
-                            }}
-                          />
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={`tab-pane fade ${activeTab === 'nav-rollen' ? 'show active' : ''}`}
-                      id="nav-rollen"
-                      role="tabpanel"
-                      aria-labelledby="nav-rollen-tab"
-                    ></div>
-                    <div
-                      className={`tab-pane fade ${
-                        activeTab === 'nav-mannschaften' ? 'show active' : ''
-                      }`}
-                      id="nav-mannschaften"
-                      role="tabpanel"
-                      aria-labelledby="nav-mannschaften-tab"
-                    ></div>
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
                   <button style={{ border: 'none', background: 'none' }}></button>
                   <div className="btn-wrap">
                     <button className="btn btn-cancel" onClick={handleCloseInviteUserModal}>
-                      Abbrechen
+                      Cancel
                     </button>
                     <button className="btn btn-save ms-3" onClick={handleSubmit}>
-                      Speichern
+                      Save
                     </button>
                   </div>
                 </Modal.Footer>
