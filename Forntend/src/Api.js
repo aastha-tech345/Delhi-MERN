@@ -1,6 +1,6 @@
 import axios from 'axios'
 export const getFetch = async (url) => {
-  try {
+  try { 
     // const token = localStorage.getItem('token')
     const response = await axios({
       method: 'get',
